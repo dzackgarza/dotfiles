@@ -1,4 +1,37 @@
-syntax on
+"Set up Vundle
+"-----------------------------
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'gmarik/Vundle.vim'
+Bundle 'joonty/vdebug.git'
+
+call vundle#end()
+filetype plugin indent on
+"-----------------------------
+
+execute pathogen#infect()
+
 
 " Wrap gitcommit file types at the appropriate length
 filetype indent plugin on
+
+set number
+syntax on
+colorscheme Sunburst
+set background=dark
+set nu
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set mouse=nicr
+set list
+
+set term=xterm-256
+set tags=~/.vim/tags/manager
+
+" Custom commands for NERDTree
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
