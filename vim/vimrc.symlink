@@ -6,31 +6,87 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
-Bundle 'joonty/vdebug.git'
-
+Bundle 'gigamo/sunburst.vim'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'sheerun/vim-polyglot'
 call vundle#end()
-filetype plugin indent on
 "-----------------------------
 
 execute pathogen#infect()
 
 
-" Wrap gitcommit file types at the appropriate length
-filetype indent plugin on
+" Aesthetics
+set background=dark
+colorscheme grb256
+
 
 set number
 syntax on
-colorscheme Sunburst
-set background=dark
 set nu
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set mouse=nicr
-set list
 
-set term=xterm-256
-set tags=~/.vim/tags/manager
+" Formatting
+" ------------------------------
+set expandtab " Default to soft tabs, 2 spaces
+set tabstop=4
+set shiftwidth=4
+set shiftround " Use multiples of shiftwidth when using >i
+
+set showmatch " Show matching parens
+set smartcase " Ignore case if searching all lowercase
+set smarttab  " Indents based on sw, not ts
+set hlsearch    " Highlight search terms
+set incsearch   " Show search matches as typed
+
+set backspace=indent,eol,start " Allow backspace over anything
+
+
+set nowrap
+" Except for Makefiles; hard tabs of width 2
+autocmd FileType make set ts=2
+
+" And Markdown
+autocmd FileType mkd set sw=4
+autocmd FileType mkd set sts=4
+
+" Default to Unix LF line endings
+set ffs=unix
+
+" Folding
+set foldmethod=syntax
+set foldcolumn=1
+set foldlevelstart=20
+
+let g:vim_markdown_folding_disabled=1 " Markdown
+let javaScript_fold=1                 " JavaScript
+let perl_fold=1                       " Perl
+let php_folding=1                     " PHP
+let r_syntax_folding=1                " R
+let ruby_fold=1                       " Ruby
+let sh_fold_enabled=1                 " sh
+let vimsyn_folding='af'               " Vim script
+let xml_syntax_folding=1              " XML
+
+
+" Allow mouse scrolling
+set mouse=nicr
+set nolist
+
+" Misc.
+set clipboard=unnamed "Use OS clipboard
+
+set wildmode=longest,list " Bash style tab completion
+set wildmenu
+
+set noswapfile " Use version control instead
+
+set paste " Fix indentation problems when pasting
+
+filetype indent plugin on
+
+" Column 80 marker
+highlight OverLength ctermbg=red ctermfg=white guibg=#660000
+match OverLength /\%81v.\+/
+
 
 " Custom commands for NERDTree
 autocmd StdinReadPre * let s:std_in=1
