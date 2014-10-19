@@ -1,18 +1,21 @@
-"Set up Vundle
-""-----------------------------
+"""Set up Vundle
+"""-----------------------------
 set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
-Bundle 'gigamo/sunburst.vim'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'sheerun/vim-polyglot'
+Plugin 'scrooloose/syntastic'
+Plugin 'godlygeek/tabular'
+
 call vundle#end()
-"-----------------------------
+"""-----------------------------
 
 call pathogen#infect()
+
 let mapleader=","
 set nocompatible
 set viminfo='1000,f1,:1000,/1000
@@ -37,7 +40,7 @@ set listchars=tab:▸\ ,trail:·,extends:❯,precedes:❮,nbsp:×,eol:¬
 map <Leader>L :set invnumber<CR>
 
 
-"------  Generic Behavior  ------
+"""------  Generic Behavior  ------
 set tabstop=4
 set shiftwidth=4
 set hidden
@@ -245,7 +248,7 @@ set t_Co=256
 colorscheme Mustang
 set mouse=a
 
-"------  Local Overrides  ------
+"""------  Local Overrides  ------
 if filereadable($HOME.'/.vimrc_local')
 	source $HOME/.vimrc_local
 endif
@@ -253,5 +256,16 @@ endif
 set showmatch " Show matching parens
 set smartcase " Ignore case if searching all lowercase
 set smarttab  " Indents based on sw, not ts
-set hlsearch    " Highlight search terms
-set incsearch   " Show search matches as typed
+set hlsearch  " Highlight search terms
+set incsearch " Show search matches as typed
+
+set backspace=indent,eol,start " Allow backspace over anything
+set ffs=unix                   " Default to Unix LF line endings
+
+
+""" Misc.
+set clipboard=unnamed " Use OS clipboard
+set noswapfile        " Use version control instead
+
+highlight OverLength ctermbg=red ctermfg=white guibg=#660000 " Column 80 marker
+match OverLength /\%81v.\+/
