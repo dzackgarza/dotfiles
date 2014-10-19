@@ -240,77 +240,18 @@ nnoremap <silent> <Leader>t :tabnew<CR>
 " Cmd+w = close tab (this should happen by default)
 nnoremap <silent> <Leader>w :tabclose<CR>
 
-
-
-"------  GUI Options  ------
-if has("gui_running")
-	" Hides toolbar and scrollbars and File menu
-	set guioptions=egt
-
-	" Highlights the current line background
-	set cursorline
-	colorscheme Tomorrow-Night
-
-	"autocmd VimEnter * TagbarOpen
-
-	"Invisible character colors
-	highlight NonText guifg=#4a4a59
-	highlight SpecialKey guifg=#4a4a59
-
-	if has("gui_macvim") " OS X
-		"set guifont=Monaco:h14
-		set guifont=Monaco:h12
-		"set noantialias
-		"set transparency=15
-
-		" Cmd+1...9 = go to that tab
-		map <silent> <D-1> 1gt
-		map <silent> <D-2> 2gt
-		map <silent> <D-3> 3gt
-		map <silent> <D-4> 4gt
-		map <silent> <D-5> 5gt
-		map <silent> <D-6> 6gt
-		map <silent> <D-7> 7gt
-		map <silent> <D-8> 8gt
-		map <silent> <D-9> 9gt
-
-		" OS X probably has ctags in a weird place
-		let g:tagbar_ctags_bin='/usr/local/bin/ctags'
-
-	elseif has("gui_gtk2") " Linux
-		set guifont=monospace\ 9
-
-		" Alt+n = new buffer
-		map <silent> <A-n> :enew<CR>
-
-		" Alt+t = new tab
-		nnoremap <silent> <A-t> :tabnew<CR>
-
-		" Alt+w = close tab
-		nnoremap <silent> <A-w> :tabclose<CR>
-
-		" Alt+1...9 = go to that tab
-		map <silent> <A-1> 1gt
-		map <silent> <A-2> 2gt
-		map <silent> <A-3> 3gt
-		map <silent> <A-4> 4gt
-		map <silent> <A-5> 5gt
-		map <silent> <A-6> 6gt
-		map <silent> <A-7> 7gt
-		map <silent> <A-8> 8gt
-		map <silent> <A-9> 9gt
-
-	elseif has("gui_win32") " Windows
-		" WHAT ARE YOU DOING WITH YOUR LIFE?!
-	endif
-else
-	set t_Co=256
-	colorscheme Mustang
-	set mouse=a
-endif
-
+" GUI Settings
+set t_Co=256
+colorscheme Mustang
+set mouse=a
 
 "------  Local Overrides  ------
 if filereadable($HOME.'/.vimrc_local')
 	source $HOME/.vimrc_local
 endif
+
+set showmatch " Show matching parens
+set smartcase " Ignore case if searching all lowercase
+set smarttab  " Indents based on sw, not ts
+set hlsearch    " Highlight search terms
+set incsearch   " Show search matches as typed
