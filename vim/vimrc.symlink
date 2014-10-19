@@ -1,43 +1,23 @@
-"Set up Vundle
-"-----------------------------
-set nocompatible
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
 
-Plugin 'gmarik/Vundle.vim'
-Bundle 'gigamo/sunburst.vim'
-Plugin 'flazz/vim-colorschemes'
-Plugin 'sheerun/vim-polyglot'
-call vundle#end()
-"-----------------------------
 
-execute pathogen#infect()
-
+" Enable filetype plugins
+filetype plugin indent on
 
 " Aesthetics
 set background=dark
 colorscheme grb256
 
-
-set number
-syntax on
-set nu
-
 " Formatting
 " ------------------------------
-set expandtab " Default to soft tabs, 2 spaces
-set tabstop=4
-set shiftwidth=4
-set shiftround " Use multiples of shiftwidth when using >i
+set expandtab " Morph tabs into spaces
+set smarttab  " Indents based on sw, not ts
+set tabstop=2
+set shiftwidth=2
+
 
 set showmatch " Show matching parens
-set smartcase " Ignore case if searching all lowercase
-set smarttab  " Indents based on sw, not ts
-set hlsearch    " Highlight search terms
-set incsearch   " Show search matches as typed
 
-set backspace=indent,eol,start " Allow backspace over anything
+
 
 
 set nowrap
@@ -48,8 +28,6 @@ autocmd FileType make set ts=2
 autocmd FileType mkd set sw=4
 autocmd FileType mkd set sts=4
 
-" Default to Unix LF line endings
-set ffs=unix
 
 " Folding
 set foldmethod=syntax
@@ -71,23 +49,25 @@ let xml_syntax_folding=1              " XML
 set mouse=nicr
 set nolist
 
-" Misc.
-set clipboard=unnamed "Use OS clipboard
-
-set wildmode=longest,list " Bash style tab completion
-set wildmenu
-
-set noswapfile " Use version control instead
-
-set paste " Fix indentation problems when pasting
-
-filetype indent plugin on
-
-" Column 80 marker
-highlight OverLength ctermbg=red ctermfg=white guibg=#660000
-match OverLength /\%81v.\+/
 
 
-" Custom commands for NERDTree
+
+" Always show current pos
+set ruler
+
+
+
+
+
+" Python fixes
+set smartindent
+autocmd FileType python setlocal foldmethod=indent smartindent shiftwidth=4 ts=4 et cinwords=if,elif,else,for,while,try,except,finally,def,class
+
+
+" Start up NERDTree if opened without a file
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
+
