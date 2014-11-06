@@ -1,0 +1,14 @@
+colorscheme mirodark
+
+" Ctrl-\ : Open tag definition in vertical split
+map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+
+" Fix ugly highlighting"
+set nospell
+
+" Fix slow scrolling
+set lazyredraw
+let g:spf13_use_powerline = 1
+let g:spf13_use_old_powerline = 1
+
+  
