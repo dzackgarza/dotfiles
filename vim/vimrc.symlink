@@ -11,7 +11,10 @@ Plugin 'sheerun/vim-polyglot'
 Plugin 'scrooloose/syntastic'
 Plugin 'godlygeek/tabular'
 Plugin 'scrooloose/nerdtree'
-
+Plugin 'shawncplus/phpcomplete.vim'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-easytags' 
+Bundle 'majutsushi/tagbar'
 call vundle#end()
 """-----------------------------
 
@@ -179,7 +182,7 @@ let g:tagbar_width=26
 noremap <silent> <Leader>y :TagbarToggle<CR>
 
 " ,ct = Builds ctags
-"map <Leader>ct :! /usr/local/bin/ctags -R *<CR>
+map <Leader>ct :! /usr/local/bin/ctags -R *<CR>
 
 
 "------  Fugitive Plugin Options  ------
@@ -270,3 +273,22 @@ set noswapfile        " Use version control instead
 
 highlight OverLength ctermbg=red ctermfg=white guibg=#660000 " Column 80 marker
 match OverLength /\%81v.\+/
+
+" Sane vimdiff colorscheme
+highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
+
+" Map to run xmllint on current file
+map @@x !%xmllint --format --recover -^M
+
+" Function for cleaning an XML document
+function! DoCleanXML()
+	silent %!xmllint --format --encode utf-8 -
+	g/xml version=/d
+endfunction
+
+command! CleanXML call DoCleanXML()
+
+set tags=./tags;
