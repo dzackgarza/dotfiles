@@ -50,3 +50,4 @@ done
 setopt no_rm_star_silent
 unset config_files
 unsetopt correct
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
