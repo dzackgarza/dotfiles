@@ -5,7 +5,6 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-Plugin 'gmarik/Vundle.vim'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'scrooloose/syntastic'
