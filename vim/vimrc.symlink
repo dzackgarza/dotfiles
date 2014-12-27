@@ -252,8 +252,8 @@ colorscheme Mustang
 set mouse=a
 
 """------  Local Overrides  ------
-if filereadable($HOME.'/.vimrc_local')
-	source $HOME/.vimrc_local
+if filereadable($HOME.'/dotfiles/vim/vimrc.local')
+	source $HOME/dotfiles/vim/vimrc.local
 endif
 
 set showmatch " Show matching parens
