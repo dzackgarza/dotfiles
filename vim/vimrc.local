@@ -11,4 +11,4 @@ set lazyredraw
 let g:spf13_use_powerline = 1
 let g:spf13_use_old_powerline = 1
 
-  
+hi Normal ctermbg=None

@@ -1,19 +1,7 @@
-alias tpd='ssh zgarza@zgarza.tinyprints.com'
+# Restart XMonad
+alias xr="xmonad --recompile && xmonad --restart"
 
-alias syncjogl_fromdev='rsync -raz zgarza@zgarza.tinyprints.com:/opt/tinyprints/w2p-jogl /opt/tinyprints'
-
-alias syncjogl_todev='rsync -raz /opt/tinyprints wqzgarza@zgarza.tinyprints.com:/opt/tinyprints/w2p-jogl'
-
-function py { 
-	python3 $1; 
-}
-
-function parHaskell() { 
-	ghc -O2 --make $1 -threaded -rtsopts; 
-}
-
-export JAVA_HOME='/usr/libexec/java_home'
-
+# SSH Targets
 alias droplet='ssh root@104.131.9.12'
 alias berkeley='ssh -XC -c blowfish-cbc,arcfour cory.eecs.berkeley.edu -l cs70-awu'
 
@@ -29,3 +17,17 @@ function build_ctags_php() {
 	--regex-PHP='/interface\s+([^ ]+)/\1/c/' \
 	--regex-PHP='/(public\s+|static\s+|abstract\s+|protected\s+|private\s+)function\s+\&?\s*([^ (]+)/\2/f/'
 }
+
+function py { 
+	python3 $1; 
+}
+
+function parHaskell() { 
+	ghc -O2 --make $1 -threaded -rtsopts; 
+}
+
+function mcd() {
+	mkdir $1 && cd $1
+}
+
+alias ls="ls --color=always"
