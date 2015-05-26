@@ -30,4 +30,9 @@ function mcd() {
 	mkdir $1 && cd $1
 }
 
+# Copy to X-Window clipboard
+alias cp="xclip -sel clip"
+
 alias ls="ls --color=always"
+
+alias mkdir="mkdir -p"
