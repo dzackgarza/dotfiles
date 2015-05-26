@@ -1,9 +1,7 @@
-<<<<<<< Updated upstream
-=======
-
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export PATH="$HOME/.jenv/bin:$PATH"
 export PATH=$HOME/.cabal/bin:$PATH
 
->>>>>>> Stashed changes
 # ZSH-specific
 ####################
 export ZSH=$HOME/.oh-my-zsh
@@ -57,16 +55,12 @@ done
 
 setopt no_rm_star_silent
 unset config_files
-<<<<<<< Updated upstream
 unsetopt correct
 setopt completealiases 		# Extend auto-completion to custom aliases
 setopt HIST_IGNORE_DUPS		# Keep only unique items in zsh_history
 
 # Initialize fzf (fuzzy finder) if installed.
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# Add haskell programs from hackage on the path.
-PATH=$HOME/.cabal/bin:$HOME/bin:$PATH
 
 # Add ruby gems to path
 PATH="`ruby -e 'print Gem.user_dir'`/bin:$PATH"
@@ -79,19 +73,10 @@ hostname | figlet -k
 fortune -a | cowsay -f healy
 # What day is it again..?
 date
-<<<<<<< Updated upstream
 fortune -c
-=======
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
->>>>>>> Stashed changes
-=======
-
 # --------------------
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+eval "$(jenv init -)"
 
 # Active zsh-syntax-highlighting
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
->>>>>>> Stashed changes
