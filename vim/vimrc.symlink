@@ -5,6 +5,8 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+Plugin 'gmarik/vundle'
+Plugin 'valloric/MatchTagAlways'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'sheerun/vim-polyglot'
 <<<<<<< Updated upstream
@@ -311,6 +313,7 @@ command! CleanXML call DoCleanXML()
 
 <<<<<<< Updated upstream
 set tags=./tags;
+<<<<<<< Updated upstream
 =======
 " Custom commands for NERDTree
 autocmd StdinReadPre * let s:std_in=1
@@ -384,4 +387,9 @@ let g:tagbar_type_haskell = {
         \ 'type'   : 't'
     \ }
 \ }
+>>>>>>> Stashed changes
+=======
+
+" Turn on HTML tag matching
+runtime macros/matchit.vim
 >>>>>>> Stashed changes
