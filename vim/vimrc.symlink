@@ -9,23 +9,18 @@ Plugin 'gmarik/vundle'
 Plugin 'valloric/MatchTagAlways'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'sheerun/vim-polyglot'
-<<<<<<< Updated upstream
-Plugin 'scrooloose/syntastic'
-Plugin 'godlygeek/tabular'
 Plugin 'scrooloose/nerdtree'
 Plugin 'shawncplus/phpcomplete.vim'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-easytags' 
 Bundle 'majutsushi/tagbar'
-=======
 Plugin 'bitc/vim-hdevtools'
 Plugin 'lukerandall/haskellmode-vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'dag/vim2hs'
 Plugin 'godlygeek/tabular'
 Plugin 'eagletmt/neco-ghc'
-Plugin 'majutsushi/tagbar'
->>>>>>> Stashed changes
+Plugin 'tpope/vim-fugitive'
 call vundle#end()
 """-----------------------------
 
@@ -171,20 +166,18 @@ let NERDTreeChDirMode=2
 " Toggle visibility using ,n
 noremap <silent> <Leader>n :NERDTreeToggle<CR>
 
-<<<<<<< Updated upstream
 " These prevent accidentally loading files while focused on NERDTree
 autocmd FileType nerdtree noremap <buffer> <c-left> <nop>
 autocmd FileType nerdtree noremap <buffer> <c-h> <nop>
 autocmd FileType nerdtree noremap <buffer> <c-right> <nop>
 autocmd FileType nerdtree noremap <buffer> <c-l> <nop>
-=======
+ 
 " Match indentation level when moving to new line.
 set autoindent
 set smartindent
 
 " Misc.
 set clipboard=unnamed "Use OS clipboard
->>>>>>> Stashed changes
 
 " Open NERDTree if we're executing vim without specifying a file to open
 autocmd vimenter * if !argc() | NERDTree | endif
@@ -311,10 +304,8 @@ endfunction
 
 command! CleanXML call DoCleanXML()
 
-<<<<<<< Updated upstream
 set tags=./tags;
-<<<<<<< Updated upstream
-=======
+"
 " Custom commands for NERDTree
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
@@ -387,9 +378,6 @@ let g:tagbar_type_haskell = {
         \ 'type'   : 't'
     \ }
 \ }
->>>>>>> Stashed changes
-=======
 
 " Turn on HTML tag matching
 runtime macros/matchit.vim
->>>>>>> Stashed changes
