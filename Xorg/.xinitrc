@@ -1,0 +1,20 @@
+# Xmonad doesn't set an X-cursor by default. 
+# Manually replaces "X" shaped cursor with the usual.
+xsetroot -cursor_name left_ptr
+
+# Start the composition manager for window transparency.
+# No shadowing (Usually "-c" is added) 
+xcompmgr &
+
+# Reload terminal settings
+xrdb ~/.Xresources
+xrdb -merge ~/.Xcolors
+
+# Reload the last background
+nitrogen --restore &
+
+# Set keyboard delay (in ms) and repeat rate (in char/s)
+xset r rate 200 50
+
+# Start the window manager.
+xmonad
