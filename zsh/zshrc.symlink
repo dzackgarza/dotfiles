@@ -45,6 +45,10 @@ done
 autoload -U compinit
 compinit
 
+# Do the same for prompts
+autoload -U promptinit
+promptinit
+
 # load every completion after autocomplete loads
 for file in ${(M)config_files:#*/completion.zsh}
 do
@@ -55,14 +59,39 @@ setopt no_rm_star_silent
 unset config_files
 <<<<<<< Updated upstream
 unsetopt correct
+setopt completealiases 		# Extend auto-completion to custom aliases
+setopt HIST_IGNORE_DUPS		# Keep only unique items in zsh_history
+
+# Initialize fzf (fuzzy finder) if installed.
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-set -o vi
+# Add haskell programs from hackage on the path.
+PATH=$HOME/.cabal/bin:$HOME/bin:$PATH
 
+# Add ruby gems to path
+PATH="`ruby -e 'print Gem.user_dir'`/bin:$PATH"
+# Fun startup stuff
+# --------------------
+
+# Bubble text, with kerning!
+hostname | figlet -k
+# Borg cow, might speak offensively!
+fortune -a | cowsay -f healy
+# What day is it again..?
 date
+<<<<<<< Updated upstream
 fortune -c
 =======
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
+>>>>>>> Stashed changes
+=======
+
+# --------------------
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+# Active zsh-syntax-highlighting
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 >>>>>>> Stashed changes
