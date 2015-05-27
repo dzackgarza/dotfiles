@@ -140,11 +140,13 @@ setup_gitconfig
 install_dotfiles
 
 info "Linking vim files.."
-ln -s $HOME/dotfiles/vim/vim $HOME/.vim
+ln -s $HOME/$DOTFILES_ROOT/vim/vim $HOME/.vim
+git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/Vundle.vim
+vim +PluginInstall +qall
 success "Vim files linked."
 
 info "Linking XMonad.."
-ln -s $HOME/dotfiles/xmonad $HOME/.xmonad
+ln -s $HOME/$DOTFILES_ROOT/xmonad $HOME/.xmonad
 success "XMonad linked."
 
 echo ''
