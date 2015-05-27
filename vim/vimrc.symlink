@@ -21,6 +21,7 @@ Plugin 'dag/vim2hs'
 Plugin 'godlygeek/tabular'
 Plugin 'eagletmt/neco-ghc'
 Plugin 'tpope/vim-fugitive'
+Plugin 'kien/ctrlp.vim'
 call vundle#end()
 """-----------------------------
 
@@ -38,7 +39,7 @@ set number
 set nowrap
 set vb
 set ruler
-set statusline=%<%f\ %h%m%r%=%{fugitive#statusline()}\ \ %-14.(%l,%c%V%)\ %P
+"set statusline=%<%f\ %h%m%r%=%{fugitive#statusline()}\ \ %-14.(%l,%c%V%)\ %P
 let g:buftabs_only_basename=1
 let g:buftabs_marker_modified = "+"
 
@@ -95,11 +96,6 @@ set nostartofline
 " Keep the cursor in place while joining lines
 nnoremap J mzJ`z
 
-" H = Home, L = End
-noremap H ^
-noremap L $
-vnoremap L g_
-
 
 "------  Window Navigation  ------
 " ,hljk = Move between windows
@@ -134,20 +130,16 @@ nnoremap <silent> <leader>b :nohlsearch<CR>
 
 " http://www.vim.org/scripts/script.php?script_id=2572
 " ,a will open a prmompt for a term to search for
-noremap <leader>a :Ack 
+noremap <leader>a :!ag <cword><return>
 
-" ,A will close the new window created for that ack search
-noremap <leader>A <C-w>j<C-w>c<C-w>l
-
-let g:ackprg="ack -H --nocolor --nogroup --column --type-add php=.tpl"
 
 " When searching for words with * and navigating with N/n, keep line centered vertically
-"nnoremap n nzz
-"nnoremap N Nzz
-"nnoremap * *zz
-"nnoremap # #zz
-"nnoremap g* g*zz
-"nnoremap g# g#zz
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
+nnoremap g* g*zz
+nnoremap g# g#zz
 
 " CtrlP will load from the CWD, makes it easier with all these nested repos
 let g:ctrlp_working_path_mode = ''
@@ -163,6 +155,7 @@ let NERDTreeIgnore=['CVS','\.dSYM$']
 "setting root dir in NT also sets VIM's cd
 let NERDTreeChDirMode=2
 
+let g:NERDTreeDirArrows=0
 " Toggle visibility using ,n
 noremap <silent> <Leader>n :NERDTreeToggle<CR>
 
@@ -188,11 +181,6 @@ autocmd vimenter * if !argc() | NERDTree | endif
 " Hides "Press ? for help"
 let NERDTreeMinimalUI=1
 
-"------  Tagbar Plugin Options  ------
-" http://adamyoung.net/Exuberant-Ctags-OS-X
-" http://www.vim.org/scripts/script.php?script_id=273
-let g:tagbar_width=26
-noremap <silent> <Leader>y :TagbarToggle<CR>
 
 " ,ct = Builds ctags
 map <Leader>ct :! /usr/local/bin/ctags -R *<CR>
@@ -252,7 +240,7 @@ map <silent> <SwipeLeft> :bprev<CR>
 map <silent> <SwipeRight> :bnext<CR>
 
 " Cmd+Shift+N = new buffer
-map <silent> <Leader>n :enew<CR>
+" map <silent> <Leader>n :enew<CR>
 
 " Cmd+t = new tab
 nnoremap <silent> <Leader>t :tabnew<CR>
@@ -319,7 +307,6 @@ let g:haddock_browser="/usr/bin/links"
 let g:haddock_docdir="/usr/share/haddock-2.13.2/html/"
 let g:haddock_browser_callformat = '%s "%s"'
 
-let mapleader = ","
 
 map <Leader>c :w \| SyntasticCheck<CR>
 map <Leader>m :w \| make<CR>
@@ -381,3 +368,9 @@ let g:tagbar_type_haskell = {
 
 " Turn on HTML tag matching
 runtime macros/matchit.vim
+
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode='ra'
+
+let g:ackprg = 'ag --vimgrep'
