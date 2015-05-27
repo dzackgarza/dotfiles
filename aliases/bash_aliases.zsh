@@ -31,8 +31,23 @@ function mcd() {
 }
 
 # Copy to X-Window clipboard
-alias cp="xclip -sel clip"
+alias xcopy="xclip -sel clip"
 
 alias ls="ls --color=always"
 
 alias mkdir="mkdir -p"
+
+# Search through history
+alias hgrep='hist | grep'
+
+# Serve up the files in this directory
+alias wserve='python -m SimpleHTTPServer 8080'
+
+# Sync entire directory with git
+alias gup="git add -A && git commit -m 'auto update' && git push origin master"
+
+# Directory jumping
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
