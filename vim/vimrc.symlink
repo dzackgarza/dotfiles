@@ -1,7 +1,29 @@
-"""Set up Vundle
-"""-----------------------------
+""" Set up Vundle
+""" -----------------------------
 set nocompatible
 filetype off
+
+""" Bootstrap vundle if this is a new install.
+if !isdirectory($HOME . '/.vim/bundle/Vundle.vim')
+	if executable('git')
+		if has('win32') || has ('win64') 
+			execute '!"git clone https://github.com/gmarik/vundle.git "'
+			\ . $HOME . '/.vim/bundle/Vundle.vim""'
+		else
+			execute '!git clone https://github.com/gmarik/vundle.git "'
+			\ . $HOME . '/.vim/bundle/Vundle.vim"'
+		endif
+		autocmd VimEnter * PluginInstall
+	else
+		let choice =  confirm("You should get Git to be able to
+			\ Install and Update. Continue?", "&Yes\n&No", 2)
+		if choice == 2
+			quit
+		endif
+	endif
+endif
+"""" Now we can assume the vundle is installed!
+
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
@@ -170,7 +192,7 @@ set autoindent
 set smartindent
 
 " Misc.
-set clipboard=unnamed "Use OS clipboard
+set clipboard=unnamed 			"Use OS clipboard
 
 " Open NERDTree if we're executing vim without specifying a file to open
 autocmd vimenter * if !argc() | NERDTree | endif
