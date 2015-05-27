@@ -1,17 +1,18 @@
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 export PATH="$HOME/.jenv/bin:$PATH"
-export PATH=$HOME/.cabal/bin:$PATH
+export PATH=/app/bin:$PATH
+
 
 # ZSH-specific
 ####################
 export ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="mira"
-plugins=(git dirhistory)
+plugins=(git dirhistory zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 ####################
 
 # shortcut to this dotfiles path is $ZSH
-export ZSH=$HOME/dotfiles
+export ZSH=$HOME/.dotfiles
 
 # your project folder that we can `c [tab]` to
 export PROJECTS=~/Projects
