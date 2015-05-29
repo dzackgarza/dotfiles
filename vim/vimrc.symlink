@@ -1,5 +1,4 @@
-""" Set up Vundle
-""" -----------------------------
+""""""""""""" < Vundle Setup > """""""""""""""
 set nocompatible
 filetype off
 
@@ -22,9 +21,12 @@ if !isdirectory($HOME . '/.vim/bundle/Vundle.vim')
 		endif
 	endif
 endif
-"""" Now we can assume the vundle is installed!
+" Now we can assume the vundle is installed.
+""""""""""""" </ Vundle Setup > """""""""""""""
 
+"""""""""""" < Vundle Plugins > """""""""""""""
 set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=~/.fzf
 call vundle#begin()
 
 Plugin 'gmarik/vundle'
@@ -44,8 +46,10 @@ Plugin 'godlygeek/tabular'
 Plugin 'eagletmt/neco-ghc'
 Plugin 'tpope/vim-fugitive'
 Plugin 'kien/ctrlp.vim'
+Plugin 'bling/vim-airline'
+
 call vundle#end()
-"""-----------------------------
+"""""""""""" </ Vundle Plugins > """""""""""""""
 
 call pathogen#infect()
 
@@ -67,8 +71,7 @@ let g:buftabs_marker_modified = "+"
 
 " Toggle whitespace visibility with ,s
 nmap <Leader>s :set list!<CR>
-set listchars=tab:▸\ ,trail:·,extends:❯,precedes:❮,nbsp:×,eol:¬
-
+set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
 " ,L = Toggle line numbers
 map <Leader>L :set invnumber<CR>
 
@@ -92,6 +95,15 @@ cmap w!! %!sudo tee > /dev/null %
 " F2 = Paste Toggle (in insert mode, pasting indented text behavior changes)
 set pastetoggle=<F2>
 
+" Match indentation level when moving to new line.
+set autoindent
+set smartindent
+
+" Misc.
+set clipboard=unnamed 			"Use OS clipboard
+
+
+""""""""""""" 	< Keymaps > """"""""""""""""""
 " ,v = Paste
 map <Leader>v "+gP
 
@@ -111,23 +123,21 @@ map ,cd :cd %:p:h<CR>
 " Wtf is Ex Mode anyways?
 nnoremap Q <nop>
 
-"------  Text Navigation  ------
+" < Text Navigation>
 " Prevent cursor from moving to beginning of line when switching buffers
 set nostartofline
 
 " Keep the cursor in place while joining lines
 nnoremap J mzJ`z
 
-
-"------  Window Navigation  ------
+" < Window Navigation> 
 " ,hljk = Move between windows
 nnoremap <Leader>h <C-w>h
 nnoremap <Leader>l <C-w>l
 nnoremap <Leader>j <C-w>j
 nnoremap <Leader>k <C-w>k
 
-
-"------  Buffer Navigation  ------
+" < Buffer Navigation> 
 " Ctrl Left/h & Right/l cycle between buffers
 noremap <silent> <C-left> :bprev<CR>
 noremap <silent> <C-h> :bprev<CR>
@@ -139,6 +149,8 @@ nnoremap <silent> <Leader>q :Bclose<CR>
 
 " ,Q Closes the current window
 nnoremap <silent> <Leader>Q <C-w>c
+
+""""""""""""" 	</ Keymaps > """"""""""""""""""
 
 
 "------  Searching  ------
@@ -171,7 +183,11 @@ nmap S :%s//g<LEFT><LEFT>
 vmap S :s//g<LEFT><LEFT>
 
 
-"------  NERDTree Options  ------
+""""""""""""" < NerdTree > """"""""""""""""""
+" Always open NerdTree along with files
+" and switch focus to file
+" au VimEnter * NERDTree | wincmd p	
+
 let NERDTreeIgnore=['CVS','\.dSYM$']
 
 "setting root dir in NT also sets VIM's cd
@@ -187,13 +203,6 @@ autocmd FileType nerdtree noremap <buffer> <c-h> <nop>
 autocmd FileType nerdtree noremap <buffer> <c-right> <nop>
 autocmd FileType nerdtree noremap <buffer> <c-l> <nop>
  
-" Match indentation level when moving to new line.
-set autoindent
-set smartindent
-
-" Misc.
-set clipboard=unnamed 			"Use OS clipboard
-
 " Open NERDTree if we're executing vim without specifying a file to open
 autocmd vimenter * if !argc() | NERDTree | endif
 
@@ -202,6 +211,8 @@ autocmd vimenter * if !argc() | NERDTree | endif
 
 " Hides "Press ? for help"
 let NERDTreeMinimalUI=1
+""""""""""""" </ NerdTree > """"""""""""""""""
+
 
 
 " ,ct = Builds ctags
@@ -326,7 +337,7 @@ au FileType haskell nnoremap <buffer> <silent> <F3> :HdevtoolsInfo<CR>
 
 au BufEnter *.hs compiler ghc
 let g:haddock_browser="/usr/bin/links"
-let g:haddock_docdir="/usr/share/haddock-2.13.2/html/"
+let g:haddock_docdir="/opt/docs/haddock"
 let g:haddock_browser_callformat = '%s "%s"'
 
 
@@ -343,14 +354,16 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
 let g:syntastic_haskell_ghc_mod_args = '-g -fno-warn-missing-signatures'
-set laststatus=2
-set statusline=%<%f\    " Filename
-set statusline+=%w%h%m%r " Options
-set statusline+=%{fugitive#statusline()} "  Git Hotness
-set statusline+=\ [%{&ff}/%Y]            " filetype
-set statusline+=\ [%{getcwd()}]          " current dir
 let g:syntastic_enable_signs=1
-set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
+
+set laststatus=2
+set statusline=%<%f\    					" Filename
+set statusline+=%w%h%m%r 					" Options
+set statusline+=%{fugitive#statusline()}	" Git hotness
+set statusline+=\ [%{&ff}/%Y]            	" filetype
+set statusline+=\ [%{getcwd()}]          	" current dir
+set statusline+=%=%-14.(%l,%c%V%)\ %p%%  	" Right aligned file nav info
+
 
 nmap <leader>= :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
@@ -396,3 +409,28 @@ let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode='ra'
 
 let g:ackprg = 'ag --vimgrep'
+
+" Close NerdTree if it is the only buffer left open.
+function! NERDTreeQuit()
+  redir => buffersoutput
+  silent buffers
+  redir END
+"                     1BufNo  2Mods.     3File           4LineNo
+  let pattern = '^\s*\(\d\+\)\(.....\) "\(.*\)"\s\+line \(\d\+\)$'
+  let windowfound = 0
+
+  for bline in split(buffersoutput, "\n")
+    let m = matchlist(bline, pattern)
+
+    if (len(m) > 0)
+      if (m[2] =~ '..a..')
+        let windowfound = 1
+      endif
+    endif
+  endfor
+
+  if (!windowfound)
+    quitall
+  endif
+endfunction
+autocmd WinEnter * call NERDTreeQuit()
