@@ -9,11 +9,11 @@ myLayout = tiled ||| Mirror tiled ||| Full
     where
         tiled = Tall 1 (3/100) (3/5)
 
-main = do
+main =
     xmonad $ defaultConfig {
-    terminal            = "lxterm",
+    terminal            = "lxterminal",
     modMask             = mod4Mask,
-    layoutHook          = spacing 2 $ avoidStruts $ smartBorders $ myLayout,
+    layoutHook          = spacing 2 $ avoidStruts $ smartBorders myLayout,
     workspaces          = myWorkspaces,
     borderWidth         = 1,
     normalBorderColor   = "#000000",
