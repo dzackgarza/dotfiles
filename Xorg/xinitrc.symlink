@@ -17,4 +17,5 @@ nitrogen --restore &
 xset r rate 200 50
 
 # Start the window manager.
-xmonad
+xmonad 
+
