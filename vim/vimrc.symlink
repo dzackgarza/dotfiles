@@ -5,7 +5,7 @@ filetype off
 """ Bootstrap vundle if this is a new install.
 if !isdirectory($HOME . '/.vim/bundle/Vundle.vim')
 	if executable('git')
-		if has('win32') || has ('win64') 
+		if has('win32') || has ('win64')
 			execute '!"git clone https://github.com/gmarik/vundle.git "'
 			\ . $HOME . '/.vim/bundle/Vundle.vim""'
 		else
@@ -36,7 +36,7 @@ Plugin 'sheerun/vim-polyglot'
 Plugin 'scrooloose/nerdtree'
 Plugin 'shawncplus/phpcomplete.vim'
 Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-easytags' 
+Plugin 'xolox/vim-easytags'
 Bundle 'majutsushi/tagbar'
 Plugin 'bitc/vim-hdevtools'
 Plugin 'lukerandall/haskellmode-vim'
@@ -47,6 +47,7 @@ Plugin 'eagletmt/neco-ghc'
 Plugin 'tpope/vim-fugitive'
 Plugin 'kien/ctrlp.vim'
 Plugin 'bling/vim-airline'
+Plugin 'enomsg/vim-haskellConcealPlus'
 
 call vundle#end()
 """""""""""" </ Vundle Plugins > """""""""""""""
@@ -71,14 +72,18 @@ let g:buftabs_marker_modified = "+"
 
 " Toggle whitespace visibility with ,s
 nmap <Leader>s :set list!<CR>
-set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
+"set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
 " ,L = Toggle line numbers
 map <Leader>L :set invnumber<CR>
 
 
 """------  Generic Behavior  ------
-set tabstop=4
-set shiftwidth=4
+" Use spaces instead of tabs (necessary for haskell/ghc)
+set tabstop=4		" Inserts 4 spaces when tab key is pressed.
+set softtabstop=4	" Deletes 4 spaces (simulates deleting a tab)
+set shiftwidth=4	" Inserts 4 spaces for auto-indentation.
+set expandtab		" Insert spaces whenever tab key is pressed.
+
 set hidden
 filetype indent on
 filetype plugin on
@@ -104,6 +109,9 @@ set clipboard=unnamed 			"Use OS clipboard
 
 
 """"""""""""" 	< Keymaps > """"""""""""""""""
+" Save a few keystrokes
+nnoremap ; :
+
 " ,v = Paste
 map <Leader>v "+gP
 
@@ -130,14 +138,14 @@ set nostartofline
 " Keep the cursor in place while joining lines
 nnoremap J mzJ`z
 
-" < Window Navigation> 
+" < Window Navigation>
 " ,hljk = Move between windows
 nnoremap <Leader>h <C-w>h
 nnoremap <Leader>l <C-w>l
 nnoremap <Leader>j <C-w>j
 nnoremap <Leader>k <C-w>k
 
-" < Buffer Navigation> 
+" < Buffer Navigation>
 " Ctrl Left/h & Right/l cycle between buffers
 noremap <silent> <C-left> :bprev<CR>
 noremap <silent> <C-h> :bprev<CR>
@@ -186,7 +194,7 @@ vmap S :s//g<LEFT><LEFT>
 """"""""""""" < NerdTree > """"""""""""""""""
 " Always open NerdTree along with files
 " and switch focus to file
-" au VimEnter * NERDTree | wincmd p	
+" au VimEnter * NERDTree | wincmd p
 
 let NERDTreeIgnore=['CVS','\.dSYM$']
 
@@ -202,7 +210,7 @@ autocmd FileType nerdtree noremap <buffer> <c-left> <nop>
 autocmd FileType nerdtree noremap <buffer> <c-h> <nop>
 autocmd FileType nerdtree noremap <buffer> <c-right> <nop>
 autocmd FileType nerdtree noremap <buffer> <c-l> <nop>
- 
+
 " Open NERDTree if we're executing vim without specifying a file to open
 autocmd vimenter * if !argc() | NERDTree | endif
 
@@ -225,10 +233,10 @@ nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>gr :Gremove<CR>
 nnoremap <Leader>gl :Glog<CR>
 nnoremap <Leader>gb :Gblame<CR>
-nnoremap <Leader>gm :Gmove 
-nnoremap <Leader>gp :Ggrep 
+nnoremap <Leader>gm :Gmove
+nnoremap <Leader>gp :Ggrep
 nnoremap <Leader>gR :Gread<CR>
-nnoremap <Leader>gg :Git 
+nnoremap <Leader>gg :Git
 nnoremap <Leader>gd :Gdiff<CR>
 
 
@@ -287,8 +295,8 @@ colorscheme Mustang
 set mouse=a
 
 """------  Local Overrides  ------
-if filereadable($HOME.'/dotfiles/vim/vimrc.local')
-	source $HOME/dotfiles/vim/vimrc.local
+if filereadable($HOME.'/.dotfiles/vim/vimrc.local')
+	source $HOME/.dotfiles/vim/vimrc.local
 endif
 
 set showmatch " Show matching parens
@@ -334,6 +342,10 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 au FileType haskell nnoremap <buffer> <F1> :HdevtoolsType<CR>
 au FileType haskell nnoremap <buffer> <silent> <F2> :HdevtoolsClear<CR>
 au FileType haskell nnoremap <buffer> <silent> <F3> :HdevtoolsInfo<CR>
+
+
+au FileType haskell autocmd  VimEnter * hi clear Conceal        " Remove background color from concealed characters (grey on grey??)
+set foldlevelstart=20                                           " Automatically unfold everything at startup
 
 au BufEnter *.hs compiler ghc
 let g:haddock_browser="/usr/bin/links"
@@ -434,3 +446,11 @@ function! NERDTreeQuit()
   endif
 endfunction
 autocmd WinEnter * call NERDTreeQuit()
+
+" Make sure unicode works properly (primarily for concealing)
+set encoding=utf-8
+let &termencoding=&encoding
+
+" Remove trailing whitespace before writing (applies to all files)
+autocmd BufWritePre * :%s/\s\+$//e
+
