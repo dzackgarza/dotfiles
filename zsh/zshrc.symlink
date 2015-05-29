@@ -84,3 +84,5 @@ fortune -a | cowsay -f healy
 date
 # --------------------
 
+# Add ghc-mod to the path (for haskell dev)
+export PATH=$PATH:/home/dzack/ghc-mod/dist/dist-sandbox-ead5f88e/build
