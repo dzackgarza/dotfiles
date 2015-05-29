@@ -194,7 +194,7 @@ vmap S :s//g<LEFT><LEFT>
 """"""""""""" < NerdTree > """"""""""""""""""
 " Always open NerdTree along with files
 " and switch focus to file
-" au VimEnter * NERDTree | wincmd p
+au VimEnter * NERDTree | wincmd p
 
 let NERDTreeIgnore=['CVS','\.dSYM$']
 
@@ -215,7 +215,7 @@ autocmd FileType nerdtree noremap <buffer> <c-l> <nop>
 autocmd vimenter * if !argc() | NERDTree | endif
 
 " Close if only NERDTree open
-"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " Hides "Press ? for help"
 let NERDTreeMinimalUI=1
@@ -344,7 +344,8 @@ au FileType haskell nnoremap <buffer> <silent> <F2> :HdevtoolsClear<CR>
 au FileType haskell nnoremap <buffer> <silent> <F3> :HdevtoolsInfo<CR>
 
 
-au FileType haskell autocmd  VimEnter * hi clear Conceal        " Remove background color from concealed characters (grey on grey??)
+au FileType haskell autocmd VimEnter * hi clear Conceal        " Remove background color from concealed characters (grey on grey??)
+au FileType haskell call tagbar#autoopen(0)
 set foldlevelstart=20                                           " Automatically unfold everything at startup
 
 au BufEnter *.hs compiler ghc
