@@ -1,0 +1,6 @@
+! Enable transparency.
+URxvt*.depth: 		32
+
+! Disable the scrollbar
+URxvt.scrollBar:	false
+

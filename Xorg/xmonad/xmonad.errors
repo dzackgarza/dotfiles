@@ -1,0 +1,46 @@
+
+xmonad.hs:8:18:
+    Not in scope: ‘|||’
+    Perhaps you meant ‘||’ (imported from Prelude)
+
+xmonad.hs:8:22:
+    Not in scope: data constructor ‘Mirror’
+    Perhaps you meant variable ‘error’ (imported from Prelude)
+
+xmonad.hs:8:35:
+    Not in scope: ‘|||’
+    Perhaps you meant ‘||’ (imported from Prelude)
+
+xmonad.hs:8:39:
+    Not in scope: data constructor ‘Full’
+    Perhaps you meant variable ‘null’ (imported from Prelude)
+
+xmonad.hs:10:25:
+    Not in scope: data constructor ‘Tall’
+    Perhaps you meant variable ‘all’ (imported from Prelude)
+
+xmonad.hs:13:9: Not in scope: ‘xmonad’
+
+xmonad.hs:13:18: Not in scope: ‘defaultConfig’
+
+xmonad.hs:14:9:
+    ‘terminal’ is not a (visible) constructor field name
+
+xmonad.hs:15:9: ‘modMask’ is not a (visible) constructor field name
+
+xmonad.hs:15:43: Not in scope: ‘mod4Mask’
+
+xmonad.hs:16:9:
+    ‘layoutHook’ is not a (visible) constructor field name
+
+xmonad.hs:17:9:
+    ‘workspaces’ is not a (visible) constructor field name
+
+xmonad.hs:18:9:
+    ‘borderWidth’ is not a (visible) constructor field name
+
+xmonad.hs:19:9:
+    ‘normalBorderColor’ is not a (visible) constructor field name
+
+xmonad.hs:20:9:
+    ‘focusedBorderColor’ is not a (visible) constructor field name

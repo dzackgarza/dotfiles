@@ -1,6 +1,11 @@
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-export PATH="$HOME/.jenv/bin:$PATH"
-export PATH=/app/bin:$PATH
+DOTFILES_ROOT=".dotfiles"
+
+#export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+#export PATH="$HOME/.jenv/bin:$PATH"
+export PATH="$PATH:$HOME/$DOTFILES_ROOT/bin"
+export PATH="$PATH:/app/bin"
+# Add ruby gems to path
+#PATH="`ruby -e 'print Gem.user_dir'`/bin:$PATH"
 
 
 # ZSH-specific
@@ -60,24 +65,22 @@ unsetopt correct
 setopt completealiases 		# Extend auto-completion to custom aliases
 setopt HIST_IGNORE_DUPS		# Keep only unique items in zsh_history
 
+# Active zsh-syntax-highlighting
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+source ~/.dotfiles/functions/*
+
 # Initialize fzf (fuzzy finder) if installed.
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# Add ruby gems to path
-PATH="`ruby -e 'print Gem.user_dir'`/bin:$PATH"
 # Fun startup stuff
 # --------------------
 
 # Bubble text, with kerning!
 hostname | figlet -k
-# Borg cow, might speak offensively!
+# Custom unicode 'cow'. Might speak offensively!
 fortune -a | cowsay -f healy
 # What day is it again..?
 date
-fortune -c
 # --------------------
 
-eval "$(jenv init -)"
-
-# Active zsh-syntax-highlighting
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
