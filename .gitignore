@@ -1,8 +1,10 @@
 git/gitconfig.symlink
 
+Xorg/xmonad/xmonad
 Xorg/xmonad/xmonad.hi
 Xorg/xmonad/xmonad.hs
 Xorg/xmonad/xmonad.o
 Xorg/xmonad/xmonad-*
+
 */.cabal-sandbox
 */.cabal-sandbox/*
