@@ -2,10 +2,10 @@ DOTFILES_ROOT=".dotfiles"
 
 #export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 #export PATH="$HOME/.jenv/bin:$PATH"
-export PATH="$PATH:$HOME/$DOTFILES_ROOT/bin"
-export PATH="$PATH:/app/bin"
+#export PATH="$PATH:$HOME/$DOTFILES_ROOT/bin"
+#export PATH="$PATH:/app/bin"
 # Add ruby gems to path
-#PATH="`ruby -e 'print Gem.user_dir'`/bin:$PATH"
+PATH="`ruby -e 'print Gem.user_dir'`/bin:$PATH"
 
 
 # ZSH-specific
@@ -85,4 +85,4 @@ date
 # --------------------
 
 # Add ghc-mod to the path (for haskell dev)
-export PATH=$PATH:/home/dzack/ghc-mod/dist/dist-sandbox-ead5f88e/build
+export PATH="/home/dzack/ghc-mod/dist/dist-sandbox-ead5f88e/build:$PATH"

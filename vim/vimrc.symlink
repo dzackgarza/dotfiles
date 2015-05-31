@@ -29,25 +29,44 @@ set rtp+=~/.vim/bundle/Vundle.vim
 set rtp+=~/.fzf
 call vundle#begin()
 
+" Plugin Management
 Plugin 'gmarik/vundle'
-Plugin 'valloric/MatchTagAlways'
-Plugin 'flazz/vim-colorschemes'
-Plugin 'sheerun/vim-polyglot'
-Plugin 'scrooloose/nerdtree'
-Plugin 'shawncplus/phpcomplete.vim'
+
+" Aesthetics
 Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-easytags'
-Bundle 'majutsushi/tagbar'
-Plugin 'bitc/vim-hdevtools'
-Plugin 'lukerandall/haskellmode-vim'
-Plugin 'scrooloose/syntastic'
-Plugin 'dag/vim2hs'
-Plugin 'godlygeek/tabular'
-Plugin 'eagletmt/neco-ghc'
+Plugin 'bling/vim-airline'              " Improve the status bar
+Plugin 'flazz/vim-colorschemes'
+Plugin 'valloric/MatchTagAlways'
+
+" Git
 Plugin 'tpope/vim-fugitive'
-Plugin 'kien/ctrlp.vim'
-Plugin 'bling/vim-airline'
-Plugin 'enomsg/vim-haskellConcealPlus'
+Plugin 'airblade/vim-gitgutter'         " Show git difs next to line numbers.
+
+" Langauges
+Plugin 'scrooloose/syntastic'
+Plugin 'sheerun/vim-polyglot'
+
+"" Haskell
+Plugin 'dag/vim2hs'
+Plugin 'eagletmt/neco-ghc'
+Plugin 'bitc/vim-hdevtools'
+Plugin 'Shougo/neocomplcache.vim'
+Plugin 'lukerandall/haskellmode-vim'
+Plugin 'enomsg/vim-haskellConcealPlus'  " Swap in unicode symbols for haskell ops.
+
+"" Web Dev
+Plugin 'shawncplus/phpcomplete.vim'
+
+" Searching
+Plugin 'ervandew/ag'
+Plugin 'kien/ctrlp.vim'                 " Fuzzy file search from current dir.
+Plugin 'xolox/vim-easytags'
+
+" Windows and Buffers
+Plugin 'majutsushi/tagbar'              " Display ctags in a sidebar.
+Plugin 'godlygeek/tabular'
+Plugin 'scrooloose/nerdtree'            " File navigation buffer
+Plugin 'rbgrouleff/bclose.vim'
 
 call vundle#end()
 """""""""""" </ Vundle Plugins > """""""""""""""
@@ -59,7 +78,6 @@ set nocompatible
 set viminfo='1000,f1,:1000,/1000
 set history=1000
 
-
 "------  Visual Options  ------
 syntax on
 set number
@@ -70,18 +88,13 @@ set ruler
 let g:buftabs_only_basename=1
 let g:buftabs_marker_modified = "+"
 
-" Toggle whitespace visibility with ,s
-nmap <Leader>s :set list!<CR>
 "set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
-" ,L = Toggle line numbers
-map <Leader>L :set invnumber<CR>
-
 
 """------  Generic Behavior  ------
 " Use spaces instead of tabs (necessary for haskell/ghc)
-set tabstop=4		" Inserts 4 spaces when tab key is pressed.
-set softtabstop=4	" Deletes 4 spaces (simulates deleting a tab)
-set shiftwidth=4	" Inserts 4 spaces for auto-indentation.
+set tabstop=2		" Inserts 4 spaces when tab key is pressed.
+set softtabstop=2	" Deletes 4 spaces (simulates deleting a tab)
+set shiftwidth=2	" Inserts 4 spaces for auto-indentation.
 set expandtab		" Insert spaces whenever tab key is pressed.
 
 set hidden
@@ -94,8 +107,6 @@ set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.
 "allow deletion of previously entered data in insert mode
 set backspace=indent,eol,start
 
-" Allow saving of files as sudo when I forgot to start vim using sudo.
-cmap w!! %!sudo tee > /dev/null %
 
 " F2 = Paste Toggle (in insert mode, pasting indented text behavior changes)
 set pastetoggle=<F2>
@@ -109,6 +120,37 @@ set clipboard=unnamed 			"Use OS clipboard
 
 
 """"""""""""" 	< Keymaps > """"""""""""""""""
+
+" Haskell shortcuts
+map <Leader>c :w \| SyntasticCheck<CR>
+map <Leader>m :w \| make<CR>
+map <Leader>r :w \| !runhaskell %<CR>
+
+map <Leader>/ :Ag<SPACE>
+
+" grep the word under the cursor.
+nmap <Leader>// :<c-u>execute 'Ag ' .  expand("<cWORD>")<CR>
+
+" Toggle whitespace visibility
+nmap <Leader>s :set list!<CR>
+
+nmap <Leader>L :set invnumber<CR>
+
+" Edit and Reload .vimrc files
+nmap <silent> <Leader>ev :e $MYVIMRC<CR>
+nmap <silent> <Leader>es :so $MYVIMRC<CR>
+
+"type S, then type what you're looking for, a /, and what to replace it with
+nmap S :%s//g<LEFT><LEFT>
+vmap S :s//g<LEFT><LEFT>
+
+nmap <silent> =j :%!python -m json.tool<CR>:setfiletype json<CR>
+
+nmap <leader>= :TagbarToggle<CR>
+
+
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+cmap w!! %!sudo tee > /dev/null %
 " Save a few keystrokes
 nnoremap ; :
 
@@ -120,10 +162,6 @@ map <Leader>c "+y
 
 " Accidentally pressing Shift K will no longer open stupid man entry
 noremap K <nop>
-
-" Edit and Reload .vimrc files
-nmap <silent> <Leader>ev :e $MYVIMRC<CR>
-nmap <silent> <Leader>es :so $MYVIMRC<CR>
 
 " When pressing ,cd switch to the directory of the open buffer
 map ,cd :cd %:p:h<CR>
@@ -170,10 +208,6 @@ set hlsearch
 " Clear search highlights when pressing ,b
 nnoremap <silent> <leader>b :nohlsearch<CR>
 
-" http://www.vim.org/scripts/script.php?script_id=2572
-" ,a will open a prmompt for a term to search for
-noremap <leader>a :!ag <cword><return>
-
 
 " When searching for words with * and navigating with N/n, keep line centered vertically
 nnoremap n nzz
@@ -186,9 +220,6 @@ nnoremap g# g#zz
 " CtrlP will load from the CWD, makes it easier with all these nested repos
 let g:ctrlp_working_path_mode = ''
 
-"type S, then type what you're looking for, a /, and what to replace it with
-nmap S :%s//g<LEFT><LEFT>
-vmap S :s//g<LEFT><LEFT>
 
 
 """"""""""""" < NerdTree > """"""""""""""""""
@@ -257,7 +288,6 @@ map <Leader>R :retab<CR>
 "------  JSON Filetype Settings  ------
 au BufRead,BufNewFile *.json set filetype=json
 let g:vim_json_syntax_conceal = 0
-nmap <silent> =j :%!python -m json.tool<CR>:setfiletype json<CR>
 
 
 "------  CoffeeScript Filetype Settings  ------
@@ -345,7 +375,7 @@ au FileType haskell nnoremap <buffer> <silent> <F3> :HdevtoolsInfo<CR>
 
 
 au FileType haskell autocmd VimEnter * hi clear Conceal        " Remove background color from concealed characters (grey on grey??)
-au FileType haskell call tagbar#autoopen(0)
+autocmd FileType * nested :call tagbar#autoopen(0)
 set foldlevelstart=20                                           " Automatically unfold everything at startup
 
 au BufEnter *.hs compiler ghc
@@ -354,9 +384,7 @@ let g:haddock_docdir="/opt/docs/haddock"
 let g:haddock_browser_callformat = '%s "%s"'
 
 
-map <Leader>c :w \| SyntasticCheck<CR>
-map <Leader>m :w \| make<CR>
-map <Leader>r :w \| !runhaskell %<CR>
+
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -378,8 +406,8 @@ set statusline+=\ [%{getcwd()}]          	" current dir
 set statusline+=%=%-14.(%l,%c%V%)\ %p%%  	" Right aligned file nav info
 
 
-nmap <leader>= :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
+let g:tagbar_compact = 1
 
 map <silent> tu :call GHC_BrowseAll()<CR>
 let g:tagbar_type_haskell = {
@@ -455,3 +483,14 @@ let &termencoding=&encoding
 " Remove trailing whitespace before writing (applies to all files)
 autocmd BufWritePre * :%s/\s\+$//e
 
+" Recognize .md files as markdown
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+
+if executable('ag')
+    set grepprg=ag\ --nogroup\ --nocolor
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+    let g:ctrlp_use_caching=0
+endif
+
+" For the love of god, don't grep min files!
+set wildignore+=*.min,*.min.js,*.tmp,*.svg
