@@ -4,22 +4,22 @@ filetype off
 
 """ Bootstrap vundle if this is a new install.
 if !isdirectory($HOME . '/.vim/bundle/Vundle.vim')
-	if executable('git')
-		if has('win32') || has ('win64')
-			execute '!"git clone https://github.com/gmarik/vundle.git "'
-			\ . $HOME . '/.vim/bundle/Vundle.vim""'
-		else
-			execute '!git clone https://github.com/gmarik/vundle.git "'
-			\ . $HOME . '/.vim/bundle/Vundle.vim"'
-		endif
-		autocmd VimEnter * PluginInstall
-	else
-		let choice =  confirm("You should get Git to be able to
-			\ Install and Update. Continue?", "&Yes\n&No", 2)
-		if choice == 2
-			quit
-		endif
-	endif
+  if executable('git')
+    if has('win32') || has ('win64')
+      execute '!"git clone https://github.com/gmarik/vundle.git "'
+      \ . $HOME . '/.vim/bundle/Vundle.vim""'
+    else
+      execute '!git clone https://github.com/gmarik/vundle.git "'
+      \ . $HOME . '/.vim/bundle/Vundle.vim"'
+    endif
+    autocmd VimEnter * PluginInstall
+  else
+    let choice =  confirm("You should get Git to be able to
+      \ Install and Update. Continue?", "&Yes\n&No", 2)
+    if choice == 2
+      quit
+    endif
+  endif
 endif
 " Now we can assume the vundle is installed.
 """"""""""""" </ Vundle Setup > """""""""""""""
@@ -47,20 +47,19 @@ Plugin 'scrooloose/syntastic'
 Plugin 'sheerun/vim-polyglot'
 
 "" Haskell
-Plugin 'dag/vim2hs'
+" Plugin 'dag/vim2hs'                   " Fixes highlighting for top-level defs, but slows startup noticeably for large files (>400 lines)
 Plugin 'eagletmt/neco-ghc'
-Plugin 'bitc/vim-hdevtools'
-Plugin 'Shougo/neocomplcache.vim'
+" Plugin 'bitc/vim-hdevtools'
 Plugin 'lukerandall/haskellmode-vim'
 Plugin 'enomsg/vim-haskellConcealPlus'  " Swap in unicode symbols for haskell ops.
 
 "" Web Dev
-Plugin 'shawncplus/phpcomplete.vim'
+" Plugin 'shawncplus/phpcomplete.vim'
 
 " Searching
 Plugin 'ervandew/ag'
 Plugin 'kien/ctrlp.vim'                 " Fuzzy file search from current dir.
-Plugin 'xolox/vim-easytags'
+" Plugin 'xolox/vim-easytags'
 
 " Windows and Buffers
 Plugin 'majutsushi/tagbar'              " Display ctags in a sidebar.
@@ -68,15 +67,20 @@ Plugin 'godlygeek/tabular'
 Plugin 'scrooloose/nerdtree'            " File navigation buffer
 Plugin 'rbgrouleff/bclose.vim'
 
+" Input
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'ervandew/supertab'
+
 call vundle#end()
 """""""""""" </ Vundle Plugins > """""""""""""""
 
+
 call pathogen#infect()
 
-let mapleader=","
 set nocompatible
 set viminfo='1000,f1,:1000,/1000
 set history=1000
+
 
 "------  Visual Options  ------
 syntax on
@@ -90,124 +94,171 @@ let g:buftabs_marker_modified = "+"
 
 "set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
 
+" Linebreak on 500 characters
+set lbr
+set tw=500
+
+" Treat long lines as break lines (useful when moving around in them)
+nnoremap j gj
+nnoremap k gk
 """------  Generic Behavior  ------
 " Use spaces instead of tabs (necessary for haskell/ghc)
-set tabstop=2		" Inserts 4 spaces when tab key is pressed.
-set softtabstop=2	" Deletes 4 spaces (simulates deleting a tab)
-set shiftwidth=2	" Inserts 4 spaces for auto-indentation.
-set expandtab		" Insert spaces whenever tab key is pressed.
+set tabstop=2     " Inserts 2 spaces when tab key is pressed.
+set softtabstop=2 " Deletes 2 spaces (simulates deleting a tab)
+set shiftwidth=2  " Inserts 2 spaces for auto-indentation.
+set expandtab     " Insert spaces whenever tab key is pressed.
+set smarttab      " ?
+set shiftround    " Round indent to nearest 'shiftwidth' multiple
 
 set hidden
 filetype indent on
 filetype plugin on
-set autoindent
-"set expandtab
-set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif,node_modules/*
+set autoindent    " Match indentation level when moving to new line.
+set smartindent
 
 "allow deletion of previously entered data in insert mode
 set backspace=indent,eol,start
 
+set viminfo^=%                    " Remember info about open buffers on close
 
-" F2 = Paste Toggle (in insert mode, pasting indented text behavior changes)
-set pastetoggle=<F2>
+set wildmenu                      " Turn on the WiLd menu
+set wildmode=list:longest,full    " Tab-complete files up to longest unambiguous prefix
 
-" Match indentation level when moving to new line.
-set autoindent
-set smartindent
+" For the love of god, don't grep min files!
+set wildignore=.svn,CVS,.git,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif,node_modules/*
+set wildignore+=*.min,*.min.js,*.tmp,*.svg
 
-" Misc.
-set clipboard=unnamed 			"Use OS clipboard
+set ignorecase                    " Ignore case when searching
+set smartcase                     " When searching try to be smart about cases
 
+set lazyredraw                    " Don't redraw while executing macros (good performance config)
 
-""""""""""""" 	< Keymaps > """"""""""""""""""
+set nobackup                      " Turn backup off (store everything in version control)
+set nowb
+set noswapfile
+
+"""""""""""""""""""" <Misc> """"""""""""""
+" Allows pasting (S-Insert) from OS clipboard
+set clipboard+=unnamed
+
+" GUI Settings
+set t_Co=256
+colorscheme Mustang
+
+set mouse=a                     " Allow mouse selection
+
+set showmatch                   " Show matching parens
+set smarttab                    " Indents based on sw, not ts
+set hlsearch                    " Highlight search terms
+set incsearch                   " Show search matches as typed
+
+set backspace=indent,eol,start  " Allow backspace over anything
+set ffs=unix                    " Default to Unix LF line endings
+
+set noswapfile                  " Use version control instead
+
+" Make sure unicode works properly (primarily for concealing)
+set encoding=utf-8
+let &termencoding=&encoding
+"""""""""""""   < Keymaps > """"""""""""""""""
+
+let mapleader=","
 
 " Haskell shortcuts
-map <Leader>c :w \| SyntasticCheck<CR>
+map <silent> <Leader>c :SyntasticCheck<CR>
+nmap <silent> <leader>cl :SyntasticCheck hlint<CR>
 map <Leader>m :w \| make<CR>
 map <Leader>r :w \| !runhaskell %<CR>
 
+" Then type in word to ag from the curent directory
 map <Leader>/ :Ag<SPACE>
 
-" grep the word under the cursor.
+" Ag the word under the cursor.
 nmap <Leader>// :<c-u>execute 'Ag ' .  expand("<cWORD>")<CR>
 
 " Toggle whitespace visibility
 nmap <Leader>s :set list!<CR>
 
-nmap <Leader>L :set invnumber<CR>
-
-" Edit and Reload .vimrc files
-nmap <silent> <Leader>ev :e $MYVIMRC<CR>
-nmap <silent> <Leader>es :so $MYVIMRC<CR>
-
-"type S, then type what you're looking for, a /, and what to replace it with
-nmap S :%s//g<LEFT><LEFT>
-vmap S :s//g<LEFT><LEFT>
-
-nmap <silent> =j :%!python -m json.tool<CR>:setfiletype json<CR>
+" nmap <silent> =j :%!python -m json.tool<CR>:setfiletype json<CR>
 
 nmap <leader>= :TagbarToggle<CR>
 
+" Allow saving of read-only files when opened without sudo.
+cmap wf %!sudo tee > /dev/null %
 
-" Allow saving of files as sudo when I forgot to start vim using sudo.
-cmap w!! %!sudo tee > /dev/null %
 " Save a few keystrokes
 nnoremap ; :
 
-" ,v = Paste
-map <Leader>v "+gP
+" ,q Closes the current buffer
+nnoremap <silent> <Leader>q :Bclose<CR>
 
-" ,c = Copy
-map <Leader>c "+y
+" cscope the word under the cursor
+nnoremap <silent> <C-\> :cs find c <C-R>=expand("<cword>")<CR><CR>
 
-" Accidentally pressing Shift K will no longer open stupid man entry
-noremap K <nop>
+" Clear search highlights when pressing ,b
+nnoremap <silent> <leader>b :nohlsearch<CR>
 
-" When pressing ,cd switch to the directory of the open buffer
-map ,cd :cd %:p:h<CR>
+" Toggle visibility using ,n
+noremap <silent> <Leader>n :NERDTreeToggle<CR>
 
-" Wtf is Ex Mode anyways?
-nnoremap Q <nop>
-
-" < Text Navigation>
-" Prevent cursor from moving to beginning of line when switching buffers
-set nostartofline
-
-" Keep the cursor in place while joining lines
-nnoremap J mzJ`z
-
-" < Window Navigation>
 " ,hljk = Move between windows
 nnoremap <Leader>h <C-w>h
 nnoremap <Leader>l <C-w>l
 nnoremap <Leader>j <C-w>j
 nnoremap <Leader>k <C-w>k
 
-" < Buffer Navigation>
 " Ctrl Left/h & Right/l cycle between buffers
 noremap <silent> <C-left> :bprev<CR>
 noremap <silent> <C-h> :bprev<CR>
 noremap <silent> <C-right> :bnext<CR>
 noremap <silent> <C-l> :bnext<CR>
 
-" ,q Closes the current buffer
-nnoremap <silent> <Leader>q :Bclose<CR>
+"------  Fugitive Plugin Options  ------
+nnoremap <Leader>gs :Gstatus<CR>
+nnoremap <Leader>gr :Gremove<CR>
+nnoremap <Leader>gl :Glog<CR>
+nnoremap <Leader>gb :Gblame<CR>
+nnoremap <Leader>gm :Gmove
+nnoremap <Leader>gp :Ggrep
+nnoremap <Leader>gR :Gread<CR>
+nnoremap <Leader>gg :Git
+nnoremap <Leader>gd :Gdiff<CR>
 
-" ,Q Closes the current window
-nnoremap <silent> <Leader>Q <C-w>c
+" Cmd+t = new tab
+nnoremap <silent> <Leader>t :tabnew<CR>
 
-""""""""""""" 	</ Keymaps > """"""""""""""""""
+" Cmd+w = close tab (this should happen by default)
+nnoremap <silent> <Leader>w :tabclose<CR>
+
+" Cmd+Shift+N = new buffer
+" map <silent> <Leader>n :enew<CR>
+
+""""""""""""" < /Keymaps > """"""""""""""""""""""""""""""
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+set laststatus=2
+set statusline=%<%f\                        " Filename
+set statusline+=%w%h%m%r                    " Options
+set statusline+=%{fugitive#statusline()}    " Git hotness
+set statusline+=\ [%{&ff}/%Y]               " filetype
+set statusline+=\ [%{getcwd()}]             " current dir
+set statusline+=%=%-14.(%l,%c%V%)\ %p%%     " Right aligned file nav info
+
+" Prevent cursor from moving to beginning of line when switching buffers
+set nostartofline
+
+" Keep the cursor in place while joining lines
+nnoremap J mzJ`z
 
 
-"------  Searching  ------
+""""""""" < Search > """""""""""
 set incsearch
 set ignorecase
 set smartcase
 set hlsearch
-
-" Clear search highlights when pressing ,b
-nnoremap <silent> <leader>b :nohlsearch<CR>
-
 
 " When searching for words with * and navigating with N/n, keep line centered vertically
 nnoremap n nzz
@@ -216,16 +267,17 @@ nnoremap * *zz
 nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
-
-" CtrlP will load from the CWD, makes it easier with all these nested repos
-let g:ctrlp_working_path_mode = ''
-
+""""""""" </ Search > """""""""""
 
 
 """"""""""""" < NerdTree > """"""""""""""""""
 " Always open NerdTree along with files
 " and switch focus to file
-au VimEnter * NERDTree | wincmd p
+" au VimEnter * NERDTree | wincmd p
+
+" Custom commands for NERDTree
+autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 let NERDTreeIgnore=['CVS','\.dSYM$']
 
@@ -233,8 +285,6 @@ let NERDTreeIgnore=['CVS','\.dSYM$']
 let NERDTreeChDirMode=2
 
 let g:NERDTreeDirArrows=0
-" Toggle visibility using ,n
-noremap <silent> <Leader>n :NERDTreeToggle<CR>
 
 " These prevent accidentally loading files while focused on NERDTree
 autocmd FileType nerdtree noremap <buffer> <c-left> <nop>
@@ -253,97 +303,21 @@ let NERDTreeMinimalUI=1
 """"""""""""" </ NerdTree > """"""""""""""""""
 
 
-
-" ,ct = Builds ctags
-map <Leader>ct :! /usr/local/bin/ctags -R *<CR>
-
-
-"------  Fugitive Plugin Options  ------
-"https://github.com/tpope/vim-fugitive
-nnoremap <Leader>gs :Gstatus<CR>
-nnoremap <Leader>gr :Gremove<CR>
-nnoremap <Leader>gl :Glog<CR>
-nnoremap <Leader>gb :Gblame<CR>
-nnoremap <Leader>gm :Gmove
-nnoremap <Leader>gp :Ggrep
-nnoremap <Leader>gR :Gread<CR>
-nnoremap <Leader>gg :Git
-nnoremap <Leader>gd :Gdiff<CR>
-
-
-"------  Text Editing Utilities  ------
-" ,T = Delete all Trailing space in file
-map <Leader>T :%s/\s\+$//<CR>
-
-" ,U = Deletes Unwanted empty lines
-map <Leader>U :g/^$/d<CR>
-
-" ,R = Converts tabs to spaces in document
-map <Leader>R :retab<CR>
-
-" Deletes trailing space in file upon write
-" autocmd BufWritePre * :%s/\s\+$//e
-
-
 "------  JSON Filetype Settings  ------
 au BufRead,BufNewFile *.json set filetype=json
 let g:vim_json_syntax_conceal = 0
-
-
-"------  CoffeeScript Filetype Settings  ------
-au BufNewFile,BufReadPost *.coffee set shiftwidth=2 softtabstop=2 expandtab
-autocmd BufNewFile,BufRead *.coffee set filetype=coffee
-au BufWritePost *.coffee silent make!
-autocmd QuickFixCmdPost * nested cwindow | redraw!
+"------ </ JSON > -----------
 
 
 "------  PHP Filetype Settings  ------
-" ,p = Runs PHP lint checker on current file
-map <Leader>p :! php -l %<CR>
-
-" ,P = Runs PHP and executes the current file
-map <Leader>P :! php -q %<CR>
+map <Leader>p :! php -l %<CR>   " ,p = Runs PHP lint checker on current file
+map <Leader>P :! php -q %<CR>   " ,P = Runs PHP and executes the current file
 
 au FileType php set omnifunc=phpcomplete#CompletePHP
+" ----- </ PHP > -------------------
 
-" Swipe to move between bufers :D
-map <silent> <SwipeLeft> :bprev<CR>
-map <silent> <SwipeRight> :bnext<CR>
-
-" Cmd+Shift+N = new buffer
-" map <silent> <Leader>n :enew<CR>
-
-" Cmd+t = new tab
-nnoremap <silent> <Leader>t :tabnew<CR>
-
-" Cmd+w = close tab (this should happen by default)
-nnoremap <silent> <Leader>w :tabclose<CR>
-
-" GUI Settings
-set t_Co=256
-colorscheme Mustang
-set mouse=a
-
-"""------  Local Overrides  ------
-if filereadable($HOME.'/.dotfiles/vim/vimrc.local')
-	source $HOME/.dotfiles/vim/vimrc.local
-endif
-
-set showmatch " Show matching parens
-set smartcase " Ignore case if searching all lowercase
-set smarttab  " Indents based on sw, not ts
-set hlsearch  " Highlight search terms
-set incsearch " Show search matches as typed
-
-set backspace=indent,eol,start " Allow backspace over anything
-set ffs=unix                   " Default to Unix LF line endings
-
-
-""" Misc.
-set clipboard=unnamed " Use OS clipboard
-set noswapfile        " Use version control instead
-
-highlight OverLength ctermbg=red ctermfg=white guibg=#660000 " Column 80 marker
+" Column 80 marker
+highlight OverLength ctermbg=red ctermfg=white guibg=#660000
 match OverLength /\%81v.\+/
 
 " Sane vimdiff colorscheme
@@ -357,59 +331,29 @@ map @@x !%xmllint --format --recover -^M
 
 " Function for cleaning an XML document
 function! DoCleanXML()
-	silent %!xmllint --format --encode utf-8 -
-	g/xml version=/d
+  silent %!xmllint --format --encode utf-8 -
+  g/xml version=/d
 endfunction
 
 command! CleanXML call DoCleanXML()
 
-set tags=./tags;
-"
-" Custom commands for NERDTree
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
-au FileType haskell nnoremap <buffer> <F1> :HdevtoolsType<CR>
-au FileType haskell nnoremap <buffer> <silent> <F2> :HdevtoolsClear<CR>
-au FileType haskell nnoremap <buffer> <silent> <F3> :HdevtoolsInfo<CR>
+"""""" < Haskell > """""""""""
+" Include codex tags in tagbar, ^], etc
+set tags=tags;/,codex.tags;/
 
+au FileType haskell autocmd VimEnter * hi clear Conceal         " Remove background color from concealed characters (grey on grey??)
+" autocmd FileType * nested :call tagbar#autoopen(0)            " Automatically open tagbar
+" set foldlevelstart=20                                         " Automatically unfold everything at startup
+" au BufEnter *.hs compiler ghc
 
-au FileType haskell autocmd VimEnter * hi clear Conceal        " Remove background color from concealed characters (grey on grey??)
-autocmd FileType * nested :call tagbar#autoopen(0)
-set foldlevelstart=20                                           " Automatically unfold everything at startup
-
-au BufEnter *.hs compiler ghc
 let g:haddock_browser="/usr/bin/links"
 let g:haddock_docdir="/opt/docs/haddock"
 let g:haddock_browser_callformat = '%s "%s"'
+"""""" </ Haskell > """""""""""
 
 
-
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-
-let g:syntastic_haskell_ghc_mod_args = '-g -fno-warn-missing-signatures'
-let g:syntastic_enable_signs=1
-
-set laststatus=2
-set statusline=%<%f\    					" Filename
-set statusline+=%w%h%m%r 					" Options
-set statusline+=%{fugitive#statusline()}	" Git hotness
-set statusline+=\ [%{&ff}/%Y]            	" filetype
-set statusline+=\ [%{getcwd()}]          	" current dir
-set statusline+=%=%-14.(%l,%c%V%)\ %p%%  	" Right aligned file nav info
-
-
-let g:tagbar_autofocus = 1
-let g:tagbar_compact = 1
-
-map <silent> tu :call GHC_BrowseAll()<CR>
+" { Tags
 let g:tagbar_type_haskell = {
     \ 'ctagsbin'  : 'hasktags',
     \ 'ctagsargs' : '-x -c -o-',
@@ -442,14 +386,51 @@ let g:tagbar_type_haskell = {
     \ }
 \ }
 
+
+"""""""""" < HScope >
+set csprg=/app/bin/hscope
+set csto=1                " search codex tags first
+set cst
+set csverb
+
+" Automatically make cscope connections
+function! LoadHscope()
+  let db = findfile("hscope.out", ".;")
+  if (!empty(db))
+    let path = strpart(db, 0, match(db, "/hscope.out$"))
+    set nocscopeverbose " suppress 'duplicate connection' error
+    exe "cs add " . db . " " . path
+    set cscopeverbose
+  endif
+endfunction
+au BufEnter /*.hs call LoadHscope()
+"""""""""" < /HScope >
+" /Tags }
+
+
+let g:tagbar_autofocus = 1
+let g:tagbar_compact = 1
+
 " Turn on HTML tag matching
 runtime macros/matchit.vim
+
+"""""""""" < CtrlP >
+" CtrlP will load from the CWD, makes it easier with all these nested repos
+let g:ctrlp_working_path_mode = ''
 
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode='ra'
 
-let g:ackprg = 'ag --vimgrep'
+let g:ctrlp_clear_cache_on_exit=0       " Save cache for a small speedup.
+
+" Use ag for Ctrl-P for speed improvement.
+if executable('ag')
+    set grepprg=ag\ --nogroup\ --nocolor
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+    let g:ctrlp_use_caching=0
+endif
+"""""""""" </ CtrlP >
 
 " Close NerdTree if it is the only buffer left open.
 function! NERDTreeQuit()
@@ -476,21 +457,72 @@ function! NERDTreeQuit()
 endfunction
 autocmd WinEnter * call NERDTreeQuit()
 
-" Make sure unicode works properly (primarily for concealing)
-set encoding=utf-8
-let &termencoding=&encoding
-
 " Remove trailing whitespace before writing (applies to all files)
 autocmd BufWritePre * :%s/\s\+$//e
 
 " Recognize .md files as markdown
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
-if executable('ag')
-    set grepprg=ag\ --nogroup\ --nocolor
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-    let g:ctrlp_use_caching=0
+" Return to last edit position when opening files
+augroup last_edit
+  autocmd!
+  autocmd BufReadPost *
+       \ if line("'\"") > 0 && line("'\"") <= line("$") |
+       \   exe "normal! g`\"" |
+       \ endif
+augroup END
+
+" Source the vimrc file after saving it
+augroup sourcing
+  autocmd!
+  autocmd bufwritepost .vimrc source $MYVIMRC
+augroup END
+
+
+" Use buffer words as default tab completion
+let g:SuperTabDefaultCompletionType = '<c-x><c-p>'
+
+" But provide (neco-ghc) omnicompletion
+if has("gui_running")
+  imap <c-space> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
+else " no gui
+  if has("unix")
+    inoremap <Nul> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
+  endif
 endif
 
-" For the love of god, don't grep min files!
-set wildignore+=*.min,*.min.js,*.tmp,*.svg
+" Show types in completion suggestions
+let g:necoghc_enable_detailed_browse = 1
+
+" Use neco-ghc for omnicompletion
+autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+
+" Fix the omnicomplete popup menu a bit
+" Allows typing in a few characters to narrow down the list
+set completeopt=longest,menuone
+
+" After narrowing choices, allows pressing enter to select last entry in popup menu.
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Hacks for Syntastic
+function! FindCabalSandboxRoot()
+    return finddir('.cabal-sandbox', './;')
+endfunction
+
+function! FindCabalSandboxRootPackageConf()
+    return glob(FindCabalSandboxRoot().'/*-packages.conf.d')
+endfunction
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+
+" Enable syntax checking on write/close, but disable on haskell files
+" (Intensive for large projects)
+let g:syntastic_mode_map = {
+        \ "mode": "active",
+        \ "active_filetypes": ["ruby", "php"],
+        \ "passive_filetypes": ["haskell", "tex"] }
+let g:hdevtools_options = '-g -cpp -g-ilib -g-isrc -g-i. -g-idist/build/autogen -g-Wall -g-package-conf='.FindCabalSandboxRootPackageConf()
+let g:syntastic_enable_signs=1
