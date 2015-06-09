@@ -1,0 +1,8 @@
+# Sourced on all invocations of shell (including scripts)
+function jg () {
+  curl -i -H "Accept: application/json" -H "Content-Type: application/json" "$1" -L
+}
+
+function jp () {
+  curl --data "$1" "$2"
+}
