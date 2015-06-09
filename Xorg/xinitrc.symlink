@@ -1,3 +1,6 @@
+# Load random background
+feh --randomize --bg-fill ~/Dropbox/Backgrounds/*
+
 # Xmonad doesn't set an X-cursor by default.
 # Manually replaces "X" shaped cursor with the usual.
 xsetroot -cursor_name left_ptr
@@ -13,11 +16,11 @@ xrdb -merge ~/.Xcolors
 # Reload the last background
 # nitrogen --restore &
 
-# Load random background
-feh --randomize --bg-fill ~/Dropbox/Backgrounds/*
-
 # Set keyboard delay (in ms) and repeat rate (in char/s)
 xset r rate 220 45
+
+# Start the scratch terminal (f12 key)
+tilda -h &
 
 # Start the window manager.
 xmonad
