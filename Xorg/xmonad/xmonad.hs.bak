@@ -3,10 +3,10 @@
 -- Author : Nnoell <nnoell3[at]gmail.com>                                                 --
 -- Desc   : My XMonad config                                                              --
 --------------------------------------------------------------------------------------------
- 
+
 -- Options
 {-# LANGUAGE DeriveDataTypeable, NoMonomorphismRestriction, MultiParamTypeClasses, ImplicitParams #-}
- 
+
 -- Modules
 import XMonad
 import XMonad.Layout
@@ -67,12 +67,12 @@ import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 import qualified XMonad.Actions.FlexibleResize as Flex
 import qualified XMonad.Util.ExtensibleState as XS
- 
- 
+
+
 --------------------------------------------------------------------------------------------
 -- MAIN                                                                                   --
 --------------------------------------------------------------------------------------------
- 
+
 main :: IO ()
 main = do
 	r <- getScreenRes ":0" 0  --display ":0", screen 0
@@ -82,6 +82,7 @@ main = do
 	botRightBar <- dzenSpawnPipe $ dzenBotRightFlags r
 	xmonad $ myUrgencyHook defaultConfig
 		{ modMask            = mod4Mask          --default modMask
+    , terminal           = "lxterminal"
 		, focusFollowsMouse  = True              --focus follow config
 		, clickJustFocuses   = True              --focus click config
 		, borderWidth        = 1                 --border width
@@ -99,15 +100,16 @@ main = do
 			myBotRightLogHook botRightBar <+>      --bottom right dzen
 			ewmhDesktopsLogHook           >>
 			setWMName "LG3D"
-		, keys               = myKeys            --key bindings config
 		, mouseBindings      = myMouseBindings   --mouse bindings config
 		}
- 
- 
+    `additionalKeys`
+      myKeys
+
+
 --------------------------------------------------------------------------------------------
 -- LOOK AND FEEL CONFIG                                                                   --
 --------------------------------------------------------------------------------------------
- 
+
 -- Colors, fonts and paths
 dzenFont       = "-*-montecarlo-medium-r-normal-*-11-*-*-*-*-*-*-*"
 colorBlack     = "#020202" --Background
@@ -136,7 +138,7 @@ panelHeight    = 16   --height of top and bottom panels
 boxHeight      = 14   --height of dzen logger box
 topPanelSepPos = 950  --left-right alignment pos of top panel
 botPanelSepPos = 450  --left-right alignment pos of bottom panel
- 
+
 -- Title theme
 myTitleTheme :: Theme
 myTitleTheme = defaultTheme
@@ -151,7 +153,7 @@ myTitleTheme = defaultTheme
 	, urgentTextColor     = colorGreen
 	, decoHeight          = 14
 	}
- 
+
 -- Prompt theme
 myXPConfig :: XPConfig
 myXPConfig = defaultXPConfig
@@ -168,7 +170,7 @@ myXPConfig = defaultXPConfig
 	, historyFilter     = deleteConsecutive
 	, autoComplete      = Nothing
 	}
- 
+
 -- GridSelect color scheme
 myColorizer :: Window -> Bool -> X (String, String)
 myColorizer = colorRangeFromClassName
@@ -177,7 +179,7 @@ myColorizer = colorRangeFromClassName
 	(0x44,0xAA,0xCC) --active bg
 	(0xBB,0xBB,0xBB) --inactive fg
 	(0x00,0x00,0x00) --active fg
- 
+
 -- GridSelect theme
 myGSConfig :: t -> GSConfig Window
 myGSConfig colorizer = (buildDefaultGSConfig myColorizer)
@@ -186,7 +188,7 @@ myGSConfig colorizer = (buildDefaultGSConfig myColorizer)
 	, gs_cellpadding = 10
 	, gs_font        = dzenFont
 	}
- 
+
 -- Flash text config
 myTextConfig :: ShowTextConfig
 myTextConfig = STC
@@ -194,7 +196,7 @@ myTextConfig = STC
 	, st_bg   = colorBlack
 	, st_fg   = colorWhite
 	}
- 
+
 -- Dzen logger box pretty printing themes
 gray2BoxPP :: BoxPP
 gray2BoxPP = BoxPP
@@ -205,7 +207,7 @@ gray2BoxPP = BoxPP
 	, rightIconBPP = boxRightIcon
 	, boxHeightBPP = boxHeight
 	}
- 
+
 blueBoxPP :: BoxPP
 blueBoxPP = BoxPP
 	{ bgColorBPP   = colorBlack
@@ -215,7 +217,7 @@ blueBoxPP = BoxPP
 	, rightIconBPP = boxRightIcon
 	, boxHeightBPP = boxHeight
 	}
- 
+
 blue2BoxPP :: BoxPP
 blue2BoxPP = BoxPP
 	{ bgColorBPP   = colorBlack
@@ -225,7 +227,7 @@ blue2BoxPP = BoxPP
 	, rightIconBPP = boxRightIcon
 	, boxHeightBPP = boxHeight
 	}
- 
+
 whiteBoxPP :: BoxPP
 whiteBoxPP = BoxPP
 	{ bgColorBPP   = colorBlack
@@ -235,7 +237,7 @@ whiteBoxPP = BoxPP
 	, rightIconBPP = boxRightIcon
 	, boxHeightBPP = boxHeight
 	}
- 
+
 blackBoxPP :: BoxPP
 blackBoxPP = BoxPP
 	{ bgColorBPP   = colorBlack
@@ -245,7 +247,7 @@ blackBoxPP = BoxPP
 	, rightIconBPP = boxRightIcon
 	, boxHeightBPP = boxHeight
 	}
- 
+
 white2BBoxPP :: BoxPP
 white2BBoxPP = BoxPP
 	{ bgColorBPP   = colorBlack
@@ -255,7 +257,7 @@ white2BBoxPP = BoxPP
 	, rightIconBPP = boxRightIcon
 	, boxHeightBPP = boxHeight
 	}
- 
+
 blue2BBoxPP :: BoxPP --current workspace
 blue2BBoxPP = BoxPP
 	{ bgColorBPP   = colorBlack
@@ -265,7 +267,7 @@ blue2BBoxPP = BoxPP
 	, rightIconBPP = boxRightIcon
 	, boxHeightBPP = boxHeight
 	}
- 
+
 green2BBoxPP :: BoxPP --urgent workspace
 green2BBoxPP = BoxPP
 	{ bgColorBPP   = colorBlack
@@ -275,7 +277,7 @@ green2BBoxPP = BoxPP
 	, rightIconBPP = boxRightIcon
 	, boxHeightBPP = boxHeight
 	}
- 
+
 -- Dzen logger clickable areas
 calendarCA :: CA
 calendarCA = CA
@@ -285,7 +287,7 @@ calendarCA = CA
 	, wheelUpCA     = "/home/nnoell/bin/dzencal.sh"
 	, wheelDownCA   = "/home/nnoell/bin/dzencal.sh"
 	}
- 
+
 layoutCA :: CA
 layoutCA = CA
 	{ leftClickCA   = "/usr/bin/xdotool key super+space"
@@ -294,7 +296,7 @@ layoutCA = CA
 	, wheelUpCA     = "/usr/bin/xdotool key super+f"
 	, wheelDownCA   = "/usr/bin/xdotool key super+control+f"
 	}
- 
+
 workspaceCA :: CA
 workspaceCA = CA
 	{ leftClickCA   = "/usr/bin/xdotool key super+1"
@@ -303,7 +305,7 @@ workspaceCA = CA
 	, wheelUpCA     = "/usr/bin/xdotool key ctrl+alt+Right"
 	, wheelDownCA   = "/usr/bin/xdotool key ctrl+alt+Left"
 	}
- 
+
 focusCA :: CA
 focusCA = CA
 	{ leftClickCA   = "/usr/bin/xdotool key super+m"
@@ -312,11 +314,11 @@ focusCA = CA
 	, wheelUpCA     = "/usr/bin/xdotool key super+shift+j"
 	, wheelDownCA   = "/usr/bin/xdotool key super+shift+k"
 	}
- 
+
 -- Workspace index (do not change)
 myWorkspaces :: [WorkspaceId]
 myWorkspaces = map show $ [1..9] ++ [0]
- 
+
 -- Workspace names
 workspaceNames :: [WorkspaceId]
 workspaceNames =
@@ -331,7 +333,7 @@ workspaceNames =
 	, "Alternate3"
 	, "Alternate4"
 	]
- 
+
 -- Layout names (must be one word /= to: Mirror, ReflectX, ReflectY, Switcher, Normal and Unique)
 myTileName = "Tiled"
 myMirrName = "MirrTld"
@@ -343,12 +345,12 @@ myCst3Name = "Web"
 myChatName = "Chat"
 myFTabName = "Full"
 myFloaName = "Float"
- 
- 
+
+
 --------------------------------------------------------------------------------------------
 -- STARTUP HOOK CONFIG                                                                    --
 --------------------------------------------------------------------------------------------
- 
+
 -- Startup Hook
 myStartupHook =
 	(setDefaultCursor xC_left_ptr) <+>
@@ -356,18 +358,18 @@ myStartupHook =
 	(liftIO $ threadDelay 1000000) <+> --needed so that xmonad can be launched on the fly without crashing
 	(spawn "/home/nnoell/.xmonad/apps/haskell-cpu-usage.out 5") <+>
 	(startTimer 1 >>= XS.put . TID)
- 
- 
+
+
 --------------------------------------------------------------------------------------------
 -- HANDLE EVENT HOOK CONFIG                                                               --
 --------------------------------------------------------------------------------------------
- 
+
 -- Wrapper for the Timer id, so it can be stored as custom mutable state
 data TidState = TID TimerId deriving Typeable
- 
+
 instance ExtensionClass TidState where
 	initialValue = TID 0
- 
+
 -- Handle event hook
 myHandleEventHook =
 	fullscreenEventHook <+> docksEventHook <+>
@@ -382,26 +384,26 @@ myHandleEventHook =
 			return $ All True                 --return required type
 		notFocusFloat = followOnlyIf (fmap not isFloat) where --Do not focusFollowMouse on Float layout
 			isFloat = fmap (isSuffixOf myFloaName) $ gets (description . W.layout . W.workspace . W.current . windowset)
- 
- 
+
+
 --------------------------------------------------------------------------------------------
 -- LAYOUT CONFIG                                                                          --
 --------------------------------------------------------------------------------------------
- 
+
 -- Tabbed transformer (W+f)
 data TABBED = TABBED deriving (Read, Show, Eq, Typeable)
 instance Transformer TABBED Window where
 	transform TABBED x k = k myFTabU (\_ -> x)
- 
+
 -- Floated transformer (W+ctl+f)
 data FLOATED = FLOATED deriving (Read, Show, Eq, Typeable)
 instance Transformer FLOATED Window where
 	transform FLOATED x k = k myFloaU (\_ -> x)
- 
+
 -- Unique Layouts
 myFTabU = smartBorders $ named ("Unique " ++ myFTabName) $ tabbedAlways shrinkText myTitleTheme
 myFloaU = named ("Unique " ++ myFloaName) $ mouseResize $ noFrillsDeco shrinkText myTitleTheme simplestFloat
- 
+
 -- Layout hook
 myLayoutHook =
 	gaps [(U,panelHeight), (D,panelHeight)] $
@@ -442,12 +444,12 @@ myLayoutHook =
 		--costom draggingVisualizer toggle
 		myToggleL l n = smartBorders $ toggleLayouts (named ("Switcher " ++ n) $ switcher l) (named ("Normal " ++ n) l) where
 			switcher l = windowSwitcherDecoration shrinkText myTitleTheme $ draggingVisualizer l
- 
- 
+
+
 --------------------------------------------------------------------------------------------
 -- MANAGE HOOK CONFIG                                                                     --
 --------------------------------------------------------------------------------------------
- 
+
 -- Manage Hook
 myManageHook :: ManageHook
 myManageHook =
@@ -455,7 +457,7 @@ myManageHook =
 	(scratchpadManageHook $ W.RationalRect 0 0 1 (3/4)) <+>
 	dynamicMasterHook <+>
 	manageWindows
- 
+
 -- Manage Windows
 manageWindows :: ManageHook
 manageWindows = composeAll . concat $
@@ -492,11 +494,11 @@ manageWindows = composeAll . concat $
 		keepMaster c = assertSlave <+> assertMaster where
 			assertSlave = fmap (/= c) className --> doF W.swapDown
 			assertMaster = className =? c --> doF W.swapMaster
- 
+
 --------------------------------------------------------------------------------------------
 -- DZEN STATUS BARS CONFIG                                                                --
 --------------------------------------------------------------------------------------------
- 
+
 -- urgencyHook
 myUrgencyHook :: LayoutClass l Window => XConfig l -> XConfig l
 myUrgencyHook = withUrgencyHook dzenUrgencyHook
@@ -511,7 +513,7 @@ myUrgencyHook = withUrgencyHook dzenUrgencyHook
 		, "-fg", colorGreen
 		]
 	}
- 
+
 -- Dzen top left bar flags
 dzenTopLeftFlags :: Res -> DF
 dzenTopLeftFlags _ = DF
@@ -526,7 +528,7 @@ dzenTopLeftFlags _ = DF
 	, eventDF      = "onstart=lower"
 	, extrasDF     = "-p"
 	}
- 
+
 -- Top left bar logHook
 myTopLeftLogHook :: Handle -> X ()
 myTopLeftLogHook h = dynamicLogWithPP defaultPP
@@ -535,7 +537,7 @@ myTopLeftLogHook h = dynamicLogWithPP defaultPP
 	, ppSep    = " "
 	, ppExtras = [ myLayoutL, myWorkspaceL, myFocusL ]
 	}
- 
+
 -- Dzen top right bar flags
 dzenTopRightFlags :: Res -> DF
 dzenTopRightFlags r = DF
@@ -550,7 +552,7 @@ dzenTopRightFlags r = DF
 	, eventDF      = "onstart=lower"
 	, extrasDF     = "-p"
 	}
- 
+
 -- Top right bar logHook
 myTopRightLogHook :: Handle -> X ()
 myTopRightLogHook h = dynamicLogWithPP defaultPP
@@ -559,7 +561,7 @@ myTopRightLogHook h = dynamicLogWithPP defaultPP
 	, ppSep     = " "
 	, ppExtras  = [ myUptimeL, myDateL ]
 	}
- 
+
 -- Dzen bottom left bar flags
 dzenBotLeftFlags :: Res -> DF
 dzenBotLeftFlags r = DF
@@ -574,7 +576,7 @@ dzenBotLeftFlags r = DF
 	, eventDF      = "onstart=lower"
 	, extrasDF     = "-p"
 	}
- 
+
 -- Bottom left bar logHook
 myBotLeftLogHook :: Handle -> X ()
 myBotLeftLogHook h = dynamicLogWithPP . namedScratchpadFilterOutWorkspacePP $ defaultPP
@@ -594,7 +596,7 @@ myBotLeftLogHook h = dynamicLogWithPP . namedScratchpadFilterOutWorkspacePP $ de
 			wsIdxToString (Just n) = show $ mod (n+1) $ length myWorkspaces
 			index = wsIdxToString (elemIndex ws myWorkspaces)
 			xdo key = "/usr/bin/xdotool key super+" ++ key
- 
+
 -- Dzen bottom right bar flags
 dzenBotRightFlags :: Res -> DF
 dzenBotRightFlags r = DF
@@ -609,7 +611,7 @@ dzenBotRightFlags r = DF
 	, eventDF      = "onstart=lower"
 	, extrasDF     = "-p"
 	}
- 
+
 -- Bottom right bar logHook
 myBotRightLogHook :: Handle -> X ()
 myBotRightLogHook h = dynamicLogWithPP defaultPP
@@ -618,12 +620,12 @@ myBotRightLogHook h = dynamicLogWithPP defaultPP
 	, ppSep    = " "
 	, ppExtras = [ myCpuL, myMemL, myTempL, myWifiL, myBatL ]
 	}
- 
- 
+
+
 --------------------------------------------------------------------------------------------
 -- LOGGERS CONFIG                                                                         --
 --------------------------------------------------------------------------------------------
- 
+
 -- BotRight Loggers
 myBatL =
 	(dzenBoxStyleL gray2BoxPP $ labelL "BATTERY") ++!
@@ -641,7 +643,7 @@ myMemL =
 myCpuL =
 	(dzenBoxStyleL gray2BoxPP $ labelL "CPU") ++!
 	(dzenBoxStyleL blueBoxPP  $ cpuUsage "/tmp/haskell-cpu-usage.txt" 70 colorRed)
- 
+
 -- BotLeft Loggers
 myResL =
 	(dzenBoxStyleL blue2BoxPP $ labelL "RES") ++!
@@ -649,7 +651,7 @@ myResL =
 myBrightL =
 	(dzenBoxStyleL blue2BoxPP $ labelL "BRIGHT") ++!
 	(dzenBoxStyleL whiteBoxPP $ brightPerc 15) --15 because brightness go from 0 to 15 in my case, usually must be 10
- 
+
 -- TopRight Loggers
 myDateL =
 	(dzenBoxStyleL white2BBoxPP $ date "%A") ++!
@@ -659,7 +661,7 @@ myDateL =
 myUptimeL =
 	(dzenBoxStyleL blue2BoxPP   $ labelL "UPTIME") ++!
 	(dzenBoxStyleL whiteBoxPP uptime)
- 
+
 -- TopLeft Loggers
 myFocusL  =
 	(dzenClickStyleL focusCA  $ dzenBoxStyleL white2BBoxPP $ labelL "FOCUS") ++!
@@ -682,12 +684,12 @@ myWorkspaceL =
 		namedWorkspaces w
 			| (elem w $ map show [0..9]) = "^fg(" ++ colorGreen ++ ")" ++ w ++ "^fg(" ++ colorGray ++ ")|^fg()" ++ workspaceNames !! (mod ((read w::Int) - 1) 10)
 			| otherwise                  = "^fg(" ++ colorRed   ++ ")x^fg(" ++ colorGray ++ ")|^fg()" ++ w
- 
- 
+
+
 --------------------------------------------------------------------------------------------
 -- BINDINGS CONFIG                                                                        --
 --------------------------------------------------------------------------------------------
- 
+
 -- Key bindings
 myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
@@ -695,7 +697,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	[((modMask .|. shiftMask, xK_q), killAndExit)                        --Quit xmonad
 	, ((modMask, xK_q), killAndRestart)                                  --Restart xmonad
 	, ((0, xK_Pause), killAndRestart)
-	, ((mod1Mask, xK_F2), shellPrompt myXPConfig)                        --Launch Xmonad shell prompt
+	, ((mod1Mask, xK_F2), shellPrompT myXPConfig)                        --Launch Xmonad shell prompt
 	, ((modMask, xK_F2), xmonadPrompt myXPConfig)                        --Launch Xmonad prompt
 	, ((mod1Mask, xK_F3), manPrompt myXPConfig)                          --Launch man prompt
 	, ((modMask, xK_g), goToSelected $ myGSConfig myColorizer)           --Launch GridSelect
@@ -804,7 +806,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 			(spawn "/usr/bin/killall dzen2 haskell-cpu-usage.out") <+>
 			(liftIO $ threadDelay 1000000) <+>
 			(restart "xmonad" True)
- 
+
 -- Mouse bindings
 myMouseBindings :: XConfig Layout -> M.Map (KeyMask, Button) (Window -> X ())
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
@@ -816,12 +818,12 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, (((modMask .|. shiftMask), button4), (\_ -> shiftToPrev))                           --Send client to previous workspace
 	, (((modMask .|. shiftMask), button5), (\_ -> shiftToNext))                           --Send client to next workspace
 	]
- 
- 
+
+
 --------------------------------------------------------------------------------------------
 -- DZEN UTILS                                                                             --
 --------------------------------------------------------------------------------------------
- 
+
 -- Dzen flags
 data DF = DF
 	{ xPosDF       :: Int
@@ -835,7 +837,7 @@ data DF = DF
 	, eventDF      :: String
 	, extrasDF     :: String
 	}
- 
+
 -- Dzen box pretty config
 data BoxPP = BoxPP
 	{ bgColorBPP   :: String
@@ -845,7 +847,7 @@ data BoxPP = BoxPP
 	, rightIconBPP :: String
 	, boxHeightBPP :: Int
 	}
- 
+
 -- Dzen clickable area config
 data CA = CA
 	{ leftClickCA   :: String
@@ -854,7 +856,7 @@ data CA = CA
 	, wheelUpCA     :: String
 	, wheelDownCA   :: String
 	}
- 
+
 -- Create a dzen string with its flags
 dzenFlagsToStr :: DF -> String
 dzenFlagsToStr df =
@@ -868,7 +870,7 @@ dzenFlagsToStr df =
 	"' -fn '" ++ fontDF df ++
 	"' -e '" ++ eventDF df ++
 	"' " ++ extrasDF df
- 
+
 -- Uses dzen format to draw a "box" arround a given text
 dzenBoxStyle :: BoxPP -> String -> String
 dzenBoxStyle bpp t =
@@ -882,7 +884,7 @@ dzenBoxStyle bpp t =
 	")^fg(" ++ (bgColorBPP bpp) ++
 	")^r(1920x" ++ (show $ boxHeightBPP bpp) ++
 	")^p(-1920)^fg()^ib(0)"
- 
+
 -- Uses dzen format to make dzen text clickable
 dzenClickStyle :: CA -> String -> String
 dzenClickStyle ca t = "^ca(1," ++ leftClickCA ca ++
@@ -892,53 +894,53 @@ dzenClickStyle ca t = "^ca(1," ++ leftClickCA ca ++
 	")^ca(5," ++ wheelDownCA ca ++
 	")" ++ t ++
 	"^ca()^ca()^ca()^ca()^ca()"
- 
+
 -- Launch dzen through the system shell and return a Handle to its standard input
 dzenSpawnPipe df = spawnPipe $ "dzen2" ++ dzenFlagsToStr df
- 
+
 -- Logger version of dzenBoxStyle
 dzenBoxStyleL :: BoxPP -> Logger -> Logger
 dzenBoxStyleL bpp l = (fmap . fmap) (dzenBoxStyle bpp) l
- 
+
 -- Logger version of dzenClickStyle
 dzenClickStyleL :: CA -> Logger -> Logger
 dzenClickStyleL ca l = (fmap . fmap) (dzenClickStyle ca) l
- 
- 
+
+
 --------------------------------------------------------------------------------------------
 -- HARDCODED LOGGERS (you may need to amend them so that they work on your computer)      --
 --------------------------------------------------------------------------------------------
- 
+
 -- Concat two Loggers
 (++!) :: Logger -> Logger -> Logger
 l1 ++! l2 = (liftA2 . liftA2) (++) l1 l2
- 
+
 -- Label
 labelL :: String -> Logger
 labelL = return . return
- 
+
 -- Init version for Logger
 initL :: Logger -> Logger
 initL = (fmap . fmap) initNotNull
- 
+
 -- Concat a list of loggers
 concatL :: [Logger] -> Logger
 concatL [] = return $ return ""
 concatL (x:xs) = x ++! concatL xs
- 
+
 -- Concat a list of loggers with spaces between them
 concatWithSpaceL :: [Logger] -> Logger
 concatWithSpaceL [] = return $ return ""
 concatWithSpaceL (x:xs) = x ++! (labelL " ") ++! concatWithSpaceL xs
- 
+
 initNotNull :: String -> String
 initNotNull [] = "0\n"
 initNotNull xs = init xs
- 
+
 tailNotNull :: [String] -> [String]
 tailNotNull [] = ["0\n"]
 tailNotNull xs = tail xs
- 
+
 -- Convert the content of a file into a Logger
 fileToLogger :: (String -> String) -> String -> FilePath -> Logger
 fileToLogger f e p = do
@@ -947,55 +949,55 @@ fileToLogger f e p = do
 		return $ f1 (initNotNull contents) ) ((\_ -> return e1) :: E.SomeException -> IO String)
 	str <- liftIO $ readWithE f e p
 	return $ return str
- 
+
 -- Battery percent
 batPercent :: Int -> String -> Logger
 batPercent v c = fileToLogger format "N/A" "/sys/class/power_supply/BAT0/capacity" where
 	format x = if ((read x::Int) <= v) then "^fg(" ++ c ++ ")" ++ x ++ "%^fg()" else (x ++ "%")
- 
+
 -- Battery status
 batStatus :: Logger
 batStatus = fileToLogger (\x -> x) "AC Conection" "/sys/class/power_supply/BAT0/status"
- 
+
 -- Brightness percenn
 brightPerc :: Int -> Logger
 brightPerc p = fileToLogger format "0" "/sys/class/backlight/acpi_video0/actual_brightness" where
 	format x = (show $ div ((read x::Int) * 100) p) ++ "%"
- 
+
 -- wifi signal
 wifiSignal :: Logger
 wifiSignal = fileToLogger format "N/A" "/proc/net/wireless" where
 	format x = if (length $ lines x) >= 3 then (initNotNull ((words ((lines x) !! 2)) !! 2) ++ "%") else "Off"
- 
+
 -- CPU temperature
 cpuTemp :: Int -> Int -> String -> Logger
 cpuTemp n v c = initL $ concatWithSpaceL $ map (fileToLogger divc "0") pathtemps where
 	pathtemps = map (++"/thermal_zone/temp") $ map ("/sys/bus/acpi/devices/LNXTHERM:0"++) $ take n $ map show [0..]
 	divc x = crit $ div (read x::Int) 1000
 	crit x = if (x >= v) then "^fg(" ++ c ++ ")" ++ show x ++ "°^fg()" else (show x ++ "°")
- 
+
 -- Memory usage
 memUsage :: [(String -> String)] -> Logger
 memUsage xs = initL $ concatWithSpaceL $ map funct xs where
 	funct x = fileToLogger x "N/A" "/proc/meminfo"
- 
+
 _memUsed x = (_memValues x !! 0) - ((_memValues x !! 2) + (_memValues x !! 3) + (_memValues x !! 1))
 _memPerc x = div (_memUsed x * 100) (_memValues x !! 0)
 _memValues x = map (getValues x) $ take 4 [0..] where
 	getValues x n = read (words (lines x !! n) !! 1)::Int
- 
+
 freeBMemUsage x = (show $ _memValues x !! 1) ++ "B"
 freeMBMemUsage x = (show $ div (_memValues x !! 1) 1024) ++ "MB"
 totBMemUsage = (++"B") . show . _memUsed
 totMBMemUsage = (++"MB") . show . (`div` 1024) . _memUsed
 percMemUsage = (++"%") . show . _memPerc
- 
+
 -- CPU Usage: this is an ugly hack that depends on "haskell-cpu-usage" app (See my github repo to get the app)
 cpuUsage :: String -> Int -> String -> Logger
 cpuUsage path v c = fileToLogger format "0" path where
 	format x = if (null x) then "N/A" else initNotNull $ concat $ map (++" ") $ map crit $ tailNotNull $ words $ x
 	crit x = if ((read x::Int) >= v) then "^fg(" ++ c ++ ")" ++ x ++ "%^fg()" else (x ++ "%")
- 
+
 -- Uptime
 uptime :: Logger
 uptime = fileToLogger format "0" "/proc/uptime" where
@@ -1005,7 +1007,7 @@ uptime = fileToLogger format "0" "/proc/uptime" where
 	m x  = div (hr x) 60
 	s x  = mod (hr x) 60
 	format x = (show $ h x) ++ "h " ++ (show $ m x) ++ "m " ++ (show $ s x) ++ "s"
- 
+
 -- Gets the current resolution given a display and a screen
 getScreenRes :: String -> Int -> IO Res
 getScreenRes d n = do
@@ -1016,13 +1018,13 @@ getScreenRes d n = do
 		{ xRes = fromIntegral $ rect_width $ r !! n
 		, yRes = fromIntegral $ rect_height $ r !! n
 		}
- 
+
 -- Screen Resolution
 data Res = Res
 	{ xRes :: Int
 	, yRes :: Int
 	}
- 
+
 -- Resolution logger
 screenRes :: String -> Int -> Logger
 screenRes d n = do
