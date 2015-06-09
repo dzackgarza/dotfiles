@@ -1,0 +1,128 @@
+!_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
+#	/home/dzack/.vimrc	/^nnoremap # #zz$/;"	m	language:Vim
+*	/home/dzack/.vimrc	/^nnoremap * *zz$/;"	m	language:Vim
+,cd	/home/dzack/.vimrc	/^map ,cd :cd %:p:h<CR>$/;"	m	language:Vim
+;	/home/dzack/.vimrc	/^nnoremap ; :$/;"	m	language:Vim
+<C-h>	/home/dzack/.vimrc	/^noremap <silent> <C-h> :bprev<CR>$/;"	m	language:Vim
+<C-l>	/home/dzack/.vimrc	/^noremap <silent> <C-l> :bnext<CR>$/;"	m	language:Vim
+<C-left>	/home/dzack/.vimrc	/^noremap <silent> <C-left> :bprev<CR>$/;"	m	language:Vim
+<C-right>	/home/dzack/.vimrc	/^noremap <silent> <C-right> :bnext<CR>$/;"	m	language:Vim
+<c-space>	/home/dzack/.vimrc	/^  imap <c-space> <c-r>=SuperTabAlternateCompletion("\\<lt>c-x>\\<lt>c-o>")<cr>$/;"	m	language:Vim
+<C-\>	/home/dzack/.vimrc	/^nnoremap <silent> <C-\\> :cs find c <C-R>=expand("<cword>")<CR><CR>$/;"	m	language:Vim
+<Leader>/	/home/dzack/.vimrc	/^map <Leader>\/ :Ag<SPACE>$/;"	m	language:Vim
+<Leader>//	/home/dzack/.vimrc	/^nmap <Leader>\/\/ :<c-u>execute 'Ag ' .  expand("<cWORD>")<CR>$/;"	m	language:Vim
+<leader>=	/home/dzack/.vimrc	/^nmap <leader>= :TagbarToggle<CR>$/;"	m	language:Vim
+<leader>b	/home/dzack/.vimrc	/^nnoremap <silent> <leader>b :nohlsearch<CR>$/;"	m	language:Vim
+<Leader>c	/home/dzack/.vimrc	/^map <Leader>c "+y$/;"	m	language:Vim
+<Leader>c	/home/dzack/.vimrc	/^map <Leader>c :w \\| SyntasticCheck<CR>$/;"	m	language:Vim
+<Leader>ct	/home/dzack/.vimrc	/^map <Leader>ct :! \/usr\/local\/bin\/ctags -R *<CR>$/;"	m	language:Vim
+<Leader>es	/home/dzack/.vimrc	/^nmap <silent> <Leader>es :so $MYVIMRC<CR>$/;"	m	language:Vim
+<Leader>ev	/home/dzack/.vimrc	/^nmap <silent> <Leader>ev :e $MYVIMRC<CR>$/;"	m	language:Vim
+<Leader>gb	/home/dzack/.vimrc	/^nnoremap <Leader>gb :Gblame<CR>$/;"	m	language:Vim
+<Leader>gd	/home/dzack/.vimrc	/^nnoremap <Leader>gd :Gdiff<CR>$/;"	m	language:Vim
+<Leader>gg	/home/dzack/.vimrc	/^nnoremap <Leader>gg :Git$/;"	m	language:Vim
+<Leader>gl	/home/dzack/.vimrc	/^nnoremap <Leader>gl :Glog<CR>$/;"	m	language:Vim
+<Leader>gm	/home/dzack/.vimrc	/^nnoremap <Leader>gm :Gmove$/;"	m	language:Vim
+<Leader>gp	/home/dzack/.vimrc	/^nnoremap <Leader>gp :Ggrep$/;"	m	language:Vim
+<Leader>gR	/home/dzack/.vimrc	/^nnoremap <Leader>gR :Gread<CR>$/;"	m	language:Vim
+<Leader>gr	/home/dzack/.vimrc	/^nnoremap <Leader>gr :Gremove<CR>$/;"	m	language:Vim
+<Leader>gs	/home/dzack/.vimrc	/^nnoremap <Leader>gs :Gstatus<CR>$/;"	m	language:Vim
+<Leader>h	/home/dzack/.vimrc	/^nnoremap <Leader>h <C-w>h$/;"	m	language:Vim
+<Leader>j	/home/dzack/.vimrc	/^nnoremap <Leader>j <C-w>j$/;"	m	language:Vim
+<Leader>k	/home/dzack/.vimrc	/^nnoremap <Leader>k <C-w>k$/;"	m	language:Vim
+<Leader>L	/home/dzack/.vimrc	/^nmap <Leader>L :set invnumber<CR>$/;"	m	language:Vim
+<Leader>l	/home/dzack/.vimrc	/^nnoremap <Leader>l <C-w>l$/;"	m	language:Vim
+<Leader>m	/home/dzack/.vimrc	/^map <Leader>m :w \\| make<CR>$/;"	m	language:Vim
+<Leader>n	/home/dzack/.vimrc	/^noremap <silent> <Leader>n :NERDTreeToggle<CR>$/;"	m	language:Vim
+<Leader>p	/home/dzack/.vimrc	/^map <Leader>p :! php -l %<CR>$/;"	m	language:Vim
+<Leader>P	/home/dzack/.vimrc	/^map <Leader>P :! php -q %<CR>$/;"	m	language:Vim
+<Leader>q	/home/dzack/.vimrc	/^nnoremap <silent> <Leader>q :Bclose<CR>$/;"	m	language:Vim
+<Leader>Q	/home/dzack/.vimrc	/^nnoremap <silent> <Leader>Q <C-w>c$/;"	m	language:Vim
+<Leader>R	/home/dzack/.vimrc	/^map <Leader>R :retab<CR>$/;"	m	language:Vim
+<Leader>r	/home/dzack/.vimrc	/^map <Leader>r :w \\| !runhaskell %<CR>$/;"	m	language:Vim
+<Leader>s	/home/dzack/.vimrc	/^nmap <Leader>s :set list!<CR>$/;"	m	language:Vim
+<Leader>T	/home/dzack/.vimrc	/^map <Leader>T :%s\/\\s\\+$\/\/<CR>$/;"	m	language:Vim
+<Leader>t	/home/dzack/.vimrc	/^nnoremap <silent> <Leader>t :tabnew<CR>$/;"	m	language:Vim
+<leader>tg	/home/dzack/.vimrc	/^map <leader>tg :!codex update --force<CR>:call system("git hscope -X TemplateHaskell")<CR><CR>:call LoadHscope()<CR>$/;"	m	language:Vim
+<Leader>U	/home/dzack/.vimrc	/^map <Leader>U :g\/^$\/d<CR>$/;"	m	language:Vim
+<Leader>v	/home/dzack/.vimrc	/^map <Leader>v "+gP$/;"	m	language:Vim
+<Leader>w	/home/dzack/.vimrc	/^nnoremap <silent> <Leader>w :tabclose<CR>$/;"	m	language:Vim
+<Nul>	/home/dzack/.vimrc	/^    inoremap <Nul> <c-r>=SuperTabAlternateCompletion("\\<lt>c-x>\\<lt>c-o>")<cr>$/;"	m	language:Vim
+<SwipeLeft>	/home/dzack/.vimrc	/^map <silent> <SwipeLeft> :bprev<CR>$/;"	m	language:Vim
+<SwipeRight>	/home/dzack/.vimrc	/^map <silent> <SwipeRight> :bnext<CR>$/;"	m	language:Vim
+=j	/home/dzack/.vimrc	/^nmap <silent> =j :%!python -m json.tool<CR>:setfiletype json<CR>$/;"	m	language:Vim
+@@x	/home/dzack/.vimrc	/^map @@x !%xmllint --format --recover -^M$/;"	m	language:Vim
+ask	/home/dzack/website/Rakefile	/^def ask(message, valid_options)$/;"	f	language:Ruby
+base	/home/dzack/website/Rakefile	/^    def self.base$/;"	F	language:Ruby	class:JB.Path
+build	/home/dzack/website/Rakefile	/^    def self.build(path, opts = {})$/;"	F	language:Ruby	class:JB.Path
+choice	/home/dzack/.vimrc	/^		let choice =  confirm("You should get Git to be able to$/;"	v	language:Vim
+CleanXML	/home/dzack/.vimrc	/^command! CleanXML call DoCleanXML()$/;"	c	language:Vim
+DoCleanXML	/home/dzack/.vimrc	/^function! DoCleanXML()$/;"	f	language:Vim
+esc	/home/dzack/website/Rakefile	/^def esc(text)$/;"	f	language:Ruby
+g#	/home/dzack/.vimrc	/^nnoremap g# g#zz$/;"	m	language:Vim
+g*	/home/dzack/.vimrc	/^nnoremap g* g*zz$/;"	m	language:Vim
+g:ackprg	/home/dzack/.vimrc	/^let g:ackprg = 'ag --vimgrep'$/;"	v	language:Vim
+g:buftabs_marker_modified	/home/dzack/.vimrc	/^let g:buftabs_marker_modified = "+"$/;"	v	language:Vim
+g:buftabs_only_basename	/home/dzack/.vimrc	/^let g:buftabs_only_basename=1$/;"	v	language:Vim
+g:ctrlp_cmd	/home/dzack/.vimrc	/^let g:ctrlp_cmd = 'CtrlP'$/;"	v	language:Vim
+g:ctrlp_map	/home/dzack/.vimrc	/^let g:ctrlp_map = '<c-p>'$/;"	v	language:Vim
+g:ctrlp_user_command	/home/dzack/.vimrc	/^    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'$/;"	v	language:Vim
+g:ctrlp_use_caching	/home/dzack/.vimrc	/^    let g:ctrlp_use_caching=0$/;"	v	language:Vim
+g:ctrlp_working_path_mode	/home/dzack/.vimrc	/^let g:ctrlp_working_path_mode = ''$/;"	v	language:Vim
+g:ctrlp_working_path_mode	/home/dzack/.vimrc	/^let g:ctrlp_working_path_mode='ra'$/;"	v	language:Vim
+g:haddock_browser	/home/dzack/.vimrc	/^let g:haddock_browser="\/usr\/bin\/links"$/;"	v	language:Vim
+g:haddock_browser_callformat	/home/dzack/.vimrc	/^let g:haddock_browser_callformat = '%s "%s"'$/;"	v	language:Vim
+g:haddock_docdir	/home/dzack/.vimrc	/^let g:haddock_docdir="\/opt\/docs\/haddock"$/;"	v	language:Vim
+g:necoghc_enable_detailed_browse	/home/dzack/.vimrc	/^let g:necoghc_enable_detailed_browse = 1$/;"	v	language:Vim
+g:NERDTreeDirArrows	/home/dzack/.vimrc	/^let g:NERDTreeDirArrows=0$/;"	v	language:Vim
+g:SuperTabDefaultCompletionType	/home/dzack/.vimrc	/^let g:SuperTabDefaultCompletionType = '<c-x><c-p>'$/;"	v	language:Vim
+g:syntastic_always_populate_loc_list	/home/dzack/.vimrc	/^let g:syntastic_always_populate_loc_list = 1$/;"	v	language:Vim
+g:syntastic_auto_loc_list	/home/dzack/.vimrc	/^let g:syntastic_auto_loc_list = 0$/;"	v	language:Vim
+g:syntastic_check_on_open	/home/dzack/.vimrc	/^let g:syntastic_check_on_open = 0$/;"	v	language:Vim
+g:syntastic_check_on_wq	/home/dzack/.vimrc	/^let g:syntastic_check_on_wq = 0$/;"	v	language:Vim
+g:syntastic_enable_signs	/home/dzack/.vimrc	/^let g:syntastic_enable_signs=1$/;"	v	language:Vim
+g:syntastic_haskell_ghc_mod_args	/home/dzack/.vimrc	/^let g:syntastic_haskell_ghc_mod_args = '-g -fno-warn-missing-signatures'$/;"	v	language:Vim
+g:syntastic_mode_map	/home/dzack/.vimrc	/^let g:syntastic_mode_map = { 'mode': 'active', }$/;"	v	language:Vim
+g:syntastic_mode_map	/home/dzack/.vimrc	/^let g:syntastic_mode_map = {$/;"	v	language:Vim
+g:tagbar_autofocus	/home/dzack/.vimrc	/^let g:tagbar_autofocus = 1$/;"	v	language:Vim
+g:tagbar_compact	/home/dzack/.vimrc	/^let g:tagbar_compact = 1$/;"	v	language:Vim
+g:tagbar_type_haskell	/home/dzack/.vimrc	/^let g:tagbar_type_haskell = {$/;"	v	language:Vim
+g:vim_json_syntax_conceal	/home/dzack/.vimrc	/^let g:vim_json_syntax_conceal = 0$/;"	v	language:Vim
+get_stdin	/home/dzack/website/Rakefile	/^def get_stdin(message)$/;"	f	language:Ruby
+j	/home/dzack/.vimrc	/^nnoremap j gj$/;"	m	language:Vim
+J	/home/dzack/.vimrc	/^nnoremap J mzJ`z$/;"	m	language:Vim
+JB	/home/dzack/website/Rakefile	/^module JB$/;"	m	language:Ruby
+k	/home/dzack/.vimrc	/^nnoremap k gk$/;"	m	language:Vim
+K	/home/dzack/.vimrc	/^noremap K <nop>$/;"	m	language:Vim
+last_edit	/home/dzack/.vimrc	/^augroup last_edit$/;"	a	language:Vim
+LoadHscope	/home/dzack/.vimrc	/^function! LoadHscope()$/;"	f	language:Vim
+mapleader	/home/dzack/.vimrc	/^let mapleader=","$/;"	v	language:Vim
+n	/home/dzack/.vimrc	/^nnoremap n nzz$/;"	m	language:Vim
+N	/home/dzack/.vimrc	/^nnoremap N Nzz$/;"	m	language:Vim
+NERDTreeChDirMode	/home/dzack/.vimrc	/^let NERDTreeChDirMode=2$/;"	v	language:Vim
+NERDTreeIgnore	/home/dzack/.vimrc	/^let NERDTreeIgnore=['CVS','\\.dSYM$']$/;"	v	language:Vim
+NERDTreeMinimalUI	/home/dzack/.vimrc	/^let NERDTreeMinimalUI=1$/;"	v	language:Vim
+NERDTreeQuit	/home/dzack/.vimrc	/^function! NERDTreeQuit()$/;"	f	language:Vim
+Path	/home/dzack/website/Rakefile	/^  class Path$/;"	c	language:Ruby	class:JB
+Q	/home/dzack/.vimrc	/^nnoremap Q <nop>$/;"	m	language:Vim
+S	/home/dzack/.vimrc	/^nmap S :%s\/\/g<LEFT><LEFT>$/;"	m	language:Vim
+S	/home/dzack/.vimrc	/^vmap S :s\/\/g<LEFT><LEFT>$/;"	m	language:Vim
+sourcing	/home/dzack/.vimrc	/^augroup sourcing$/;"	a	language:Vim
+theme_from_git_url	/home/dzack/website/Rakefile	/^def theme_from_git_url(url)$/;"	f	language:Ruby
+tu	/home/dzack/.vimrc	/^map <silent> tu :call GHC_BrowseAll()<CR>$/;"	m	language:Vim
+verify_manifest	/home/dzack/website/Rakefile	/^def verify_manifest(theme_path)$/;"	f	language:Ruby
+vim2hs#haskell#syntax#bindings	/home/dzack/.dotfiles/vim/vim/bundle/vim2hs/autoload/vim2hs/haskell/syntax.vim	/^function! vim2hs#haskell#syntax#bindings() " {{{$/;"	f	language:Vim
+vim2hs#haskell#syntax#comments	/home/dzack/.dotfiles/vim/vim/bundle/vim2hs/autoload/vim2hs/haskell/syntax.vim	/^function! vim2hs#haskell#syntax#comments(conceal_comments, conceal_enumerations) " {{{$/;"	f	language:Vim
+vim2hs#haskell#syntax#cpp	/home/dzack/.dotfiles/vim/vim/bundle/vim2hs/autoload/vim2hs/haskell/syntax.vim	/^function! vim2hs#haskell#syntax#cpp() " {{{$/;"	f	language:Vim
+vim2hs#haskell#syntax#delimiters	/home/dzack/.dotfiles/vim/vim/bundle/vim2hs/autoload/vim2hs/haskell/syntax.vim	/^function! vim2hs#haskell#syntax#delimiters() " {{{$/;"	f	language:Vim
+vim2hs#haskell#syntax#ffi	/home/dzack/.dotfiles/vim/vim/bundle/vim2hs/autoload/vim2hs/haskell/syntax.vim	/^function! vim2hs#haskell#syntax#ffi() " {{{$/;"	f	language:Vim
+vim2hs#haskell#syntax#folds	/home/dzack/.dotfiles/vim/vim/bundle/vim2hs/autoload/vim2hs/haskell/syntax.vim	/^function! vim2hs#haskell#syntax#folds() " {{{$/;"	f	language:Vim
+vim2hs#haskell#syntax#haddock	/home/dzack/.dotfiles/vim/vim/bundle/vim2hs/autoload/vim2hs/haskell/syntax.vim	/^function! vim2hs#haskell#syntax#haddock() " {{{$/;"	f	language:Vim
+vim2hs#haskell#syntax#hsp	/home/dzack/.dotfiles/vim/vim/bundle/vim2hs/autoload/vim2hs/haskell/syntax.vim	/^function! vim2hs#haskell#syntax#hsp() " {{{$/;"	f	language:Vim
+vim2hs#haskell#syntax#keywords	/home/dzack/.dotfiles/vim/vim/bundle/vim2hs/autoload/vim2hs/haskell/syntax.vim	/^function! vim2hs#haskell#syntax#keywords(conceal_wide, conceal_enumerations, conceal_bad) " {{{$/;"	f	language:Vim
+vim2hs#haskell#syntax#numbers	/home/dzack/.dotfiles/vim/vim/bundle/vim2hs/autoload/vim2hs/haskell/syntax.vim	/^function! vim2hs#haskell#syntax#numbers() " {{{$/;"	f	language:Vim
+vim2hs#haskell#syntax#operators	/home/dzack/.dotfiles/vim/vim/bundle/vim2hs/autoload/vim2hs/haskell/syntax.vim	/^function! vim2hs#haskell#syntax#operators() " {{{$/;"	f	language:Vim
+vim2hs#haskell#syntax#strings	/home/dzack/.dotfiles/vim/vim/bundle/vim2hs/autoload/vim2hs/haskell/syntax.vim	/^function! vim2hs#haskell#syntax#strings(multiline_strings) " {{{$/;"	f	language:Vim
+vim2hs#haskell#syntax#th	/home/dzack/.dotfiles/vim/vim/bundle/vim2hs/autoload/vim2hs/haskell/syntax.vim	/^function! vim2hs#haskell#syntax#th() " {{{$/;"	f	language:Vim
+vim2hs#haskell#syntax#types	/home/dzack/.dotfiles/vim/vim/bundle/vim2hs/autoload/vim2hs/haskell/syntax.vim	/^function! vim2hs#haskell#syntax#types() " {{{$/;"	f	language:Vim
+w!!	/home/dzack/.vimrc	/^cmap w!! %!sudo tee > \/dev\/null %$/;"	m	language:Vim
