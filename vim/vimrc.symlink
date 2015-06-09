@@ -34,9 +34,10 @@ Plugin 'gmarik/vundle'
 
 " Aesthetics
 Plugin 'xolox/vim-misc'
-Plugin 'bling/vim-airline'              " Improve the status bar
+Plugin 'bling/vim-airline'                " Improve the status bar
 Plugin 'flazz/vim-colorschemes'
 Plugin 'valloric/MatchTagAlways'
+Plugin 'nathanaelkane/vim-indent-guides'  " Colored tab indent levels
 
 " Git
 Plugin 'tpope/vim-fugitive'
@@ -47,11 +48,13 @@ Plugin 'scrooloose/syntastic'
 Plugin 'sheerun/vim-polyglot'
 
 "" Haskell
-" Plugin 'dag/vim2hs'                   " Fixes highlighting for top-level defs, but slows startup noticeably for large files (>400 lines)
-Plugin 'eagletmt/neco-ghc'
+" Plugin 'dag/vim2hs'                     " Fixes highlighting for top-level defs, but slows startup noticeably for large files (>400 lines)
+Plugin 'eagletmt/neco-ghc'                " Provides completions using ghc-mod
+Plugin 'shougo/vimproc.vim'               " Dependency for ghc-mod
+Plugin 'eagletmt/ghcmod-vim'              " Infer and display types
 " Plugin 'bitc/vim-hdevtools'
 Plugin 'lukerandall/haskellmode-vim'
-Plugin 'enomsg/vim-haskellConcealPlus'  " Swap in unicode symbols for haskell ops.
+Plugin 'enomsg/vim-haskellConcealPlus'    " Swap in unicode symbols for haskell ops.
 
 "" Web Dev
 " Plugin 'shawncplus/phpcomplete.vim'
@@ -70,6 +73,10 @@ Plugin 'rbgrouleff/bclose.vim'
 " Input
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'ervandew/supertab'
+Plugin 'scrooloose/nerdcommenter'        " Line comment toggling
+
+" Markdown
+Plugin 'plasticboy/vim-markdown'
 
 call vundle#end()
 """""""""""" </ Vundle Plugins > """""""""""""""
@@ -137,6 +144,9 @@ set nobackup                      " Turn backup off (store everything in version
 set nowb
 set noswapfile
 
+set wrap                          " Wrap lines longer than window width
+set breakindent                   " Indent wraps to same level as original line
+
 """""""""""""""""""" <Misc> """"""""""""""
 " Allows pasting (S-Insert) from OS clipboard
 set clipboard+=unnamed
@@ -165,16 +175,18 @@ let &termencoding=&encoding
 let mapleader=","
 
 " Haskell shortcuts
-map <silent> <Leader>c :SyntasticCheck<CR>
-nmap <silent> <leader>cl :SyntasticCheck hlint<CR>
+map <silent> <Leader>hc :SyntasticCheck<CR>
+nmap <silent> <leader>hl :SyntasticCheck hlint<CR>
 map <Leader>m :w \| make<CR>
-map <Leader>r :w \| !runhaskell %<CR>
+map <Leader>rh :w \| !runhaskell %<CR>
+map <Leader>hst :GhcModType<CR>
+map <Leader>hsti :GhcModTypeInsert<CR>
 
 " Then type in word to ag from the curent directory
-map <Leader>/ :Ag<SPACE>
+map <Leader>/ :Ag!<SPACE>
 
 " Ag the word under the cursor.
-nmap <Leader>// :<c-u>execute 'Ag ' .  expand("<cWORD>")<CR>
+nmap <Leader>// :<c-u>execute 'Ag! ' .  expand("<cWORD>")<CR>
 
 " Toggle whitespace visibility
 nmap <Leader>s :set list!<CR>
@@ -214,14 +226,15 @@ noremap <silent> <C-right> :bnext<CR>
 noremap <silent> <C-l> :bnext<CR>
 
 "------  Fugitive Plugin Options  ------
+nnoremap <Leader>ga :Git add %:p<CR>
+nnoremap <Leader>gc :Gcommit -v -q<CR>
+nnoremap <Leader>gpo :Git push origin master<CR>
 nnoremap <Leader>gs :Gstatus<CR>
-nnoremap <Leader>gr :Gremove<CR>
 nnoremap <Leader>gl :Glog<CR>
 nnoremap <Leader>gb :Gblame<CR>
 nnoremap <Leader>gm :Gmove
 nnoremap <Leader>gp :Ggrep
 nnoremap <Leader>gR :Gread<CR>
-nnoremap <Leader>gg :Git
 nnoremap <Leader>gd :Gdiff<CR>
 
 " Cmd+t = new tab
@@ -233,6 +246,16 @@ nnoremap <silent> <Leader>w :tabclose<CR>
 " Cmd+Shift+N = new buffer
 " map <silent> <Leader>n :enew<CR>
 
+" Toggle between absolute and relative line numbers
+function! NumberToggle()
+  if (&relativenumber == 1)
+    set norelativenumber
+  else
+    set relativenumber
+  endif
+endfunc
+
+nnoremap <Leader>el :call NumberToggle()<CR>
 """"""""""""" < /Keymaps > """"""""""""""""""""""""""""""
 
 set statusline+=%#warningmsg#
