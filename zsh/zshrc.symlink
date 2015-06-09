@@ -1,3 +1,5 @@
+# Sourced only in interactive shells
+
 DOTFILES_ROOT=".dotfiles"
 
 #export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
@@ -62,8 +64,7 @@ done
 setopt no_rm_star_silent
 unset config_files
 unsetopt correct
-setopt completealiases 		# Extend auto-completion to custom aliases
-setopt HIST_IGNORE_DUPS		# Keep only unique items in zsh_history
+
 
 # Active zsh-syntax-highlighting
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -86,3 +87,7 @@ date
 
 # Add ghc-mod to the path (for haskell dev)
 export PATH="/home/dzack/ghc-mod/dist/dist-sandbox-ead5f88e/build:$PATH"
+
+setopt aliases            # Expand aliases in noninteractie shells
+setopt completealiases 		# Extend auto-completion to custom aliases
+setopt HIST_IGNORE_DUPS		# Keep only unique items in zsh_history
