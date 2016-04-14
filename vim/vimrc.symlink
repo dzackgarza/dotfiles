@@ -38,6 +38,7 @@ Plugin 'bling/vim-airline'                " Improve the status bar
 Plugin 'flazz/vim-colorschemes'
 Plugin 'valloric/MatchTagAlways'
 Plugin 'nathanaelkane/vim-indent-guides'  " Colored tab indent levels
+Plugin 'croaker/mustang-vim'
 
 " Git
 Plugin 'tpope/vim-fugitive'
@@ -145,7 +146,11 @@ set nowb
 set noswapfile
 
 set wrap                          " Wrap lines longer than window width
-set breakindent                   " Indent wraps to same level as original line
+
+" Not compiled into some versions of vim, i.e. ubuntu default repos.
+if exists("&breakindent")
+  set breakindent                   " Indent wraps to same level as original line
+endif
 
 """""""""""""""""""" <Misc> """"""""""""""
 " Allows pasting (S-Insert) from OS clipboard
@@ -153,7 +158,7 @@ set clipboard+=unnamed
 
 " GUI Settings
 set t_Co=256
-colorscheme Mustang
+colorscheme mustang
 
 set mouse=a                     " Allow mouse selection
 
