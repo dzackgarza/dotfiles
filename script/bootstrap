@@ -141,9 +141,20 @@ install_dotfiles
 
 info "Linking vim files.."
 ln -s $HOME/$DOTFILES_ROOT/vim/vim $HOME/.vim
-git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/Vundle.vim
-vim +PluginInstall +qall
 success "Vim files linked."
+
+info "Installing Vundle..."
+git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/Vundle.vim
+success "Vundle installed."
+
+info "Installing Pathogen.."
+mkdir -p ~/.vim/autoload ~/.vim/bundle
+curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+success "Pathogen installed."
+
+info "Setting up vim.."
+vim +PluginInstall +qall
+success "Vim setup successful."
 
 info "Linking XMonad.."
 ln -s $HOME/$DOTFILES_ROOT/xmonad $HOME/.xmonad
