@@ -19,15 +19,9 @@ export DOTFILES_ROOT="$HOME/dotfiles"
 ZSH_THEME="mira"
 plugins=(git dirhistory zsh-syntax-highlighting)
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 # dirhistory: press alt-left/right to move through visited directories.
 # zsh-syntax-highlighting: like fish shell. Install the package first!
-=======
-# source $ZSH/oh-my-zsh.sh
-####################
->>>>>>> Stashed changes
-
-# TODO: Doesn't seem to be relevant anymore.
-# source $ZSH/oh-my-zsh.sh
 ####################
 
 # Doesn't seem to exist anymore.
