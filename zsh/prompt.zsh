@@ -81,4 +81,3 @@
    #title "zsh" "%m" "%55<...<%~"
    set_prompt
  }
->>>>>>> Stashed changes
