@@ -40,11 +40,11 @@ fi
 
 # Source zsh options, which are separated by function
 # and all end in .zsh
-personal_zsh_files=($DOTFILES_ROOT/**/*.zsh)
-for file in $personal_zsh_files
-do
-  source $file
-done
+#personal_zsh_files=($DOTFILES_ROOT/**/*.zsh)
+#for file in $personal_zsh_files
+#do
+  #source $file
+#done
 
 
 # load the path files
@@ -105,3 +105,12 @@ date
 setopt aliases            # Expand aliases in noninteractie shells
 setopt completealiases 		# Extend auto-completion to custom aliases
 setopt HIST_IGNORE_DUPS		# Keep only unique items in zsh_history
+
+# Completions from history, using every word (instead of just the first one)
+# and allows pressing up/down to scroll through completions.
+autoload up-line-or-beginning-search
+autoload down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "\e[A" up-line-or-beginning-search
+bindkey "\e[B" down-line-or-beginning-search
