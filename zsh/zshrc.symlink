@@ -1,6 +1,6 @@
 # Sourced only in interactive shells
 
-DOTFILES_ROOT="dotfiles"
+export DOTFILES_ROOT="$HOME/dotfiles"
 
 #export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 #export PATH="$HOME/.jenv/bin:$PATH"
@@ -18,11 +18,10 @@ ZSH_THEME="mira"
 plugins=(git dirhistory zsh-syntax-highlighting)
 # dirhistory: press alt-left/right to move through visited directories.
 # zsh-syntax-highlighting: like fish shell. Install the package first!
-source $ZSH/oh-my-zsh.sh
-####################
 
-# your project folder that we can `c [tab]` to
-export PROJECTS=~/Projects
+# Doesn't seem to exist anymore.
+#source $DOTFILES_ROOT/oh-my-zsh.sh
+####################
 
 # use .localrc for SUPER SECRET CRAP that you don't
 # want in your public, versioned repo.
@@ -32,20 +31,29 @@ then
 fi
 
 # all of our zsh files
-typeset -U config_files
-config_files=($ZSH/**/*.zsh)
+#typeset -U config_files
+#config_files=($DOTFILES_ROOT/**/*.zsh)
+
+# Source zsh options, which are separated by function
+# and all end in .zsh
+personal_zsh_files=($DOTFILES_ROOT/**/*.zsh)
+for file in $personal_zsh_files
+do
+  source $file
+done
+
 
 # load the path files
-for file in ${(M)config_files:#*/path.zsh}
-do
-  source $file
-done
+#for file in ${(M)config_files:#*/path.zsh}
+#do
+  #source $file
+#done
 
 # load everything but the path and completion files
-for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}
-do
-  source $file
-done
+#for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}
+#do
+  #source $file
+#done
 
 # initialize autocomplete here, otherwise functions won't be loaded
 autoload -U compinit
@@ -56,11 +64,12 @@ autoload -U promptinit
 promptinit
 
 # load every completion after autocomplete loads
-for file in ${(M)config_files:#*/completion.zsh}
-do
-  source $file
-done
+#for file in ${(M)config_files:#*/completion.zsh}
+#do
+  #source $file
+#done
 
+#TODO: Move to options
 setopt no_rm_star_silent
 unset config_files
 unsetopt correct
@@ -68,9 +77,6 @@ unsetopt correct
 
 # Active zsh-syntax-highlighting
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-source $DOTFILES_ROOT/zsh/*.zsh
-source $DOTFILES_ROOT/functions/*
 
 # Initialize fzf (fuzzy finder) if installed.
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -80,8 +86,10 @@ source $DOTFILES_ROOT/functions/*
 
 # Bubble text, with kerning!
 hostname | figlet -k
+
 # Custom unicode 'cow'. Might speak offensively!
 fortune -a | cowsay -f healy
+
 # What day is it again..?
 date
 # --------------------
