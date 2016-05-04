@@ -89,12 +89,12 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 # --------------------
 
 # Bubble text, with kerning!
-if command -v figlet 2>/dev/null; then
+if command -v figlet >/dev/null 2>&1; then
 	hostname | figlet -k
 fi
 
 # Custom unicode 'cow'. Might speak offensively!
-if command -v fortune 2>/dev/null; then
+if command -v fortune >/dev/null 2>&1; then
 	fortune -a | cowsay -f healy
 fi
 
