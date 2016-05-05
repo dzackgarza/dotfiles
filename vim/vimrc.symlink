@@ -101,6 +101,7 @@ set ruler
 "set statusline=%<%f\ %h%m%r%=%{fugitive#statusline()}\ \ %-14.(%l,%c%V%)\ %P
 let g:buftabs_only_basename=1
 let g:buftabs_marker_modified = "+"
+set t_ut=
 
 "set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
 
