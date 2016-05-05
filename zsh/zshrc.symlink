@@ -1,5 +1,6 @@
 # Sourced only in interactive shells
 export SHELL=/bin/zsh
+export PATH=$PATH:$HOME/local/bin
 
 export DOTFILES_ROOT="$HOME/dotfiles"
 
@@ -20,9 +21,14 @@ ZSH_THEME="nanotech"
 plugins=(git dirhistory tmux)
 # dirhistory: press alt-left/right to move through visited directories.
 # zsh-syntax-highlighting: like fish shell. Install the package first!
-source $ZSH/oh-my-zsh.sh
+# tmux: Handles automatically connecting to sessions.
 ####################
 
+# Starts a tmux session when logging in.
+# If a session is already running, attaches to it.
+ZSH_TMUX_AUTOSTART=true
+
+source $ZSH/oh-my-zsh.sh
 # Doesn't seem to exist anymore.
 #source $DOTFILES_ROOT/oh-my-zsh.sh
 ####################
@@ -116,4 +122,3 @@ bindkey "\e[A" up-line-or-beginning-search
 bindkey "\e[B" down-line-or-beginning-search
 #export TERM=xterm-256color
 
-export PATH=$PATH:$HOME/local/bin
