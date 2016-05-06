@@ -72,6 +72,8 @@ Plugin 'majutsushi/tagbar'              " Display ctags in a sidebar.
 Plugin 'godlygeek/tabular'
 Plugin 'scrooloose/nerdtree'            " File navigation buffer
 Plugin 'rbgrouleff/bclose.vim'
+Plugin 'ap/vim-buftabline'
+Plugin 'benmills/vimux'
 
 " Input
 Plugin 'terryma/vim-multiple-cursors'
@@ -112,6 +114,7 @@ set tw=500
 " Treat long lines as break lines (useful when moving around in them)
 nnoremap j gj
 nnoremap k gk
+
 """------  Generic Behavior  ------
 " Use spaces instead of tabs (necessary for haskell/ghc)
 set tabstop=2     " Inserts 2 spaces when tab key is pressed.
@@ -154,6 +157,10 @@ set wrap                          " Wrap lines longer than window width
 if exists("&breakindent")
   set breakindent                   " Indent wraps to same level as original line
 endif
+
+" set breakindent                   " Indent wraps to same level as original line
+" Incompatible with debian vim?
+
 
 """""""""""""""""""" <Misc> """"""""""""""
 " Allows pasting (S-Insert) from OS clipboard
@@ -228,9 +235,9 @@ nnoremap <Leader>j <C-w>j
 nnoremap <Leader>k <C-w>k
 
 " Ctrl Left/h & Right/l cycle between buffers
-noremap <silent> <C-left> :bprev<CR>
+noremap <silent> <C-Left> :bprev<CR>
 noremap <silent> <C-h> :bprev<CR>
-noremap <silent> <C-right> :bnext<CR>
+noremap <silent> <C-Right> :bnext<CR>
 noremap <silent> <C-l> :bnext<CR>
 
 "------  Fugitive Plugin Options  ------
@@ -244,6 +251,10 @@ nnoremap <Leader>gm :Gmove
 nnoremap <Leader>gp :Ggrep
 nnoremap <Leader>gR :Gread<CR>
 nnoremap <Leader>gd :Gdiff<CR>
+
+" Some custom programming commands
+nnoremap <Leader>mm :VimuxRunCommand 'make clean && make all && ./test'<CR>
+nnoremap <leader>cap :VimuxRunCommand 'git add *; git commit -am "save"; git push origin master'<CR>
 
 " Cmd+t = new tab
 nnoremap <silent> <Leader>t :tabnew<CR>
@@ -548,6 +559,7 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
+let g:syntastic_cpp_compiler_options=' -std=c++11 -stdlib=libc++'
 
 " Enable syntax checking on write/close, but disable on haskell files
 " (Intensive for large projects)
