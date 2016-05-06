@@ -9,4 +9,4 @@ Xorg/xmonad/xmonad-*
 Xorg/xmonad/xmonad.errors
 
 .cabal-sandbox/
-vim/vim/bundle
+vim/vim/bundle/*
