@@ -1,1 +1,6 @@
 set -g default-terminal "screen-256color"
+set -g status on
+
+# set the scrollback
+set -g history-limit 200000
+set -g mouse on
