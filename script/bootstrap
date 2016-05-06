@@ -134,6 +134,7 @@ install_dotfiles () {
     dst="$HOME/.$(basename "${src%.*}")"
     link_file "$src" "$dst"
   done
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/zsh-syntax-highlighting
 }
 
 setup_gitconfig
