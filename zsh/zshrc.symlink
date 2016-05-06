@@ -27,7 +27,7 @@ plugins=(git dirhistory tmux)
 
 # Starts a tmux session when logging in.
 # If a session is already running, attaches to it.
-ZSH_TMUX_AUTOSTART=true
+#ZSH_TMUX_AUTOSTART=true
 
 # Load themes, plugins, etc
 source $ZSH/oh-my-zsh.sh
@@ -100,6 +100,7 @@ fi
 
 # Custom unicode 'cow'. Might speak offensively!
 if command -v fortune >/dev/null 2>&1; then
+  export COWPATH=$COWPATH:$DOTFILES_ROOT/zsh/cows
 	fortune -a | cowsay -f healy
 fi
 
