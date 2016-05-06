@@ -149,7 +149,6 @@ set nowb
 set noswapfile
 
 set wrap                          " Wrap lines longer than window width
-<<<<<<< Updated upstream
 
 " Not compiled into some versions of vim, i.e. ubuntu default repos.
 if exists("&breakindent")
