@@ -29,7 +29,7 @@
 
  #git_prompt_info () {
   #ref=$($git symbolic-ref HEAD 2>/dev/null) || return
-  echo "(%{\e[0;33m%}${ref#refs/heads/}%{\e[0m%})"
+  ## echo "(%{\e[0;33m%}${ref#refs/heads/}%{\e[0m%})"
   #echo "${ref#refs/heads/}"
  #}
 
@@ -58,7 +58,7 @@
    #fi
  #}
 
- #rb_prompt() {
+ # rb_prompt() {
    #if ! [[ -z "$(ruby_version)" ]]
    #then
      #echo "%{$fg_bold[yellow]%}$(ruby_version)%{$reset_color%} "
@@ -67,17 +67,17 @@
    #fi
  #}
 
- #directory_name() {
+ # directory_name() {
    #echo "%{$fg_bold[cyan]%}%1/%\/%{$reset_color%}"
  #}
 
  #export PROMPT=$'\n$hostname:$(rb_prompt)$(directory_name) $(git_dirty)$(need_push)\n› '
 
- #set_prompt () {
+ # set_prompt () {
    #export RPROMPT="%{$fg_bold[cyan]%}%{$reset_color%}"
  #}
 
- #precmd() {
-   title "zsh" "%m" "%55<...<%~"
+ # precmd() {
+   # title "zsh" "%m" "%55<...<%~"
    #set_prompt
- }
+ #}
