@@ -157,7 +157,7 @@ vim +PluginInstall +qall
 success "Vim setup successful."
 
 info "Linking XMonad.."
-ln -s $DOTFILES_ROOT/xmonad $HOME/.xmonad
+ln -s $DOTFILES_ROOT/Xorg/xmonad $HOME/.xmonad
 success "XMonad linked."
 
 echo ''
