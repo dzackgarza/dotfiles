@@ -149,11 +149,16 @@ set nowb
 set noswapfile
 
 set wrap                          " Wrap lines longer than window width
+<<<<<<< Updated upstream
 
 " Not compiled into some versions of vim, i.e. ubuntu default repos.
 if exists("&breakindent")
   set breakindent                   " Indent wraps to same level as original line
 endif
+
+" set breakindent                   " Indent wraps to same level as original line
+" Incompatible with debian vim?
+
 
 """""""""""""""""""" <Misc> """"""""""""""
 " Allows pasting (S-Insert) from OS clipboard
