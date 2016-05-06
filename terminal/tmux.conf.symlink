@@ -3,4 +3,6 @@ set -g status on
 
 # set the scrollback
 set -g history-limit 200000
-set -g mouse on
+
+#Ambiguous option?
+#set -g mouse on
