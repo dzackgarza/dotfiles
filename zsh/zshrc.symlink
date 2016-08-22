@@ -23,15 +23,17 @@ plugins=(git dirhistory tmux)
 # dirhistory: press alt-left/right to move through visited directories.
 # zsh-syntax-highlighting: like fish shell. Install the package first!
 # tmux: Handles automatically connecting to sessions.
+# dirhistory: press alt-left/right to move through visited directories.
+# zsh-syntax-highlighting: like fish shell. Install the package first!
 ####################
 
 # Starts a tmux session when logging in.
 # If a session is already running, attaches to it.
-#ZSH_TMUX_AUTOSTART=true
+ZSH_TMUX_AUTOSTART=true
 
 # By default, detaching closes the terminal session and/or logs out of ssh.
 # Uncomment to access the underlying shell.
-ZSH_TMUX_AUTOQUIT=false
+# ZSH_TMUX_AUTOQUIT=false
 
 
 # Load themes, plugins, etc
@@ -117,6 +119,15 @@ zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 bindkey "\e[A" up-line-or-beginning-search
 bindkey "\e[B" down-line-or-beginning-search
+
+alias tmux="tmux -2"
+
+# Antigen stuff
+source /usr/share/zsh/scripts/antigen/antigen.zsh
+
+antigen-use oh-my-zsh
+antigen-bundle arialdomartini/oh-my-git
+antigen theme arialdomartini/oh-my-git-themes oppa-lana-style
 
 # Source zsh options, which are separated by function
 # and all end in .zsh
