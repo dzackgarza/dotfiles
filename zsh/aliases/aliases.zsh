@@ -35,5 +35,6 @@ alias w2pbuild='cd /opt/tinyprints/web2print_trunk;/dist/apache-tomcat-7.0.29/bi
 alias permfix='sudo chown -R zgarza:zgarza /opt/tinyprints && find /opt/tinyprints/w2p-jogl -type f -perm 777 -print -exec chmod 755 {} \;'
 alias crestart='/dist/apache-tomcat-7.0.29/bin/shutdown.sh && /dist/apache-tomcat-7.0.29/bin/startup.sh'
 
-
 alias getqueries="cat ~/.config/calibre/server_access_log.txt| grep -o -E 'query=[^ ]+' | sed 's/query=//' | sed 's/\"//' | sed 's/^[ \t]*//' | sort | uniq"
+
+alias ls='ls --color=auto'
