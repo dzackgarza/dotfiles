@@ -253,14 +253,16 @@ nnoremap <Leader>gR :Gread<CR>
 nnoremap <Leader>gd :Gdiff<CR>
 
 " Some custom programming commands
-nnoremap <Leader>mm :VimuxRunCommand 'make clean && make all && ./test'<CR>
-nnoremap <leader>cap :VimuxRunCommand 'git add *; git commit -am "save"; git push origin master'<CR>
+nnoremap <Leader>mm :wa \| :VimuxRunCommand 'make clean && make all && ./test'<CR>
+nnoremap <leader>cap :wa \| :VimuxRunCommand 'git add *; git commit -am "save"; git push origin master'<CR>
+" Close buffer without affecting splits.
+nnoremap <leader>w :Bclose<CR>
 
 " Cmd+t = new tab
 nnoremap <silent> <Leader>t :tabnew<CR>
 
 " Cmd+w = close tab (this should happen by default)
-nnoremap <silent> <Leader>w :tabclose<CR>
+"nnoremap <silent> <Leader>w :tabclose<CR>
 
 " Cmd+Shift+N = new buffer
 " map <silent> <Leader>n :enew<CR>
