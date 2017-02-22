@@ -2,8 +2,9 @@
 #
 # bootstrap installs things.
 
-cd "$(dirname "$0")/.."
-DOTFILES_ROOT=$(pwd)
+DOTFILES_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+# DOTFILES_ROOT=`dirname $SCRIPT_DIR`
+echo "Using the following dotfiles root foler: $DOTFILES_ROOT"
 
 set -e
 
@@ -28,7 +29,7 @@ fail () {
 }
 
 setup_gitconfig () {
-  if ! [ -f git/gitconfig.symlink ]
+  if ! [ -f $DOTFILES_ROOT/git/gitconfig.symlink ]
   then
     info 'setup gitconfig'
 
@@ -134,18 +135,24 @@ install_dotfiles () {
     dst="$HOME/.$(basename "${src%.*}")"
     link_file "$src" "$dst"
   done
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/zsh-syntax-highlighting
+  if [ ! -d $HOME/zsh-syntax-highlighting ]; then
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/zsh-syntax-highlighting
+  fi
 }
 
 setup_gitconfig
 install_dotfiles
 
 info "Linking vim files.."
-ln -s $DOTFILES_ROOT/vim/vim $HOME/.vim
+if [ ! -d $HOME/.vim ]; then
+  ln -s $DOTFILES_ROOT/vim/vim $HOME/.vim
+fi
 success "Vim files linked."
 
 info "Installing Vundle..."
-git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/Vundle.vim
+if [ ! -d $HOME/.vim/bundle/Vundle.vim ]; then
+  git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/Vundle.vim
+fi
 success "Vundle installed."
 
 info "Installing Pathogen.."
@@ -158,7 +165,9 @@ vim +PluginInstall +qall
 success "Vim setup successful."
 
 info "Linking XMonad.."
-ln -s $DOTFILES_ROOT/Xorg/xmonad $HOME/.xmonad
+if [ ! -d $HOME/.xmonad ]; then
+  ln -s $DOTFILES_ROOT/Xorg/xmonad $HOME/.xmonad
+fi
 success "XMonad linked."
 
 echo ''
