@@ -140,6 +140,13 @@ install_dotfiles () {
   fi
 }
 
+# Install zsh
+pacapt install zsh
+chsh -s $(which zsh)
+
+# Install oh-my-zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
 setup_gitconfig
 install_dotfiles
 
