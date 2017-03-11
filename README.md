@@ -20,6 +20,7 @@ Take your dotfiles everywhere!
 * cowsay: Could not find healy cowfile
 * Install tmux
 * Install ag
+* Install xclip
 * Fix vim autoindent for markdown files
 * Fix antigen install issues, or install vim-apt
 * Install dependencies
@@ -27,6 +28,8 @@ Take your dotfiles everywhere!
   * figlet
   * fortune
   * ruby
+* Modify wizard to store git login information somewhere
+  * See if github SSH key addition can be automated
 
 /root/.zshrc:source:18: no such file or directory: /root/.oh-my-zsh/oh-my-zsh.sh
 /root/.zshrc:source:70: no such file or directory: /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
