@@ -136,3 +136,6 @@ for file in $personal_zsh_files
 do
   source $file
 done
+
+alias apt="sudo apt"
+alias pacapt="sudo pacapt"
