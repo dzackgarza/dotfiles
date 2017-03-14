@@ -141,13 +141,14 @@ install_dotfiles () {
 }
 
 # Install zsh
-pacapt install zsh
+pacapt -S zsh
 chsh -s $(which zsh)
 
 # Install oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-pacapt install ag tree cowsay lolcat fortune-mod
+pacapt -S silversearcher-ag tree cowsay lolcat fortune-mod
+
 
 setup_gitconfig
 install_dotfiles
