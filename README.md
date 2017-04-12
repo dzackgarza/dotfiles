@@ -1,5 +1,13 @@
 Take your dotfiles everywhere!
 
+# How to Install
+```
+sudo apt-get install pacapt
+git clone https://github.com/dzackgarza/dotfiles
+cd dotfiles
+sudo ./autoinstall.sh
+```
+
 # Dependencies
 * pacapt (To abstract away the underlying package manager)
 
