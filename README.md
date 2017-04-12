@@ -3,7 +3,7 @@ Take your dotfiles everywhere!
 # How to Install
 ```
 sudo apt-get install pacapt
-git clone https://github.com/dzackgarza/dotfiles
+git clone --recursive -j8 git://github.com/dzackgarza/dotfiles.git
 cd dotfiles
 sudo ./autoinstall.sh
 ```
