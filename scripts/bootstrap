@@ -46,6 +46,11 @@ setup_gitconfig () {
 
     sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" git/gitconfig.symlink.example > git/gitconfig.symlink
 
+    ssh-keygen -t rsa -b 4096 -C git_authoremail
+    eval "$(ssh-agent -s)"
+    ssh-add ~/.ssh/id_rsa
+    xclip -sel clip < ~/.ssh/id_rsa.pub
+
     success 'gitconfig'
   fi
 }
@@ -147,7 +152,11 @@ chsh -s $(which zsh)
 # Install oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-pacapt -S silversearcher-ag tree cowsay lolcat fortune-mod
+# Install antigen
+curl -L git.io/antigen > antigen.zsh
+source antigen.zsh
+
+pacapt -S silversearcher-ag tree cowsay lolcat fortune-mod tmux xclip
 
 
 setup_gitconfig
@@ -179,6 +188,11 @@ if [ ! -d $HOME/.xmonad ]; then
   ln -s $DOTFILES_ROOT/Xorg/xmonad $HOME/.xmonad
 fi
 success "XMonad linked."
+
+info "Installing fzf..."
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
+success "fzf installed."
 
 echo ''
 echo ' Installation Completed.'
