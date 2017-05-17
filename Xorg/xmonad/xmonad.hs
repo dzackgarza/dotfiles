@@ -31,7 +31,7 @@ main =
     , workspaces          = myWorkspaces
     , borderWidth         = 1
     , normalBorderColor   = "#000000"
-    , focusedBorderColor  = "#49455C"
+    , focusedBorderColor  = "#ff3300"
     , manageHook          = myManageHook
     , handleEventHook     = handleEventHook defaultConfig <+> fullscreenEventHook
     }
