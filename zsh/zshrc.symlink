@@ -12,6 +12,7 @@ export DOTFILES_ROOT="$HOME/dotfiles"
 export PATH="$HOME/anaconda/bin:$PATH"
 export PATH="$HOME/dotfiles/bin:$PATH"
 export PATH="$HOME/.odrive-agent/bin:$PATH"
+export PATH="/home/zack/anaconda3/bin:$PATH"
 
 # TODO: Check if ruby is available
 # Add ruby gems to path
