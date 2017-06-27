@@ -34,10 +34,6 @@ setup_gitconfig () {
     info 'setup gitconfig'
 
     git_credential='cache'
-    if [ "$(uname -s)" == "Darwin" ]
-    then
-      git_credential='osxkeychain'
-    fi
 
     user ' - What is your github author name?'
     read -e git_authorname
@@ -154,7 +150,8 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 
 # Install antigen
 curl -L git.io/antigen > antigen.zsh
-source antigen.zsh
+#source ./antigen.zsh
+success "Run 'source antigen.zsh' from zsh."
 
 pacapt -S silversearcher-ag tree cowsay lolcat fortune-mod tmux xclip
 
