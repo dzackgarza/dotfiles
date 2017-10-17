@@ -1,0 +1,100 @@
+"*":
+  aligner:
+    alignComments: true
+  "atom-beautify":
+    css:
+      end_with_newline: true
+  "atom-ternjs":
+    excludeLowerPriorityProviders: true
+  "autosave-onchange":
+    delay: 4000
+  core:
+    audioBeep: false
+    closeDeletedFileTabs: true
+    disabledPackages: [
+      "atom-save-all"
+      "linter-csslint"
+    ]
+    ignoredNames: [
+      ".git"
+      ".hg"
+      ".svn"
+      ".DS_Store"
+      "._*"
+      "Thumbs.db"
+      "desktop.ini"
+      "*.bundle.js"
+      "*.min*"
+    ]
+    projectHome: "/home/zack/Projects"
+    telemetryConsent: "no"
+  editor:
+    fontSize: 12
+    preferredLineLength: 120
+    scrollPastEnd: true
+    showIndentGuide: true
+    showInvisibles: true
+    softWrap: true
+    softWrapAtPreferredLineLength: true
+  "exception-reporting":
+    userId: "38d3e691-afd2-48c0-8ed8-d7d7bdea684f"
+  "language-babel":
+    autoIndentJSX: true
+  "linter-eslint":
+    disableWhenNoEslintConfig: false
+    eslintrcPath: "/home/zack/.eslintrc"
+    fixOnSave: true
+    globalNodePath: "/home/zack/.nvm/versions/node/v8.4.0"
+    lintHtmlFiles: true
+  "linter-stylelint":
+    disableWhenNoConfig: false
+    useStandard: true
+  "linter-ui-default":
+    showPanel: true
+  "prettier-atom":
+    formatOnSaveOptions:
+      excludedGlobs: [
+        "*.css"
+      ]
+      showInStatusBar: true
+    prettierOptions:
+      singleQuote: true
+      useTabs: true
+  stylefmt: {}
+  "tabs-to-spaces":
+    onSave: "tabify"
+  "tree-view":
+    autoReveal: true
+    hideIgnoredNames: true
+    hideVcsIgnoredFiles: true
+    squashDirectoryNames: true
+  welcome:
+    showOnStartup: false
+".jade.source":
+  editor:
+    showIndentGuide: true
+".js.jsx.react.source":
+  editor:
+    scrollPastEnd: true
+    showIndentGuide: true
+    showInvisibles: true
+".js.jsx.source":
+  editor:
+    scrollPastEnd: true
+    showIndentGuide: true
+    showInvisibles: true
+    softWrap: true
+    softWrapAtPreferredLineLength: true
+".js.source.subtlegradient":
+  editor:
+    showIndentGuide: true
+".languagebabel.ttlextension":
+  editor:
+    scrollPastEnd: true
+    showIndentGuide: true
+    softWrap: true
+    softWrapAtPreferredLineLength: true
+".pug.source":
+  editor:
+    scrollPastEnd: true
+    showIndentGuide: true
