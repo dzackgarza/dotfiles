@@ -141,3 +141,7 @@ alias pacapt="sudo pacapt"
 #antigen-use oh-my-zsh
 #antigen-bundle arialdomartini/oh-my-git
 #antigen theme arialdomartini/oh-my-git-themes oppa-lana-style
+export PATH="$PATH:/opt/mssql-tools/bin"
+
+export NVM_DIR="/home/zack/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
