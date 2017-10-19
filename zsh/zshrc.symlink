@@ -123,7 +123,6 @@ zle -N down-line-or-beginning-search
 bindkey "\e[A" up-line-or-beginning-search
 bindkey "\e[B" down-line-or-beginning-search
 
-alias tmux="tmux -2"
 
 # Source zsh options, which are separated by function
 # and all end in .zsh
@@ -133,15 +132,19 @@ do
   source $file
 done
 
+alias tmux="tmux -2"
 alias apt="sudo apt"
 alias pacapt="sudo pacapt"
+alias python=python3
 # Antigen stuff
 #source /usr/share/zsh/scripts/antigen/antigen.zsh
 
 #antigen-use oh-my-zsh
 #antigen-bundle arialdomartini/oh-my-git
 #antigen theme arialdomartini/oh-my-git-themes oppa-lana-style
-export PATH="$PATH:/opt/mssql-tools/bin"
+#export PATH="$PATH:/opt/mssql-tools/bin"
 
 export NVM_DIR="/home/zack/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+source /etc/zsh_command_not_found
