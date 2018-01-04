@@ -29,7 +29,7 @@
     projectHome: "/home/zack/Projects"
     telemetryConsent: "no"
   editor:
-    fontSize: 12
+    fontSize: 13
     preferredLineLength: 120
     scrollPastEnd: true
     showIndentGuide: true
@@ -44,13 +44,13 @@
     disableWhenNoEslintConfig: false
     eslintrcPath: "/home/zack/.eslintrc"
     fixOnSave: true
-    globalNodePath: "/home/zack/.nvm/versions/node/v8.4.0"
+    ignoreFixableRulesWhileTyping: true
     lintHtmlFiles: true
   "linter-stylelint":
     disableWhenNoConfig: false
     useStandard: true
   "linter-ui-default":
-    showPanel: true
+    panelHeight: 86
   "prettier-atom":
     formatOnSaveOptions:
       excludedGlobs: [
