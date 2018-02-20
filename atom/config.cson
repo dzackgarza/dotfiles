@@ -14,6 +14,11 @@
     disabledPackages: [
       "atom-save-all"
       "linter-csslint"
+      "git-time-machine"
+      "goto-definition"
+      "symbol-gen"
+      "symbols-tree-view"
+      "markdown-preview"
     ]
     ignoredNames: [
       ".git"
@@ -29,7 +34,6 @@
     projectHome: "/home/zack/Projects"
     telemetryConsent: "no"
   editor:
-    fontSize: 13
     preferredLineLength: 120
     scrollPastEnd: true
     showIndentGuide: true
@@ -51,6 +55,12 @@
     useStandard: true
   "linter-ui-default":
     panelHeight: 86
+  "markdown-preview-enhanced":
+    enableTypographer: true
+  minimap:
+    plugins:
+      pigments: true
+      pigmentsDecorationsZIndex: 0
   "prettier-atom":
     formatOnSaveOptions:
       excludedGlobs: [
