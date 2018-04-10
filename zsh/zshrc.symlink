@@ -123,6 +123,8 @@ zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 bindkey "\e[A" up-line-or-beginning-search
 bindkey "\e[B" down-line-or-beginning-search
+bindkey '^[[1;5D' backward-word
+bindkey '^[[1;5C' forward-word
 
 
 # Source zsh options, which are separated by function
