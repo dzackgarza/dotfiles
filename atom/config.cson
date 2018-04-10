@@ -19,6 +19,7 @@
       "symbol-gen"
       "symbols-tree-view"
       "markdown-preview"
+      "language-gfm"
     ]
     ignoredNames: [
       ".git"
@@ -55,8 +56,12 @@
     useStandard: true
   "linter-ui-default":
     panelHeight: 86
+    showPanel: true
   "markdown-preview-enhanced":
     enableTypographer: true
+    mathRenderingOption: "MathJax"
+    openPreviewPaneAutomatically: false
+    printBackground: true
   minimap:
     plugins:
       pigments: true
