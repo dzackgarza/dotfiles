@@ -1,2 +1,3 @@
 startup_message off
 force_color_prompt=yes
+term screen-256color
