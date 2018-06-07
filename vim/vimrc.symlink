@@ -388,7 +388,7 @@ set tags=tags;/,codex.tags;/
 
 au FileType haskell autocmd VimEnter * hi clear Conceal         " Remove background color from concealed characters (grey on grey??)
 " autocmd FileType * nested :call tagbar#autoopen(0)            " Automatically open tagbar
-" set foldlevelstart=20                                         " Automatically unfold everything at startup
+set foldlevelstart=20                                         " Automatically unfold everything at startup
 " au BufEnter *.hs compiler ghc
 
 let g:haddock_browser="/usr/bin/links"
@@ -571,3 +571,26 @@ let g:syntastic_mode_map = {
         \ "passive_filetypes": ["haskell", "tex"] }
 let g:hdevtools_options = '-g -cpp -g-ilib -g-isrc -g-i. -g-idist/build/autogen -g-Wall -g-package-conf='.FindCabalSandboxRootPackageConf()
 let g:syntastic_enable_signs=1
+
+" Automatically :set-paste when pasting from clipboard, in insert mode
+function! WrapForTmux(s)
+  if !exists('$TMUX')
+    return a:s
+  endif
+
+  let tmux_start = "\<Esc>Ptmux;"
+  let tmux_end = "\<Esc>\\"
+
+  return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
+endfunction
+
+let &t_SI .= WrapForTmux("\<Esc>[?2004h")
+let &t_EI .= WrapForTmux("\<Esc>[?2004l")
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
