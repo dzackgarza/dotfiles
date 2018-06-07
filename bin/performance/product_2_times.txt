@@ -1,1 +1,0 @@
-Average time per call: 215 ms

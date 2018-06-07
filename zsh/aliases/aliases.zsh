@@ -1,23 +1,36 @@
+function jg () {
+  curl -i -H "Accept: application/json" -H "Content-Type: application/json" "$1" -L
+}
+
+function jp () {
+  curl --data "$1" "$2"
+}
+
 function parHaskell() {
 	ghc -O2 --make $1 -threaded -rtsopts;
 }
 
-#export JAVA_HOME='/usr/libexec/java_home'
+function mcd() {
+	mkdir $1 && cd $1
+}
 
-
-
-# SSH Shortcuts
-alias tpd='ssh zgarza@zgarza.tinyprints.com'
-alias droplet='ssh root@104.131.9.12'
-alias berkeley='ssh -XC -c blowfish-cbc,arcfour cory.eecs.berkeley.edu -l cs70-awu'
-
+# For xmonad tweaking
+alias xr="xmonad --recompile && xmonad --restart"
 
 # Dev Specific
-alias l="ls"
+alias ls="colorls"
+alias l="colorls"
+alias mkdir="mkdir -p"
 
-alias getqueries="cat ~/.config/calibre/server_access_log.txt| grep -o -E 'query=[^ ]+' | sed 's/query=//' | sed 's/\"//' | sed 's/^[ \t]*//' | sort | uniq"
+# Just git save everything
+alias gsave="git add -A && git commit -m 'auto update' && git push origin master"
 
-alias ls='ls --color=auto'
-
+# Copy/paste piping
 alias pbcopy='xsel --clipboard --input';
 alias pbpaste='xsel --clipboard --output';
+
+# Directory jumping
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
