@@ -29,22 +29,15 @@ fail () {
 }
 
 setup_gitconfig () {
-  if ! [ -f $DOTFILES_ROOT/git/gitconfig.symlink ]
+  if ! [ -f $DOTFILES_ROOT/configs/gitconfig.symlink ]
   then
     info 'setup gitconfig'
 
-    git_credential='cache'
-
-    user ' - What is your github author name?'
-    read -e git_authorname
     user ' - What is your github author email?'
     read -e git_authoremail
 
-    sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" git/gitconfig.symlink.example > git/gitconfig.symlink
-
     ssh-keygen -t rsa -b 4096 -C $git_authoremail
     eval "$(ssh-agent -s)" && ssh-add ~/.ssh/id_rsa
-    #xclip -sel clip < ~/.ssh/id_rsa.pub
 
     success 'gitconfig'
   fi
@@ -141,7 +134,7 @@ install_dotfiles () {
 }
 
 # Install zsh
-yaourt -S zsh
+yaourt -S zsh --noconfirm
 chsh -s $(which zsh)
 
 # Install oh-my-zsh
@@ -152,7 +145,7 @@ curl -L git.io/antigen > antigen.zsh
 #source ./antigen.zsh
 success "Run 'source antigen.zsh' from zsh."
 
-yaourt -S tree cowsay lolcat fortune-mod tmux xclip vim
+yaourt -S tree cowsay lolcat fortune-mod tmux xclip vim --noconfirm
 
 
 setup_gitconfig
@@ -190,5 +183,19 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
 success "fzf installed."
 
+info "Installing rvm..."
+gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+\curl -sSL https://get.rvm.io | bash -s -- --ignore-dotfiles
+source $HOME/.rvm/scripts/rvm
+rvm install ruby --latest
+rvm --default use ruby
+
+mkdir $HOME/.nvm
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+
 echo ''
 echo ' Installation Completed.'
+
+xclip -sel clip < ~/.ssh/id_rsa.pub
+
+echo 'SSH key copied to clipboard, go to Github to add.'
