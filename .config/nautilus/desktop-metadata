@@ -1,0 +1,19 @@
+[directory]
+nautilus-icon-view-keep-aligned=true
+nautilus-icon-view-layout-timestamp=1527784336
+nautilus-desktop-icon-size=96
+
+[home]
+nautilus-icon-position-timestamp=1527784336
+nautilus-icon-position=56,26
+icon-scale=1
+
+[trash]
+nautilus-icon-position-timestamp=1527784336
+nautilus-icon-position=56,126
+icon-scale=1
+
+[Ubuntu 17.10 amd64.volume]
+nautilus-icon-position=56,226
+icon-scale=1
+nautilus-icon-position-timestamp=1527783680

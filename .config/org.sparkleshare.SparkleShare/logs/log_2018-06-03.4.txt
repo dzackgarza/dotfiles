@@ -1,0 +1,742 @@
+21:35:40 Environment | SparkleShare 2.0.1 (Flatpak)
+21:35:42 Environment | Git LFS 2.3.0
+21:35:42 Environment | Git 2.14.1
+21:35:42 Environment | GNOME (Unix 4.16.13.1)
+21:35:42 Cmd |  | gvfs-set-attribute "/home/zack/SparkleShare" metadata::custom-icon-name org.sparkleshare.SparkleShare
+21:36:02 /home/zack/SparkleShare/github.com/notes | Initializing...
+21:36:05 Cmd | notes | git config core.ignorecase false
+21:36:20 Cmd | notes | git config remote.origin.url "ssh://git@github.com/dzackgarza/notes.git"
+21:36:29 Cmd | notes | git config core.sshCommand ssh -i /home/zack/.config/org.sparkleshare.SparkleShare/ssh/2018-05-31_20h18.key -o UserKnownHostsFile=/home/zack/.config/org.sparkleshare.SparkleShare/ssh/known_hosts -o IdentitiesOnly=yes -o PasswordAuthentication=no -F /dev/null
+21:36:29 Cmd | notes | git --no-pager log --since=1.month --raw --find-renames --date=iso --format=medium --no-color --no-merges
+21:36:39 Git | notes | Checking for remote changes...
+21:36:39 Cmd | notes | git rev-parse HEAD
+21:36:40 Cmd | notes | git config core.ignorecase true
+21:36:40 Cmd | notes | git config core.ignorecase false
+21:36:40 Cmd | notes | git rev-parse --abbrev-ref HEAD
+21:36:40 Cmd | notes | git ls-remote --heads --exit-code origin master
+21:36:42 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+21:36:42 Cmd | notes | git status --porcelain
+21:41:03 Git | notes | Checking for remote changes...
+21:41:03 Cmd | notes | git rev-parse HEAD
+21:41:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+21:41:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+21:46:03 Git | notes | Checking for remote changes...
+21:46:03 Cmd | notes | git rev-parse HEAD
+21:46:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+21:46:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+21:51:03 Git | notes | Checking for remote changes...
+21:51:03 Cmd | notes | git rev-parse HEAD
+21:51:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+21:51:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+21:56:03 Git | notes | Checking for remote changes...
+21:56:03 Cmd | notes | git rev-parse HEAD
+21:56:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+21:56:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+22:01:03 Git | notes | Checking for remote changes...
+22:01:03 Cmd | notes | git rev-parse HEAD
+22:01:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+22:01:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+22:06:03 Git | notes | Checking for remote changes...
+22:06:03 Cmd | notes | git rev-parse HEAD
+22:06:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+22:06:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+22:11:03 Git | notes | Checking for remote changes...
+22:11:03 Cmd | notes | git rev-parse HEAD
+22:11:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+22:11:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+22:16:03 Git | notes | Checking for remote changes...
+22:16:03 Cmd | notes | git rev-parse HEAD
+22:16:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+22:16:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+22:21:03 Git | notes | Checking for remote changes...
+22:21:04 Cmd | notes | git rev-parse HEAD
+22:21:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+22:21:06 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+22:26:03 Git | notes | Checking for remote changes...
+22:26:03 Cmd | notes | git rev-parse HEAD
+22:26:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+22:26:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+22:31:03 Git | notes | Checking for remote changes...
+22:31:03 Cmd | notes | git rev-parse HEAD
+22:31:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+22:31:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+22:36:03 Git | notes | Checking for remote changes...
+22:36:03 Cmd | notes | git rev-parse HEAD
+22:36:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+22:36:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+22:41:03 Git | notes | Checking for remote changes...
+22:41:03 Cmd | notes | git rev-parse HEAD
+22:41:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+22:41:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+22:46:03 Git | notes | Checking for remote changes...
+22:46:03 Cmd | notes | git rev-parse HEAD
+22:46:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+22:46:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+22:51:03 Git | notes | Checking for remote changes...
+22:51:03 Cmd | notes | git rev-parse HEAD
+22:51:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+22:51:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+22:56:03 Git | notes | Checking for remote changes...
+22:56:03 Cmd | notes | git rev-parse HEAD
+22:56:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+22:56:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+23:01:03 Git | notes | Checking for remote changes...
+23:01:03 Cmd | notes | git rev-parse HEAD
+23:01:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+23:01:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+23:06:03 Git | notes | Checking for remote changes...
+23:06:03 Cmd | notes | git rev-parse HEAD
+23:06:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+23:06:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+23:11:03 Git | notes | Checking for remote changes...
+23:11:03 Cmd | notes | git rev-parse HEAD
+23:11:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+23:11:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+23:16:03 Git | notes | Checking for remote changes...
+23:16:03 Cmd | notes | git rev-parse HEAD
+23:16:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+23:16:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+23:21:03 Git | notes | Checking for remote changes...
+23:21:03 Cmd | notes | git rev-parse HEAD
+23:21:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+23:21:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+23:26:03 Git | notes | Checking for remote changes...
+23:26:03 Cmd | notes | git rev-parse HEAD
+23:26:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+23:26:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+23:31:03 Git | notes | Checking for remote changes...
+23:31:03 Cmd | notes | git rev-parse HEAD
+23:31:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+23:31:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+23:36:03 Git | notes | Checking for remote changes...
+23:36:03 Cmd | notes | git rev-parse HEAD
+23:36:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+23:36:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+23:41:03 Git | notes | Checking for remote changes...
+23:41:03 Cmd | notes | git rev-parse HEAD
+23:41:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+23:41:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+23:46:03 Git | notes | Checking for remote changes...
+23:46:03 Cmd | notes | git rev-parse HEAD
+23:46:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+23:46:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+23:51:03 Git | notes | Checking for remote changes...
+23:51:03 Cmd | notes | git rev-parse HEAD
+23:51:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+23:51:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+23:56:03 Git | notes | Checking for remote changes...
+23:56:03 Cmd | notes | git rev-parse HEAD
+23:56:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+23:56:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+00:01:03 Git | notes | Checking for remote changes...
+00:01:03 Cmd | notes | git rev-parse HEAD
+00:01:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+00:01:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+00:06:03 Git | notes | Checking for remote changes...
+00:06:03 Cmd | notes | git rev-parse HEAD
+00:06:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+00:06:09 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+00:11:03 Git | notes | Checking for remote changes...
+00:11:03 Cmd | notes | git rev-parse HEAD
+00:11:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+00:11:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+00:16:03 Git | notes | Checking for remote changes...
+00:16:03 Cmd | notes | git rev-parse HEAD
+00:16:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+00:16:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+00:21:03 Git | notes | Checking for remote changes...
+00:21:03 Cmd | notes | git rev-parse HEAD
+00:21:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+00:21:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+00:26:03 Git | notes | Checking for remote changes...
+00:26:03 Cmd | notes | git rev-parse HEAD
+00:26:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+00:26:04 Git | notes | No remote changes, local+remote: 00f28e921ef91d9c31e47244841b0d97e2f2376f
+00:27:49 Cmd | notes | git status --porcelain
+00:27:49 Local | notes | Activity detected, waiting for it to settle...
+00:27:51 Local | notes | Activity has settled
+00:27:51 Cmd | notes | git status --porcelain
+00:27:51 SyncUp | notes | Initiated
+00:27:51 Cmd | notes | git add --all
+00:27:51 Cmd | notes | git status --porcelain
+00:27:51 Cmd | notes | git config user.name "zack"
+00:27:51 Cmd | notes | git config user.email "dzackgarza@gmai.com"
+00:27:51 Cmd | notes | git commit --all --message="/ ‘Talks/Homotopy and the Hopf Fibration.md’
+" --author="zack <dzackgarza@gmai.com>"
+00:27:51 Cmd | notes | git push --all --progress origin
+00:27:52 Git | Counting objects: 4, done.
+00:27:52 Git | Delta compression using up to 4 threads.
+00:27:52 Git | Total 4 (delta 3), reused 0 (delta 0)
+00:27:57 Git | To ssh://github.com/dzackgarza/notes.git
+00:27:57 Git |    00f28e9..0202367  master -> master
+00:27:57 SyncUp | notes | Done
+00:27:57 Cmd | notes | git --no-pager log --since=1.month --raw --find-renames --date=iso --format=medium --no-color --no-merges
+00:27:58 Cmd | notes | git status --porcelain
+00:36:56 Cmd | notes | git status --porcelain
+00:36:56 Local | notes | Activity detected, waiting for it to settle...
+00:36:57 Local | notes | Activity has settled
+00:36:57 Cmd | notes | git status --porcelain
+00:36:57 SyncUp | notes | Initiated
+00:36:57 Cmd | notes | git add --all
+00:36:57 Cmd | notes | git status --porcelain
+00:36:57 Cmd | notes | git commit --all --message="/ ‘Talks/Homotopy and the Hopf Fibration.md’
+" --author="zack <dzackgarza@gmai.com>"
+00:36:57 Cmd | notes | git push --all --progress origin
+00:36:58 Git | Counting objects: 4, done.
+00:36:58 Git | Delta compression using up to 4 threads.
+00:36:58 Git | Total 4 (delta 3), reused 0 (delta 0)
+00:37:03 Git | To ssh://github.com/dzackgarza/notes.git
+00:37:03 Git |    0202367..e5f10e5  master -> master
+00:37:03 SyncUp | notes | Done
+00:37:03 Cmd | notes | git --no-pager log --since=1.month --raw --find-renames --date=iso --format=medium --no-color --no-merges
+00:37:03 Cmd | notes | git status --porcelain
+00:41:03 Git | notes | Checking for remote changes...
+00:41:03 Cmd | notes | git rev-parse HEAD
+00:41:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+00:41:04 Git | notes | No remote changes, local+remote: e5f10e5c2f2354f086db777fbc111befd465cffd
+00:47:27 Cmd | notes | git status --porcelain
+00:47:27 Local | notes | Activity detected, waiting for it to settle...
+00:47:29 Local | notes | Activity has settled
+00:47:29 Cmd | notes | git status --porcelain
+00:47:29 SyncUp | notes | Initiated
+00:47:29 Cmd | notes | git add --all
+00:47:29 Cmd | notes | git status --porcelain
+00:47:29 Cmd | notes | git commit --all --message="/ ‘Talks/Homotopy and the Hopf Fibration.md’
+" --author="zack <dzackgarza@gmai.com>"
+00:47:29 Cmd | notes | git push --all --progress origin
+00:47:30 Git | Counting objects: 4, done.
+00:47:30 Git | Delta compression using up to 4 threads.
+00:47:30 Git | Total 4 (delta 3), reused 0 (delta 0)
+00:47:34 Git | To ssh://github.com/dzackgarza/notes.git
+00:47:34 Git |    e5f10e5..e179dfc  master -> master
+00:47:34 SyncUp | notes | Done
+00:47:34 Cmd | notes | git --no-pager log --since=1.month --raw --find-renames --date=iso --format=medium --no-color --no-merges
+00:47:35 Cmd | notes | git status --porcelain
+00:50:09 Cmd | notes | git status --porcelain
+00:50:09 Local | notes | Activity detected, waiting for it to settle...
+00:50:10 Local | notes | Activity has settled
+00:50:10 Cmd | notes | git status --porcelain
+00:50:10 SyncUp | notes | Initiated
+00:50:10 Cmd | notes | git add --all
+00:50:10 Cmd | notes | git status --porcelain
+00:50:10 Cmd | notes | git commit --all --message="/ ‘Talks/Homotopy and the Hopf Fibration.md’
+" --author="zack <dzackgarza@gmai.com>"
+00:50:10 Cmd | notes | git push --all --progress origin
+00:50:11 Git | Counting objects: 4, done.
+00:50:11 Git | Delta compression using up to 4 threads.
+00:50:11 Git | Total 4 (delta 3), reused 0 (delta 0)
+00:50:15 Git | To ssh://github.com/dzackgarza/notes.git
+00:50:15 Git |    e179dfc..b4feedc  master -> master
+00:50:15 SyncUp | notes | Done
+00:50:15 Cmd | notes | git --no-pager log --since=1.month --raw --find-renames --date=iso --format=medium --no-color --no-merges
+00:50:16 Cmd | notes | git status --porcelain
+00:56:03 Git | notes | Checking for remote changes...
+00:56:03 Cmd | notes | git rev-parse HEAD
+00:56:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+00:56:04 Git | notes | No remote changes, local+remote: b4feedcbd99df62cc7ca42fc20d037c75be0e5b2
+01:11:03 Git | notes | Checking for remote changes...
+01:11:03 Cmd | notes | git rev-parse HEAD
+01:11:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+01:11:04 Git | notes | No remote changes, local+remote: b4feedcbd99df62cc7ca42fc20d037c75be0e5b2
+01:26:03 Git | notes | Checking for remote changes...
+01:26:03 Cmd | notes | git rev-parse HEAD
+01:26:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+01:26:04 Git | notes | No remote changes, local+remote: b4feedcbd99df62cc7ca42fc20d037c75be0e5b2
+01:30:20 Cmd | notes | git status --porcelain
+01:30:20 Local | notes | Activity detected, waiting for it to settle...
+01:30:21 Local | notes | Activity has settled
+01:30:21 Cmd | notes | git status --porcelain
+01:30:21 SyncUp | notes | Initiated
+01:30:21 Cmd | notes | git add --all
+01:30:22 Cmd | notes | git status --porcelain
+01:30:22 Cmd | notes | git commit --all --message="/ ‘Talks/Homotopy and the Hopf Fibration.md’
+" --author="zack <dzackgarza@gmai.com>"
+01:30:22 Cmd | notes | git push --all --progress origin
+01:30:23 Git | Counting objects: 4, done.
+01:30:23 Git | Delta compression using up to 4 threads.
+01:30:23 Git | Total 4 (delta 3), reused 0 (delta 0)
+01:30:27 Git | To ssh://github.com/dzackgarza/notes.git
+01:30:27 Git |    b4feedc..0139da1  master -> master
+01:30:27 SyncUp | notes | Done
+01:30:27 Cmd | notes | git --no-pager log --since=1.month --raw --find-renames --date=iso --format=medium --no-color --no-merges
+01:30:27 Cmd | notes | git status --porcelain
+01:31:25 Cmd | notes | git status --porcelain
+01:31:25 Local | notes | Activity detected, waiting for it to settle...
+01:31:26 Local | notes | Activity has settled
+01:31:26 Cmd | notes | git status --porcelain
+01:31:26 SyncUp | notes | Initiated
+01:31:26 Cmd | notes | git add --all
+01:31:26 Cmd | notes | git status --porcelain
+01:31:26 Cmd | notes | git commit --all --message="/ ‘Talks/Homotopy and the Hopf Fibration.md’
+" --author="zack <dzackgarza@gmai.com>"
+01:31:26 Cmd | notes | git push --all --progress origin
+01:31:27 Git | Counting objects: 4, done.
+01:31:27 Git | Delta compression using up to 4 threads.
+01:31:27 Git | Total 4 (delta 3), reused 0 (delta 0)
+01:31:32 Git | To ssh://github.com/dzackgarza/notes.git
+01:31:32 Git |    0139da1..2d53443  master -> master
+01:31:32 SyncUp | notes | Done
+01:31:32 Cmd | notes | git --no-pager log --since=1.month --raw --find-renames --date=iso --format=medium --no-color --no-merges
+01:31:32 Cmd | notes | git status --porcelain
+01:37:52 Cmd | notes | git status --porcelain
+01:37:52 Local | notes | Activity detected, waiting for it to settle...
+01:37:54 Local | notes | Activity has settled
+01:37:54 Cmd | notes | git status --porcelain
+01:37:54 SyncUp | notes | Initiated
+01:37:54 Cmd | notes | git add --all
+01:37:54 Cmd | notes | git status --porcelain
+01:37:54 Cmd | notes | git commit --all --message="/ ‘Talks/Homotopy and the Hopf Fibration.md’
+" --author="zack <dzackgarza@gmai.com>"
+01:37:54 Cmd | notes | git push --all --progress origin
+01:37:54 Git | Counting objects: 4, done.
+01:37:54 Git | Delta compression using up to 4 threads.
+01:37:54 Git | Total 4 (delta 3), reused 0 (delta 0)
+01:37:59 Git | To ssh://github.com/dzackgarza/notes.git
+01:37:59 Git |    2d53443..202827e  master -> master
+01:37:59 SyncUp | notes | Done
+01:37:59 Cmd | notes | git --no-pager log --since=1.month --raw --find-renames --date=iso --format=medium --no-color --no-merges
+01:37:59 Cmd | notes | git status --porcelain
+01:39:57 Cmd | notes | git status --porcelain
+01:39:57 Local | notes | Activity detected, waiting for it to settle...
+01:39:59 Local | notes | Activity has settled
+01:39:59 Cmd | notes | git status --porcelain
+01:39:59 SyncUp | notes | Initiated
+01:39:59 Cmd | notes | git add --all
+01:39:59 Cmd | notes | git status --porcelain
+01:39:59 Cmd | notes | git commit --all --message="/ ‘Talks/Homotopy and the Hopf Fibration.md’
+" --author="zack <dzackgarza@gmai.com>"
+01:39:59 Cmd | notes | git push --all --progress origin
+01:40:00 Git | Counting objects: 4, done.
+01:40:00 Git | Delta compression using up to 4 threads.
+01:40:00 Git | Total 4 (delta 3), reused 0 (delta 0)
+01:40:04 Git | To ssh://github.com/dzackgarza/notes.git
+01:40:04 Git |    202827e..b6736b2  master -> master
+01:40:04 SyncUp | notes | Done
+01:40:04 Cmd | notes | git --no-pager log --since=1.month --raw --find-renames --date=iso --format=medium --no-color --no-merges
+01:40:05 Cmd | notes | git status --porcelain
+01:41:03 Git | notes | Checking for remote changes...
+01:41:03 Cmd | notes | git rev-parse HEAD
+01:41:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+01:41:04 Git | notes | No remote changes, local+remote: b6736b212e5c253dfcb47a949035012b9222f7d6
+01:41:06 Cmd | notes | git status --porcelain
+01:41:06 Local | notes | Activity detected, waiting for it to settle...
+01:41:08 Local | notes | Activity has settled
+01:41:08 Cmd | notes | git status --porcelain
+01:41:08 SyncUp | notes | Initiated
+01:41:08 Cmd | notes | git add --all
+01:41:08 Cmd | notes | git status --porcelain
+01:41:08 Cmd | notes | git commit --all --message="/ ‘Talks/Homotopy and the Hopf Fibration.md’
+" --author="zack <dzackgarza@gmai.com>"
+01:41:08 Cmd | notes | git push --all --progress origin
+01:41:09 Git | Counting objects: 4, done.
+01:41:09 Git | Delta compression using up to 4 threads.
+01:41:09 Git | Total 4 (delta 3), reused 0 (delta 0)
+01:41:13 Git | To ssh://github.com/dzackgarza/notes.git
+01:41:13 Git |    b6736b2..4a77245  master -> master
+01:41:13 SyncUp | notes | Done
+01:41:13 Cmd | notes | git --no-pager log --since=1.month --raw --find-renames --date=iso --format=medium --no-color --no-merges
+01:41:14 Cmd | notes | git status --porcelain
+01:46:50 Cmd | notes | git status --porcelain
+01:46:50 Local | notes | Activity detected, waiting for it to settle...
+01:46:52 Local | notes | Activity has settled
+01:46:52 Cmd | notes | git status --porcelain
+01:46:52 SyncUp | notes | Initiated
+01:46:52 Cmd | notes | git add --all
+01:46:52 Cmd | notes | git status --porcelain
+01:46:52 Cmd | notes | git commit --all --message="/ ‘Talks/Homotopy and the Hopf Fibration.md’
+" --author="zack <dzackgarza@gmai.com>"
+01:46:52 Cmd | notes | git push --all --progress origin
+01:46:53 Git | Counting objects: 4, done.
+01:46:53 Git | Delta compression using up to 4 threads.
+01:46:53 Git | Total 4 (delta 3), reused 0 (delta 0)
+01:46:58 Git | To ssh://github.com/dzackgarza/notes.git
+01:46:58 Git |    4a77245..99d7c35  master -> master
+01:46:58 SyncUp | notes | Done
+01:46:58 Cmd | notes | git --no-pager log --since=1.month --raw --find-renames --date=iso --format=medium --no-color --no-merges
+01:46:58 Cmd | notes | git status --porcelain
+01:49:22 Cmd | notes | git status --porcelain
+01:49:22 Local | notes | Activity detected, waiting for it to settle...
+01:49:24 Local | notes | Activity has settled
+01:49:24 Cmd | notes | git status --porcelain
+01:49:24 SyncUp | notes | Initiated
+01:49:24 Cmd | notes | git add --all
+01:49:24 Cmd | notes | git status --porcelain
+01:49:24 Cmd | notes | git commit --all --message="/ ‘Talks/Homotopy and the Hopf Fibration.md’
+" --author="zack <dzackgarza@gmai.com>"
+01:49:24 Cmd | notes | git push --all --progress origin
+01:49:25 Git | Counting objects: 4, done.
+01:49:25 Git | Delta compression using up to 4 threads.
+01:49:25 Git | Total 4 (delta 3), reused 0 (delta 0)
+01:49:29 Git | To ssh://github.com/dzackgarza/notes.git
+01:49:29 Git |    99d7c35..5ecb03b  master -> master
+01:49:29 SyncUp | notes | Done
+01:49:29 Cmd | notes | git --no-pager log --since=1.month --raw --find-renames --date=iso --format=medium --no-color --no-merges
+01:49:30 Cmd | notes | git status --porcelain
+01:53:42 Cmd | notes | git status --porcelain
+01:53:42 Local | notes | Activity detected, waiting for it to settle...
+01:53:43 Local | notes | Activity has settled
+01:53:43 Cmd | notes | git status --porcelain
+01:53:43 SyncUp | notes | Initiated
+01:53:43 Cmd | notes | git add --all
+01:53:43 Cmd | notes | git status --porcelain
+01:53:43 Cmd | notes | git commit --all --message="/ ‘Talks/Homotopy and the Hopf Fibration.md’
+" --author="zack <dzackgarza@gmai.com>"
+01:53:43 Cmd | notes | git push --all --progress origin
+01:53:44 Git | Counting objects: 4, done.
+01:53:44 Git | Delta compression using up to 4 threads.
+01:53:44 Git | Total 4 (delta 3), reused 0 (delta 0)
+01:53:48 Git | To ssh://github.com/dzackgarza/notes.git
+01:53:48 Git |    5ecb03b..1cac10d  master -> master
+01:53:49 SyncUp | notes | Done
+01:53:49 Cmd | notes | git --no-pager log --since=1.month --raw --find-renames --date=iso --format=medium --no-color --no-merges
+01:53:49 Cmd | notes | git status --porcelain
+01:54:40 Cmd | notes | git status --porcelain
+01:54:40 Local | notes | Activity detected, waiting for it to settle...
+01:54:42 Local | notes | Activity has settled
+01:54:42 Cmd | notes | git status --porcelain
+01:54:42 SyncUp | notes | Initiated
+01:54:42 Cmd | notes | git add --all
+01:54:42 Cmd | notes | git status --porcelain
+01:54:42 Cmd | notes | git commit --all --message="/ ‘Talks/Homotopy and the Hopf Fibration.md’
+" --author="zack <dzackgarza@gmai.com>"
+01:54:42 Cmd | notes | git push --all --progress origin
+01:54:43 Git | Counting objects: 4, done.
+01:54:43 Git | Delta compression using up to 4 threads.
+01:54:43 Git | Total 4 (delta 3), reused 0 (delta 0)
+01:54:47 Git | To ssh://github.com/dzackgarza/notes.git
+01:54:47 Git |    1cac10d..5f65dc2  master -> master
+01:54:47 SyncUp | notes | Done
+01:54:47 Cmd | notes | git --no-pager log --since=1.month --raw --find-renames --date=iso --format=medium --no-color --no-merges
+01:54:48 Cmd | notes | git status --porcelain
+01:56:03 Git | notes | Checking for remote changes...
+01:56:03 Cmd | notes | git rev-parse HEAD
+01:56:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+01:56:04 Git | notes | No remote changes, local+remote: 5f65dc23bfbf29a36dfbf01cf4ff12581c8ce8bf
+01:59:36 Cmd | notes | git status --porcelain
+01:59:36 Local | notes | Activity detected, waiting for it to settle...
+01:59:38 Local | notes | Activity has settled
+01:59:38 Cmd | notes | git status --porcelain
+01:59:38 SyncUp | notes | Initiated
+01:59:38 Cmd | notes | git add --all
+01:59:38 Cmd | notes | git status --porcelain
+01:59:38 Cmd | notes | git commit --all --message="/ ‘Talks/Homotopy and the Hopf Fibration.md’
+" --author="zack <dzackgarza@gmai.com>"
+01:59:38 Cmd | notes | git push --all --progress origin
+01:59:39 Git | Counting objects: 4, done.
+01:59:39 Git | Delta compression using up to 4 threads.
+01:59:39 Git | Total 4 (delta 3), reused 0 (delta 0)
+01:59:43 Git | To ssh://github.com/dzackgarza/notes.git
+01:59:43 Git |    5f65dc2..c1fa9d9  master -> master
+01:59:43 SyncUp | notes | Done
+01:59:43 Cmd | notes | git --no-pager log --since=1.month --raw --find-renames --date=iso --format=medium --no-color --no-merges
+01:59:43 Cmd | notes | git status --porcelain
+02:00:31 Cmd | notes | git status --porcelain
+02:00:31 Local | notes | Activity detected, waiting for it to settle...
+02:00:33 Local | notes | Activity has settled
+02:00:33 Cmd | notes | git status --porcelain
+02:00:33 SyncUp | notes | Initiated
+02:00:33 Cmd | notes | git add --all
+02:00:33 Cmd | notes | git status --porcelain
+02:00:33 Cmd | notes | git commit --all --message="/ ‘Talks/Homotopy and the Hopf Fibration.md’
+" --author="zack <dzackgarza@gmai.com>"
+02:00:33 Cmd | notes | git push --all --progress origin
+02:00:34 Git | Counting objects: 4, done.
+02:00:34 Git | Delta compression using up to 4 threads.
+02:00:34 Git | Total 4 (delta 3), reused 0 (delta 0)
+02:00:38 Git | To ssh://github.com/dzackgarza/notes.git
+02:00:38 Git |    c1fa9d9..7f7c6e4  master -> master
+02:00:38 SyncUp | notes | Done
+02:00:38 Cmd | notes | git --no-pager log --since=1.month --raw --find-renames --date=iso --format=medium --no-color --no-merges
+02:00:38 Cmd | notes | git status --porcelain
+02:07:20 Cmd | notes | git status --porcelain
+02:07:20 Local | notes | Activity detected, waiting for it to settle...
+02:07:22 Local | notes | Activity has settled
+02:07:22 Cmd | notes | git status --porcelain
+02:07:22 SyncUp | notes | Initiated
+02:07:22 Cmd | notes | git add --all
+02:07:22 Cmd | notes | git status --porcelain
+02:07:22 Cmd | notes | git commit --all --message="/ ‘Talks/Homotopy and the Hopf Fibration.md’
+" --author="zack <dzackgarza@gmai.com>"
+02:07:22 Cmd | notes | git push --all --progress origin
+02:07:23 Git | Counting objects: 4, done.
+02:07:23 Git | Delta compression using up to 4 threads.
+02:07:23 Git | Total 4 (delta 3), reused 0 (delta 0)
+02:07:28 Git | To ssh://github.com/dzackgarza/notes.git
+02:07:28 Git |    7f7c6e4..539c68f  master -> master
+02:07:28 SyncUp | notes | Done
+02:07:28 Cmd | notes | git --no-pager log --since=1.month --raw --find-renames --date=iso --format=medium --no-color --no-merges
+02:07:29 Cmd | notes | git status --porcelain
+02:07:33 Cmd | notes | git status --porcelain
+02:07:33 Local | notes | Activity detected, waiting for it to settle...
+02:07:35 Local | notes | Activity has settled
+02:07:35 Cmd | notes | git status --porcelain
+02:07:35 SyncUp | notes | Initiated
+02:07:35 Cmd | notes | git add --all
+02:07:35 Cmd | notes | git status --porcelain
+02:07:35 Cmd | notes | git commit --all --message="- ‘Research/assets/2-22ReadingNotes-e35ae.png’
+" --author="zack <dzackgarza@gmai.com>"
+02:07:35 Cmd | notes | git push --all --progress origin
+02:07:36 Git | Counting objects: 4, done.
+02:07:36 Git | Delta compression using up to 4 threads.
+02:07:36 Git | Total 4 (delta 3), reused 0 (delta 0)
+02:07:41 Git | To ssh://github.com/dzackgarza/notes.git
+02:07:41 Git |    539c68f..4f00276  master -> master
+02:07:41 SyncUp | notes | Done
+02:07:41 Cmd | notes | git --no-pager log --since=1.month --raw --find-renames --date=iso --format=medium --no-color --no-merges
+02:07:41 Cmd | notes | git status --porcelain
+02:10:05 Cmd | notes | git status --porcelain
+02:10:05 Local | notes | Activity detected, waiting for it to settle...
+02:10:09 Local | notes | Activity has settled
+02:10:09 Cmd | notes | git status --porcelain
+02:10:09 SyncUp | notes | Initiated
+02:10:09 Cmd | notes | git add --all
+02:10:09 Cmd | notes | git status --porcelain
+02:10:09 Cmd | notes | git commit --all --message="- ‘Topology/1512963948050.png’
+- ‘Topology/1512964060261.png’
+" --author="zack <dzackgarza@gmai.com>"
+02:10:09 Cmd | notes | git push --all --progress origin
+02:10:10 Git | Counting objects: 3, done.
+02:10:10 Git | Delta compression using up to 4 threads.
+02:10:10 Git | Total 3 (delta 2), reused 0 (delta 0)
+02:10:15 Git | To ssh://github.com/dzackgarza/notes.git
+02:10:15 Git |    4f00276..eb28ff8  master -> master
+02:10:15 SyncUp | notes | Done
+02:10:15 Cmd | notes | git --no-pager log --since=1.month --raw --find-renames --date=iso --format=medium --no-color --no-merges
+02:10:15 Cmd | notes | git status --porcelain
+02:11:03 Git | notes | Checking for remote changes...
+02:11:03 Cmd | notes | git rev-parse HEAD
+02:11:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+02:11:04 Git | notes | No remote changes, local+remote: eb28ff8d14a0fe1b364fb63fc3004b0f1a5f670c
+02:12:21 Cmd | notes | git status --porcelain
+02:12:21 Local | notes | Activity detected, waiting for it to settle...
+02:12:23 Local | notes | Activity has settled
+02:12:23 Cmd | notes | git status --porcelain
+02:12:23 SyncUp | notes | Initiated
+02:12:23 Cmd | notes | git add --all
+02:12:23 Cmd | notes | git status --porcelain
+02:12:23 Cmd | notes | git commit --all --message="- ‘Topology/homotopy groups of spheres.PNG’
+" --author="zack <dzackgarza@gmai.com>"
+02:12:24 Cmd | notes | git push --all --progress origin
+02:12:25 Git | Counting objects: 3, done.
+02:12:25 Git | Delta compression using up to 4 threads.
+02:12:25 Git | Total 3 (delta 2), reused 0 (delta 0)
+02:12:29 Git | To ssh://github.com/dzackgarza/notes.git
+02:12:29 Git |    eb28ff8..2857a6d  master -> master
+02:12:29 SyncUp | notes | Done
+02:12:29 Cmd | notes | git --no-pager log --since=1.month --raw --find-renames --date=iso --format=medium --no-color --no-merges
+02:12:30 Cmd | notes | git status --porcelain
+02:13:13 Cmd | notes | git status --porcelain
+02:13:13 Local | notes | Activity detected, waiting for it to settle...
+02:13:14 Local | notes | Activity has settled
+02:13:14 Cmd | notes | git status --porcelain
+02:13:14 SyncUp | notes | Initiated
+02:13:14 Cmd | notes | git add --all
+02:13:14 Cmd | notes | git status --porcelain
+02:13:14 Cmd | notes | git commit --all --message="< ‘Topology/homotopy groups stabilize.png’
+> ‘Topology/homotopyGroupsStabilize.png’
+" --author="zack <dzackgarza@gmai.com>"
+02:13:14 Cmd | notes | git push --all --progress origin
+02:13:15 Git | Counting objects: 3, done.
+02:13:15 Git | Delta compression using up to 4 threads.
+02:13:15 Git | Total 3 (delta 2), reused 0 (delta 0)
+02:13:20 Git | To ssh://github.com/dzackgarza/notes.git
+02:13:20 Git |    2857a6d..a4510a7  master -> master
+02:13:20 SyncUp | notes | Done
+02:13:20 Cmd | notes | git --no-pager log --since=1.month --raw --find-renames --date=iso --format=medium --no-color --no-merges
+02:13:21 Cmd | notes | git status --porcelain
+02:13:22 Cmd | notes | git status --porcelain
+02:13:22 Local | notes | Activity detected, waiting for it to settle...
+02:13:23 Local | notes | Activity has settled
+02:13:23 Cmd | notes | git status --porcelain
+02:13:24 SyncUp | notes | Initiated
+02:13:24 Cmd | notes | git add --all
+02:13:24 Cmd | notes | git status --porcelain
+02:13:24 Cmd | notes | git commit --all --message="/ ‘Talks/Homotopy and the Hopf Fibration.md’
+" --author="zack <dzackgarza@gmai.com>"
+02:13:24 Cmd | notes | git push --all --progress origin
+02:13:24 Git | Counting objects: 4, done.
+02:13:24 Git | Delta compression using up to 4 threads.
+02:13:24 Git | Total 4 (delta 3), reused 0 (delta 0)
+02:13:29 Git | To ssh://github.com/dzackgarza/notes.git
+02:13:29 Git |    a4510a7..dea08d4  master -> master
+02:13:29 SyncUp | notes | Done
+02:13:29 Cmd | notes | git --no-pager log --since=1.month --raw --find-renames --date=iso --format=medium --no-color --no-merges
+02:13:29 Cmd | notes | git status --porcelain
+02:20:13 Cmd | notes | git status --porcelain
+02:20:13 Cmd | notes | git status --porcelain
+02:26:03 Git | notes | Checking for remote changes...
+02:26:03 Cmd | notes | git rev-parse HEAD
+02:26:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+02:26:04 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+02:41:03 Git | notes | Checking for remote changes...
+02:41:03 Cmd | notes | git rev-parse HEAD
+02:41:03 Cmd | notes | git ls-remote --heads --exit-code origin master
+02:41:04 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+02:56:03 Git | notes | Checking for remote changes...
+02:56:03 Cmd | notes | git rev-parse HEAD
+02:56:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+02:56:04 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+03:11:04 Git | notes | Checking for remote changes...
+03:11:04 Cmd | notes | git rev-parse HEAD
+03:11:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+03:11:04 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+03:26:04 Git | notes | Checking for remote changes...
+03:26:04 Cmd | notes | git rev-parse HEAD
+03:26:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+03:26:04 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+03:41:04 Git | notes | Checking for remote changes...
+03:41:04 Cmd | notes | git rev-parse HEAD
+03:41:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+03:41:04 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+03:56:04 Git | notes | Checking for remote changes...
+03:56:04 Cmd | notes | git rev-parse HEAD
+03:56:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+03:56:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+04:11:04 Git | notes | Checking for remote changes...
+04:11:04 Cmd | notes | git rev-parse HEAD
+04:11:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+04:11:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+04:26:04 Git | notes | Checking for remote changes...
+04:26:04 Cmd | notes | git rev-parse HEAD
+04:26:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+04:26:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+04:41:04 Git | notes | Checking for remote changes...
+04:41:04 Cmd | notes | git rev-parse HEAD
+04:41:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+04:41:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+04:56:04 Git | notes | Checking for remote changes...
+04:56:04 Cmd | notes | git rev-parse HEAD
+04:56:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+04:56:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+05:11:04 Git | notes | Checking for remote changes...
+05:11:04 Cmd | notes | git rev-parse HEAD
+05:11:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+05:11:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+05:26:04 Git | notes | Checking for remote changes...
+05:26:04 Cmd | notes | git rev-parse HEAD
+05:26:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+05:26:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+05:41:04 Git | notes | Checking for remote changes...
+05:41:04 Cmd | notes | git rev-parse HEAD
+05:41:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+05:41:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+05:56:04 Git | notes | Checking for remote changes...
+05:56:04 Cmd | notes | git rev-parse HEAD
+05:56:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+05:56:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+06:11:04 Git | notes | Checking for remote changes...
+06:11:04 Cmd | notes | git rev-parse HEAD
+06:11:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+06:11:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+06:26:04 Git | notes | Checking for remote changes...
+06:26:04 Cmd | notes | git rev-parse HEAD
+06:26:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+06:26:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+06:41:04 Git | notes | Checking for remote changes...
+06:41:04 Cmd | notes | git rev-parse HEAD
+06:41:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+06:41:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+06:56:04 Git | notes | Checking for remote changes...
+06:56:04 Cmd | notes | git rev-parse HEAD
+06:56:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+06:56:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+07:11:04 Git | notes | Checking for remote changes...
+07:11:04 Cmd | notes | git rev-parse HEAD
+07:11:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+07:11:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+07:26:04 Git | notes | Checking for remote changes...
+07:26:04 Cmd | notes | git rev-parse HEAD
+07:26:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+07:26:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+07:41:04 Git | notes | Checking for remote changes...
+07:41:04 Cmd | notes | git rev-parse HEAD
+07:41:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+07:41:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+07:56:04 Git | notes | Checking for remote changes...
+07:56:04 Cmd | notes | git rev-parse HEAD
+07:56:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+07:56:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+08:11:04 Git | notes | Checking for remote changes...
+08:11:04 Cmd | notes | git rev-parse HEAD
+08:11:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+08:11:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+08:26:04 Git | notes | Checking for remote changes...
+08:26:04 Cmd | notes | git rev-parse HEAD
+08:26:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+08:26:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+08:41:04 Git | notes | Checking for remote changes...
+08:41:04 Cmd | notes | git rev-parse HEAD
+08:41:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+08:41:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+08:56:04 Git | notes | Checking for remote changes...
+08:56:04 Cmd | notes | git rev-parse HEAD
+08:56:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+08:56:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+09:11:04 Git | notes | Checking for remote changes...
+09:11:04 Cmd | notes | git rev-parse HEAD
+09:11:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+09:11:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+09:26:04 Git | notes | Checking for remote changes...
+09:26:04 Cmd | notes | git rev-parse HEAD
+09:26:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+09:26:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+09:41:04 Git | notes | Checking for remote changes...
+09:41:04 Cmd | notes | git rev-parse HEAD
+09:41:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+09:41:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+09:56:04 Git | notes | Checking for remote changes...
+09:56:04 Cmd | notes | git rev-parse HEAD
+09:56:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+09:56:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+10:11:04 Git | notes | Checking for remote changes...
+10:11:04 Cmd | notes | git rev-parse HEAD
+10:11:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+10:11:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+10:26:04 Git | notes | Checking for remote changes...
+10:26:04 Cmd | notes | git rev-parse HEAD
+10:26:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+10:26:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+10:41:04 Git | notes | Checking for remote changes...
+10:41:04 Cmd | notes | git rev-parse HEAD
+10:41:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+10:41:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+10:56:04 Git | notes | Checking for remote changes...
+10:56:04 Cmd | notes | git rev-parse HEAD
+10:56:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+10:56:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+11:11:04 Git | notes | Checking for remote changes...
+11:11:04 Cmd | notes | git rev-parse HEAD
+11:11:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+11:11:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+11:26:04 Git | notes | Checking for remote changes...
+11:26:04 Cmd | notes | git rev-parse HEAD
+11:26:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+11:26:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+11:41:04 Git | notes | Checking for remote changes...
+11:41:04 Cmd | notes | git rev-parse HEAD
+11:41:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+11:41:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+11:56:04 Git | notes | Checking for remote changes...
+11:56:04 Cmd | notes | git rev-parse HEAD
+11:56:04 Cmd | notes | git ls-remote --heads --exit-code origin master
+11:56:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+12:11:04 Git | notes | Checking for remote changes...
+12:11:04 Cmd | notes | git rev-parse HEAD
+12:11:05 Cmd | notes | git ls-remote --heads --exit-code origin master
+12:11:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+12:26:05 Git | notes | Checking for remote changes...
+12:26:05 Cmd | notes | git rev-parse HEAD
+12:26:05 Cmd | notes | git ls-remote --heads --exit-code origin master
+12:26:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+12:41:05 Git | notes | Checking for remote changes...
+12:41:05 Cmd | notes | git rev-parse HEAD
+12:41:05 Cmd | notes | git ls-remote --heads --exit-code origin master
+12:41:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+12:56:05 Git | notes | Checking for remote changes...
+12:56:05 Cmd | notes | git rev-parse HEAD
+12:56:05 Cmd | notes | git ls-remote --heads --exit-code origin master
+12:56:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
+13:11:05 Git | notes | Checking for remote changes...
+13:11:05 Cmd | notes | git rev-parse HEAD
+13:11:05 Cmd | notes | git ls-remote --heads --exit-code origin master
+13:11:05 Git | notes | No remote changes, local+remote: dea08d403eaab17103f969eef8e601b0ee057a1c
