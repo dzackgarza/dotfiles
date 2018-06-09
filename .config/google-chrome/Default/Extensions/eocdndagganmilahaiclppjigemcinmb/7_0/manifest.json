@@ -1,0 +1,19 @@
+{
+   "app": {
+      "launch": {
+         "web_url": "https://cocalc.com/app"
+      },
+      "urls": [ "https://cocalc.com/" ]
+   },
+   "description": "Collaborative Calculation in the Cloud",
+   "icons": {
+      "128": "cocalc-128.png",
+      "512": "cocalc-512.png"
+   },
+   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCYOUWwoi4urlpbQnSQfjONSw83JGFO9KHsadvqClh25I3P+LRxr4+W+qyAKWZoxHj4uHMGmj7gpV0CE6JI4tx9K7c0JBbMXhY97SS7CseeGQzTWyg3H+mqkByEc8wwrkL9BUnywRcElfJ5cNCGyaxSotomARcZMSt1NIJ7+tfrGQIDAQAB",
+   "manifest_version": 2,
+   "name": "CoCalc",
+   "permissions": [  ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "7"
+}

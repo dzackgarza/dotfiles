@@ -1,0 +1,41 @@
+{
+   "appConnector": {
+      "message": "$1 Connector"
+   },
+   "general_cancel": {
+      "message": "Annuleren"
+   },
+   "general_done": {
+      "message": "Klaar"
+   },
+   "general_more": {
+      "message": "Meer…"
+   },
+   "general_saveTo": {
+      "message": "Opslaan in $1"
+   },
+   "general_tryAgain": {
+      "message": "Opnieuw proberen"
+   },
+   "progressWindow_error_fallback": {
+      "message": "Opslaan mislukt met $1. Probeer het opnieuw op te slaan met $2."
+   },
+   "progressWindow_error_translation": {
+      "message": "Er is een fout opgetreden bij het opslaan van dit item. Bekijk $1 voor meer informatie."
+   },
+   "progressWindow_error_upgradeClient": {
+      "message": "Deze functie wordt niet ondersteund door jouw versie van $1. Upgrade naar $2."
+   },
+   "progressWindow_error_upgradeClient_latestVersion": {
+      "message": "laatste versie"
+   },
+   "progressWindow_savingTo": {
+      "message": "Opslaan in"
+   },
+   "progressWindow_tagPlaceholder": {
+      "message": "Labels (gescheiden door komma’s)"
+   },
+   "upgradeApp": {
+      "message": "Bijwerken $1"
+   }
+}

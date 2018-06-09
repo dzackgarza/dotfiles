@@ -1,0 +1,18 @@
+16:30:00 Environment | SparkleShare 2.0.1 (Flatpak)
+16:30:02 Environment | Git LFS 2.3.0
+16:30:02 Environment | Git 2.14.1
+16:30:02 Environment | GNOME (Unix 4.16.13.2)
+16:30:02 Cmd |  | gvfs-set-attribute "/home/zack/SparkleShare" metadata::custom-icon-name org.sparkleshare.SparkleShare
+16:30:54 /home/zack/SparkleShare/github.com/notes | Initializing...
+16:30:57 Cmd | notes | git config core.ignorecase false
+16:31:13 Cmd | notes | git config remote.origin.url "ssh://git@github.com/dzackgarza/notes.git"
+16:31:14 Cmd | notes | git config core.sshCommand ssh -i /home/zack/.config/org.sparkleshare.SparkleShare/ssh/2018-05-31_20h18.key -o UserKnownHostsFile=/home/zack/.config/org.sparkleshare.SparkleShare/ssh/known_hosts -o IdentitiesOnly=yes -o PasswordAuthentication=no -F /dev/null
+16:31:15 Cmd | notes | git --no-pager log --since=1.month --raw --find-renames --date=iso --format=medium --no-color --no-merges
+16:31:23 Git | notes | Checking for remote changes...
+16:31:23 Cmd | notes | git rev-parse HEAD
+16:31:23 Cmd | notes | git config core.ignorecase true
+16:31:23 Cmd | notes | git config core.ignorecase false
+16:31:24 Cmd | notes | git rev-parse --abbrev-ref HEAD
+16:31:24 Cmd | notes | git ls-remote --heads --exit-code origin master
+16:31:33 Git | notes | No remote changes, local+remote: 0e7f5317f7d2bc91737a581e76faa4f5df3a47b9
+16:31:39 Cmd | notes | git status --porcelain

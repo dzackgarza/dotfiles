@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset=utf-8 />
+  <title>New App</title>
+  <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1"/>
+  <link type="text/css" media="screen" rel="stylesheet" href="jquery.cropbox.css">
+  <style type="text/css">
+  * { margin:0; padding:0; }
+
+  	html {   	
+
+  	/*	
+  		background-color: rgba(237, 237, 237, 0.93);
+  		zoom:1.25;
+  		width: 540px;
+  		box-sizing: border-box;
+  		border-left: 10px solid rgba(0,0,0,.05);
+  		*/
+  		zoom:1.25;
+
+ 		}
+
+    @media only screen and (max-width: 500px) {
+      html { zoom:1; }
+    }
+
+  	html {
+  	}
+    body {
+      font-family : segoe ui, sans-serif;
+      font-size   : 16px;
+      height: 100%;
+      padding: 15px 20px 20px 10px;
+      user-select:none;
+      -webkit-user-select: none;
+      cursor:default;
+    }
+
+    input, button {
+    	margin:5px 0;
+    	font-family : segoe ui, sans-serif;
+    	font-size   : 14px;
+    	line-height: 1;
+    	padding: 4px 8px;
+    	width: 100%;
+    	box-sizing: border-box;
+    }
+    input {
+      padding: 2px 6px;
+    }
+    button { cursor:pointer }
+    input::-webkit-file-upload-button {
+      padding: 4px 8px;
+      font-size: 13px;
+      cursor:pointer; 
+    }
+    input[type=file] {
+    	padding-left:0; 
+    	cursor:pointer; 
+    }
+    .invalid {
+    	border:1px solid red !important;
+      outline:1px solid red !important;
+    }
+
+    input[type=text], input[type=url] {
+    	box-sizing: border-box;
+    	border: 1px solid #B6B6B6;
+    }
+
+    input[type=text]::-webkit-input-placeholder,
+    input[type=url]::-webkit-input-placeholder  {
+    	line-height: 1.2;
+    }
+
+    input[type=range]:focus,
+    input[type=range]:active {
+    	outline: 0;
+    }
+    /* Webkit */
+    input[type=range] {
+    	-webkit-appearance: none;
+    	width: 280px;
+    	border-radius: 8px;
+    	height: 7px;
+    	border: 1px solid #bdc3c7;
+    	background-color: #fff; 
+    	position: relative;
+    	transition:all .15s ease-in-out;
+    	/*padding: 8px 0;
+    	border-radius: 12px;*/
+    }
+    input[type=range]:active {
+    	background-color: #fbfbfb; 
+    	border: 1px solid #bbb;
+    }
+
+    input[type='range']::-webkit-slider-runnable-track {
+    	padding: 5px 0;
+    	position: relative;
+    }
+
+    input[type='range']::-webkit-slider-thumb {
+    	-webkit-appearance: none;
+    	background-color: #ecf0f1;
+    	border: 1px solid #bdc3c7;
+    	width: 20px;
+    	height: 20px;
+    	border-radius: 10px;
+    	cursor: pointer;
+    	position: relative;
+
+    	background-color: #4D90FE;
+  	  background-image: -webkit-linear-gradient(top,#4d90fe,#4787ed);
+  	  background-image: linear-gradient(top,#4d90fe,#4787ed);
+  	  border: 1px solid #3079ED;
+    }
+    input[type='range']::-webkit-slider-thumb:hover {
+    	/*background-color: #ddd;
+    	border: 1px solid #bbb;*/
+
+    	border: 1px solid #2F5BB7;
+    	background-color: #357AE8;
+    	background-image: -webkit-linear-gradient(top,#4d90fe,#357ae8);
+    	background-image: linear-gradient(top,#4d90fe,#357ae8);
+    	box-shadow: 0 1px 1px rgba(0,0,0,.1);
+    }
+    input[type='range']::-webkit-slider-thumb:active {
+    	/*background-color: #bbb;
+    	border: 1px solid #999;*/
+
+    	border: 1px solid #183B82;
+    	background-color: #2964C3;
+    	background-image:none;
+    	box-shadow: 0 1px 1px rgba(0,0,0,.1);
+    }
+
+    input[type='range']:disabled {
+    	opacity: 0.5;
+    }
+
+    .input-row-text {
+    	margin: 0 0 2px 0;
+    }
+
+    .slider-wrapper {
+    	user-select:none;
+    	-webkit-user-select: none;
+    	color: #606060;
+    	font-weight: 500;
+    	/*text-align: right;*/
+    }
+    .slider-wrapper b {
+    	color: #4A8CF6;
+    }
+
+    #imgWrapper {
+    	width:128px; 
+    	height:128px;
+    	position: relative;
+    	overflow: hidden;
+    	box-sizing: border-box;
+
+    	background-color: rgba(0, 0, 0, .05);
+    	border-radius: 5px;
+    	border: 1px solid rgba(255,255,255,.2);
+    	/*background-color: rgba(0,0,0,.2);*/
+    	/*box-shadow: 3px 3px 5px rgba(0,0,0,.05);*/
+    }
+
+    .loading {
+    	background:url(/img/loading.gif) no-repeat center center;
+    }
+
+    #new-app-title {
+    	font-size: 30px;
+    	margin-bottom: 15px;
+    	text-align: center;
+    	color: #777;
+    	text-shadow: 0 1px 1px rgba(255, 255, 255, .7);
+    }
+
+
+    /* ====== media ====== */
+    .media {margin:10px 0;}
+    .media, .bd {overflow:hidden; _overflow:visible; zoom:1;}
+    .media .img {float:left; margin-right: 10px;}
+    .media .img img {display:block;}
+    .media .imgExt {float:right; margin-left: 10px;}
+
+    #icon-progress {
+    	  height: 7px;
+    	  width: 0%;
+    	  background-color: rgb(74, 139, 244);
+    	  z-index: 1000;
+    	  position: absolute;
+    	  bottom: 0;
+    	  border-top: 1px solid rgba(255,255,255,.4);
+    	  border-right: 1px solid rgba(255,255,255,.4);
+    	  display: none;
+    }
+
+
+    .cropFrame {
+    	display: block;
+    	left: 50%;
+    	top: 50%;
+    	transform: translate(-50%, -50%);
+    }
+    .cropControls { display:none }
+
+    .button:hover {
+      background-color: #F8F8F8;
+      background-image: -webkit-linear-gradient(top,#f8f8f8,#f1f1f1);
+      background-image: linear-gradient(top,#f8f8f8,#f1f1f1);
+      border: 1px solid #C6C6C6;
+      color: #333;
+      -webkit-box-shadow: 0px 1px 1px rgba(0,0,0,.1);
+      box-shadow: 0px 1px 1px rgba(0,0,0,.1);
+    }
+
+    .button {
+      display: inline-block;
+      background-color: #f5f5f5;
+      background-image: -webkit-linear-gradient(top,#f5f5f5,#f1f1f1);
+      background-image: linear-gradient(top,#f5f5f5,#f1f1f1);
+      color: #444;
+      border: 1px solid #dcdcdc;
+      -webkit-border-radius: 2px;
+      border-radius: 2px;
+      cursor: default;
+      font-size: 13px;
+      font-weight: bold;
+      text-align: center;
+      height: 26px;
+      line-height: 26px;
+      min-width: 54px;
+      padding: 0 8px;
+      text-decoration: none;
+      cursor:pointer;
+    }
+
+    .button.blue:hover {
+      border: 1px solid #2F5BB7;
+      background-color: #357AE8;
+      background-image: -webkit-linear-gradient(top,#4d90fe,#357ae8);
+      background-image: linear-gradient(top,#4d90fe,#357ae8);
+      -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.1);
+      box-shadow: 0 1px 1px rgba(0,0,0,.1);
+    }
+
+    .button.blue {
+      background-color: #4D90FE;
+      background-image: -webkit-linear-gradient(top,#4d90fe,#4787ed);
+      background-image: linear-gradient(top,#4d90fe,#4787ed);
+      border: 1px solid #3079ED;
+      color: white;
+    }
+
+    .button.blue:active {
+    	border: 1px solid #183B82;
+    	background-color: #2964C3;
+    	background-image: none;
+    }
+
+    #user-app-submit {
+    	display: block;
+    	margin: 40px auto 0;
+    	padding: 5px 50px;
+    	text-align: center;
+    	font-size: 16px;
+    	font-weight: 500;
+    }
+
+    #loadingSite {
+    	  width: 16px;
+    	  height: 16px;
+    	  left: -25px;
+    	  position: relative;
+    	  top: 3px;
+    }
+
+    #removeImage { display:none }
+
+    .thanks {
+      margin-top: 63px;
+      text-align: center;
+      text-shadow: 1px 1px 1px rgba(255,255,255,.5);
+    }
+
+    .thanks a {
+    	display:inline-block;
+    	padding:0 2px 0 4px;
+    	-webkit-transition: background .25s ease-in-out;
+    	border-radius:4px;
+
+      color: rgb(72, 136, 239);
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px solid rgb(196, 196, 196);
+    }
+    .thanks a:hover {
+    	  background: #fff;
+    }
+
+    #titleInPlaceOfIcon {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      margin-top: -1em;
+      text-align: center;
+      width: 100%;
+      font-weight: 500;
+    }
+
+    .opt-edit-app {display:none}
+    body.page-edit-app .opt-edit-app {display:block}
+    body.page-edit-app .opt-new-app  {display:none}
+
+  #plusone {
+    width: 90px; 
+    height: 20px;
+  }
+
+  #social-buttons {
+    width: 130px;
+    margin: 20px auto 0;
+  }
+  #fb-like {
+    position: relative;
+    top: 6px;
+    margin-right: 10px;
+  }
+
+  </style>
+
+</head>
+<body>  
+
+<div id="new-app-title">
+  <span class="opt-new-app">New App</span>
+  <span class="opt-edit-app">Edit App</span>
+</div>
+
+<input type="url" id="url" style="width:300px" placeholder="Enter Site URL (e.g. yelp.com)" spellcheck="false" autofocus /><br>
+<input type="text" id="name" style="width:300px" placeholder="Enter Site Name (keep it short and sweet)" spellcheck="false"  />
+<img src="/img/loading.gif" id="loadingSite" style="display:none"> 
+
+
+ <br> 
+ 	<div class="media">
+ 	 <span class="img" id="imgWrapper">
+ 	 <img class="cropimage" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" cropwidth="96" cropheight="96"/>
+ 	 <div id="icon-progress"></div>
+ 	 </span>
+  <div class="bd">
+    <div class="input-row-text">Icon Source:  </div>
+  	<input type="url" id="imageURL" placeholder="Image by direct URL" /><br>
+  	<input type="file" id="imageFile" /><br>
+  	<button id="removeImage">Remove Current Image</button><br>
+  </div>
+
+  </div>
+
+  <div class="slider-wrapper" style="margin-bottom:15px;">
+  	<input id="zoom" type="range" min="0.01" max="2" step="0.01" value="0.01" />  
+  	<b>[</b> Zoom <b>]</b>
+  </div>
+  <div class="slider-wrapper">
+  	<input id="roundedCorner" type="range" min="0" max="64" step="1" value="0" /> 
+  	<b>(</b> Corners <b>)</b>
+  </div>
+  <!--
+  <input type="number"  min="1" max="100" step="1" id="zoomText" value="100" />
+	-->
+	<div id="user-app-submit" class="button blue">
+    <span class="opt-new-app">Add App</span>
+    <span class="opt-edit-app">Save App</span>
+  </div>
+
+  
+  <div class="thanks opt-new-app">If you <i style="font-weight: 500;">love</i> 
+  adding New Apps with this feature, 
+  <br> don't hesitate to let me know in a<a href="https://chrome.google.com/webstore/detail/ehhkfhegcenpfoanmgfpfhnmdmflkbgk/reviews" target="_blank">review</a>. Cheers! :)
+  </div>
+
+  <div class="thanks opt-edit-app">You've been waiting for an Edit button for a long time? Now you know I read every single review. :) 
+  If you <i style="font-weight: 500;">love</i> 
+  the new app editing feature, 
+  say thanks in a <a href="https://chrome.google.com/webstore/detail/ehhkfhegcenpfoanmgfpfhnmdmflkbgk/reviews" target="_blank">review</a>. Cheers! 
+  <span style="color:rgb(243, 144, 1);">★★★★★<span>
+  </div>
+
+<div id="social-buttons">
+<!--
+<div id="fb-root"></div>
+<div class="fb-like" data-href="https://www.facebook.com/homenewtab/" data-layout="box_count" data-action="like" data-size="large" data-show-faces="false" data-share="false"></div>
+-->
+<!--
+<div class="g-plusone" data-size="tall" data-href="https://chrome.google.com/webstore/detail/home-new-tab-page/ehhkfhegcenpfoanmgfpfhnmdmflkbgk"></div>
+iframe faster than js
+-->
+
+<iframe id="fb-like" src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fhomenewtab%2F&width=63&layout=box_count&action=like&size=large&show_faces=false&share=false&height=65&appId=267128753314780" width="63" height="65" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+
+<div id="___plusone_0" style="text-indent: 0px; margin: 0px; padding: 0px; background: transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 50px; height: 60px;"><iframe ng-non-bindable="" frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position: static; top: 0px; width: 50px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 60px;" tabindex="0" vspace="0" width="100%" id="I0_1495096884686" name="I0_1495096884686" src="https://apis.google.com/u/0/se/0/_/+1/fastbutton?usegapi=1&amp;size=tall&amp;origin=chrome-extension%3A%2F%2Fmedcogigaddopcmahlhefiiabkklihoa&amp;url=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Fhome-new-tab-page%2Fehhkfhegcenpfoanmgfpfhnmdmflkbgk&amp;gsrc=3p&amp;ic=1&amp;jsh=m%3B%2F_%2Fscs%2Fapps-static%2F_%2Fjs%2Fk%3Doz.gapi.en.ddpHWyA01nc.O%2Fm%3D__features__%2Fam%3DAQ%2Frt%3Dj%2Fd%3D1%2Frs%3DAGLTcCNh_S5xQdvLZHwun7lq1ep_8o9_JA#_methods=onPlusOne%2C_ready%2C_close%2C_open%2C_resizeMe%2C_renderstart%2Concircled%2Cdrefresh%2Cerefresh%2Conload&amp;id=I0_1495096884686&amp;parent=chrome-extension%3A%2F%2Fmedcogigaddopcmahlhefiiabkklihoa&amp;pfname=&amp;rpctoken=41793698" data-gapiattached="true" title="+1"></iframe></div>
+
+
+</div>
+
+
+	<div id="new-app-debug" style="display:none">
+	<br> <br> <br>
+	  <div class="download">
+	    <a href="#" download="crop.png">Download</a>
+	  </div>
+  </div>
+
+  <script src="/js/lib/jquery.min.js"></script>
+  <!--<script src="hammer.js"></script>-->
+  <script src="jquery.mousewheel.js"></script>
+  <script src="jquery.cropbox.js"></script>
+  <script src="cropinit.js"></script>
+  <script src="new_app_panel.js"></script>
+  <script src="/js/lib/filesystem.js"></script>
+  <!--<script src="../js/cursor.js"></script>-->
+
+<!--
+<script src="https://apis.google.com/js/platform.js" async></script>
+<script src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9&appId=267128753314780" id="facebook-jssdk" async></script>
+-->
+
+</body>
+</html>

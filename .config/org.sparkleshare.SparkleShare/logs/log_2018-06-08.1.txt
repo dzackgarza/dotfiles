@@ -1,0 +1,238 @@
+11:44:52 Environment | SparkleShare 2.0.1 (Flatpak)
+11:44:54 Environment | Git LFS 2.3.0
+11:44:54 Environment | Git 2.14.1
+11:44:54 Environment | GNOME (Unix 4.16.13.2)
+11:44:54 Cmd |  | gvfs-set-attribute "/home/zack/SparkleShare" metadata::custom-icon-name org.sparkleshare.SparkleShare
+11:45:11 /home/zack/SparkleShare/github.com/notes | Initializing...
+11:45:15 Cmd | notes | git config core.ignorecase false
+11:45:16 Cmd | notes | git config remote.origin.url "ssh://git@github.com/dzackgarza/notes.git"
+11:45:16 Cmd | notes | git config core.sshCommand ssh -i /home/zack/.config/org.sparkleshare.SparkleShare/ssh/2018-05-31_20h18.key -o UserKnownHostsFile=/home/zack/.config/org.sparkleshare.SparkleShare/ssh/known_hosts -o IdentitiesOnly=yes -o PasswordAuthentication=no -F /dev/null
+11:45:16 Cmd | notes | git --no-pager log --since=1.month --raw --find-renames --date=iso --format=medium --no-color --no-merges
+11:45:24 Git | notes | Checking for remote changes...
+11:45:24 Cmd | notes | git rev-parse HEAD
+11:45:24 Cmd | notes | git config core.ignorecase true
+11:45:24 Cmd | notes | git config core.ignorecase false
+11:45:24 Cmd | notes | git rev-parse --abbrev-ref HEAD
+11:45:24 Cmd | notes | git ls-remote --heads --exit-code origin master
+11:45:25 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+11:45:25 Cmd | notes | git status --porcelain
+11:50:15 Git | notes | Checking for remote changes...
+11:50:15 Cmd | notes | git rev-parse HEAD
+11:50:15 Cmd | notes | git ls-remote --heads --exit-code origin master
+11:50:16 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+11:55:15 Git | notes | Checking for remote changes...
+11:55:15 Cmd | notes | git rev-parse HEAD
+11:55:15 Cmd | notes | git ls-remote --heads --exit-code origin master
+11:55:16 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+12:00:15 Git | notes | Checking for remote changes...
+12:00:15 Cmd | notes | git rev-parse HEAD
+12:00:15 Cmd | notes | git ls-remote --heads --exit-code origin master
+12:00:16 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+12:05:15 Git | notes | Checking for remote changes...
+12:05:15 Cmd | notes | git rev-parse HEAD
+12:05:15 Cmd | notes | git ls-remote --heads --exit-code origin master
+12:05:16 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+12:10:15 Git | notes | Checking for remote changes...
+12:10:15 Cmd | notes | git rev-parse HEAD
+12:10:15 Cmd | notes | git ls-remote --heads --exit-code origin master
+12:10:16 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+12:15:15 Git | notes | Checking for remote changes...
+12:15:15 Cmd | notes | git rev-parse HEAD
+12:15:15 Cmd | notes | git ls-remote --heads --exit-code origin master
+12:15:16 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+12:20:15 Git | notes | Checking for remote changes...
+12:20:15 Cmd | notes | git rev-parse HEAD
+12:20:15 Cmd | notes | git ls-remote --heads --exit-code origin master
+12:20:16 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+12:25:15 Git | notes | Checking for remote changes...
+12:25:15 Cmd | notes | git rev-parse HEAD
+12:25:15 Cmd | notes | git ls-remote --heads --exit-code origin master
+12:25:16 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+12:30:15 Git | notes | Checking for remote changes...
+12:30:15 Cmd | notes | git rev-parse HEAD
+12:30:15 Cmd | notes | git ls-remote --heads --exit-code origin master
+12:30:16 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+12:35:15 Git | notes | Checking for remote changes...
+12:35:15 Cmd | notes | git rev-parse HEAD
+12:35:15 Cmd | notes | git ls-remote --heads --exit-code origin master
+12:35:16 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+12:40:15 Git | notes | Checking for remote changes...
+12:40:15 Cmd | notes | git rev-parse HEAD
+12:40:15 Cmd | notes | git ls-remote --heads --exit-code origin master
+12:40:16 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+12:45:15 Git | notes | Checking for remote changes...
+12:45:15 Cmd | notes | git rev-parse HEAD
+12:45:15 Cmd | notes | git ls-remote --heads --exit-code origin master
+12:45:16 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+12:50:15 Git | notes | Checking for remote changes...
+12:50:15 Cmd | notes | git rev-parse HEAD
+12:50:15 Cmd | notes | git ls-remote --heads --exit-code origin master
+12:50:16 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+12:55:15 Git | notes | Checking for remote changes...
+12:55:15 Cmd | notes | git rev-parse HEAD
+12:55:15 Cmd | notes | git ls-remote --heads --exit-code origin master
+12:55:16 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+13:00:15 Git | notes | Checking for remote changes...
+13:00:15 Cmd | notes | git rev-parse HEAD
+13:00:15 Cmd | notes | git ls-remote --heads --exit-code origin master
+13:00:16 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+13:05:15 Git | notes | Checking for remote changes...
+13:05:15 Cmd | notes | git rev-parse HEAD
+13:05:15 Cmd | notes | git ls-remote --heads --exit-code origin master
+13:05:16 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+13:10:15 Git | notes | Checking for remote changes...
+13:10:15 Cmd | notes | git rev-parse HEAD
+13:10:15 Cmd | notes | git ls-remote --heads --exit-code origin master
+13:10:16 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+13:15:15 Git | notes | Checking for remote changes...
+13:15:15 Cmd | notes | git rev-parse HEAD
+13:15:15 Cmd | notes | git ls-remote --heads --exit-code origin master
+13:15:16 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+13:20:15 Git | notes | Checking for remote changes...
+13:20:15 Cmd | notes | git rev-parse HEAD
+13:20:15 Cmd | notes | git ls-remote --heads --exit-code origin master
+13:20:16 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+13:25:15 Git | notes | Checking for remote changes...
+13:25:15 Cmd | notes | git rev-parse HEAD
+13:25:15 Cmd | notes | git ls-remote --heads --exit-code origin master
+13:25:16 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+13:30:15 Git | notes | Checking for remote changes...
+13:30:15 Cmd | notes | git rev-parse HEAD
+13:30:15 Cmd | notes | git ls-remote --heads --exit-code origin master
+13:30:16 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+13:35:15 Git | notes | Checking for remote changes...
+13:35:15 Cmd | notes | git rev-parse HEAD
+13:35:15 Cmd | notes | git ls-remote --heads --exit-code origin master
+13:35:16 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+13:40:15 Git | notes | Checking for remote changes...
+13:40:15 Cmd | notes | git rev-parse HEAD
+13:40:15 Cmd | notes | git ls-remote --heads --exit-code origin master
+13:40:16 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+13:45:15 Git | notes | Checking for remote changes...
+13:45:15 Cmd | notes | git rev-parse HEAD
+13:45:15 Cmd | notes | git ls-remote --heads --exit-code origin master
+13:45:16 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+13:58:53 Git | notes | Checking for remote changes...
+13:58:53 Cmd | notes | git rev-parse HEAD
+13:58:53 Cmd | notes | git ls-remote --heads --exit-code origin master
+14:03:53 Git | notes | Checking for remote changes...
+14:03:53 Cmd | notes | git rev-parse HEAD
+14:03:53 Cmd | notes | git ls-remote --heads --exit-code origin master
+14:03:54 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+14:08:53 Git | notes | Checking for remote changes...
+14:08:53 Cmd | notes | git rev-parse HEAD
+14:08:53 Cmd | notes | git ls-remote --heads --exit-code origin master
+14:08:54 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+14:13:53 Git | notes | Checking for remote changes...
+14:13:53 Cmd | notes | git rev-parse HEAD
+14:13:53 Cmd | notes | git ls-remote --heads --exit-code origin master
+14:13:53 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+14:18:53 Git | notes | Checking for remote changes...
+14:18:53 Cmd | notes | git rev-parse HEAD
+14:18:53 Cmd | notes | git ls-remote --heads --exit-code origin master
+14:18:54 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+14:23:53 Git | notes | Checking for remote changes...
+14:23:53 Cmd | notes | git rev-parse HEAD
+14:23:53 Cmd | notes | git ls-remote --heads --exit-code origin master
+14:23:54 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+14:28:53 Git | notes | Checking for remote changes...
+14:28:53 Cmd | notes | git rev-parse HEAD
+14:28:53 Cmd | notes | git ls-remote --heads --exit-code origin master
+14:28:54 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+14:33:54 Git | notes | Checking for remote changes...
+14:33:54 Cmd | notes | git rev-parse HEAD
+14:33:54 Cmd | notes | git ls-remote --heads --exit-code origin master
+14:33:54 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+14:38:54 Git | notes | Checking for remote changes...
+14:38:54 Cmd | notes | git rev-parse HEAD
+14:38:54 Cmd | notes | git ls-remote --heads --exit-code origin master
+14:38:55 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+14:43:54 Git | notes | Checking for remote changes...
+14:43:54 Cmd | notes | git rev-parse HEAD
+14:43:54 Cmd | notes | git ls-remote --heads --exit-code origin master
+14:43:55 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+14:48:54 Git | notes | Checking for remote changes...
+14:48:54 Cmd | notes | git rev-parse HEAD
+14:48:54 Cmd | notes | git ls-remote --heads --exit-code origin master
+14:48:54 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+14:53:54 Git | notes | Checking for remote changes...
+14:53:54 Cmd | notes | git rev-parse HEAD
+14:53:54 Cmd | notes | git ls-remote --heads --exit-code origin master
+14:53:55 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+14:58:54 Git | notes | Checking for remote changes...
+14:58:54 Cmd | notes | git rev-parse HEAD
+14:58:54 Cmd | notes | git ls-remote --heads --exit-code origin master
+14:58:55 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+15:03:54 Git | notes | Checking for remote changes...
+15:03:54 Cmd | notes | git rev-parse HEAD
+15:03:54 Cmd | notes | git ls-remote --heads --exit-code origin master
+15:03:55 Git | notes | No remote changes, local+remote: d580d0f7d188fedd43967634e887c91537cc7bbb
+17:22:15 Git | notes | Checking for remote changes...
+17:22:15 Cmd | notes | git rev-parse HEAD
+17:22:15 Cmd | notes | git ls-remote --heads --exit-code origin master
+17:27:15 Git | notes | Checking for remote changes...
+17:27:15 Cmd | notes | git rev-parse HEAD
+17:27:15 Cmd | notes | git ls-remote --heads --exit-code origin master
+17:30:11 Cmd | notes | git status --porcelain
+17:30:11 Local | notes | Activity detected, waiting for it to settle...
+17:30:13 Local | notes | Activity has settled
+17:30:13 Cmd | notes | git status --porcelain
+17:30:13 SyncUp | notes | Initiated
+17:30:13 Cmd | notes | git add --all
+17:30:13 Cmd | notes | git status --porcelain
+17:30:13 Cmd | notes | git config user.name "zack"
+17:30:13 Cmd | notes | git config user.email "dzackgarza@gmai.com"
+17:30:13 Cmd | notes | git commit --all --message="/ ‘Research/Paper/Paper Outline.md’
+" --author="zack <dzackgarza@gmai.com>"
+17:30:13 Cmd | notes | git push --all --progress origin
+17:30:13 Git | ssh: Could not resolve hostname github.com: Temporary failure in name resolution
+17:30:13 Git | fatal: Could not read from remote repository.
+17:30:13 Git | Please make sure you have the correct access rights
+17:30:13 Git | and the repository exists.
+17:30:13 SyncUp | notes | Error
+17:30:13 SyncDown | notes | Initiated
+17:30:13 Cmd | notes | git rev-parse HEAD
+17:30:13 Cmd | notes | git fetch --progress origin master
+17:30:13 Git | ssh: Could not resolve hostname github.com: Temporary failure in name resolution
+17:30:13 Git | fatal: Could not read from remote repository.
+17:30:13 Git | Please make sure you have the correct access rights
+17:30:13 Git | and the repository exists.
+17:30:13 SyncDown | notes | Error
+17:30:13 Cmd | notes | git --no-pager log --since=1.month --raw --find-renames --date=iso --format=medium --no-color --no-merges
+17:30:15 Cmd | notes | git status --porcelain
+17:31:11 Cmd | notes | git status --porcelain
+17:31:11 Local | notes | Activity detected, waiting for it to settle...
+17:31:12 Local | notes | Activity has settled
+17:31:12 Cmd | notes | git status --porcelain
+17:31:25 Cmd | notes | git status --porcelain
+17:31:25 Local | notes | Activity detected, waiting for it to settle...
+17:31:26 Local | notes | Activity has settled
+17:31:26 Cmd | notes | git status --porcelain
+17:32:15 SyncUp | notes | Initiated
+17:32:15 Cmd | notes | git add --all
+17:32:15 Cmd | notes | git status --porcelain
+17:32:15 Cmd | notes | git commit --all --message="/ ‘Research/1-13 Reading Notes.md’
+/ ‘Research/Paper/Paper Outline.md’
+" --author="zack <dzackgarza@gmai.com>"
+17:32:15 Cmd | notes | git push --all --progress origin
+17:32:15 Git | ssh: Could not resolve hostname github.com: Temporary failure in name resolution
+17:32:15 Git | fatal: Could not read from remote repository.
+17:32:15 Git | Please make sure you have the correct access rights
+17:32:15 Git | and the repository exists.
+17:32:15 SyncUp | notes | Error
+17:32:15 SyncDown | notes | Initiated
+17:32:15 Cmd | notes | git rev-parse HEAD
+17:32:15 Cmd | notes | git fetch --progress origin master
+17:32:15 Git | ssh: Could not resolve hostname github.com: Temporary failure in name resolution
+17:32:15 Git | fatal: Could not read from remote repository.
+17:32:15 Git | Please make sure you have the correct access rights
+17:32:15 Git | and the repository exists.
+17:32:15 SyncDown | notes | Error
+17:32:15 Cmd | notes | git --no-pager log --since=1.month --raw --find-renames --date=iso --format=medium --no-color --no-merges
+17:32:16 Git | notes | Checking for remote changes...
+17:32:16 Cmd | notes | git rev-parse HEAD
+17:32:16 Cmd | notes | git ls-remote --heads --exit-code origin master
+17:32:51 Cmd | notes | git status --porcelain
+17:32:51 Local | notes | Activity detected, waiting for it to settle...
+17:32:53 Local | notes | Activity has settled
+17:32:53 Cmd | notes | git status --porcelain

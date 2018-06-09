@@ -1,0 +1,11 @@
+{
+    "appName": {
+        "message": "Todoist: Gjøremålsliste og oppgavebehandler"
+    },
+    "appDesc": {
+        "message": "Todoist er den beste online gjøremålslisten, og behandler flere millioner oppgaver. Kan brukes med Chrome, Web, iPhone m.m."
+    },
+    "addToTodoist": {
+        "message": "Legg til Todoist"
+    }
+}

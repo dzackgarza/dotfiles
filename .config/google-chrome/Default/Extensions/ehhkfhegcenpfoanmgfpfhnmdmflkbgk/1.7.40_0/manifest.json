@@ -1,0 +1,41 @@
+{
+   "background": {
+      "page": "background.html"
+   },
+   "chrome_url_overrides": {
+      "newtab": "index.html"
+   },
+   "content_scripts": [ {
+      "all_frames": true,
+      "js": [ "js/content_script.js" ],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_start"
+   }, {
+      "all_frames": true,
+      "js": [ "js/search/search_content_script.js" ],
+      "matches": [ "*://*.homenewtabsearch.com/*", "*://homenewtabsearch.com.s3-website-us-east-1.amazonaws.com/*" ],
+      "run_at": "document_start"
+   }, {
+      "all_frames": true,
+      "js": [ "3rd-party/facebook/facebook_unread.js" ],
+      "matches": [ "https://www.facebook.com/ajax/mercury/threadlist_info.php*" ],
+      "run_at": "document_start"
+   } ],
+   "content_security_policy": "script-src 'self' https://www.google-analytics.com https://apis.google.com/ https://searchmake.com https://connect.facebook.net https://www.googleadservices.com/ https://autocomplete.wunderground.com; object-src 'self'",
+   "description": "A homepage you will fall in love with! Notifications, badges, recently closed tabs, quick notes, calendar and more.",
+   "icons": {
+      "128": "icons/home.png",
+      "16": "icons/home/home16.png",
+      "32": "icons/home/home32.png",
+      "48": "icons/home.png"
+   },
+   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDQLTrw3Ol43TC482YiOAdhMeAa9n7pxO6y3LBor1qAZYq6Me0Psd48nSdB1mPtm1FHVfaEcCOlolZwirLe0YhpeGXNqpMqWnqAZxgJ/TcBpvpxbGqWFpemkGepVKD9szurGxaiLvFfz5OZCbkeUVW3/+RlMw0wMKZwc86nZNIHlwIDAQAB",
+   "manifest_version": 2,
+   "name": "Home - New Tab Page",
+   "optional_permissions": [ "history", "topSites" ],
+   "options_page": "options.html",
+   "permissions": [ "bookmarks", "tabs", "management", "notifications", "chrome://favicon/", "http://*/*", "https://*/*", "\u003Call_urls>", "webNavigation", "webRequest", "webRequestBlocking", "storage", "unlimitedStorage", "cookies", "idle", "system.cpu", "system.memory" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.7.40",
+   "web_accessible_resources": [ "css/search_badge.css" ]
+}

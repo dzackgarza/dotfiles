@@ -1,0 +1,27 @@
+{
+   "background": {
+      "scripts": [ "background-chrome-bundle.js" ]
+   },
+   "browser_action": {
+      "default_icon": {
+         "19": "icons/mendeley19.png"
+      },
+      "default_title": "Import to Mendeley"
+   },
+   "content_scripts": [ {
+      "js": [ "content-chrome-bundle.js" ],
+      "matches": [ "\u003Call_urls>" ],
+      "run_at": "document_end"
+   } ],
+   "icons": {
+      "128": "icons/mendeley128.png",
+      "16": "icons/mendeley16.png",
+      "64": "icons/mendeley64.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgsFbC2OVooVovua34FWKZpfepLals2QdXhXgU4mj7hZ64Xk0iwA1wcn87FlXNwFTbb0XR6nUp4eu1MkG/QuRtAtH7u4IlHDy+Pl1iu8mjmYY+x9aeZA9/7s59piOxZjq1TFAwm+xu8TkW2Nbcw8lhn49Y0wpy0mMSbBgX/tvcHieg/aOA2gfr5XW3wDdfsXznCyLHZnZC5evKUyfDnNBKu31HBQpELgG9VacV4CRUla+IGHNbMngYw1jlQ8dtnY/iBJYI6+WvPbvkeP7F7/82JpgvAc/CEsr35QQcVba5GqcgTZmmsGD5pMBw2gbwS8BqC9celTTFotBZfnwEyOKkwIDAQAB",
+   "manifest_version": 2,
+   "name": "Mendeley Importer",
+   "permissions": [ "activeTab", "tabs", "\u003Call_urls>" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "2.0.46"
+}

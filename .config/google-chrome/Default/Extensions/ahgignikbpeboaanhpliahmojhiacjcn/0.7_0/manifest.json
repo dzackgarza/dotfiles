@@ -1,0 +1,17 @@
+{
+   "app": {
+      "background": {
+         "scripts": [ "background.js" ]
+      }
+   },
+   "description": "Access all Unicode characters to copy/paste them wherever you feel like.",
+   "icons": {
+      "128": "128.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnCdWrvyAjJu3gBAGll4/FzNLZAvRyWyZITjeRolVUBa+P8YD04mMsXClrCVgx1Wk7mhpjNZHWtBpUiKWO0XHaD7qwZN5ioEYVaPBE4iuBX3wjZyCZ7CenWPl7/9rDer4r/WhWTZM3kkEXFWOOiGKa/5qy/fHMZEiRzDkLmT9vj1R7pCcfdkGJqQYcho/nN4XhopcUl+TqyuNDoZrVLnL1mGr0NrDHh2ex7vsjoyotlhEn+CghQzVFM0aHqCpA1YgaMwymZIAItOJaYr/Vm7bSs0QQhF9LYFjw3atoabxNOzGV38RXHr8dmAzwshpaGVgLBpe5TxHjSELSaHM2f8TKQIDAQAB",
+   "manifest_version": 2,
+   "name": "Unicode",
+   "permissions": [ "clipboardWrite", "notifications", "storage" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "0.7"
+}

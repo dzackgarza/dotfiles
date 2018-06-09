@@ -1,0 +1,145 @@
+/*
+ Panels
+*/
+
+#new-app-panel {
+  	position: fixed;
+  	right: 0;
+	  top: 0;
+	  display: block;
+	  border: 0;
+	  height: 100%;
+	  width: 540px;
+	  z-index: 1000;
+	  box-shadow: -10px 0 50px rgba(0,0,0,.4);
+	  border-left: 10px solid rgba(0,0,0,.05);
+	  box-sizing: border-box;
+	  background-color: rgba(237, 237, 237, 0.95);
+
+	  transition:-webkit-transform .3s ease-in-out;
+	  box-sizing: initial;
+	  padding-right: 50px;
+	  right: -50px;
+	  -webkit-animation-name: elastic-snap-to-point-from-right;
+	  -webkit-animation-duration: .8s;
+	  -webkit-animation-play-state: running; 
+}
+
+#new-app-panel.hidden {
+	-webkit-animation-play-state: paused;
+	transform:translate(110%,0);
+}
+
+
+
+@-webkit-keyframes elastic-snap-to-point-from-right {
+	0% { -webkit-transform:translate(110.00000000000001%,0%) translateZ(0) }
+	30% { -webkit-transform:translate(-2.571428571428564%,0%) translateZ(0) }
+	35% { -webkit-transform:translate(-2.295238095238097%,0%) translateZ(0) }
+	40% { -webkit-transform:translate(0%,0%) translateZ(0) }
+	45% { -webkit-transform:translate(1.2571428571428577%,0%) translateZ(0) }
+	50% { -webkit-transform:translate(1.2190476190476199%,0%) translateZ(0) }
+	55% { -webkit-transform:translate(0%,0%) translateZ(0) }
+	60% { -webkit-transform:translate(-0.7509523809524043%,0%) translateZ(0) }
+	65% { -webkit-transform:translate(-0.51904761904763%,0%) translateZ(0) }
+	70% { -webkit-transform:translate(0%,0%) translateZ(0) }
+	75% { -webkit-transform:translate(0.459523809523815%,0%) translateZ(0) }
+	80% { -webkit-transform:translate(0.2547619047618964%,0%) translateZ(0) }
+	85% { -webkit-transform:translate(0%,0%) translateZ(0) }
+	90% { -webkit-transform:translate(-0.2723809523809593%,0%) translateZ(0) }
+	95% { -webkit-transform:translate(-0.1623809523809593%,0%) translateZ(0) }
+	100% { -webkit-transform:translate(0%,0%) translateZ(0) }
+}
+
+@-webkit-keyframes elastic-snap-to-point-from-bottom {
+	0% { -webkit-transform:translate(0%,110.00000000000001%) translateZ(0) }
+	30% { -webkit-transform:translate(0%,-2.571428571428564%) translateZ(0) }
+	35% { -webkit-transform:translate(0%,-2.295238095238097%) translateZ(0) }
+	40% { -webkit-transform:translate(0%,0%) translateZ(0) }
+	45% { -webkit-transform:translate(0%,1.2571428571428577%) translateZ(0) }
+	50% { -webkit-transform:translate(0%,1.2190476190476199%) translateZ(0) }
+	55% { -webkit-transform:translate(0%,0%) translateZ(0) }
+	60% { -webkit-transform:translate(0%,-0.7509523809524043%) translateZ(0) }
+	65% { -webkit-transform:translate(0%,-0.51904761904763%) translateZ(0) }
+	70% { -webkit-transform:translate(0%,0%) translateZ(0) }
+	75% { -webkit-transform:translate(0%,0.459523809523815%) translateZ(0) }
+	80% { -webkit-transform:translate(0%,0.2547619047618964%) translateZ(0) }
+	85% { -webkit-transform:translate(0%,0%) translateZ(0) }
+	90% { -webkit-transform:translate(0%,-0.2723809523809593%) translateZ(0) }
+	95% { -webkit-transform:translate(0%,-0.1623809523809593%) translateZ(0) }
+	100% { -webkit-transform:translate(0%,0%) translateZ(0) }
+}
+
+
+#background-setting-panel {
+  	position: fixed;
+  	bottom: 0;
+	  left: 0;
+	  display: block;
+	  border: 0;
+	  width: 100%;
+	  height: 240px;
+	  z-index: 1000;
+	  box-shadow: -10px 0 50px rgba(0,0,0,.4);
+	  /* background-color: rgba(255,255,255,.98); */
+	  /*border-top: 10px solid rgba(0,0,0,.05);*/
+	  /* border: 10px solid rgba(0,0,0,.05); */
+	  border-top: 5px solid rgba(255,255,255,.05);
+	  background-color: rgba(30, 30, 30, 0.95);
+	  transition:-webkit-transform .3s ease-in-out;
+
+	  box-sizing: initial;
+	  padding-bottom: 50px;
+	  bottom: -50px;
+	  -webkit-animation-name: elastic-snap-to-point-from-bottom;
+	  -webkit-animation-duration: .90s;
+	  -webkit-animation-play-state: running; 
+}
+
+#background-setting-panel.hidden {
+	transform:translate(0,110%);
+	-webkit-animation-play-state: paused; 
+}
+
+
+/* Search by Speech */
+#speech-panel {
+    background: #fff;
+    min-width: 100%;
+    overflow: hidden;
+    height: 150px;
+    position: absolute;
+    z-index: 1000;
+    border:0;
+    top:0;
+    left: 0;
+    border-bottom: 2px solid #ddd;
+    box-shadow: 0 2px 15px 15px rgba(0,0,0,.35);
+}
+#speech-panel.hidden {
+	display: none;
+}
+
+
+/*
+ Different Resolutions
+*/
+
+@media only screen and (max-height: 1000px) {
+	#background-setting-panel { height:200px; }
+}
+@media only screen and (max-height: 900px) {
+	#background-setting-panel { height:190px; }
+}
+@media only screen and (max-height: 800px) {
+	#background-setting-panel { height:180px }
+}
+@media only screen and (max-height: 700px) {
+	#background-setting-panel { height:160px }
+}
+
+@media only screen and (max-width: 1440px) {
+	#new-app-panel {
+		width: 440px;
+	}
+}

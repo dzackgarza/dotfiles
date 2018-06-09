@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>History On/Off Settings</title>
+<script src="settings.js"></script>
+<link href="settings.css" rel="stylesheet">
+</head>
+<body style="text-align:left; padding:25px;">
+
+  <h2>History On/Off Settings:</h2>
+   
+
+<div class="labelError" id="labelError" style="display:none;color:red">
+Wrong number of seconds.
+</div>
+
+  <p><label for="blockDownloads" title="Clean the downloads history on the above specified interval (without deleting the actual files downloaded)"><input id="blockDownloads" type="checkbox" /> 
+  Don't Track Downloads  (clear downloads history too)</label></p>
+
+<p><label for="addToMnu" title="This option will add History On/Off button to the context menu"><input id="addToMnu" type="checkbox" /> 
+  Add History On/Off to the context menu</label><br />
+  </p>  
+
+  <br />   
+<h3>Toolbar Icon:</h3>   
+    
+   
+      <p>   <input id="defaultIcon" type="radio" name="icon" /> <label for='defaultIcon'>Default Icon</label> <img src="icon.png" valign="middle" width="19" height="19" /></p>
+      <p>   <input id="yellowIcon" type="radio" name="icon" /> <label for='yellowIcon'>Yellow Icon</label> <img src="yellow.png" valign="middle" width="19" height="19" /></p>
+       <p>  <input id="greenIcon" type="radio" name="icon" /> <label for='greenIcon'>Green Icon</label> <img src="green.png" valign="middle" width="19" height="19" /></p>
+     <p>  <input id="purpleIcon" type="radio" name="icon" /> <label for='purpleIcon'>Purple Icon</label> <img src="purple.png" valign="middle" width="19" height="19" /></p>
+     <p>  <input id="redIcon" type="radio" name="icon" /> <label for='redIcon'>Red Icon</label> <img src="red.png" valign="middle" width="19" height="19" /></p>
+    <p>  <input id="beigeIcon" type="radio" name="icon" /> <label for='beigeIcon'>Beige Icon</label> <img src="beige.png" valign="middle" width="19" height="19" /></p>
+    <p>  <input id="ownIcon" type="radio" name="icon"  /> <label for='ownIcon'>   
+
+            Select your own icon (19x19 pixels):</label> 
+
+            <input type="file" id="upload-file"  />
+            
+            <!-- We'll display the image in this DIV -->
+            <div id="destination"></div>
+            <div id="errorMessage"></div>
+        </p> 
+
+    <br />
+      <p><button id="restoreDefaults">restore defaults</button><br />
+  </p>
+    <h2>&nbsp;</h2>
+  <h2>More Info</h2>
+  <p><a href="https://singleclickapps.com/history-on-off">https://singleclickapps.com/history-on-off</a></p>
+</body>
+</html>

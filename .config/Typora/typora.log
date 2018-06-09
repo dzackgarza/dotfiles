@@ -1,0 +1,46 @@
+INFO 5/31/2018, 7:54:21 PM  luanchFromDiffVersion, pre version is undefined
+INFO 5/31/2018, 7:54:21 PM  overwriteThemeFolder
+INFO 5/31/2018, 7:54:21 PM  cannot parse user config, use the default one
+INFO 5/31/2018, 7:54:21 PM  ------------------start------------------
+INFO 5/31/2018, 7:54:21 PM  typora version: 0.9.53
+INFO 5/31/2018, 7:54:41 PM  window.File && (function(){            File.setTheme();        })();
+INFO 5/31/2018, 7:54:45 PM  ------------------quit------------------
+INFO 6/4/2018, 9:56:48 PM  ------------------start------------------
+INFO 6/4/2018, 9:56:48 PM  typora version: 0.9.53
+INFO 6/4/2018, 9:56:49 PM  addRecentDocument
+INFO 6/4/2018, 10:16:44 PM  [ 'typora',
+  '/run/media/zack/A63881E83881B837/Users/Zack/Dropbox/MCWP/MCWP/AD Draft 1.md' ]
+INFO 6/4/2018, 10:16:44 PM  secondary instance would exit
+INFO 6/4/2018, 10:16:50 PM  ------------------quit------------------
+INFO 6/4/2018, 10:19:06 PM  ------------------start------------------
+INFO 6/4/2018, 10:19:06 PM  typora version: 0.9.53
+INFO 6/4/2018, 10:19:06 PM  addRecentDocument
+INFO 6/4/2018, 10:19:25 PM  ------------------quit------------------
+INFO 6/4/2018, 10:19:32 PM  ------------------start------------------
+INFO 6/4/2018, 10:19:32 PM  typora version: 0.9.53
+INFO 6/4/2018, 10:19:32 PM  addRecentDocument
+ERROR 6/4/2018, 10:19:40 PM  wrapExeFunc Timed out window.onWindowBlur && window.onWindowBlur()
+ERROR 6/4/2018, 10:19:46 PM  wrapExeFunc Timed out window.onWindowFocus && window.onWindowFocus()
+INFO 6/4/2018, 11:32:57 PM  ------------------quit------------------
+INFO 6/7/2018, 7:41:18 PM  ------------------start------------------
+INFO 6/7/2018, 7:41:18 PM  typora version: 0.9.53
+INFO 6/7/2018, 7:41:33 PM  ------------------quit------------------
+INFO 6/7/2018, 9:57:25 PM  ------------------start------------------
+INFO 6/7/2018, 9:57:25 PM  typora version: 0.9.53
+INFO 6/7/2018, 9:57:43 PM  addRecentDocument
+INFO 6/7/2018, 9:58:16 PM  window.File && (function() {                File.setCanCollapsePinnedOutline(true);            })();
+INFO 6/7/2018, 9:58:20 PM  window.File && (function(){File.option.enableInlineMath = true;})();
+INFO 6/7/2018, 9:58:29 PM  window.File && (function() {                File.option.smartQuote = true;            })();
+INFO 6/7/2018, 9:58:33 PM  window.File && (function() {                File.option.smartDash = true;            })();
+INFO 6/7/2018, 9:58:43 PM  window.File && (function(){File.option.showLineNumbersForFence = true;})();
+INFO 6/7/2018, 9:58:59 PM  window.File && (function(){File.option.copyMarkdownByDefault = true;})();
+INFO 6/7/2018, 9:59:04 PM  window.File && (function(){File.option.enableAutoSave = true;})();
+INFO 6/7/2018, 9:59:27 PM  ------------------quit------------------
+INFO 6/7/2018, 9:59:32 PM  ------------------start------------------
+INFO 6/7/2018, 9:59:32 PM  typora version: 0.9.53
+INFO 6/7/2018, 10:00:46 PM  addRecentDocument
+INFO 6/7/2018, 10:28:32 PM  addRecentDocument
+INFO 6/8/2018, 11:50:19 AM  ------------------start------------------
+INFO 6/8/2018, 11:50:19 AM  typora version: 0.9.53
+INFO 6/8/2018, 11:50:19 AM  addRecentDocument
+INFO 6/8/2018, 11:57:58 AM  ------------------quit------------------
