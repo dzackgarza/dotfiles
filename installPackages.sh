@@ -1,2 +1,1 @@
-xargs -a ./Packages yaourt -S --noconfirm --needed
-gconftool-2 --load gconf_dump.xml
+xargs -a ./Package.txt yaourt -S --noconfirm --needed
