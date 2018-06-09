@@ -1,0 +1,5 @@
+19:06:50 Environment | SparkleShare 2.0.1 (Flatpak)
+19:06:52 Environment | Git LFS 2.3.0
+19:06:52 Environment | Git 2.14.1
+19:06:52 Environment | GNOME (Unix 4.16.13.2)
+19:06:52 Cmd |  | gvfs-set-attribute "/home/zack/SparkleShare" metadata::custom-icon-name org.sparkleshare.SparkleShare
