@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head lang="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <title>PomoDone blocked resource</title>
+
+    <link rel="stylesheet" href="styles/vendor.css">
+    <link rel="stylesheet" href="styles/app.css">
+    <style>
+        .page {
+            display: flex;
+            align-items: center;
+        }
+
+        .page__body {
+            overflow: visible!important;
+            max-width: 960px;
+            margin: 0 auto 60px auto;
+        }
+
+        .blocked {
+            text-align: center;
+        }
+
+        .blocked__icon {
+
+        }
+
+        .blocked__icon_item {
+            font-size: 140px;
+            color: #c03928;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <nav class="page__navbar navbar-default">
+            <div class="page__navbar_body row">
+                <div class="page__navbar_item page__navbar_item_logo">
+                    <a class="page__navbar_logo" href="http://pomodoneapp.com/" target="_blank">PomoDone</a>
+                </div>
+                <div class="page__navbar_item page__navbar_item_selector"></div>
+            </div>
+        </nav>
+        <div class="page__body">
+            <blocked></blocked>
+        </div>
+    </div>
+    <script src="libs/riot.compiler.min.js"></script>
+    <script src="stop.js"></script>
+</body>
+</html>

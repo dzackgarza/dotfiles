@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="jquery-2.1.4.min.js"></script>
+        <script src="popup.js"></script>
+        <link rel="stylesheet" href="popup.css" type="text/css">
+    </head>
+    <body>
+
+        <div id="mainView">
+
+        	<div id="listContainer">
+                <div id="tableHeader">
+                    <div id="headerFilename">Filename</div>
+                    <div id="headerDescription">Description</div>
+                </div>
+                <div id="listContent">
+                    <table id="listTable">
+                        <tr><td class="checkbox"></td><td class="url"><span class="part3">Loading links. (Refresh page if it doesn't work.)</span></span></td><td class="Description"></td></tr>
+                    </table>
+                </div>
+            </div>
+            <div id="buttons">
+                <button id="selectButton">Select</button>
+                <button id="deselectButton">Deselect</button>
+                <input type="text" id="patternInput" value="*.pdf"><button id="patternButton">Add by filename pattern</button>
+                <button id="startButton" disabled>Start download (0 files)</button>
+                <div class="clear"></div>
+            </div>
+
+        </div>
+
+        <div id="downloadStats">
+            <div class="statsTab">Downloading: <span id="numDownloading" class="statsNumber">0</span></div>
+            <div class="statsTab">Queued: <span id="numQueued" class="statsNumber">0</span></div>
+            <div class="statsTab">Finished: <span id="numFinished" class="statsNumber">0</span></div>
+            <div id="clearDownloads">Clear downloads</div>
+            <div class="clear"></div>
+        </div>
+        
+    </body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<link rel="stylesheet" type="text/css" media="screen,projection" href="css/style.css" />
+<link rel="shortcut icon" type="image/png" href="icons/home/home16.png">
+<script src="js/new.js"></script>
+<script src="js/default.js"></script>
+<script src="js/style.js"></script>
+
+<title>Home</title>
+</head>
+<body>  
+
+<div id="page">
+<div id="page-gradient">
+  <div id="apps-wrapper">
+    <div id="apps-slider">
+      <div id="apps-pages-list">
+        <!-- <div class="apps-page"></div> -->
+      </div>
+      <div id="apps-dots"><span class="active-dot"></span></div>
+     </div>
+  </div>
+
+  <div id="search-box" class="mac" style="display:none">
+    <form id="search-form" name="search-form">
+      <!--
+      action="http://search.findwide.com/srd2/"
+      <input type="hidden" name="id" value="101276dGImdHlwZT1obnRwX2Jn">
+      -->
+      <input type="search"  name="p" autocomplete="off" placeholder="Search Google or type URL" spellcheck="false"  id="search-input" autofocus  />
+      <div id="search-input-bg"></div>
+      <div id="bar-buttons">
+        <div id="search-button" class="button blue">Search</div>
+      </div>
+      <!--<ul id="suggestions">
+        <li>bon jovi</li>
+        <li>black eyed peave</li>
+        <li>mr bean</li>
+        <li>dr rover</li>
+      </ul>
+      -->
+    </form>
+    <iframe id="search-results" src="about:blank" style="display:none"></iframe>
+  </div>
+
+  <div id="boxes">
+    <div class="box" id="notifications-box">
+      <div class="box-h1 bold">Notifications</div>
+      <button id="clear-notifications">clear</button>
+      <div class="scrollable" id="notifications"></div>
+    </div>
+    <div class="box" id="qnote">
+      <div class="box-h1 bold" contenteditable="true" spellcheck="false"id="qnote-title">Quick Notes</div>
+      <div id="qnote-editor">
+        <img src="icons/editor/undo.png" data-cmd="undo" />
+        <img src="icons/editor/redo.png" data-cmd="redo" />
+        <img src="icons/editor/bold.png" data-cmd="bold" />
+        <img src="icons/editor/italics.png" data-cmd="italic" />
+      </div>
+      <div class="box-text scrollable" contenteditable="true" spellcheck="false" id="qnote-text">
+        <div><b>Click to edit</b> <i>&amp;</i> <b>add your own notes</b><i>!</i></div>
+        <div>1<b>)</b> Something to do</div>
+        <div>2<b>)</b> Somewhere to go</div>
+        <div>3<b>)</b> Something to remember</div>
+        <div>4<b>)</b> Someone to meet</div>
+        <div>5<b>)</b> And so on <b>...</b></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="datetime">
+    <div id="time" title="Click to change format"></div>
+    <a id="upcoming-event" title="Click to see event" href="#" target="_blank"></a>
+    <div id="date"></div>
+  </div>
+
+
+  <a href="#" id="recently-closed-button">recently closed</a>
+  <div id="recently-closed"></div>
+
+  <div id="drop-target-wrapper">
+    <div id="drop-target">Drop here to remove</div>
+  </div>
+
+<div id="left-toolbar">
+  <div id="left-toolbar-gradient"></div>
+  <a id="info-button" title="Help" href="https://chrome.google.com/webstore/detail/ehhkfhegcenpfoanmgfpfhnmdmflkbgk/support" target="_blank">i</a>
+  <a id="review-button" title="Review" href="https://chrome.google.com/webstore/detail/ehhkfhegcenpfoanmgfpfhnmdmflkbgk/reviews" target="_blank"></a>
+  <a id="settings-button" title="Settings" href="options.html" target="_blank"></a>
+  <!-- ◉◎○● --> 
+  <a id="focus-button" data-title="Focus"><div id="focus-button-fish-eye"></div></a>  
+  <a id="background-button" data-title="Beautiful Backgrounds"></a>
+</div>
+
+<ul class="panel"></ul>
+
+</div>
+</div> <!-- end of page -->
+
+<div id="bookmarks-bar"></div>
+<div class="overlay"></div>
+<div class="open-app"></div>
+<div class="open-app-overlay"></div>
+<div id="screenshot-overlay"></div>
+<div id="mouse-move-overlay"></div>
+
+<script src="js/main.js"></script>
+<script src="js/notes.js"></script>
+
+<script src="js/search/logerror.js"></script>
+<script src="js/search/common.js"></script>
+<script src="js/search/fauxmine.js"></script>
+<script src="js/search/suggest.js"></script>
+
+<script src="js/recently_closed.js"></script>
+<!--<script src="js/idle_overlay.js"></script>-->
+
+<script src="js/draggable.js"></script>
+
+
+<div id="search-promo" style="display:none">
+<!--<style></style>
+<img src="http://i59.tinypic.com/2mzfknn.png">-->
+<div id="search-promo-text">
+<div id="search-promo-desc">
+    Your searchbar got smarter.
+    <br><b>Needs you to enable history.</b>
+</div>
+<div id="search-promo-accept"><a href="#">Alright let's do this</a> :)</div>
+<div id="search-promo-decline"><a href="#">Nope, I don't need quick urls</a></div>
+</div>
+</div>
+<script src="js/search/search_promo.js"></script>
+
+<!--
+<script src="js/context_menu.js"></script>
+<script src="js/smoothscroll/sscr.js"></script>
+-->
+
+</body>  
+</html>

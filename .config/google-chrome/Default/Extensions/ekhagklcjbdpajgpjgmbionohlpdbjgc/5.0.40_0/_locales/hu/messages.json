@@ -1,0 +1,20 @@
+{
+   "general_done": {
+      "message": "Rendben"
+   },
+   "general_more": {
+      "message": "Egyéb…"
+   },
+   "general_saveTo": {
+      "message": "Mentés $1-ba(n)"
+   },
+   "progressWindow_error_troubleshootingTranslatorIssues": {
+      "message": "Ismert konverter hibák"
+   },
+   "progressWindow_error_upgradeClient_latestVersion": {
+      "message": "legfrissebb verzió"
+   },
+   "progressWindow_savingTo": {
+      "message": "Mentés"
+   }
+}

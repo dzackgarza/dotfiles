@@ -1,0 +1,243 @@
+
+body {
+	margin: 0;
+	background-color: #eeeeee;
+}
+
+input, button {
+	outline: none;
+}
+
+* {
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+	cursor: default;
+}
+
+.clear {
+	clear: both;
+}
+
+
+
+
+
+
+#mainView {
+	padding: 10px;
+}
+
+#listContainer {
+	border: 1px solid #999999;
+	border-radius: 2px;
+	background-color: #ffffff;
+	box-shadow: 2px 2px 2px #dddddd;
+}
+
+#tableHeader {
+	height: 24px;
+	border-bottom: 1px solid #bbbbbb;
+	background-color: #f8f8f8;
+	line-height: 24px;
+	position: relative;
+}
+
+#headerFilename {
+	position: absolute;
+	top: 0px;
+	left: 28px;
+	color: #333333;
+	font-weight: bold;
+}
+
+#headerDescription {
+	position: absolute;
+	top: 0px;
+	left: 435px;
+	color: #333333;
+	font-weight: bold;
+}
+
+#listContent {
+	width: 620px;
+	height: 350px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+#listTable {
+	width: 600px;
+	table-layout: fixed;
+	border-collapse: collapse;
+}
+
+#listTable td {
+	height: 24px;
+	line-height: 24px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding: 0 3px;
+}
+
+#listTable td.url {
+	width: 400px;
+}
+
+#listTable td.url span.part1, #listTable td.url span.part3 {
+	color: rgba(0, 0, 0, 0.5);
+}
+
+#listTable td.checkbox {
+	width: 20px;
+	position: relative;
+}
+
+#listTable input.checkbox {
+	position: absolute;
+	top: 3px;
+	left: 4px;
+}
+
+#listTable tr.link.green {
+	background-color: #9EF097;
+}
+
+#listTable tr.link.selected {
+	background-color: #D7F3FC;
+}
+
+#listTable tr.link.selected.green {
+	background-color: #7EE07E;
+}
+
+
+
+
+
+
+#buttons {
+	margin-top: 9px;
+}
+
+button {
+	display: block;
+	float: left;
+	border: 1px solid #999999;
+	background: linear-gradient(to bottom, #cccccc 0%, #bbbbbb 100%);
+	padding: 6px 10px;
+	border-radius: 2px;
+	font-size: 12px;
+	font-color: #333333;
+	margin-right: 8px;
+	text-shadow: 0px 1px 0px #dddddd;
+	box-shadow: 2px 2px 2px #dddddd;
+}
+
+button:active {
+	background: linear-gradient(to bottom, #bbbbbb 0%, #aaaaaa 100%);
+	text-shadow: 0px 1px 0px #cccccc;
+	box-shadow: 0 2px 2px #999999 inset;
+	padding: 7px 10px 5px 10px;
+}
+
+#startButton {
+	background: linear-gradient(to bottom, #40cf15 0%, #35b60e 100%);
+	font-weight: bold;
+	border-color: #2b930b;
+	float: right;
+	margin-right: 0;
+	color: #ffffff;
+	text-shadow: 0px 1px 0px #1e7604;
+}
+
+#startButton:active {
+	background: linear-gradient(to bottom, #34BA25 0%, #2DA61F 100%);
+	box-shadow: 0 2px 2px #2DA120 inset;
+	text-shadow: 0px 1px 0px #4DC93E;
+}
+
+#startButton:disabled {
+	color: #1e7604;
+	text-shadow: 0px 1px 0px #4bdb1e;
+}
+
+#patternInput {
+	float: left;
+	border: 1px solid #999999;
+	padding: 6px 5px;
+	width: 120px;
+	border-radius: 2px 0px 0px 2px;
+	border-right: 0;
+	font-size: 12px;
+	font-color: #333333;
+	background-color: #ffffff;
+	user-select: text;
+	-webkit-user-select: text;
+	cursor: auto;
+	box-shadow: 2px 2px 2px #dddddd;
+}
+
+#patternButton {
+	border-radius: 0px 2px 2px 0;
+}
+
+
+
+
+
+
+
+#downloadStats {
+	border: 1px solid #bbbbbb;
+	background-color: #dddddd;
+}
+
+#downloadStats div.statsTab {
+	padding: 6px 10px;
+	border-right: 1px solid #bbbbbb;
+	float: left;
+}
+
+#downloadStats span.statsNumber {
+	background-color: #cccccc;
+	font-weight: bold;
+	color: #333333;
+	border-radius: 2px;
+	padding: 4px 11px;
+}
+
+#downloadStats span.statsNumber.statsNumberAnimated {
+    animation-name: animateState;
+    animation-duration: 2s;
+}
+
+#clearDownloads {
+	float: right;
+	margin: 2px 10px 0 0;
+	background: linear-gradient(to bottom, #FC6D6D 0%, #F55F5F 100%);
+	font-weight: bold;
+	color: #332222;
+	border-radius: 2px;
+	padding: 4px 11px;
+	transition: background-color 0.1s;
+	text-shadow: 0 1px 0 #FF7373;
+}
+
+#clearDownloads:active {
+	text-shadow: 0 1px 0 #F54949;
+	background: linear-gradient(to bottom, #E84141 0%, #E63737 100%);
+}
+
+
+
+@keyframes animateState {
+    0%   { background-color: #46DB35; }
+    10%   { background-color: #46DB35; }
+    20%   { background-color: #cccccc; }
+    30%   { background-color: #46DB35; }
+    40%   { background-color: #cccccc; }
+    50%  { background-color: #46DB35; }
+    60% { background-color: #cccccc; }
+}

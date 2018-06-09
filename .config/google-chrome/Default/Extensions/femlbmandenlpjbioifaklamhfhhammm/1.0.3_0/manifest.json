@@ -1,0 +1,18 @@
+{
+   "browser_action": {
+      "default_icon": "icon.png",
+      "default_popup": "popup.html"
+   },
+   "description": "Chrome extension for using special characters easily.",
+   "icons": {
+      "128": "icon128.png",
+      "16": "icon16.png",
+      "64": "icon64.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAs0JMk7TVV2y9W4gU3rTajIq2XtiaDKCAWb1SUGs+pRbqVYvpie7boxCsW7E5i0udomM5AmKl5jLYj1CpGcE3vPFXtbVB89q8ij4Iy0hkEZK5Q1sjFm2ZsA5JCRG4j4aNY1jg+/suJuYAWW9U+Q9wJvV5NKzXP69bnPI5ylJ10c+/wLE6BbviUvGw+BOBIwBmbS8Ar5LF/N3Xkaig07FO1IW1ZChxEp4Rtq8BV3ZCefuhLdYl7eFRjVhOEyWw8LAKbex70T5WBFn8nSLKMRgsvnDaMS7e9EZ/Bq9x1cHf2bfXdny1PWIrkxVEb0Ou2O/VHAXTXoO1F213OUn1DWK/JwIDAQAB",
+   "manifest_version": 2,
+   "name": "Special characters finder",
+   "permissions": [ "activeTab", "\u003Call_urls>" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.0.3"
+}

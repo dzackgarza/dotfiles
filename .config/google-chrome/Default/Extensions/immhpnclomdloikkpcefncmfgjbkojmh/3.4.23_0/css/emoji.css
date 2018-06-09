@@ -1,0 +1,421 @@
+#EmojiInputPopupHtml,
+#EmojiInputPopupBody {
+    width: 410px;
+    overflow: hidden;
+    font-family: sans-serif;
+}
+
+.emoji-outer {
+    height: inherit;
+    line-height: inherit;
+}
+
+.emoji-inner {
+    width: 1.5em;
+    height: 1.5em;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+#emojiSelector .navEmoji {
+    list-style-type: none;
+    font-family: Helvetica, Arial, sans-serif;
+    color: black;
+    font-weight: bold;
+    margin: -10px 0px 15px -46px;
+    position: fixed;
+    background-color: white;
+    padding-top: 5px;
+    height: 24px;
+    font-size: 15px;
+    display: block;
+}
+
+#d-emoji {
+    margin-top: 14px;
+}
+
+#emojiSelector .navEmoji li {
+    display: inline-block;
+    border-right: 1px dotted #CCC;
+    margin-left: 6px;
+    padding-right: 6px;
+}
+
+#emojiSelector .navEmoji li:last-child {
+    border: 0;
+}
+
+#emojiSelector .navEmoji li a {
+    display: inline-block;
+    text-decoration: none;
+    color: black;
+    width: 24px;
+    height: 24px;
+    background-image: url('../icons.png');
+    background-size: cover;
+    -webkit-filter: grayscale(80%);
+    outline: 0;
+}
+
+#emojiSelector .navEmoji li a:hover {
+    -webkit-filter: grayscale(0%);
+}
+
+#emojiSelector .navEmoji li #navEmojiPeople {
+    background-position: 0px 0px
+}
+
+#emojiSelector .navEmoji li #navEmojiNature {
+    background-position: -24px 0px
+}
+
+#emojiSelector .navEmoji li #navEmojiFoods {
+    background-position: -48px 0px
+}
+
+#emojiSelector .navEmoji li #navEmojiActivity {
+    background-position: -72px 0px
+}
+
+#emojiSelector .navEmoji li #navEmojiPlaces {
+    background-position: -96px 0px
+}
+
+#emojiSelector .navEmoji li #navEmojiObjects {
+    background-position: -120px 0px
+}
+
+#emojiSelector .navEmoji li #navEmojiSymbols {
+    background-position: -144px 0px
+}
+
+#emojiSelector .navEmoji li #navEmojiFlags {
+    background-position: -168px 0px
+}
+
+#emojiSelector .navEmoji li #navEmojiRecent {
+    background-position: -192px 0px
+}
+
+#emojiSelector .navEmoji li #navEmojiSearch {
+    background-position: -216px 0px
+}
+
+#emojiSelector .clear {
+    clear: both;
+}
+
+#emojiSelector .emoji-inner {
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    padding: 0px;
+    vertical-align: middle;
+}
+
+#emojiSelector .eq {
+    display: inline-block;
+    margin: 2px 0px 8px 10px;
+}
+
+#emojiSelector .eq:hover {
+    margin: -4px -4px 4px 7px;
+}
+
+#emojiSelector .eq:hover .emoji-inner {
+    width: 40px;
+    height: 40px;
+}
+
+#emojiSelector .board-min {
+    width: 400px;
+}
+
+#emojiSelector .tab-content {
+    height: 400px;
+    overflow-y: scroll;
+}
+
+#emojiSelector .tab-pane {
+    display: none;
+}
+
+#emojiSelector .active {
+    display: block;
+}
+
+.EmojiInput {
+    width: 33px;
+    height: 33px;
+    display: inline-block;
+    padding: 0px;
+    background: url('../emoji-sprite.png');
+    vertical-align: middle;
+    zoom: 0.64;
+}
+
+#EmojiInputPopupBody #txtSearch {
+    width: 95%;
+    font-size: 12pt;
+    padding: 4px;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+#EmojiInputPopupBody #searchMessage {
+    color: #bbb;
+    text-align: center;
+    padding: 50px;
+}
+
+#EmojiInputPopupBody #txtCopyBox {
+    width: 75%;
+    font-size: 10pt;
+    padding: 8px 4px;
+    margin: 10px 0 0 0;
+    color: black;
+    display: inline-block;
+}
+
+#aCopy {
+    display: inline-block;
+    padding: 9px 12px;
+    background-color: #ddd;
+    color: #888;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 12pt;
+}
+
+#aCopy:hover {
+    color: #000;
+}
+
+.typedEmoji {
+    position: absolute;
+    display: none;
+}
+
+#emojiAutoComplete {
+    display: none;
+    position: absolute;
+    border: 1px solid black;
+    background-color: white;
+    z-index: 999999999;
+    padding: 5px;
+}
+
+.spanShortCode {
+    padding: 3px 8px 2px 5px;
+    width: auto;
+    display: inline-block;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.spanShortCode span {
+    display: inline-block;
+    margin-left: 3px;
+}
+
+.emojiHighlighted {
+    border-radius: 15px;
+    background-color: #feca38;
+}
+
+#EmojiInputPopupBody #placeholder {
+    height: 65px;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    margin-top: 10px;
+    text-align: center;
+}
+
+#EmojiInputPopupBody #emoji_stuff_logo {
+    margin-top: 10px;
+}
+
+
+#EmojiInputPopupBody .bottom-links {
+    width: 400px;
+    margin: 10px 0px 0px 0px;
+    font: 12pt Helvetica, Arial, sans-serif;
+}
+
+#EmojiInputPopupBody .bottom-links-shop {
+    float: left;
+    text-align: center;
+    display: inline-block;
+    margin: 2px 0 10px 0;
+    width: 100%;
+}
+
+#EmojiInputPopupBody .bottom-links a,
+#EmojiInputPopupBody .bottom-links a:visited {
+    color: black;
+}
+
+#EmojiInputPopupBody .bottom-links a:hover {
+    color: blue;
+}
+
+#EmojiInputPopupBody .emoji-stuff-logo-link {
+    display: block;
+    height: 60px;
+    background-image: url('../emoji-stuff-logo.png');
+    background-position: center -15px;
+    background-size: 75%;
+    background-repeat: no-repeat;
+}
+
+#EmojiInputPopupBody a.my-shop {
+    color: green !important;
+    font-weight: bold;
+}
+
+#EmojiInputPopupBody a.my-shop:hover {
+    color: blue !important;
+    font-weight: bold;
+}
+
+#EmojiInputPopupBody .other_extensions a img {
+    border: 0px;
+    vertical-align: middle;
+    display: inline-block;
+    margin-right: 5px;
+    float: left;
+}
+
+#EmojiInputPopupBody .other_extensions a span {
+    display: inline-block;
+    float: left;
+    line-height: 18px;
+    text-align: left;
+    margin: 10px;
+}
+
+#EmojiInputPopupBody .other_extensions a {
+    line-height: 48px;
+    text-decoration: none;
+    color: black;
+    font-size: 13px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#EmojiInputPopupBody #social_icons div {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+#EmojiInputPopupBody #social_icons a {
+    color: #666;
+    text-decoration: none;
+    margin: 5px;
+}
+
+#EmojiInputPopupBody #social_icons a:hover {
+    color: black;
+    text-decoration: none;
+}
+
+#EmojiInputPopupBody .fa-facebook {
+    color: #3b5998;
+}
+
+#EmojiInputPopupBody .fa-twitter {
+    color: #00aced;
+}
+
+#EmojiInputPopupBody .fa-pinterest {
+    color: #cb2027;
+}
+
+#EmojiInputPopupBody .fa-instagram {
+    color: #8a3ab9;
+}
+
+#EmojiInputPopupBody .rotator {
+    display: none;
+}
+
+#EmojiInputPopupBody .fadingIn {
+    display: block;
+    animation: fadeInFromNone 2s ease-out;
+}
+
+#EmojiInputPopupBody .fadingOut {
+    display: block;
+    animation: fadeOutFromBlock 2s ease-in;
+}
+
+#EmojiInputPopupBody .fadingIn:hover,
+#EmojiInputPopupBody .fadingOut:hover {
+    display: block;
+    animation: none;
+    opacity: 1;
+}
+
+#EmojiInputPopupBody .isVariation {
+    display: none;
+}
+
+#EmojiInputPopupBody .isVariationShown {
+    display: inline-block;
+}
+
+#EmojiInputPopupBody .hasVariations {
+    position: relative;
+}
+
+#EmojiInputPopupBody .hasVariations::after {
+    content:'';
+    position: absolute;
+    bottom:0px;
+    right:0px;
+    width:0;
+    height:0;
+    border-style: solid;
+    border-width: 0 0 10px 10px;
+    border-color: transparent transparent #ccc transparent;
+}
+
+@keyframes fadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    1% {
+        display: block;
+        opacity: 0;
+    }
+
+    100% {
+        display: block;
+        opacity: 1;
+    }
+}
+
+
+@keyframes fadeOutFromBlock {
+    0% {
+        display: block;
+        opacity: 1;
+    }
+
+    1% {
+        display: block;
+        opacity: 1;
+    }
+
+    100% {
+        display: none;
+        opacity: 0;
+    }
+}

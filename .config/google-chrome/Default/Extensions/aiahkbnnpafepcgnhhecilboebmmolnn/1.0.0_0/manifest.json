@@ -1,0 +1,30 @@
+{
+   "author": "Fabian Gremper",
+   "background": {
+      "scripts": [ "background.js" ]
+   },
+   "browser_action": {
+      "default_icon": {
+         "19": "icon19.png",
+         "38": "icon38.png"
+      },
+      "default_popup": "popup.html",
+      "default_title": "Batch Link Downloader"
+   },
+   "content_scripts": [ {
+      "js": [ "jquery-2.1.4.min.js", "content.js" ],
+      "matches": [ "\u003Call_urls>" ]
+   } ],
+   "description": "Download many links from a website easily.",
+   "icons": {
+      "128": "icon128.png",
+      "16": "icon16.png",
+      "48": "icon48.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqAtdv+vZruFBvA9jpQqb7wQ69mjyeRefZEpfjN0kpHbP+5YWObx022yc9Z3lDkEabqsAzm20WT4kZISTX4FkkLWXdiO0uGxmLZPqjJiE3o6PCb39UK5dr6jazhv80pPixSFXmzKWKLT2PWZb7dBH+nf/E/Q+ip3MwnfjZ/yW+aP7fWFT3JrfPuLxuNh6SetXq/x5j2aqKWxn7nJ7d2hL12Z7f+44zJlWTOLByr/csC1FQkoMsJ0pzj+RAmepKA3SVV+2Y4ygekqG3oR7ivQIPyZ05euPdN9lFC2K1H9LMsTRLb3PQ94DXnA+bNw29XAaJ1TkCdXkourHVr+F8CaRSwIDAQAB",
+   "manifest_version": 2,
+   "name": "Batch Link Downloader",
+   "permissions": [ "tabs", "notifications", "downloads" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.0.0"
+}

@@ -1,0 +1,11 @@
+{
+    "appName": {
+        "message": "Todoist: タスク一覧表とタスクマネージャー"
+    },
+    "appDesc": {
+        "message": "Todoistは、膨大な量のタスク管理に最適なオンラインタスクリストです。Chrome、Web、iPhone、Android、Firefox、Outlookやその他にも対応しています。"
+    },
+    "addToTodoist": {
+        "message": "Todoistに追加"
+    }
+}

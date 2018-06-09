@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head lang="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <title>PomoDone</title>
+
+    <link rel="stylesheet" href="styles/vendor.css">
+    <link rel="stylesheet" href="styles/app.css">
+    <style>
+        .page__body {
+            overflow: visible!important;
+            max-width: 960px;
+            margin: 0 auto 60px auto;
+        }
+
+        .download_app {
+            text-align: center;
+        }
+
+        .btn-icon {
+            display: inline-block;
+            margin: 0 4px 0 0;
+        }
+
+        .btn-icon-rotate {
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin { 100% { transform:rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <nav class="page__navbar navbar-default">
+            <div class="page__navbar_body row">
+                <div class="page__navbar_item page__navbar_item_logo">
+                    <a class="page__navbar_logo" href="http://pomodoneapp.com/" target="_blank">PomoDoneApp</a>
+                </div>
+                <div class="page__navbar_item page__navbar_item_selector"></div>
+            </div>
+        </nav>
+        <div class="page__body">
+            <h2 class="card__timer_title content__text-multiline_ellipsis">Options</h2>
+            <options></options>
+            <div class="download_app">
+                <h3>Download PomoDoneApp</h3>
+                <p><a href="http://pomodoneapp.com/" target="_blank"><img src="/icon128.png" alt=""/></a></p>
+            </div>
+
+        </div>
+    </div>
+    <script src="libs/riot.compiler.min.js"></script>
+    <script src="options.js"></script>
+</body>
+</html>

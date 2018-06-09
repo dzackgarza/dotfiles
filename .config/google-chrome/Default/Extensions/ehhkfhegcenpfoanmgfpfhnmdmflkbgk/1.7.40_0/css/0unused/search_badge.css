@@ -1,0 +1,53 @@
+.e_ {
+  padding-bottom: 2px;
+  display: inline-block;
+  cursor: text;
+}
+
+.descText, .ctcCO {
+    margin-top: 1px !important;
+    display: inline-block;
+}
+
+
+/*.adBadge */
+.e_::before
+{
+    background-color: #efc439;
+    border-radius: 2px;
+    color: #fff;
+    display: inline-block;
+    font-size: 11px;
+    padding: 0 2px;
+    line-height: 14px;
+    vertical-align: baseline;
+    margin-right: 7px;
+    /* position: relative; */
+    /* top: -1px; */
+    /* margin-bottom: 1px; */
+}
+
+.d_, .ctcT a {
+    text-decoration: none !important;
+}
+
+.d_:hover, .ctcT a:hover {
+    text-decoration: underline !important;
+}
+
+.d_ {
+  line-height:1.2em !important;
+}
+
+.b_ {
+    padding-left:0 !important;
+}
+
+#adBlock {
+    border-color:transparent !important;
+    background-color:transparent !important;
+}
+
+#attrHeader {
+    display:none;
+}

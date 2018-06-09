@@ -1,0 +1,103 @@
+
+#recently-closed-box {
+	/*-webkit-transition: right .3s ease-out;*/
+	position: absolute;
+	right:10px; /*6%;*/
+	background: #fff;
+	box-shadow:0 1px 13px rgba(0, 0, 0, 0.8);
+	padding:5px 0;
+	padding-top:36px;
+	border-radius:10px;
+	color:#222;
+	/*
+	border:3px solid rgba(0, 0, 0, .2);
+	background-image: -webkit-gradient( linear, left center, right center, color-stop(0.5, white), color-stop(1, #ddd) );
+	*/
+	background-image: -webkit-gradient( linear, left bottom, left top, color-stop(0.1, #DDD), color-stop(0.5, white) );
+	border:3px solid rgba(0, 0, 0, .1);
+	border-right:0;
+	bottom: 40px;
+	z-index: 12;
+	-webkit-transition: -webkit-transform .25s cubic-bezier(.1,.56,.52,1);
+	/* .2s ease-out
+	cubic-bezier(0,.89,.68,1.09) 
+	cubic-bezier(.17,.67,.68,1.09)
+	middle: cubic-bezier(.08,.80,.68,1.09)
+	cubic-beziercubic-bezier(.01,.61,.66,1.07); 
+	*/
+	/*-webkit-transition: opacity .3s, -webkit-transform .3s cubic-bezier(.87,-.41,.19,1.44);
+	*/
+	opacity:1;	
+	display:none;
+	/*new:
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+	border:0;*/
+}
+
+#recently-closed-box.minimized {
+	-webkit-transform: translate3d(17%,55%,0) scale(0.1); 
+	/*-webkit-transform: translate3d(15%,41%,0) scale(0.3);*/
+	opacity:0.1;	
+}
+
+#recently-closed-clear-button {
+   top: 10px;
+   right: 14px;
+   border: 2px solid #bbb;
+   color: #555;
+}
+
+#recently-closed-clear-button:hover {
+	background:  rgba(0,0,0,.2);
+	border-color: rgba(0,0,0,.1);
+	color: #222;
+}
+
+#recently-closed-list a {
+	color:#000;
+	display: block;
+	line-height: 2;
+	margin: 5px 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	text-decoration:none;
+	padding: 0 20px 0 10px;
+	width: 600px;
+	font-size: 18px;
+}
+
+#recently-closed-list a:hover {
+	background-color: #cfcfcf;
+}
+#recently-closed-list a:active {
+	background:#4081EA !important;
+	color:#fff !important;
+}
+#recently-closed-list  img {
+	margin-right: 10px;
+	margin-top: -4px;
+	vertical-align: middle;
+}
+
+@media only screen and (max-width: 1440px) {
+	/*#apps-slider { padding-top:14px; }*/
+	#recently-closed-list a {
+		width: 500px;
+		font-size: 16px;
+	}
+}
+
+@media only screen and (max-width: 1366px), screen and (max-height: 792px) {
+	#recently-closed-list a {
+		width: 430px;
+		font-size: 13px;
+	}
+}
+
+@media only screen and (max-width: 1280px) {
+	#recently-closed-list a {
+		width: 430px;
+		font-size: 13px;
+	}
+}

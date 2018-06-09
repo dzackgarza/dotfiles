@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8 />
+  <title>Seach by speech</title>
+  <style>
+  * { margin:0; padding:0; }
+
+  	html {
+  	}
+    body {
+      font-family : segoe ui, sans-serif;
+      font-size   : 16px;
+      height: 100%;
+      user-select:none;
+      -webkit-user-select: none;
+      cursor:default;
+      overflow: hidden;
+      background: #f1f1f1;
+    }
+
+    #page {
+      max-height: 140px;
+      background: #fff;
+      position: relative;
+    }
+
+    
+    #results {
+    font-size: 24px;
+    padding: 15px;
+    text-align: left;
+    min-height: 110px;
+    margin-right: 170px;
+    }
+
+    .interim {
+    color: gray;
+    }
+    .final {
+    color: #333;
+    padding-right: 3px;
+    }
+#info {
+    font-size: 20px;
+    }
+
+    #microphone-button {
+      position: absolute;
+      right: 50px;
+      top: 17px;
+      width: 100px;
+      height: 100px;
+    }
+
+   .button>.img {
+      background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE2LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgd2lkdGg9IjQ4NC41cHgiIGhlaWdodD0iNDg0LjVweCIgdmlld0JveD0iMCAwIDQ4NC41IDQ4NC41IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0ODQuNSA0ODQuNTsiIHhtbDpzcGFjZT0icHJlc2VydmUiDQoJPg0KPGc+DQoJPGcgaWQ9ImtleWJvYXJkLXZvaWNlIj4NCgkJPHBhdGggZmlsbD0icmVkIiBkPSJNMjQyLjI1LDMwNmM0My4zNSwwLDc2LjUtMzMuMTUsNzYuNS03Ni41di0xNTNjMC00My4zNS0zMy4xNS03Ni41LTc2LjUtNzYuNWMtNDMuMzUsMC03Ni41LDMzLjE1LTc2LjUsNzYuNXYxNTMNCgkJCUMxNjUuNzUsMjcyLjg1LDE5OC45LDMwNiwyNDIuMjUsMzA2eiBNMzc3LjQsMjI5LjVjMCw3Ni41LTYzLjc1LDEzMC4wNS0xMzUuMTUsMTMwLjA1Yy03MS40LDAtMTM1LjE1LTUzLjU1LTEzNS4xNS0xMzAuMDVINjMuNzUNCgkJCWMwLDg2LjcsNjguODUsMTU4LjEsMTUzLDE3MC44NXY4NC4xNWg1MXYtODQuMTVjODQuMTUtMTIuNzUsMTUzLTg0LjE0OSwxNTMtMTcwLjg1SDM3Ny40TDM3Ny40LDIyOS41eiIvPg0KCTwvZz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjwvc3ZnPg0K) no-repeat;
+    width: 100%;
+    height: 100%;
+    background-size: 50%;
+    background-position: center center;
+    -webkit-filter: grayscale(1);
+    filter: grayscale(1);  
+    opacity: .8;
+}
+
+.button {
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 100%;
+    bottom: 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,.1);
+    cursor: pointer;
+    display: inline-block;
+    position: absolute;
+    transition: background-color 0.218s,border 0.218s,box-shadow 0.218s;
+}
+.button:active {
+    background-color: #eee;
+}
+button:focus,.button:focus,select:focus {outline:none}
+
+.blue {
+   -webkit-filter: hue-rotate(220deg) saturate(5);
+    filter: hue-rotate(220deg) saturate(5);
+}
+
+
+.recording-start>.img {
+ -webkit-filter:  hue-rotate(45deg) saturate(5);
+  filter: hue-rotate(45deg) saturate(5);
+  opacity: .9;
+}
+
+.recording-results {
+  background: #f44;
+}
+.recording-results>.img {
+  -webkit-filter: brightness(0) invert(1) ;
+   filter: brightness(0) invert(1); 
+  opacity: 1;
+}
+
+.disabled{
+  background: #eee;
+  box-shadow: none;
+  cursor:default;
+}
+.disabled>.img {
+  opacity: 0.1;
+}
+
+
+#info {
+  position: absolute; top:0;
+      font-size: 24px;
+    padding: 15px;
+    text-align: left;
+    min-height: 150px;
+    margin-right: 150px;
+    color:#888;
+}
+
+#close-button {
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 18px;
+  height: 18px;
+    background-color: transparent;
+    border: 0;
+    opacity: 0.5;
+    cursor:pointer;
+   background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPjxzdmcgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDEwMDAgMTAwMCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMTAwMCAxMDAwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48bWV0YWRhdGE+IFN2ZyBWZWN0b3IgSWNvbnMgOiBodHRwOi8vd3d3Lm9ubGluZXdlYmZvbnRzLmNvbS9pY29uIDwvbWV0YWRhdGE+PGc+PHBhdGggZD0iTTkxLjgsOTg5LjlsLTgxLjYtODEuNkw5MDguNCwxMC4xTDk5MCw5MS43TDkxLjgsOTg5LjlMOTEuOCw5ODkuOXogTTk4OS45LDkwOC4zbC04MS42LDgxLjZMMTAsOTEuNmw4MS42LTgxLjZMOTg5LjksOTA4LjNMOTg5LjksOTA4LjN6Ii8+PC9nPjwvc3ZnPg==);
+}
+#close-button:hover { opacity:0.7;}
+
+#div_language {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+select {
+  background: transparent;
+  border: 0;
+  color:#999;
+  padding:1px 3px;
+}
+select:hover, select:focus  { background:#f1f1f1; border-radius: 6px; color:#333; }
+
+.inactive #select_language, .inactive #select_dialect {
+  background: transparent;
+  border: 0;
+}
+
+
+  </style>
+
+</head>
+<body>  
+
+<div id="page">
+
+
+  <div id="results">
+    <span class="final" id="final_span"></span>
+    <span class="interim" id="interim_span"></span>
+  </div>
+
+  <button id="microphone-button" class="button">
+    <div id="microphone-img" class="img"></div>
+  </button>
+
+  <button id="close-button"></button>
+
+  <div id="info">
+    <p id="info_start">
+      <!-- Click on the microphone icon and begin speaking for as long as you like. -->
+    </p>
+    <p id="info_speak_now" style="display:none">
+      Speak now
+    </p>
+    <p id="info_no_speech" style="display:none">
+      No speech was detected. You may need to adjust your <a 
+      href="https://support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892" target="_parent">microphone
+      settings</a>.
+    </p>
+    <p id="info_no_microphone" style="display:none">
+      No microphone was found. Ensure that a microphone is installed and that
+      <a href="https://support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892" target="_parent">
+      microphone settings</a> are configured correctly.
+    </p>
+    <p id="info_allow" style="display:none">
+      Click the "Allow" button above to enable your microphone.
+    </p>
+    <p id="info_denied" style="display:none">
+      <!-- Permission to use microphone was denied. -->
+      Permission to use microphone is denied. <br>To allow voice search, click the icon with the red <span style="background:#ec5656; color:#fff; padding:0 8px;">x</span> at the end of the address bar.
+      <!-- Voice search has been turned off. <a href="https://support.google.com/chrome/?p=ui_voice_search" target="_parent">Details</a>  -->
+    </p>
+    <p id="info_blocked" style="display:none">
+      Permission to use microphone is blocked. <br>To allow voice search, click the icon with the red <span style="background:#ec5656; color:#fff; padding:0 8px;">x</span> at the end of the address bar.
+    </p>
+    <p id="info_upgrade" style="display:none">
+      Web Speech API is not supported by this browser. Upgrade to <a 
+      href="https://www.google.com/chrome" target="_parent">Chrome</a> version 25 or later.
+    </p>
+  </div>
+
+
+  <div class="compact marquee" id="div_language" style="/*display:none">
+    <select id="select_language" onchange="updateCountry()">
+      </select>&nbsp;&nbsp; <select id="select_dialect">
+    </select>
+    <!-- &nbsp;&nbsp;change -->
+  </div>
+</div>
+
+ <script src="/js/lib/jquery.min.js"></script>
+ <script src="./speech_panel.js"></script>
+</body>
+</html>

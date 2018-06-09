@@ -1,0 +1,27 @@
+.pomodoneSidebar {
+    position: fixed;
+    z-index: 100500;
+    background: #fff;
+    width: 360px;
+    top: 0;
+    bottom: 0;
+    right: -360px;
+    opacity: 0;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    text-align: left;
+}
+
+.pomodoneSidebar-opened {
+    right: 0;
+    opacity: 1;
+}
+
+.pomodoneSidebar__iframe {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
