@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<map>
+  <int name="autoHideBookmarks" value="1" />
+  <int name="autoSaveInterval" value="60" />
+  <int name="inputSmoothing" value="5" />
+  <int name="insEmptySpace" value="1" />
+  <int name="mouseMode" value="0" />
+  <int name="penButtonMode" value="14" />
+  <int name="penType" value="11" />
+  <int name="reopenLastDoc" value="1" />
+  <int name="showAdvPrefs" value="1" />
+  <int name="singleFile" value="1" />
+  <int name="strokeCounter" value="1027" />
+  <int name="touchUI" value="1" />
+  <float name="marginLeft" value="100" />
+  <float name="pageHeight" value="2004" />
+  <float name="pageWidth" value="1116" />
+  <float name="preScale" value="0.946667" />
+  <string name="backupFilename" value="" />
+  <string name="clippingDoc" value="" />
+  <string name="currFolder" value="/home/zack" />
+  <string name="docTags" value="" />
+  <string name="docTitle" value="" />
+  <string name="fileExt" value="html" />
+  <string name="lastURL" value="" />
+  <string name="mainWindowGeometry" value="AdnQywACAAAAAAAAAAAAAAAAB38AAAQ3AAAACgAAAEwAAAd1AAAELQAAAAAABAAAB4A=" />
+  <string name="mainWindowState" value="AAAA/wAAAAD9AAAAAQAAAAAAAAEAAAAEDfwCAAAAAvsAAAAYAGIAbwBvAGsAbQBhAHIAawBEAG8AYwBrAAAAACsAAAQNAAAATQD////7AAAAGABjAGwAaQBwAHAAaQBuAGcARABvAGMAawAAAAAA/////wAAAFIA////AAAHgAAABA0AAAAEAAAABAAAAAgAAAAI/AAAAAEAAAACAAAAAQAAABAAdABvAG8AbABCAGEAcgAwAQAAAAD/////AAAAAAAAAAA=" />
+  <string name="recentDocs" value="/home/zack/Jun 06 2.03PM.html:::/home/zack/Jun 02 12.21AM.html" />
+  <string name="syncPass" value="" />
+  <string name="syncServer" value="" />
+  <string name="syncUser" value="" />
+  <string name="toolBars" value="docTitle,stretch,actionSave,separator,actionDraw,actionErase,actionSelect,actionInsert_Space,separator,undoRedoBtn,separator,actionCut,actionCopy,actionPaste,separator,actionShow_Bookmarks,action_Previous_Page,action_Next_Page,separator,actionOverflow_Menu" />
+  <string name="toolModes" value="14 18 27" />
+  <pen color="4278190080" width="1.4" pressure="2" drawunder="false" snaptogrid="false" />
+  <pen color="4294901760" width="1.4" pressure="2" drawunder="false" snaptogrid="false" />
+  <pen color="4278255360" width="1.4" pressure="2" drawunder="false" snaptogrid="false" />
+  <pen color="4278190335" width="1.4" pressure="2" drawunder="false" snaptogrid="false" />
+  <pen color="4278190080" width="2.4" pressure="2" drawunder="false" snaptogrid="false" />
+  <pen color="4294901760" width="2.4" pressure="2" drawunder="false" snaptogrid="false" />
+  <pen color="4278255360" width="2.4" pressure="2" drawunder="false" snaptogrid="false" />
+  <pen color="4278190335" width="2.4" pressure="2" drawunder="false" snaptogrid="false" />
+  <ruling name="default">
+    <g class="ruleline">
+      <g class="rulepattern" shape-rendering="crispEdges">
+        <pattern id="pattern0" class="rule_y" x="0.000" y="0.000" width="0.000" height="40.000" patternUnits="userSpaceOnUse">
+          <path vector-effect="non-scaling-stroke" fill="none" stroke="#0000FF" stroke-width="1.000" d="M0.000 40.000 l 65535.000 0.000" />
+        </pattern>
+        <rect x="0.000" y="0.000" width="0.000" height="0.000" fill="url(#pattern0)" />
+      </g>
+      <g class="rulepattern" shape-rendering="crispEdges">
+        <pattern id="pattern1" class="rule_x rule_margin" x="100.000" y="0.000" width="0.000" height="0.000" patternUnits="userSpaceOnUse">
+          <path vector-effect="non-scaling-stroke" fill="none" stroke="#FF0000" stroke-width="1.000" d="M0.000 0.000 l 0.000 65535.000" />
+        </pattern>
+        <rect x="100.000" y="0.000" width="-100.000" height="0.000" fill="url(#pattern1)" />
+      </g>
+    </g>
+  </ruling>
+</map>

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<sparkleshare>
+  <user>
+    <name>zack</name>
+    <email>dzackgarza@gmai.com</email>
+  </user>
+  <notifications>True</notifications>
+  <folder>
+    <name>notes</name>
+    <identifier>7cc602b1a1211b2383e86038f8a2fd67b8b65e8b</identifier>
+    <url>ssh://git@github.com/dzackgarza/notes.git</url>
+    <backend>Git</backend>
+  </folder>
+</sparkleshare>

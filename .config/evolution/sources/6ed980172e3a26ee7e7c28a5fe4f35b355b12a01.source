@@ -1,0 +1,19 @@
+[Data Source]
+DisplayName=dzackgarza@gmail.com
+Enabled=true
+Parent=88035fa991e70f0d334b068522ed5507818553ee
+
+[Mail Transport]
+BackendName=smtp
+
+[Authentication]
+Host=smtp.gmail.com
+Method=XOAUTH2
+Port=465
+ProxyUid=system-proxy
+RememberPassword=true
+User=dzackgarza@gmail.com
+CredentialName=
+
+[Security]
+Method=ssl-on-alternate-port
