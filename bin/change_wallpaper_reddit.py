@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+# https://github.com/ssimunic/Daily-Reddit-Wallpaper
 from __future__ import unicode_literals
 import argparse
 import ctypes
