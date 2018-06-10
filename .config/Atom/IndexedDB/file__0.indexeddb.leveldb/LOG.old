@@ -1,6 +1,0 @@
-2018/06/08-11:57:33.830 28154 Reusing MANIFEST /home/zack/.config/Atom/IndexedDB/file__0.indexeddb.leveldb/MANIFEST-000001
-2018/06/08-11:57:33.830 28154 Recovering log #43
-2018/06/08-11:57:33.953 28154 Reusing old log /home/zack/.config/Atom/IndexedDB/file__0.indexeddb.leveldb/000043.log 
-2018/06/08-11:58:07.966 28805 Level-0 table #48: started
-2018/06/08-11:58:08.111 28805 Level-0 table #48: 1354211 bytes OK
-2018/06/08-11:58:08.180 28805 Delete type=0 #43
