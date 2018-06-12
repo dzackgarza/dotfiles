@@ -35,3 +35,5 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias gsave="git add -A && git commit -am Update && git push"
+
+alias owp='"$(xclip -o | sed -E '\''s/\\/\//g'\'' | sed -E '\''s/X:/\/home\/zack\/onedrive/g'\'')"'
