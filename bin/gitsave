@@ -1,0 +1,11 @@
+#!/bin/bash
+if [[ $# -eq 0 ]] ; then
+  echo 'Enter a directory (relative or absolute)'
+  exit 1
+fi
+
+cd $(realpath $1);
+git add -A;
+git commit -am "Automatic save";
+git push origin master;
+cd -;
