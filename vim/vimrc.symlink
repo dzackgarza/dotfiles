@@ -361,8 +361,8 @@ au FileType php set omnifunc=phpcomplete#CompletePHP
 " ----- </ PHP > -------------------
 
 " Column 80 marker
-highlight OverLength ctermbg=red ctermfg=white guibg=#660000
-match OverLength /\%81v.\+/
+" highlight OverLength ctermbg=red ctermfg=white guibg=#660000
+" match OverLength /\%81v.\+/
 
 " Sane vimdiff colorscheme
 highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
