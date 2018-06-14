@@ -62,6 +62,8 @@
     mathRenderingOption: "MathJax"
     openPreviewPaneAutomatically: false
     printBackground: true
+  "markdown-writer":
+    siteEngine: "jekyll"
   minimap:
     plugins:
       pigments: true
