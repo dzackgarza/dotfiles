@@ -145,7 +145,7 @@ curl -L git.io/antigen > antigen.zsh
 #source ./antigen.zsh
 success "Run 'source antigen.zsh' from zsh."
 
-yaourt -S tree cowsay lolcat fortune-mod tmux xclip vim ranger --noconfirm
+yaourt -S tree cowsay lolcat fortune-mod tmux xclip vim ranger xsel --noconfirm
 
 # todo: Install go and tewisay
 
