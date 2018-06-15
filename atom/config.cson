@@ -39,8 +39,10 @@
     scrollPastEnd: true
     showIndentGuide: true
     showInvisibles: true
+    softTabs: false
     softWrap: true
     softWrapAtPreferredLineLength: true
+    tabType: "hard"
   "exception-reporting":
     userId: "38d3e691-afd2-48c0-8ed8-d7d7bdea684f"
   "language-babel":
