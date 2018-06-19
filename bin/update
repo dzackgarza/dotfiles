@@ -1,5 +1,6 @@
 #!/bin/bash
-sudo yaourt -Syuu --noconfirm
+command -v yaourt >/dev/null 2>&1 || sudo yaourt -Syuu --noconfirm
+command -v apt-get >/dev/null 2>&1 || sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get -y autoremove && sudo apt-get autoclean
 # calibre library update
 # dropbox sync
 # sparkleshare sync
