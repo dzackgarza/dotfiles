@@ -1,10 +1,10 @@
-function extract() {
-  if[ -f $1 ]; then
-    aunpack $1
-  else
-    echo "'$1' is not a valid file"
-  fi
-}
+#function extract() {
+  #if[ -f $1 ]; then
+    #aunpack $1
+  #else
+    #echo "'$1' is not a valid file"
+  #fi
+#}
 
 function jg () {
   curl -i -H "Accept: application/json" -H "Content-Type: application/json" "$1" -L
@@ -45,4 +45,5 @@ alias .....="cd ../../../.."
 alias gsave="git add -A && git commit -am Update && git push"
 
 alias owp='xclip -o | sed -E '\''s/\\/\//g'\'' | sed -E '\''s/X:/\/home\/zack\/onedrive/g'\'''
-alias wcd='cd "$(owp)"'
+alias owpcd='cd "$(dirname "$(owp)")"'
+alias owpopen='xdg-open "$(owp)"'
