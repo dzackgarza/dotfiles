@@ -1,7 +1,0 @@
-function runHaskTagsVim() {
-	# Enable case-sensitive sorting. (Needed for, i.e., f and f' to be sorted correctly)
-	export LC_ALL=C
-    hasktags --ignore-close-implementation --ctags -o temptags . 
-	sort temptags > tags
-	rm temptags
-}
