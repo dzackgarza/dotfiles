@@ -29,16 +29,11 @@ fail () {
 }
 
 setup_gitconfig () {
-  if ! [ -f $DOTFILES_ROOT/configs/gitconfig.symlink ]
-  then
-    info 'setup gitconfig'
-
+  if ! [ -f $HOME/.gitconfig ]; then
     user ' - What is your github author email?'
     read -e git_authoremail
-
     ssh-keygen -t rsa -b 4096 -C $git_authoremail
     eval "$(ssh-agent -s)" && ssh-add ~/.ssh/id_rsa
-
     success 'gitconfig'
   fi
 }
@@ -133,9 +128,12 @@ install_dotfiles () {
   fi
 }
 
-# Install zsh
-yaourt -S zsh --noconfirm
-chsh -s $(which zsh)
+# Install Packagezs
+yaourt --needed --noconfirm -S - < packages.list
+# todo: Install go and tewisay
+if ! [[ $(awk -F: -v user="zack" '$1 == user {print $NF}' /etc/passwd) = $(which zsh) ]]; then
+  chsh -s $(which zsh)
+fi
 
 # Install oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
@@ -144,10 +142,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 curl -L git.io/antigen > antigen.zsh
 #source ./antigen.zsh
 success "Run 'source antigen.zsh' from zsh."
-
-yaourt -S tree cowsay lolcat fortune-mod tmux xclip vim ranger xsel --noconfirm
-
-# todo: Install go and tewisay
 
 setup_gitconfig
 install_dotfiles
@@ -173,33 +167,43 @@ info "Setting up vim.."
 vim +PluginInstall +qall
 success "Vim setup successful."
 
-info "Linking XMonad.."
 if [ ! -d $HOME/.xmonad ]; then
   ln -s $DOTFILES_ROOT/Xorg/xmonad $HOME/.xmonad
+  success "XMonad linked."
 fi
-success "XMonad linked."
 
-info "Installing fzf..."
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install
-success "fzf installed."
+if [ ! -d $HOME/.fzf ]; then
+  info "Installing fzf..."
+  git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
+  $HOME/.fzf/install
+  success "fzf installed."
+fi
 
-info "Installing rvm..."
-gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-\curl -sSL https://get.rvm.io | bash -s -- --ignore-dotfiles
-source $HOME/.rvm/scripts/rvm
-rvm install ruby --latest
-rvm --default use ruby
-gem install lolcat colorls
+if [ ! -d $HOME/.rvm ]; then
+  info "Installing rvm..."
+  gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+  \curl -sSL https://get.rvm.io | bash -s -- --ignore-dotfiles
+  source $HOME/.rvm/scripts/rvm
+  rvm install ruby --latest
+  rvm --default use ruby
+  gem install lolcat colorls
+  info "rvm, ruby, and gems installed."
+fi
 
-mkdir $HOME/.nvm
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-nvm install node
-npm install -g webpack eslint
+if [ ! -d $HOME/.nvm ]; then
+  info "Installing nvm..."
+  mkdir $HOME/.nvm
+  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  nvm install node
+  npm install -g webpack eslint
+  info "NVM, node, and global packages installed."
+fi
 
 echo ''
 echo ' Installation Completed.'
 
-xclip -sel clip < ~/.ssh/id_rsa.pub
+xclip -sel clip < $HOME/.ssh/id_rsa.pub
 
 echo 'SSH key copied to clipboard, go to Github to add.'
