@@ -82,7 +82,7 @@ fi
 # Custom unicode 'cow'. Might speak offensively!
 if command -v fortune >/dev/null 2>&1; then
   export COWPATH=$COWPATH:$DOTFILES_ROOT/zsh/cows
-	fortune -a | tewisay -f healy | lolcat
+	fortune -a | tewisay -f kingslime | lolcat
 fi
 
 # What day is it again..?
