@@ -1,3 +1,11 @@
+function extract() {
+  if[ -f $1 ]; then
+    aunpack $1
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
 function jg () {
   curl -i -H "Accept: application/json" -H "Content-Type: application/json" "$1" -L
 }
