@@ -24,25 +24,24 @@ myLayout = tiled ||| Mirror tiled ||| Full
         tiled = Tall 1 (3/100) (3/5)
 
 main =
-    xmonad $ ewmh defaultConfig {
-      terminal            = myTerminal
-    , modMask             = mod4Mask
-    , layoutHook          = spacing 5 $ avoidStruts $ smartBorders myLayout
-    , workspaces          = myWorkspaces
-    , borderWidth         = 1
-    , normalBorderColor   = "#000000"
-    , focusedBorderColor  = "#ff3300"
-    , manageHook          = myManageHook
-    , handleEventHook     = handleEventHook defaultConfig <+> fullscreenEventHook
-    }
-    `additionalKeys`
-	  [ ((mod4Mask .|. shiftMask, xK_q), killAndExit)     --Quit xmonad
-    , ((mod4Mask, xK_Return)        , spawn myTerminal)
-    , ((mod1Mask, xK_F2)            , shellPrompt myXPConfig)
-    ]
-      where
-        killAndExit =
-          io (exitWith ExitSuccess)
+  xmonad $ ewmh defaultConfig {
+    terminal            = myTerminal
+  , layoutHook          = spacing 5 $ avoidStruts $ smartBorders myLayout
+  , workspaces          = myWorkspaces
+  , borderWidth         = 1
+  , normalBorderColor   = "#000000"
+  , focusedBorderColor  = "#ff3300"
+  , manageHook          = myManageHook
+  , handleEventHook     = handleEventHook defaultConfig <+> fullscreenEventHook
+  }
+  `additionalKeys`
+  [ ((mod4Mask .|. shiftMask, xK_q), killAndExit)     --Quit xmonad
+  , ((mod4Mask, xK_Return)        , spawn myTerminal)
+  , ((mod4Mask, xK_F2)            , shellPrompt myXPConfig)
+  ]
+    where
+      killAndExit =
+        io (exitWith ExitSuccess)
 
 myManageHook = manageDocks <+> composeAll
   [ className =? "Tilda" --> doFloat
