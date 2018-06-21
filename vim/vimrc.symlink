@@ -69,7 +69,7 @@ Plugin 'kien/ctrlp.vim'                 " Fuzzy file search from current dir.
 
 " Windows and Buffers
 Plugin 'majutsushi/tagbar'              " Display ctags in a sidebar.
-Plugin 'godlygeek/tabular'
+Plugin 'godlygeek/tabular'              " Needed for vim-markdown, should be loaded in this order
 Plugin 'scrooloose/nerdtree'            " File navigation buffer
 Plugin 'rbgrouleff/bclose.vim'
 Plugin 'ap/vim-buftabline'
@@ -594,3 +594,8 @@ function! XTermPasteBegin()
 endfunction
 
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+let g:vim_markdown_math = 1
+let g:vim_markdown_frontmatter = 1
+let g:vim_markdown_new_list_item_indent = 2
+
