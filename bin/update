@@ -1,9 +1,21 @@
 #!/bin/bash
+echo "Updating via package manger.."
 command -v yaourt >/dev/null 2>&1 || sudo yaourt -Syuu --noconfirm
 command -v apt-get >/dev/null 2>&1 || sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get -y autoremove && sudo apt-get autoclean
+echo "Updating calibre library.."
 # calibre library update
+echo "Forcing Dropbox sync.."
 # dropbox sync
+echo "Forcing Sparkleshare sync.."
 # sparkleshare sync
+
+echo "Moving PDFs to dropbox and converting ebooks.."
 find ~/Downloads -name "*.djvu" -exec djvu2pdf {} \; -exec rm {} \;
 find ~/Downloads -name "*.pdf" -exec mv {} ~/Dropbox \;
+
+echo "Pushing dotfiles upstream.."
+cd ~/dotfiles && git add -A && git commit -am "Update script" && git push origin master && cd -;
+
+echo "Updating 'locate' database..."
 sudo updatedb
+echo "Update completed."
