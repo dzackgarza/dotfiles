@@ -163,8 +163,8 @@ endif
 
 
 """""""""""""""""""" <Misc> """"""""""""""
-" Allows pasting (S-Insert) from OS clipboard
-set clipboard+=unnamed
+" Automatically use the system clipboard for copy-paste (instead of internal registers)
+set clipboard+=unnamedplus
 
 " GUI Settings
 set t_Co=256
