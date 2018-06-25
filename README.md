@@ -28,3 +28,4 @@ sudo ./autoinstall.sh
 * Fix vim autoindent for markdown files
 * Modify wizard to store git login information somewhere
   * See if github SSH key addition can be automated
+* Install nerdfonts
