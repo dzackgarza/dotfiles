@@ -29,3 +29,4 @@ sudo ./autoinstall.sh
 * Modify wizard to store git login information somewhere
   * See if github SSH key addition can be automated
 * Install nerdfonts
+* Scripts for file manager /.local/share/nautilus/scripts
