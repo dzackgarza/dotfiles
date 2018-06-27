@@ -178,7 +178,7 @@ set hlsearch                    " Highlight search terms
 set incsearch                   " Show search matches as typed
 
 set backspace=indent,eol,start  " Allow backspace over anything
-set ffs=unix                    " Default to Unix LF line endings
+set ff=unix                     " Default to Unix LF line endings
 
 set noswapfile                  " Use version control instead
 
