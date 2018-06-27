@@ -1,5 +1,5 @@
 #!/bin/bash
-source "../.bash_colors";
+source "$DOTFILES_ROOT/.bash_colors";
 
 clr_green "Updating via package manager..";
 command -v yaourt >/dev/null 2>&1 && sudo yaourt -Syuu --noconfirm;
