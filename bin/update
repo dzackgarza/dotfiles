@@ -1,39 +1,23 @@
 #!/bin/bash
-info () {
-  printf "  [ \033[00;34m..\033[0m ] $1"
-}
+source "../.bash_colors";
 
-user () {
-  printf "\r  [ \033[0;33m?\033[0m ] $1 "
-}
-
-success () {
-  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
-}
-
-fail () {
-  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
-  echo ''
-  exit
-}
-
-info "Updating via package manger.."
-command -v yaourt >/dev/null 2>&1 && sudo yaourt -Syuu --noconfirm
-command -v apt-get >/dev/null 2>&1 && sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get -y autoremove && sudo apt-get autoclean
-echo "Updating calibre library.."
+clr_green "Updating via package manger..";
+command -v yaourt >/dev/null 2>&1 && sudo yaourt -Syuu --noconfirm;
+command -v apt-get >/dev/null 2>&1 && sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get -y autoremove && sudo apt-get autoclean;
+clr_green "Updating calibre library..";
 # calibre library update
-echo "Forcing Dropbox sync.."
+clr_green "Forcing Dropbox sync..";
 # dropbox sync
-echo "Forcing Sparkleshare sync.."
+clr_green "Forcing Sparkleshare sync..";
 # sparkleshare sync
 
-echo "Moving PDFs to dropbox and converting ebooks.."
+clr_green "Moving PDFs to dropbox and converting ebooks..";
 find ~/Downloads -name "*.djvu" -exec djvu2pdf {} \; -exec rm {} \;
 find ~/Downloads -name "*.pdf" -exec mv {} ~/Dropbox \;
 
-echo "Pushing dotfiles upstream.."
+clr_green "Pushing dotfiles upstream..";
 cd ~/dotfiles && git add -A && git commit -am "Update script" && git push origin master && cd -;
 
-echo "Updating 'locate' database..."
-sudo updatedb
-echo "Update completed."
+clr_green "Updating 'locate' database...";
+sudo updatedb;
+clr_green "Update completed.";
