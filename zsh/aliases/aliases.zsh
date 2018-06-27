@@ -47,3 +47,5 @@ alias gsave="git add -A && git commit -am Update && git push"
 alias owp='pbpaste | sed -E '\''s/\\/\//g'\'' | sed -E '\''s/X:/\/home\/zack\/onedrive/g'\'''
 alias owpcd='cd "$(dirname "$(owp)")"'
 alias owpopen='xdg-open "$(owp)"'
+
+alias whatsmyip="curl ipinfo.io/ip"
