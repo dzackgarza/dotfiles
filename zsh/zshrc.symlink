@@ -93,6 +93,7 @@ setopt aliases            # Expand aliases in noninteractie shells
 setopt completealiases 		# Extend auto-completion to custom aliases
 setopt HIST_IGNORE_DUPS		# Keep only unique items in zsh_history
 setopt no_rm_star_silent
+setopt nobanghist         # Disable !x to expand history
 unsetopt correct
 unset config_files
 
