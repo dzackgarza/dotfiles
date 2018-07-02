@@ -5,6 +5,7 @@ if [[ $# -eq 0 ]] ; then
 fi
 
 cd $(realpath $1);
+git pull;
 git add -A;
 git commit -am "Automatic save";
 git push origin master;
