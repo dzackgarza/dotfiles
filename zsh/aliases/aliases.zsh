@@ -49,3 +49,7 @@ alias owpcd='cd "$(dirname "$(owp)")"'
 alias owpopen='xdg-open "$(owp)"'
 
 alias whatsmyip="curl ipinfo.io/ip"
+
+function uninstall() {
+  command -v yaourt >/dev/null 2>&1 && sudo yaourt -Rns "$1" --noconfirm;
+  }
