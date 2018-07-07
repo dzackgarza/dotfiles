@@ -58,7 +58,6 @@
     useStandard: true
   "linter-ui-default":
     panelHeight: 86
-    showPanel: true
   "markdown-preview-enhanced":
     enableTypographer: true
     mathRenderingOption: "MathJax"
