@@ -26,8 +26,8 @@ function mcd() {
 alias xr="xmonad --recompile && xmonad --restart"
 
 # Dev Specific
-alias ls="colorls"
-alias l="colorls"
+#alias ls="colorls"
+alias lsc="colorls"
 alias mkdir="mkdir -p"
 
 # Just git save everything
