@@ -6,6 +6,8 @@ command -v yaourt >/dev/null 2>&1 && sudo yaourt -Syuu --noconfirm;
 command -v apt-get >/dev/null 2>&1 && sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get -y autoremove && sudo apt-get autoclean;
 clr_green "Updating atom packages..";
 apm upgrade
+clr_green "Updating pip..";
+pip install --upgrade pip
 clr_green "Updating calibre library..";
 # calibre library update
 clr_green "Forcing Dropbox sync..";
