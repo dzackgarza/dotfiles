@@ -99,4 +99,4 @@ C. G. J. Jacobi, writing to von Humboldt, in 1846.
 
 "All analysts spend half their time hunting through the literature for inequalities which they want to use and cannot prove." - G.H. Hardy
 
-
+In describing the natural understanding we have of factoring, the famous mathematician Paul Erdos would have said, "Every baby knows that any integer greater than one can be factored into a product of primes." While Erdos often exaggerated what babies know, it is certainly true that most grade school children know it.
