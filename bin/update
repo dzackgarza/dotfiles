@@ -11,14 +11,18 @@ command -v apm >/dev/null 2>&1 && apm upgrade
 clr_green "Updating pip..";
 command -v pip  >/dev/null 2>&1 && pip install --upgrade pip
 
-clr_green "Updating calibre library..";
+#clr_green "Updating calibre library..";
 # calibre library update
 
-clr_green "Forcing Dropbox sync..";
+#clr_green "Forcing Dropbox sync..";
 # dropbox sync
 
-clr_green "Forcing Sparkleshare sync..";
+#clr_green "Forcing Sparkleshare sync..";
 # sparkleshare sync
+
+clr_green "Updating nvm/node";
+command -v nvm >/dev/null 2>&1 && nvm install node --latest-npm --reinstall-packages-from=node
+
 
 clr_green "Moving PDFs to dropbox and converting ebooks..";
 find ~/Downloads -name "*.djvu" -exec djvu2pdf {} \; -exec rm {} \;
