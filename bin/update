@@ -4,14 +4,19 @@ source "$DOTFILES_ROOT/.bash_colors";
 clr_green "Updating via package manager..";
 command -v yaourt >/dev/null 2>&1 && sudo yaourt -Syuu --noconfirm;
 command -v apt-get >/dev/null 2>&1 && sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get -y autoremove && sudo apt-get autoclean;
+
 clr_green "Updating atom packages..";
-apm upgrade
+command -v apm >/dev/null 2>&1 && apm upgrade
+
 clr_green "Updating pip..";
-pip install --upgrade pip
+command -v pip  >/dev/null 2>&1 && pip install --upgrade pip
+
 clr_green "Updating calibre library..";
 # calibre library update
+
 clr_green "Forcing Dropbox sync..";
 # dropbox sync
+
 clr_green "Forcing Sparkleshare sync..";
 # sparkleshare sync
 
@@ -24,4 +29,5 @@ cd ~/dotfiles && git add -A && git commit -am "Update script" && git push origin
 
 clr_green "Updating 'locate' database...";
 sudo updatedb;
+
 clr_green "Update completed.";
