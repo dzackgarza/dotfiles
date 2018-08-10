@@ -29,7 +29,7 @@ command -v conda >/dev/null 2>&1 && conda update --all --update-dependencies
 
 clr_green "Moving PDFs to dropbox and converting ebooks..";
 find ~/Downloads -name "*.djvu" -exec djvu2pdf {} \; -exec rm {} \;
-find ~/Downloads -name "*.pdf" -exec mv {} ~/Dropbox \;
+#find ~/Downloads -name "*.pdf" -exec mv {} ~/Dropbox \;
 
 clr_green "Pushing dotfiles upstream..";
 cd ~/dotfiles && git add -A && git commit -am "Update script" && git push origin master && cd -;
