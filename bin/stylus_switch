@@ -1,6 +1,14 @@
 #!/bin/bash
 
-devnr=19
+# Find the input device number.
+devicename="ELAN Touchscreen Pen"
+numevents=$(ls /dev/input | grep -c event*)
+for ((devnr=0;devnr<$numevents;devnr++)); do
+    input-kbd $devnr | grep -q "$devicename"
+    if [[ $? == 0 ]]; then
+        break
+    fi
+done
 
 # Listen for BTN_TOOL_RUBBER events.
 evtest /dev/input/event$devnr | while read line; do
