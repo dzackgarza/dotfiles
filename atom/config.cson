@@ -1,4 +1,6 @@
 "*":
+  "Sublime-Style-Column-Selection":
+    selectKeyTrigger: "None"
   aligner:
     alignComments: true
   "atom-beautify":
