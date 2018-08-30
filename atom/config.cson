@@ -22,6 +22,7 @@
       "symbols-tree-view"
       "markdown-preview"
       "language-gfm"
+      "Sublime-Style-Column-Selection"
     ]
     ignoredNames: [
       ".git"
