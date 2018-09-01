@@ -1,6 +1,7 @@
 "*":
   "Sublime-Style-Column-Selection":
-    selectKeyTrigger: "None"
+    mouseButtonTrigger: "Right"
+    selectKeyTrigger: "Ctrl"
   aligner:
     alignComments: true
   "atom-beautify":
