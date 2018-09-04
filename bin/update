@@ -37,6 +37,5 @@ test -d ~/dotfiles && cd ~/dotfiles && git add -A && git commit -am "Update scri
 
 clr_green "Updating 'locate' database...";
 sudo updatedb;
-rehash
 
 clr_green "Update completed.";
