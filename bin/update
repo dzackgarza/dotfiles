@@ -22,19 +22,21 @@ command -v pip  >/dev/null 2>&1 && pip install --upgrade pip
 
 clr_green "Updating nvm/node";
 command -v nvm >/dev/null 2>&1 && nvm install node --latest-npm --reinstall-packages-from=node
+command -v npm >/dev/null 2>&1 && npm i -g npm && npm update -g
 
 clr_green "Updating anaconda packages";
 command -v conda >/dev/null 2>&1 && conda update --all --update-dependencies
 
 
 clr_green "Moving PDFs to dropbox and converting ebooks..";
-find ~/Downloads -name "*.djvu" -exec djvu2pdf {} \; -exec rm {} \;
+test -d ~/Downlads && find ~/Downloads -name "*.djvu" -exec djvu2pdf {} \; -exec rm {} \;
 #find ~/Downloads -name "*.pdf" -exec mv {} ~/Dropbox \;
 
 clr_green "Pushing dotfiles upstream..";
-cd ~/dotfiles && git add -A && git commit -am "Update script" && git push origin master && cd -;
+test -d ~/dotfiles && cd ~/dotfiles && git add -A && git commit -am "Update script" && git push origin master && cd -;
 
 clr_green "Updating 'locate' database...";
 sudo updatedb;
+rehash
 
 clr_green "Update completed.";
