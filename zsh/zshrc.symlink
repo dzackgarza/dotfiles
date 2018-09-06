@@ -12,7 +12,6 @@ export NVM_DIR="$HOME/.nvm"
 
 export PATH="$DOTFILES_ROOT/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
-export PATH="$PATH:$HOME/anaconda3/bin"
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 
@@ -121,4 +120,5 @@ alias tmux="tmux -2"
 #antigen-use oh-my-zsh
 #antigen-bundle arialdomartini/oh-my-git
 #antigen theme arialdomartini/oh-my-git-themes oppa-lana-style
-
+. /home/zack/anaconda3/etc/profile.d/conda.sh
+conda activate
