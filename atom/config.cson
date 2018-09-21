@@ -86,8 +86,7 @@
       singleQuote: true
       useTabs: true
   stylefmt: {}
-  "tabs-to-spaces":
-    onSave: "tabify"
+  "tabs-to-spaces": {}
   "tree-view":
     autoReveal: true
     hideIgnoredNames: true
