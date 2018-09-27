@@ -1,0 +1,7 @@
+#!/bin/bash
+if [ $# -gt 1 ]; then
+  gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$2 $1
+else
+  echo "Usage: compresspdf input.pdf output.pdf"
+fi
+
