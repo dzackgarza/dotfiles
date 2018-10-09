@@ -9,7 +9,7 @@ clr_green "Updating atom packages..";
 command -v apm >/dev/null 2>&1 && apm upgrade
 
 clr_green "Updating pip..";
-command -v pip  >/dev/null 2>&1 && pip install --upgrade pip
+command -v pip  >/dev/null 2>&1 && pip install --upgrade pip --user
 
 #clr_green "Updating calibre library..";
 # calibre library update
