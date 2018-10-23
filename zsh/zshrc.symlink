@@ -120,7 +120,7 @@ alias tmux="tmux -2"
 #antigen-use oh-my-zsh
 #antigen-bundle arialdomartini/oh-my-git
 #antigen theme arialdomartini/oh-my-git-themes oppa-lana-style
-if ! command -v conda >/dev/null 2>&1; then
-  . /home/zack/anaconda3/etc/profile.d/conda.sh
-  conda activate
-fi
+#if ! command -v conda >/dev/null 2>&1; then
+  #. /home/zack/anaconda3/etc/profile.d/conda.sh
+  #conda activate
+#fi
