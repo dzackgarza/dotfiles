@@ -24,6 +24,7 @@
       "markdown-preview"
       "language-gfm"
       "Sublime-Style-Column-Selection"
+      "language-r"
     ]
     ignoredNames: [
       ".git"
