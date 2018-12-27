@@ -24,6 +24,7 @@
       "markdown-preview"
       "language-gfm"
       "Sublime-Style-Column-Selection"
+      "language-r"
     ]
     ignoredNames: [
       ".git"
@@ -86,8 +87,7 @@
       singleQuote: true
       useTabs: true
   stylefmt: {}
-  "tabs-to-spaces":
-    onSave: "tabify"
+  "tabs-to-spaces": {}
   "tree-view":
     autoReveal: true
     hideIgnoredNames: true
