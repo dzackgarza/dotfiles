@@ -12,7 +12,6 @@ export NVM_DIR="$HOME/.nvm"
 
 export PATH="$DOTFILES_ROOT/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
-export PATH="$PATH:$HOME/anaconda3/bin"
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 
@@ -66,7 +65,7 @@ promptinit
 #done
 
 # Active zsh-syntax-highlighting
-source $HOME/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+#source $HOME/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Initialize fzf (fuzzy finder) if installed.
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -121,6 +120,7 @@ alias tmux="tmux -2"
 #antigen-use oh-my-zsh
 #antigen-bundle arialdomartini/oh-my-git
 #antigen theme arialdomartini/oh-my-git-themes oppa-lana-style
-
-
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+#if ! command -v conda >/dev/null 2>&1; then
+  #. /home/zack/anaconda3/etc/profile.d/conda.sh
+  #conda activate
+#fi

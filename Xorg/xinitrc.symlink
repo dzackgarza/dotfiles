@@ -25,5 +25,5 @@ tilda -h &
 lxterminal &
 
 # Start the window manager.
-xmonad
+#xmonad
 
