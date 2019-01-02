@@ -1,0 +1,1 @@
+/home/zack/Notes/asymptote_preview.sh
