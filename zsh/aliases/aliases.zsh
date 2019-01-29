@@ -14,20 +14,13 @@ function jp () {
   curl --data "$1" "$2"
 }
 
-function parHaskell() {
-	ghc -O2 --make $1 -threaded -rtsopts;
-}
-
 function mcd() {
 	mkdir $1 && cd $1
 }
 
-# For xmonad tweaking
-alias xr="xmonad --recompile && xmonad --restart"
-
 # Dev Specific
-#alias ls="colorls"
-alias lsc="colorls"
+alias ls="colorls"
+#alias lsc="colorls"
 alias mkdir="mkdir -p"
 
 # Just git save everything
@@ -42,11 +35,6 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
-alias gsave="git add -A && git commit -am Update && git push"
-
-alias owp='pbpaste | sed -E '\''s/\\/\//g'\'' | sed -E '\''s/X:/\/home\/zack\/onedrive/g'\'''
-alias owpcd='cd "$(dirname "$(owp)")"'
-alias owpopen='xdg-open "$(owp)"'
 
 alias whatsmyip="curl ipinfo.io/ip"
 
@@ -55,3 +43,7 @@ function uninstall() {
 }
 
 alias pipi="pip install --user"
+
+function pinstall() {
+  command -v yaourt >/dev/null 2>&1 && sudo yaourt -S "$1" --noconfirm;
+}
