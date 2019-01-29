@@ -45,5 +45,5 @@ function uninstall() {
 alias pipi="pip install --user"
 
 function pinstall() {
-  command -v yaourt >/dev/null 2>&1 && sudo yaourt -S "$1" --noconfirm;
+  command -v yaourt >/dev/null 2>&1 && yaourt -S "$1" --noconfirm;
 }
