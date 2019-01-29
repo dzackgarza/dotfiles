@@ -2,6 +2,7 @@
   core:
     disabledPackages: [
       "language-gfm"
+      "language-r"
     ]
     telemetryConsent: "no"
   "exception-reporting":
