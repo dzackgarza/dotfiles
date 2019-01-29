@@ -10,3 +10,5 @@
     plugins:
       pigments: true
       pigmentsDecorationsZIndex: 0
+  welcome:
+    showOnStartup: false
