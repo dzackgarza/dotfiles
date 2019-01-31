@@ -124,3 +124,6 @@ alias tmux="tmux -2"
   #. /home/zack/anaconda3/etc/profile.d/conda.sh
   #conda activate
 #fi
+#
+
+export JEKYLL_EDITOR=typora
