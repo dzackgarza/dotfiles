@@ -8,9 +8,9 @@ echo "Prefix is: $PREFIX"
 echo "Converting to TIFF..."
 if command -v parallel >/dev/null 2>&1; then
   LAST_PAGE=$(($(pdfinfo "$1"|grep '^Pages:'|awk '{print $2}') - 1))
-  parallel --bar -u convert -density 300 "$1"\[\{1\}\] -type Grayscale -compress lzw -background white +matte -depth 32 "${PREFIX}_page_%05d.tif" ::: $(seq 0 $LAST_PAGE)
+  parallel --bar -u convert -density 600 "$1"\[\{1\}\] -type Grayscale -compress lzw -background white +matte -depth 32 "${PREFIX}_page_%05d.tif" ::: $(seq 0 $LAST_PAGE)
 else
-  convert -density 300 "$1" -type Grayscale -compress lzw -background white +matte -depth 32 "${PREFIX}_page_%05d.tif"
+  convert -density 600 "$1" -type Grayscale -compress lzw -background white +matte -depth 32 "${PREFIX}_page_%05d.tif"
 fi
 echo "Performing OCR..."
 if command -v parallel >/dev/null 2>&1; then
@@ -25,7 +25,7 @@ echo "Verifying output and converting missing files back without OCR..."
 for i in "${PREFIX}"_page_*.pdf; do
   if ! pdfinfo "$i" > /dev/null; then
     rm -v $i
-    convert -density 300 $(basename $i .pdf).tif $i
+    convert -density 600 $(basename $i .pdf).tif $i
   fi
 done
 echo "Combining output to ${PREFIX}-OCR.pdf..."
