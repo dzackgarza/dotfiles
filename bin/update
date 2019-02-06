@@ -40,3 +40,4 @@ clr_green "Updating 'locate' database...";
 sudo updatedb;
 
 clr_green "Update completed.";
+ln -s /home/zack/Dropbox/Library/**/*.pdf /home/zack/Symlinked\ Calibre\ Library
