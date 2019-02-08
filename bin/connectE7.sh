@@ -1,4 +1,4 @@
 #!/bin/bash
 bluetoothctl << EOF
-connect FC:58:FA:61:32:B5
+connect FC:58:FA:95:06:55
 EOF
