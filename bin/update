@@ -39,7 +39,5 @@ test -d ~/dotfiles && cd ~/dotfiles && git add -A && git commit -am "Update scri
 clr_green "Updating 'locate' database...";
 sudo updatedb;
 
-clr_green "Updating Calibre/Zotero symlink dump.."
-ln -s /home/zack/Dropbox/Library/**/*.pdf /home/zack/Symlinked\ Calibre\ Library
 
 clr_blueb "Update completed.";
