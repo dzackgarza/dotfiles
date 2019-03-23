@@ -6,4 +6,4 @@ set vcs_aware true
 set preview_images_method w3m
 set unicode_ellipsis true
 set mouse_enabled true
-setintag v sort Mtime
+setintag v sort ctime
