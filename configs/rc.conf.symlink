@@ -6,4 +6,4 @@ set preview_images_method w3m
 set unicode_ellipsis true
 set mouse_enabled true
 set tilde_in_titlebar True
-set intag v sort mtime
+setintag v sort mtime
