@@ -7,3 +7,4 @@ set preview_images_method w3m
 set unicode_ellipsis true
 set mouse_enabled true
 setintag v sort ctime
+setintag v sort_reverse
