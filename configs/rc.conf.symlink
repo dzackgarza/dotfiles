@@ -7,3 +7,4 @@ set unicode_ellipsis true
 set mouse_enabled true
 set tilde_in_titlebar True
 setintag v sort mtime
+setintag v sort_reverse True
