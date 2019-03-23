@@ -6,6 +6,4 @@ set vcs_aware true
 set preview_images_method w3m
 set unicode_ellipsis true
 set mouse_enabled true
-set display_size_in_main_column False
-set display_size_in_status_bar true
 set tilde_in_titlebar True
