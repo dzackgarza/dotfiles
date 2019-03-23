@@ -6,4 +6,4 @@ set vcs_aware true
 set preview_images_method w3m
 set unicode_ellipsis true
 set mouse_enabled true
-setlocal path ~/Notes/Research/Notes/ReadingGeneral sort Mtime
+setintag v sort Mtime
