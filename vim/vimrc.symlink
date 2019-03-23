@@ -600,4 +600,6 @@ let g:vim_markdown_frontmatter = 1
 let g:vim_markdown_new_list_item_indent = 2
 
 autocmd BufRead,BufNewFile *.md setlocal spell
+set complete+=kspell
 set conceallevel=2
+
