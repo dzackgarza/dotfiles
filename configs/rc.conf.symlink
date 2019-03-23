@@ -6,5 +6,5 @@ set preview_images_method w3m
 set unicode_ellipsis true
 set mouse_enabled true
 set tilde_in_titlebar True
-setintag v sort mtime
-setintag v sort_reverse True
+setlocal path=~/Notes/Research/Notes/ReadingGeneral sort mtime
+setlocal path=~/Notes/Research/Notes/ReadingGeneral sort_reverse True
