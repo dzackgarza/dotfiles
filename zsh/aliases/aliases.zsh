@@ -52,5 +52,6 @@ function pinstall() {
 function researchnotes() {
   echo "Enter description for file name";
   read somefilename;
-  echo "Ok: $somefilename"
+  todaydate=$(date +"%Y-%m-%d")
+  echo "Ok: '$todaydate $somefilename.md'"
 }
