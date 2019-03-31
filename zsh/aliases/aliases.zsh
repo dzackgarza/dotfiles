@@ -47,3 +47,10 @@ alias pipi="pip install --user"
 function pinstall() {
   command -v yaourt >/dev/null 2>&1 && yaourt -S "$1" --noconfirm;
 }
+
+
+function researchnotes() {
+  echo "Enter description for file name";
+  read somefilename;
+  echo "Ok: $somefilename"
+}
