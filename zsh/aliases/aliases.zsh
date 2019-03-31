@@ -56,4 +56,6 @@ function researchnotes() {
   basepath="/home/zack/Notes/Research/Notes/ReadingGeneral";
   fullname="$basepath/$todaydate $somefilename.md";
   echo "Creating file:\n$fullname\n";
+  touch $fullname;
+  code $fullname;
 }
