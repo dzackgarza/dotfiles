@@ -53,5 +53,6 @@ function researchnotes() {
   echo "Enter description for file name";
   read somefilename;
   todaydate=$(date +"%Y-%m-%d")
-  echo "Ok: '$todaydate $somefilename.md'"
+  fullname="$todaydate $somefilename.md"
+  echo "Ok: $fullname"
 }
