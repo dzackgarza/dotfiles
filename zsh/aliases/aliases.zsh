@@ -52,7 +52,8 @@ function pinstall() {
 function researchnotes() {
   echo "Enter description for file name";
   read somefilename;
-  todaydate=$(date +"%Y-%m-%d")
-  fullname="$todaydate $somefilename.md"
-  echo "Ok: $fullname"
+  todaydate=$(date +"%Y-%m-%d");
+  basepath="/home/zack/Notes/Research/Notes/ReadingGeneral";
+  fullname="$basepath/$todaydate $somefilename.md";
+  echo "Creating file:\n $fullname\n";
 }
