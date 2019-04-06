@@ -59,9 +59,6 @@ Plugin 'eagletmt/ghcmod-vim'              " Infer and display types
 Plugin 'lukerandall/haskellmode-vim'
 Plugin 'enomsg/vim-haskellConcealPlus'    " Swap in unicode symbols for haskell ops.
 
-"" Web Dev
-" Plugin 'shawncplus/phpcomplete.vim'
-
 " Searching
 Plugin 'ervandew/ag'
 Plugin 'kien/ctrlp.vim'                 " Fuzzy file search from current dir.
@@ -82,6 +79,7 @@ Plugin 'scrooloose/nerdcommenter'        " Line comment toggling
 
 " Markdown
 Plugin 'plasticboy/vim-markdown'
+Plugin 'KeitaNakamura/tex-conceal.vim'
 
 call vundle#end()
 """""""""""" </ Vundle Plugins > """""""""""""""
@@ -595,6 +593,7 @@ endfunction
 
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
+let g:tex_conceal = ""
 let g:vim_markdown_math = 1
 let g:vim_markdown_frontmatter = 1
 let g:vim_markdown_new_list_item_indent = 2
@@ -603,3 +602,7 @@ autocmd BufRead,BufNewFile *.md setlocal spell
 set complete+=kspell
 set conceallevel=2
 
+
+set conceallevel=2
+let g:tex_conceal="abdgm"
+au FileType markdown autocmd VimEnter * hi clear Conceal         " Remove background color from concealed characters (grey on grey??)

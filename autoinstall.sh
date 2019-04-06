@@ -129,7 +129,7 @@ install_dotfiles () {
 }
 
 # Install Packagezs
-yaourt --needed --noconfirm -S - < packages.list
+##yaourt --needed --noconfirm -S - < packages.list
 # todo: Install go and tewisay
 if ! [[ $(awk -F: -v user="zack" '$1 == user {print $NF}' /etc/passwd) = $(which zsh) ]]; then
   chsh -s $(which zsh)
