@@ -53,14 +53,14 @@ def main():
 
     if total_annotations < 1:
         sys.exit()
-    outfilename = f"/home/zack/Notes/Annotations/{booktitle}.html"
+    outfilename = f"/home/zack/Notes/Annotations/{booktitle}.md"
     with open(outfilename, "w") as fp:
-        fp.write(f"<h1>{booktitle}, {bookauthor}</h1>")
-        fp.write(f"File Location: <br>{realpath}")
-        fp.write("<h2>Notes</h2>")
+        fp.write(f"# {booktitle}, {bookauthor}")
+        fp.write(f"{realpath}")
+        fp.write("## Notes")
         fp.write('\n'.join(popups))
         fp.write("<hr>")
-        fp.write("<h2>Highlights</h2>")
+        fp.write("## Highlights")
         fp.write('\n'.join(highlights))
         fp.write("<hr>")
     os.utime(outfilename, (modtime, modtime ))
