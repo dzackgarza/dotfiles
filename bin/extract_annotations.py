@@ -69,9 +69,10 @@ def main():
         sys.exit()
     # print(f"Total annotations: {total_annotations}")
     outfilename = f"/home/zack/Notes/Annotations/{booktitle}.md"
+
     with open(outfilename, "w") as fp:
         fp.write(f"# {booktitle} ({bookauthor})\n\n")
-        fp.write(f"[{realpath}]({realpath})\n\n")
+        fp.write(f"<a href='file:///{realpath}' target='_blank'>{realpath}</a>")
         if len(popups) > 1:
             fp.write("## Notes\n\n")
             fp.write('\n'.join(popups))
