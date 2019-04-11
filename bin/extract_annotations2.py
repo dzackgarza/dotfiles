@@ -13,15 +13,12 @@ def main():
     modtime = os.path.getmtime(realpath)
     # print(filename)
     # print(realpath)
-    # with open(realpath, 'rb') as fp:
-        # parser = PDFParser(fp)
-        # doc = PDFDocument(parser)
-        # print(doc.info)
+    outstring = ""
     doc = popplerqt5.Poppler.Document.load(filename)
     booktitle = doc.info('Title')
     bookauthor = doc.info('Author')
     total_annotations = 0
-    print(f"<h1>{booktitle}, {bookauthor}</h1>")
+    outstring += f"<h1>{booktitle}, {bookauthor}</h1>"
     for i in range(doc.numPages()):
         #print("========= PAGE {} =========".format(i+1))
         page = doc.page(i)
@@ -45,10 +42,10 @@ def main():
 
                         #print(f'========= ANNOTATION, PAGE {i}=========')
                         fewer_spaces = ' '.join(txt.split()).replace("- ", "")
-                        print(f'{fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">{bookauthor} {i+1}</a>)</p>')
+                        outstring += f'{fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">{bookauthor} {i+1}</a>)</p>'
                         #print("========= END ANNOTATION =========")
 
-    print("<hr>")
+    outstring += "<hr>"
     # if total_annotations > 0:
         # print (str(total_annotations) + " annotation(s) found")
     # else:
