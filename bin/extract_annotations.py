@@ -36,7 +36,7 @@ def main():
                 popups.append(f'{fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">{bookauthor} {i+1}</a>)</p>')
             if isinstance(annotation, popplerqt5.Poppler.InkAnnotation):
                 bdy = annotation.boundary()
-                txt += str(page.text(bdy)) + ' '
+                txt = str(page.text(bdy)) + ' '
                 fewer_spaces = ' '.join(txt.split()).replace("- ", "")
                 highlights.append(f'{fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">{bookauthor} {i+1}</a>)</p>')
             if isinstance(annotation, popplerqt5.Poppler.HighlightAnnotation):
