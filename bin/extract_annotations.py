@@ -53,16 +53,17 @@ def main():
 
     if total_annotations < 1:
         sys.exit()
+    print(f"Total annotations: {total_annotations}")
     outfilename = f"/home/zack/Notes/Annotations/{booktitle}.md"
     with open(outfilename, "w") as fp:
-        fp.write(f"# {booktitle}, {bookauthor}")
-        fp.write(f"{realpath}")
-        fp.write("## Notes")
+        fp.write(f"# {booktitle}, {bookauthor}\n")
+        fp.write(f"{realpath}\n")
+        fp.write("## Notes\n")
         fp.write('\n'.join(popups))
-        fp.write("<hr>")
-        fp.write("## Highlights")
+        fp.write("<hr>\n")
+        fp.write("## Highlights\n")
         fp.write('\n'.join(highlights))
-        fp.write("<hr>")
+        fp.write("<hr>\n")
     os.utime(outfilename, (modtime, modtime ))
 
     # if total_annotations > 0:
