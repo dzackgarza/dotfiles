@@ -52,7 +52,7 @@ def main():
 
     with open(f"/home/zack/Notes/Annotations/{booktitle}.html", "w") as fp:
         fp.write(f"<h1>{booktitle}, {bookauthor}</h1>")
-        fp.write(f"File Location: {realpath}")
+        fp.write(f"File Location: <br>{realpath}")
         fp.write("<h2>Notes</h2>")
         fp.write('\n'.join(popups))
         fp.write("<hr>")
