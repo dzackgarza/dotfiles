@@ -29,8 +29,9 @@ def main():
                             bdy.setCoords(*rect)
                             txt = txt + str(page.text(bdy)) + ' '
 
-                        #print("========= ANNOTATION =========")
+                        print("========= ANNOTATION =========")
                         print(txt)
+                        print("========= END ANNOTATION =========")
 
     if total_annotations > 0:
         print (str(total_annotations) + " annotation(s) found")
