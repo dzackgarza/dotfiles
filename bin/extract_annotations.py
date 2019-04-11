@@ -22,7 +22,6 @@ def main():
     bookauthor = doc.info('Author')
     print(f"Parsing book: {booktitle}")
     for i in range(doc.numPages()):
-        #print("========= PAGE {} =========".format(i+1))
         page = doc.page(i)
         annotations = page.annotations()
         if len(annotations) < 1:
@@ -49,6 +48,7 @@ def main():
                     txt += str(page.text(bdy)) + ' '
                 fewer_spaces = ' '.join(txt.split()).replace("- ", "")
                 highlights.append(f'{fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">{bookauthor} {i+1}</a>)</p>')
+            print(f"Found annotation on page {i+1}")
             total_annotations += 1
 
     if total_annotations < 1:
