@@ -29,7 +29,7 @@ def main():
         if len(annotation) < 1:
             continue
         for annotation in annotations:
-            if(!isinstance(annotation, popplerqt5.Poppler.Annotation):
+            if(not isinstance(annotation, popplerqt5.Poppler.Annotation):
                continue
             total_annotations += 1
             txt = ""
