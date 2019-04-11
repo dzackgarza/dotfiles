@@ -8,10 +8,11 @@ import os
 def main():
     filename = sys.argv[1]
     realpath = os.path.abspath(filename)
-    print(filename)
-    print(realpath)
+    # print(filename)
+    # print(realpath)
     doc = popplerqt5.Poppler.Document.load(filename)
     total_annotations = 0
+    print("<html><body>")
     for i in range(doc.numPages()):
         #print("========= PAGE {} =========".format(i+1))
         page = doc.page(i)
@@ -35,14 +36,15 @@ def main():
 
                         #print(f'========= ANNOTATION, PAGE {i}=========')
                         fewer_spaces = ' '.join(txt.split())
-                        #print(fewer_spaces)
-                        print(f'<a href="file:///{realpath}#page={i}">Page {i}</a>')
+                        print(f'<p>{fewer_spaces} (<a href="file:///{realpath}#page={i+1}">Page {i+1}</a>)</p>')
                         #print("========= END ANNOTATION =========")
 
-    if total_annotations > 0:
-        print (str(total_annotations) + " annotation(s) found")
-    else:
-        print ("no annotations found")
+    print("</body></html>")
+    # if total_annotations > 0:
+        # print (str(total_annotations) + " annotation(s) found")
+    # else:
+        # print ("no annotations found")
+
 
 if __name__ == "__main__":
     main()
