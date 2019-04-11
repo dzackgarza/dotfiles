@@ -6,11 +6,12 @@ import os
 # from pdfminer.pdfparser import PDFParser
 # from pdfminer.pdfdocument import PDFDocument
 
-total_annotations = 0
-popups = []
-highlights = []
 
 def main():
+    total_annotations = 0
+    popups = []
+    highlights = []
+    #
     filename = sys.argv[1]
     realpath = os.path.abspath(filename)
     modtime = os.path.getmtime(realpath)
@@ -35,7 +36,7 @@ def main():
                 popups.append(f'{fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">{bookauthor} {i+1}</a>)</p>')
             if isinstance(annotation, popplerqt5.Poppler.HighlightAnnotation):
                 txt = ""
-                print("Found highlight.")
+                # print("Found highlight.")
                 quads = annotation.highlightQuads()
                 for quad in quads:
                     rect = (quad.points[0].x() * pwidth,
