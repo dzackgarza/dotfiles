@@ -3,6 +3,8 @@ import popplerqt5
 import sys
 import PyQt5
 import os
+# from pdfminer.pdfparser import PDFParser
+# from pdfminer.pdfdocument import PDFDocument
 
 
 def main():
@@ -11,7 +13,13 @@ def main():
     modtime = os.path.getmtime(realpath)
     # print(filename)
     # print(realpath)
+    # with open(realpath, 'rb') as fp:
+        # parser = PDFParser(fp)
+        # doc = PDFDocument(parser)
+        # print(doc.info)
     doc = popplerqt5.Poppler.Document.load(filename)
+    print(doc.infoKeys())
+    print("00000000000000000000000")
     total_annotations = 0
     for i in range(doc.numPages()):
         #print("========= PAGE {} =========".format(i+1))
