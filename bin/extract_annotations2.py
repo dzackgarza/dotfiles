@@ -18,8 +18,7 @@ def main():
         # doc = PDFDocument(parser)
         # print(doc.info)
     doc = popplerqt5.Poppler.Document.load(filename)
-    print(doc.infoKeys())
-    print("00000000000000000000000")
+    print(doc.info('Title'))
     total_annotations = 0
     for i in range(doc.numPages()):
         #print("========= PAGE {} =========".format(i+1))
