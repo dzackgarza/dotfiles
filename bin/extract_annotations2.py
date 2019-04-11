@@ -33,10 +33,11 @@ def main():
                             bdy.setCoords(*rect)
                             txt = txt + str(page.text(bdy)) + ' '
 
-                        print(f'========= ANNOTATION, PAGE {i}=========')
+                        #print(f'========= ANNOTATION, PAGE {i}=========')
                         fewer_spaces = ' '.join(txt.split())
-                        print(fewer_spaces)
-                        print("========= END ANNOTATION =========")
+                        #print(fewer_spaces)
+                        print(f'<a href="file:///{realpath}#page={i}">Page {i}</a>')
+                        #print("========= END ANNOTATION =========")
 
     if total_annotations > 0:
         print (str(total_annotations) + " annotation(s) found")
