@@ -21,7 +21,7 @@ def main():
             for annot_mapping in annot_mappings:
                 if  annot_mapping.annot.get_annot_type().value_name != 'POPPLER_ANNOT_LINK':
                     all_annots += 1
-                    #print 'page: {0:3}, {1:10}, type: {2:10}, content: {3}'.format(i+1, annot_mapping.annot.get_modified(), annot_mapping.annot.get_annot_type().value_nick, annot_mapping.annot.get_contents())
+                    print 'page: {0:3}, {1:10}, type: {2:10}, content: {3}'.format(i+1, annot_mapping.annot.get_modified(), annot_mapping.annot.get_annot_type().value_nick, annot_mapping.annot.get_contents())
                     print 'page: {0:3}: {3}'.format(i+1, annot_mapping.annot.get_modified(), annot_mapping.annot.get_annot_type().value_nick, annot_mapping.annot.get_contents())
 
   if all_annots > 0:
