@@ -18,7 +18,7 @@ def main():
     booktitle = doc.info('Title')
     bookauthor = doc.info('Author')
     total_annotations = 0
-    outstring += f"<h1>{booktitle}, {bookauthor}</h1>"
+    outstring += f"<h1>{booktitle}, {bookauthor}</h1>\n"
     for i in range(doc.numPages()):
         #print("========= PAGE {} =========".format(i+1))
         page = doc.page(i)
@@ -42,10 +42,12 @@ def main():
 
                         #print(f'========= ANNOTATION, PAGE {i}=========')
                         fewer_spaces = ' '.join(txt.split()).replace("- ", "")
-                        outstring += f'{fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">{bookauthor} {i+1}</a>)</p>'
+                        outstring += f'{fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">{bookauthor} {i+1}</a>)</p>\n'
                         #print("========= END ANNOTATION =========")
 
-    outstring += "<hr>"
+    outstring += "<hr>\n"
+    with open(f"/home/zack/Notes/Annotations/{booktitle}.html", "w") as fp:
+        fp.write(outstring)
     # if total_annotations > 0:
         # print (str(total_annotations) + " annotation(s) found")
     # else:
