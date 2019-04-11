@@ -72,7 +72,7 @@ def main():
 
     with open(outfilename, "w") as fp:
         fp.write(f"# {booktitle} ({bookauthor})\n\n")
-        fp.write(f"<a href='file:///{realpath}' target='_blank'>{realpath}</a>")
+        fp.write(f"<a href='file:///{realpath}' target='_blank'>{realpath}</a>\n\n")
         if len(popups) > 1:
             fp.write("## Notes\n\n")
             fp.write('\n'.join(popups))
