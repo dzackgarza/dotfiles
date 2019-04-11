@@ -2,11 +2,15 @@
 import popplerqt5
 import sys
 import PyQt5
+import os
 
 
 def main():
-
-    doc = popplerqt5.Poppler.Document.load(sys.argv[1])
+    filename = sys.argv[1]
+    realpath = os.path.abspath(filename)
+    print(filename)
+    print(realpath)
+    doc = popplerqt5.Poppler.Document.load(filename)
     total_annotations = 0
     for i in range(doc.numPages()):
         #print("========= PAGE {} =========".format(i+1))
