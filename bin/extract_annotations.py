@@ -8,6 +8,7 @@ import os
 
 def cleanString(somestr):
     fewer_spaces = ' '.join(somestr.split()).replace("- ", "").translate(str.maketrans({"(": r"\(", ")": r"\)", ".": r"\.", "_": r"\_", "*": r"\*"}))
+    return(fewer_spaces)
 
 def main():
     total_annotations = 0
