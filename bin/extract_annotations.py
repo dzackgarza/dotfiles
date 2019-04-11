@@ -32,7 +32,7 @@ def main():
                continue
             if(isinstance(annotation, popplerqt5.Poppler.TextAnnotation)):
                 # print("Found popup text.")
-                fewer_spaces = ' '.join(annotation.contents().split()).replace("- ", "").translate(str.maketrans({"(": r"\(", ")": r"\)"}))
+                fewer_spaces = ' '.join(annotation.contents().split()).replace("- ", "").translate(str.maketrans({"(": r"\(", ")": r"\)", ".": r"\."}))
                 popups.append(f'- {fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">{bookauthor} {i+1}</a>)')
             if isinstance(annotation, popplerqt5.Poppler.InkAnnotation):
                 bdy = annotation.boundary()
