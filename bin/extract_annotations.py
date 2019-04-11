@@ -6,6 +6,8 @@ import os
 # from pdfminer.pdfparser import PDFParser
 # from pdfminer.pdfdocument import PDFDocument
 
+def cleanString(somestr):
+    fewer_spaces = ' '.join(somestr.split()).replace("- ", "").translate(str.maketrans({"(": r"\(", ")": r"\)", ".": r"\.", "_": r"\_"}))
 
 def main():
     total_annotations = 0
@@ -32,7 +34,7 @@ def main():
                continue
             if(isinstance(annotation, popplerqt5.Poppler.TextAnnotation)):
                 # print("Found popup text.")
-                fewer_spaces = ' '.join(annotation.contents().split()).replace("- ", "").translate(str.maketrans({"(": r"\(", ")": r"\)", ".": r"\."}))
+                fewer_spaces = cleanString(annotation.contents())
                 popups.append(f'- {fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">{bookauthor} {i+1}</a>)')
             if isinstance(annotation, popplerqt5.Poppler.InkAnnotation):
                 bdy = annotation.boundary()
@@ -44,7 +46,7 @@ def main():
                 bdy2 = PyQt5.QtCore.QRectF()
                 bdy2.setCoords(*rect)
                 txt = str(page.text(bdy2)) + ' '
-                fewer_spaces = ' '.join(txt.split()).replace("- ", "").translate(str.maketrans({"(": r"\(", ")": r"\)"}))
+                fewer_spaces = cleanString(txt)
                 highlights.append(f'- {fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">{bookauthor} {i+1}</a>)')
             if isinstance(annotation, popplerqt5.Poppler.HighlightAnnotation):
                 txt = ""
@@ -58,7 +60,7 @@ def main():
                     bdy = PyQt5.QtCore.QRectF()
                     bdy.setCoords(*rect)
                     txt += str(page.text(bdy)) + ' '
-                fewer_spaces = ' '.join(txt.split()).replace("- ", "").translate(str.maketrans({"(": r"\(", ")": r"\)"}))
+                fewer_spaces = cleanString(txt)
                 highlights.append(f'- {fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">{bookauthor} {i+1}</a>)')
             # print(f"Found annotation on page {i+1}")
             total_annotations += 1
