@@ -32,7 +32,7 @@ def main():
             if not isinstance(annotation, popplerqt5.Poppler.Annotation):
                continue
             if(isinstance(annotation, popplerqt5.Poppler.TextAnnotation)):
-                print("Found popup text.")
+                # print("Found popup text.")
                 fewer_spaces = ' '.join(annotation.contents().split()).replace("- ", "")
                 popups.append(f'{fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">{bookauthor} {i+1}</a>)</p>')
             if isinstance(annotation, popplerqt5.Poppler.HighlightAnnotation):
