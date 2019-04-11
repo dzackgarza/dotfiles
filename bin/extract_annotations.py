@@ -13,6 +13,7 @@ def cleanString(somestr):
 def main():
     popups = []
     highlights = []
+    filenames = []
     #
     filename = sys.argv[1]
     realpath = os.path.abspath(filename)
@@ -67,9 +68,11 @@ def main():
     total_annotations = len(popups) + len(highlights)
     if total_annotations < 1:
         sys.exit()
-    # print(f"Total annotations: {total_annotations}")
-    outfilename = f"/home/zack/Notes/Annotations/{booktitle}.md"
 
+    with open("/home/zack/Notes/Annotations/books_annotated.log", "a") as fp:
+        fp.write(realpath)
+
+    outfilename = f"/home/zack/Notes/Annotations/{booktitle}.md"
     with open(outfilename, "w") as fp:
         fp.write(f"# {booktitle} ({bookauthor})\n\n")
         fp.write(f"<a href='file:///{realpath}' target='_blank'>{realpath}</a>\n\n")
