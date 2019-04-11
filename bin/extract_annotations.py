@@ -36,7 +36,14 @@ def main():
                 popups.append(f'{fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">{bookauthor} {i+1}</a>)</p>')
             if isinstance(annotation, popplerqt5.Poppler.InkAnnotation):
                 bdy = annotation.boundary()
-                txt = str(page.text(bdy)) + ' '
+                rect_tmp = bdy.getCoords()
+                rect = (rect_tmp[0] * pwidth,
+                        rect_tmp[1] * pheight,
+                        rect_tmp[2] * pwidth,
+                        rect_tmp[3] * pheight)
+                bdy2 = PyQt5.QtCore.QRectF()
+                bdy2.setCoords(*rect)
+                txt = str(page.text(bdy2)) + ' '
                 fewer_spaces = ' '.join(txt.split()).replace("- ", "")
                 highlights.append(f'{fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">{bookauthor} {i+1}</a>)</p>')
             if isinstance(annotation, popplerqt5.Poppler.HighlightAnnotation):
