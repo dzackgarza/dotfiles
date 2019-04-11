@@ -50,9 +50,10 @@ def main():
                 highlights.append(f'{fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">{bookauthor} {i+1}</a>)</p>')
             total_annotations += 1
 
-    if total_annotations == 0:
+    if total_annotations < 1:
         sys.exit()
-    with open(f"/home/zack/Notes/Annotations/{booktitle}.html", "w") as fp:
+    outfilename = f"/home/zack/Notes/Annotations/{booktitle}.html"
+    with open(outfilename, "w") as fp:
         fp.write(f"<h1>{booktitle}, {bookauthor}</h1>")
         fp.write(f"File Location: <br>{realpath}")
         fp.write("<h2>Notes</h2>")
@@ -61,6 +62,8 @@ def main():
         fp.write("<h2>Highlights</h2>")
         fp.write('\n'.join(highlights))
         fp.write("<hr>")
+    os.utime(outfilename, (modtime, modtime ))
+
     # if total_annotations > 0:
         # print (str(total_annotations) + " annotation(s) found")
     # else:
