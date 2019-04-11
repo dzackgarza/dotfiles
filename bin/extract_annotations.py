@@ -70,7 +70,7 @@ def main():
         sys.exit()
 
     with open("/home/zack/Notes/Annotations/books_annotated.log", "a") as fp:
-        fp.write(realpath)
+        fp.write(realpath + '\n')
 
     outfilename = f"/home/zack/Notes/Annotations/{booktitle}.md"
     with open(outfilename, "w") as fp:
