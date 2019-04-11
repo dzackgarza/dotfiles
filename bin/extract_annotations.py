@@ -1,33 +1,69 @@
-#!/usr/bin/env python2
-
-import poppler
+#!/usr/bin/env python3
+import popplerqt5
 import sys
-import urllib
+import PyQt5
 import os
+# from pdfminer.pdfparser import PDFParser
+# from pdfminer.pdfdocument import PDFDocument
+
 
 def main():
-  input_filename = sys.argv[1]
-    # http://blog.hartwork.org/?p=612
-  document = poppler.document_new_from_file('file://%s' % \
-    urllib.pathname2url(os.path.abspath(input_filename)), None)
-  n_pages = document.get_n_pages()
-  all_annots = 0
+    total_annotations = 0
+    popups = []
+    highlights = []
+    #
+    filename = sys.argv[1]
+    realpath = os.path.abspath(filename)
+    modtime = os.path.getmtime(realpath)
+    # print(filename)
+    # print(realpath)
+    doc = popplerqt5.Poppler.Document.load(filename)
+    booktitle = doc.info('Title')
+    bookauthor = doc.info('Author')
+    for i in range(doc.numPages()):
+        #print("========= PAGE {} =========".format(i+1))
+        page = doc.page(i)
+        annotations = page.annotations()
+        if len(annotations) < 1:
+            continue
+        (pwidth, pheight) = (page.pageSize().width(), page.pageSize().height())
+        for annotation in annotations:
+            if not isinstance(annotation, popplerqt5.Poppler.Annotation):
+               continue
+            if(isinstance(annotation, popplerqt5.Poppler.TextAnnotation)):
+                print("Found popup text.")
+                fewer_spaces = ' '.join(annotation.contents().split()).replace("- ", "")
+                popups.append(f'{fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">{bookauthor} {i+1}</a>)</p>')
+            if isinstance(annotation, popplerqt5.Poppler.HighlightAnnotation):
+                txt = ""
+                # print("Found highlight.")
+                quads = annotation.highlightQuads()
+                for quad in quads:
+                    rect = (quad.points[0].x() * pwidth,
+                            quad.points[0].y() * pheight,
+                            quad.points[2].x() * pwidth,
+                            quad.points[2].y() * pheight)
+                    bdy = PyQt5.QtCore.QRectF()
+                    bdy.setCoords(*rect)
+                    txt += str(page.text(bdy)) + ' '
+                fewer_spaces = ' '.join(txt.split()).replace("- ", "")
+                highlights.append(f'{fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">{bookauthor} {i+1}</a>)</p>')
+            total_annotations += 1
 
-  for i in range(n_pages):
-        page = document.get_page(i)
-        annot_mappings = page.get_annot_mapping ()
-        num_annots = len(annot_mappings)
-        if num_annots > 0:
-            for annot_mapping in annot_mappings:
-                if  annot_mapping.annot.get_annot_type().value_name != 'POPPLER_ANNOT_LINK':
-                    all_annots += 1
-                    print 'page: {0:3}, {1:10}, type: {2:10}, content: {3}'.format(i+1, annot_mapping.annot.get_modified(), annot_mapping.annot.get_annot_type().value_nick, annot_mapping.annot.get_contents())
-                    print 'page: {0:3}: {3}'.format(i+1, annot_mapping.annot.get_modified(), annot_mapping.annot.get_annot_type().value_nick, annot_mapping.annot.get_contents())
+    with open(f"/home/zack/Notes/Annotations/{booktitle}.html", "w") as fp:
+        fp.write(f"<h1>{booktitle}, {bookauthor}</h1>")
+        fp.write(f"File Location: <br>{realpath}")
+        fp.write("<h2>Notes</h2>")
+        fp.write('\n'.join(popups))
+        fp.write("<hr>")
+        fp.write("<h2>Highlights</h2>")
+        fp.write('\n'.join(highlights))
+        fp.write("<hr>")
+    # if total_annotations > 0:
+        # print (str(total_annotations) + " annotation(s) found")
+    # else:
+        # print ("no annotations found")
 
-  if all_annots > 0:
-    print str(all_annots) + " annotation(s) found"
-  else:
-    print "no annotations found"
 
 if __name__ == "__main__":
     main()
