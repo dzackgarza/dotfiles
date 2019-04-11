@@ -34,7 +34,8 @@ def main():
                             txt = txt + str(page.text(bdy)) + ' '
 
                         print("========= ANNOTATION =========")
-                        print(txt)
+                        fewer_spaces = ' '.join(txt.split())
+                        print(fewer_spaces)
                         print("========= END ANNOTATION =========")
 
     if total_annotations > 0:
