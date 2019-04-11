@@ -71,16 +71,16 @@ def main():
     # print(f"Total annotations: {total_annotations}")
     outfilename = f"/home/zack/Notes/Annotations/{booktitle}.md"
     with open(outfilename, "w") as fp:
-        fp.write(f"# {booktitle}, {bookauthor}\n")
-        fp.write(f"{realpath}\n")
+        fp.write(f"# {booktitle}, {bookauthor}\n\n")
+        fp.write(f"{realpath}\n\n")
         if len(popups) > 1:
-            fp.write("## Notes\n")
+            fp.write("## Notes\n\n")
             fp.write('\n'.join(popups))
-            fp.write("<hr>\n")
+            fp.write("<hr>\n\n")
         if len(highlights) > 1:
-            fp.write("## Highlights\n")
+            fp.write("## Highlights\n\n")
             fp.write('\n'.join(highlights))
-            fp.write("<hr>\n")
+            fp.write("<hr>\n\n")
     os.utime(outfilename, (modtime, modtime ))
     print(f"Written to {outfilename}")
 
