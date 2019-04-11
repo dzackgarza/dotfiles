@@ -1,6 +1,7 @@
+#!/usr/bin/env python3
 import popplerqt5
 import sys
-import PyQt4
+import PyQt5
 
 
 def main():
