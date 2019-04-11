@@ -22,6 +22,7 @@ def main():
     popups = []
     highlights = []
     for i in range(doc.numPages()):
+        print(i)
         #print("========= PAGE {} =========".format(i+1))
         page = doc.page(i)
         annotations = page.annotations()
