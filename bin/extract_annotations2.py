@@ -36,7 +36,7 @@ def main():
 
                         #print(f'========= ANNOTATION, PAGE {i}=========')
                         fewer_spaces = ' '.join(txt.split())
-                        print(f'<p>{fewer_spaces} (<a href="file:///{realpath}#page={i+1}">Page {i+1}</a>)</p>')
+                        print(f'<p>{fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">Page {i+1}</a>)</p>')
                         #print("========= END ANNOTATION =========")
 
     print("</body></html>")
