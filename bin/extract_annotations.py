@@ -65,6 +65,7 @@ def main():
         fp.write('\n'.join(highlights))
         fp.write("<hr>\n")
     os.utime(outfilename, (modtime, modtime ))
+    print(f"Written to {outfilename}")
 
     # if total_annotations > 0:
         # print (str(total_annotations) + " annotation(s) found")
