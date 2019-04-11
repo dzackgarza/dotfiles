@@ -11,7 +11,6 @@ def cleanString(somestr):
     return(fewer_spaces)
 
 def main():
-    total_annotations = 0
     popups = []
     highlights = []
     #
@@ -64,8 +63,8 @@ def main():
                 fewer_spaces = cleanString(txt)
                 highlights.append(f'- {fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">{bookauthor} {i+1}</a>)')
             # print(f"Found annotation on page {i+1}")
-            total_annotations += 1
 
+    total_annotations = len(popups) + len(highlights)
     if total_annotations < 1:
         sys.exit()
     # print(f"Total annotations: {total_annotations}")
