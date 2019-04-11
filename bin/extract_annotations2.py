@@ -43,8 +43,8 @@ def main():
                     bdy = PyQt5.QtCore.QRectF()
                     bdy.setCoords(*rect)
                     txt += str(page.text(bdy)) + ' '
-            if(isinstance(annotation, popplerqt5.Poppler.TextAnnotation)):
-               txt += annotation.contents()
+            # if(isinstance(annotation, popplerqt5.Poppler.TextAnnotation)):
+               # txt += annotation.contents()
             fewer_spaces = ' '.join(txt.split()).replace("- ", "")
             highlights.append(f'{fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">{bookauthor} {i+1}</a>)</p>\n')
 
