@@ -6,7 +6,7 @@ import PyQt5
 
 def main():
 
-    doc = popplerqt4.Poppler.Document.load(sys.argv[1])
+    doc = popplerqt5.Poppler.Document.load(sys.argv[1])
     total_annotations = 0
     for i in range(doc.numPages()):
         #print("========= PAGE {} =========".format(i+1))
@@ -15,9 +15,9 @@ def main():
         (pwidth, pheight) = (page.pageSize().width(), page.pageSize().height())
         if len(annotations) > 0:
             for annotation in annotations:
-                if  isinstance(annotation, popplerqt4.Poppler.Annotation):
+                if  isinstance(annotation, popplerqt5.Poppler.Annotation):
                     total_annotations += 1
-                    if(isinstance(annotation, popplerqt4.Poppler.HighlightAnnotation)):
+                    if(isinstance(annotation, popplerqt5.Poppler.HighlightAnnotation)):
                         quads = annotation.highlightQuads()
                         txt = ""
                         for quad in quads:
@@ -25,7 +25,7 @@ def main():
                                     quad.points[0].y() * pheight,
                                     quad.points[2].x() * pwidth,
                                     quad.points[2].y() * pheight)
-                            bdy = PyQt4.QtCore.QRectF()
+                            bdy = PyQt5.QtCore.QRectF()
                             bdy.setCoords(*rect)
                             txt = txt + str(page.text(bdy)) + ' '
 
