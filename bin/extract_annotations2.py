@@ -29,11 +29,11 @@ def main():
         if len(annotation) < 1:
             continue
         for annotation in annotations:
-            if(not isinstance(annotation, popplerqt5.Poppler.Annotation):
+            if not isinstance(annotation, popplerqt5.Poppler.Annotation):
                continue
             total_annotations += 1
             txt = ""
-            if(isinstance(annotation, popplerqt5.Poppler.HighlightAnnotation)):
+            if isinstance(annotation, popplerqt5.Poppler.HighlightAnnotation):
                 quads = annotation.highlightQuads()
                 for quad in quads:
                     rect = (quad.points[0].x() * pwidth,
