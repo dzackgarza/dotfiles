@@ -26,7 +26,7 @@ def main():
         page = doc.page(i)
         annotations = page.annotations()
         (pwidth, pheight) = (page.pageSize().width(), page.pageSize().height())
-        if len(annotation) < 1:
+        if len(annotations) < 1:
             continue
         for annotation in annotations:
             if not isinstance(annotation, popplerqt5.Poppler.Annotation):
