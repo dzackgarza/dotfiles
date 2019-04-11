@@ -33,7 +33,7 @@ def main():
                             bdy.setCoords(*rect)
                             txt = txt + str(page.text(bdy)) + ' '
 
-                        print("========= ANNOTATION =========")
+                        print(f'========= ANNOTATION, PAGE {i}=========')
                         fewer_spaces = ' '.join(txt.split())
                         print(fewer_spaces)
                         print("========= END ANNOTATION =========")
