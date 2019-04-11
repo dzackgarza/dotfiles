@@ -20,6 +20,7 @@ def main():
     doc = popplerqt5.Poppler.Document.load(filename)
     booktitle = doc.info('Title')
     bookauthor = doc.info('Author')
+    print(f"Parsing book: {booktitle}")
     for i in range(doc.numPages()):
         #print("========= PAGE {} =========".format(i+1))
         page = doc.page(i)
