@@ -18,7 +18,8 @@ def main():
         # doc = PDFDocument(parser)
         # print(doc.info)
     doc = popplerqt5.Poppler.Document.load(filename)
-    print(doc.info('Title'))
+    booktitle = doc.info('Title')
+    bookauthor = doc.info('Author')
     total_annotations = 0
     for i in range(doc.numPages()):
         #print("========= PAGE {} =========".format(i+1))
@@ -43,7 +44,7 @@ def main():
 
                         #print(f'========= ANNOTATION, PAGE {i}=========')
                         fewer_spaces = ' '.join(txt.split())
-                        print(f'{fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">Page {i+1}</a>)</p>')
+                        print(f'{fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">({bookauthor} {i+1})</a>)</p>')
                         #print("========= END ANNOTATION =========")
 
     # if total_annotations > 0:
