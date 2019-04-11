@@ -52,9 +52,10 @@ def main():
 
     with open(f"/home/zack/Notes/Annotations/{booktitle}.html", "w") as fp:
         fp.write(f"<h1>{booktitle}, {bookauthor}</h1>")
-        fp.write("Notes")
+        fp.write("<h2>Notes</h2>")
         fp.write('\n'.join(popups))
-        fp.write("Highlights")
+        fp.write("<hr>")
+        fp.write("<h2>Highlights</h2>")
         fp.write('\n'.join(highlights))
         fp.write("<hr>")
     # if total_annotations > 0:
