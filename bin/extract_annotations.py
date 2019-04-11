@@ -33,7 +33,7 @@ def main():
             if(isinstance(annotation, popplerqt5.Poppler.TextAnnotation)):
                 # print("Found popup text.")
                 fewer_spaces = ' '.join(annotation.contents().split()).replace("- ", "")
-                popups.append(f'{fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">{bookauthor} {i+1}</a>)</p>')
+                popups.append(f'{fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">{bookauthor} {i+1}</a>)')
             if isinstance(annotation, popplerqt5.Poppler.InkAnnotation):
                 bdy = annotation.boundary()
                 rect_tmp = bdy.getCoords()
@@ -45,7 +45,7 @@ def main():
                 bdy2.setCoords(*rect)
                 txt = str(page.text(bdy2)) + ' '
                 fewer_spaces = ' '.join(txt.split()).replace("- ", "")
-                highlights.append(f'{fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">{bookauthor} {i+1}</a>)</p>')
+                highlights.append(f'{fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">{bookauthor} {i+1}</a>)')
             if isinstance(annotation, popplerqt5.Poppler.HighlightAnnotation):
                 txt = ""
                 # print("Found highlight.")
@@ -59,13 +59,13 @@ def main():
                     bdy.setCoords(*rect)
                     txt += str(page.text(bdy)) + ' '
                 fewer_spaces = ' '.join(txt.split()).replace("- ", "")
-                highlights.append(f'{fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">{bookauthor} {i+1}</a>)</p>')
-            print(f"Found annotation on page {i+1}")
+                highlights.append(f'{fewer_spaces} (<a href="file:///{realpath}#page={i+1}" target="_blank">{bookauthor} {i+1}</a>)')
+            # print(f"Found annotation on page {i+1}")
             total_annotations += 1
 
     if total_annotations < 1:
         sys.exit()
-    print(f"Total annotations: {total_annotations}")
+    # print(f"Total annotations: {total_annotations}")
     outfilename = f"/home/zack/Notes/Annotations/{booktitle}.md"
     with open(outfilename, "w") as fp:
         fp.write(f"# {booktitle}, {bookauthor}\n")
