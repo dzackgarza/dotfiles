@@ -7,7 +7,7 @@ import os
 # from pdfminer.pdfdocument import PDFDocument
 
 def cleanString(somestr):
-    fewer_spaces = ' '.join(somestr.split()).replace("- ", "").translate(str.maketrans({"(": r"\(", ")": r"\)", ".": r"\.", "_": r"\_"}))
+    fewer_spaces = ' '.join(somestr.split()).replace("- ", "").translate(str.maketrans({"(": r"\(", ")": r"\)", ".": r"\.", "_": r"\_", "*": r"\*"}))
 
 def main():
     total_annotations = 0
