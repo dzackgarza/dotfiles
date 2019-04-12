@@ -607,4 +607,5 @@ set conceallevel=2
 let g:tex_conceal="abdgm"
 au FileType markdown autocmd VimEnter * hi clear Conceal         " Remove background color from concealed characters (grey on grey??)
 
-hi NonText ctermbg=none hi Normal guibg=NONE ctermbg=NONE
+hi NonText ctermbg=none
+hi Normal guibg=NONE ctermbg=NONE
