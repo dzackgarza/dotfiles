@@ -80,11 +80,11 @@ def main():
         fp.write(f"# {outdate}: {booktitle} ({bookauthor})\n\n")
         fp.write(f"<a href='file:///{realpath}' target='_blank'>{realpath}</a>\n\n")
         fp.write(f"Last Annotation: {outdate}\n\n")
-        if len(popups) > 1:
+        if len(popups) > 0:
             fp.write("## Notes\n\n")
             fp.write('\n'.join(popups))
             fp.write("<hr>\n\n")
-        if len(highlights) > 1:
+        if len(highlights) > 0:
             fp.write("## Highlights\n\n")
             fp.write('\n'.join(highlights))
             fp.write("<hr>\n\n")
