@@ -17,7 +17,7 @@ def main():
     #
     filename = sys.argv[1]
     realpath = os.path.abspath(filename)
-    # modtime = os.path.getmtime(realpath)
+    modtime = os.path.getmtime(realpath)
     # print(filename)
     # print(realpath)
     doc = popplerqt5.Poppler.Document.load(filename)
@@ -33,7 +33,9 @@ def main():
         for annotation in annotations:
             if not isinstance(annotation, popplerqt5.Poppler.Annotation):
                continue
-            dates.append(annotation.modificationDate().toPyDateTime())
+            modDate = annotation.modificationDate()
+            if not modDate.isNull():
+                dates.append(annotation.modificationDate().toPyDateTime())
             if(isinstance(annotation, popplerqt5.Poppler.TextAnnotation)):
                 # print("Found popup text.")
                 fewer_spaces = cleanString(annotation.contents())
