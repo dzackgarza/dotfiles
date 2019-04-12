@@ -13,10 +13,11 @@ def main():
     popups = []
     highlights = []
     filenames = []
+    dates = []
     #
     filename = sys.argv[1]
     realpath = os.path.abspath(filename)
-    modtime = os.path.getmtime(realpath)
+    # modtime = os.path.getmtime(realpath)
     # print(filename)
     # print(realpath)
     doc = popplerqt5.Poppler.Document.load(filename)
@@ -32,6 +33,7 @@ def main():
         for annotation in annotations:
             if not isinstance(annotation, popplerqt5.Poppler.Annotation):
                continue
+           dates.append(annotation.modificationDate().toPyDateTime())
             if(isinstance(annotation, popplerqt5.Poppler.TextAnnotation)):
                 # print("Found popup text.")
                 fewer_spaces = cleanString(annotation.contents())
@@ -71,12 +73,13 @@ def main():
     with open("/home/zack/Notes/Annotations/books_annotated.log", "a") as fp:
         fp.write(realpath + '\n')
 
+    modtime = max(dates)
+    outdate = modtime.strftime('%m/%d/%Y')
     outfilename = f"/home/zack/Notes/Annotations/{booktitle}.md"
-    outdate = time.strftime('%m/%d/%Y', time.gmtime(modtime))
     with open(outfilename, "w") as fp:
         fp.write(f"# {outdate}: {booktitle} ({bookauthor})\n\n")
         fp.write(f"<a href='file:///{realpath}' target='_blank'>{realpath}</a>\n\n")
-        fp.write(f"Last Annotation: {modtime}\n\n")
+        fp.write(f"Last Annotation: {outdate}\n\n")
         if len(popups) > 1:
             fp.write("## Notes\n\n")
             fp.write('\n'.join(popups))
@@ -85,7 +88,8 @@ def main():
             fp.write("## Highlights\n\n")
             fp.write('\n'.join(highlights))
             fp.write("<hr>\n\n")
-    os.utime(outfilename, (modtime, modtime ))
+    setutime = time.mktime(modtime.timetuple())
+    os.utime(outfilename, (setutime, setutime))
     print(f"Written to {outfilename}")
 
     # if total_annotations > 0:
