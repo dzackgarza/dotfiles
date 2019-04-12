@@ -57,5 +57,5 @@ function researchnotes() {
   fullname="$basepath/$todaydate $somefilename.md";
   echo "Creating file:\n$fullname\n";
   touch $fullname;
-  code $fullname;
+  vim $fullname;
 }
