@@ -33,7 +33,7 @@ def main():
         for annotation in annotations:
             if not isinstance(annotation, popplerqt5.Poppler.Annotation):
                continue
-           dates.append(annotation.modificationDate().toPyDateTime())
+            dates.append(annotation.modificationDate().toPyDateTime())
             if(isinstance(annotation, popplerqt5.Poppler.TextAnnotation)):
                 # print("Found popup text.")
                 fewer_spaces = cleanString(annotation.contents())
