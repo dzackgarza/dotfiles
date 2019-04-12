@@ -3,8 +3,7 @@ import popplerqt5
 import sys
 import PyQt5
 import os
-# from pdfminer.pdfparser import PDFParser
-# from pdfminer.pdfdocument import PDFDocument
+import time
 
 def cleanString(somestr):
     fewer_spaces = ' '.join(somestr.split()).replace("- ", "").translate(str.maketrans({"(": r"\(", ")": r"\)", ".": r"\.", "_": r"\_", "*": r"\*"}))
@@ -73,8 +72,9 @@ def main():
         fp.write(realpath + '\n')
 
     outfilename = f"/home/zack/Notes/Annotations/{booktitle}.md"
+    outdate = time.strftime('%m/%d/%Y', time.gmtime(modtime))
     with open(outfilename, "w") as fp:
-        fp.write(f"# {booktitle} ({bookauthor})\n\n")
+        fp.write(f"# {outdate}: {booktitle} ({bookauthor})\n\n")
         fp.write(f"<a href='file:///{realpath}' target='_blank'>{realpath}</a>\n\n")
         fp.write(f"Last Annotation: {modtime}\n\n")
         if len(popups) > 1:
