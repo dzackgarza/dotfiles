@@ -4,6 +4,7 @@ import sys
 import PyQt5
 import os
 import time
+import datetime
 
 def cleanString(somestr):
     fewer_spaces = ' '.join(somestr.split()).replace("- ", "").translate(str.maketrans({"(": r"\(", ")": r"\)", ".": r"\.", "_": r"\_", "*": r"\*"}))
@@ -75,7 +76,7 @@ def main():
     with open("/home/zack/Notes/Annotations/books_annotated.log", "a") as fp:
         fp.write(realpath + '\n')
 
-    modtime = max(dates)
+    modtime = max(dates) if len(dates) > 0 else datetime.date.today()
     outdate = modtime.strftime('%m/%d/%Y')
     outfilename = f"/home/zack/Notes/Annotations/{booktitle}.md"
     with open(outfilename, "w") as fp:
