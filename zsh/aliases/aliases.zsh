@@ -20,6 +20,7 @@ function mcd() {
 
 # Dev Specific
 alias ls="colorls"
+alias ll="colorls -l"
 #alias lsc="colorls"
 alias mkdir="mkdir -p"
 
