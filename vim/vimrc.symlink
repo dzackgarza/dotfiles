@@ -193,7 +193,7 @@ nmap <silent> <leader>hl :SyntasticCheck hlint<CR>
 "map <Leader>m :w \| make<CR>
 
 map <Leader>m :w \| !xelatex --interaction=batchmode % && rm *.{aux,log,out,dvi,nav,toc,pre,tdo}<CR><CR>
-autocmd BufWritePost *.tex :silent !xelatex --interaction=batchmode % && rm *.{aux,log,out,dvi,nav,toc,pre,tdo} :edit
+autocmd BufWritePost *.tex :silent !xelatex --interaction=batchmode % && rm *.{aux,log,out,dvi,nav,toc,pre,tdo} | redraw
 
 
 map <Leader>rh :w \| !runhaskell %<CR>
