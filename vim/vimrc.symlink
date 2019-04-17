@@ -614,3 +614,5 @@ au FileType markdown autocmd VimEnter * hi clear Conceal         " Remove backgr
 
 hi NonText ctermbg=none
 hi Normal guibg=NONE ctermbg=NONE
+
+set autoread
