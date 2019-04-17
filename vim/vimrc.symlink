@@ -190,7 +190,8 @@ let mapleader=","
 " Haskell shortcuts
 map <silent> <Leader>hc :SyntasticCheck<CR>
 nmap <silent> <leader>hl :SyntasticCheck hlint<CR>
-map <Leader>m :w \| make<CR>
+"map <Leader>m :w \| make<CR>
+map <Leader>m :w \| !xelatex %<CR>
 map <Leader>rh :w \| !runhaskell %<CR>
 map <Leader>hst :GhcModType<CR>
 map <Leader>hsti :GhcModTypeInsert<CR>
