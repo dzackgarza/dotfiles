@@ -166,7 +166,7 @@ set clipboard+=unnamedplus
 
 " GUI Settings
 set t_Co=256
-colorscheme mustang
+colorscheme less
 
 set mouse=a                     " Allow mouse selection
 
