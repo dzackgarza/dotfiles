@@ -18,8 +18,8 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 # ZSH-specific
 export ZSH=$HOME/.oh-my-zsh
-#ZSH_THEME="af-magic"
-ZSH_THEME="kphoen"
+ZSH_THEME="af-magic"
+#ZSH_THEME="kphoen"
 plugins=(git dirhistory tmux command-not-found)
 # dirhistory: press alt-left/right to move through visited directories.
 # zsh-syntax-highlighting: like fish shell. Install the package first!
