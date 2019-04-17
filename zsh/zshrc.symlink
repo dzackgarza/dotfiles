@@ -133,4 +133,4 @@ export JEKYLL_EDITOR=typora
 #PATH_TO_NPM_COMPLETION="/home/zack/.nvm/versions/node/v8.4.0/lib/node_modules/npm-completion"
 #source $PATH_TO_NPM_COMPLETION/npm-completion.sh
 
-/usr/share/LS_COLORS/dircolors.sh
+#/usr/share/LS_COLORS/dircolors.sh
