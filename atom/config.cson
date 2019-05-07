@@ -2,14 +2,10 @@
   core:
     disabledPackages: [
       "language-gfm"
-      "language-r"
     ]
-    telemetryConsent: "no"
   "exception-reporting":
-    userId: "7a10cca5-c676-4966-8323-d99713ab376f"
+    userId: "0fe985fb-ce20-4313-9517-698787603b68"
   minimap:
     plugins:
       pigments: true
       pigmentsDecorationsZIndex: 0
-  welcome:
-    showOnStartup: false
