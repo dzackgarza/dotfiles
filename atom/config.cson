@@ -3,6 +3,7 @@
     disabledPackages: [
       "language-gfm"
     ]
+    telemetryConsent: "no"
   "exception-reporting":
     userId: "0fe985fb-ce20-4313-9517-698787603b68"
   minimap:
