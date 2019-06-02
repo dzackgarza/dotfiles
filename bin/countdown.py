@@ -65,7 +65,7 @@ Script Example:
         if len(sys.argv) > found_index + 1:
             date_format = sys.argv[found_index + 1]
 
-    print(bar_title + " | font=\'Monospace\'")
+    print(bar_title + " | font=\'UbuntuMono\'")
     if "--no-cycle" in sys.argv:
         print("---")
 
