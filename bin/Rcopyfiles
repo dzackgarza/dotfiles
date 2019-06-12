@@ -1,2 +1,0 @@
-#!/bin/bash
-perl -n -e'/file=\"(.*)\"/ && print $1. "\n"' $1 | while read -r line; do cp $line "$(realpath .)"; done

@@ -1,2 +1,0 @@
-#1/bin/bash
-perl -n -e'/file=\"(.*)\"/ && print $1. "\n"' $1
