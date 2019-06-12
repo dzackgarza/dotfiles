@@ -1,2 +1,0 @@
-#!/bin/bash
-cat "$1" | sed -E 's/\/\//g' | sed -E 's/X:/\/home\/zack\/onedrive/g'

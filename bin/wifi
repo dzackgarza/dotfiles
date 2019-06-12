@@ -1,2 +1,0 @@
-sudo ip link set wlp6s0 up
-sudo wpa_supplicant -c /etc/wpa_supplicant/example.conf -i wlp6s0 -B
