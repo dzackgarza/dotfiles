@@ -627,3 +627,6 @@ set autoread
 " Automatically save after a few seconds
 au CursorHold *.tex,*.md  update
 
+" Press enter to clear search highlights
+nnoremap <CR> :noh<CR><CR>
+
