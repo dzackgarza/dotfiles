@@ -34,6 +34,6 @@ command -v apt-get >/dev/null 2>&1 && sudo apt-get update && sudo apt-get -y upg
 
 clr_green "Updating 'locate' database...";
 sudo updatedb;
-rehash;
+#rehash;
 
 clr_blueb "Update completed.";
