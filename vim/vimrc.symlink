@@ -630,3 +630,5 @@ au CursorHold *.tex,*.md  update
 " Press enter to clear search highlights
 nnoremap <CR> :noh<CR><CR>
 
+set complete+=kspell
+
