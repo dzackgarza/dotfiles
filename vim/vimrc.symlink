@@ -24,19 +24,20 @@ if !isdirectory($HOME . '/.vim/bundle/Vundle.vim')
   endif
 endif
 " Now we can assume the vundle is installed.
-""""""""""""" </ Vundle Setup > """""""""""""""
+""""""""""""" </ Vundle Setup > """"""""""""""
 
-"""""""""""" < Vundle Plugins > """""""""""""""
+"""""""""""" < Vundle Plugins > """"""""""""""
 set rtp+=~/.vim/bundle/Vundle.vim
 set rtp+=~/.fzf
 call vundle#begin()
 
 " Plugin Management
-Plugin 'gmarik/vundle'
+Plugin 'VundleVim/Vundle.vim'
 
 " Aesthetics
-Plugin 'xolox/vim-misc'
-Plugin 'bling/vim-airline'                " Improve the status bar
+Plugin 'xolox/vim-misc'                   " Misc needed for other plugins?
+Plugin 'vim-airline/vim-airline'          " Better status bar
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'valloric/MatchTagAlways'
 Plugin 'nathanaelkane/vim-indent-guides'  " Colored tab indent levels
@@ -46,7 +47,7 @@ Plugin 'croaker/mustang-vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'         " Show git difs next to line numbers.
 
-" Langauges
+" Languages
 Plugin 'scrooloose/syntastic'
 Plugin 'sheerun/vim-polyglot'
 
@@ -76,11 +77,19 @@ Plugin 'benmills/vimux'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'ervandew/supertab'
 Plugin 'scrooloose/nerdcommenter'        " Line comment toggling
+Plugin 'Townk/vim-autoclose'
 
 " Markdown
 Plugin 'plasticboy/vim-markdown'
 Plugin 'KeitaNakamura/tex-conceal.vim'
 Plugin 'dkarter/bullets.vim'
+
+" Latex
+Plugin 'lervag/vimtex'
+Plugin 'SirVer/ultisnips'
+" Snippets are separated from the engine. Add this if you want them:
+Plugin 'honza/vim-snippets'
+
 
 call vundle#end()
 """""""""""" </ Vundle Plugins > """""""""""""""
@@ -195,13 +204,13 @@ nmap <silent> <leader>hl :SyntasticCheck hlint<CR>
 
 "map <Leader>m :w \| !xelatex --interaction=batchmode %; rm *.{aux,log,out,dvi,nav,toc,pre,tdo}<CR><CR>
 "autocmd BufWritePost *.tex :silent execute "!xelatex --interaction=batchmode %; rm *.{aux,log,out}" | redraw!
-let blacklist = ['preamble.tex']
+"let blacklist = ['preamble.tex']
 "autocmd BufWritePost *.tex if expand('%:t') != "preamble.tex" | :silent execute "!pdflatex %; rm *.{aux,log,out}" | redraw!
 
 
-map <Leader>rh :w \| !runhaskell %<CR>
-map <Leader>hst :GhcModType<CR>
-map <Leader>hsti :GhcModTypeInsert<CR>
+"map <Leader>rh :w \| !runhaskell %<CR>
+"map <Leader>hst :GhcModType<CR>
+"map <Leader>hsti :GhcModTypeInsert<CR>
 
 " Then type in word to ag from the curent directory
 map <Leader>/ :Ag!<SPACE>
@@ -211,8 +220,6 @@ nmap <Leader>// :<c-u>execute 'Ag! ' .  expand("<cWORD>")<CR>
 
 " Toggle whitespace visibility
 nmap <Leader>s :set list!<CR>
-
-" nmap <silent> =j :%!python -m json.tool<CR>:setfiletype json<CR>
 
 nmap <leader>= :TagbarToggle<CR>
 
@@ -231,7 +238,10 @@ nnoremap <silent> <C-\> :cs find c <C-R>=expand("<cword>")<CR><CR>
 " Clear search highlights when pressing ,b
 nnoremap <silent> <leader>b :nohlsearch<CR>
 
-" Toggle visibility using ,n
+" Press enter to clear search highlights
+nnoremap <CR> :noh<CR><CR>
+
+" Toggle NerdTree visibility using ,n
 noremap <silent> <Leader>n :NERDTreeToggle<CR>
 
 " ,hljk = Move between windows
@@ -245,18 +255,6 @@ noremap <silent> <C-Left> :bprev<CR>
 noremap <silent> <C-h> :bprev<CR>
 noremap <silent> <C-Right> :bnext<CR>
 noremap <silent> <C-l> :bnext<CR>
-
-"------  Fugitive Plugin Options  ------
-nnoremap <Leader>ga :Git add %:p<CR>
-nnoremap <Leader>gc :Gcommit -v -q<CR>
-nnoremap <Leader>gpo :Git push origin master<CR>
-nnoremap <Leader>gs :Gstatus<CR>
-nnoremap <Leader>gl :Glog<CR>
-nnoremap <Leader>gb :Gblame<CR>
-nnoremap <Leader>gm :Gmove
-nnoremap <Leader>gp :Ggrep
-nnoremap <Leader>gR :Gread<CR>
-nnoremap <Leader>gd :Gdiff<CR>
 
 " Some custom programming commands
 nnoremap <Leader>mm :wa \| :VimuxRunCommand 'make clean && make all && ./test'<CR>
@@ -363,7 +361,7 @@ let g:vim_json_syntax_conceal = 0
 map <Leader>p :! php -l %<CR>   " ,p = Runs PHP lint checker on current file
 map <Leader>P :! php -q %<CR>   " ,P = Runs PHP and executes the current file
 
-au FileType php set omnifunc=phpcomplete#CompletePHP
+"au FileType php set omnifunc=phpcomplete#CompletePHP
 " ----- </ PHP > -------------------
 
 " Column 80 marker
@@ -529,8 +527,6 @@ augroup sourcing
 augroup END
 
 
-" Use buffer words as default tab completion
-let g:SuperTabDefaultCompletionType = '<c-x><c-p>'
 
 " But provide (neco-ghc) omnicompletion
 if has("gui_running")
@@ -547,12 +543,13 @@ let g:necoghc_enable_detailed_browse = 1
 " Use neco-ghc for omnicompletion
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
-" Fix the omnicomplete popup menu a bit
-" Allows typing in a few characters to narrow down the list
-set completeopt=longest,menuone
 
 " After narrowing choices, allows pressing enter to select last entry in popup menu.
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Display buffers in tabs when only one tab is open
+let g:airline#extensions#tabline#enabled = 1
+
 
 " Hacks for Syntastic
 function! FindCabalSandboxRoot()
@@ -609,11 +606,21 @@ let g:vim_markdown_follow_anchor = 1
 let g:vim_markdown_frontmatter = 1
 let g:vim_markdown_new_list_item_indent = 0
 
-
-autocmd BufRead,BufNewFile *.md setlocal spell
+"autocmd BufRead,BufNewFile *.md,tex,latex setlocal spell
+autocmd FileType markdown,tex,latex setlocal spell
+" Fix the omnicomplete popup menu a bit
+" Allows typing in a few characters to narrow down the list
+set completeopt=longest,menuone
+"set complete=kspell,.
 set complete+=kspell
+set complete+=k/home/zack/math_dict.txt
 set conceallevel=2
-
+" Use buffer words as default tab completion
+"let g:SuperTabDefaultCompletionType = '<c-x><c-p>'
+autocmd FileType *
+  \ if &omnifunc != '' |
+  \   call SuperTabChain(&omnifunc, "<c-p>") |
+  \ endif
 
 let g:tex_conceal="abdgm"
 au FileType markdown autocmd VimEnter * hi clear Conceal         " Remove background color from concealed characters (grey on grey??)
@@ -627,8 +634,21 @@ set autoread
 " Automatically save after a few seconds
 au CursorHold *.tex,*.md  update
 
-" Press enter to clear search highlights
-nnoremap <CR> :noh<CR><CR>
 
-set complete+=kspell
 
+" inoremap { {}<Esc>i
+let g:polyglot_disabled = ['latex']
+
+"let g:UltiSnipsExpandTrigger="<c-b>"
+"let g:UltiSnipsJumpForwardTrigger="<c-h>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-g>"
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+" Hit Ctrl-L to correct last spelling mistake
+inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
+
+" Include figures
+inoremap <C-f> <Esc>: silent exec '.!inkscape-figures create "'.getline('.').'" "'.b:vimtex.root.'/figures/"'<CR><CR>:w<CR>
+nnoremap <C-f> : silent exec '!inkscape-figures edit "'.b:vimtex.root.'/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>
