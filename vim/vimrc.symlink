@@ -65,7 +65,7 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'ervandew/supertab'
 Plugin 'scrooloose/nerdcommenter'        " Line comment toggling
 Plugin 'Townk/vim-autoclose'
-Plugin "907th/vim-auto-save"
+Plugin '907th/vim-auto-save'
 
 " Markdown
 Plugin 'plasticboy/vim-markdown'
