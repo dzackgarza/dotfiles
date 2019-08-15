@@ -526,10 +526,10 @@ let &undodir=s:undoDir
 set undofile
 
 " Press Ctrl-B to change this line to a latex begin/end.
-map  <C-B>      YpkI\begin{<ESC>A}<ESC>jI\end{<ESC>A}<esc>k$o
-map! <C-B> <ESC>YpkI\begin{<ESC>A}<ESC>jI\end{<ESC>A}<esc>k$o
+"map  <C-B>      YpkI\begin{<ESC>A}<ESC>jI\end{<ESC>A}<esc>k$o
+"map! <C-B> <ESC>YpkI\begin{<ESC>A}<ESC>jI\end{<ESC>A}<esc>k$o
 
-map  <C-B>      YpkI\begin{<ESC>A}<ESC>jI\end{<ESC>A}<esc>k$o
+map  <Leader>b  YpkI\begin{<ESC>A}<ESC>jI\end{<ESC>A}<esc>k$o
 map! <C-B> <ESC>YpkI\begin{<ESC>A}<ESC>jI\end{<ESC>A}<esc>k$o
 
 " Quickly insert an empty new line without entering insert mode
