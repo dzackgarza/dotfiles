@@ -467,7 +467,7 @@ set completeopt=longest,menuone
 "set complete=kspell,.
 set complete+=kspell
 set complete+=k/home/zack/math_dict.txt
-set spellfile=/home/zack/math_dict.en.utf-8.add
+set spellfile=/home/zack/math_dict.utf-8.add
 set conceallevel=2
 " Use buffer words as default tab completion
 "let g:SuperTabDefaultCompletionType = '<c-x><c-p>'
