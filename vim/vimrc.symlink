@@ -529,4 +529,4 @@ set undofile
 map  <C-B>      YpkI\begin{<ESC>A}<ESC>jI\end{<ESC>A}<esc>kA
 map! <C-B> <ESC>YpkI\begin{<ESC>A}<ESC>jI\end{<ESC>A}<esc>kA
 
-nmap <Leader>// :<c-u>execute 'Ag! ' .  expand("<cWORD>")<CR>
+nmap <Leader>b :<c-u>execute 'Ag! ' .  expand("<cWORD>")<CR>
