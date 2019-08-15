@@ -529,6 +529,9 @@ set undofile
 map  <C-B>      YpkI\begin{<ESC>A}<ESC>jI\end{<ESC>A}<esc>k$o
 map! <C-B> <ESC>YpkI\begin{<ESC>A}<ESC>jI\end{<ESC>A}<esc>k$o
 
+map  <C-B>      YpkI\begin{<ESC>A}<ESC>jI\end{<ESC>A}<esc>k$o
+map! <C-B> <ESC>YpkI\begin{<ESC>A}<ESC>jI\end{<ESC>A}<esc>k$o
+
 " Quickly insert an empty new line without entering insert mode
 nnoremap <Leader>o o<Esc>
 nnoremap <Leader>O O<Esc>
