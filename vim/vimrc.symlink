@@ -6,7 +6,6 @@ filetype off
 
 """ Bootstrap vundle if this is a new install.
 if !isdirectory($HOME . '/.vim/bundle/Vundle.vim')
-bcde
   if executable('git')
     if has('win32') || has ('win64')
       execute '!"git clone https://github.com/gmarik/vundle.git "'
@@ -517,9 +516,6 @@ set foldlevel=20
 let g:auto_save        = 1
 let g:auto_save_silent = 1
 let g:auto_save_events = ["InsertLeave", "FocusLost"]
-sdsad
-
-asdsaas
 
 " Persistent Undo
 let s:undoDir = "/tmp/.undodir_" . $USER
@@ -534,3 +530,4 @@ map  <C-B>      YpkI\begin{<ESC>A}<ESC>jI\end{<ESC>A}<esc>kA
 map! <C-B> <ESC>YpkI\begin{<ESC>A}<ESC>jI\end{<ESC>A}<esc>kA
 
 map! <C-M> <ESC>o<ESC>abcde
+bcde:
