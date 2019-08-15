@@ -159,7 +159,7 @@ set clipboard+=unnamedplus
 
 " GUI Settings
 set t_Co=256
-colorscheme ecostation
+colorscheme elflord
 
 set mouse=a                     " Allow mouse selection
 
