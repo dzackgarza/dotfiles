@@ -44,3 +44,9 @@ function researchnotes() {
   touch $fullname;
   vim $fullname;
 }
+
+function todaymd() {
+  todaydate=$(date +"%Y-%m-%d");
+  fullname="./$basepath/$todaydate.md";
+  touch $fullname;
+}
