@@ -6,6 +6,7 @@ filetype off
 
 """ Bootstrap vundle if this is a new install.
 if !isdirectory($HOME . '/.vim/bundle/Vundle.vim')
+bcde
   if executable('git')
     if has('win32') || has ('win64')
       execute '!"git clone https://github.com/gmarik/vundle.git "'
