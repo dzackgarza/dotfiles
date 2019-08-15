@@ -534,3 +534,6 @@ nnoremap <Leader>o o<Esc>
 nnoremap <Leader>O O<Esc>
 
 map <Leader>m  I$$<CR><CR>.$$<ESC>k<ESC>
+$$
+
+.$$
