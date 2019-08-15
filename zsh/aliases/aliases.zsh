@@ -26,6 +26,8 @@ alias pbpaste='xsel --clipboard --output';
 
 alias whatsmyip="curl ipinfo.io/ip"
 
+alias r.ranger='SHELL=/usr/local/bin/r.shell ranger'
+
 function uninstall() {
   command -v yaourt >/dev/null 2>&1 && sudo yaourt -Rns "$1" --noconfirm;
 }
@@ -50,3 +52,4 @@ function todaymd() {
   fullname="./$basepath/$todaydate.md";
   touch $fullname;
 }
+
