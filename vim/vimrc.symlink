@@ -524,3 +524,5 @@ if !isdirectory(s:undoDir)
 endif
 let &undodir=s:undoDir
 set undofile
+
+" Press Ctrl-B to change this line to a latex begin/end.
