@@ -529,4 +529,4 @@ set undofile
 map  <C-B>      YpkI\begin{<ESC>A}<ESC>jI\end{<ESC>A}<esc>kA
 map! <C-B> <ESC>YpkI\begin{<ESC>A}<ESC>jI\end{<ESC>A}<esc>kA
 
-map <C-M> <ESC>o<ESC>$$<CR><CR>$$<ESC>j<ESC>
+map <C-M> <ESC>o<ESC>asdsad<CR><CR>asdsaas<ESC>j<ESC>
