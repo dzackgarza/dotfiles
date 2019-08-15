@@ -8,3 +8,4 @@ set mouse_enabled true
 set tilde_in_titlebar True
 setlocal path=~/Notes/Research/Notes/ReadingGeneral sort basename
 setlocal path=~/Notes/Research/Notes/ReadingGeneral sort_reverse True
+set colorscheme zenburn
