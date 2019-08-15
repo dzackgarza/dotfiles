@@ -49,7 +49,7 @@ while true; do
   status_ok=$?
   if [ $status_ok -ne 0 ]; then
     echo "Error compiling"
-    notify-send "Doc Preview" "Error Compiling." --urgency=critical --expire-time=5000
+    #notify-send "Doc Preview" "Error Compiling." --urgency=critical --expire-time=5000
   else
     if [ "$first_run" = true ]; then
       echo "First run"
