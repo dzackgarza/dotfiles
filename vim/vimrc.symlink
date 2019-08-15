@@ -65,6 +65,7 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'ervandew/supertab'
 Plugin 'scrooloose/nerdcommenter'        " Line comment toggling
 Plugin 'Townk/vim-autoclose'
+Plugin "907th/vim-auto-save"
 
 " Markdown
 Plugin 'plasticboy/vim-markdown'
@@ -76,6 +77,7 @@ Plugin 'lervag/vimtex'
 Plugin 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
 Plugin 'honza/vim-snippets'
+
 
 call vundle#end()
 """""""""""" </ Vundle Plugins > """""""""""""""
