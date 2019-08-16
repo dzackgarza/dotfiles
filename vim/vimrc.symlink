@@ -547,4 +547,4 @@ autocmd FileType markdown set foldexpr=NestedMarkdownFolds()
 
 noremap <C-f> <Esc>: silent exec '.!xournal'
 "nmap <Leader>// :<c-u>execute 'Ag! ' .  expand("<cWORD>")<CR>
-autocmd FileType markdown nmap <silent> <leader>p :call mdip#MarkdownClipboardImage()<CR><CR>\\<CR>
+autocmd FileType markdown nmap <silent> <leader>p :call mdip#MarkdownClipboardImage()<CR><CR>\\\\<CR>
