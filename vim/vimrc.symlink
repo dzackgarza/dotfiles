@@ -551,3 +551,4 @@ noremap <C-f> <Esc>: silent exec '.!xournal'
 autocmd FileType markdown nmap <silent> <leader>p :call mdip#MarkdownClipboardImage()<CR><CR>asdsa<CR>
 
 inoremap ^ ^{}<ESC>h
+inoremap _ _{}<ESC>h
