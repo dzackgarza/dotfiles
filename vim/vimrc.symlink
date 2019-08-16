@@ -73,7 +73,7 @@ Plugin 'KeitaNakamura/tex-conceal.vim'
 Plugin 'dkarter/bullets.vim'
 Plugin 'masukomi/vim-markdown-folding'
 Plugin 'ferrine/md-img-paste.vim'
-autocmd FileType markdown nmap <silent> <leader>p :call mdip#MarkdownClipboardImage()
+autocmd FileType markdown nmap <silent> <leader>p :call mdip#MarkdownClipboardImage() | <BR><BR>
 " there are some defaults for image directory and image name, you can change them
 let g:mdip_imgdir = 'figures'
 " let g:mdip_imgname = 'image'
@@ -99,7 +99,6 @@ set number
 set nowrap
 set vb
 set ruler
-"set statusline=%<%f\ %h%m%r%=%{fugitive#statusline()}\ \ %-14.(%l,%c%V%)\ %P
 let g:buftabs_only_basename=1
 let g:buftabs_marker_modified = "+"
 set t_ut=
