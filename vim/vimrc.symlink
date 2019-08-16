@@ -536,4 +536,4 @@ nnoremap <Leader>b  YpkI\wrapenv{\Begin{<ESC>A}}<ESC>jI\wrapenv{\End{<ESC>A}}<es
 nnoremap <Leader>o o<Esc>
 nnoremap <Leader>O O<Esc>
 
-map <Leader>mm  i\[<ESC>o<ESC>.\]<ESC>O
+map <Leader>mm  I\[<CR>.\]<ESC>O
