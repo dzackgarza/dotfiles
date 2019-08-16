@@ -73,7 +73,7 @@ Plugin 'KeitaNakamura/tex-conceal.vim'
 Plugin 'dkarter/bullets.vim'
 Plugin 'masukomi/vim-markdown-folding'
 Plugin 'ferrine/md-img-paste.vim'
-autocmd FileType markdown nmap <silent> <leader>p :call mdip#MarkdownClipboardImage() | <BR><BR>
+autocmd FileType markdown nmap <silent> <leader>p :call mdip#MarkdownClipboardImage() |
 " there are some defaults for image directory and image name, you can change them
 let g:mdip_imgdir = 'figures'
 " let g:mdip_imgname = 'image'
