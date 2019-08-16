@@ -538,3 +538,5 @@ nnoremap <Leader>o o<Esc>
 nnoremap <Leader>O O<Esc>
 
 nnoremap <Leader>mm  I\[<CR>.\]<ESC>O
+autocmd FileType markdown set foldexpr=NestedMarkdownFolds()
+
