@@ -193,15 +193,15 @@ let mapleader=","
 "autocmd BufWritePost *.tex if expand('%:t') != "preamble.tex" | :silent execute "!pdflatex %; rm *.{aux,log,out}" | redraw!
 
 " Then type in word to ag from the curent directory
-map <Leader>/ :Ag!<SPACE>
+"map <Leader>/ :Ag!<SPACE>
 
 " Ag the word under the cursor.
-nmap <Leader>// :<c-u>execute 'Ag! ' .  expand("<cWORD>")<CR>
+"nmap <Leader>// :<c-u>execute 'Ag! ' .  expand("<cWORD>")<CR>
 
 " Toggle whitespace visibility
 nmap <Leader>s :set list!<CR>
 
-nmap <leader>= :TagbarToggle<CR>
+"nmap <leader>= :TagbarToggle<CR>
 
 " Allow saving of read-only files when opened without sudo.
 cmap wf %!sudo tee > /dev/null %
@@ -237,8 +237,8 @@ noremap <silent> <C-Right> :bnext<CR>
 noremap <silent> <C-l> :bnext<CR>
 
 " Some custom programming commands
-nnoremap <Leader>mm :wa \| :VimuxRunCommand 'make clean && make all && ./test'<CR>
-nnoremap <leader>cap :wa \| :VimuxRunCommand 'git add *; git commit -am "save"; git push origin master'<CR>
+"nnoremap <Leader>mm :wa \| :VimuxRunCommand 'make clean && make all && ./test'<CR>
+"nnoremap <leader>cap :wa \| :VimuxRunCommand 'git add *; git commit -am "save"; git push origin master'<CR>
 " Close buffer without affecting splits.
 nnoremap <leader>w :Bclose<CR>
 
@@ -536,4 +536,4 @@ nnoremap <Leader>b  YpkI\wrapenv{\Begin{<ESC>A}}<ESC>jI\wrapenv{\End{<ESC>A}}<es
 nnoremap <Leader>o o<Esc>
 nnoremap <Leader>O O<Esc>
 
-map <Leader>n  i$$<ESC>o<ESC>o.$$<ESC>ki
+map <Leader>mm  i$$<ESC>o<ESC>o.$$<ESC>ki
