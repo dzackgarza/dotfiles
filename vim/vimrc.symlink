@@ -510,8 +510,8 @@ inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 "nnoremap <C-f> : exec '!inkscape-figures create "'.expand('%:p:h').'/figures/" > /dev/null 2>&1 &'
 "nnoremap <C-f> : silent exec '!echo "'.expand<F11>('%:p:h').'/figures/" '
 "nnoremap <C-f> : exec echo expand('%:p:h')
-inoremap <C-f> <Esc>: silent exec '.!inkscape-figures create "'.getline('.').'" "'.expand('%:p:h').'/figures/"'<CR><CR>:w<CR>
-nnoremap <C-f> : silent exec '!inkscape-figures edit "'.expand('%:p:h').'/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>
+"inoremap <C-f> <Esc>: silent exec '.!inkscape-figures create "'.getline('.').'" "'.expand('%:p:h').'/figures/"'<CR><CR>:w<CR>
+"nnoremap <C-f> : silent exec '!inkscape-figures edit "'.expand('%:p:h').'/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>
 
 set foldlevel=20
 
@@ -541,3 +541,4 @@ nnoremap <Leader>O O<Esc>
 
 nnoremap <Leader>mm  I\[<CR>.\]<ESC>O
 autocmd FileType markdown set foldexpr=NestedMarkdownFolds()
+
