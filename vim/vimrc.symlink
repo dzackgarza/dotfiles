@@ -71,6 +71,7 @@ Plugin '907th/vim-auto-save'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'KeitaNakamura/tex-conceal.vim'
 Plugin 'dkarter/bullets.vim'
+Plugin 'masukomi/vim-markdown-folding'
 
 " Latex
 Plugin 'lervag/vimtex'
