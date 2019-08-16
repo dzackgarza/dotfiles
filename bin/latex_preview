@@ -5,8 +5,8 @@ if [ $# -eq 0 ]; then
   exit 1;
 fi
 
-filepath="$(realpath $1)"
-directory="$(dirname "$filepath")"
+filepath=$(realpath $1)
+directory=$(dirname "$filepath")
 filename=$(basename -- "$filepath")
 extension="${filename##*.}"
 filename="${filename%.*}"
