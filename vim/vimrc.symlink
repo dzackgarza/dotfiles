@@ -73,7 +73,6 @@ Plugin 'KeitaNakamura/tex-conceal.vim'
 Plugin 'dkarter/bullets.vim'
 Plugin 'masukomi/vim-markdown-folding'
 Plugin 'ferrine/md-img-paste.vim'
-autocmd FileType markdown nmap <silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>o\\
 " there are some defaults for image directory and image name, you can change them
 let g:mdip_imgdir = 'figures'
 " let g:mdip_imgname = 'image'
@@ -548,3 +547,4 @@ autocmd FileType markdown set foldexpr=NestedMarkdownFolds()
 
 noremap <C-f> <Esc>: silent exec '.!xournal'
 "nmap <Leader>// :<c-u>execute 'Ag! ' .  expand("<cWORD>")<CR>
+autocmd FileType markdown nmap <silent> <leader>p :call mdip#MarkdownClipboardImage()<CR><ESC>o\\
