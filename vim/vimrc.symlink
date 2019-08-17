@@ -71,6 +71,8 @@ Plugin '907th/vim-auto-save'
 " Markdown
 Plugin 'plasticboy/vim-markdown'
 Plugin 'KeitaNakamura/tex-conceal.vim'
+let g:tex_conceal="abdgm"
+
 Plugin 'dkarter/bullets.vim'
 Plugin 'masukomi/vim-markdown-folding'
 Plugin 'ferrine/md-img-paste.vim'
