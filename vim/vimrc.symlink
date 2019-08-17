@@ -554,5 +554,6 @@ autocmd FileType markdown nmap <silent> <leader>p :call mdip#MarkdownClipboardIm
 
 "inoremap <Leader>6 ^{}<ESC>i
 "inoremap <Leader>- _{}<ESC>i
+" Prevent F1 from launching help
 map <F1> <Esc>
 imap <F1> <Esc>
