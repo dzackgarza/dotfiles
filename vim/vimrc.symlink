@@ -555,3 +555,5 @@ autocmd FileType markdown nmap <silent> <leader>p :call mdip#MarkdownClipboardIm
 autocmd FileType markdown inoremap ^ ^{}<Left>
 autocmd FileType markdown inoremap _ _{}<Left>
 autocmd FileType markdown inoremap $ $$<Left>
+
+<F11>
