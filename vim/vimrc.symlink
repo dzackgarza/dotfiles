@@ -557,3 +557,4 @@ autocmd FileType markdown inoremap _ _{}<Left>
 autocmd FileType markdown inoremap $ $$<Left>
 
 command latex !latex_preview "%"
+command tikzcd
