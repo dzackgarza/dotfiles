@@ -558,5 +558,4 @@ autocmd FileType markdown inoremap $ $$<Left>
 
 command Latex !latex_preview "%"
 command Tikzcd :r!echo '\\begin{center}\n\\begin{tikzcd}\n\n\\end{tikzcd}\n\\end{center}'
-:let @*=expand("%:p")<CR>
-nmap ,cl :let @*=expand("%:p")<CR>
+nmap <LEADER>cl :let @*=expand("%:p")<CR>
