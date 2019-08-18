@@ -557,4 +557,4 @@ autocmd FileType markdown inoremap _ _{}<Left>
 autocmd FileType markdown inoremap $ $$<Left>
 
 command Latex !latex_preview "%"
-command Tikzcd :r! echo "\\begin{center}\n\\begin{tikzcd}\n\n\\end{tikzcd}\\end{center}"
+command Tikzcd :r! echo '\\begin{center}\n\\begin{tikzcd}\n\n\\end{tikzcd}\n\\end{center}'
