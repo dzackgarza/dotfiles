@@ -558,4 +558,5 @@ autocmd FileType markdown inoremap $ $$<Left>
 
 command Latex !latex_preview "%"
 command Tikzcd :r!echo '\\begin{center}\n\\begin{tikzcd}\n\n\\end{tikzcd}\n\\end{center}'
-command Copyfilepath :let @*=expand("%:p")<CR>
+:let @*=expand("%:p")<CR>
+nmap ,cl :let @*=expand("%:p")<CR>
