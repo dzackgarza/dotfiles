@@ -553,7 +553,6 @@ autocmd FileType markdown nmap <silent> <leader>p :call mdip#MarkdownClipboardIm
 
 autocmd FileType markdown inoremap ^ ^{}<Left>
 autocmd FileType markdown inoremap _ _{}<Left>
-autocmd FileType markdown inoremap $ $$<Left>
 
 command Latex !latex_preview "%"
 command Tikzcd :r!echo '\\begin{center}\n\\begin{tikzcd}\n\n\\end{tikzcd}\n\\end{center}'
