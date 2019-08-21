@@ -544,7 +544,7 @@ nnoremap <Leader>b  YpkI\wrapenv{\Begin{<ESC>A}}<ESC>jI\wrapenv{\End{<ESC>A}}<es
 nnoremap <Leader>o o<Esc>
 nnoremap <Leader>O O<Esc>
 
-nnoremap <Leader>mm  I\[<CR>\begin{align*}<CR>.\end{align*}<CR>\]<ESC>
+nnoremap <Leader>mm  I\[<CR>\begin{align*}<CR>.\end{align*}<CR>\]<ESC>kO
 autocmd FileType markdown set foldexpr=NestedMarkdownFolds()
 
 noremap <C-f> <Esc>: silent exec '.!xournal'
