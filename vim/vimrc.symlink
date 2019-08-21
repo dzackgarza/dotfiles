@@ -555,5 +555,5 @@ autocmd FileType markdown nmap <silent> <leader>p :call mdip#MarkdownClipboardIm
 "autocmd FileType markdown inoremap _ _{}<Left>
 
 command Latex !latex_preview "%"
-command Tikzcd :r!echo '\\begin{center}\n\\begin{tikzcd}\n\n\\end{tikzcd}\n\\end{center}'
+command Tikzcd :r!echo '\\[\n\\begin{center}\n\\begin{tikzcd}\n\n\\end{tikzcd}\n\\end{center}\n\\]'
 nmap <Leader>ll :let @+=expand("%:p")<CR><CR>
