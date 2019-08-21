@@ -500,12 +500,12 @@ au CursorHold *.tex,*.md  update
 " inoremap { {}<Esc>i
 let g:polyglot_disabled = ['latex']
 
-"let g:UltiSnipsExpandTrigger="<c-b>"
-"let g:UltiSnipsJumpForwardTrigger="<c-h>"
-"let g:UltiSnipsJumpBackwardTrigger="<c-g>"
-let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsExpandTrigger="<c-k>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+"let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<tab>"
+"let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " Hit Ctrl-L to correct last spelling mistake
 inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
