@@ -538,7 +538,7 @@ set undofile
 "map! <C-B> <ESC>YpkI\begin{<ESC>A}<ESC>jI\end{<ESC>A}<esc>k$o
 
 nnoremap <Leader>b  YpkI\wrapenv{\Begin{<ESC>A}}<ESC>jI\wrapenv{\End{<ESC>A}}<esc>k$o<esc>
-
+"nnoremap <C-b>  YpkI\wrapenv{\Begin{<ESC>A}}<ESC>jI\wrapenv{\End{<ESC>A}}<esc>k$o<esc>
 "map! <C-B> <ESC>YpkI\begin{<ESC>A}<ESC>jI\end{<ESC>A}<esc>k$o
 
 " Quickly insert an empty new line without entering insert mode
