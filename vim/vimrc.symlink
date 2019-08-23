@@ -168,7 +168,7 @@ set clipboard+=unnamedplus
 
 " GUI Settings
 set t_Co=256
-colorscheme Atelier_SavannahLight
+colorscheme Atelier_SavannaLight
 
 set mouse=a                     " Allow mouse selection
 
