@@ -521,9 +521,9 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 set foldlevel=20
 
 " Autosave settings
-let g:auto_save        = 1
-let g:auto_save_silent = 1
-let g:auto_save_events = ["InsertLeave", "FocusLost"]
+"let g:auto_save        = 1
+"let g:auto_save_silent = 1
+"let g:auto_save_events = ["InsertLeave", "FocusLost"]
 
 " Persistent Undo
 let s:undoDir = "/tmp/.undodir_" . $USER
