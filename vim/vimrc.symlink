@@ -560,3 +560,10 @@ command Tikzcd :r!echo '\\begin{center}\n\\begin{tikzcd}\n\n\\end{tikzcd}\n\\end
 nmap <Leader>ll :let @+=expand("%:p")<CR><CR>
 
 hi clear Conceal
+
+" Save folds between sessions
+augroup AutoSaveFolds
+  autocmd!
+  autocmd BufWinLeave * mkview
+  autocmd BufWinEnter * silent loadview
+augroup END
