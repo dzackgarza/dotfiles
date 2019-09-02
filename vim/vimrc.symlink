@@ -567,3 +567,7 @@ augroup AutoSaveFolds
   autocmd BufWinLeave * mkview
   autocmd BufWinEnter * silent loadview
 augroup END
+
+" Prevent cursor jumping?
+let g:syntastic_auto_jump = 0
+
