@@ -190,8 +190,6 @@ let &termencoding=&encoding
 let mapleader=","
 
 " Haskell shortcuts
-"map <silent> <Leader>hc :SyntasticCheck<CR>
-"nmap <silent> <leader>hl :SyntasticCheck hlint<CR>
 "map <Leader>m :w \| make<CR>
 
 "map <Leader>m :w \| !xelatex --interaction=batchmode %; rm *.{aux,log,out,dvi,nav,toc,pre,tdo}<CR><CR>
@@ -205,16 +203,8 @@ let mapleader=","
 " Ag the word under the cursor.
 "nmap <Leader>// :<c-u>execute 'Ag! ' .  expand("<cWORD>")<CR>
 
-" Toggle whitespace visibility
-nmap <Leader>s :set list!<CR>
-
-"nmap <leader>= :TagbarToggle<CR>
-
 " Allow saving of read-only files when opened without sudo.
 cmap wf %!sudo tee > /dev/null %
-
-" Save a few keystrokes
-nnoremap ; :
 
 " ,q Closes the current buffer
 nnoremap <silent> <Leader>q :Bclose<CR>
@@ -266,8 +256,6 @@ function! NumberToggle()
     set relativenumber
   endif
 endfunc
-
-nnoremap <Leader>el :call NumberToggle()<CR>
 
 """"""""""""" < /Keymaps > """"""""""""""""""""""""""""""
 set statusline+=%#warningmsg#
@@ -396,7 +384,7 @@ endfunction
 autocmd WinEnter * call NERDTreeQuit()
 
 " Remove trailing whitespace before writing (applies to all files)
-autocmd BufWritePre * :%s/\s\+$//e
+"autocmd BufWritePre * :%s/\s\+$//e
 
 " Recognize .md files as markdown
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
@@ -422,19 +410,19 @@ inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " Display buffers in tabs when only one tab is open
 let g:airline#extensions#tabline#enabled = 1
 
-let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 0
+"let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
-let g:syntastic_cpp_compiler_options=' -std=c++11 -stdlib=libc++'
+"let g:syntastic_cpp_compiler_options=' -std=c++11 -stdlib=libc++'
 
 " Enable syntax checking on write/close, but disable on haskell files
 " (Intensive for large projects)
-let g:syntastic_mode_map = {
-        \ "mode": "active",
-        \ "active_filetypes": ["ruby", "php"],
-        \ "passive_filetypes": ["haskell", "tex"] }
-let g:syntastic_enable_signs=1
+"let g:syntastic_mode_map = {
+        "\ "mode": "active",
+        "\ "active_filetypes": ["ruby", "php"],
+        "\ "passive_filetypes": ["haskell", "tex"] }
+"let g:syntastic_enable_signs=1
 
 " Automatically :set-paste when pasting from clipboard, in insert mode
 function! WrapForTmux(s)
@@ -507,17 +495,6 @@ let g:UltiSnipsExpandTrigger="<c-l>"
 "let g:UltiSnipsJumpForwardTrigger="<tab>"
 "let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
-" Hit Ctrl-L to correct last spelling mistake
-"inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
-
-" Include figures
-"noremap <C-f> <Esc>: silent exec '.!inkscape-figures create "'.getline('.').'" "'.b:vimtex.root.'/figures/"'<CR><CR>:w<CR>
-"nnoremap <C-f> : exec '!inkscape-figures create "'.expand('%:p:h').'/figures/" > /dev/null 2>&1 &'
-"nnoremap <C-f> : silent exec '!echo "'.expand<F11>('%:p:h').'/figures/" '
-"nnoremap <C-f> : exec echo expand('%:p:h')
-"inoremap <C-f> <Esc>: silent exec '.!inkscape-figures create "'.getline('.').'" "'.expand('%:p:h').'/figures/"'<CR><CR>:w<CR>
-"nnoremap <C-f> : silent exec '!inkscape-figures edit "'.expand('%:p:h').'/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>
-
 set foldlevel=20
 
 " Autosave settings
@@ -551,9 +528,6 @@ autocmd FileType markdown set foldexpr=NestedMarkdownFolds()
 noremap <C-f> <Esc>: silent exec '.!xournal'
 "nmap <Leader>// :<c-u>execute 'Ag! ' .  expand("<cWORD>")<CR>
 autocmd FileType markdown nmap <silent> <leader>p :call mdip#MarkdownClipboardImage()<CR><CR><CR>
-
-"autocmd FileType markdown inoremap ^ ^{}<Left>
-"autocmd FileType markdown inoremap _ _{}<Left>
 
 command Latex !latex_preview "%"
 command Tikzcd :r!echo '\\begin{center}\n\\begin{tikzcd}\n\n\\end{tikzcd}\n\\end{center}'
