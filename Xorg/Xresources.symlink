@@ -1,3 +1,4 @@
+urxvt*perl-ext-common: urxvt-colours
 ! Enable transparency.
 URxvt*.depth: 		32
 
