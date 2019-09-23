@@ -52,7 +52,7 @@ while true; do
   else
     if [ "$first_run" = true ]; then
       echo "First run"
-      okular "$outfile";
+      okular "$outfile" &
       first_run=false;
     fi
   fi
