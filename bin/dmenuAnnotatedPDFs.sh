@@ -8,7 +8,7 @@ while read THISBOOK; do
   NEWNAME=$(basename $THISBOOK .pdf)
   NEWCMD="${THISBOOK}"
   BOOKS[$NEWNAME]=$NEWCMD
-done < <(recentlyAnnotatedPDFs.sh) 
+done < <(/home/zack/dotfiles/bin/recentlyAnnotatedPDFs.sh) 
 
 choice=$(printf "%s\n" "${!BOOKS[@]}" | dmenu -i)
 [ -z "$choice" ] || okular "${BOOKS[$choice]}"
