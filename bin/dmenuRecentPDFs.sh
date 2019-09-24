@@ -9,7 +9,7 @@ while read THISBOOK; do
   NEWNAME=$(basename $THISBOOK .pdf)
   NEWCMD="${THISBOOK}"
   BOOKS[$NEWNAME]=$NEWCMD
-done < <(recentlyOpenedPDFs.sh) 
+done < <(/home/zack/dotfiles/bin/recentlyOpenedPDFs.sh) 
 
 
 choice=$(printf "%s\n" "${!BOOKS[@]}" | dmenu -i)
