@@ -496,7 +496,7 @@ let g:UltiSnipsExpandTrigger="<c-l>"
 "let g:UltiSnipsJumpForwardTrigger="<tab>"
 "let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
-set foldlevel=20
+"set foldlevel=20
 
 " Autosave settings
 "let g:auto_save        = 1
@@ -524,7 +524,7 @@ nnoremap <Leader>o o<Esc>
 nnoremap <Leader>O O<Esc>
 
 nnoremap <Leader>mm  I\[<CR>\begin{align*}<CR>.\end{align*}<CR>\]<ESC>kO
-autocmd FileType markdown set foldexpr=NestedMarkdownFolds()
+"autocmd FileType markdown set foldexpr=NestedMarkdownFolds()
 
 noremap <C-f> <Esc>: silent exec '.!xournal'
 "nmap <Leader>// :<c-u>execute 'Ag! ' .  expand("<cWORD>")<CR>
