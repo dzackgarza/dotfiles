@@ -30,7 +30,7 @@ while true; do
     "md")
       outfile="$directory/$filename.pdf"
       echo "Rendering markdown to $outfile"
-      cat "$filepath" | sed 's/\\\(\[\|\]\)/\n/g' | pandoc -f markdown -r markdown+tex_math_dollars+simple_tables+table_captions+yaml_metadata_block+smart+blank_before_blockquote+backtick_code_blocks+link_attributes --template=/home/zack/Dropbox/Document\ Archive/Latex/pandoc_template.tex  --resource-path="$directory" --pdf-engine=xelatex --lua-filter=/home/zack/Dropbox/Document\ Archive/Latex/dollar_math.lua -o "$outfile" --pdf-engine-opt=-output-driver='xdvipdfmx -z0'
+      cat "$filepath" | sed 's/\\\(\[\|\]\)/\n/g' | pandoc -f markdown --filter pandoc-include -r markdown+tex_math_dollars+simple_tables+table_captions+yaml_metadata_block+smart+blank_before_blockquote+backtick_code_blocks+link_attributes --template=/home/zack/Dropbox/Document\ Archive/Latex/pandoc_template.tex  --resource-path="$directory" --pdf-engine=xelatex --lua-filter=/home/zack/Dropbox/Document\ Archive/Latex/dollar_math.lua -o "$outfile" --pdf-engine-opt=-output-driver='xdvipdfmx -z0'
       ;;
     "asy")
       echo "Re-rendering..."
@@ -59,5 +59,5 @@ while true; do
 
 
   # Block execution until file write
-  inotifywait -e CLOSE_WRITE "$filepath";
+  inotifywait -e CLOSE_WRITE -r "$directory";
 done

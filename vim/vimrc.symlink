@@ -45,7 +45,7 @@ Plugin 'croaker/mustang-vim'
 
 " Languages
 Plugin 'scrooloose/syntastic'
-Plugin 'sheerun/vim-polyglot'
+"Plugin 'sheerun/vim-polyglot'
 
 " Searching
 Plugin 'ervandew/ag'
@@ -67,13 +67,15 @@ Plugin 'scrooloose/nerdcommenter'        " Line comment toggling
 Plugin 'Townk/vim-autoclose'
 "let g:AutoClosePairs_add = "$"
 Plugin '907th/vim-auto-save'
+Plugin 'tpope/vim-repeat'
 
 " Markdown
-Plugin 'plasticboy/vim-markdown'
+"Plugin 'plasticboy/vim-markdown'
+Plugin 'vim-pandoc/vim-pandoc'
+Plugin 'vim-pandoc/vim-pandoc-syntax'
 Plugin 'KeitaNakamura/tex-conceal.vim'
 let g:tex_conceal="abdgm"
 Plugin 'tpope/vim-surround'
-
 Plugin 'dkarter/bullets.vim'
 Plugin 'masukomi/vim-markdown-folding'
 Plugin 'ferrine/md-img-paste.vim'
@@ -211,10 +213,10 @@ cmap wf %!sudo tee > /dev/null %
 nnoremap <silent> <Leader>q :Bclose<CR>
 
 " cscope the word under the cursor
-nnoremap <silent> <C-\> :cs find c <C-R>=expand("<cword>")<CR><CR>
+"nnoremap <silent> <C-\> :cs find c <C-R>=expand("<cword>")<CR><CR>
 
 " Clear search highlights when pressing ,b
-nnoremap <silent> <leader>b :nohlsearch<CR>
+"nnoremap <silent> <leader>b :nohlsearch<CR>
 
 " Press enter to clear search highlights
 nnoremap <CR> :noh<CR><CR>
@@ -229,16 +231,17 @@ nnoremap <Leader>j <C-w>j
 nnoremap <Leader>k <C-w>k
 
 " Ctrl Left/h & Right/l cycle between buffers
-noremap <silent> <C-Left> :bprev<CR>
+"noremap <silent> <C-Left> :bprev<CR>
 noremap <silent> <C-h> :bprev<CR>
-noremap <silent> <C-Right> :bnext<CR>
+"noremap <silent> <C-Right> :bnext<CR>
 noremap <silent> <C-l> :bnext<CR>
 
 " Some custom programming commands
 "nnoremap <Leader>mm :wa \| :VimuxRunCommand 'make clean && make all && ./test'<CR>
 "nnoremap <leader>cap :wa \| :VimuxRunCommand 'git add *; git commit -am "save"; git push origin master'<CR>
 " Close buffer without affecting splits.
-nnoremap <leader>w :Bclose<CR>
+"nnoremap <leader>w :Bclose<CR>
+nnoremap <leader>w :bp\|bd #<CR>
 
 " Cmd+t = new tab
 nnoremap <silent> <Leader>t :tabnew<CR>
@@ -388,7 +391,7 @@ autocmd WinEnter * call NERDTreeQuit()
 "autocmd BufWritePre * :%s/\s\+$//e
 
 " Recognize .md files as markdown
-autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+"autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
 " Return to last edit position when opening files
 augroup last_edit
@@ -496,7 +499,7 @@ let g:UltiSnipsExpandTrigger="<c-l>"
 "let g:UltiSnipsJumpForwardTrigger="<tab>"
 "let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
-"set foldlevel=20
+set foldlevel=20
 
 " Autosave settings
 "let g:auto_save        = 1
@@ -515,15 +518,19 @@ set undofile
 "map  <C-B>      YpkI\begin{<ESC>A}<ESC>jI\end{<ESC>A}<esc>k$o
 "map! <C-B> <ESC>YpkI\begin{<ESC>A}<ESC>jI\end{<ESC>A}<esc>k$o
 
-nnoremap <Leader>b  YpkI\wrapenv{\Begin{<ESC>A}}<ESC>jI\wrapenv{\End{<ESC>A}}<esc>k$o<esc>
+"nnoremap <Leader>b  YpkI\wrapenv{\Begin{<ESC>A}}<ESC>jI\wrapenv{\End{<ESC>A}}<esc>k$o<esc>
 "nnoremap <C-b>  YpkI\wrapenv{\Begin{<ESC>A}}<ESC>jI\wrapenv{\End{<ESC>A}}<esc>k$o<esc>
 "map! <C-B> <ESC>YpkI\begin{<ESC>A}<ESC>jI\end{<ESC>A}<esc>k$o
 
 " Quickly insert an empty new line without entering insert mode
 nnoremap <Leader>o o<Esc>
 nnoremap <Leader>O O<Esc>
+nnoremap <Leader>bi :execute "normal \<PLUG>Yssurround*"<CR>
+nnoremap <Leader>bb :execute "normal \<PLUG>Yssurround*"<CR> :execute "normal \<PLUG>Yssurround*"<CR>
 
-nnoremap <Leader>mm  I\[<CR>\begin{align*}<CR>.\end{align*}<CR>\]<ESC>kO
+
+nnoremap <Leader>mm  I<CR>\begin{align*}<CR>.\end{align*}<CR><ESC>kO<ESC>
+nnoremap <Leader><Enter> i<CR><Esc>k$
 "autocmd FileType markdown set foldexpr=NestedMarkdownFolds()
 
 noremap <C-f> <Esc>: silent exec '.!xournal'
@@ -549,3 +556,34 @@ let g:syntastic_auto_jump = 0
 " Ctrl-R after visual select to replace
 vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
+let g:polyglot_disabled = ['javascript', 'html']
+"syntax region Statement matchgroup=Delimiter start="\\begin{.*}" end="\\end{.*}" contains=Statement
+au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+
+" Jump to headers
+function! s:JumpToHeader(forward, visual)
+  let cnt = v:count1
+  let save = @/
+  let pattern = '\v^#{1,1} .*$|^.+\n%(\-+|\=+)$'
+  if a:visual
+    normal! gv
+  endif
+  if a:forward
+    let motion = '/' . pattern
+  else
+    let motion = '?' . pattern
+  endif
+  while cnt > 0
+	  silent! execute motion
+	  let cnt = cnt - 1
+  endwhile
+  call histdel('/', -1)
+  let @/ = save
+endfunction
+
+noremap <silent> <buffer> <script> ]] :<C-u>call <SID>JumpToHeader(1, 0)<CR>
+noremap <silent> <buffer> <script> [[ :<C-u>call <SID>JumpToHeader(0, 0)<CR>
+vnoremap <silent> <buffer> <script> ]] :<C-u>call <SID>JumpToHeader(1, 1)<CR>
+vnoremap <silent> <buffer> <script> [[ :<C-u>call <SID>JumpToHeader(0, 1)<CR>
+noremap <silent> <buffer> <script> ][ <nop>
+noremap <silent> <buffer> <script> [] <nop>
