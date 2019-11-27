@@ -559,7 +559,7 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
 let g:polyglot_disabled = ['javascript', 'html']
 "syntax region Statement matchgroup=Delimiter start="\\begin{.*}" end="\\end{.*}" contains=Statement
-au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc so ~/.vim/after/syntax/tex/amsmath.vim
 
 " Jump to headers
 function! s:JumpToHeader(forward, visual)
