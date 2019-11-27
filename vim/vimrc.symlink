@@ -530,7 +530,7 @@ nnoremap <Leader>bi :execute "normal \<PLUG>Yssurround*"<CR>
 nnoremap <Leader>bb :execute "normal \<PLUG>Yssurround*"<CR> :execute "normal \<PLUG>Yssurround*"<CR>
 
 
-nnoremap <Leader>mm  I<CR>\begin{equation*}<CR>.\end{equation*}<CR><ESC>kO<ESC>
+nnoremap <Leader>mm  I<CR>\begin{align*}<CR>.\end{align*}<CR><ESC>kO<ESC>
 nnoremap <Leader>mat  i\left[\begin{array}{cc} 0 & 0 \\ 0 & 0 \end{array}\right]<ESC>
 nnoremap <Leader><Enter> i<CR><Esc>k$
 "autocmd FileType markdown set foldexpr=NestedMarkdownFolds()
