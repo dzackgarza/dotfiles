@@ -12,3 +12,4 @@ set colorscheme zenburn
 set save_tabs_on_exit true
 /*map <C-f> fzf_select*/
 map <C-f> fzf_rga_documents_search
+default_linemode devicons
