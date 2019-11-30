@@ -593,3 +593,9 @@ noremap <silent> <buffer> <script> [] <nop>
 
 " No spellchecking fullstops without capitalization
 set spellcapcheck=
+
+" Fix Ctrl-Left/Right
+map <ESC>[5D <C-Left>
+map <ESC>[5C <C-Right>
+map! <ESC>[5D <C-Left>
+map! <ESC>[5C <C-Right>
