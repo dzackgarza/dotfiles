@@ -2,8 +2,8 @@
 source "$DOTFILES_ROOT/.bash_colors";
 
 clr_green "Updating via package manager..";
-command -v yay >/dev/null 2>&1 && sudo yay -Syuu --noconfirm;
-command -v yay >/dev/null 2>&1 && sudo yay -Scc --noconfirm;
+command -v yay >/dev/null 2>&1 && yay -Syuu --noconfirm;
+command -v yay >/dev/null 2>&1 && yay -Scc --noconfirm;
 command -v apt-get >/dev/null 2>&1 && sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get dist-upgrade && sudo apt-get -y autoremove && sudo apt-get clean;
 
 #clr_green "Updating atom packages..";
