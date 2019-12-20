@@ -172,7 +172,8 @@ set clipboard+=unnamedplus
 " GUI Settings
 set t_Co=256
 "colorscheme 3dglasses 
-colorscheme afterglow 
+"colorscheme afterglow 
+colorscheme apprentice
 
 set mouse=a                     " Allow mouse selection
 
