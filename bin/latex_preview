@@ -34,7 +34,6 @@ JUSTCOMPILE=${2:no}
 echo "Starting..."
 while true; do
 
-  echo "Extension: $extension"
   case $extension in
     "md")
       outfile="$directory/$filename.pdf"
