@@ -24,16 +24,12 @@ fi
 
 
 pandoc_compile() {
+  echo "$filepath"
   cat "$filepath" | sed 's/\\\(\[\|\]\)/\n/g' | pandoc -f markdown --filter pandoc-include -r markdown+tex_math_dollars+simple_tables+table_captions+yaml_metadata_block+smart+blank_before_blockquote+backtick_code_blocks+link_attributes --template=/home/zack/Dropbox/Document\ Archive/Latex/pandoc_template.tex  --resource-path="$directory" --pdf-engine=xelatex --lua-filter=/home/zack/Dropbox/Document\ Archive/Latex/dollar_math.lua -o "$outfile" --pdf-engine-opt=-output-driver='xdvipdfmx -z0'
 }
 
 JUSTCOMPILE=${2:no}
 
-if [ $JUSTCOMPILE == "justcompile" ]; then
-  echo "Just Compiling.."
-  pandoc_compile
-  exit 1
-fi
 
 echo "Starting..."
 while true; do
@@ -44,6 +40,10 @@ while true; do
       outfile="$directory/$filename.pdf"
       echo "Rendering markdown to $outfile"
       pandoc_compile 
+      if [ $JUSTCOMPILE == "justcompile" ]; then
+        echo "Compile only, now exiting."
+        exit 1
+      fi
       #cat "$filepath" | sed 's/\\\(\[\|\]\)/\n/g' | pandoc -f markdown --filter pandoc-include -r markdown+tex_math_dollars+simple_tables+table_captions+yaml_metadata_block+smart+blank_before_blockquote+backtick_code_blocks+link_attributes --template=/home/zack/Dropbox/Document\ Archive/Latex/pandoc_template.tex  --resource-path="$directory" --pdf-engine=xelatex --lua-filter=/home/zack/Dropbox/Document\ Archive/Latex/dollar_math.lua -o "$outfile" --pdf-engine-opt=-output-driver='xdvipdfmx -z0'
       ;;
     "asy")
