@@ -39,7 +39,7 @@ while true; do
       outfile="$directory/$filename.pdf"
       echo "Rendering markdown to $outfile"
       pandoc_compile 
-      if [ $JUSTCOMPILE == "justcompile" ]; then
+      if [[ $JUSTCOMPILE == "justcompile" ]]; then
         echo "Compile only, now exiting."
         exit 1
       else
