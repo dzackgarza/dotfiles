@@ -37,8 +37,8 @@ while true; do
 
   case $extension in
     "md")
-      #outfile="$directory/$filename.pdf"
-      outfile="$directory/$filename.tex"
+      outfile="$directory/$filename.pdf"
+      #outfile="$directory/$filename.tex"
       echo "Rendering markdown to $outfile"
       pandoc_compile 
       if [[ $JUSTCOMPILE == "justcompile" ]]; then
