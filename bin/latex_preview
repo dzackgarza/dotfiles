@@ -5,6 +5,27 @@ if [ $# -eq 0 ]; then
   exit 1;
 fi
 
+print_usage() {
+  printf "Usage: ..."
+  printf "-f somefile.md -j"
+}
+
+files=''
+view=false
+totex=false
+JUSTCOMPILE=false
+
+while getopts 'vfxj:' flag; do
+  case "${flag}" in
+    v) view='true' ;;
+    x) totex='true' ;;
+    j) JUSTCOMPILE='true' ;;
+    f) files="${OPTARG}" ;;
+    *) print_usage
+       exit 1 ;;
+  esac
+done
+
 filepath=$(realpath "$1")
 directory=$(dirname "$filepath")
 filename=$(basename -- "$filepath")
@@ -29,7 +50,6 @@ pandoc_compile() {
   cat "$filepath" | sed 's/\\\(\[\|\]\)/\n/g' | pandoc -f markdown --filter pandoc-include -r markdown+tex_math_dollars+simple_tables+table_captions+yaml_metadata_block+smart+blank_before_blockquote+backtick_code_blocks+link_attributes --template=/home/zack/Dropbox/Document\ Archive/Latex/pandoc_template.tex  --resource-path="$directory" --pdf-engine=pdflatex --lua-filter=/home/zack/Dropbox/Document\ Archive/Latex/dollar_math.lua -o "$outfile" #--pdf-engine-opt=-output-driver='xdvipdfmx -z0'
 }
 
-JUSTCOMPILE=${2:no}
 
 
 echo "Starting..."
@@ -37,11 +57,14 @@ while true; do
 
   case $extension in
     "md")
-      outfile="$directory/$filename.pdf"
-      #outfile="$directory/$filename.tex"
+      if [ "$totex" = true ]; then
+        outfile="$directory/$filename.tex"
+      else
+        outfile="$directory/$filename.pdf"
+      fi
       echo "Rendering markdown to $outfile"
       pandoc_compile 
-      if [[ $JUSTCOMPILE == "justcompile" ]]; then
+      if [ "$JUSTCOMPILE" = true ]; then
         echo "Compile only, now exiting."
         exit 1
       else
@@ -68,7 +91,9 @@ while true; do
   else
     if [ "$first_run" = true ]; then
       echo "First run"
-      okular "$outfile" &
+      if [ "$view" = true ]; then
+        okular "$outfile" &
+      fi
       first_run=false;
     fi
   fi
