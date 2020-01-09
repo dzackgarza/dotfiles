@@ -15,7 +15,7 @@ view=false
 totex=false
 JUSTCOMPILE=false
 
-while getopts 'vfxj:' flag; do
+while getopts 'vf:xj' flag; do
   case "${flag}" in
     v) view='true' ;;
     x) totex='true' ;;
