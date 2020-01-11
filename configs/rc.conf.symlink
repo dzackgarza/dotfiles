@@ -11,4 +11,4 @@ setlocal path=~/Notes/Research/Notes/ReadingGeneral sort_reverse True
 set colorscheme zenburn
 set save_tabs_on_exit true
 default_linemode devicons
-map MK shell touch `date +"%%Y-%%m-%%d".md`
+map mm shell touch `date +"%%Y-%%m-%%d".md`
