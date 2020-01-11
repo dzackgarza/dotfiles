@@ -147,3 +147,11 @@ PERL_MB_OPT="--install_base \"/home/zack/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/home/zack/perl5"; export PERL_MM_OPT;
 
 stty -ixon
+
+ranger() {
+    if [ -z "$RANGER_LEVEL" ]; then
+        /usr/bin/ranger "$@"
+    else
+        exit
+    fi
+}
