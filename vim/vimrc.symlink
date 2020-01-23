@@ -77,7 +77,7 @@ Plugin 'KeitaNakamura/tex-conceal.vim'
 let g:tex_conceal="abdgm"
 Plugin 'tpope/vim-surround'
 Plugin 'dkarter/bullets.vim'
-Plugin 'masukomi/vim-markdown-folding'
+"Plugin 'masukomi/vim-markdown-folding'
 Plugin 'ferrine/md-img-paste.vim'
 " there are some defaults for image directory and image name, you can change them
 let g:mdip_imgdir = 'figures'
@@ -551,11 +551,11 @@ nmap <Leader>ll :let @+=expand("%:p")<CR><CR>
 hi clear Conceal
 
 " Save folds between sessions
-augroup AutoSaveFolds
-  autocmd!
-  autocmd BufWinLeave * mkview
-  autocmd BufWinEnter * silent loadview
-augroup END
+"augroup AutoSaveFolds
+  "autocmd!
+  "autocmd BufWinLeave * mkview
+  "autocmd BufWinEnter * silent loadview
+"augroup END
 
 " Prevent cursor jumping?
 let g:syntastic_auto_jump = 0
