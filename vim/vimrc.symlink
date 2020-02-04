@@ -173,7 +173,8 @@ set clipboard+=unnamedplus
 set t_Co=256
 "colorscheme 3dglasses 
 "colorscheme afterglow 
-colorscheme apprentice
+"colorscheme apprentice
+colorscheme SweetCandy
 
 set mouse=a                     " Allow mouse selection
 
