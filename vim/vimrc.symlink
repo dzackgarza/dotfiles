@@ -534,6 +534,7 @@ nnoremap <Leader>bb :execute "normal \<PLUG>Yssurround*"<CR> :execute "normal \<
 
 nnoremap <Leader>mm   I<CR>\begin{align*}<CR>.\end{align*}<CR><ESC>kO<ESC>
 nnoremap <Leader>bc   I\begin{cases}<CR>\end{cases}<CR><ESC>kO<ESC>
+nnoremap <Leader>bce   I\begin{center}<CR>\end{center}<CR><ESC>
 nnoremap <Leader>mat  i\left[\begin{array}{cc} 0 & 0 \\ 0 & 0 \end{array}\right]<ESC>
 nnoremap <Leader>Mat  i\left[\begin{array}{cc}<CR>0 & 0 \\<CR>0 & 0 <CR>\end{array}\right]<ESC>
 nnoremap <Leader>bct  i\begin{center}<ESC>
