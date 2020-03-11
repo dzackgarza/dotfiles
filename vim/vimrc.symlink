@@ -235,9 +235,9 @@ nnoremap <Leader>k <C-w>k
 
 " Ctrl Left/h & Right/l cycle between buffers
 "noremap <silent> <C-Left> :bprev<CR>
-noremap <silent> <C-h> :bprev<CR>
+"noremap <silent> <C-h> :bprev<CR>
 "noremap <silent> <C-Right> :bnext<CR>
-noremap <silent> <C-l> :bnext<CR>
+"noremap <silent> <C-l> :bnext<CR>
 
 " Some custom programming commands
 "nnoremap <Leader>mm :wa \| :VimuxRunCommand 'make clean && make all && ./test'<CR>
@@ -602,10 +602,10 @@ noremap <silent> <buffer> <script> [] <nop>
 set spellcapcheck=
 
 " Fix Ctrl-Left/Right
-map <ESC>[5D <C-Left>
-map <ESC>[5C <C-Right>
-map! <ESC>[5D <C-Left>
-map! <ESC>[5C <C-Right>
-
+map  <ESC>[1;5D] <C-Left>
+map  <ESC>[1;5C] <C-Right>
+map! <ESC>[1;5D] <C-Left>
+map! <ESC>[1;5C] <C-Right>
+"
 " Fix capital W writing
 command! W  write
