@@ -236,9 +236,9 @@ nnoremap <Leader>k <C-w>k
 
 " Ctrl Left/h & Right/l cycle between buffers
 "noremap <silent> <C-Left> :bprev<CR>
-"noremap <silent> <C-h> :bprev<CR>
+noremap <silent> <C-h> :bprev<CR>
 "noremap <silent> <C-Right> :bnext<CR>
-"noremap <silent> <C-l> :bnext<CR>
+noremap <silent> <C-l> :bnext<CR>
 
 " Some custom programming commands
 "nnoremap <Leader>mm :wa \| :VimuxRunCommand 'make clean && make all && ./test'<CR>
