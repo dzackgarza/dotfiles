@@ -530,7 +530,7 @@ nnoremap <Leader>o o<Esc>
 nnoremap <Leader>O O<Esc>
 
 " Make single word italics or bold
-nnoremap <Leader>bi :execute "normal! ysiw*" 
+nnoremap <Leader>bi ysiw*<CR> 
 nnoremap <Leader>bb ysiw*l. 
 " Make entire line italics or bold
 nnoremap <Leader>bli :execute "normal \<PLUG>Yssurround*"<CR>
