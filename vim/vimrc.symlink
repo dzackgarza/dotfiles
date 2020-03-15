@@ -540,6 +540,7 @@ nnoremap <Leader>bi :execute "normal \<PLUG>Yssurround*"<CR>
 nnoremap <Leader>bb :execute "normal \<PLUG>Yssurround*"<CR> :execute "normal \<PLUG>Yssurround*"<CR>
 
 
+" Insert line break here
 nnoremap <Leader><Enter> i<CR><Esc>k$
 "autocmd FileType markdown set foldexpr=NestedMarkdownFolds()
 
