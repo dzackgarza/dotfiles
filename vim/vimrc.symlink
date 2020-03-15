@@ -82,6 +82,8 @@ Plugin 'ferrine/md-img-paste.vim'
 " there are some defaults for image directory and image name, you can change them
 let g:mdip_imgdir = 'figures'
 " let g:mdip_imgname = 'image'
+" Bold and italics shortcuts
+Plugin 'SidOfc/mkdx'
 
 " Latex
 Plugin 'lervag/vimtex'
