@@ -85,8 +85,11 @@ let g:mdip_imgdir = 'figures'
 
 " Latex
 Plugin 'lervag/vimtex'
-Plugin 'SirVer/ultisnips'
+"Plugin 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 
 
@@ -491,7 +494,7 @@ let g:polyglot_disabled = ['latex']
 
 """ Tab Completion
 " Ultisnips config
-let g:UltiSnipsEditSplit="horizontal"
+"let g:UltiSnipsEditSplit="horizontal"
 let g:SuperTabDefaultCompletionType = '<C-n>'
 "let g:UltiSnipsExpandTrigger = "<tab>"
 "let g:UltiSnipsJumpForwardTrigger = "<tab>"
@@ -499,7 +502,7 @@ let g:SuperTabDefaultCompletionType = '<C-n>'
 "let g:UltiSnipsExpandTrigger="<c-s-A>"
 "let g:UltiSnipsListSnippets="<c-s-B>"
 "let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsExpandTrigger = '<f5>'
+"let g:UltiSnipsExpandTrigger = '<f5>'
 " Use buffer words as default tab completion
 "let g:SuperTabDefaultCompletionType = '<c-x><c-p>'
 autocmd FileType *
