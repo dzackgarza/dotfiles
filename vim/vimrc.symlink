@@ -491,7 +491,7 @@ let g:polyglot_disabled = ['latex']
 
 """ Tab Completion
 " Ultisnips config
-let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsEditSplit="horizontal"
 let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
