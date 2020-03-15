@@ -537,7 +537,7 @@ nnoremap <Leader>mm   I<CR>\begin{align*}<CR>.\end{align*}<CR><ESC>kO<ESC>
 nnoremap <Leader>mme   I<CR>\begin{equation*}<CR>.\end{equation*}<CR><ESC>kO<ESC>
 nnoremap <Leader>bc   I\begin{cases}<CR>\end{cases}<CR><ESC>kO<ESC>
 nnoremap <Leader>bce   I\begin{center}<CR><CR>\end{center}<CR><ESC>k
-nnoremap <Leader>tcd   I\begin{center}<CR>\begin{tikzcd}<CR>\end{tikzcd}<CR>\end{center}<CR><ESC>k
+nnoremap <Leader>tcd   I\begin{center}<CR>\begin{tikzcd}<CR>\end{tikzcd}<CR>\end{center}<CR><ESC>kk
 nnoremap <Leader>mat  i\left[\begin{array}{cc} 0 & 0 \\ 0 & 0 \end{array}\right]<ESC>
 nnoremap <Leader>Mat  i\left[\begin{array}{cc}<CR>0 & 0 \\<CR>0 & 0 <CR>\end{array}\right]<ESC>
 nnoremap <Leader>bct  i\begin{center}<ESC>
