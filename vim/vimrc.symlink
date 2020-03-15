@@ -474,13 +474,6 @@ set complete+=k/home/zack/math_dict.txt
 set spelllang=en
 set spellfile=/home/zack/mathdict.utf-8.add
 set conceallevel=2
-" Use buffer words as default tab completion
-"let g:SuperTabDefaultCompletionType = '<c-x><c-p>'
-autocmd FileType *
-  \ if &omnifunc != '' |
-  \   call SuperTabChain(&omnifunc, "<c-p>") |
-  \ endif
-
 let g:tex_conceal="abdgm"
 au FileType markdown autocmd VimEnter * hi clear Conceal         " Remove background color from concealed characters (grey on grey??)
 
@@ -496,6 +489,7 @@ au CursorHold *.tex,*.md  update
 " inoremap { {}<Esc>i
 let g:polyglot_disabled = ['latex']
 
+""" Tab Completion
 " Ultisnips config
 let g:UltiSnipsEditSplit="vertical"
 let g:SuperTabDefaultCompletionType = '<C-n>'
@@ -503,6 +497,13 @@ let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 "let g:UltiSnipsExpandTrigger="<c-j>"
+" Use buffer words as default tab completion
+"let g:SuperTabDefaultCompletionType = '<c-x><c-p>'
+autocmd FileType *
+  \ if &omnifunc != '' |
+  \   call SuperTabChain(&omnifunc, "<c-p>") |
+  \ endif
+
 
 set foldlevel=20
 
