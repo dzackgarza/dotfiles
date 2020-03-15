@@ -531,11 +531,12 @@ nnoremap <Leader>O O<Esc>
 
 " Make single word italics or bold
 nnoremap <Leader>bi :execute "normal \<PLUG>Ysurround*"<CR>
-nnoremap <Leader>bb :execute "normal \<PLUG>Ysurround*"<CR> l :execute "normal \<PLUG>Yssurround*"<CR>
+nnoremap <Leader>bb :execute "normal \<PLUG>Ysurround*"<CR> l :execute "normal \<PLUG>Ysurround*"<CR>
 " Make entire line italics or bold
 nnoremap <Leader>bli :execute "normal \<PLUG>Yssurround*"<CR>
 nnoremap <Leader>blb :execute "normal \<PLUG>Yssurround*"<CR> :execute "normal \<PLUG>Yssurround*"<CR>
 
+asdsadas dassdadasd 
 
 
 " Insert line break here
