@@ -529,9 +529,13 @@ set undofile
 nnoremap <Leader>o o<Esc>
 nnoremap <Leader>O O<Esc>
 
+" Make single word italics or bold
+nnoremap <Leader>bi :execute "normal \<PLUG>Ysurround*"<CR>
+nnoremap <Leader>bb :execute "normal \<PLUG>Ysurround*"<CR> l :execute "normal \<PLUG>Yssurround*"<CR>
 " Make entire line italics or bold
-nnoremap <Leader>bi :execute "normal \<PLUG>Yssurround*"<CR>
-nnoremap <Leader>bb :execute "normal \<PLUG>Yssurround*"<CR> :execute "normal \<PLUG>Yssurround*"<CR>
+nnoremap <Leader>bli :execute "normal \<PLUG>Yssurround*"<CR>
+nnoremap <Leader>blb :execute "normal \<PLUG>Yssurround*"<CR> :execute "normal \<PLUG>Yssurround*"<CR>
+
 
 
 " Insert line break here
