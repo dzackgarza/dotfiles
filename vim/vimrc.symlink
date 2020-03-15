@@ -497,7 +497,7 @@ au CursorHold *.tex,*.md  update
 let g:polyglot_disabled = ['latex']
 
 " Ultisnips config
-let g:UltiSnipsExpandTrigger="<c-l>"
+let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsEditSplit="vertical"
 
 set foldlevel=20
