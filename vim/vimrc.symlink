@@ -40,7 +40,7 @@ Plugin 'xolox/vim-misc'
 " Better status bar
 " Plugin 'vim-airline/vim-airline'          
 " Plugin 'vim-airline/vim-airline-themes'
-" Plugin 'flazz/vim-colorschemes'
+Plugin 'flazz/vim-colorschemes'
 Plugin 'valloric/MatchTagAlways'
 Plugin 'nathanaelkane/vim-indent-guides'  " Colored tab indent levels
 Plugin 'croaker/mustang-vim'
