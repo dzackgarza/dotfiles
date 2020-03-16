@@ -84,7 +84,6 @@ Plugin '907th/vim-auto-save'
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
 Plugin 'KeitaNakamura/tex-conceal.vim'
-let g:tex_conceal="abdgm"
 Plugin 'tpope/vim-surround'
 " Automatically continue bulleted lists
 "Plugin 'dkarter/bullets.vim'
@@ -321,9 +320,6 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 let NERDTreeMinimalUI=1
 """"""""""""" </ NerdTree > """"""""""""""""""
 
-"au FileType php set omnifunc=phpcomplete#CompletePHP
-" ----- </ PHP > -------------------
-
 " Column 80 marker
 " highlight OverLength ctermbg=red ctermfg=white guibg=#660000
 " match OverLength /\%81v.\+/
@@ -333,27 +329,6 @@ highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Re
 highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
 highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
 highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
-
-" Turn on HTML tag matching
-runtime macros/matchit.vim
-
-"""""""""" < CtrlP >
-" CtrlP will load from the CWD, makes it easier with all these nested repos
-let g:ctrlp_working_path_mode = ''
-
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode='ra'
-
-let g:ctrlp_clear_cache_on_exit=0       " Save cache for a small speedup.
-
-" Use ag for Ctrl-P for speed improvement.
-if executable('ag')
-    set grepprg=ag\ --nogroup\ --nocolor
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-    let g:ctrlp_use_caching=0
-endif
-"""""""""" </ CtrlP >
 
 " Close NerdTree if it is the only buffer left open.
 function! NERDTreeQuit()
@@ -381,10 +356,7 @@ endfunction
 autocmd WinEnter * call NERDTreeQuit()
 
 " Remove trailing whitespace before writing (applies to all files)
-"autocmd BufWritePre * :%s/\s\+$//e
-
-" Recognize .md files as markdown
-"autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+autocmd BufWritePre * :%s/\s\+$//e
 
 " Return to last edit position when opening files
 augroup last_edit
@@ -411,38 +383,6 @@ let g:airline#extensions#tabline#enabled = 1
 let g:syntastic_auto_loc_list = 0
 "let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
-"let g:syntastic_cpp_compiler_options=' -std=c++11 -stdlib=libc++'
-
-" Enable syntax checking on write/close, but disable on haskell files
-" (Intensive for large projects)
-"let g:syntastic_mode_map = {
-        "\ "mode": "active",
-        "\ "active_filetypes": ["ruby", "php"],
-        "\ "passive_filetypes": ["haskell", "tex"] }
-"let g:syntastic_enable_signs=1
-
-" Automatically :set-paste when pasting from clipboard, in insert mode
-function! WrapForTmux(s)
-  if !exists('$TMUX')
-    return a:s
-  endif
-
-  let tmux_start = "\<Esc>Ptmux;"
-  let tmux_end = "\<Esc>\\"
-
-  return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
-endfunction
-
-let &t_SI .= WrapForTmux("\<Esc>[?2004h")
-let &t_EI .= WrapForTmux("\<Esc>[?2004l")
-
-function! XTermPasteBegin()
-  set pastetoggle=<Esc>[201~
-  set paste
-  return ""
-endfunction
-
-inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
 "let g:tex_conceal = ""
 let g:vim_markdown_math = 1
@@ -452,19 +392,19 @@ let g:vim_markdown_follow_anchor = 1
 let g:vim_markdown_frontmatter = 1
 let g:vim_markdown_new_list_item_indent = 0
 
-"autocmd BufRead,BufNewFile *.md,tex,latex setlocal spell
 autocmd FileType markdown,tex,latex setlocal spell
 " Fix the omnicomplete popup menu a bit
 " Allows typing in a few characters to narrow down the list
 set completeopt=longest,menuone
-"set complete=kspell,.
 set complete+=kspell
 set complete+=k/home/zack/math_dict.txt
 set spelllang=en
 set spellfile=/home/zack/mathdict.utf-8.add
 set conceallevel=2
 let g:tex_conceal="abdgm"
-au FileType markdown autocmd VimEnter * hi clear Conceal         " Remove background color from concealed characters (grey on grey??)
+" Remove background color from concealed characters (grey on grey??)
+autocmd FileType markdown nmap <silent> <leader>p :call mdip#MarkdownClipboardImage()<CR><CR><CR>
+au FileType markdown autocmd VimEnter * hi clear Conceal         
 
 hi NonText ctermbg=none
 hi Normal guibg=NONE ctermbg=NONE
@@ -480,29 +420,14 @@ let g:polyglot_disabled = ['latex']
 
 """ Tab Completion
 " Ultisnips config
-"let g:UltiSnipsEditSplit="horizontal"
 let g:SuperTabDefaultCompletionType = '<C-n>'
-"let g:UltiSnipsExpandTrigger = "<tab>"
-"let g:UltiSnipsJumpForwardTrigger = "<tab>"
-"let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-"let g:UltiSnipsExpandTrigger="<c-s-A>"
-"let g:UltiSnipsListSnippets="<c-s-B>"
-"let g:UltiSnipsExpandTrigger="<c-j>"
-"let g:UltiSnipsExpandTrigger = '<f5>'
-" Use buffer words as default tab completion
-"let g:SuperTabDefaultCompletionType = '<c-x><c-p>'
+
 autocmd FileType *
   \ if &omnifunc != '' |
   \   call SuperTabChain(&omnifunc, "<c-p>") |
   \ endif
 
-
 set foldlevel=20
-
-" Autosave settings
-"let g:auto_save        = 1
-"let g:auto_save_silent = 1
-"let g:auto_save_events = ["InsertLeave", "FocusLost"]
 
 " Persistent Undo
 let s:undoDir = "/tmp/.undodir_" . $USER
@@ -516,43 +441,20 @@ set undofile
 nnoremap <Leader>o o<Esc>
 nnoremap <Leader>O O<Esc>
 
-" Make single word italics or bold (doesn't work)
-" nnoremap <Leader>bi ysiw*<CR> 
-" nnoremap <Leader>bb ysiw*l. 
-" Make entire line italics or bold
-nnoremap <Leader>bli :execute "normal \<PLUG>Yssurround*"<CR>
-nnoremap <Leader>blb :execute "normal \<PLUG>Yssurround*"<CR> :execute "normal \<PLUG>Yssurround*"<CR>
-
 " Insert line break here
 nnoremap <Leader><Enter> i<CR><Esc>k$
-"autocmd FileType markdown set foldexpr=NestedMarkdownFolds()
 
 "nmap <Leader>// :<c-u>execute 'Ag! ' .  expand("<cWORD>")<CR>
-autocmd FileType markdown nmap <silent> <leader>p :call mdip#MarkdownClipboardImage()<CR><CR><CR>
 
-command Latex !latex_preview "%"
 nmap <Leader>ll :let @+=expand("%:p")<CR><CR>
-
-hi clear Conceal
-
-" Save folds between sessions
-"augroup AutoSaveFolds
-  "autocmd!
-  "autocmd BufWinLeave * mkview
-  "autocmd BufWinEnter * silent loadview
-"augroup END
 
 " Prevent cursor jumping?
 let g:syntastic_auto_jump = 0
 
-" Ctrl-R after visual select to replace
-" vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
-
 let g:polyglot_disabled = ['javascript', 'html']
 "syntax region Statement matchgroup=Delimiter start="\\begin{.*}" end="\\end{.*}" contains=Statement
-au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc 
 
-" Jump to headers
+" Jump to markdown headers
 function! s:JumpToHeader(forward, visual)
   let cnt = v:count1
   let save = @/
@@ -573,6 +475,7 @@ function! s:JumpToHeader(forward, visual)
   let @/ = save
 endfunction
 
+" Markdown jump to next section
 noremap <silent> <buffer> <script> ]] :<C-u>call <SID>JumpToHeader(1, 0)<CR>
 noremap <silent> <buffer> <script> [[ :<C-u>call <SID>JumpToHeader(0, 0)<CR>
 vnoremap <silent> <buffer> <script> ]] :<C-u>call <SID>JumpToHeader(1, 1)<CR>
