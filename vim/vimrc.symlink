@@ -35,10 +35,12 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 " Aesthetics
-Plugin 'xolox/vim-misc'                   " Misc needed for other plugins?
-Plugin 'vim-airline/vim-airline'          " Better status bar
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'flazz/vim-colorschemes'
+" Misc needed for other plugins?
+Plugin 'xolox/vim-misc'                   
+" Better status bar
+" Plugin 'vim-airline/vim-airline'          
+" Plugin 'vim-airline/vim-airline-themes'
+" Plugin 'flazz/vim-colorschemes'
 Plugin 'valloric/MatchTagAlways'
 Plugin 'nathanaelkane/vim-indent-guides'  " Colored tab indent levels
 Plugin 'croaker/mustang-vim'
@@ -50,7 +52,7 @@ Plugin 'scrooloose/syntastic'
 " Searching
 Plugin 'ervandew/ag'
 " Fuzzy file search from current dir.
-Plugin 'kien/ctrlp.vim'                 
+" Plugin 'kien/ctrlp.vim'                 
 " Plugin 'xolox/vim-easytags'
 
 " Windows and Buffers
@@ -62,6 +64,7 @@ Plugin 'godlygeek/tabular'
 Plugin 'scrooloose/nerdtree'            
 " Delete buffer without exiting vim
 Plugin 'rbgrouleff/bclose.vim'
+" Display all buffers in tab-like bar across top
 Plugin 'ap/vim-buftabline'
 "Plugin 'benmills/vimux'
 
@@ -83,8 +86,10 @@ Plugin 'vim-pandoc/vim-pandoc-syntax'
 Plugin 'KeitaNakamura/tex-conceal.vim'
 let g:tex_conceal="abdgm"
 Plugin 'tpope/vim-surround'
-Plugin 'dkarter/bullets.vim'
+" Automatically continue bulleted lists
+"Plugin 'dkarter/bullets.vim'
 "Plugin 'masukomi/vim-markdown-folding'
+" Convert clipboard image to figure and paste it in.
 Plugin 'ferrine/md-img-paste.vim'
 " there are some defaults for image directory and image name, you can change them
 let g:mdip_imgdir = 'figures'
