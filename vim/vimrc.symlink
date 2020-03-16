@@ -49,25 +49,32 @@ Plugin 'scrooloose/syntastic'
 
 " Searching
 Plugin 'ervandew/ag'
-Plugin 'kien/ctrlp.vim'                 " Fuzzy file search from current dir.
+" Fuzzy file search from current dir.
+Plugin 'kien/ctrlp.vim'                 
 " Plugin 'xolox/vim-easytags'
 
 " Windows and Buffers
-Plugin 'majutsushi/tagbar'              " Display ctags in a sidebar.
-Plugin 'godlygeek/tabular'              " Needed for vim-markdown, should be loaded in this order
-Plugin 'scrooloose/nerdtree'            " File navigation buffer
+" Display ctags in a sidebar.
+"Plugin 'majutsushi/tagbar'              
+" Needed for vim-markdown, should be loaded in this order
+Plugin 'godlygeek/tabular'              
+" File navigation buffer
+Plugin 'scrooloose/nerdtree'            
+" Delete buffer without exiting vim
 Plugin 'rbgrouleff/bclose.vim'
 Plugin 'ap/vim-buftabline'
-Plugin 'benmills/vimux'
+"Plugin 'benmills/vimux'
 
 " Input
-Plugin 'terryma/vim-multiple-cursors'
+"Plugin 'terryma/vim-multiple-cursors'
 Plugin 'ervandew/supertab'
-Plugin 'scrooloose/nerdcommenter'        " Line comment toggling
+" Nerdcommenter: toggle multiple lines as comments
+Plugin 'scrooloose/nerdcommenter'
+" Autoclose: matches delimiters
 Plugin 'Townk/vim-autoclose'
 "let g:AutoClosePairs_add = "$"
 Plugin '907th/vim-auto-save'
-Plugin 'tpope/vim-repeat'
+" Plugin 'tpope/vim-repeat'
 
 " Markdown
 "Plugin 'plasticboy/vim-markdown'
