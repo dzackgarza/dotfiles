@@ -96,7 +96,6 @@ let g:mdip_imgdir = 'figures'
 " Bold and italics shortcuts
 " Plugin 'SidOfc/mkdx'
 
-
 " Latex
 Plugin 'lervag/vimtex'
 "Plugin 'SirVer/ultisnips'
@@ -132,6 +131,8 @@ set tw=500
 " Treat long lines as break lines (useful when moving around in them)
 nnoremap j gj
 nnoremap k gk
+nnoremap <Up> gk
+nnoremap <Down> gj
 
 """------  Generic Behavior  ------
 " Use spaces instead of tabs (necessary for haskell/ghc)
@@ -148,7 +149,7 @@ filetype plugin on
 set autoindent    " Match indentation level when moving to new line.
 set smartindent
 
-"allow deletion of previously entered data in insert mode
+" Allow deletion of previously entered data in insert mode
 set backspace=indent,eol,start
 
 set viminfo^=%                    " Remember info about open buffers on close
@@ -163,7 +164,8 @@ set wildignore+=*.min,*.min.js,*.tmp,*.svg
 set ignorecase                    " Ignore case when searching
 set smartcase                     " When searching try to be smart about cases
 
-set lazyredraw                    " Don't redraw while executing macros (good performance config)
+" Don't redraw while executing macros (good performance config)
+" set lazyredraw                    
 
 set nobackup                      " Turn backup off (store everything in version control)
 set nowb
@@ -175,9 +177,6 @@ set wrap                          " Wrap lines longer than window width
 if exists("&breakindent")
   set breakindent                   " Indent wraps to same level as original line
 endif
-
-" set breakindent                   " Indent wraps to same level as original line
-" Incompatible with debian vim?
 
 
 """""""""""""""""""" <Misc> """"""""""""""
@@ -207,17 +206,9 @@ set noswapfile                  " Use version control instead
 " Make sure unicode works properly (primarily for concealing)
 set encoding=utf-8
 let &termencoding=&encoding
+
 """""""""""""   < Keymaps > """"""""""""""""""
-
 let mapleader=","
-
-" Haskell shortcuts
-"map <Leader>m :w \| make<CR>
-
-"map <Leader>m :w \| !xelatex --interaction=batchmode %; rm *.{aux,log,out,dvi,nav,toc,pre,tdo}<CR><CR>
-"autocmd BufWritePost *.tex :silent execute "!xelatex --interaction=batchmode %; rm *.{aux,log,out}" | redraw!
-"let blacklist = ['preamble.tex']
-"autocmd BufWritePost *.tex if expand('%:t') != "preamble.tex" | :silent execute "!pdflatex %; rm *.{aux,log,out}" | redraw!
 
 " Then type in word to ag from the curent directory
 "map <Leader>/ :Ag!<SPACE>
@@ -230,12 +221,6 @@ cmap wf %!sudo tee > /dev/null %
 
 " ,q Closes the current buffer
 nnoremap <silent> <Leader>q :Bclose<CR>
-
-" cscope the word under the cursor
-"nnoremap <silent> <C-\> :cs find c <C-R>=expand("<cword>")<CR><CR>
-
-" Clear search highlights when pressing ,b
-"nnoremap <silent> <leader>b :nohlsearch<CR>
 
 " Press enter to clear search highlights
 nnoremap <CR> :noh<CR><CR>
@@ -256,8 +241,6 @@ noremap <silent> <C-h> :bprev<CR>
 noremap <silent> <C-l> :bnext<CR>
 
 " Some custom programming commands
-"nnoremap <Leader>mm :wa \| :VimuxRunCommand 'make clean && make all && ./test'<CR>
-"nnoremap <leader>cap :wa \| :VimuxRunCommand 'git add *; git commit -am "save"; git push origin master'<CR>
 " Close buffer without affecting splits.
 "nnoremap <leader>w :Bclose<CR>
 nnoremap <leader>w :bp\|bd #<CR>
@@ -270,15 +253,6 @@ nnoremap <silent> <Leader>t :tabnew<CR>
 
 " Cmd+Shift+N = new buffer
 " map <silent> <Leader>n :enew<CR>
-
-" Toggle between absolute and relative line numbers
-function! NumberToggle()
-  if (&relativenumber == 1)
-    set norelativenumber
-  else
-    set relativenumber
-  endif
-endfunc
 
 """"""""""""" < /Keymaps > """"""""""""""""""""""""""""""
 set statusline+=%#warningmsg#
@@ -318,7 +292,7 @@ nnoremap g# g#zz
 """"""""""""" < NerdTree > """"""""""""""""""
 " Always open NerdTree along with files
 " and switch focus to file
-" au VimEnter * NERDTree | wincmd p
+au VimEnter * NERDTree | wincmd p
 
 " Custom commands for NERDTree
 autocmd StdinReadPre * let s:std_in=1
