@@ -36,9 +36,9 @@ Plugin 'VundleVim/Vundle.vim'
 
 " Aesthetics
 " Misc needed for other plugins?
-Plugin 'xolox/vim-misc'                   
+Plugin 'xolox/vim-misc'
 " Better status bar
-" Plugin 'vim-airline/vim-airline'          
+" Plugin 'vim-airline/vim-airline'
 " Plugin 'vim-airline/vim-airline-themes'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'valloric/MatchTagAlways'
@@ -52,16 +52,16 @@ Plugin 'scrooloose/syntastic'
 " Searching
 Plugin 'ervandew/ag'
 " Fuzzy file search from current dir.
-" Plugin 'kien/ctrlp.vim'                 
+" Plugin 'kien/ctrlp.vim'
 " Plugin 'xolox/vim-easytags'
 
 " Windows and Buffers
 " Display ctags in a sidebar.
-"Plugin 'majutsushi/tagbar'              
+"Plugin 'majutsushi/tagbar'
 " Needed for vim-markdown, should be loaded in this order
-Plugin 'godlygeek/tabular'              
+Plugin 'godlygeek/tabular'
 " File navigation buffer
-Plugin 'scrooloose/nerdtree'            
+Plugin 'scrooloose/nerdtree'
 " Delete buffer without exiting vim
 Plugin 'rbgrouleff/bclose.vim'
 " Display all buffers in tab-like bar across top
@@ -164,7 +164,7 @@ set ignorecase                    " Ignore case when searching
 set smartcase                     " When searching try to be smart about cases
 
 " Don't redraw while executing macros (good performance config)
-" set lazyredraw                    
+" set lazyredraw
 
 set nobackup                      " Turn backup off (store everything in version control)
 set nowb
@@ -184,8 +184,8 @@ set clipboard+=unnamedplus
 
 " GUI Settings
 set t_Co=256
-"colorscheme 3dglasses 
-"colorscheme afterglow 
+"colorscheme 3dglasses
+"colorscheme afterglow
 "colorscheme apprentice
 "colorscheme SweetCandy
 colorscheme Tomorrow-Night
@@ -291,7 +291,7 @@ nnoremap g# g#zz
 """"""""""""" < NerdTree > """"""""""""""""""
 " Always open NerdTree along with files
 " and switch focus to file
-au VimEnter * NERDTree | wincmd p
+au FileType markdown autocmd VimEnter * NERDTree | wincmd p
 
 " Custom commands for NERDTree
 autocmd StdinReadPre * let s:std_in=1
@@ -404,7 +404,7 @@ set conceallevel=2
 let g:tex_conceal="abdgm"
 " Remove background color from concealed characters (grey on grey??)
 autocmd FileType markdown nmap <silent> <leader>p :call mdip#MarkdownClipboardImage()<CR><CR><CR>
-au FileType markdown autocmd VimEnter * hi clear Conceal         
+au FileType markdown autocmd VimEnter * hi clear Conceal
 
 hi NonText ctermbg=none
 hi Normal guibg=NONE ctermbg=NONE
