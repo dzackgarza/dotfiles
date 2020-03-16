@@ -291,7 +291,7 @@ nnoremap g# g#zz
 """"""""""""" < NerdTree > """"""""""""""""""
 " Always open NerdTree along with files
 " and switch focus to file
-au FileType markdown autocmd VimEnter * NERDTree | wincmd p
+" au FileType markdown autocmd VimEnter * NERDTree | wincmd p
 
 " Custom commands for NERDTree
 autocmd StdinReadPre * let s:std_in=1
@@ -404,7 +404,7 @@ set conceallevel=2
 let g:tex_conceal="abdgm"
 " Remove background color from concealed characters (grey on grey??)
 autocmd FileType markdown nmap <silent> <leader>p :call mdip#MarkdownClipboardImage()<CR><CR><CR>
-" au FileType markdown autocmd VimEnter * hi clear Conceal
+au FileType markdown autocmd VimEnter * hi clear Conceal
 
 hi NonText ctermbg=none
 hi Normal guibg=NONE ctermbg=NONE
