@@ -83,7 +83,7 @@ Plugin 'ferrine/md-img-paste.vim'
 let g:mdip_imgdir = 'figures'
 " let g:mdip_imgname = 'image'
 " Bold and italics shortcuts
-"Plugin 'SidOfc/mkdx'
+Plugin 'SidOfc/mkdx'
 
 
 " Latex
