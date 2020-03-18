@@ -189,7 +189,7 @@ set t_Co=256
 "colorscheme apprentice
 "colorscheme SweetCandy
 "colorscheme Tomorrow-Night
-colorscheme Mustang
+colorscheme mustang
 
 set mouse=a                     " Allow mouse selection
 
