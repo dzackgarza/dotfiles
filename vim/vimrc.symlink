@@ -188,7 +188,8 @@ set t_Co=256
 "colorscheme afterglow
 "colorscheme apprentice
 "colorscheme SweetCandy
-colorscheme Tomorrow-Night
+"colorscheme Tomorrow-Night
+colorscheme Mustang
 
 set mouse=a                     " Allow mouse selection
 
