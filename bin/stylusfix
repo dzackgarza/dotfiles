@@ -8,9 +8,8 @@ matrix1=$(xinput list-props "ELAN Touchscreen" | grep 'Coordinate Transformation
 sagescript="M = Matrix(RR, 3, ["$matrix1"]; print(M)"
 sagescript="M = Matrix(RR, 3, ["$matrix1"]); M2 = Matrix(RR, 3, [0, 1, 0, -1, 0, 1, 0, 0, 1]); print([round(x, 2) for x in (M*M2).list()])"
 echo $sagescript
-matrix="$(sage -c "$sagescript")"
+matrix="$(sage -c  '' | tr -d '[],')"
 echo $matrix
-#matrix="$(sage -c  '' | tr -d '[],')"
 
 xinput set-prop "ELAN Touchscreen" --type=float "Coordinate Transformation Matrix" $matrix
 xinput set-prop "ELAN Touchscreen stylus" --type=float "Coordinate Transformation Matrix" $matrix
