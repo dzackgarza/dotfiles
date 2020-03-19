@@ -12,3 +12,5 @@ xinput set-prop "ELAN Touchscreen" --type=float "Coordinate Transformation Matri
 xinput set-prop "ELAN Touchscreen stylus" --type=float "Coordinate Transformation Matrix" $matrix
 xinput set-prop "ELAN Touchscreen eraser" --type=float "Coordinate Transformation Matrix" $matrix
 
+xsetwacom set "ELAN Touchscreen stylus" PressureCurve 40 17 100 0
+
