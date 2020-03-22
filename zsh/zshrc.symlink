@@ -1,4 +1,3 @@
-zmodload zsh/zprof
 # Sourced only in interactive shells
 export EDITOR=vim
 export PAGER=less
@@ -72,4 +71,3 @@ ranger() {
         exit
     fi
 }
-zprof
