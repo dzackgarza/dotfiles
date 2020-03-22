@@ -4,12 +4,10 @@ export EDITOR=vim
 export PAGER=less
 export SHELL=/bin/zsh
 export TERM=xterm-256color
+export JEKYLL_EDITOR=typora
 
 export DOTFILES_ROOT="$HOME/dotfiles"
 
-#export NVM_DIR="$HOME/.nvm"
-#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 # [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
 export PATH="$DOTFILES_ROOT/bin:$PATH"
@@ -27,23 +25,8 @@ plugins=(command-not-found autojump)
 # Load themes, plugins, etc
 source $ZSH/oh-my-zsh.sh
 
-# all of our zsh files
-#typeset -U config_files
-#config_files=($DOTFILES_ROOT/**/*.zsh)
-
-# load the path files
-#for file in ${(M)config_files:#*/path.zsh}
-#do
-  #source $file
-#done
-
-# load everything but the path and completion files
-#for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}
-#do
-  #source $file
-#done
-
 # initialize autocomplete here, otherwise functions won't be loaded
+# Only regenerate .zcompdump once per day
 autoload -Uz compinit
 for dump in ~/.zcompdump(N.mh+24); do
   compinit
@@ -53,12 +36,6 @@ compinit -C
 # Do the same for prompts
 autoload -U promptinit
 promptinit
-
-# load every completion after autocomplete loads
-#for file in ${(M)config_files:#*/completion.zsh}
-#do
-  #source $file
-#done
 
 # Initialize fzf (fuzzy finder) if installed.
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -76,29 +53,6 @@ promptinit
 	#fortune -a | tewisay -f kingslime | lolcat
 #fi
 
-# What day is it again..?
-#date
-
-# Set options
-setopt aliases            # Expand aliases in noninteractie shells
-setopt completealiases 		# Extend auto-completion to custom aliases
-setopt HIST_IGNORE_DUPS		# Keep only unique items in zsh_history
-setopt no_rm_star_silent
-setopt nobanghist         # Disable !x to expand history
-unsetopt correct
-unset config_files
-
-# Completions from history, using every word (instead of just the first one)
-# and allows pressing up/down to scroll through completions.
-autoload up-line-or-beginning-search
-autoload down-line-or-beginning-search
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-bindkey "\e[A" up-line-or-beginning-search
-bindkey "\e[B" down-line-or-beginning-search
-bindkey '^[[1;5D' backward-word
-bindkey '^[[1;5C' forward-word
-
 # Source everything in dotfiles tree ending in .zsh
 personal_zsh_files=($DOTFILES_ROOT/**/*.zsh)
 for file in $personal_zsh_files
@@ -106,27 +60,9 @@ do
   source $file
 done
 
-# matches case insensitive for lowercase
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-
-# pasting with tabs doesn't perform completion
-zstyle ':completion:*' insert-tab pending
-
-#alias tmux="tmux -2"
-
-# Antigen
-
-export JEKYLL_EDITOR=typora
 
 /usr/share/LS_COLORS/dircolors.sh
 
-#PATH="/home/zack/perl5/bin${PATH:+:${PATH}}"; export PATH;
-#PERL5LIB="/home/zack/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-#PERL_LOCAL_LIB_ROOT="/home/zack/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-#PERL_MB_OPT="--install_base \"/home/zack/perl5\""; export PERL_MB_OPT;
-#PERL_MM_OPT="INSTALL_BASE=/home/zack/perl5"; export PERL_MM_OPT;
-
-# ?
 stty -ixon
 
 ranger() {
