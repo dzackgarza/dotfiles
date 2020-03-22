@@ -1,20 +1,6 @@
-#function extract() {
-  #if[ -f $1 ]; then
-    #aunpack $1
-  #else
-    #echo "'$1' is not a valid file"
-  #fi
-#}
-
-
-function mcd() {
-	mkdir $1 && cd $1
-}
-
 # Dev Specific
 alias ls="colorls"
 alias ll="colorls -l"
-#alias lsc="colorls"
 alias mkdir="mkdir -p"
 
 # Just git save everything
@@ -27,14 +13,6 @@ alias pbpaste='xsel --clipboard --output';
 alias whatsmyip="curl ipinfo.io/ip"
 
 alias r.ranger='SHELL=/usr/local/bin/r.shell ranger'
-
-function uninstall() {
-  command -v yaourt >/dev/null 2>&1 && sudo yaourt -Rns "$1" --noconfirm;
-}
-
-function pinstall() {
-  command -v yaourt >/dev/null 2>&1 && yaourt -S "$1" --noconfirm;
-}
 
 function researchnotes() {
   echo "Enter description for file name";
