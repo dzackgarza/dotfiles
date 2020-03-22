@@ -41,15 +41,33 @@ setopt nobanghist         # Disable !x to expand history
 setopt complete_aliases
 
 zle -N newtab
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
 
 bindkey '^[^[[D' backward-word
 bindkey '^[^[[C' forward-word
+#bindkey '^[[1;5D' backward-word
+#bindkey '^[[1;5C' forward-word
 bindkey '^[[5D' beginning-of-line
 bindkey '^[[5C' end-of-line
 bindkey '^[[3~' delete-char
 bindkey '^[^N' newtab
 bindkey '^?' backward-delete-char
+#bindkey "\e[A" up-line-or-beginning-search
+#bindkey "\e[B" down-line-or-beginning-search
+
+# Completions from history, using every word (instead of just the first one)
+# and allows pressing up/down to scroll through completions.
+autoload up-line-or-beginning-search
+autoload down-line-or-beginning-search
+
 
 setopt no_rm_star_silent
 unsetopt correct
 unset config_files
+
+# matches case insensitive for lowercase
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+# pasting with tabs doesn't perform completion
+zstyle ':completion:*' insert-tab pending
