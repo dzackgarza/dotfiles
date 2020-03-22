@@ -59,6 +59,9 @@ do
   source $file
 done
 
+antigen bundle command-not-found
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen apply
 
 /usr/share/LS_COLORS/dircolors.sh
 
