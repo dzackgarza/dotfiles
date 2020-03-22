@@ -20,7 +20,8 @@ export ZSH=$HOME/.oh-my-zsh
 #ZSH_THEME="kphoen"
 POWERLEVEL9K_MODE="nerdfont-complete"
 ZSH_THEME=powerlevel9k/powerlevel9k
-# dirhistory: press alt-left/right to move through visited directories.
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(user os_icon dir)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status)
 
 # Load themes, plugins, etc
 source $ZSH/oh-my-zsh.sh
