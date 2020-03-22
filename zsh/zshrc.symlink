@@ -20,7 +20,7 @@ export ZSH=$HOME/.oh-my-zsh
 #ZSH_THEME="kphoen"
 POWERLEVEL9K_MODE="nerdfont-complete"
 ZSH_THEME=powerlevel9k/powerlevel9k
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(user os_icon dir)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon user dir)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status)
 
 # Load themes, plugins, etc
