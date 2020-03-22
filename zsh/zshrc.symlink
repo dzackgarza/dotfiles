@@ -17,8 +17,9 @@ export PATH="$HOME/.local/bin:$PATH"
 # ZSH-specific
 export ZSH=$HOME/.oh-my-zsh
 #ZSH_THEME="af-magic"
-ZSH_THEME="kphoen"
-plugins=(command-not-found autojump)
+#ZSH_THEME="kphoen"
+POWERLEVEL9K_MODE="nerdfont-complete"
+ZSH_THEME=powerlevel9k/powerlevel9k
 # dirhistory: press alt-left/right to move through visited directories.
 
 # Load themes, plugins, etc
@@ -59,8 +60,12 @@ do
   source $file
 done
 
+
+plugins=(command-not-found autojump)
 antigen bundle command-not-found
 antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle autojump-zsh
+antigen bundle autosuggestions
 antigen apply
 
 /usr/share/LS_COLORS/dircolors.sh
