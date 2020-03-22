@@ -44,8 +44,11 @@ source $ZSH/oh-my-zsh.sh
 #done
 
 # initialize autocomplete here, otherwise functions won't be loaded
-autoload -U compinit
-compinit
+autoload -Uz compinit
+for dump in ~/.zcompdump(N.mh+24); do
+  compinit
+done
+compinit -C
 
 # Do the same for prompts
 autoload -U promptinit
