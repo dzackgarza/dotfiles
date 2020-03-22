@@ -32,6 +32,9 @@ setopt APPEND_HISTORY # adds history
 setopt INC_APPEND_HISTORY SHARE_HISTORY  # adds history incrementally and share it across sessions
 setopt HIST_IGNORE_ALL_DUPS  # don't record dupes in history
 setopt HIST_REDUCE_BLANKS
+setopt HIST_IGNORE_DUPS		# Keep only unique items in zsh_history
+setopt nobanghist         # Disable !x to expand history
+
 
 # don't expand aliases _before_ completion has finished
 #   like: git comm-[tab]
@@ -46,3 +49,7 @@ bindkey '^[[5C' end-of-line
 bindkey '^[[3~' delete-char
 bindkey '^[^N' newtab
 bindkey '^?' backward-delete-char
+
+setopt no_rm_star_silent
+unsetopt correct
+unset config_files
