@@ -81,9 +81,9 @@ while true; do
   esac
 
   if [ $status_ok -ne 0 ]; then
+    notify-send "PandocMake Preview" "Error compiling." --urgency=critical --expire-time=5000
     echo "Error compiling"
   else
-    notify-send "PandocMake Preview" "Successful compilation." --urgency=critical --expire-time=5000
     if [ "$first_run" = true ]; then
       echo "First run"
       if [ "$view" = true ]; then
