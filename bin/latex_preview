@@ -56,7 +56,7 @@ pandoc_compile() {
 
 echo "Starting..."
 while true; do
-
+  notify-send "PandocMake Preview" "Compiling.." --urgency=critical --expire-time=2000
   case $extension in
     "md")
       if [ "$totex" = true ]; then
