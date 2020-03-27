@@ -5,8 +5,9 @@ xsetwacom set "ELAN Touchscreen eraser" MapToOutput eDP1
 
 matrix1=$(xinput list-props "ELAN Touchscreen" | grep 'Coordinate Transformation Matrix' | cut -d ':' -f 2 | xargs)
 
-sagescript="M = Matrix(RR, 3, ["$matrix1"]); M2 = Matrix(RR, 3, [0, 1, 0, -1, 0, 1, 0, 0, 1]); print([round(x, 2) for x in (M*M2).list()])"
-matrix="$(sage -c  "$sagescript" | tr -d '[],')"
+#sagescript="M = Matrix(RR, 3, ["$matrix1"]); M2 = Matrix(RR, 3, [0, 1, 0, -1, 0, 1, 0, 0, 1]); print([round(x, 2) for x in (M*M2).list()])"
+#matrix="$(sage -c  "$sagescript" | tr -d '[],')"
+matrix=$matrix1
 
 xinput set-prop "ELAN Touchscreen" --type=float "Coordinate Transformation Matrix" $matrix
 xinput set-prop "ELAN Touchscreen stylus" --type=float "Coordinate Transformation Matrix" $matrix
