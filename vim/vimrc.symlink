@@ -224,6 +224,49 @@ set nostartofline
 " Keep the cursor in place while joining lines
 nnoremap J mzJ`z
 
+set foldlevel=20
+
+" Automatically re-read changed files
+set autoread
+
+" Automatically save after a few seconds
+au CursorHold *.tex,*.md  update
+
+" ?
+autocmd FileType *
+  \ if &omnifunc != '' |
+  \   call SuperTabChain(&omnifunc, "<c-p>") |
+  \ endif
+
+" Persistent Undo
+let s:undoDir = "/tmp/.undodir_" . $USER
+if !isdirectory(s:undoDir)
+    call mkdir(s:undoDir, "", 0700)
+endif
+let &undodir=s:undoDir
+set undofile
+
+" ?
+" syntax region Statement matchgroup=Delimiter start="\\begin{.*}" end="\\end{.*}" contains=Statement
+
+
+""""""""""""" < Spelling and Grammar > """"""""""""""""""
+" for vim-polyglot users, it loads Plasticboy's markdown
+" plugin which unfortunately interferes with mkdx list indentation.
+autocmd FileType markdown,tex,latex setlocal spell
+
+" Fix the omnicomplete popup menu a bit
+" Allows typing in a few characters to narrow down the list
+set completeopt=longest,menuone
+set complete+=kspell
+set complete+=k/home/zack/Notes/math_dict.txt
+set spelllang=en
+set spellfile=/home/zack/Notes/mathdict.utf-8.add
+set conceallevel=2
+
+" No spellchecking fullstops without capitalization
+set spellcapcheck=
+""""""""""""" < \Spelling and Grammar > """"""""""""""""""
 
 """"""""" < Search > """""""""""
 set incsearch
@@ -239,65 +282,6 @@ nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
 """"""""" </ Search > """""""""""
-
-
-""""""""""""" < NerdTree > """"""""""""""""""
-" Always open NerdTree along with files
-" and switch focus to file
-" au FileType markdown autocmd VimEnter * NERDTree | wincmd p
-
-" Custom commands for NERDTree
-autocmd StdinReadPre * let s:std_in=1
-" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-let NERDTreeIgnore=['CVS','\.dSYM$']
-
-"setting root dir in NT also sets VIM's cd
-let NERDTreeChDirMode=2
-
-let g:NERDTreeDirArrows=0
-
-" These prevent accidentally loading files while focused on NERDTree
-autocmd FileType nerdtree noremap <buffer> <c-left> <nop>
-autocmd FileType nerdtree noremap <buffer> <c-h> <nop>
-autocmd FileType nerdtree noremap <buffer> <c-right> <nop>
-autocmd FileType nerdtree noremap <buffer> <c-l> <nop>
-
-" Open NERDTree if we're executing vim without specifying a file to open
-autocmd vimenter * if !argc() | NERDTree | endif
-
-" Close if only NERDTree open
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
-" Hides "Press ? for help"
-let NERDTreeMinimalUI=1
-
-" Close NerdTree if it is the only buffer left open.
-function! NERDTreeQuit()
-  redir => buffersoutput
-  silent buffers
-  redir END
-"                     1BufNo  2Mods.     3File           4LineNo
-  let pattern = '^\s*\(\d\+\)\(.....\) "\(.*\)"\s\+line \(\d\+\)$'
-  let windowfound = 0
-
-  for bline in split(buffersoutput, "\n")
-    let m = matchlist(bline, pattern)
-
-    if (len(m) > 0)
-      if (m[2] =~ '..a..')
-        let windowfound = 1
-      endif
-    endif
-  endfor
-
-  if (!windowfound)
-    quitall
-  endif
-endfunction
-autocmd WinEnter * call NERDTreeQuit()
-
-""""""""""""" </ NerdTree > """"""""""""""""""
 
 " Column 80 marker
 " highlight OverLength ctermbg=red ctermfg=white guibg=#660000
@@ -357,65 +341,69 @@ let g:mkdx#settings     = { 'highlight': { 'enable': 1 },
                         \ 'toc': { 'text': 'Table of Contents', 'update_on_write': 1 },
                         \ 'fold': { 'enable': 1 } }
 let g:polyglot_disabled = ['javascript', 'html', 'markdown', 'latex']
+
+""""""""""""" < NerdTree > """"""""""""""""""
+" Always open NerdTree along with files
+" and switch focus to file
+" au FileType markdown autocmd VimEnter * NERDTree | wincmd p
+
+" Custom commands for NERDTree
+autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+let NERDTreeIgnore=['CVS','\.dSYM$']
+
+"setting root dir in NT also sets VIM's cd
+let NERDTreeChDirMode=2
+
+let g:NERDTreeDirArrows=0
+
+" These prevent accidentally loading files while focused on NERDTree
+autocmd FileType nerdtree noremap <buffer> <c-left> <nop>
+autocmd FileType nerdtree noremap <buffer> <c-h> <nop>
+autocmd FileType nerdtree noremap <buffer> <c-right> <nop>
+autocmd FileType nerdtree noremap <buffer> <c-l> <nop>
+
+" Open NERDTree if we're executing vim without specifying a file to open
+autocmd vimenter * if !argc() | NERDTree | endif
+
+" Close if only NERDTree open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+" Hides "Press ? for help"
+let NERDTreeMinimalUI=1
+
+" Close NerdTree if it is the only buffer left open.
+function! NERDTreeQuit()
+  redir => buffersoutput
+  silent buffers
+  redir END
+"                     1BufNo  2Mods.     3File           4LineNo
+  let pattern = '^\s*\(\d\+\)\(.....\) "\(.*\)"\s\+line \(\d\+\)$'
+  let windowfound = 0
+
+  for bline in split(buffersoutput, "\n")
+    let m = matchlist(bline, pattern)
+
+    if (len(m) > 0)
+      if (m[2] =~ '..a..')
+        let windowfound = 1
+      endif
+    endif
+  endfor
+
+  if (!windowfound)
+    quitall
+  endif
+endfunction
+autocmd WinEnter * call NERDTreeQuit()
+
+""""""""""""" </ NerdTree > """"""""""""""""""
 """"""""""""" < \Plugin Setting Configuration > """"""""""""""""""
 
 
-
-""""""""""""" < Spelling and Grammar > """"""""""""""""""
-" for vim-polyglot users, it loads Plasticboy's markdown
-" plugin which unfortunately interferes with mkdx list indentation.
-autocmd FileType markdown,tex,latex setlocal spell
-
-" Fix the omnicomplete popup menu a bit
-" Allows typing in a few characters to narrow down the list
-set completeopt=longest,menuone
-set complete+=kspell
-set complete+=k/home/zack/Notes/math_dict.txt
-set spelllang=en
-set spellfile=/home/zack/Notes/mathdict.utf-8.add
-set conceallevel=2
-
-" No spellchecking fullstops without capitalization
-set spellcapcheck=
-""""""""""""" < \Spelling and Grammar > """"""""""""""""""
-
-set foldlevel=20
-
-" Automatically re-read changed files
-set autoread
-
-" Automatically save after a few seconds
-au CursorHold *.tex,*.md  update
-
-autocmd FileType *
-  \ if &omnifunc != '' |
-  \   call SuperTabChain(&omnifunc, "<c-p>") |
-  \ endif
-
-
-" Persistent Undo
-let s:undoDir = "/tmp/.undodir_" . $USER
-if !isdirectory(s:undoDir)
-    call mkdir(s:undoDir, "", 0700)
-endif
-let &undodir=s:undoDir
-set undofile
-
-" Quickly insert an empty new line without entering insert mode
-nnoremap <Leader>o o<Esc>
-nnoremap <Leader>O O<Esc>
-
-" Paste image from clipboard
-autocmd FileType markdown nmap <silent> <leader>p :call mdip#MarkdownClipboardImage()<CR><CR><CR>
-
-" Insert line break here
-nnoremap <Leader><Enter> i<CR><Esc>k$
-
-" Copy file path to clipboard?
-nmap <Leader>ll :let @+=expand("%:p")<CR><CR>
-
-
-"syntax region Statement matchgroup=Delimiter start="\\begin{.*}" end="\\end{.*}" contains=Statement
+""""""""""""" < Key Maps > """"""""""""""""""
+let mapleader=","
 
 " Jump to markdown headers
 function! s:JumpToHeader(forward, visual)
@@ -437,21 +425,16 @@ function! s:JumpToHeader(forward, visual)
   call histdel('/', -1)
   let @/ = save
 endfunction
-
-
-""""""""""""" < Key Maps > """"""""""""""""""
-let mapleader=","
-
-" Fix capital W writing
-command! W  write
-
-" Markdown jump to next section
 noremap <silent> <buffer> <script> ]] :<C-u>call <SID>JumpToHeader(1, 0)<CR>
 noremap <silent> <buffer> <script> [[ :<C-u>call <SID>JumpToHeader(0, 0)<CR>
 vnoremap <silent> <buffer> <script> ]] :<C-u>call <SID>JumpToHeader(1, 1)<CR>
 vnoremap <silent> <buffer> <script> [[ :<C-u>call <SID>JumpToHeader(0, 1)<CR>
 noremap <silent> <buffer> <script> ][ <nop>
 noremap <silent> <buffer> <script> [] <nop>
+
+" Fix capital W writing
+command! W  write
+
 
 " Then type in word to ag from the curent directory
 "map <Leader>/ :Ag!<SPACE>
@@ -493,6 +476,19 @@ nnoremap <silent> <Leader>t :tabnew<CR>
 
 " Cmd+Shift+N = new buffer
 " map <silent> <Leader>n :enew<CR>
+
+" Quickly insert an empty new line without entering insert mode
+nnoremap <Leader>o o<Esc>
+nnoremap <Leader>O O<Esc>
+
+" Paste image from clipboard
+autocmd FileType markdown nmap <silent> <leader>p :call mdip#MarkdownClipboardImage()<CR><CR><CR>
+
+" Insert line break here
+nnoremap <Leader><Enter> i<CR><Esc>k$
+
+" Copy file path to clipboard?
+nmap <Leader>ll :let @+=expand("%:p")<CR><CR>
 """"""""""""" < \Key Maps > """"""""""""""""""
 
 " Remove background color from concealed characters (grey on grey??)
