@@ -1,0 +1,7 @@
+game:
+  appid: checkers
+  args: ''
+  exe: /usr/bin/checkers
+linux: {}
+system:
+  disable_runtime: true

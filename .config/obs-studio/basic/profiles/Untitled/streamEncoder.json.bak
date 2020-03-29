@@ -1,0 +1,5 @@
+{
+    "preset": "ultrafast",
+    "profile": "baseline",
+    "tune": "fastdecode"
+}

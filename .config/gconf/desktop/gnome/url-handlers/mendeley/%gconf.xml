@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<gconf>
+	<entry name="enabled" mtime="1548955336" type="bool" value="true"/>
+	<entry name="command" mtime="1548955336" type="string">
+		<stringvalue>/home/zack/.local/share/mendeleydesktop %s</stringvalue>
+	</entry>
+</gconf>

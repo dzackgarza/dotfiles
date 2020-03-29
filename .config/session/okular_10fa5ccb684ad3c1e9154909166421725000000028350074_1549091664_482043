@@ -1,0 +1,12 @@
+[1]
+ActiveTab=0
+Urls[$e]=file:$HOME/Downloads/Expository/Random PDF Notes/101_analysis_bedtime_stories_(epsilon_red_riding_hood).pdf
+
+[Number]
+NumberOfWindows=1
+
+[WindowProperties1]
+ClassName=Shell
+ObjectName=okular::Shell#1
+State=AAAA/wAAAAD9AAAAAAAAA8AAAAO4AAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAA
+Window-Maximized 1080x1920=true

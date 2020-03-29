@@ -1,0 +1,8 @@
+game:
+  appid: org.wesnoth.Wesnoth
+  args: run --branch=stable --arch=x86_64 --command=sh org.wesnoth.Wesnoth -c "wesnoth
+    >/dev/null 2>&1"
+  exe: /usr/bin/flatpak
+linux: {}
+system:
+  disable_runtime: true

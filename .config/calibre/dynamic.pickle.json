@@ -1,0 +1,62 @@
+{
+  "add a plugin dialog": "/home/zack/Downloads", 
+  "add books dialog dir": "/home/zack/actualpdfs", 
+  "auto add path choose": "/home/zack/Downloads", 
+  "check_library_editor_delete_again": false, 
+  "choose library location": "/home/zack/Dropbox/Library", 
+  "confirm_plugin_removal_msg_again": false, 
+  "confirm_vl_removal_again": false, 
+  "export-calibre-dir": "/run/media/Storage/Calibre Backup", 
+  "library_delete_books_again": false, 
+  "notified-version-updates": {
+    "__class__": "set", 
+    "__value__": [
+      "4.12", 
+      "4.11", 
+      "4.10", 
+      "4.13", 
+      "4.2", 
+      "4.5", 
+      "4.4", 
+      "4.7", 
+      "4.0", 
+      "3.48", 
+      "3.47", 
+      "3.46", 
+      "3.45", 
+      "4.9", 
+      "4.8"
+    ]
+  }, 
+  "recursive book import root dir dialog": "/home/zack/actualpdfs", 
+  "s_r_search_mode": 0, 
+  "save to disk dialog": "/home/zack/NewLib", 
+  "sort_history": [
+    [
+      "last_modified", 
+      false
+    ], 
+    [
+      "authors", 
+      false
+    ], 
+    [
+      "timestamp", 
+      false
+    ], 
+    [
+      "timestamp", 
+      false
+    ]
+  ], 
+  "systray_msg": true, 
+  "update to version 3.26.1": false, 
+  "update to version 3.28": false, 
+  "update to version 3.39": false, 
+  "update to version 3.40": false, 
+  "update to version 3.41": false, 
+  "update to version 3.42": false, 
+  "update to version 3.44": false, 
+  "welcome_wizard_device": "android", 
+  "welcome_wizard_was_run": true
+}

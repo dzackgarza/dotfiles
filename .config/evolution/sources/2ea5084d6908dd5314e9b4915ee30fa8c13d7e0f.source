@@ -1,0 +1,20 @@
+[Data Source]
+DisplayName=dzackgarza@gmail.com
+Enabled=true
+Parent=
+
+[GNOME Online Accounts]
+AccountId=account_1530398872_2
+CalendarUrl=
+ContactsUrl=
+Name=
+Address=dzackgarza@gmail.com
+
+[Collection]
+BackendName=outlook
+CalendarEnabled=true
+ContactsEnabled=true
+Identity=f3d12a3b73ba6f4f
+MailEnabled=true
+CalendarUrl=
+ContactsUrl=

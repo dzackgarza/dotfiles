@@ -1,0 +1,13 @@
+[1]
+ActiveTab=0
+Urls[$e]=file:$HOME/SparkleShare/github.com/Notes/Conferences/UMD Geometry Festival/Talk2.pdf
+
+[Number]
+NumberOfWindows=1
+
+[WindowProperties1]
+ClassName=Shell
+Height 1080=982
+ObjectName=okular::Shell#1
+State=AAAA/wAAAAD9AAAAAAAABaAAAAOUAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAA
+Width 1920=1440

@@ -1,0 +1,120 @@
+{
+  "custom_colors_for_color_dialog": [
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ]
+  ], 
+  "in_paged_mode": true, 
+  "main_window_state": {
+    "__class__": "bytearray", 
+    "__value__": "AAAA/wAAAAL9AAAAAwAAAAAAAAAAAAAAAPwCAAAAAfsAAAAQAHQAbwBjAC0AZABvAGMAawAAAAAA/////wAAAIgA////AAAAAQAAAAAAAAAA/AIAAAAB+wAAABwAYgBvAG8AawBtAGEAcgBrAHMALQBkAG8AYwBrAAAAAAD/////AAAAzQD///8AAAADAAAAAAAAAAD8AQAAAAH7AAAAHABmAG8AbwB0AG4AbwB0AGUAcwAtAGQAbwBjAGsAAAAAAP////8AAAA6AP///wAAA1wAAAO9AAAAAQAAAAIAAAABAAAAAvwAAAACAAAAAAAAAAEAAAAQAHQAbwBvAGwAXwBiAGEAcgMAAAAA/////wAAAAAAAAAAAAAAAgAAAAEAAAASAHQAbwBvAGwAXwBiAGEAcgAyAQAAAAD/////AAAAAAAAAAA="
+  }, 
+  "multiplier": 1.0, 
+  "print-to-pdf-geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywACAAAAAAB5AAABIwAAAnYAAAKKAAAAeQAAAU0AAAJ2AAACigAAAAAAAAAAB4A="
+  }, 
+  "viewer_open_history": [
+    "/run/media/Storage/School-20181213T043500Z-001/School/Subjects/Calc III/Notes.odt", 
+    "/home/zack/Dropbox/Downloads/Tutoring/Hungerford T.W - Abstract algebra. An introduction-Brooks (2014).djvu", 
+    "/home/zack/Downloads/Books/Adam Ruben - Surviving Your Stupid, Stupid Decision to Go to Grad School-Three Rivers Press (2010).epub"
+  ], 
+  "viewer_toc_isvisible": false, 
+  "viewer_window_geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywACAAAAAAPHAAAAHQAAB2IAAAQEAAADyQAAAB8AAAdgAAAEAgAAAAAAAAAAB4A="
+  }
+}

@@ -1,0 +1,127 @@
+05:11:28 PM.995: CPU Name: Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz
+05:11:28 PM.995: CPU Speed: 3100.217MHz
+05:11:28 PM.995: Physical Cores: 2, Logical Cores: 4
+05:11:28 PM.995: Physical Memory: 11864MB Total, 5835MB Free
+05:11:28 PM.995: Kernel Version: Linux 5.5.13-arch1-1
+05:11:28 PM.996: Distribution: "Antergos Linux" Unknown
+05:11:28 PM.997: Window System: X11.0, Vendor: The X.Org Foundation, Version: 1.20.7
+05:11:28 PM.999: Portable mode: false
+05:11:29 PM.278: OBS 25.0.3-1 (linux)
+05:11:29 PM.278: ---------------------------------
+05:11:29 PM.350: ---------------------------------
+05:11:29 PM.350: audio settings reset:
+05:11:29 PM.350: 	samples per sec: 44100
+05:11:29 PM.350: 	speakers:        2
+05:11:29 PM.398: ---------------------------------
+05:11:29 PM.398: Initializing OpenGL...
+05:11:29 PM.427: Loading up OpenGL on adapter Intel Open Source Technology Center Mesa DRI Intel(R) HD Graphics 620 (Kaby Lake GT2) 
+05:11:29 PM.427: OpenGL loaded successfully, version 4.6 (Core Profile) Mesa 19.3.4, shading language 4.60
+05:11:29 PM.441: ---------------------------------
+05:11:29 PM.441: video settings reset:
+05:11:29 PM.441: 	base resolution:   1920x1080
+05:11:29 PM.441: 	output resolution: 1920x1080
+05:11:29 PM.441: 	downscale filter:  Bilinear
+05:11:29 PM.441: 	fps:               24000/1001
+05:11:29 PM.441: 	format:            NV12
+05:11:29 PM.441: 	YUV mode:          601/Partial
+05:11:29 PM.441: NV12 texture support not available
+05:11:29 PM.441: Audio monitoring device:
+05:11:29 PM.441: 	name: Default
+05:11:29 PM.441: 	id: default
+05:11:29 PM.441: ---------------------------------
+05:11:29 PM.443: Failed to load 'en-US' text for module: 'decklink-ouput-ui.so'
+05:11:29 PM.562: A DeckLink iterator could not be created.  The DeckLink drivers may not be installed
+05:11:29 PM.562: No blackmagic support
+05:11:29 PM.572: NVENC supported
+05:11:29 PM.572: FFMPEG VAAPI supported
+05:11:29 PM.581: VLC found, VLC video source enabled
+05:11:29 PM.581: ---------------------------------
+05:11:29 PM.581:   Loaded Modules:
+05:11:29 PM.581:     vlc-video.so
+05:11:29 PM.581:     text-freetype2.so
+05:11:29 PM.581:     rtmp-services.so
+05:11:29 PM.581:     obs-x264.so
+05:11:29 PM.581:     obs-transitions.so
+05:11:29 PM.581:     obs-outputs.so
+05:11:29 PM.581:     obs-libfdk.so
+05:11:29 PM.581:     obs-filters.so
+05:11:29 PM.581:     obs-ffmpeg.so
+05:11:29 PM.581:     linux-v4l2.so
+05:11:29 PM.581:     linux-pulseaudio.so
+05:11:29 PM.581:     linux-jack.so
+05:11:29 PM.581:     linux-decklink.so
+05:11:29 PM.581:     linux-capture.so
+05:11:29 PM.581:     linux-alsa.so
+05:11:29 PM.581:     image-source.so
+05:11:29 PM.582:     frontend-tools.so
+05:11:29 PM.582:     decklink-ouput-ui.so
+05:11:29 PM.582: ---------------------------------
+05:11:29 PM.582: ==== Startup complete ===============================================
+05:11:29 PM.584: All scene data cleared
+05:11:29 PM.584: ------------------------------------------------
+05:11:29 PM.587: pulse-input: Server name: 'pulseaudio 13.0'
+05:11:29 PM.587: pulse-input: An error occurred while getting the source info!
+05:11:29 PM.587: pulse-input: Server name: 'pulseaudio 13.0'
+05:11:29 PM.591: pulse-input: Audio format: s16le, 44100 Hz, 1 channels
+05:11:29 PM.591: pulse-input: Started recording from 'alsa_input.usb-MICE_MICROPHONE_USB_MICROPHONE_201308-00.multichannel-input'
+05:11:29 PM.591: v4l2-input: Start capture from /dev/video0
+05:11:29 PM.592: v4l2-input: Input: 0
+05:11:29 PM.599: v4l2-input: Resolution: 1280x720
+05:11:29 PM.599: v4l2-input: Pixelformat: VYUY
+05:11:29 PM.599: v4l2-input: Linesize: 2560 Bytes
+05:11:29 PM.599: v4l2-input: Framerate: 10.00 fps
+05:11:29 PM.601: [Media Source 'Media Source']: settings:
+05:11:29 PM.601: 	input:                   /home/zack/Downloads/02 Dragon Quest 8 - Intermezzo.mp3
+05:11:29 PM.601: 	input_format:            (null)
+05:11:29 PM.601: 	speed:                   100
+05:11:29 PM.601: 	is_looping:              yes
+05:11:29 PM.601: 	is_hw_decoding:          yes
+05:11:29 PM.601: 	is_clear_on_media_end:   no
+05:11:29 PM.601: 	restart_on_activate:     yes
+05:11:29 PM.601: 	close_when_inactive:     yes
+05:11:29 PM.653: v4l2-input: Start capture from /dev/video2
+05:11:29 PM.654: v4l2-input: Input: 0
+05:11:29 PM.655: v4l2-input: Resolution: 864x480
+05:11:29 PM.655: v4l2-input: Pixelformat: VYUY
+05:11:29 PM.655: v4l2-input: Linesize: 1728 Bytes
+05:11:29 PM.655: v4l2-input: Framerate: 24.00 fps
+05:11:29 PM.656: xshm-input: Geometry 1920x1080 @ 0,0
+05:11:29 PM.683: pulse-input: Server name: 'pulseaudio 13.0'
+05:11:29 PM.683: pulse-input: Audio format: s16le, 44100 Hz, 2 channels
+05:11:29 PM.683: pulse-input: Started recording from 'alsa_output.pci-0000_00_1f.3.analog-stereo.monitor'
+05:11:29 PM.684: xshm-input: Geometry 1920x1080 @ 1920,0
+05:11:29 PM.767: pulse-input: Server name: 'pulseaudio 13.0'
+05:11:29 PM.768: pulse-input: Audio format: s16le, 44100 Hz, 1 channels
+05:11:29 PM.768: pulse-input: Started recording from 'alsa_input.usb-MICE_MICROPHONE_USB_MICROPHONE_201308-00.multichannel-input'
+05:11:29 PM.807: Switched to scene 'Scene 2'
+05:11:29 PM.807: ------------------------------------------------
+05:11:29 PM.807: Loaded scenes:
+05:11:29 PM.807: - scene 'Desktop Scene':
+05:11:29 PM.807:     - source: 'Background Image' (image_source)
+05:11:29 PM.807:     - source: 'Audio Input Capture (PulseAudio)' (pulse_input_capture)
+05:11:29 PM.807:     - source: 'Screen Capture (XSHM) 2' (xshm_input)
+05:11:29 PM.807:     - source: 'Screen Capture (XSHM)' (xshm_input)
+05:11:29 PM.807:     - source: 'Video Capture Device (V4L2)' (v4l2_input)
+05:11:29 PM.807:     - source: 'Status Message' (text_ft2_source)
+05:11:29 PM.807: - scene 'Break':
+05:11:29 PM.807:     - source: 'Image' (image_source)
+05:11:29 PM.807:     - source: 'Text (FreeType 2)' (text_ft2_source)
+05:11:29 PM.807:     - source: 'Media Source' (ffmpeg_source)
+05:11:29 PM.807: - scene 'Pre-Stream':
+05:11:29 PM.807:     - source: 'Image' (image_source)
+05:11:29 PM.807:     - source: 'Text (FreeType 2) 2' (text_ft2_source)
+05:11:29 PM.807:     - source: 'Audio Output Capture (PulseAudio)' (pulse_output_capture)
+05:11:29 PM.807:     - source: 'Media Source' (ffmpeg_source)
+05:11:29 PM.807: - scene 'Single Desktop Scene':
+05:11:29 PM.807:     - source: 'Background Image' (image_source)
+05:11:29 PM.807:     - source: 'Audio Input Capture (PulseAudio)' (pulse_input_capture)
+05:11:29 PM.807:     - source: 'Screen Capture (XSHM)' (xshm_input)
+05:11:29 PM.807:     - source: 'Video Capture Device (V4L2)' (v4l2_input)
+05:11:29 PM.807:     - source: 'Status Message' (text_ft2_source)
+05:11:29 PM.807: - scene 'Scene 2':
+05:11:29 PM.807:     - source: 'Video Capture Device (V4L2) 2' (v4l2_input)
+05:11:29 PM.807: ------------------------------------------------
+05:11:30 PM.117: Switched to Preview/Program mode
+05:11:30 PM.117: ------------------------------------------------
+05:11:30 PM.143: adding 46 milliseconds of audio buffering, total audio buffering is now 46 milliseconds (source: Mic/Aux)
+05:11:30 PM.143: 

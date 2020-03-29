@@ -1,0 +1,17 @@
+{
+  "disabled_plugins": {
+    "__class__": "set", 
+    "__value__": []
+  }, 
+  "enabled_plugins": {
+    "__class__": "set", 
+    "__value__": [
+      "Google Images"
+    ]
+  }, 
+  "filetype_mapping": {}, 
+  "plugin_customization": {}, 
+  "plugins": {
+    "Reading List": "/home/zack/.config/calibre/plugins/Reading List.zip"
+  }
+}

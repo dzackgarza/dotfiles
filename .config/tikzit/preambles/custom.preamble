@@ -1,0 +1,21 @@
+\documentclass{article}
+\usepackage[svgnames]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{shapes.geometric}
+\pagestyle{empty}
+
+\pgfdeclarelayer{edgelayer}
+\pgfdeclarelayer{nodelayer}
+\pgfsetlayers{edgelayer,nodelayer,main}
+
+\tikzstyle{none}=[inner sep=0pt]
+
+
+
+\usepackage[graphics,tightpage,active]{preview}
+\PreviewEnvironment{tikzpicture}
+\newlength{\imagewidth}
+\newlength{\imagescale}
+
+\begin{document}

@@ -1,0 +1,395 @@
+{
+  "Plugin Updater plugin:plugin updater dialog": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywACAAAAAAIkAAABwAAABI0AAANaAAACJAAAAdwAAASNAAADWgAAAAAAAAAAB4A="
+  }, 
+  "action-layout-context-menu": [
+    "Edit Metadata", 
+    "Send To Device", 
+    "Save To Disk", 
+    "Connect Share", 
+    "Copy To Library", 
+    null, 
+    "Convert Books", 
+    "View", 
+    "Open Folder", 
+    "Show Book Details", 
+    "Similar Books", 
+    "Tweak ePub", 
+    null, 
+    "Remove Books", 
+    "Reading List"
+  ], 
+  "action-layout-context-menu-cover-browser": [
+    "Edit Metadata", 
+    "Send To Device", 
+    "Save To Disk", 
+    "Connect Share", 
+    "Copy To Library", 
+    null, 
+    "Convert Books", 
+    "View", 
+    "Open Folder", 
+    "Show Book Details", 
+    "Similar Books", 
+    "Tweak ePub", 
+    null, 
+    "Remove Books", 
+    "Reading List"
+  ], 
+  "action-layout-context-menu-device": [
+    "View", 
+    "Save To Disk", 
+    null, 
+    "Remove Books", 
+    null, 
+    "Add To Library", 
+    "Edit Collections", 
+    "Match Books", 
+    "Reading List"
+  ], 
+  "action-layout-context-menu-split": [
+    "Edit Metadata", 
+    "Send To Device", 
+    "Save To Disk", 
+    "Connect Share", 
+    "Copy To Library", 
+    null, 
+    "Convert Books", 
+    "View", 
+    "Open Folder", 
+    "Show Book Details", 
+    "Similar Books", 
+    "Tweak ePub", 
+    null, 
+    "Remove Books", 
+    "Reading List"
+  ], 
+  "action-layout-menubar": [
+    "Reading List"
+  ], 
+  "action-layout-menubar-device": [
+    "Reading List"
+  ], 
+  "action-layout-toolbar": [
+    "Reading List", 
+    "Preferences", 
+    null, 
+    "Open Folder", 
+    "Add Books", 
+    "Embed Metadata", 
+    null, 
+    "Virtual library", 
+    "Choose Library", 
+    "Sort By"
+  ], 
+  "action-layout-toolbar-child": [
+    "Reading List"
+  ], 
+  "action-layout-toolbar-device": [
+    "Add Books", 
+    "Edit Metadata", 
+    null, 
+    "Convert Books", 
+    "View", 
+    "Send To Device", 
+    null, 
+    null, 
+    "Location Manager", 
+    null, 
+    null, 
+    "Fetch News", 
+    "Save To Disk", 
+    "Store", 
+    "Connect Share", 
+    null, 
+    "Remove Books", 
+    null, 
+    "Help", 
+    "Preferences", 
+    "Reading List"
+  ], 
+  "ask_to_manage_device": [
+    "R58K75P3RFB"
+  ], 
+  "auto_add_auto_convert": true, 
+  "auto_add_check_for_duplicates": true, 
+  "auto_add_path": "/home/zack/Downloads/Books", 
+  "basic_metadata_widget_splitter_state": {
+    "__class__": "bytearray", 
+    "__value__": "AAAA/wAAAAEAAAADAAAA/AAAAWgAAAEKAf////8BAAAAAQA="
+  }, 
+  "blocked_auto_formats": [
+    "azw", 
+    "azw1", 
+    "azw3", 
+    "doc", 
+    "docx", 
+    "htm", 
+    "html", 
+    "markdown", 
+    "mobi", 
+    "odt", 
+    "rar", 
+    "rb", 
+    "rtf", 
+    "txt", 
+    "zip"
+  ], 
+  "book_details_splitter_horizontal_state": [
+    true, 
+    190
+  ], 
+  "book_info_dialog_layout": [
+    {
+      "__class__": "bytearray", 
+      "__value__": "AdnQywACAAAAAAHvAAAAHAAABXwAAAPvAAAB7wAAADgAAAV8AAAD7wAAAAAAAAAAB4A="
+    }, 
+    {
+      "__class__": "bytearray", 
+      "__value__": "AAAA/wAAAAEAAAACAAABXgAAAXAB/////wEAAAABAA=="
+    }
+  ], 
+  "book_list_pin_splitter_state": {
+    "__class__": "bytearray", 
+    "__value__": "AAAA/wAAAAEAAAACAAABAAAAAEYA/////wEAAAABAA=="
+  }, 
+  "booklist_grid": true, 
+  "bulk-mde-casing-algorithm": "title_case", 
+  "bulk_metadata_window_geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywACAAAAAALgAAAE6gAABqEAAAfYAAAC4AAABRQAAAahAAAH2AAAAAAAAAAAB4A="
+  }, 
+  "bulk_metadata_window_tab": 0, 
+  "choose-merge-dialog-geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywACAAAAAAPpAAABwgAABqIAAAMTAAAD6QAAAd4AAAaiAAADEwAAAAAAAAAAB4A="
+  }, 
+  "choose-merge-dialog-splitter-state": {
+    "__class__": "bytearray", 
+    "__value__": "AAAA/wAAAAEAAAACAAAB0wAAAQAA/////wEAAAABAA=="
+  }, 
+  "config_widget_dialog_geometry_Sharing_Metadata download": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywADAAAAAAJJAAABAQAABTYAAANQAAACSQAAASsAAAU2AAADUAAAAAAAAAAAB4AAAAJJAAABKwAABTYAAANQ"
+  }, 
+  "convert_bulk_dialog_geom": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywADAAAAAABGAAAAOAAAB38AAAQaAAAARgAAAGIAAAd/AAAEGgAAAAAAAAAAB4AAAABGAAAAYgAAB38AAAQa"
+  }, 
+  "convert_single_dialog_geom": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywACAAAAAAAAAAAAtgAAA/8AAAObAAAAAAAAAOAAAAP/AAADmwAAAAAAAAAAB4A="
+  }, 
+  "cover_browser_splitter_vertical_state": [
+    true, 
+    403
+  ], 
+  "cover_grid_color": [
+    80, 
+    80, 
+    80
+  ], 
+  "cover_grid_show_title": true, 
+  "cover_grid_texture": null, 
+  "custom_colors_for_color_dialog": [
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ]
+  ], 
+  "default_author_link": null, 
+  "diff_dialog_geom": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywADAAAAAAKuAAAEKQAABmMAAAgmAAACrgAABFMAAAZjAAAIJgAAAAAAAAAAB4AAAAKuAAAEUwAABmMAAAgm"
+  }, 
+  "duplicates-question-dialog-geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywADAAAAAADlAAABVQAAAwYAAALTAAAA5wAAAVcAAAMEAAAC0QAAAAAAAAAAB4AAAADnAAABVwAAAwQAAALR"
+  }, 
+  "exim-calibre-geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywACAAAAAAHcAAAFLwAABPsAAAewAAAB3AAABVkAAAT7AAAHsAAAAAAAAAAAB4A="
+  }, 
+  "filename_pattern_history": [
+    "(?P<title>.+) - (?P<author>[^_]+)", 
+    "(?P<title>.+)", 
+    "(?P<author>[^_-]+) -?\\s*(?P<series>[^_0-9-]*)(?P<series_index>[0-9]*)\\s*-\\s*(?P<title>[^_].+) ?"
+  ], 
+  "grid view visible": false, 
+  "jobs view column layout3": {
+    "__class__": "bytearray", 
+    "__value__": "AAAA/wAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAq4AAAAFAQEBAAAAAAAAAAAAAAAAAGT/////AAAAhAAAAAAAAAAFAAAAZAAAAAEAAAAAAAABHgAAAAEAAAAAAAAAZAAAAAEAAAAAAAAAZAAAAAEAAAAAAAAAZAAAAAEAAAAAAAAD6AA="
+  }, 
+  "jobs_dialog_geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywACAAAAAAHrAAAB7gAABegAAAQPAAAB7QAAAfAAAAXmAAAEDQAAAAAAAAAAB4A="
+  }, 
+  "library_usage_stats": {
+    "/home/zack/Dropbox/Library": 174
+  }, 
+  "metadata_single_gui_geom": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywACAAAAAANXAAAA6AAABqgAAANpAAADVwAAARIAAAaoAAADaQAAAAAAAAAAB4A="
+  }, 
+  "metasingle_window_geometry3": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywADAAAAAAKGAAAAxgAAB4kAAAOZAAACiAAAAMgAAAeHAAADlwAAAAAAAAAAB4AAAAKIAAAAyAAAB4cAAAOX"
+  }, 
+  "plugin config dialog:User interface action:Reading List": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywACAAAAAAOTAAABbAAABZAAAAQpAAADkwAAAYgAAAWQAAAEKQAAAAAAAAAAB4A="
+  }, 
+  "preferences dialog geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywADAAAAAAHQAAAAiAAABXUAAANbAAAB0gAAAIoAAAVzAAADWQAAAAAAAAAAB4AAAAHSAAAAigAABXMAAANZ"
+  }, 
+  "previous_sort_order_BooksView": {
+    "authors": false, 
+    "last_modified": false, 
+    "marked": true, 
+    "timestamp": false, 
+    "title": false
+  }, 
+  "questions_to_auto_skip": [
+    "tag_item_delete"
+  ], 
+  "quick_start_guide_added": true, 
+  "quickview visible": false, 
+  "quickview_dialog_books_table_widths": [
+    189, 
+    189, 
+    189
+  ], 
+  "quickview_dialog_geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywACAAAAAAQTAAABSQAABxIAAALIAAAEEwAAAXMAAAcSAAACyAAAAAAAAAAAB4A="
+  }, 
+  "reading list plugin:move books dialog": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywACAAAAAAOEAAAFpAAABZ8AAAceAAADhAAABc4AAAWfAAAHHgAAAAAAAAAAB4A="
+  }, 
+  "recently_used_languages": [
+    "English"
+  ], 
+  "replace_scene_breaks_history": [
+    "", 
+    "<hr />", 
+    "∗ ∗ ∗", 
+    "• • •", 
+    "♦ ♦ ♦", 
+    "† †", 
+    "‡ ‡ ‡", 
+    "∞ ∞ ∞", 
+    "¤ ¤ ¤"
+  ], 
+  "search bar visible": true, 
+  "show-embed-failed-books": true, 
+  "show_emblems": false, 
+  "show_files_after_save": false, 
+  "single-cover-fetch-dialog-geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywACAAAAAAIXAAAA6QAABWgAAANcAAACFwAAAQUAAAVoAAADXAAAAAAAAAAAB4A="
+  }, 
+  "tag browser search box visible": false, 
+  "tag_browser_splitter_horizontal_state": [
+    true, 
+    129
+  ], 
+  "zotero_metadata_importer:gui_zmi_dialog": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywADAAAAAAHVAAAARAAABcIAAANdAAAB1QAAAG4AAAXCAAADXQAAAAAAAAAAB4AAAAHVAAAAbgAABcIAAANd"
+  }
+}
