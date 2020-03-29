@@ -207,54 +207,6 @@ set noswapfile                  " Use version control instead
 set encoding=utf-8
 let &termencoding=&encoding
 
-"""""""""""""   < Keymaps > """"""""""""""""""
-let mapleader=","
-
-" Then type in word to ag from the curent directory
-"map <Leader>/ :Ag!<SPACE>
-
-" Ag the word under the cursor.
-"nmap <Leader>// :<c-u>execute 'Ag! ' .  expand("<cWORD>")<CR>
-
-" Allow saving of read-only files when opened without sudo.
-cmap wf %!sudo tee > /dev/null %
-
-" ,q Closes the current buffer
-nnoremap <silent> <Leader>q :Bclose<CR>
-
-" Press enter to clear search highlights
-nnoremap <CR> :noh<CR><CR>
-
-" Toggle NerdTree visibility using ,n
-noremap <silent> <Leader>n :NERDTreeToggle<CR>
-
-" ,hljk = Move between windows
-nnoremap <Leader>h <C-w>h
-nnoremap <Leader>l <C-w>l
-nnoremap <Leader>j <C-w>j
-nnoremap <Leader>k <C-w>k
-
-" Ctrl Left/h & Right/l cycle between buffers
-"noremap <silent> <C-Left> :bprev<CR>
-noremap <silent> <C-h> :bprev<CR>
-"noremap <silent> <C-Right> :bnext<CR>
-noremap <silent> <C-l> :bnext<CR>
-
-" Some custom programming commands
-" Close buffer without affecting splits.
-"nnoremap <leader>w :Bclose<CR>
-nnoremap <leader>w :bp\|bd #<CR>
-
-" Cmd+t = new tab
-nnoremap <silent> <Leader>t :tabnew<CR>
-
-" Cmd+w = close tab (this should happen by default)
-"nnoremap <silent> <Leader>w :tabclose<CR>
-
-" Cmd+Shift+N = new buffer
-" map <silent> <Leader>n :enew<CR>
-
-""""""""""""" < /Keymaps > """"""""""""""""""""""""""""""
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -319,17 +271,6 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 
 " Hides "Press ? for help"
 let NERDTreeMinimalUI=1
-""""""""""""" </ NerdTree > """"""""""""""""""
-
-" Column 80 marker
-" highlight OverLength ctermbg=red ctermfg=white guibg=#660000
-" match OverLength /\%81v.\+/
-
-" Sane vimdiff colorscheme
-highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
 
 " Close NerdTree if it is the only buffer left open.
 function! NERDTreeQuit()
@@ -356,6 +297,18 @@ function! NERDTreeQuit()
 endfunction
 autocmd WinEnter * call NERDTreeQuit()
 
+""""""""""""" </ NerdTree > """"""""""""""""""
+
+" Column 80 marker
+" highlight OverLength ctermbg=red ctermfg=white guibg=#660000
+" match OverLength /\%81v.\+/
+
+" Sane vimdiff colorscheme
+highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
+
 " Remove trailing whitespace before writing (applies to all files)
 autocmd BufWritePre * :%s/\s\+$//e
 
@@ -377,6 +330,7 @@ augroup END
 " After narrowing choices, allows pressing enter to select last entry in popup menu.
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
+""""""""""""" < Plugin Setting Configuration> """"""""""""""""""
 " Display buffers in tabs when only one tab is open
 let g:airline#extensions#tabline#enabled = 1
 
@@ -384,6 +338,8 @@ let g:airline#extensions#tabline#enabled = 1
 let g:syntastic_auto_loc_list = 0
 "let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
+" Prevent cursor jumping?
+let g:syntastic_auto_jump = 0
 
 "let g:tex_conceal = ""
 let g:vim_markdown_math = 1
@@ -393,7 +349,23 @@ let g:vim_markdown_follow_anchor = 1
 let g:vim_markdown_frontmatter = 1
 let g:vim_markdown_new_list_item_indent = 0
 
+let g:tex_conceal="abdgm"
+let g:SuperTabDefaultCompletionType = '<C-n>'
+let g:mkdx#settings     = { 'highlight': { 'enable': 1 },
+                        \ 'enter': { 'shift': 1 },
+                        \ 'links': { 'external': { 'enable': 1 } },
+                        \ 'toc': { 'text': 'Table of Contents', 'update_on_write': 1 },
+                        \ 'fold': { 'enable': 1 } }
+let g:polyglot_disabled = ['javascript', 'html', 'markdown', 'latex']
+""""""""""""" < \Plugin Setting Configuration > """"""""""""""""""
+
+
+
+""""""""""""" < Spelling and Grammar > """"""""""""""""""
+" for vim-polyglot users, it loads Plasticboy's markdown
+" plugin which unfortunately interferes with mkdx list indentation.
 autocmd FileType markdown,tex,latex setlocal spell
+
 " Fix the omnicomplete popup menu a bit
 " Allows typing in a few characters to narrow down the list
 set completeopt=longest,menuone
@@ -402,13 +374,12 @@ set complete+=k/home/zack/Notes/math_dict.txt
 set spelllang=en
 set spellfile=/home/zack/Notes/mathdict.utf-8.add
 set conceallevel=2
-let g:tex_conceal="abdgm"
-" Remove background color from concealed characters (grey on grey??)
-autocmd FileType markdown nmap <silent> <leader>p :call mdip#MarkdownClipboardImage()<CR><CR><CR>
-hi clear Conceal
 
-hi NonText ctermbg=none
-hi Normal guibg=NONE ctermbg=NONE
+" No spellchecking fullstops without capitalization
+set spellcapcheck=
+""""""""""""" < \Spelling and Grammar > """"""""""""""""""
+
+set foldlevel=20
 
 " Automatically re-read changed files
 set autoread
@@ -416,18 +387,11 @@ set autoread
 " Automatically save after a few seconds
 au CursorHold *.tex,*.md  update
 
-" inoremap { {}<Esc>i
-
-""" Tab Completion
-" Ultisnips config
-let g:SuperTabDefaultCompletionType = '<C-n>'
-
 autocmd FileType *
   \ if &omnifunc != '' |
   \   call SuperTabChain(&omnifunc, "<c-p>") |
   \ endif
 
-set foldlevel=20
 
 " Persistent Undo
 let s:undoDir = "/tmp/.undodir_" . $USER
@@ -441,15 +405,15 @@ set undofile
 nnoremap <Leader>o o<Esc>
 nnoremap <Leader>O O<Esc>
 
+" Paste image from clipboard
+autocmd FileType markdown nmap <silent> <leader>p :call mdip#MarkdownClipboardImage()<CR><CR><CR>
+
 " Insert line break here
 nnoremap <Leader><Enter> i<CR><Esc>k$
 
-"nmap <Leader>// :<c-u>execute 'Ag! ' .  expand("<cWORD>")<CR>
-
+" Copy file path to clipboard?
 nmap <Leader>ll :let @+=expand("%:p")<CR><CR>
 
-" Prevent cursor jumping?
-let g:syntastic_auto_jump = 0
 
 "syntax region Statement matchgroup=Delimiter start="\\begin{.*}" end="\\end{.*}" contains=Statement
 
@@ -474,6 +438,13 @@ function! s:JumpToHeader(forward, visual)
   let @/ = save
 endfunction
 
+
+""""""""""""" < Key Maps > """"""""""""""""""
+let mapleader=","
+
+" Fix capital W writing
+command! W  write
+
 " Markdown jump to next section
 noremap <silent> <buffer> <script> ]] :<C-u>call <SID>JumpToHeader(1, 0)<CR>
 noremap <silent> <buffer> <script> [[ :<C-u>call <SID>JumpToHeader(0, 0)<CR>
@@ -482,18 +453,49 @@ vnoremap <silent> <buffer> <script> [[ :<C-u>call <SID>JumpToHeader(0, 1)<CR>
 noremap <silent> <buffer> <script> ][ <nop>
 noremap <silent> <buffer> <script> [] <nop>
 
+" Then type in word to ag from the curent directory
+"map <Leader>/ :Ag!<SPACE>
 
-" No spellchecking fullstops without capitalization
-set spellcapcheck=
+" Ag the word under the cursor.
+"nmap <Leader>// :<c-u>execute 'Ag! ' .  expand("<cWORD>")<CR>
 
-" Fix capital W writing
-command! W  write
+" ,q Closes the current buffer
+nnoremap <silent> <Leader>q :Bclose<CR>
 
-let g:mkdx#settings     = { 'highlight': { 'enable': 1 },
-                        \ 'enter': { 'shift': 1 },
-                        \ 'links': { 'external': { 'enable': 1 } },
-                        \ 'toc': { 'text': 'Table of Contents', 'update_on_write': 1 },
-                        \ 'fold': { 'enable': 1 } }
-let g:polyglot_disabled = ['javascript', 'html', 'markdown', 'latex']
-" for vim-polyglot users, it loads Plasticboy's markdown
-" plugin which unfortunately interferes with mkdx list indentation.
+" Press enter to clear search highlights
+nnoremap <CR> :noh<CR><CR>
+
+" Toggle NerdTree visibility using ,n
+noremap <silent> <Leader>n :NERDTreeToggle<CR>
+
+" ,hljk = Move between windows
+nnoremap <Leader>h <C-w>h
+nnoremap <Leader>l <C-w>l
+nnoremap <Leader>j <C-w>j
+nnoremap <Leader>k <C-w>k
+
+" Ctrl Left/h & Right/l cycle between buffers
+"noremap <silent> <C-Left> :bprev<CR>
+noremap <silent> <C-h> :bprev<CR>
+"noremap <silent> <C-Right> :bnext<CR>
+noremap <silent> <C-l> :bnext<CR>
+
+" Some custom programming commands
+" Close buffer without affecting splits.
+"nnoremap <leader>w :Bclose<CR>
+nnoremap <leader>w :bp\|bd #<CR>
+
+" Cmd+t = new tab
+nnoremap <silent> <Leader>t :tabnew<CR>
+
+" Cmd+w = close tab (this should happen by default)
+"nnoremap <silent> <Leader>w :tabclose<CR>
+
+" Cmd+Shift+N = new buffer
+" map <silent> <Leader>n :enew<CR>
+""""""""""""" < \Key Maps > """"""""""""""""""
+
+" Remove background color from concealed characters (grey on grey??)
+hi NonText ctermbg=none
+hi Normal guibg=NONE ctermbg=NONE
+hi clear Conceal
