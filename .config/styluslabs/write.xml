@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<map>
+  <int name="autoHideBookmarks" value="1" />
+  <int name="autoHideScroller" value="0" />
+  <int name="autoSaveInterval" value="10" />
+  <int name="columnDetectMode" value="0" />
+  <int name="docListSort" value="1" />
+  <int name="inputSmoothing" value="3" />
+  <int name="insEmptySpace" value="1" />
+  <int name="insSpaceErase" value="0" />
+  <int name="liveSelect" value="0" />
+  <int name="mouseMode" value="1" />
+  <int name="pageColor" value="-16777216" />
+  <int name="penButtonMode" value="20" />
+  <int name="penType" value="11" />
+  <int name="popupToolbar" value="1" />
+  <int name="reflow" value="0" />
+  <int name="scrollerLocation" value="1" />
+  <int name="showAdvPrefs" value="1" />
+  <int name="singleFile" value="1" />
+  <int name="singleTouchMode" value="1" />
+  <int name="strokeCounter" value="34" />
+  <int name="thumbFirstPage" value="1" />
+  <int name="touchUI" value="1" />
+  <float name="marginLeft" value="100" />
+  <float name="pageHeight" value="5000" />
+  <float name="pageSpacing" value="10" />
+  <float name="pageWidth" value="800" />
+  <float name="preScale" value="1.43" />
+  <string name="backupFilename" value="" />
+  <string name="clippingDoc" value="/home/zack/.config/styluslabs/saved/clippings.html" />
+  <string name="currFolder" value="/home/zack/Notes/Class_Notes/2020/Talks/GSTopology/Talk 2 Morse Theory" />
+  <string name="docTags" value="" />
+  <string name="docTitle" value="" />
+  <string name="fileExt" value="html" />
+  <string name="lastURL" value="" />
+  <string name="mainWindowGeometry" value="AdnQywADAAAAAAeEAAAAHQAADskAAAQEAAAHZwAAABQAAAqHAAABRAAAAAACAAAAB4AAAAeGAAAAHwAADscAAAQC" />
+  <string name="mainWindowState" value="AAAA/wAAAAD9AAAAAQAAAAAAAADLAAAHRfwCAAAAAvsAAAAYAGIAbwBvAGsAbQBhAHIAawBEAG8AYwBrAAAAADsAAAbxAAAAXAD////7AAAAGABjAGwAaQBwAHAAaQBuAGcARABvAGMAawAAAAA7AAAHRQAAAGMA////AAAHQgAAA6oAAAAEAAAABAAAAAgAAAAI/AAAAAEAAAACAAAAAQAAABAAdABvAG8AbABCAGEAcgAwAQAAAAD/////AAAAAAAAAAA=" />
+  <string name="recentDocs" value="/home/zack/Notes/Class_Notes/2020/Talks/GSTopology/Talk 2 Morse Theory/Sketches.html:::/home/zack/Dropbox/Mar 20 6.46PM.html:::/home/zack/Dropbox/Mar 19 8.31PM.html:::/home/zack/Dropbox/test.html:::/home/zack/Dropbox/GRE/Midterm 2 Review.html:::/home/zack/Dropbox/GRE/May 12 11.05PM.html:::/home/zack/Dropbox/GRE/Jan 10 12.33AM.html:::/home/zack/Dropbox/GRE/Screenshot Scraps.html:::/home/zack/Dropbox/GRE/Notes - Snippets from Cracking the GRE.html:::/home/zack/Dropbox/GRE/Diagrams.html:::/home/zack/Dropbox/GRE/Scratch.html" />
+  <string name="syncPass" value="" />
+  <string name="syncServer" value="" />
+  <string name="syncUser" value="dzackgarza" />
+  <string name="toolBars" value="docTitle,stretch,separator,actionDraw,penColor,penWidth,actionUndo,actionRedo,actionShow_Clippings,actionStroke_Eraser,actionTools_Menu,actionExpand_Down,actionFullscreen,separator,actionOverflow_Menu" />
+  <string name="toolModes" value="14 20 25" />
+  <pen color="4294967295" width="2" pressure="1" drawunder="false" snaptogrid="false" />
+  <pen color="4286545919" width="2" pressure="1" drawunder="false" snaptogrid="false" />
+  <pen color="4294919424" width="2" pressure="1" drawunder="false" snaptogrid="false" />
+  <pen color="4286578559" width="2" pressure="1" drawunder="false" snaptogrid="false" />
+  <pen color="4294902015" width="2" pressure="1" drawunder="false" snaptogrid="false" />
+  <pen color="4278190080" width="2" pressure="1" drawunder="false" snaptogrid="false" />
+  <pen color="4278190080" width="1.5" pressure="1" drawunder="false" snaptogrid="false" />
+  <pen color="4278190080" width="2" pressure="2" drawunder="false" snaptogrid="false" />
+  <ruling name="default">
+    <g class="ruleline" />
+  </ruling>
+</map>

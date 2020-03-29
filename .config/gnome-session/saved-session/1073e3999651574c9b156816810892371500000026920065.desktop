@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=yakuake
+Comment=Client 1073e3999651574c9b156816810892371500000026920065 which was automatically saved
+Icon=system-run
+Type=Application
+StartupNotify=true
+X-GNOME-Autostart-startup-id=1073e3999651574c9b156816810892371500000026920065
+Exec=yakuake -session 1073e3999651574c9b156816810892371500000026920065_1568347528_285815
+X-GNOME-Autostart-discard-exec=rm /home/zack/.config/session/yakuake_1073e3999651574c9b156816810892371500000026920065_1568347528_285815

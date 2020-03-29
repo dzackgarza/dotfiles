@@ -1,0 +1,19 @@
+[Data Source]
+DisplayName=dzackgarza@gmail.com
+Enabled=true
+Parent=2ea5084d6908dd5314e9b4915ee30fa8c13d7e0f
+
+[Mail Transport]
+BackendName=smtp
+
+[Authentication]
+Host=smtp-mail.outlook.com
+Method=XOAUTH2
+Port=587
+ProxyUid=system-proxy
+RememberPassword=true
+User=dzackgarza@gmail.com
+CredentialName=
+
+[Security]
+Method=starttls-on-standard-port

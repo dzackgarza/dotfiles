@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=gnome-shell
+Comment=Client 105745b8d3b2b0587155254211423145100000024570000 which was automatically saved
+Icon=system-run
+Type=Application
+StartupNotify=true
+X-GNOME-Autostart-startup-id=105745b8d3b2b0587155254211423145100000024570000
+Exec=gnome-shell --sm-client-id 105745b8d3b2b0587155254211423145100000024570000
+X-GNOME-Autostart-discard-exec=rm -f /home/zack/.config/mutter/sessions/105745b8d3b2b0587155254211423145100000024570000.ms
+X-GNOME-Provides=panel;windowmanager;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+X-GNOME-Autostart-Phase=DisplayServer
+X-GNOME-AutoRestart=false

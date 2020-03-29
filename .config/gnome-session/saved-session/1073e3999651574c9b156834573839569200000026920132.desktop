@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=okular
+Comment=Client 1073e3999651574c9b156834573839569200000026920132 which was automatically saved
+Icon=system-run
+Type=Application
+StartupNotify=true
+X-GNOME-Autostart-startup-id=1073e3999651574c9b156834573839569200000026920132
+Exec=okular -session 1073e3999651574c9b156834573839569200000026920132_1568347528_283817
+X-GNOME-Autostart-discard-exec=rm /home/zack/.config/session/okular_1073e3999651574c9b156834573839569200000026920132_1568347528_283817

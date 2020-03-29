@@ -1,0 +1,7 @@
+game:
+  appid: 0ad
+  args: ''
+  exe: /usr/bin/0ad
+linux: {}
+system:
+  disable_runtime: true

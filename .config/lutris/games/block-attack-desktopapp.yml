@@ -1,0 +1,7 @@
+game:
+  appid: blocks
+  args: ''
+  exe: /usr/bin/blocks
+linux: {}
+system:
+  disable_runtime: true

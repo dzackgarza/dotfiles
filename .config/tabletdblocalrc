@@ -1,0 +1,23 @@
+[22FE]
+layout=unknown
+model=unknown
+name=ELAN Touchscreen
+padbuttons=1
+statusleds=0
+touchring=false
+touchsensorid=
+touchstripl=false
+touchstripr=false
+wheel=false
+
+[306F]
+hwbutton1=3
+layout=unknown
+model=unknown
+name=ELAN1200:00 04F3:306F Touchpad touch
+padbuttons=1
+statusleds=0
+touchring=false
+touchstripl=false
+touchstripr=false
+wheel=false

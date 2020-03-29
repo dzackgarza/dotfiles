@@ -1,0 +1,7 @@
+Zack Garza is a first-year graduate student in Mathematics at the University of Georgia. Zack began his education at a junior college in California, worked in software and data science for several years, and then transferred to the University of California San Diego to earn his undergraduate degree in Mathematics.
+
+Zack has been involved in Mathematics in many ways, including presiding over the undergraduate Mathematics club at UCSD, presenting a number of talks and technical workshops, and organizing several undergraduate Mathematics competitions. He began taking graduate Mathematics courses as an undergraduate, and took on an undergraduate research project which resulted in an expository paper and a poster presentation. He also tutors science and Mathematics courses on an ongoing basis.
+
+Zack's primary research is in Topology, a branch of Mathematics that studies different types of "spaces", the ways that they can be continuously deformed, and how they can be classified and distinguished from each other. He was drawn to the University of Georgia due to the large group of faculty working in this area, as well as the size and strength of other nearby research areas in the department. He was also particular drawn to the friendly and welcoming nature of the department, whose faculty are as kind and welcoming as they are knowledgeable.
+
+In his spare time, Zack 

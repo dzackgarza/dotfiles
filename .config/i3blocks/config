@@ -1,0 +1,63 @@
+[all_pdfs]
+full_text="All PDFs"
+command=/home/zack/dotfiles/bin/dmenuAllPDFs.sh > /dev/null 2>&1 &
+
+[recent_pdfs]
+full_text="Recent PDFs"
+command=/home/zack/dotfiles/bin/dmenuRecentPDFs.sh
+
+[annotated_pdfs]
+full_text="Annotated PDFs"
+command=/home/zack/dotfiles/bin/dmenuAnnotatedPDFs.sh
+
+[battery2]
+align=left
+command=/home/zack/dotfiles/i3/battery2
+markup=pango
+interval=30
+
+[calendar]
+command=/home/zack/dotfiles/i3/calendar
+interval=30
+LABEL= 
+DATEFMT=+%A %B %d %l:%M %p
+HEIGHT=180
+WIDTH=220
+
+
+[cpu_usage]
+markup=pango
+command=grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage "%"}'
+interval=2
+label=<span color='#FFFFFF' font='FontAwesome' size='x-large'> </span>
+#min_width=CPU: 100.00%
+#T_WARN=50
+#T_CRIT=80
+#DECIMALS=2
+
+[temperature]
+command=/home/zack/dotfiles/i3/temperature
+markup=pango
+label=<span color='#FFFFFF' font='FontAwesome' size='large'> </span>
+interval=15
+
+
+[volume-pulseaudio]
+command=/home/zack/dotfiles/i3/volume-pulseaudio
+interval=persist
+signal=1
+LONG_FORMAT="${SYMB} ${VOL}%"
+SHORT_FORMAT="${SYMB} ${VOL}%"
+AUDIO_HIGH_SYMBOL='  '
+AUDIO_MED_THRESH=50
+AUDIO_MED_SYMBOL='  '
+AUDIO_LOW_THRESH=0
+AUDIO_LOW_SYMBOL='  '
+AUDIO_DELTA=5
+DEFAULT_COLOR="#ffffff"
+SUBSCRIBE=1
+
+[shutdown_menu]
+markup=pango
+full_text=<span color='#FF2200' font='FontAwesome' size='x-large'></span>
+command=/home/zack/dotfiles/i3/shutdown_menu
