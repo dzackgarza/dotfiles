@@ -417,7 +417,6 @@ set autoread
 au CursorHold *.tex,*.md  update
 
 " inoremap { {}<Esc>i
-let g:polyglot_disabled = ['latex']
 
 """ Tab Completion
 " Ultisnips config
@@ -452,7 +451,6 @@ nmap <Leader>ll :let @+=expand("%:p")<CR><CR>
 " Prevent cursor jumping?
 let g:syntastic_auto_jump = 0
 
-let g:polyglot_disabled = ['javascript', 'html']
 "syntax region Statement matchgroup=Delimiter start="\\begin{.*}" end="\\end{.*}" contains=Statement
 
 " Jump to markdown headers
@@ -496,5 +494,6 @@ let g:mkdx#settings     = { 'highlight': { 'enable': 1 },
                         \ 'links': { 'external': { 'enable': 1 } },
                         \ 'toc': { 'text': 'Table of Contents', 'update_on_write': 1 },
                         \ 'fold': { 'enable': 1 } }
-let g:polyglot_disabled = ['markdown'] " for vim-polyglot users, it loads Plasticboy's markdown
-                                       " plugin which unfortunately interferes with mkdx list indentation.
+let g:polyglot_disabled = ['javascript', 'html', 'markdown', 'latex']
+" for vim-polyglot users, it loads Plasticboy's markdown
+" plugin which unfortunately interferes with mkdx list indentation.
