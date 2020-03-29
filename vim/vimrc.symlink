@@ -398,9 +398,9 @@ autocmd FileType markdown,tex,latex setlocal spell
 " Allows typing in a few characters to narrow down the list
 set completeopt=longest,menuone
 set complete+=kspell
-set complete+=k/home/zack/math_dict.txt
+set complete+=k/home/zack/Notes/math_dict.txt
 set spelllang=en
-set spellfile=/home/zack/mathdict.utf-8.add
+set spellfile=/home/zack/Notes/mathdict.utf-8.add
 set conceallevel=2
 let g:tex_conceal="abdgm"
 " Remove background color from concealed characters (grey on grey??)
