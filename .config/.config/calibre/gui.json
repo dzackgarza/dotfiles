@@ -1,0 +1,217 @@
+{
+  "quick_start_guide_added": true, 
+  "recently_used_languages": [], 
+  "book_details_splitter_horizontal_state": [
+    true, 
+    200
+  ], 
+  "book_list_pin_splitter_state": {
+    "__class__": "bytearray", 
+    "__value__": "AAAA/wAAAAEAAAACAAABAAAAAEYA/////wEAAAABAA=="
+  }, 
+  "convert_single_dialog_geom": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywACAAAAAABGAAAAPQAAB38AAAP5AAAARgAAAGIAAAd/AAAD+QAAAAAAAAAAB4A="
+  }, 
+  "cover_grid_show_title": true, 
+  "tag browser search box visible": false, 
+  "tag_list_editor_table_widths": [
+    174, 
+    174, 
+    174
+  ], 
+  "default_author_link": null, 
+  "previous_sort_order_BooksView": {
+    "timestamp": false, 
+    "size": true
+  }, 
+  "replace_scene_breaks_history": [
+    "", 
+    "<hr />", 
+    "\u2217 \u2217 \u2217", 
+    "\u2022 \u2022 \u2022", 
+    "\u2666 \u2666 \u2666", 
+    "\u2020 \u2020", 
+    "\u2021 \u2021 \u2021", 
+    "\u221e \u221e \u221e", 
+    "\u00a4 \u00a4 \u00a4"
+  ], 
+  "cover_grid_texture": null, 
+  "jobs_dialog_geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywACAAAAAAGqAAAARQAABd4AAALzAAABqgAAAGoAAAXeAAAC8wAAAAAAAAAAB4A="
+  }, 
+  "preferences dialog geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywACAAAAAAEHAAAAoQAABKgAAAOVAAABBwAAAMYAAASoAAADlQAAAAAAAAAAB4A="
+  }, 
+  "bulk_metadata_window_tab": 0, 
+  "tag_browser_splitter_horizontal_state": [
+    true, 
+    319
+  ], 
+  "jobs view column layout3": {
+    "__class__": "bytearray", 
+    "__value__": "AAAA/wAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2EAAAAFAQEBAAAAAAAAAAAAAAAAAGT/////AAAAhAAAAAAAAAAFAAAB0QAAAAEAAAAAAAAAZAAAAAEAAAAAAAAAZAAAAAEAAAAAAAAAZAAAAAEAAAAAAAAAZAAAAAEAAAAAAAAD6AAAAAAA"
+  }, 
+  "tag_list_editor_dialog_geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywACAAAAAAMTAAABAAAABXsAAAKgAAADEwAAASUAAAV7AAACoAAAAAAAAAAAB4A="
+  }, 
+  "show_emblems": false, 
+  "library_usage_stats": {
+    "/home/zack/Calibre Library": 9
+  }, 
+  "quickview visible": false, 
+  "grid view visible": true, 
+  "convert_bulk_dialog_geom": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywACAAAAAABGAAAAPQAAB38AAAP5AAAARgAAAGIAAAd/AAAD+QAAAAAAAAAAB4A="
+  }, 
+  "auto_add_path": "/run/media/zack/A63881E83881B837/Users/Zack/Dropbox", 
+  "custom_colors_for_color_dialog": [
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ]
+  ], 
+  "blocked_auto_formats": [
+    "doc", 
+    "docm", 
+    "docx", 
+    "htm", 
+    "html", 
+    "markdown", 
+    "md", 
+    "odt", 
+    "rar", 
+    "text", 
+    "textile", 
+    "txt", 
+    "xhtm", 
+    "xhtml", 
+    "zip"
+  ], 
+  "bulk-mde-casing-algorithm": "title_case", 
+  "auto_add_check_for_duplicates": true, 
+  "search bar visible": true, 
+  "filename_pattern_history": [
+    "(?P<title>.+) - (?P<author>[^_]+)", 
+    "(?P<title>.+)", 
+    "(?P<author>[^_-]+) -?\\s*(?P<series>[^_0-9-]*)(?P<series_index>[0-9]*)\\s*-\\s*(?P<title>[^_].+) ?"
+  ], 
+  "metasingle_window_geometry3": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywACAAAAAABGAAAAHQAAB38AAAQLAAAARgAAAEIAAAd/AAAECwAAAAAAAAAAB4A="
+  }, 
+  "manual_add_auto_convert": false, 
+  "cover_browser_splitter_vertical_state": [
+    false, 
+    300
+  ], 
+  "cover_grid_color": [
+    80, 
+    80, 
+    80
+  ], 
+  "duplicates-question-dialog-geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywACAAAAAAEaAAAA3QAAAz4AAAJ+AAABGgAAAQIAAAM+AAACfgAAAAAAAAAAB4A="
+  }, 
+  "bulk_metadata_window_geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywACAAAAAABGAAAAJAAAB38AAAQSAAAARgAAAEkAAAd/AAAEEgAAAAAAAAAAB4A="
+  }
+}

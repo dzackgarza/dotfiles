@@ -1,0 +1,2072 @@
+20:03:39 Environment | SparkleShare 3.28.0 (Flatpak)
+20:03:39 Environment | Git LFS 2.4.0
+20:03:39 Environment | Git 2.17.0
+20:03:39 Environment | GNOME (Linux 5.5.13.1)
+20:03:39 Cmd | gio set "/home/zack/SparkleShare" metadata::custom-icon-name org.sparkleshare.SparkleShare
+20:03:39 Environment | GTK+ 3.22.30
+20:03:39 Environment | Status Icon: AppIndicator
+20:03:41 /home/zack/SparkleShare/github.com/Arizona-Winter-School-2019 | Initializing...
+20:03:41 Cmd | Arizona-Winter-School-2019 | git config core.ignorecase false
+20:03:41 Cmd | Arizona-Winter-School-2019 | git config remote.origin.url "ssh://git@github.com/dzackgarza/Arizona-Winter-School-2019.git"
+20:03:41 Cmd | Arizona-Winter-School-2019 | git config core.sshCommand ssh -i /home/zack/.config/org.sparkleshare.SparkleShare/ssh/2018-06-09_14h04.key -o UserKnownHostsFile=/home/zack/.config/org.sparkleshare.SparkleShare/ssh/known_hosts -o IdentitiesOnly=yes -o PasswordAuthentication=no -F /dev/null
+20:03:41 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Arizona-Winter-School-2019/.git/hooks/pre-push
+20:03:41 Cmd | Arizona-Winter-School-2019 | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:03:42 /home/zack/SparkleShare/github.com/Complex-Analysis | Initializing...
+20:03:42 Git | Arizona-Winter-School-2019 | Checking for remote changes...
+20:03:42 Cmd | Arizona-Winter-School-2019 | git rev-parse HEAD
+20:03:42 Cmd | Arizona-Winter-School-2019 | git config core.ignorecase true
+20:03:42 Cmd | Arizona-Winter-School-2019 | git config core.ignorecase false
+20:03:42 Cmd | Arizona-Winter-School-2019 | git rev-parse --abbrev-ref HEAD
+20:03:42 Cmd | Arizona-Winter-School-2019 | git ls-remote --heads --exit-code origin master
+20:03:42 Cmd | Complex-Analysis | git config core.ignorecase false
+20:03:42 Cmd | Complex-Analysis | git config remote.origin.url "ssh://git@github.com/dzackgarza/Complex-Analysis.git"
+20:03:42 Cmd | Complex-Analysis | git config core.sshCommand ssh -i /home/zack/.config/org.sparkleshare.SparkleShare/ssh/2018-06-09_14h04.key -o UserKnownHostsFile=/home/zack/.config/org.sparkleshare.SparkleShare/ssh/known_hosts -o IdentitiesOnly=yes -o PasswordAuthentication=no -F /dev/null
+20:03:42 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:03:42 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:03:42 Git | Complex-Analysis | Checking for remote changes...
+20:03:42 /home/zack/SparkleShare/github.com/dotfiles | Initializing...
+20:03:42 Cmd | Complex-Analysis | git rev-parse HEAD
+20:03:42 Cmd | Complex-Analysis | git config core.ignorecase true
+20:03:42 Cmd | Complex-Analysis | git config core.ignorecase false
+20:03:42 Cmd | Complex-Analysis | git rev-parse --abbrev-ref HEAD
+20:03:42 Cmd | Complex-Analysis | git ls-remote --heads --exit-code origin master
+20:03:43 Git | Arizona-Winter-School-2019 | No remote changes, local+remote: 17ae3ec485dc06fa8e6e3b991e12a67d7db9260c
+20:03:43 Cmd | Arizona-Winter-School-2019 | git status --porcelain
+20:03:43 Git | Complex-Analysis | No remote changes, local+remote: d8394fd908d593a0afb26c948a585414c71414a0
+20:03:43 Cmd | Complex-Analysis | git status --porcelain
+20:03:43 Cmd | dotfiles | git config core.ignorecase false
+20:03:43 Cmd | dotfiles | git config remote.origin.url "ssh://git@github.com/dzackgarza/dotfiles.git"
+20:03:43 Cmd | dotfiles | git config core.sshCommand ssh -i /home/zack/.config/org.sparkleshare.SparkleShare/ssh/2018-06-09_14h04.key -o UserKnownHostsFile=/home/zack/.config/org.sparkleshare.SparkleShare/ssh/known_hosts -o IdentitiesOnly=yes -o PasswordAuthentication=no -F /dev/null
+20:03:43 Cmd | chmod 700 /home/zack/SparkleShare/github.com/dotfiles/.git/hooks/pre-push
+20:03:43 Cmd | dotfiles | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:03:43 /home/zack/SparkleShare/github.com/dzackgarza.comv2018 | Initializing...
+20:03:43 Git | dotfiles | Checking for remote changes...
+20:03:43 Cmd | dotfiles | git rev-parse HEAD
+20:03:43 Cmd | dotfiles | git config core.ignorecase true
+20:03:43 Cmd | dotfiles | git config core.ignorecase false
+20:03:43 Cmd | dotfiles | git rev-parse --abbrev-ref HEAD
+20:03:43 Cmd | dotfiles | git ls-remote --heads --exit-code origin master
+20:03:44 Git | dotfiles | No remote changes, local+remote: de5c0278b353fae9e66ddc0c7108796be9ac3d18
+20:03:44 Cmd | dotfiles | git status --porcelain
+20:03:45 Cmd | dzackgarza.comv2018 | git config core.ignorecase false
+20:03:45 Cmd | dzackgarza.comv2018 | git config remote.origin.url "ssh://git@github.com/dzackgarza/dzackgarza.comv2018.git"
+20:03:45 Cmd | dzackgarza.comv2018 | git config core.sshCommand ssh -i /home/zack/.config/org.sparkleshare.SparkleShare/ssh/2018-06-09_14h04.key -o UserKnownHostsFile=/home/zack/.config/org.sparkleshare.SparkleShare/ssh/known_hosts -o IdentitiesOnly=yes -o PasswordAuthentication=no -F /dev/null
+20:03:45 Cmd | chmod 700 /home/zack/SparkleShare/github.com/dzackgarza.comv2018/.git/hooks/pre-push
+20:03:45 Cmd | dzackgarza.comv2018 | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:03:46 /home/zack/SparkleShare/github.com/GSCATG-2019 | Initializing...
+20:03:46 Git | dzackgarza.comv2018 | Checking for remote changes...
+20:03:46 Cmd | dzackgarza.comv2018 | git rev-parse HEAD
+20:03:46 Cmd | dzackgarza.comv2018 | git config core.ignorecase true
+20:03:46 Cmd | dzackgarza.comv2018 | git config core.ignorecase false
+20:03:46 Cmd | dzackgarza.comv2018 | git rev-parse --abbrev-ref HEAD
+20:03:46 Cmd | dzackgarza.comv2018 | git ls-remote --heads --exit-code origin master
+20:03:46 Cmd | GSCATG-2019 | git config core.ignorecase false
+20:03:46 Cmd | GSCATG-2019 | git config remote.origin.url "ssh://git@github.com/dzackgarza/GSCATG-2019.git"
+20:03:46 Cmd | GSCATG-2019 | git config core.sshCommand ssh -i /home/zack/.config/org.sparkleshare.SparkleShare/ssh/2018-06-09_14h04.key -o UserKnownHostsFile=/home/zack/.config/org.sparkleshare.SparkleShare/ssh/known_hosts -o IdentitiesOnly=yes -o PasswordAuthentication=no -F /dev/null
+20:03:46 Cmd | chmod 700 /home/zack/SparkleShare/github.com/GSCATG-2019/.git/hooks/pre-push
+20:03:46 Cmd | GSCATG-2019 | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:03:46 Cmd | GSCATG-2019 | git --no-pager log -n 75 --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:03:46 Git | GSCATG-2019 | Checking for remote changes...
+20:03:46 Cmd | GSCATG-2019 | git rev-parse HEAD
+20:03:46 /home/zack/SparkleShare/github.com/Notes | Initializing...
+20:03:46 Cmd | GSCATG-2019 | git config core.ignorecase true
+20:03:46 Cmd | GSCATG-2019 | git config core.ignorecase false
+20:03:46 Cmd | GSCATG-2019 | git rev-parse --abbrev-ref HEAD
+20:03:46 Cmd | GSCATG-2019 | git ls-remote --heads --exit-code origin master
+20:03:46 Cmd | Notes | git config core.ignorecase false
+20:03:46 Cmd | Notes | git config remote.origin.url "ssh://git@github.com/dzackgarza/Notes.git"
+20:03:46 Cmd | Notes | git config core.sshCommand ssh -i /home/zack/.config/org.sparkleshare.SparkleShare/ssh/2018-06-09_14h04.key -o UserKnownHostsFile=/home/zack/.config/org.sparkleshare.SparkleShare/ssh/known_hosts -o IdentitiesOnly=yes -o PasswordAuthentication=no -F /dev/null
+20:03:46 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Notes/.git/hooks/pre-push
+20:03:46 Cmd | Notes | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:03:46 Git | dzackgarza.comv2018 | No remote changes, local+remote: 8215e45609dd862743dfb77a3b0730bb1d072b85
+20:03:46 Git | GSCATG-2019 | No remote changes, local+remote: 4d70e6e5eb001f445c5a9ed9fc103a0432611c8e
+20:03:46 Cmd | GSCATG-2019 | git status --porcelain
+20:03:47 /home/zack/SparkleShare/github.com/Redbud-Topology-Conference-2019 | Initializing...
+20:03:47 Git | Notes | Checking for remote changes...
+20:03:47 Cmd | Notes | git rev-parse HEAD
+20:03:47 Cmd | Notes | git config core.ignorecase true
+20:03:47 Cmd | Redbud-Topology-Conference-2019 | git config core.ignorecase false
+20:03:47 Cmd | Notes | git config core.ignorecase false
+20:03:47 Cmd | Redbud-Topology-Conference-2019 | git config remote.origin.url "ssh://git@github.com/dzackgarza/Redbud-Topology-Conference-2019.git"
+20:03:47 Cmd | Notes | git rev-parse --abbrev-ref HEAD
+20:03:47 Cmd | Redbud-Topology-Conference-2019 | git config core.sshCommand ssh -i /home/zack/.config/org.sparkleshare.SparkleShare/ssh/2018-06-09_14h04.key -o UserKnownHostsFile=/home/zack/.config/org.sparkleshare.SparkleShare/ssh/known_hosts -o IdentitiesOnly=yes -o PasswordAuthentication=no -F /dev/null
+20:03:48 Cmd | Notes | git ls-remote --heads --exit-code origin master
+20:03:48 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Redbud-Topology-Conference-2019/.git/hooks/pre-push
+20:03:48 Cmd | Redbud-Topology-Conference-2019 | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:03:48 Cmd | Redbud-Topology-Conference-2019 | git --no-pager log -n 75 --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:03:48 /home/zack/SparkleShare/github.com/Research | Initializing...
+20:03:48 Git | Redbud-Topology-Conference-2019 | Checking for remote changes...
+20:03:48 Cmd | Redbud-Topology-Conference-2019 | git rev-parse HEAD
+20:03:48 Cmd | Redbud-Topology-Conference-2019 | git config core.ignorecase true
+20:03:48 Cmd | Redbud-Topology-Conference-2019 | git config core.ignorecase false
+20:03:48 Cmd | Redbud-Topology-Conference-2019 | git rev-parse --abbrev-ref HEAD
+20:03:48 Cmd | Redbud-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+20:03:48 Cmd | Research | git config core.ignorecase false
+20:03:48 Cmd | Research | git config remote.origin.url "ssh://git@github.com/dzackgarza/Research.git"
+20:03:48 Cmd | Research | git config core.sshCommand ssh -i /home/zack/.config/org.sparkleshare.SparkleShare/ssh/2018-06-09_14h04.key -o UserKnownHostsFile=/home/zack/.config/org.sparkleshare.SparkleShare/ssh/known_hosts -o IdentitiesOnly=yes -o PasswordAuthentication=no -F /dev/null
+20:03:48 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Research/.git/hooks/pre-push
+20:03:48 Cmd | Research | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:03:48 Git | Research | Checking for remote changes...
+20:03:48 Cmd | Research | git rev-parse HEAD
+20:03:48 /home/zack/SparkleShare/github.com/UGA-Topology-Conference-2019 | Initializing...
+20:03:48 Cmd | Research | git config core.ignorecase true
+20:03:48 Cmd | Research | git config core.ignorecase false
+20:03:48 Cmd | Research | git rev-parse --abbrev-ref HEAD
+20:03:48 Cmd | Research | git ls-remote --heads --exit-code origin master
+20:03:48 Git | Notes | No remote changes, local+remote: 4aae1846eee21fd032a1eeeba277503e8ecdd18d
+20:03:48 Cmd | dzackgarza.comv2018 | git status --porcelain
+20:03:48 Git | Redbud-Topology-Conference-2019 | No remote changes, local+remote: b730f46cbd39ee0af9583ce7046f70890a0b0e92
+20:03:48 Cmd | Redbud-Topology-Conference-2019 | git status --porcelain
+20:03:48 Cmd | Notes | git status --porcelain
+20:03:49 Cmd | UGA-Topology-Conference-2019 | git config core.ignorecase false
+20:03:49 Cmd | UGA-Topology-Conference-2019 | git config remote.origin.url "ssh://git@github.com/dzackgarza/UGA-Topology-Conference-2019.git"
+20:03:49 Cmd | UGA-Topology-Conference-2019 | git config core.sshCommand ssh -i /home/zack/.config/org.sparkleshare.SparkleShare/ssh/2018-06-09_14h04.key -o UserKnownHostsFile=/home/zack/.config/org.sparkleshare.SparkleShare/ssh/known_hosts -o IdentitiesOnly=yes -o PasswordAuthentication=no -F /dev/null
+20:03:49 Cmd | chmod 700 /home/zack/SparkleShare/github.com/UGA-Topology-Conference-2019/.git/hooks/pre-push
+20:03:49 Cmd | UGA-Topology-Conference-2019 | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:03:49 Cmd | UGA-Topology-Conference-2019 | git --no-pager log -n 75 --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:03:49 Git | UGA-Topology-Conference-2019 | Checking for remote changes...
+20:03:49 Cmd | UGA-Topology-Conference-2019 | git rev-parse HEAD
+20:03:49 Cmd | UGA-Topology-Conference-2019 | git config core.ignorecase true
+20:03:49 Cmd | UGA-Topology-Conference-2019 | git config core.ignorecase false
+20:03:49 Cmd | UGA-Topology-Conference-2019 | git rev-parse --abbrev-ref HEAD
+20:03:49 Cmd | UGA-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+20:03:49 Git | Research | No remote changes, local+remote: 327c1fce14967ef35c7c5d7255299ae3ecfcd601
+20:03:49 Cmd | Research | git status --porcelain
+20:03:49 Git | UGA-Topology-Conference-2019 | No remote changes, local+remote: 2f2460e355ee671a576467e33127d4ba7ab119c2
+20:03:49 Cmd | UGA-Topology-Conference-2019 | git status --porcelain
+20:08:43 Git | Arizona-Winter-School-2019 | Checking for remote changes...
+20:08:43 Cmd | Arizona-Winter-School-2019 | git rev-parse HEAD
+20:08:43 Cmd | Arizona-Winter-School-2019 | git ls-remote --heads --exit-code origin master
+20:08:43 Git | Complex-Analysis | Checking for remote changes...
+20:08:43 Cmd | Complex-Analysis | git rev-parse HEAD
+20:08:43 Cmd | Complex-Analysis | git ls-remote --heads --exit-code origin master
+20:08:43 Git | Arizona-Winter-School-2019 | No remote changes, local+remote: 17ae3ec485dc06fa8e6e3b991e12a67d7db9260c
+20:08:44 Git | Complex-Analysis | No remote changes, local+remote: d8394fd908d593a0afb26c948a585414c71414a0
+20:08:44 Git | dotfiles | Checking for remote changes...
+20:08:44 Cmd | dotfiles | git rev-parse HEAD
+20:08:44 Cmd | dotfiles | git ls-remote --heads --exit-code origin master
+20:08:45 Git | dotfiles | No remote changes, local+remote: de5c0278b353fae9e66ddc0c7108796be9ac3d18
+20:08:46 Git | GSCATG-2019 | Checking for remote changes...
+20:08:46 Cmd | GSCATG-2019 | git rev-parse HEAD
+20:08:46 Cmd | GSCATG-2019 | git ls-remote --heads --exit-code origin master
+20:08:47 Git | GSCATG-2019 | No remote changes, local+remote: 4d70e6e5eb001f445c5a9ed9fc103a0432611c8e
+20:08:48 Git | dzackgarza.comv2018 | Checking for remote changes...
+20:08:48 Cmd | dzackgarza.comv2018 | git rev-parse HEAD
+20:08:48 Cmd | dzackgarza.comv2018 | git ls-remote --heads --exit-code origin master
+20:08:48 Git | Redbud-Topology-Conference-2019 | Checking for remote changes...
+20:08:48 Cmd | Redbud-Topology-Conference-2019 | git rev-parse HEAD
+20:08:48 Cmd | Redbud-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+20:08:48 Git | Notes | Checking for remote changes...
+20:08:48 Cmd | Notes | git rev-parse HEAD
+20:08:48 Cmd | Notes | git ls-remote --heads --exit-code origin master
+20:08:49 Git | dzackgarza.comv2018 | No remote changes, local+remote: 8215e45609dd862743dfb77a3b0730bb1d072b85
+20:08:49 Git | Research | Checking for remote changes...
+20:08:49 Cmd | Research | git rev-parse HEAD
+20:08:49 Cmd | Research | git ls-remote --heads --exit-code origin master
+20:08:49 Git | Redbud-Topology-Conference-2019 | No remote changes, local+remote: b730f46cbd39ee0af9583ce7046f70890a0b0e92
+20:08:49 Git | Notes | No remote changes, local+remote: 4aae1846eee21fd032a1eeeba277503e8ecdd18d
+20:08:49 Git | UGA-Topology-Conference-2019 | Checking for remote changes...
+20:08:49 Cmd | UGA-Topology-Conference-2019 | git rev-parse HEAD
+20:08:49 Cmd | UGA-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+20:08:49 Git | Research | No remote changes, local+remote: 327c1fce14967ef35c7c5d7255299ae3ecfcd601
+20:08:50 Git | UGA-Topology-Conference-2019 | No remote changes, local+remote: 2f2460e355ee671a576467e33127d4ba7ab119c2
+20:13:43 Git | Arizona-Winter-School-2019 | Checking for remote changes...
+20:13:43 Cmd | Arizona-Winter-School-2019 | git rev-parse HEAD
+20:13:43 Cmd | Arizona-Winter-School-2019 | git ls-remote --heads --exit-code origin master
+20:13:43 Git | Complex-Analysis | Checking for remote changes...
+20:13:43 Cmd | Complex-Analysis | git rev-parse HEAD
+20:13:43 Cmd | Complex-Analysis | git ls-remote --heads --exit-code origin master
+20:13:43 Git | Arizona-Winter-School-2019 | No remote changes, local+remote: 17ae3ec485dc06fa8e6e3b991e12a67d7db9260c
+20:13:44 Git | Complex-Analysis | No remote changes, local+remote: d8394fd908d593a0afb26c948a585414c71414a0
+20:13:44 Git | dotfiles | Checking for remote changes...
+20:13:44 Cmd | dotfiles | git rev-parse HEAD
+20:13:44 Cmd | dotfiles | git ls-remote --heads --exit-code origin master
+20:13:45 Git | dotfiles | No remote changes, local+remote: de5c0278b353fae9e66ddc0c7108796be9ac3d18
+20:13:46 Git | GSCATG-2019 | Checking for remote changes...
+20:13:46 Cmd | GSCATG-2019 | git rev-parse HEAD
+20:13:46 Cmd | GSCATG-2019 | git ls-remote --heads --exit-code origin master
+20:13:47 Git | GSCATG-2019 | No remote changes, local+remote: 4d70e6e5eb001f445c5a9ed9fc103a0432611c8e
+20:13:48 Git | dzackgarza.comv2018 | Checking for remote changes...
+20:13:48 Cmd | dzackgarza.comv2018 | git rev-parse HEAD
+20:13:48 Cmd | dzackgarza.comv2018 | git ls-remote --heads --exit-code origin master
+20:13:48 Git | Redbud-Topology-Conference-2019 | Checking for remote changes...
+20:13:48 Cmd | Redbud-Topology-Conference-2019 | git rev-parse HEAD
+20:13:48 Cmd | Redbud-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+20:13:48 Git | Notes | Checking for remote changes...
+20:13:48 Cmd | Notes | git rev-parse HEAD
+20:13:49 Cmd | Notes | git ls-remote --heads --exit-code origin master
+20:13:49 Git | dzackgarza.comv2018 | No remote changes, local+remote: 8215e45609dd862743dfb77a3b0730bb1d072b85
+20:13:49 Git | Redbud-Topology-Conference-2019 | No remote changes, local+remote: b730f46cbd39ee0af9583ce7046f70890a0b0e92
+20:13:49 Git | UGA-Topology-Conference-2019 | Checking for remote changes...
+20:13:49 Cmd | UGA-Topology-Conference-2019 | git rev-parse HEAD
+20:13:49 Cmd | UGA-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+20:13:50 Git | UGA-Topology-Conference-2019 | No remote changes, local+remote: 2f2460e355ee671a576467e33127d4ba7ab119c2
+20:13:54 Git | Research | Checking for remote changes...
+20:13:54 Cmd | Research | git rev-parse HEAD
+20:13:54 Cmd | Research | git ls-remote --heads --exit-code origin master
+20:13:54 Git | Notes | No remote changes, local+remote: 4aae1846eee21fd032a1eeeba277503e8ecdd18d
+20:13:54 Git | Research | No remote changes, local+remote: 327c1fce14967ef35c7c5d7255299ae3ecfcd601
+20:18:43 Git | Arizona-Winter-School-2019 | Checking for remote changes...
+20:18:43 Cmd | Arizona-Winter-School-2019 | git rev-parse HEAD
+20:18:43 Cmd | Arizona-Winter-School-2019 | git ls-remote --heads --exit-code origin master
+20:18:43 Git | Complex-Analysis | Checking for remote changes...
+20:18:43 Cmd | Complex-Analysis | git rev-parse HEAD
+20:18:43 Cmd | Complex-Analysis | git ls-remote --heads --exit-code origin master
+20:18:43 Git | Arizona-Winter-School-2019 | No remote changes, local+remote: 17ae3ec485dc06fa8e6e3b991e12a67d7db9260c
+20:18:44 Git | Complex-Analysis | No remote changes, local+remote: d8394fd908d593a0afb26c948a585414c71414a0
+20:18:44 Git | dotfiles | Checking for remote changes...
+20:18:44 Cmd | dotfiles | git rev-parse HEAD
+20:18:44 Cmd | dotfiles | git ls-remote --heads --exit-code origin master
+20:18:45 Git | dotfiles | No remote changes, local+remote: de5c0278b353fae9e66ddc0c7108796be9ac3d18
+20:18:46 Git | GSCATG-2019 | Checking for remote changes...
+20:18:46 Cmd | GSCATG-2019 | git rev-parse HEAD
+20:18:46 Cmd | GSCATG-2019 | git ls-remote --heads --exit-code origin master
+20:18:47 Git | GSCATG-2019 | No remote changes, local+remote: 4d70e6e5eb001f445c5a9ed9fc103a0432611c8e
+20:18:48 Git | dzackgarza.comv2018 | Checking for remote changes...
+20:18:48 Cmd | dzackgarza.comv2018 | git rev-parse HEAD
+20:18:48 Cmd | dzackgarza.comv2018 | git ls-remote --heads --exit-code origin master
+20:18:48 Git | Redbud-Topology-Conference-2019 | Checking for remote changes...
+20:18:48 Cmd | Redbud-Topology-Conference-2019 | git rev-parse HEAD
+20:18:48 Cmd | Redbud-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+20:18:48 Git | Notes | Checking for remote changes...
+20:18:48 Cmd | Notes | git rev-parse HEAD
+20:18:49 Cmd | Notes | git ls-remote --heads --exit-code origin master
+20:18:49 Git | Redbud-Topology-Conference-2019 | No remote changes, local+remote: b730f46cbd39ee0af9583ce7046f70890a0b0e92
+20:18:49 Git | dzackgarza.comv2018 | No remote changes, local+remote: 8215e45609dd862743dfb77a3b0730bb1d072b85
+20:18:49 Git | Notes | No remote changes, local+remote: 4aae1846eee21fd032a1eeeba277503e8ecdd18d
+20:18:49 Git | UGA-Topology-Conference-2019 | Checking for remote changes...
+20:18:49 Cmd | UGA-Topology-Conference-2019 | git rev-parse HEAD
+20:18:49 Cmd | UGA-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+20:18:50 Git | UGA-Topology-Conference-2019 | No remote changes, local+remote: 2f2460e355ee671a576467e33127d4ba7ab119c2
+20:18:54 Git | Research | Checking for remote changes...
+20:18:54 Cmd | Research | git rev-parse HEAD
+20:18:54 Cmd | Research | git ls-remote --heads --exit-code origin master
+20:18:54 Git | Research | No remote changes, local+remote: 327c1fce14967ef35c7c5d7255299ae3ecfcd601
+20:19:15 Cmd | Complex-Analysis | git status --porcelain
+20:19:15 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+20:19:16 Local | Complex-Analysis | Activity has settled
+20:19:16 Cmd | Complex-Analysis | git status --porcelain
+20:19:16 SyncUp | Complex-Analysis | Initiated
+20:19:16 Cmd | Complex-Analysis | git add --all
+20:19:16 Cmd | Complex-Analysis | git status --porcelain
+20:19:16 Cmd | Complex-Analysis | git config user.name "zack"
+20:19:16 Cmd | Complex-Analysis | git config user.email "dzackgarza@gmail.com"
+20:19:16 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:19:16 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:19:16 Cmd | Complex-Analysis | git push --all --progress origin
+20:19:19 Git | Counting objects: 4, done.
+20:19:19 Git | Delta compression using up to 4 threads.
+20:19:19 Git | Total 4 (delta 3), reused 0 (delta 0)
+20:19:21 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:19:21 Git |    d8394fd..841f8dd  master -> master
+20:19:21 SyncUp | Complex-Analysis | Done
+20:19:21 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:19:26 Cmd | Complex-Analysis | git status --porcelain
+20:19:54 Cmd | Complex-Analysis | git status --porcelain
+20:19:54 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+20:19:56 Local | Complex-Analysis | Activity has settled
+20:19:56 Cmd | Complex-Analysis | git status --porcelain
+20:19:56 SyncUp | Complex-Analysis | Initiated
+20:19:56 Cmd | Complex-Analysis | git add --all
+20:19:56 Cmd | Complex-Analysis | git status --porcelain
+20:19:56 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:19:56 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:19:56 Cmd | Complex-Analysis | git push --all --progress origin
+20:19:58 Git | Counting objects: 4, done.
+20:19:58 Git | Delta compression using up to 4 threads.
+20:19:58 Git | Total 4 (delta 3), reused 0 (delta 0)
+20:20:01 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:20:01 Git |    841f8dd..94b0209  master -> master
+20:20:01 SyncUp | Complex-Analysis | Done
+20:20:01 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:20:06 Cmd | Complex-Analysis | git status --porcelain
+20:22:15 Cmd | Complex-Analysis | git status --porcelain
+20:22:15 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+20:22:17 Local | Complex-Analysis | Activity has settled
+20:22:17 Cmd | Complex-Analysis | git status --porcelain
+20:22:17 SyncUp | Complex-Analysis | Initiated
+20:22:17 Cmd | Complex-Analysis | git add --all
+20:22:17 Cmd | Complex-Analysis | git status --porcelain
+20:22:17 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:22:17 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:22:17 Cmd | Complex-Analysis | git push --all --progress origin
+20:22:19 Git | Counting objects: 4, done.
+20:22:19 Git | Delta compression using up to 4 threads.
+20:22:19 Git | Total 4 (delta 2), reused 0 (delta 0)
+20:22:22 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:22:22 Git |    94b0209..eeb4390  master -> master
+20:22:22 SyncUp | Complex-Analysis | Done
+20:22:22 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:22:27 Cmd | Complex-Analysis | git status --porcelain
+20:22:27 Local | Complex-Analysis | More changes found
+20:22:27 SyncUp | Complex-Analysis | Initiated
+20:22:27 Cmd | Complex-Analysis | git add --all
+20:22:27 Cmd | Complex-Analysis | git status --porcelain
+20:22:27 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:22:27 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:22:27 Cmd | Complex-Analysis | git push --all --progress origin
+20:22:29 Git | Counting objects: 4, done.
+20:22:29 Git | Delta compression using up to 4 threads.
+20:22:29 Git | Total 4 (delta 2), reused 0 (delta 0)
+20:22:31 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:22:31 Git |    eeb4390..70c656d  master -> master
+20:22:31 SyncUp | Complex-Analysis | Done
+20:22:31 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:22:37 Cmd | Complex-Analysis | git status --porcelain
+20:22:37 Local | Complex-Analysis | More changes found
+20:22:37 SyncUp | Complex-Analysis | Initiated
+20:22:37 Cmd | Complex-Analysis | git add --all
+20:22:37 Cmd | Complex-Analysis | git status --porcelain
+20:22:37 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:22:37 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:22:37 Cmd | Complex-Analysis | git push --all --progress origin
+20:22:39 Git | Counting objects: 4, done.
+20:22:39 Git | Delta compression using up to 4 threads.
+20:22:39 Git | Total 4 (delta 3), reused 0 (delta 0)
+20:22:42 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:22:42 Git |    70c656d..f4100ec  master -> master
+20:22:42 SyncUp | Complex-Analysis | Done
+20:22:42 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:22:48 Cmd | Complex-Analysis | git status --porcelain
+20:22:48 Local | Complex-Analysis | More changes found
+20:22:48 SyncUp | Complex-Analysis | Initiated
+20:22:48 Cmd | Complex-Analysis | git add --all
+20:22:48 Cmd | Complex-Analysis | git status --porcelain
+20:22:48 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:22:48 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:22:48 Cmd | Complex-Analysis | git push --all --progress origin
+20:22:50 Git | Counting objects: 4, done.
+20:22:50 Git | Delta compression using up to 4 threads.
+20:22:50 Git | Total 4 (delta 2), reused 0 (delta 0)
+20:22:53 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:22:53 Git |    f4100ec..ec27959  master -> master
+20:22:53 SyncUp | Complex-Analysis | Done
+20:22:53 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:22:58 Cmd | Complex-Analysis | git status --porcelain
+20:23:01 Cmd | Complex-Analysis | git status --porcelain
+20:23:01 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+20:23:03 Local | Complex-Analysis | Activity has settled
+20:23:03 Cmd | Complex-Analysis | git status --porcelain
+20:23:03 SyncUp | Complex-Analysis | Initiated
+20:23:03 Cmd | Complex-Analysis | git add --all
+20:23:03 Cmd | Complex-Analysis | git status --porcelain
+20:23:03 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:23:03 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:23:03 Cmd | Complex-Analysis | git push --all --progress origin
+20:23:05 Git | Counting objects: 4, done.
+20:23:05 Git | Delta compression using up to 4 threads.
+20:23:05 Git | Total 4 (delta 3), reused 0 (delta 0)
+20:23:08 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:23:08 Git |    ec27959..255b140  master -> master
+20:23:08 SyncUp | Complex-Analysis | Done
+20:23:08 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:23:12 Cmd | Complex-Analysis | git status --porcelain
+20:23:29 Cmd | Complex-Analysis | git status --porcelain
+20:23:29 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+20:23:31 Local | Complex-Analysis | Activity has settled
+20:23:31 Cmd | Complex-Analysis | git status --porcelain
+20:23:31 SyncUp | Complex-Analysis | Initiated
+20:23:31 Cmd | Complex-Analysis | git add --all
+20:23:31 Cmd | Complex-Analysis | git status --porcelain
+20:23:31 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:23:31 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:23:31 Cmd | Complex-Analysis | git push --all --progress origin
+20:23:33 Git | Counting objects: 4, done.
+20:23:33 Git | Delta compression using up to 4 threads.
+20:23:33 Git | Total 4 (delta 2), reused 0 (delta 0)
+20:23:36 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:23:36 Git |    255b140..93ac6d5  master -> master
+20:23:36 SyncUp | Complex-Analysis | Done
+20:23:36 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:23:41 Cmd | Complex-Analysis | git status --porcelain
+20:23:41 Local | Complex-Analysis | More changes found
+20:23:41 SyncUp | Complex-Analysis | Initiated
+20:23:41 Cmd | Complex-Analysis | git add --all
+20:23:41 Cmd | Complex-Analysis | git status --porcelain
+20:23:41 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:23:42 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:23:42 Cmd | Complex-Analysis | git push --all --progress origin
+20:23:43 Git | Arizona-Winter-School-2019 | Checking for remote changes...
+20:23:43 Cmd | Arizona-Winter-School-2019 | git rev-parse HEAD
+20:23:43 Cmd | Arizona-Winter-School-2019 | git ls-remote --heads --exit-code origin master
+20:23:43 Git | Arizona-Winter-School-2019 | No remote changes, local+remote: 17ae3ec485dc06fa8e6e3b991e12a67d7db9260c
+20:23:44 Git | Counting objects: 4, done.
+20:23:44 Git | Delta compression using up to 4 threads.
+20:23:44 Git | Total 4 (delta 2), reused 0 (delta 0)
+20:23:44 Git | dotfiles | Checking for remote changes...
+20:23:44 Cmd | dotfiles | git rev-parse HEAD
+20:23:44 Cmd | dotfiles | git ls-remote --heads --exit-code origin master
+20:23:45 Git | dotfiles | No remote changes, local+remote: de5c0278b353fae9e66ddc0c7108796be9ac3d18
+20:23:46 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:23:46 Git |    93ac6d5..a75961c  master -> master
+20:23:46 SyncUp | Complex-Analysis | Done
+20:23:46 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:23:46 Git | GSCATG-2019 | Checking for remote changes...
+20:23:46 Cmd | GSCATG-2019 | git rev-parse HEAD
+20:23:46 Cmd | GSCATG-2019 | git ls-remote --heads --exit-code origin master
+20:23:47 Git | GSCATG-2019 | No remote changes, local+remote: 4d70e6e5eb001f445c5a9ed9fc103a0432611c8e
+20:23:48 Git | dzackgarza.comv2018 | Checking for remote changes...
+20:23:48 Cmd | dzackgarza.comv2018 | git rev-parse HEAD
+20:23:48 Cmd | dzackgarza.comv2018 | git ls-remote --heads --exit-code origin master
+20:23:48 Git | Redbud-Topology-Conference-2019 | Checking for remote changes...
+20:23:48 Cmd | Redbud-Topology-Conference-2019 | git rev-parse HEAD
+20:23:48 Cmd | Redbud-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+20:23:49 Git | Notes | Checking for remote changes...
+20:23:49 Cmd | Notes | git rev-parse HEAD
+20:23:49 Cmd | Notes | git ls-remote --heads --exit-code origin master
+20:23:49 Git | dzackgarza.comv2018 | No remote changes, local+remote: 8215e45609dd862743dfb77a3b0730bb1d072b85
+20:23:49 Git | Redbud-Topology-Conference-2019 | No remote changes, local+remote: b730f46cbd39ee0af9583ce7046f70890a0b0e92
+20:23:49 Git | Notes | No remote changes, local+remote: 4aae1846eee21fd032a1eeeba277503e8ecdd18d
+20:23:49 Git | UGA-Topology-Conference-2019 | Checking for remote changes...
+20:23:49 Cmd | UGA-Topology-Conference-2019 | git rev-parse HEAD
+20:23:49 Cmd | UGA-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+20:23:50 Git | UGA-Topology-Conference-2019 | No remote changes, local+remote: 2f2460e355ee671a576467e33127d4ba7ab119c2
+20:23:51 Cmd | Complex-Analysis | git status --porcelain
+20:23:51 Local | Complex-Analysis | More changes found
+20:23:51 SyncUp | Complex-Analysis | Initiated
+20:23:51 Cmd | Complex-Analysis | git add --all
+20:23:51 Cmd | Complex-Analysis | git status --porcelain
+20:23:51 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:23:51 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:23:51 Cmd | Complex-Analysis | git push --all --progress origin
+20:23:53 Git | Counting objects: 4, done.
+20:23:53 Git | Delta compression using up to 4 threads.
+20:23:53 Git | Total 4 (delta 3), reused 0 (delta 0)
+20:23:54 Git | Research | Checking for remote changes...
+20:23:54 Cmd | Research | git rev-parse HEAD
+20:23:54 Cmd | Research | git ls-remote --heads --exit-code origin master
+20:23:54 Git | Research | No remote changes, local+remote: 327c1fce14967ef35c7c5d7255299ae3ecfcd601
+20:23:56 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:23:56 Git |    a75961c..27ce0e8  master -> master
+20:23:56 SyncUp | Complex-Analysis | Done
+20:23:56 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:24:00 Cmd | Complex-Analysis | git status --porcelain
+20:24:23 Cmd | Complex-Analysis | git status --porcelain
+20:24:23 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+20:24:25 Local | Complex-Analysis | Activity has settled
+20:24:25 Cmd | Complex-Analysis | git status --porcelain
+20:24:25 SyncUp | Complex-Analysis | Initiated
+20:24:25 Cmd | Complex-Analysis | git add --all
+20:24:25 Cmd | Complex-Analysis | git status --porcelain
+20:24:25 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:24:25 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:24:25 Cmd | Complex-Analysis | git push --all --progress origin
+20:24:27 Git | Counting objects: 4, done.
+20:24:27 Git | Delta compression using up to 4 threads.
+20:24:27 Git | Total 4 (delta 2), reused 0 (delta 0)
+20:24:29 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:24:29 Git |    27ce0e8..07beabd  master -> master
+20:24:29 SyncUp | Complex-Analysis | Done
+20:24:29 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:24:34 Cmd | Complex-Analysis | git status --porcelain
+20:24:39 Cmd | Complex-Analysis | git status --porcelain
+20:24:39 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+20:24:41 Local | Complex-Analysis | Activity has settled
+20:24:41 Cmd | Complex-Analysis | git status --porcelain
+20:24:41 SyncUp | Complex-Analysis | Initiated
+20:24:41 Cmd | Complex-Analysis | git add --all
+20:24:41 Cmd | Complex-Analysis | git status --porcelain
+20:24:41 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:24:41 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:24:41 Cmd | Complex-Analysis | git push --all --progress origin
+20:24:43 Git | Counting objects: 4, done.
+20:24:43 Git | Delta compression using up to 4 threads.
+20:24:43 Git | Total 4 (delta 3), reused 0 (delta 0)
+20:24:46 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:24:46 Git |    07beabd..32ff6bf  master -> master
+20:24:46 SyncUp | Complex-Analysis | Done
+20:24:46 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:24:51 Cmd | Complex-Analysis | git status --porcelain
+20:24:51 Local | Complex-Analysis | More changes found
+20:24:51 SyncUp | Complex-Analysis | Initiated
+20:24:51 Cmd | Complex-Analysis | git add --all
+20:24:51 Cmd | Complex-Analysis | git status --porcelain
+20:24:51 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:24:51 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:24:51 Cmd | Complex-Analysis | git push --all --progress origin
+20:24:53 Git | Counting objects: 4, done.
+20:24:53 Git | Delta compression using up to 4 threads.
+20:24:53 Git | Total 4 (delta 2), reused 0 (delta 0)
+20:24:55 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:24:55 Git |    32ff6bf..ba022f9  master -> master
+20:24:55 SyncUp | Complex-Analysis | Done
+20:24:55 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:25:01 Cmd | Complex-Analysis | git status --porcelain
+20:25:01 Local | Complex-Analysis | More changes found
+20:25:01 SyncUp | Complex-Analysis | Initiated
+20:25:01 Cmd | Complex-Analysis | git add --all
+20:25:01 Cmd | Complex-Analysis | git status --porcelain
+20:25:01 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:25:01 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:25:01 Cmd | Complex-Analysis | git push --all --progress origin
+20:25:03 Git | Counting objects: 4, done.
+20:25:03 Git | Delta compression using up to 4 threads.
+20:25:03 Git | Total 4 (delta 3), reused 0 (delta 0)
+20:25:06 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:25:06 Git |    ba022f9..cf62ed1  master -> master
+20:25:06 SyncUp | Complex-Analysis | Done
+20:25:06 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:25:11 Cmd | Complex-Analysis | git status --porcelain
+20:26:01 Cmd | Complex-Analysis | git status --porcelain
+20:26:01 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+20:26:02 Local | Complex-Analysis | Activity has settled
+20:26:02 Cmd | Complex-Analysis | git status --porcelain
+20:26:02 SyncUp | Complex-Analysis | Initiated
+20:26:02 Cmd | Complex-Analysis | git add --all
+20:26:02 Cmd | Complex-Analysis | git status --porcelain
+20:26:02 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:26:02 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:26:02 Cmd | Complex-Analysis | git push --all --progress origin
+20:26:04 Git | Counting objects: 4, done.
+20:26:04 Git | Delta compression using up to 4 threads.
+20:26:05 Git | Total 4 (delta 2), reused 0 (delta 0)
+20:26:07 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:26:07 Git |    cf62ed1..08f3302  master -> master
+20:26:07 SyncUp | Complex-Analysis | Done
+20:26:07 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:26:13 Cmd | Complex-Analysis | git status --porcelain
+20:26:17 Cmd | Complex-Analysis | git status --porcelain
+20:26:17 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+20:26:19 Local | Complex-Analysis | Activity has settled
+20:26:19 Cmd | Complex-Analysis | git status --porcelain
+20:26:19 SyncUp | Complex-Analysis | Initiated
+20:26:19 Cmd | Complex-Analysis | git add --all
+20:26:19 Cmd | Complex-Analysis | git status --porcelain
+20:26:19 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:26:19 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:26:19 Cmd | Complex-Analysis | git push --all --progress origin
+20:26:21 Git | Counting objects: 4, done.
+20:26:21 Git | Delta compression using up to 4 threads.
+20:26:21 Git | Total 4 (delta 3), reused 0 (delta 0)
+20:26:23 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:26:23 Git |    08f3302..bcdb912  master -> master
+20:26:24 SyncUp | Complex-Analysis | Done
+20:26:24 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:26:28 Cmd | Complex-Analysis | git status --porcelain
+20:27:26 Cmd | Complex-Analysis | git status --porcelain
+20:27:26 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+20:27:28 Local | Complex-Analysis | Activity has settled
+20:27:28 Cmd | Complex-Analysis | git status --porcelain
+20:27:28 SyncUp | Complex-Analysis | Initiated
+20:27:28 Cmd | Complex-Analysis | git add --all
+20:27:28 Cmd | Complex-Analysis | git status --porcelain
+20:27:28 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:27:28 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:27:28 Cmd | Complex-Analysis | git push --all --progress origin
+20:27:30 Git | Counting objects: 4, done.
+20:27:30 Git | Delta compression using up to 4 threads.
+20:27:30 Git | Total 4 (delta 2), reused 0 (delta 0)
+20:27:32 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:27:32 Git |    bcdb912..3622e1e  master -> master
+20:27:32 SyncUp | Complex-Analysis | Done
+20:27:32 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:27:38 Cmd | Complex-Analysis | git status --porcelain
+20:27:42 Cmd | Complex-Analysis | git status --porcelain
+20:27:42 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+20:27:43 Local | Complex-Analysis | Activity has settled
+20:27:43 Cmd | Complex-Analysis | git status --porcelain
+20:27:43 SyncUp | Complex-Analysis | Initiated
+20:27:43 Cmd | Complex-Analysis | git add --all
+20:27:43 Cmd | Complex-Analysis | git status --porcelain
+20:27:43 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:27:43 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:27:43 Cmd | Complex-Analysis | git push --all --progress origin
+20:27:45 Git | Counting objects: 4, done.
+20:27:45 Git | Delta compression using up to 4 threads.
+20:27:45 Git | Total 4 (delta 3), reused 0 (delta 0)
+20:27:48 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:27:48 Git |    3622e1e..1fc499b  master -> master
+20:27:48 SyncUp | Complex-Analysis | Done
+20:27:48 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:27:53 Cmd | Complex-Analysis | git status --porcelain
+20:28:11 Cmd | Complex-Analysis | git status --porcelain
+20:28:11 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+20:28:12 Local | Complex-Analysis | Activity has settled
+20:28:12 Cmd | Complex-Analysis | git status --porcelain
+20:28:12 SyncUp | Complex-Analysis | Initiated
+20:28:12 Cmd | Complex-Analysis | git add --all
+20:28:12 Cmd | Complex-Analysis | git status --porcelain
+20:28:12 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:28:12 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:28:12 Cmd | Complex-Analysis | git push --all --progress origin
+20:28:20 Git | Counting objects: 4, done.
+20:28:20 Git | Delta compression using up to 4 threads.
+20:28:20 Git | Total 4 (delta 2), reused 0 (delta 0)
+20:28:22 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:28:22 Git |    1fc499b..82453bf  master -> master
+20:28:22 SyncUp | Complex-Analysis | Done
+20:28:22 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:28:27 Cmd | Complex-Analysis | git status --porcelain
+20:28:27 Local | Complex-Analysis | More changes found
+20:28:27 SyncUp | Complex-Analysis | Initiated
+20:28:27 Cmd | Complex-Analysis | git add --all
+20:28:27 Cmd | Complex-Analysis | git status --porcelain
+20:28:27 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:28:27 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:28:28 Cmd | Complex-Analysis | git push --all --progress origin
+20:28:30 Git | Counting objects: 4, done.
+20:28:30 Git | Delta compression using up to 4 threads.
+20:28:30 Git | Total 4 (delta 3), reused 0 (delta 0)
+20:28:32 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:28:32 Git |    82453bf..028894f  master -> master
+20:28:32 SyncUp | Complex-Analysis | Done
+20:28:32 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:28:37 Cmd | Complex-Analysis | git status --porcelain
+20:28:43 Git | Arizona-Winter-School-2019 | Checking for remote changes...
+20:28:43 Cmd | Arizona-Winter-School-2019 | git rev-parse HEAD
+20:28:43 Cmd | Arizona-Winter-School-2019 | git ls-remote --heads --exit-code origin master
+20:28:43 Git | Arizona-Winter-School-2019 | No remote changes, local+remote: 17ae3ec485dc06fa8e6e3b991e12a67d7db9260c
+20:28:44 Git | dotfiles | Checking for remote changes...
+20:28:44 Cmd | dotfiles | git rev-parse HEAD
+20:28:44 Cmd | dotfiles | git ls-remote --heads --exit-code origin master
+20:28:45 Git | dotfiles | No remote changes, local+remote: de5c0278b353fae9e66ddc0c7108796be9ac3d18
+20:28:46 Cmd | Complex-Analysis | git status --porcelain
+20:28:46 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+20:28:46 Git | GSCATG-2019 | Checking for remote changes...
+20:28:46 Cmd | GSCATG-2019 | git rev-parse HEAD
+20:28:46 Cmd | GSCATG-2019 | git ls-remote --heads --exit-code origin master
+20:28:47 Git | GSCATG-2019 | No remote changes, local+remote: 4d70e6e5eb001f445c5a9ed9fc103a0432611c8e
+20:28:48 Local | Complex-Analysis | Activity has settled
+20:28:48 Cmd | Complex-Analysis | git status --porcelain
+20:28:48 SyncUp | Complex-Analysis | Initiated
+20:28:48 Cmd | Complex-Analysis | git add --all
+20:28:48 Cmd | Complex-Analysis | git status --porcelain
+20:28:48 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:28:48 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:28:48 Cmd | Complex-Analysis | git push --all --progress origin
+20:28:48 Git | dzackgarza.comv2018 | Checking for remote changes...
+20:28:48 Cmd | dzackgarza.comv2018 | git rev-parse HEAD
+20:28:48 Cmd | dzackgarza.comv2018 | git ls-remote --heads --exit-code origin master
+20:28:48 Git | Redbud-Topology-Conference-2019 | Checking for remote changes...
+20:28:48 Cmd | Redbud-Topology-Conference-2019 | git rev-parse HEAD
+20:28:48 Cmd | Redbud-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+20:28:49 Git | Notes | Checking for remote changes...
+20:28:49 Cmd | Notes | git rev-parse HEAD
+20:28:49 Cmd | Notes | git ls-remote --heads --exit-code origin master
+20:28:49 Git | dzackgarza.comv2018 | No remote changes, local+remote: 8215e45609dd862743dfb77a3b0730bb1d072b85
+20:28:49 Git | Redbud-Topology-Conference-2019 | No remote changes, local+remote: b730f46cbd39ee0af9583ce7046f70890a0b0e92
+20:28:49 Git | Notes | No remote changes, local+remote: 4aae1846eee21fd032a1eeeba277503e8ecdd18d
+20:28:49 Git | UGA-Topology-Conference-2019 | Checking for remote changes...
+20:28:49 Cmd | UGA-Topology-Conference-2019 | git rev-parse HEAD
+20:28:49 Cmd | UGA-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+20:28:50 Git | UGA-Topology-Conference-2019 | No remote changes, local+remote: 2f2460e355ee671a576467e33127d4ba7ab119c2
+20:28:50 Git | Counting objects: 4, done.
+20:28:50 Git | Delta compression using up to 4 threads.
+20:28:50 Git | Total 4 (delta 2), reused 0 (delta 0)
+20:28:52 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:28:52 Git |    028894f..8e7386f  master -> master
+20:28:52 SyncUp | Complex-Analysis | Done
+20:28:52 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:28:54 Git | Research | Checking for remote changes...
+20:28:54 Cmd | Research | git rev-parse HEAD
+20:28:54 Cmd | Research | git ls-remote --heads --exit-code origin master
+20:28:54 Git | Research | No remote changes, local+remote: 327c1fce14967ef35c7c5d7255299ae3ecfcd601
+20:28:58 Cmd | Complex-Analysis | git status --porcelain
+20:29:03 Cmd | Complex-Analysis | git status --porcelain
+20:29:03 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+20:29:04 Local | Complex-Analysis | Activity has settled
+20:29:04 Cmd | Complex-Analysis | git status --porcelain
+20:29:04 SyncUp | Complex-Analysis | Initiated
+20:29:04 Cmd | Complex-Analysis | git add --all
+20:29:04 Cmd | Complex-Analysis | git status --porcelain
+20:29:04 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:29:04 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:29:04 Cmd | Complex-Analysis | git push --all --progress origin
+20:29:12 Git | Counting objects: 4, done.
+20:29:12 Git | Delta compression using up to 4 threads.
+20:29:12 Git | Total 4 (delta 3), reused 0 (delta 0)
+20:29:14 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:29:14 Git |    8e7386f..e82538d  master -> master
+20:29:14 SyncUp | Complex-Analysis | Done
+20:29:14 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:29:20 Cmd | Complex-Analysis | git status --porcelain
+20:29:20 Local | Complex-Analysis | More changes found
+20:29:20 SyncUp | Complex-Analysis | Initiated
+20:29:20 Cmd | Complex-Analysis | git add --all
+20:29:20 Cmd | Complex-Analysis | git status --porcelain
+20:29:20 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:29:20 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:29:20 Cmd | Complex-Analysis | git push --all --progress origin
+20:29:22 Git | Counting objects: 4, done.
+20:29:22 Git | Delta compression using up to 4 threads.
+20:29:22 Git | Total 4 (delta 2), reused 0 (delta 0)
+20:29:25 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:29:25 Git |    e82538d..1800daa  master -> master
+20:29:25 SyncUp | Complex-Analysis | Done
+20:29:25 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:29:30 Cmd | Complex-Analysis | git status --porcelain
+20:29:30 Local | Complex-Analysis | More changes found
+20:29:30 SyncUp | Complex-Analysis | Initiated
+20:29:30 Cmd | Complex-Analysis | git add --all
+20:29:30 Cmd | Complex-Analysis | git status --porcelain
+20:29:30 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:29:30 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:29:30 Cmd | Complex-Analysis | git push --all --progress origin
+20:29:32 Git | Counting objects: 4, done.
+20:29:32 Git | Delta compression using up to 4 threads.
+20:29:32 Git | Total 4 (delta 3), reused 0 (delta 0)
+20:29:34 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:29:34 Git |    1800daa..6d336d1  master -> master
+20:29:34 SyncUp | Complex-Analysis | Done
+20:29:34 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:29:39 Cmd | Complex-Analysis | git status --porcelain
+20:31:59 Cmd | Complex-Analysis | git status --porcelain
+20:31:59 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+20:32:01 Local | Complex-Analysis | Activity has settled
+20:32:01 Cmd | Complex-Analysis | git status --porcelain
+20:32:01 SyncUp | Complex-Analysis | Initiated
+20:32:01 Cmd | Complex-Analysis | git add --all
+20:32:01 Cmd | Complex-Analysis | git status --porcelain
+20:32:01 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:32:01 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:32:01 Cmd | Complex-Analysis | git push --all --progress origin
+20:32:03 Git | Counting objects: 4, done.
+20:32:03 Git | Delta compression using up to 4 threads.
+20:32:03 Git | Total 4 (delta 2), reused 0 (delta 0)
+20:32:05 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:32:05 Git |    6d336d1..69d86ef  master -> master
+20:32:06 SyncUp | Complex-Analysis | Done
+20:32:06 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:32:15 Cmd | Complex-Analysis | git status --porcelain
+20:32:22 Cmd | Complex-Analysis | git status --porcelain
+20:32:22 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+20:32:24 Local | Complex-Analysis | Activity has settled
+20:32:24 Cmd | Complex-Analysis | git status --porcelain
+20:32:24 SyncUp | Complex-Analysis | Initiated
+20:32:24 Cmd | Complex-Analysis | git add --all
+20:32:24 Cmd | Complex-Analysis | git status --porcelain
+20:32:24 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:32:24 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:32:24 Cmd | Complex-Analysis | git push --all --progress origin
+20:32:26 Git | Counting objects: 4, done.
+20:32:26 Git | Delta compression using up to 4 threads.
+20:32:26 Git | Total 4 (delta 3), reused 0 (delta 0)
+20:32:29 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:32:29 Git |    69d86ef..5aa9bc8  master -> master
+20:32:29 SyncUp | Complex-Analysis | Done
+20:32:29 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:32:39 Cmd | Complex-Analysis | git status --porcelain
+20:33:43 Git | Arizona-Winter-School-2019 | Checking for remote changes...
+20:33:43 Cmd | Arizona-Winter-School-2019 | git rev-parse HEAD
+20:33:43 Cmd | Arizona-Winter-School-2019 | git ls-remote --heads --exit-code origin master
+20:33:43 Git | Complex-Analysis | Checking for remote changes...
+20:33:43 Cmd | Complex-Analysis | git rev-parse HEAD
+20:33:43 Cmd | Complex-Analysis | git ls-remote --heads --exit-code origin master
+20:33:43 Git | Arizona-Winter-School-2019 | No remote changes, local+remote: 17ae3ec485dc06fa8e6e3b991e12a67d7db9260c
+20:33:44 Git | Complex-Analysis | No remote changes, local+remote: 5aa9bc8ef9c0d75c94365a018509b48d4e10ea4b
+20:33:44 Git | dotfiles | Checking for remote changes...
+20:33:44 Cmd | dotfiles | git rev-parse HEAD
+20:33:44 Cmd | dotfiles | git ls-remote --heads --exit-code origin master
+20:33:45 Git | dotfiles | No remote changes, local+remote: de5c0278b353fae9e66ddc0c7108796be9ac3d18
+20:33:46 Git | GSCATG-2019 | Checking for remote changes...
+20:33:46 Cmd | GSCATG-2019 | git rev-parse HEAD
+20:33:46 Cmd | GSCATG-2019 | git ls-remote --heads --exit-code origin master
+20:33:47 Git | GSCATG-2019 | No remote changes, local+remote: 4d70e6e5eb001f445c5a9ed9fc103a0432611c8e
+20:33:48 Git | dzackgarza.comv2018 | Checking for remote changes...
+20:33:48 Cmd | dzackgarza.comv2018 | git rev-parse HEAD
+20:33:48 Cmd | dzackgarza.comv2018 | git ls-remote --heads --exit-code origin master
+20:33:48 Git | Redbud-Topology-Conference-2019 | Checking for remote changes...
+20:33:48 Cmd | Redbud-Topology-Conference-2019 | git rev-parse HEAD
+20:33:48 Cmd | Redbud-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+20:33:49 Git | Notes | Checking for remote changes...
+20:33:49 Cmd | Notes | git rev-parse HEAD
+20:33:49 Cmd | Notes | git ls-remote --heads --exit-code origin master
+20:33:49 Git | Redbud-Topology-Conference-2019 | No remote changes, local+remote: b730f46cbd39ee0af9583ce7046f70890a0b0e92
+20:33:49 Git | dzackgarza.comv2018 | No remote changes, local+remote: 8215e45609dd862743dfb77a3b0730bb1d072b85
+20:33:49 Git | Notes | No remote changes, local+remote: 4aae1846eee21fd032a1eeeba277503e8ecdd18d
+20:33:49 Git | UGA-Topology-Conference-2019 | Checking for remote changes...
+20:33:49 Cmd | UGA-Topology-Conference-2019 | git rev-parse HEAD
+20:33:49 Cmd | UGA-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+20:33:50 Git | UGA-Topology-Conference-2019 | No remote changes, local+remote: 2f2460e355ee671a576467e33127d4ba7ab119c2
+20:33:54 Git | Research | Checking for remote changes...
+20:33:54 Cmd | Research | git rev-parse HEAD
+20:33:54 Cmd | Research | git ls-remote --heads --exit-code origin master
+20:33:54 Git | Research | No remote changes, local+remote: 327c1fce14967ef35c7c5d7255299ae3ecfcd601
+20:38:43 Git | Arizona-Winter-School-2019 | Checking for remote changes...
+20:38:43 Cmd | Arizona-Winter-School-2019 | git rev-parse HEAD
+20:38:43 Cmd | Arizona-Winter-School-2019 | git ls-remote --heads --exit-code origin master
+20:38:43 Git | Arizona-Winter-School-2019 | No remote changes, local+remote: 17ae3ec485dc06fa8e6e3b991e12a67d7db9260c
+20:38:44 Git | dotfiles | Checking for remote changes...
+20:38:44 Cmd | dotfiles | git rev-parse HEAD
+20:38:44 Cmd | dotfiles | git ls-remote --heads --exit-code origin master
+20:38:45 Git | dotfiles | No remote changes, local+remote: de5c0278b353fae9e66ddc0c7108796be9ac3d18
+20:38:46 Git | GSCATG-2019 | Checking for remote changes...
+20:38:46 Cmd | GSCATG-2019 | git rev-parse HEAD
+20:38:46 Cmd | GSCATG-2019 | git ls-remote --heads --exit-code origin master
+20:38:47 Git | GSCATG-2019 | No remote changes, local+remote: 4d70e6e5eb001f445c5a9ed9fc103a0432611c8e
+20:38:48 Git | dzackgarza.comv2018 | Checking for remote changes...
+20:38:48 Cmd | dzackgarza.comv2018 | git rev-parse HEAD
+20:38:48 Cmd | dzackgarza.comv2018 | git ls-remote --heads --exit-code origin master
+20:38:48 Git | Redbud-Topology-Conference-2019 | Checking for remote changes...
+20:38:48 Cmd | Redbud-Topology-Conference-2019 | git rev-parse HEAD
+20:38:48 Cmd | Redbud-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+20:38:49 Git | Notes | Checking for remote changes...
+20:38:49 Cmd | Notes | git rev-parse HEAD
+20:38:49 Cmd | Notes | git ls-remote --heads --exit-code origin master
+20:38:49 Git | dzackgarza.comv2018 | No remote changes, local+remote: 8215e45609dd862743dfb77a3b0730bb1d072b85
+20:38:49 Git | Redbud-Topology-Conference-2019 | No remote changes, local+remote: b730f46cbd39ee0af9583ce7046f70890a0b0e92
+20:38:49 Git | Notes | No remote changes, local+remote: 4aae1846eee21fd032a1eeeba277503e8ecdd18d
+20:38:49 Git | UGA-Topology-Conference-2019 | Checking for remote changes...
+20:38:49 Cmd | UGA-Topology-Conference-2019 | git rev-parse HEAD
+20:38:49 Cmd | UGA-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+20:38:50 Git | UGA-Topology-Conference-2019 | No remote changes, local+remote: 2f2460e355ee671a576467e33127d4ba7ab119c2
+20:38:54 Git | Research | Checking for remote changes...
+20:38:54 Cmd | Research | git rev-parse HEAD
+20:38:54 Cmd | Research | git ls-remote --heads --exit-code origin master
+20:38:54 Git | Research | No remote changes, local+remote: 327c1fce14967ef35c7c5d7255299ae3ecfcd601
+20:43:43 Git | Arizona-Winter-School-2019 | Checking for remote changes...
+20:43:43 Cmd | Arizona-Winter-School-2019 | git rev-parse HEAD
+20:43:43 Cmd | Arizona-Winter-School-2019 | git ls-remote --heads --exit-code origin master
+20:43:43 Git | Arizona-Winter-School-2019 | No remote changes, local+remote: 17ae3ec485dc06fa8e6e3b991e12a67d7db9260c
+20:43:44 Git | dotfiles | Checking for remote changes...
+20:43:44 Cmd | dotfiles | git rev-parse HEAD
+20:43:44 Cmd | dotfiles | git ls-remote --heads --exit-code origin master
+20:43:45 Git | dotfiles | No remote changes, local+remote: de5c0278b353fae9e66ddc0c7108796be9ac3d18
+20:43:46 Git | GSCATG-2019 | Checking for remote changes...
+20:43:46 Cmd | GSCATG-2019 | git rev-parse HEAD
+20:43:46 Cmd | GSCATG-2019 | git ls-remote --heads --exit-code origin master
+20:43:47 Git | GSCATG-2019 | No remote changes, local+remote: 4d70e6e5eb001f445c5a9ed9fc103a0432611c8e
+20:43:48 Git | dzackgarza.comv2018 | Checking for remote changes...
+20:43:48 Cmd | dzackgarza.comv2018 | git rev-parse HEAD
+20:43:48 Cmd | dzackgarza.comv2018 | git ls-remote --heads --exit-code origin master
+20:43:48 Git | Redbud-Topology-Conference-2019 | Checking for remote changes...
+20:43:48 Cmd | Redbud-Topology-Conference-2019 | git rev-parse HEAD
+20:43:48 Cmd | Redbud-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+20:43:49 Git | Notes | Checking for remote changes...
+20:43:49 Cmd | Notes | git rev-parse HEAD
+20:43:49 Cmd | Notes | git ls-remote --heads --exit-code origin master
+20:43:49 Git | dzackgarza.comv2018 | No remote changes, local+remote: 8215e45609dd862743dfb77a3b0730bb1d072b85
+20:43:49 Git | Redbud-Topology-Conference-2019 | No remote changes, local+remote: b730f46cbd39ee0af9583ce7046f70890a0b0e92
+20:43:49 Git | Notes | No remote changes, local+remote: 4aae1846eee21fd032a1eeeba277503e8ecdd18d
+20:43:49 Git | UGA-Topology-Conference-2019 | Checking for remote changes...
+20:43:49 Cmd | UGA-Topology-Conference-2019 | git rev-parse HEAD
+20:43:49 Cmd | UGA-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+20:43:50 Git | UGA-Topology-Conference-2019 | No remote changes, local+remote: 2f2460e355ee671a576467e33127d4ba7ab119c2
+20:43:54 Git | Research | Checking for remote changes...
+20:43:54 Cmd | Research | git rev-parse HEAD
+20:43:54 Cmd | Research | git ls-remote --heads --exit-code origin master
+20:43:54 Git | Research | No remote changes, local+remote: 327c1fce14967ef35c7c5d7255299ae3ecfcd601
+20:45:28 Cmd | Notes | git status --porcelain
+20:45:28 Local | Notes | Activity detected, waiting for it to settle...
+20:45:30 Local | Notes | Activity has settled
+20:45:30 Cmd | Notes | git status --porcelain
+20:45:30 SyncUp | Notes | Initiated
+20:45:30 Cmd | Notes | git add --all
+20:45:30 Cmd | Notes | git status --porcelain
+20:45:30 Cmd | Notes | git config user.name "zack"
+20:45:30 Cmd | Notes | git config user.email "dzackgarza@gmail.com"
+20:45:30 Cmd | Notes | git commit --all --file="/home/zack/SparkleShare/github.com/Notes/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:45:30 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Notes/.git/hooks/pre-push
+20:45:30 Cmd | Notes | git push --all --progress origin
+20:45:32 Git | Counting objects: 4, done.
+20:45:32 Git | Delta compression using up to 4 threads.
+20:45:32 Git | Total 4 (delta 1), reused 0 (delta 0)
+20:45:34 Git | To ssh://github.com/dzackgarza/Notes.git
+20:45:34 Git |    4aae1846e..9c385aaf1  master -> master
+20:45:35 SyncUp | Notes | Done
+20:45:35 Cmd | Notes | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:45:39 Cmd | Notes | git status --porcelain
+20:48:29 Cmd | Complex-Analysis | git status --porcelain
+20:48:29 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+20:48:31 Local | Complex-Analysis | Activity has settled
+20:48:31 Cmd | Complex-Analysis | git status --porcelain
+20:48:31 SyncUp | Complex-Analysis | Initiated
+20:48:31 Cmd | Complex-Analysis | git add --all
+20:48:31 Cmd | Complex-Analysis | git status --porcelain
+20:48:31 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:48:31 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:48:31 Cmd | Complex-Analysis | git push --all --progress origin
+20:48:33 Git | Counting objects: 4, done.
+20:48:33 Git | Delta compression using up to 4 threads.
+20:48:33 Git | Total 4 (delta 2), reused 0 (delta 0)
+20:48:35 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:48:35 Git |    5aa9bc8..b1e0370  master -> master
+20:48:36 SyncUp | Complex-Analysis | Done
+20:48:36 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:48:40 Cmd | Complex-Analysis | git status --porcelain
+20:48:41 Cmd | Complex-Analysis | git status --porcelain
+20:48:41 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+20:48:43 Local | Complex-Analysis | Activity has settled
+20:48:43 Cmd | Complex-Analysis | git status --porcelain
+20:48:43 SyncUp | Complex-Analysis | Initiated
+20:48:43 Cmd | Complex-Analysis | git add --all
+20:48:43 Cmd | Complex-Analysis | git status --porcelain
+20:48:43 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:48:43 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:48:43 Cmd | Complex-Analysis | git push --all --progress origin
+20:48:43 Git | Arizona-Winter-School-2019 | Checking for remote changes...
+20:48:43 Cmd | Arizona-Winter-School-2019 | git rev-parse HEAD
+20:48:43 Cmd | Arizona-Winter-School-2019 | git ls-remote --heads --exit-code origin master
+20:48:43 Git | Arizona-Winter-School-2019 | No remote changes, local+remote: 17ae3ec485dc06fa8e6e3b991e12a67d7db9260c
+20:48:44 Git | dotfiles | Checking for remote changes...
+20:48:44 Cmd | dotfiles | git rev-parse HEAD
+20:48:44 Cmd | dotfiles | git ls-remote --heads --exit-code origin master
+20:48:45 Git | dotfiles | No remote changes, local+remote: de5c0278b353fae9e66ddc0c7108796be9ac3d18
+20:48:45 Git | Counting objects: 4, done.
+20:48:45 Git | Delta compression using up to 4 threads.
+20:48:45 Git | Total 4 (delta 3), reused 0 (delta 0)
+20:48:46 Git | GSCATG-2019 | Checking for remote changes...
+20:48:46 Cmd | GSCATG-2019 | git rev-parse HEAD
+20:48:46 Cmd | GSCATG-2019 | git ls-remote --heads --exit-code origin master
+20:48:47 Git | GSCATG-2019 | No remote changes, local+remote: 4d70e6e5eb001f445c5a9ed9fc103a0432611c8e
+20:48:48 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:48:48 Git |    b1e0370..864b9de  master -> master
+20:48:48 SyncUp | Complex-Analysis | Done
+20:48:48 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:48:48 Git | Complex-Analysis | Checking for remote changes...
+20:48:48 Cmd | Complex-Analysis | git rev-parse HEAD
+20:48:48 Cmd | Complex-Analysis | git ls-remote --heads --exit-code origin master
+20:48:48 Git | dzackgarza.comv2018 | Checking for remote changes...
+20:48:48 Cmd | dzackgarza.comv2018 | git rev-parse HEAD
+20:48:48 Cmd | dzackgarza.comv2018 | git ls-remote --heads --exit-code origin master
+20:48:48 Git | Redbud-Topology-Conference-2019 | Checking for remote changes...
+20:48:48 Cmd | Redbud-Topology-Conference-2019 | git rev-parse HEAD
+20:48:48 Cmd | Redbud-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+20:48:49 Git | Complex-Analysis | No remote changes, local+remote: 864b9dec5840eaf961cce4bde241597a1c72f3d8
+20:48:49 Git | dzackgarza.comv2018 | No remote changes, local+remote: 8215e45609dd862743dfb77a3b0730bb1d072b85
+20:48:49 Git | Redbud-Topology-Conference-2019 | No remote changes, local+remote: b730f46cbd39ee0af9583ce7046f70890a0b0e92
+20:48:49 Git | UGA-Topology-Conference-2019 | Checking for remote changes...
+20:48:49 Cmd | UGA-Topology-Conference-2019 | git rev-parse HEAD
+20:48:49 Cmd | UGA-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+20:48:50 Git | UGA-Topology-Conference-2019 | No remote changes, local+remote: 2f2460e355ee671a576467e33127d4ba7ab119c2
+20:48:51 Cmd | Complex-Analysis | git status --porcelain
+20:48:54 Git | Research | Checking for remote changes...
+20:48:54 Cmd | Research | git rev-parse HEAD
+20:48:54 Cmd | Research | git ls-remote --heads --exit-code origin master
+20:48:54 Git | Research | No remote changes, local+remote: 327c1fce14967ef35c7c5d7255299ae3ecfcd601
+20:49:54 Cmd | Complex-Analysis | git status --porcelain
+20:49:54 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+20:49:56 Local | Complex-Analysis | Activity has settled
+20:49:56 Cmd | Complex-Analysis | git status --porcelain
+20:49:56 SyncUp | Complex-Analysis | Initiated
+20:49:56 Cmd | Complex-Analysis | git add --all
+20:49:56 Cmd | Complex-Analysis | git status --porcelain
+20:49:56 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:49:56 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:49:56 Cmd | Complex-Analysis | git push --all --progress origin
+20:50:03 Git | Counting objects: 4, done.
+20:50:03 Git | Delta compression using up to 4 threads.
+20:50:03 Git | Total 4 (delta 2), reused 0 (delta 0)
+20:50:05 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:50:05 Git |    864b9de..ae64021  master -> master
+20:50:05 SyncUp | Complex-Analysis | Done
+20:50:05 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:50:12 Cmd | Complex-Analysis | git status --porcelain
+20:50:12 Local | Complex-Analysis | More changes found
+20:50:12 SyncUp | Complex-Analysis | Initiated
+20:50:12 Cmd | Complex-Analysis | git add --all
+20:50:12 Cmd | Complex-Analysis | git status --porcelain
+20:50:12 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+20:50:13 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+20:50:13 Cmd | Complex-Analysis | git push --all --progress origin
+20:50:15 Git | Counting objects: 4, done.
+20:50:15 Git | Delta compression using up to 4 threads.
+20:50:15 Git | Total 4 (delta 3), reused 0 (delta 0)
+20:50:17 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+20:50:17 Git |    ae64021..d9076b2  master -> master
+20:50:17 SyncUp | Complex-Analysis | Done
+20:50:17 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+20:50:26 Cmd | Complex-Analysis | git status --porcelain
+20:53:43 Git | Arizona-Winter-School-2019 | Checking for remote changes...
+20:53:43 Cmd | Arizona-Winter-School-2019 | git rev-parse HEAD
+20:53:43 Cmd | Arizona-Winter-School-2019 | git ls-remote --heads --exit-code origin master
+20:53:43 Git | Arizona-Winter-School-2019 | No remote changes, local+remote: 17ae3ec485dc06fa8e6e3b991e12a67d7db9260c
+20:53:44 Git | dotfiles | Checking for remote changes...
+20:53:44 Cmd | dotfiles | git rev-parse HEAD
+20:53:44 Cmd | dotfiles | git ls-remote --heads --exit-code origin master
+20:53:45 Git | dotfiles | No remote changes, local+remote: de5c0278b353fae9e66ddc0c7108796be9ac3d18
+20:53:46 Git | GSCATG-2019 | Checking for remote changes...
+20:53:46 Cmd | GSCATG-2019 | git rev-parse HEAD
+20:53:46 Cmd | GSCATG-2019 | git ls-remote --heads --exit-code origin master
+20:53:47 Git | GSCATG-2019 | No remote changes, local+remote: 4d70e6e5eb001f445c5a9ed9fc103a0432611c8e
+20:53:48 Git | dzackgarza.comv2018 | Checking for remote changes...
+20:53:48 Cmd | dzackgarza.comv2018 | git rev-parse HEAD
+20:53:48 Cmd | dzackgarza.comv2018 | git ls-remote --heads --exit-code origin master
+20:53:48 Git | Redbud-Topology-Conference-2019 | Checking for remote changes...
+20:53:48 Cmd | Redbud-Topology-Conference-2019 | git rev-parse HEAD
+20:53:48 Cmd | Redbud-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+20:53:49 Git | dzackgarza.comv2018 | No remote changes, local+remote: 8215e45609dd862743dfb77a3b0730bb1d072b85
+20:53:49 Git | Redbud-Topology-Conference-2019 | No remote changes, local+remote: b730f46cbd39ee0af9583ce7046f70890a0b0e92
+20:53:49 Git | UGA-Topology-Conference-2019 | Checking for remote changes...
+20:53:49 Cmd | UGA-Topology-Conference-2019 | git rev-parse HEAD
+20:53:49 Cmd | UGA-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+20:53:50 Git | UGA-Topology-Conference-2019 | No remote changes, local+remote: 2f2460e355ee671a576467e33127d4ba7ab119c2
+20:53:54 Git | Research | Checking for remote changes...
+20:53:54 Cmd | Research | git rev-parse HEAD
+20:53:54 Cmd | Research | git ls-remote --heads --exit-code origin master
+20:53:54 Git | Research | No remote changes, local+remote: 327c1fce14967ef35c7c5d7255299ae3ecfcd601
+20:58:43 Git | Arizona-Winter-School-2019 | Checking for remote changes...
+20:58:43 Cmd | Arizona-Winter-School-2019 | git rev-parse HEAD
+20:58:43 Cmd | Arizona-Winter-School-2019 | git ls-remote --heads --exit-code origin master
+20:58:43 Git | Arizona-Winter-School-2019 | No remote changes, local+remote: 17ae3ec485dc06fa8e6e3b991e12a67d7db9260c
+20:58:44 Git | dotfiles | Checking for remote changes...
+20:58:44 Cmd | dotfiles | git rev-parse HEAD
+20:58:44 Cmd | dotfiles | git ls-remote --heads --exit-code origin master
+20:58:45 Git | dotfiles | No remote changes, local+remote: de5c0278b353fae9e66ddc0c7108796be9ac3d18
+20:58:46 Git | GSCATG-2019 | Checking for remote changes...
+20:58:46 Cmd | GSCATG-2019 | git rev-parse HEAD
+20:58:46 Cmd | GSCATG-2019 | git ls-remote --heads --exit-code origin master
+20:58:47 Git | GSCATG-2019 | No remote changes, local+remote: 4d70e6e5eb001f445c5a9ed9fc103a0432611c8e
+20:58:48 Git | dzackgarza.comv2018 | Checking for remote changes...
+20:58:48 Cmd | dzackgarza.comv2018 | git rev-parse HEAD
+20:58:48 Cmd | dzackgarza.comv2018 | git ls-remote --heads --exit-code origin master
+20:58:48 Git | Redbud-Topology-Conference-2019 | Checking for remote changes...
+20:58:48 Cmd | Redbud-Topology-Conference-2019 | git rev-parse HEAD
+20:58:48 Cmd | Redbud-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+20:58:49 Git | Notes | Checking for remote changes...
+20:58:49 Cmd | Notes | git rev-parse HEAD
+20:58:49 Cmd | Notes | git ls-remote --heads --exit-code origin master
+20:58:49 Git | Redbud-Topology-Conference-2019 | No remote changes, local+remote: b730f46cbd39ee0af9583ce7046f70890a0b0e92
+20:58:49 Git | dzackgarza.comv2018 | No remote changes, local+remote: 8215e45609dd862743dfb77a3b0730bb1d072b85
+20:58:49 Git | Notes | No remote changes, local+remote: 9c385aaf187cf417b59bb62d1b845cca13b74454
+20:58:49 Git | UGA-Topology-Conference-2019 | Checking for remote changes...
+20:58:49 Cmd | UGA-Topology-Conference-2019 | git rev-parse HEAD
+20:58:49 Cmd | UGA-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+20:58:50 Git | UGA-Topology-Conference-2019 | No remote changes, local+remote: 2f2460e355ee671a576467e33127d4ba7ab119c2
+20:58:54 Git | Research | Checking for remote changes...
+20:58:54 Cmd | Research | git rev-parse HEAD
+20:58:54 Cmd | Research | git ls-remote --heads --exit-code origin master
+20:58:54 Git | Research | No remote changes, local+remote: 327c1fce14967ef35c7c5d7255299ae3ecfcd601
+21:03:43 Git | Arizona-Winter-School-2019 | Checking for remote changes...
+21:03:43 Cmd | Arizona-Winter-School-2019 | git rev-parse HEAD
+21:03:43 Cmd | Arizona-Winter-School-2019 | git ls-remote --heads --exit-code origin master
+21:03:43 Git | Arizona-Winter-School-2019 | No remote changes, local+remote: 17ae3ec485dc06fa8e6e3b991e12a67d7db9260c
+21:03:44 Git | dotfiles | Checking for remote changes...
+21:03:44 Cmd | dotfiles | git rev-parse HEAD
+21:03:44 Cmd | dotfiles | git ls-remote --heads --exit-code origin master
+21:03:45 Git | dotfiles | No remote changes, local+remote: de5c0278b353fae9e66ddc0c7108796be9ac3d18
+21:03:46 Git | GSCATG-2019 | Checking for remote changes...
+21:03:46 Cmd | GSCATG-2019 | git rev-parse HEAD
+21:03:46 Cmd | GSCATG-2019 | git ls-remote --heads --exit-code origin master
+21:03:47 Git | GSCATG-2019 | No remote changes, local+remote: 4d70e6e5eb001f445c5a9ed9fc103a0432611c8e
+21:03:48 Git | Complex-Analysis | Checking for remote changes...
+21:03:48 Cmd | Complex-Analysis | git rev-parse HEAD
+21:03:48 Cmd | Complex-Analysis | git ls-remote --heads --exit-code origin master
+21:03:48 Git | dzackgarza.comv2018 | Checking for remote changes...
+21:03:48 Cmd | dzackgarza.comv2018 | git rev-parse HEAD
+21:03:48 Cmd | dzackgarza.comv2018 | git ls-remote --heads --exit-code origin master
+21:03:48 Git | Redbud-Topology-Conference-2019 | Checking for remote changes...
+21:03:48 Cmd | Redbud-Topology-Conference-2019 | git rev-parse HEAD
+21:03:48 Cmd | Redbud-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+21:03:49 Git | Complex-Analysis | No remote changes, local+remote: d9076b210c20975c49246116acfd4f245aa4ce47
+21:03:49 Git | dzackgarza.comv2018 | No remote changes, local+remote: 8215e45609dd862743dfb77a3b0730bb1d072b85
+21:03:49 Git | Redbud-Topology-Conference-2019 | No remote changes, local+remote: b730f46cbd39ee0af9583ce7046f70890a0b0e92
+21:03:49 Git | UGA-Topology-Conference-2019 | Checking for remote changes...
+21:03:49 Cmd | UGA-Topology-Conference-2019 | git rev-parse HEAD
+21:03:49 Cmd | UGA-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+21:03:50 Git | UGA-Topology-Conference-2019 | No remote changes, local+remote: 2f2460e355ee671a576467e33127d4ba7ab119c2
+21:03:54 Git | Research | Checking for remote changes...
+21:03:54 Cmd | Research | git rev-parse HEAD
+21:03:54 Cmd | Research | git ls-remote --heads --exit-code origin master
+21:03:54 Git | Research | No remote changes, local+remote: 327c1fce14967ef35c7c5d7255299ae3ecfcd601
+21:08:43 Git | Arizona-Winter-School-2019 | Checking for remote changes...
+21:08:43 Cmd | Arizona-Winter-School-2019 | git rev-parse HEAD
+21:08:43 Cmd | Arizona-Winter-School-2019 | git ls-remote --heads --exit-code origin master
+21:08:43 Git | Arizona-Winter-School-2019 | No remote changes, local+remote: 17ae3ec485dc06fa8e6e3b991e12a67d7db9260c
+21:08:44 Git | dotfiles | Checking for remote changes...
+21:08:44 Cmd | dotfiles | git rev-parse HEAD
+21:08:44 Cmd | dotfiles | git ls-remote --heads --exit-code origin master
+21:08:45 Git | dotfiles | No remote changes, local+remote: de5c0278b353fae9e66ddc0c7108796be9ac3d18
+21:08:46 Git | GSCATG-2019 | Checking for remote changes...
+21:08:46 Cmd | GSCATG-2019 | git rev-parse HEAD
+21:08:46 Cmd | GSCATG-2019 | git ls-remote --heads --exit-code origin master
+21:08:47 Git | GSCATG-2019 | No remote changes, local+remote: 4d70e6e5eb001f445c5a9ed9fc103a0432611c8e
+21:08:48 Git | dzackgarza.comv2018 | Checking for remote changes...
+21:08:48 Cmd | dzackgarza.comv2018 | git rev-parse HEAD
+21:08:48 Cmd | dzackgarza.comv2018 | git ls-remote --heads --exit-code origin master
+21:08:48 Git | Redbud-Topology-Conference-2019 | Checking for remote changes...
+21:08:48 Cmd | Redbud-Topology-Conference-2019 | git rev-parse HEAD
+21:08:48 Cmd | Redbud-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+21:08:49 Git | Redbud-Topology-Conference-2019 | No remote changes, local+remote: b730f46cbd39ee0af9583ce7046f70890a0b0e92
+21:08:49 Git | dzackgarza.comv2018 | No remote changes, local+remote: 8215e45609dd862743dfb77a3b0730bb1d072b85
+21:08:49 Git | UGA-Topology-Conference-2019 | Checking for remote changes...
+21:08:49 Cmd | UGA-Topology-Conference-2019 | git rev-parse HEAD
+21:08:49 Cmd | UGA-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+21:08:50 Git | UGA-Topology-Conference-2019 | No remote changes, local+remote: 2f2460e355ee671a576467e33127d4ba7ab119c2
+21:08:54 Git | Research | Checking for remote changes...
+21:08:54 Cmd | Research | git rev-parse HEAD
+21:08:54 Cmd | Research | git ls-remote --heads --exit-code origin master
+21:08:54 Git | Research | No remote changes, local+remote: 327c1fce14967ef35c7c5d7255299ae3ecfcd601
+21:12:23 Cmd | Notes | git status --porcelain
+21:12:24 Local | Notes | Activity detected, waiting for it to settle...
+21:12:26 Local | Notes | Activity has settled
+21:12:26 Cmd | Notes | git status --porcelain
+21:12:26 SyncUp | Notes | Initiated
+21:12:26 Cmd | Notes | git add --all
+21:12:26 Cmd | Notes | git status --porcelain
+21:12:26 Cmd | Notes | git commit --all --file="/home/zack/SparkleShare/github.com/Notes/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+21:12:26 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Notes/.git/hooks/pre-push
+21:12:26 Cmd | Notes | git push --all --progress origin
+21:12:28 Git | Counting objects: 4, done.
+21:12:28 Git | Delta compression using up to 4 threads.
+21:12:28 Git | Total 4 (delta 2), reused 0 (delta 0)
+21:12:31 Git | To ssh://github.com/dzackgarza/Notes.git
+21:12:31 Git |    9c385aaf1..4f1f24c41  master -> master
+21:12:31 SyncUp | Notes | Done
+21:12:31 Cmd | Notes | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+21:12:41 Cmd | Notes | git status --porcelain
+21:13:43 Git | Arizona-Winter-School-2019 | Checking for remote changes...
+21:13:43 Cmd | Arizona-Winter-School-2019 | git rev-parse HEAD
+21:13:43 Cmd | Arizona-Winter-School-2019 | git ls-remote --heads --exit-code origin master
+21:13:43 Git | Arizona-Winter-School-2019 | No remote changes, local+remote: 17ae3ec485dc06fa8e6e3b991e12a67d7db9260c
+21:13:44 Git | dotfiles | Checking for remote changes...
+21:13:44 Cmd | dotfiles | git rev-parse HEAD
+21:13:44 Cmd | dotfiles | git ls-remote --heads --exit-code origin master
+21:13:45 Git | dotfiles | No remote changes, local+remote: de5c0278b353fae9e66ddc0c7108796be9ac3d18
+21:13:46 Git | GSCATG-2019 | Checking for remote changes...
+21:13:46 Cmd | GSCATG-2019 | git rev-parse HEAD
+21:13:47 Cmd | GSCATG-2019 | git ls-remote --heads --exit-code origin master
+21:13:47 Git | GSCATG-2019 | No remote changes, local+remote: 4d70e6e5eb001f445c5a9ed9fc103a0432611c8e
+21:13:48 Git | dzackgarza.comv2018 | Checking for remote changes...
+21:13:48 Cmd | dzackgarza.comv2018 | git rev-parse HEAD
+21:13:48 Cmd | dzackgarza.comv2018 | git ls-remote --heads --exit-code origin master
+21:13:48 Git | Redbud-Topology-Conference-2019 | Checking for remote changes...
+21:13:48 Cmd | Redbud-Topology-Conference-2019 | git rev-parse HEAD
+21:13:48 Cmd | Redbud-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+21:13:49 Git | Notes | Checking for remote changes...
+21:13:49 Cmd | Notes | git rev-parse HEAD
+21:13:49 Cmd | Notes | git ls-remote --heads --exit-code origin master
+21:13:49 Git | dzackgarza.comv2018 | No remote changes, local+remote: 8215e45609dd862743dfb77a3b0730bb1d072b85
+21:13:49 Git | Redbud-Topology-Conference-2019 | No remote changes, local+remote: b730f46cbd39ee0af9583ce7046f70890a0b0e92
+21:13:49 Git | Notes | No remote changes, local+remote: 4f1f24c41b2c782212639c180faac8dc4e03a504
+21:13:49 Git | UGA-Topology-Conference-2019 | Checking for remote changes...
+21:13:49 Cmd | UGA-Topology-Conference-2019 | git rev-parse HEAD
+21:13:49 Cmd | UGA-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+21:13:50 Git | UGA-Topology-Conference-2019 | No remote changes, local+remote: 2f2460e355ee671a576467e33127d4ba7ab119c2
+21:13:54 Git | Research | Checking for remote changes...
+21:13:54 Cmd | Research | git rev-parse HEAD
+21:13:54 Cmd | Research | git ls-remote --heads --exit-code origin master
+21:13:54 Git | Research | No remote changes, local+remote: 327c1fce14967ef35c7c5d7255299ae3ecfcd601
+21:15:24 Cmd | Complex-Analysis | git status --porcelain
+21:15:24 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+21:15:26 Local | Complex-Analysis | Activity has settled
+21:15:26 Cmd | Complex-Analysis | git status --porcelain
+21:15:26 SyncUp | Complex-Analysis | Initiated
+21:15:26 Cmd | Complex-Analysis | git add --all
+21:15:26 Cmd | Complex-Analysis | git status --porcelain
+21:15:26 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+21:15:26 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+21:15:26 Cmd | Complex-Analysis | git push --all --progress origin
+21:15:33 Git | Counting objects: 4, done.
+21:15:33 Git | Delta compression using up to 4 threads.
+21:15:33 Git | Total 4 (delta 2), reused 0 (delta 0)
+21:15:35 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+21:15:35 Git |    d9076b2..7417b54  master -> master
+21:15:35 SyncUp | Complex-Analysis | Done
+21:15:35 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+21:15:42 Cmd | Complex-Analysis | git status --porcelain
+21:15:42 Local | Complex-Analysis | More changes found
+21:15:42 SyncUp | Complex-Analysis | Initiated
+21:15:42 Cmd | Complex-Analysis | git add --all
+21:15:42 Cmd | Complex-Analysis | git status --porcelain
+21:15:42 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+21:15:42 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+21:15:42 Cmd | Complex-Analysis | git push --all --progress origin
+21:15:44 Git | Counting objects: 5, done.
+21:15:44 Git | Delta compression using up to 4 threads.
+21:15:44 Git | Total 5 (delta 3), reused 0 (delta 0)
+21:15:46 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+21:15:46 Git |    7417b54..80047a8  master -> master
+21:15:46 SyncUp | Complex-Analysis | Done
+21:15:46 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+21:15:54 Cmd | Complex-Analysis | git status --porcelain
+21:15:54 Local | Complex-Analysis | More changes found
+21:15:54 SyncUp | Complex-Analysis | Initiated
+21:15:54 Cmd | Complex-Analysis | git add --all
+21:15:54 Cmd | Complex-Analysis | git status --porcelain
+21:15:54 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+21:15:54 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+21:15:54 Cmd | Complex-Analysis | git push --all --progress origin
+21:15:56 Git | Counting objects: 4, done.
+21:15:56 Git | Delta compression using up to 4 threads.
+21:15:56 Git | Total 4 (delta 2), reused 0 (delta 0)
+21:15:58 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+21:15:58 Git |    80047a8..f896cd7  master -> master
+21:15:58 SyncUp | Complex-Analysis | Done
+21:15:58 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+21:16:03 Cmd | Complex-Analysis | git status --porcelain
+21:16:03 Local | Complex-Analysis | More changes found
+21:16:03 SyncUp | Complex-Analysis | Initiated
+21:16:03 Cmd | Complex-Analysis | git add --all
+21:16:03 Cmd | Complex-Analysis | git status --porcelain
+21:16:04 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+21:16:04 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+21:16:04 Cmd | Complex-Analysis | git push --all --progress origin
+21:16:06 Git | Counting objects: 4, done.
+21:16:06 Git | Delta compression using up to 4 threads.
+21:16:06 Git | Total 4 (delta 3), reused 0 (delta 0)
+21:16:08 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+21:16:08 Git |    f896cd7..8bb73cc  master -> master
+21:16:08 SyncUp | Complex-Analysis | Done
+21:16:08 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+21:16:13 Cmd | Complex-Analysis | git status --porcelain
+21:18:43 Git | Arizona-Winter-School-2019 | Checking for remote changes...
+21:18:43 Cmd | Arizona-Winter-School-2019 | git rev-parse HEAD
+21:18:43 Cmd | Arizona-Winter-School-2019 | git ls-remote --heads --exit-code origin master
+21:18:43 Git | Arizona-Winter-School-2019 | No remote changes, local+remote: 17ae3ec485dc06fa8e6e3b991e12a67d7db9260c
+21:18:44 Git | dotfiles | Checking for remote changes...
+21:18:44 Cmd | dotfiles | git rev-parse HEAD
+21:18:44 Cmd | dotfiles | git ls-remote --heads --exit-code origin master
+21:18:45 Git | dotfiles | No remote changes, local+remote: de5c0278b353fae9e66ddc0c7108796be9ac3d18
+21:18:47 Git | GSCATG-2019 | Checking for remote changes...
+21:18:47 Cmd | GSCATG-2019 | git rev-parse HEAD
+21:18:47 Cmd | GSCATG-2019 | git ls-remote --heads --exit-code origin master
+21:18:47 Git | GSCATG-2019 | No remote changes, local+remote: 4d70e6e5eb001f445c5a9ed9fc103a0432611c8e
+21:18:48 Git | Complex-Analysis | Checking for remote changes...
+21:18:48 Cmd | Complex-Analysis | git rev-parse HEAD
+21:18:48 Cmd | Complex-Analysis | git ls-remote --heads --exit-code origin master
+21:18:48 Git | dzackgarza.comv2018 | Checking for remote changes...
+21:18:48 Cmd | dzackgarza.comv2018 | git rev-parse HEAD
+21:18:48 Cmd | dzackgarza.comv2018 | git ls-remote --heads --exit-code origin master
+21:18:48 Git | Redbud-Topology-Conference-2019 | Checking for remote changes...
+21:18:48 Cmd | Redbud-Topology-Conference-2019 | git rev-parse HEAD
+21:18:48 Cmd | Redbud-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+21:18:49 Git | Complex-Analysis | No remote changes, local+remote: 8bb73cc215c7fcb9bedff72bc79ae7ebfcf7f573
+21:18:49 Git | dzackgarza.comv2018 | No remote changes, local+remote: 8215e45609dd862743dfb77a3b0730bb1d072b85
+21:18:49 Git | Redbud-Topology-Conference-2019 | No remote changes, local+remote: b730f46cbd39ee0af9583ce7046f70890a0b0e92
+21:18:49 Git | UGA-Topology-Conference-2019 | Checking for remote changes...
+21:18:49 Cmd | UGA-Topology-Conference-2019 | git rev-parse HEAD
+21:18:49 Cmd | UGA-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+21:18:50 Git | UGA-Topology-Conference-2019 | No remote changes, local+remote: 2f2460e355ee671a576467e33127d4ba7ab119c2
+21:18:54 Git | Research | Checking for remote changes...
+21:18:54 Cmd | Research | git rev-parse HEAD
+21:18:54 Cmd | Research | git ls-remote --heads --exit-code origin master
+21:18:54 Git | Research | No remote changes, local+remote: 327c1fce14967ef35c7c5d7255299ae3ecfcd601
+21:21:54 Cmd | Complex-Analysis | git status --porcelain
+21:21:54 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+21:21:55 Local | Complex-Analysis | Activity has settled
+21:21:55 Cmd | Complex-Analysis | git status --porcelain
+21:21:55 SyncUp | Complex-Analysis | Initiated
+21:21:55 Cmd | Complex-Analysis | git add --all
+21:21:55 Cmd | Complex-Analysis | git status --porcelain
+21:21:55 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+21:21:55 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+21:21:55 Cmd | Complex-Analysis | git push --all --progress origin
+21:21:58 Git | Counting objects: 4, done.
+21:21:58 Git | Delta compression using up to 4 threads.
+21:21:58 Git | Total 4 (delta 2), reused 0 (delta 0)
+21:22:00 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+21:22:00 Git |    8bb73cc..b557df5  master -> master
+21:22:00 SyncUp | Complex-Analysis | Done
+21:22:00 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+21:22:04 Cmd | Complex-Analysis | git status --porcelain
+21:22:04 Cmd | Complex-Analysis | git status --porcelain
+21:22:04 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+21:22:06 Local | Complex-Analysis | Activity has settled
+21:22:06 Cmd | Complex-Analysis | git status --porcelain
+21:22:06 SyncUp | Complex-Analysis | Initiated
+21:22:06 Cmd | Complex-Analysis | git add --all
+21:22:06 Cmd | Complex-Analysis | git status --porcelain
+21:22:06 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+21:22:06 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+21:22:06 Cmd | Complex-Analysis | git push --all --progress origin
+21:22:08 Git | Counting objects: 4, done.
+21:22:08 Git | Delta compression using up to 4 threads.
+21:22:08 Git | Total 4 (delta 3), reused 0 (delta 0)
+21:22:10 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+21:22:10 Git |    b557df5..800d7ef  master -> master
+21:22:11 SyncUp | Complex-Analysis | Done
+21:22:11 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+21:22:15 Cmd | Complex-Analysis | git status --porcelain
+21:22:31 Cmd | Complex-Analysis | git status --porcelain
+21:22:31 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+21:22:32 Local | Complex-Analysis | Activity has settled
+21:22:32 Cmd | Complex-Analysis | git status --porcelain
+21:22:32 SyncUp | Complex-Analysis | Initiated
+21:22:32 Cmd | Complex-Analysis | git add --all
+21:22:32 Cmd | Complex-Analysis | git status --porcelain
+21:22:32 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+21:22:32 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+21:22:32 Cmd | Complex-Analysis | git push --all --progress origin
+21:22:35 Git | Counting objects: 4, done.
+21:22:35 Git | Delta compression using up to 4 threads.
+21:22:35 Git | Total 4 (delta 2), reused 0 (delta 0)
+21:22:37 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+21:22:37 Git |    800d7ef..bc80ebc  master -> master
+21:22:37 SyncUp | Complex-Analysis | Done
+21:22:37 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+21:22:42 Cmd | Complex-Analysis | git status --porcelain
+21:22:42 Local | Complex-Analysis | More changes found
+21:22:42 SyncUp | Complex-Analysis | Initiated
+21:22:42 Cmd | Complex-Analysis | git add --all
+21:22:42 Cmd | Complex-Analysis | git status --porcelain
+21:22:42 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+21:22:42 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+21:22:42 Cmd | Complex-Analysis | git push --all --progress origin
+21:22:44 Git | Counting objects: 4, done.
+21:22:44 Git | Delta compression using up to 4 threads.
+21:22:44 Git | Total 4 (delta 2), reused 0 (delta 0)
+21:22:47 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+21:22:47 Git |    bc80ebc..89b73b5  master -> master
+21:22:47 SyncUp | Complex-Analysis | Done
+21:22:47 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+21:22:50 Cmd | Complex-Analysis | git status --porcelain
+21:22:50 Local | Complex-Analysis | More changes found
+21:22:50 SyncUp | Complex-Analysis | Initiated
+21:22:50 Cmd | Complex-Analysis | git add --all
+21:22:50 Cmd | Complex-Analysis | git status --porcelain
+21:22:50 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+21:22:50 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+21:22:50 Cmd | Complex-Analysis | git push --all --progress origin
+21:22:53 Git | Counting objects: 4, done.
+21:22:53 Git | Delta compression using up to 4 threads.
+21:22:53 Git | Total 4 (delta 3), reused 0 (delta 0)
+21:22:55 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+21:22:55 Git |    89b73b5..3ddf1a3  master -> master
+21:22:55 SyncUp | Complex-Analysis | Done
+21:22:55 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+21:22:59 Cmd | Complex-Analysis | git status --porcelain
+21:23:43 Git | Arizona-Winter-School-2019 | Checking for remote changes...
+21:23:43 Cmd | Arizona-Winter-School-2019 | git rev-parse HEAD
+21:23:43 Cmd | Arizona-Winter-School-2019 | git ls-remote --heads --exit-code origin master
+21:23:43 Git | Arizona-Winter-School-2019 | No remote changes, local+remote: 17ae3ec485dc06fa8e6e3b991e12a67d7db9260c
+21:23:44 Git | dotfiles | Checking for remote changes...
+21:23:44 Cmd | dotfiles | git rev-parse HEAD
+21:23:44 Cmd | dotfiles | git ls-remote --heads --exit-code origin master
+21:23:45 Git | dotfiles | No remote changes, local+remote: de5c0278b353fae9e66ddc0c7108796be9ac3d18
+21:23:47 Git | GSCATG-2019 | Checking for remote changes...
+21:23:47 Cmd | GSCATG-2019 | git rev-parse HEAD
+21:23:47 Cmd | GSCATG-2019 | git ls-remote --heads --exit-code origin master
+21:23:47 Git | GSCATG-2019 | No remote changes, local+remote: 4d70e6e5eb001f445c5a9ed9fc103a0432611c8e
+21:23:48 Git | dzackgarza.comv2018 | Checking for remote changes...
+21:23:48 Cmd | dzackgarza.comv2018 | git rev-parse HEAD
+21:23:48 Cmd | dzackgarza.comv2018 | git ls-remote --heads --exit-code origin master
+21:23:48 Git | Redbud-Topology-Conference-2019 | Checking for remote changes...
+21:23:48 Cmd | Redbud-Topology-Conference-2019 | git rev-parse HEAD
+21:23:48 Cmd | Redbud-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+21:23:49 Git | dzackgarza.comv2018 | No remote changes, local+remote: 8215e45609dd862743dfb77a3b0730bb1d072b85
+21:23:49 Git | Redbud-Topology-Conference-2019 | No remote changes, local+remote: b730f46cbd39ee0af9583ce7046f70890a0b0e92
+21:23:49 Git | UGA-Topology-Conference-2019 | Checking for remote changes...
+21:23:49 Cmd | UGA-Topology-Conference-2019 | git rev-parse HEAD
+21:23:49 Cmd | UGA-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+21:23:50 Git | UGA-Topology-Conference-2019 | No remote changes, local+remote: 2f2460e355ee671a576467e33127d4ba7ab119c2
+21:23:54 Git | Research | Checking for remote changes...
+21:23:54 Cmd | Research | git rev-parse HEAD
+21:23:54 Cmd | Research | git ls-remote --heads --exit-code origin master
+21:23:54 Git | Research | No remote changes, local+remote: 327c1fce14967ef35c7c5d7255299ae3ecfcd601
+21:28:43 Git | Arizona-Winter-School-2019 | Checking for remote changes...
+21:28:43 Cmd | Arizona-Winter-School-2019 | git rev-parse HEAD
+21:28:43 Cmd | Arizona-Winter-School-2019 | git ls-remote --heads --exit-code origin master
+21:28:43 Git | Arizona-Winter-School-2019 | No remote changes, local+remote: 17ae3ec485dc06fa8e6e3b991e12a67d7db9260c
+21:28:44 Git | dotfiles | Checking for remote changes...
+21:28:44 Cmd | dotfiles | git rev-parse HEAD
+21:28:44 Cmd | dotfiles | git ls-remote --heads --exit-code origin master
+21:28:47 Git | GSCATG-2019 | Checking for remote changes...
+21:28:47 Cmd | GSCATG-2019 | git rev-parse HEAD
+21:28:47 Cmd | GSCATG-2019 | git ls-remote --heads --exit-code origin master
+21:28:47 Git | GSCATG-2019 | No remote changes, local+remote: 4d70e6e5eb001f445c5a9ed9fc103a0432611c8e
+21:28:48 Git | dzackgarza.comv2018 | Checking for remote changes...
+21:28:48 Cmd | dzackgarza.comv2018 | git rev-parse HEAD
+21:28:48 Cmd | dzackgarza.comv2018 | git ls-remote --heads --exit-code origin master
+21:28:48 Git | Redbud-Topology-Conference-2019 | Checking for remote changes...
+21:28:48 Cmd | Redbud-Topology-Conference-2019 | git rev-parse HEAD
+21:28:48 Cmd | Redbud-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+21:28:49 Git | Notes | Checking for remote changes...
+21:28:49 Cmd | Notes | git rev-parse HEAD
+21:28:49 Cmd | Notes | git ls-remote --heads --exit-code origin master
+21:28:49 Git | dzackgarza.comv2018 | No remote changes, local+remote: 8215e45609dd862743dfb77a3b0730bb1d072b85
+21:28:49 Git | Redbud-Topology-Conference-2019 | No remote changes, local+remote: b730f46cbd39ee0af9583ce7046f70890a0b0e92
+21:28:49 Git | UGA-Topology-Conference-2019 | Checking for remote changes...
+21:28:49 Cmd | UGA-Topology-Conference-2019 | git rev-parse HEAD
+21:28:49 Cmd | UGA-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+21:28:50 Git | dotfiles | No remote changes, local+remote: de5c0278b353fae9e66ddc0c7108796be9ac3d18
+21:28:50 Git | UGA-Topology-Conference-2019 | No remote changes, local+remote: 2f2460e355ee671a576467e33127d4ba7ab119c2
+21:28:54 Git | Research | Checking for remote changes...
+21:28:54 Cmd | Research | git rev-parse HEAD
+21:28:54 Cmd | Research | git ls-remote --heads --exit-code origin master
+21:28:54 Git | Notes | No remote changes, local+remote: 4f1f24c41b2c782212639c180faac8dc4e03a504
+21:28:55 Git | Research | No remote changes, local+remote: 327c1fce14967ef35c7c5d7255299ae3ecfcd601
+21:33:43 Git | Arizona-Winter-School-2019 | Checking for remote changes...
+21:33:43 Cmd | Arizona-Winter-School-2019 | git rev-parse HEAD
+21:33:43 Cmd | Arizona-Winter-School-2019 | git ls-remote --heads --exit-code origin master
+21:33:44 Git | dotfiles | Checking for remote changes...
+21:33:44 Cmd | dotfiles | git rev-parse HEAD
+21:33:44 Cmd | dotfiles | git ls-remote --heads --exit-code origin master
+21:33:44 Git | Arizona-Winter-School-2019 | No remote changes, local+remote: 17ae3ec485dc06fa8e6e3b991e12a67d7db9260c
+21:33:45 Git | dotfiles | No remote changes, local+remote: de5c0278b353fae9e66ddc0c7108796be9ac3d18
+21:33:47 Git | GSCATG-2019 | Checking for remote changes...
+21:33:47 Cmd | GSCATG-2019 | git rev-parse HEAD
+21:33:47 Cmd | GSCATG-2019 | git ls-remote --heads --exit-code origin master
+21:33:48 Git | GSCATG-2019 | No remote changes, local+remote: 4d70e6e5eb001f445c5a9ed9fc103a0432611c8e
+21:33:48 Git | Complex-Analysis | Checking for remote changes...
+21:33:48 Cmd | Complex-Analysis | git rev-parse HEAD
+21:33:48 Cmd | Complex-Analysis | git ls-remote --heads --exit-code origin master
+21:33:48 Git | dzackgarza.comv2018 | Checking for remote changes...
+21:33:48 Cmd | dzackgarza.comv2018 | git rev-parse HEAD
+21:33:48 Cmd | dzackgarza.comv2018 | git ls-remote --heads --exit-code origin master
+21:33:48 Git | Redbud-Topology-Conference-2019 | Checking for remote changes...
+21:33:48 Cmd | Redbud-Topology-Conference-2019 | git rev-parse HEAD
+21:33:48 Cmd | Redbud-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+21:33:49 Git | UGA-Topology-Conference-2019 | Checking for remote changes...
+21:33:49 Cmd | UGA-Topology-Conference-2019 | git rev-parse HEAD
+21:33:49 Cmd | UGA-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+21:33:50 Git | Complex-Analysis | No remote changes, local+remote: 3ddf1a3bc971619794a0cd1bf21ee6bc23e2ee98
+21:33:50 Git | dzackgarza.comv2018 | No remote changes, local+remote: 8215e45609dd862743dfb77a3b0730bb1d072b85
+21:33:50 Git | Redbud-Topology-Conference-2019 | No remote changes, local+remote: b730f46cbd39ee0af9583ce7046f70890a0b0e92
+21:33:50 Git | UGA-Topology-Conference-2019 | No remote changes, local+remote: 2f2460e355ee671a576467e33127d4ba7ab119c2
+21:33:54 Git | Research | Checking for remote changes...
+21:33:54 Cmd | Research | git rev-parse HEAD
+21:33:54 Cmd | Research | git ls-remote --heads --exit-code origin master
+21:33:55 Git | Research | No remote changes, local+remote: 327c1fce14967ef35c7c5d7255299ae3ecfcd601
+21:36:44 Cmd | Complex-Analysis | git status --porcelain
+21:36:44 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+21:36:45 Local | Complex-Analysis | Activity has settled
+21:36:45 Cmd | Complex-Analysis | git status --porcelain
+21:36:45 SyncUp | Complex-Analysis | Initiated
+21:36:45 Cmd | Complex-Analysis | git add --all
+21:36:45 Cmd | Complex-Analysis | git status --porcelain
+21:36:45 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+21:36:45 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+21:36:45 Cmd | Complex-Analysis | git push --all --progress origin
+21:36:48 Git | Counting objects: 4, done.
+21:36:48 Git | Delta compression using up to 4 threads.
+21:36:48 Git | Total 4 (delta 2), reused 0 (delta 0)
+21:36:50 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+21:36:50 Git |    3ddf1a3..f6cd163  master -> master
+21:36:50 SyncUp | Complex-Analysis | Done
+21:36:50 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+21:36:54 Cmd | Complex-Analysis | git status --porcelain
+21:36:54 Cmd | Complex-Analysis | git status --porcelain
+21:36:54 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+21:36:56 Local | Complex-Analysis | Activity has settled
+21:36:56 Cmd | Complex-Analysis | git status --porcelain
+21:36:56 SyncUp | Complex-Analysis | Initiated
+21:36:56 Cmd | Complex-Analysis | git add --all
+21:36:56 Cmd | Complex-Analysis | git status --porcelain
+21:36:56 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+21:36:56 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+21:36:56 Cmd | Complex-Analysis | git push --all --progress origin
+21:36:58 Git | Counting objects: 4, done.
+21:36:58 Git | Delta compression using up to 4 threads.
+21:36:58 Git | Total 4 (delta 3), reused 0 (delta 0)
+21:37:01 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+21:37:01 Git |    f6cd163..dccc543  master -> master
+21:37:01 SyncUp | Complex-Analysis | Done
+21:37:01 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+21:37:04 Cmd | Complex-Analysis | git status --porcelain
+21:38:25 Cmd | Complex-Analysis | git status --porcelain
+21:38:25 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+21:38:27 Local | Complex-Analysis | Activity has settled
+21:38:27 Cmd | Complex-Analysis | git status --porcelain
+21:38:27 SyncUp | Complex-Analysis | Initiated
+21:38:27 Cmd | Complex-Analysis | git add --all
+21:38:27 Cmd | Complex-Analysis | git status --porcelain
+21:38:27 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+21:38:27 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+21:38:27 Cmd | Complex-Analysis | git push --all --progress origin
+21:38:29 Git | Counting objects: 4, done.
+21:38:29 Git | Delta compression using up to 4 threads.
+21:38:29 Git | Total 4 (delta 2), reused 0 (delta 0)
+21:38:31 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+21:38:31 Git |    dccc543..2e49649  master -> master
+21:38:31 SyncUp | Complex-Analysis | Done
+21:38:31 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+21:38:36 Cmd | Complex-Analysis | git status --porcelain
+21:38:36 Cmd | Complex-Analysis | git status --porcelain
+21:38:36 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+21:38:37 Local | Complex-Analysis | Activity has settled
+21:38:37 Cmd | Complex-Analysis | git status --porcelain
+21:38:38 SyncUp | Complex-Analysis | Initiated
+21:38:38 Cmd | Complex-Analysis | git add --all
+21:38:38 Cmd | Complex-Analysis | git status --porcelain
+21:38:38 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+21:38:38 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+21:38:38 Cmd | Complex-Analysis | git push --all --progress origin
+21:38:40 Git | Counting objects: 4, done.
+21:38:40 Git | Delta compression using up to 4 threads.
+21:38:40 Git | Total 4 (delta 3), reused 0 (delta 0)
+21:38:42 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+21:38:42 Git |    2e49649..526604b  master -> master
+21:38:42 SyncUp | Complex-Analysis | Done
+21:38:42 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+21:38:43 Git | Arizona-Winter-School-2019 | Checking for remote changes...
+21:38:43 Cmd | Arizona-Winter-School-2019 | git rev-parse HEAD
+21:38:43 Cmd | Arizona-Winter-School-2019 | git ls-remote --heads --exit-code origin master
+21:38:43 Git | Arizona-Winter-School-2019 | No remote changes, local+remote: 17ae3ec485dc06fa8e6e3b991e12a67d7db9260c
+21:38:44 Git | dotfiles | Checking for remote changes...
+21:38:44 Cmd | dotfiles | git rev-parse HEAD
+21:38:44 Cmd | dotfiles | git ls-remote --heads --exit-code origin master
+21:38:45 Git | dotfiles | No remote changes, local+remote: de5c0278b353fae9e66ddc0c7108796be9ac3d18
+21:38:46 Cmd | Complex-Analysis | git status --porcelain
+21:38:47 Git | GSCATG-2019 | Checking for remote changes...
+21:38:47 Cmd | GSCATG-2019 | git rev-parse HEAD
+21:38:47 Cmd | GSCATG-2019 | git ls-remote --heads --exit-code origin master
+21:38:47 Git | GSCATG-2019 | No remote changes, local+remote: 4d70e6e5eb001f445c5a9ed9fc103a0432611c8e
+21:38:48 Git | dzackgarza.comv2018 | Checking for remote changes...
+21:38:48 Cmd | dzackgarza.comv2018 | git rev-parse HEAD
+21:38:48 Cmd | dzackgarza.comv2018 | git ls-remote --heads --exit-code origin master
+21:38:48 Git | Redbud-Topology-Conference-2019 | Checking for remote changes...
+21:38:48 Cmd | Redbud-Topology-Conference-2019 | git rev-parse HEAD
+21:38:48 Cmd | Redbud-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+21:38:49 Git | dzackgarza.comv2018 | No remote changes, local+remote: 8215e45609dd862743dfb77a3b0730bb1d072b85
+21:38:49 Git | Redbud-Topology-Conference-2019 | No remote changes, local+remote: b730f46cbd39ee0af9583ce7046f70890a0b0e92
+21:38:49 Git | UGA-Topology-Conference-2019 | Checking for remote changes...
+21:38:49 Cmd | UGA-Topology-Conference-2019 | git rev-parse HEAD
+21:38:49 Cmd | UGA-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+21:38:50 Git | UGA-Topology-Conference-2019 | No remote changes, local+remote: 2f2460e355ee671a576467e33127d4ba7ab119c2
+21:38:54 Git | Research | Checking for remote changes...
+21:38:54 Cmd | Research | git rev-parse HEAD
+21:38:54 Cmd | Research | git ls-remote --heads --exit-code origin master
+21:38:54 Git | Research | No remote changes, local+remote: 327c1fce14967ef35c7c5d7255299ae3ecfcd601
+21:40:20 Cmd | Complex-Analysis | git status --porcelain
+21:40:20 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+21:40:22 Local | Complex-Analysis | Activity has settled
+21:40:22 Cmd | Complex-Analysis | git status --porcelain
+21:40:22 SyncUp | Complex-Analysis | Initiated
+21:40:22 Cmd | Complex-Analysis | git add --all
+21:40:22 Cmd | Complex-Analysis | git status --porcelain
+21:40:22 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+21:40:22 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+21:40:22 Cmd | Complex-Analysis | git push --all --progress origin
+21:40:24 Git | Counting objects: 4, done.
+21:40:24 Git | Delta compression using up to 4 threads.
+21:40:24 Git | Total 4 (delta 2), reused 0 (delta 0)
+21:40:26 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+21:40:26 Git |    526604b..1e919fc  master -> master
+21:40:26 SyncUp | Complex-Analysis | Done
+21:40:26 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+21:40:34 Cmd | Complex-Analysis | git status --porcelain
+21:40:36 Cmd | Complex-Analysis | git status --porcelain
+21:40:36 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+21:40:37 Local | Complex-Analysis | Activity has settled
+21:40:37 Cmd | Complex-Analysis | git status --porcelain
+21:40:37 SyncUp | Complex-Analysis | Initiated
+21:40:37 Cmd | Complex-Analysis | git add --all
+21:40:37 Cmd | Complex-Analysis | git status --porcelain
+21:40:37 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+21:40:37 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+21:40:37 Cmd | Complex-Analysis | git push --all --progress origin
+21:40:39 Git | Counting objects: 4, done.
+21:40:39 Git | Delta compression using up to 4 threads.
+21:40:39 Git | Total 4 (delta 3), reused 0 (delta 0)
+21:40:42 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+21:40:42 Git |    1e919fc..cc76b52  master -> master
+21:40:42 SyncUp | Complex-Analysis | Done
+21:40:42 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+21:40:46 Cmd | Complex-Analysis | git status --porcelain
+21:40:52 Cmd | dotfiles | git status --porcelain
+21:40:52 Local | dotfiles | Activity detected, waiting for it to settle...
+21:40:55 Local | dotfiles | Activity has settled
+21:40:55 Cmd | dotfiles | git status --porcelain
+21:40:55 SyncUp | dotfiles | Initiated
+21:40:55 Cmd | dotfiles | git add --all
+21:40:55 Cmd | dotfiles | git status --porcelain
+21:40:55 Cmd | dotfiles | git config user.name "zack"
+21:40:55 Cmd | dotfiles | git config user.email "dzackgarza@gmail.com"
+21:40:55 Cmd | dotfiles | git commit --all --file="/home/zack/SparkleShare/github.com/dotfiles/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+21:40:55 Cmd | chmod 700 /home/zack/SparkleShare/github.com/dotfiles/.git/hooks/pre-push
+21:40:55 Cmd | dotfiles | git push --all --progress origin
+21:40:57 Git | Counting objects: 3, done.
+21:40:57 Git | Delta compression using up to 4 threads.
+21:40:57 Git | Total 3 (delta 2), reused 0 (delta 0)
+21:40:59 Git | To ssh://github.com/dzackgarza/dotfiles.git
+21:40:59 Git |    de5c0278b..446e4f698  master -> master
+21:40:59 SyncUp | dotfiles | Done
+21:40:59 Cmd | dotfiles | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+21:41:04 Cmd | dotfiles | git status --porcelain
+21:42:36 Cmd | Notes | git status --porcelain
+21:42:36 Cmd | Notes | git status --porcelain
+21:42:36 Cmd | Notes | git status --porcelain
+21:42:36 Cmd | Notes | git status --porcelain
+21:42:36 Cmd | Notes | git status --porcelain
+21:42:36 Cmd | Notes | git status --porcelain
+21:42:36 Cmd | Notes | git status --porcelain
+21:42:36 Cmd | Notes | git status --porcelain
+21:42:36 Cmd | Notes | git status --porcelain
+21:42:36 Cmd | Notes | git status --porcelain
+21:42:37 Cmd | Notes | git status --porcelain
+21:42:37 Cmd | Notes | git status --porcelain
+21:42:37 Cmd | Notes | git status --porcelain
+21:42:37 Cmd | Notes | git status --porcelain
+21:42:37 Cmd | Notes | git status --porcelain
+21:42:37 Cmd | Notes | git status --porcelain
+21:42:37 Cmd | Notes | git status --porcelain
+21:42:37 Cmd | Notes | git status --porcelain
+21:42:37 Cmd | Notes | git status --porcelain
+21:42:37 Cmd | Notes | git status --porcelain
+21:42:37 Cmd | Notes | git status --porcelain
+21:42:37 Cmd | Notes | git status --porcelain
+21:42:37 Cmd | Notes | git status --porcelain
+21:42:37 Cmd | Notes | git status --porcelain
+21:42:37 Cmd | Notes | git status --porcelain
+21:42:37 Cmd | Notes | git status --porcelain
+21:42:37 Cmd | Notes | git status --porcelain
+21:42:38 Cmd | Notes | git status --porcelain
+21:42:38 Cmd | Notes | git status --porcelain
+21:42:38 Cmd | Notes | git status --porcelain
+21:42:38 Cmd | Notes | git status --porcelain
+21:42:38 Cmd | Notes | git status --porcelain
+21:42:38 Cmd | Notes | git status --porcelain
+21:42:38 Cmd | Notes | git status --porcelain
+21:42:38 Cmd | Notes | git status --porcelain
+21:42:38 Cmd | Notes | git status --porcelain
+21:42:38 Cmd | Notes | git status --porcelain
+21:42:38 Cmd | Notes | git status --porcelain
+21:42:38 Cmd | Notes | git status --porcelain
+21:42:38 Cmd | Notes | git status --porcelain
+21:42:39 Cmd | Notes | git status --porcelain
+21:42:39 Cmd | Notes | git status --porcelain
+21:42:39 Cmd | Notes | git status --porcelain
+21:42:39 Cmd | Notes | git status --porcelain
+21:42:39 Cmd | Notes | git status --porcelain
+21:42:39 Cmd | Notes | git status --porcelain
+21:42:39 Cmd | Notes | git status --porcelain
+21:42:39 Cmd | Notes | git status --porcelain
+21:42:39 Cmd | Notes | git status --porcelain
+21:42:39 Cmd | Notes | git status --porcelain
+21:42:39 Cmd | Notes | git status --porcelain
+21:42:40 Cmd | Notes | git status --porcelain
+21:42:40 Cmd | Notes | git status --porcelain
+21:42:40 Cmd | Notes | git status --porcelain
+21:42:40 Cmd | Notes | git status --porcelain
+21:42:40 Cmd | Notes | git status --porcelain
+21:42:40 Cmd | Notes | git status --porcelain
+21:42:40 Cmd | Notes | git status --porcelain
+21:42:40 Cmd | Notes | git status --porcelain
+21:42:40 Cmd | Notes | git status --porcelain
+21:42:40 Cmd | Notes | git status --porcelain
+21:42:40 Cmd | Notes | git status --porcelain
+21:42:40 Cmd | Notes | git status --porcelain
+21:42:40 Cmd | Notes | git status --porcelain
+21:42:41 Cmd | Notes | git status --porcelain
+21:42:41 Cmd | Notes | git status --porcelain
+21:42:41 Cmd | Notes | git status --porcelain
+21:42:41 Cmd | Notes | git status --porcelain
+21:42:41 Cmd | Notes | git status --porcelain
+21:42:41 Cmd | Notes | git status --porcelain
+21:42:41 Cmd | Notes | git status --porcelain
+21:42:41 Cmd | Notes | git status --porcelain
+21:42:41 Cmd | Notes | git status --porcelain
+21:42:41 Cmd | Notes | git status --porcelain
+21:42:41 Cmd | Notes | git status --porcelain
+21:42:41 Cmd | Notes | git status --porcelain
+21:42:41 Cmd | Notes | git status --porcelain
+21:42:41 Cmd | Notes | git status --porcelain
+21:42:41 Cmd | Notes | git status --porcelain
+21:42:42 Cmd | Notes | git status --porcelain
+21:42:42 Cmd | Notes | git status --porcelain
+21:42:42 Cmd | Notes | git status --porcelain
+21:42:42 Cmd | Notes | git status --porcelain
+21:42:42 Cmd | Notes | git status --porcelain
+21:42:42 Cmd | Notes | git status --porcelain
+21:42:42 Cmd | Notes | git status --porcelain
+21:42:42 Cmd | Notes | git status --porcelain
+21:42:42 Cmd | Notes | git status --porcelain
+21:42:42 Cmd | Notes | git status --porcelain
+21:42:42 Cmd | Notes | git status --porcelain
+21:42:42 Cmd | Notes | git status --porcelain
+21:42:42 Cmd | Notes | git status --porcelain
+21:42:42 Cmd | Notes | git status --porcelain
+21:42:42 Cmd | Notes | git status --porcelain
+21:42:42 Cmd | Notes | git status --porcelain
+21:42:42 Cmd | Notes | git status --porcelain
+21:42:42 Cmd | Notes | git status --porcelain
+21:42:43 Cmd | Notes | git status --porcelain
+21:42:43 Cmd | Notes | git status --porcelain
+21:42:43 Cmd | Notes | git status --porcelain
+21:42:43 Cmd | Notes | git status --porcelain
+21:42:43 Cmd | Notes | git status --porcelain
+21:42:43 Cmd | Notes | git status --porcelain
+21:42:43 Cmd | Notes | git status --porcelain
+21:42:43 Cmd | Notes | git status --porcelain
+21:42:43 Cmd | Notes | git status --porcelain
+21:42:43 Cmd | Notes | git status --porcelain
+21:42:43 Cmd | Notes | git status --porcelain
+21:42:43 Cmd | Notes | git status --porcelain
+21:42:43 Cmd | Notes | git status --porcelain
+21:42:43 Cmd | Notes | git status --porcelain
+21:42:43 Cmd | Notes | git status --porcelain
+21:42:43 Cmd | Notes | git status --porcelain
+21:42:43 Cmd | Notes | git status --porcelain
+21:42:43 Cmd | Notes | git status --porcelain
+21:42:44 Cmd | Notes | git status --porcelain
+21:42:44 Cmd | Notes | git status --porcelain
+21:42:44 Cmd | Notes | git status --porcelain
+21:42:44 Cmd | Notes | git status --porcelain
+21:42:44 Cmd | Notes | git status --porcelain
+21:42:44 Cmd | Notes | git status --porcelain
+21:42:44 Cmd | Notes | git status --porcelain
+21:42:44 Cmd | Notes | git status --porcelain
+21:42:44 Cmd | Notes | git status --porcelain
+21:42:44 Cmd | Notes | git status --porcelain
+21:42:44 Cmd | Notes | git status --porcelain
+21:42:44 Cmd | Notes | git status --porcelain
+21:42:45 Cmd | Notes | git status --porcelain
+21:42:45 Cmd | Notes | git status --porcelain
+21:42:45 Cmd | Notes | git status --porcelain
+21:42:45 Cmd | Notes | git status --porcelain
+21:42:45 Cmd | Notes | git status --porcelain
+21:42:45 Cmd | Notes | git status --porcelain
+21:42:45 Cmd | Notes | git status --porcelain
+21:42:45 Cmd | Notes | git status --porcelain
+21:42:45 Cmd | Notes | git status --porcelain
+21:42:45 Cmd | Notes | git status --porcelain
+21:42:45 Cmd | Notes | git status --porcelain
+21:42:45 Cmd | Notes | git status --porcelain
+21:42:45 Cmd | Notes | git status --porcelain
+21:42:46 Cmd | Notes | git status --porcelain
+21:42:46 Cmd | Notes | git status --porcelain
+21:42:46 Cmd | Notes | git status --porcelain
+21:42:46 Cmd | Notes | git status --porcelain
+21:42:46 Cmd | Notes | git status --porcelain
+21:42:46 Cmd | Notes | git status --porcelain
+21:42:46 Cmd | Notes | git status --porcelain
+21:42:46 Cmd | Notes | git status --porcelain
+21:42:46 Cmd | Notes | git status --porcelain
+21:42:46 Cmd | Notes | git status --porcelain
+21:42:46 Cmd | Notes | git status --porcelain
+21:42:46 Cmd | Notes | git status --porcelain
+21:42:46 Cmd | Notes | git status --porcelain
+21:42:46 Cmd | Notes | git status --porcelain
+21:42:46 Cmd | Notes | git status --porcelain
+21:42:46 Cmd | Notes | git status --porcelain
+21:42:46 Cmd | Notes | git status --porcelain
+21:42:46 Cmd | Notes | git status --porcelain
+21:42:47 Cmd | Notes | git status --porcelain
+21:42:47 Cmd | Notes | git status --porcelain
+21:42:47 Cmd | Notes | git status --porcelain
+21:42:47 Cmd | Notes | git status --porcelain
+21:42:47 Cmd | Notes | git status --porcelain
+21:42:47 Cmd | Notes | git status --porcelain
+21:42:47 Cmd | Notes | git status --porcelain
+21:42:47 Cmd | Notes | git status --porcelain
+21:42:47 Cmd | Notes | git status --porcelain
+21:42:47 Cmd | Notes | git status --porcelain
+21:42:47 Cmd | Notes | git status --porcelain
+21:42:47 Cmd | Notes | git status --porcelain
+21:42:47 Cmd | Notes | git status --porcelain
+21:42:48 Cmd | Notes | git status --porcelain
+21:42:48 Cmd | Notes | git status --porcelain
+21:42:48 Cmd | Notes | git status --porcelain
+21:42:48 Cmd | Notes | git status --porcelain
+21:42:48 Cmd | Notes | git status --porcelain
+21:42:48 Cmd | Notes | git status --porcelain
+21:42:48 Cmd | Notes | git status --porcelain
+21:42:48 Cmd | Notes | git status --porcelain
+21:42:48 Cmd | Notes | git status --porcelain
+21:42:48 Cmd | Notes | git status --porcelain
+21:42:48 Cmd | Notes | git status --porcelain
+21:42:48 Cmd | Notes | git status --porcelain
+21:42:48 Cmd | Notes | git status --porcelain
+21:42:48 Cmd | Notes | git status --porcelain
+21:42:48 Cmd | Notes | git status --porcelain
+21:42:49 Cmd | Notes | git status --porcelain
+21:42:49 Cmd | Notes | git status --porcelain
+21:42:49 Cmd | Notes | git status --porcelain
+21:42:49 Cmd | Notes | git status --porcelain
+21:42:49 Cmd | Notes | git status --porcelain
+21:42:49 Cmd | Notes | git status --porcelain
+21:42:49 Cmd | Notes | git status --porcelain
+21:42:49 Cmd | Notes | git status --porcelain
+21:42:49 Cmd | Notes | git status --porcelain
+21:42:49 Cmd | Notes | git status --porcelain
+21:42:49 Cmd | Notes | git status --porcelain
+21:42:49 Cmd | Notes | git status --porcelain
+21:42:50 Cmd | Notes | git status --porcelain
+21:42:50 Cmd | Notes | git status --porcelain
+21:42:50 Cmd | Notes | git status --porcelain
+21:42:50 Cmd | Notes | git status --porcelain
+21:42:50 Cmd | Notes | git status --porcelain
+21:42:50 Cmd | Notes | git status --porcelain
+21:42:50 Cmd | Notes | git status --porcelain
+21:42:50 Cmd | Notes | git status --porcelain
+21:42:50 Cmd | Notes | git status --porcelain
+21:42:50 Cmd | Notes | git status --porcelain
+21:43:43 Git | Arizona-Winter-School-2019 | Checking for remote changes...
+21:43:43 Cmd | Arizona-Winter-School-2019 | git rev-parse HEAD
+21:43:43 Cmd | Arizona-Winter-School-2019 | git ls-remote --heads --exit-code origin master
+21:43:43 Git | Arizona-Winter-School-2019 | No remote changes, local+remote: 17ae3ec485dc06fa8e6e3b991e12a67d7db9260c
+21:43:47 Git | GSCATG-2019 | Checking for remote changes...
+21:43:47 Cmd | GSCATG-2019 | git rev-parse HEAD
+21:43:47 Cmd | GSCATG-2019 | git ls-remote --heads --exit-code origin master
+21:43:47 Git | GSCATG-2019 | No remote changes, local+remote: 4d70e6e5eb001f445c5a9ed9fc103a0432611c8e
+21:43:48 Git | dzackgarza.comv2018 | Checking for remote changes...
+21:43:48 Cmd | dzackgarza.comv2018 | git rev-parse HEAD
+21:43:48 Cmd | dzackgarza.comv2018 | git ls-remote --heads --exit-code origin master
+21:43:48 Git | Redbud-Topology-Conference-2019 | Checking for remote changes...
+21:43:48 Cmd | Redbud-Topology-Conference-2019 | git rev-parse HEAD
+21:43:49 Cmd | Redbud-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+21:43:49 Git | Notes | Checking for remote changes...
+21:43:49 Cmd | Notes | git rev-parse HEAD
+21:43:49 Cmd | Notes | git ls-remote --heads --exit-code origin master
+21:43:49 Git | dzackgarza.comv2018 | No remote changes, local+remote: 8215e45609dd862743dfb77a3b0730bb1d072b85
+21:43:49 Git | Redbud-Topology-Conference-2019 | No remote changes, local+remote: b730f46cbd39ee0af9583ce7046f70890a0b0e92
+21:43:49 Git | Notes | No remote changes, local+remote: 4f1f24c41b2c782212639c180faac8dc4e03a504
+21:43:49 Git | UGA-Topology-Conference-2019 | Checking for remote changes...
+21:43:49 Cmd | UGA-Topology-Conference-2019 | git rev-parse HEAD
+21:43:49 Cmd | UGA-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+21:43:50 Git | UGA-Topology-Conference-2019 | No remote changes, local+remote: 2f2460e355ee671a576467e33127d4ba7ab119c2
+21:43:54 Git | Research | Checking for remote changes...
+21:43:54 Cmd | Research | git rev-parse HEAD
+21:43:54 Cmd | Research | git ls-remote --heads --exit-code origin master
+21:43:54 Git | Research | No remote changes, local+remote: 327c1fce14967ef35c7c5d7255299ae3ecfcd601
+21:45:11 Cmd | Notes | git status --porcelain
+21:45:11 Local | Notes | Activity detected, waiting for it to settle...
+21:45:13 Local | Notes | Activity has settled
+21:45:13 Cmd | Notes | git status --porcelain
+21:45:13 SyncUp | Notes | Initiated
+21:45:13 Cmd | Notes | git add --all
+21:45:13 Cmd | Notes | git status --porcelain
+21:45:13 Cmd | Notes | git commit --all --file="/home/zack/SparkleShare/github.com/Notes/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+21:45:13 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Notes/.git/hooks/pre-push
+21:45:13 Cmd | Notes | git push --all --progress origin
+21:45:15 Git | Counting objects: 3, done.
+21:45:15 Git | Delta compression using up to 4 threads.
+21:45:15 Git | Total 3 (delta 1), reused 0 (delta 0)
+21:45:18 Git | To ssh://github.com/dzackgarza/Notes.git
+21:45:18 Git |    4f1f24c41..93727553f  master -> master
+21:45:18 SyncUp | Notes | Done
+21:45:18 Cmd | Notes | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+21:45:22 Cmd | Notes | git status --porcelain
+21:45:23 Cmd | Notes | git status --porcelain
+21:45:23 Local | Notes | Activity detected, waiting for it to settle...
+21:45:25 Local | Notes | Activity has settled
+21:45:25 Cmd | Notes | git status --porcelain
+21:45:25 SyncUp | Notes | Initiated
+21:45:25 Cmd | Notes | git add --all
+21:45:25 Cmd | Notes | git status --porcelain
+21:45:25 Cmd | Notes | git commit --all --file="/home/zack/SparkleShare/github.com/Notes/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+21:45:25 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Notes/.git/hooks/pre-push
+21:45:25 Cmd | Notes | git push --all --progress origin
+21:45:27 Git | Counting objects: 3, done.
+21:45:27 Git | Delta compression using up to 4 threads.
+21:45:27 Git | Total 3 (delta 1), reused 0 (delta 0)
+21:45:30 Git | To ssh://github.com/dzackgarza/Notes.git
+21:45:30 Git |    93727553f..e0112f407  master -> master
+21:45:30 SyncUp | Notes | Done
+21:45:30 Cmd | Notes | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+21:45:35 Cmd | Notes | git status --porcelain
+21:45:35 Local | Notes | More changes found
+21:45:35 SyncUp | Notes | Initiated
+21:45:35 Cmd | Notes | git add --all
+21:45:35 Cmd | Notes | git status --porcelain
+21:45:35 Cmd | Notes | git commit --all --file="/home/zack/SparkleShare/github.com/Notes/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+21:45:35 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Notes/.git/hooks/pre-push
+21:45:35 Cmd | Notes | git push --all --progress origin
+21:45:37 Git | Counting objects: 3, done.
+21:45:37 Git | Delta compression using up to 4 threads.
+21:45:37 Git | Total 3 (delta 1), reused 0 (delta 0)
+21:45:39 Git | To ssh://github.com/dzackgarza/Notes.git
+21:45:39 Git |    e0112f407..5613cd403  master -> master
+21:45:39 SyncUp | Notes | Done
+21:45:39 Cmd | Notes | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+21:45:44 Cmd | Notes | git status --porcelain
+21:46:05 Cmd | Notes | git status --porcelain
+21:46:05 Local | Notes | Activity detected, waiting for it to settle...
+21:46:07 Local | Notes | Activity has settled
+21:46:08 Cmd | Notes | git status --porcelain
+21:46:08 SyncUp | Notes | Initiated
+21:46:08 Cmd | Notes | git add --all
+21:46:08 Cmd | Notes | git status --porcelain
+21:46:08 Cmd | Notes | git commit --all --file="/home/zack/SparkleShare/github.com/Notes/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+21:46:08 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Notes/.git/hooks/pre-push
+21:46:08 Cmd | Notes | git push --all --progress origin
+21:46:10 Git | Counting objects: 3, done.
+21:46:10 Git | Delta compression using up to 4 threads.
+21:46:10 Git | Total 3 (delta 1), reused 0 (delta 0)
+21:46:12 Git | To ssh://github.com/dzackgarza/Notes.git
+21:46:12 Git |    5613cd403..c8a444830  master -> master
+21:46:12 SyncUp | Notes | Done
+21:46:12 Cmd | Notes | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+21:46:17 Cmd | Notes | git status --porcelain
+21:46:19 Cmd | dotfiles | git status --porcelain
+21:46:19 Local | dotfiles | Activity detected, waiting for it to settle...
+21:46:21 Local | dotfiles | Activity has settled
+21:46:21 Cmd | dotfiles | git status --porcelain
+21:46:21 SyncUp | dotfiles | Initiated
+21:46:21 Cmd | dotfiles | git add --all
+21:46:21 Cmd | dotfiles | git status --porcelain
+21:46:21 Cmd | dotfiles | git commit --all --file="/home/zack/SparkleShare/github.com/dotfiles/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+21:46:21 Cmd | chmod 700 /home/zack/SparkleShare/github.com/dotfiles/.git/hooks/pre-push
+21:46:21 Cmd | dotfiles | git push --all --progress origin
+21:46:23 Git | Counting objects: 4, done.
+21:46:23 Git | Delta compression using up to 4 threads.
+21:46:23 Git | Total 4 (delta 3), reused 0 (delta 0)
+21:46:26 Git | To ssh://github.com/dzackgarza/dotfiles.git
+21:46:26 Git |    446e4f698..8dd328edc  master -> master
+21:46:26 SyncUp | dotfiles | Done
+21:46:26 Cmd | dotfiles | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+21:46:31 Cmd | dotfiles | git status --porcelain
+21:48:43 Git | Arizona-Winter-School-2019 | Checking for remote changes...
+21:48:43 Cmd | Arizona-Winter-School-2019 | git rev-parse HEAD
+21:48:43 Cmd | Arizona-Winter-School-2019 | git ls-remote --heads --exit-code origin master
+21:48:43 Git | Arizona-Winter-School-2019 | No remote changes, local+remote: 17ae3ec485dc06fa8e6e3b991e12a67d7db9260c
+21:48:47 Git | GSCATG-2019 | Checking for remote changes...
+21:48:47 Cmd | GSCATG-2019 | git rev-parse HEAD
+21:48:47 Cmd | GSCATG-2019 | git ls-remote --heads --exit-code origin master
+21:48:47 Git | GSCATG-2019 | No remote changes, local+remote: 4d70e6e5eb001f445c5a9ed9fc103a0432611c8e
+21:48:48 Git | Complex-Analysis | Checking for remote changes...
+21:48:48 Cmd | Complex-Analysis | git rev-parse HEAD
+21:48:48 Cmd | Complex-Analysis | git ls-remote --heads --exit-code origin master
+21:48:48 Git | dzackgarza.comv2018 | Checking for remote changes...
+21:48:48 Cmd | dzackgarza.comv2018 | git rev-parse HEAD
+21:48:48 Cmd | dzackgarza.comv2018 | git ls-remote --heads --exit-code origin master
+21:48:49 Git | Redbud-Topology-Conference-2019 | Checking for remote changes...
+21:48:49 Cmd | Redbud-Topology-Conference-2019 | git rev-parse HEAD
+21:48:49 Cmd | Redbud-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+21:48:49 Git | Complex-Analysis | No remote changes, local+remote: cc76b52b931ce43f71f3cbc490e889e53787f349
+21:48:49 Git | dzackgarza.comv2018 | No remote changes, local+remote: 8215e45609dd862743dfb77a3b0730bb1d072b85
+21:48:49 Git | Redbud-Topology-Conference-2019 | No remote changes, local+remote: b730f46cbd39ee0af9583ce7046f70890a0b0e92
+21:48:49 Git | UGA-Topology-Conference-2019 | Checking for remote changes...
+21:48:49 Cmd | UGA-Topology-Conference-2019 | git rev-parse HEAD
+21:48:49 Cmd | UGA-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+21:48:50 Git | UGA-Topology-Conference-2019 | No remote changes, local+remote: 2f2460e355ee671a576467e33127d4ba7ab119c2
+21:48:54 Git | Research | Checking for remote changes...
+21:48:54 Cmd | Research | git rev-parse HEAD
+21:48:54 Cmd | Research | git ls-remote --heads --exit-code origin master
+21:48:55 Git | Research | No remote changes, local+remote: 327c1fce14967ef35c7c5d7255299ae3ecfcd601
+21:53:43 Git | Arizona-Winter-School-2019 | Checking for remote changes...
+21:53:43 Cmd | Arizona-Winter-School-2019 | git rev-parse HEAD
+21:53:43 Cmd | Arizona-Winter-School-2019 | git ls-remote --heads --exit-code origin master
+21:53:43 Git | Arizona-Winter-School-2019 | No remote changes, local+remote: 17ae3ec485dc06fa8e6e3b991e12a67d7db9260c
+21:53:44 Git | dotfiles | Checking for remote changes...
+21:53:44 Cmd | dotfiles | git rev-parse HEAD
+21:53:44 Cmd | dotfiles | git ls-remote --heads --exit-code origin master
+21:53:45 Git | dotfiles | No remote changes, local+remote: 8dd328edcafb87b51d13a03f3c4ccf15e2a06800
+21:53:47 Git | GSCATG-2019 | Checking for remote changes...
+21:53:47 Cmd | GSCATG-2019 | git rev-parse HEAD
+21:53:47 Cmd | GSCATG-2019 | git ls-remote --heads --exit-code origin master
+21:53:47 Git | GSCATG-2019 | No remote changes, local+remote: 4d70e6e5eb001f445c5a9ed9fc103a0432611c8e
+21:53:48 Git | dzackgarza.comv2018 | Checking for remote changes...
+21:53:48 Cmd | dzackgarza.comv2018 | git rev-parse HEAD
+21:53:48 Cmd | dzackgarza.comv2018 | git ls-remote --heads --exit-code origin master
+21:53:49 Git | Redbud-Topology-Conference-2019 | Checking for remote changes...
+21:53:49 Cmd | Redbud-Topology-Conference-2019 | git rev-parse HEAD
+21:53:49 Cmd | Redbud-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+21:53:49 Git | dzackgarza.comv2018 | No remote changes, local+remote: 8215e45609dd862743dfb77a3b0730bb1d072b85
+21:53:49 Git | Redbud-Topology-Conference-2019 | No remote changes, local+remote: b730f46cbd39ee0af9583ce7046f70890a0b0e92
+21:53:49 Git | UGA-Topology-Conference-2019 | Checking for remote changes...
+21:53:49 Cmd | UGA-Topology-Conference-2019 | git rev-parse HEAD
+21:53:49 Cmd | UGA-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+21:53:50 Git | UGA-Topology-Conference-2019 | No remote changes, local+remote: 2f2460e355ee671a576467e33127d4ba7ab119c2
+21:53:54 Git | Research | Checking for remote changes...
+21:53:54 Cmd | Research | git rev-parse HEAD
+21:53:54 Cmd | Research | git ls-remote --heads --exit-code origin master
+21:53:55 Git | Research | No remote changes, local+remote: 327c1fce14967ef35c7c5d7255299ae3ecfcd601
+21:58:43 Git | Arizona-Winter-School-2019 | Checking for remote changes...
+21:58:43 Cmd | Arizona-Winter-School-2019 | git rev-parse HEAD
+21:58:43 Cmd | Arizona-Winter-School-2019 | git ls-remote --heads --exit-code origin master
+21:58:43 Git | Arizona-Winter-School-2019 | No remote changes, local+remote: 17ae3ec485dc06fa8e6e3b991e12a67d7db9260c
+21:58:47 Git | GSCATG-2019 | Checking for remote changes...
+21:58:47 Cmd | GSCATG-2019 | git rev-parse HEAD
+21:58:47 Cmd | GSCATG-2019 | git ls-remote --heads --exit-code origin master
+21:58:47 Git | GSCATG-2019 | No remote changes, local+remote: 4d70e6e5eb001f445c5a9ed9fc103a0432611c8e
+21:58:48 Git | dzackgarza.comv2018 | Checking for remote changes...
+21:58:48 Cmd | dzackgarza.comv2018 | git rev-parse HEAD
+21:58:48 Cmd | dzackgarza.comv2018 | git ls-remote --heads --exit-code origin master
+21:58:49 Git | Redbud-Topology-Conference-2019 | Checking for remote changes...
+21:58:49 Cmd | Redbud-Topology-Conference-2019 | git rev-parse HEAD
+21:58:49 Cmd | Redbud-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+21:58:49 Git | Notes | Checking for remote changes...
+21:58:49 Cmd | Notes | git rev-parse HEAD
+21:58:49 Cmd | Notes | git ls-remote --heads --exit-code origin master
+21:58:49 Git | Redbud-Topology-Conference-2019 | No remote changes, local+remote: b730f46cbd39ee0af9583ce7046f70890a0b0e92
+21:58:49 Git | dzackgarza.comv2018 | No remote changes, local+remote: 8215e45609dd862743dfb77a3b0730bb1d072b85
+21:58:49 Git | Notes | No remote changes, local+remote: c8a4448308f1b3d63528dda71a98dcb173642745
+21:58:49 Git | UGA-Topology-Conference-2019 | Checking for remote changes...
+21:58:49 Cmd | UGA-Topology-Conference-2019 | git rev-parse HEAD
+21:58:49 Cmd | UGA-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+21:58:50 Git | UGA-Topology-Conference-2019 | No remote changes, local+remote: 2f2460e355ee671a576467e33127d4ba7ab119c2
+21:58:54 Git | Research | Checking for remote changes...
+21:58:54 Cmd | Research | git rev-parse HEAD
+21:58:54 Cmd | Research | git ls-remote --heads --exit-code origin master
+21:58:54 Git | Research | No remote changes, local+remote: 327c1fce14967ef35c7c5d7255299ae3ecfcd601
+22:02:44 Cmd | Complex-Analysis | git status --porcelain
+22:02:44 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+22:02:45 Local | Complex-Analysis | Activity has settled
+22:02:45 Cmd | Complex-Analysis | git status --porcelain
+22:02:45 SyncUp | Complex-Analysis | Initiated
+22:02:45 Cmd | Complex-Analysis | git add --all
+22:02:45 Cmd | Complex-Analysis | git status --porcelain
+22:02:45 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+22:02:45 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+22:02:45 Cmd | Complex-Analysis | git push --all --progress origin
+22:02:48 Git | Counting objects: 4, done.
+22:02:48 Git | Delta compression using up to 4 threads.
+22:02:48 Git | Total 4 (delta 2), reused 0 (delta 0)
+22:02:50 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+22:02:50 Git |    cc76b52..1926561  master -> master
+22:02:50 SyncUp | Complex-Analysis | Done
+22:02:50 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+22:02:54 Cmd | Complex-Analysis | git status --porcelain
+22:02:54 Local | Complex-Analysis | More changes found
+22:02:54 SyncUp | Complex-Analysis | Initiated
+22:02:54 Cmd | Complex-Analysis | git add --all
+22:02:54 Cmd | Complex-Analysis | git status --porcelain
+22:02:54 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+22:02:54 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+22:02:54 Cmd | Complex-Analysis | git push --all --progress origin
+22:02:57 Git | Counting objects: 4, done.
+22:02:57 Git | Delta compression using up to 4 threads.
+22:02:57 Git | Total 4 (delta 3), reused 0 (delta 0)
+22:02:59 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+22:02:59 Git |    1926561..8d6b6b7  master -> master
+22:02:59 SyncUp | Complex-Analysis | Done
+22:02:59 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+22:03:03 Cmd | Complex-Analysis | git status --porcelain
+22:03:43 Git | Arizona-Winter-School-2019 | Checking for remote changes...
+22:03:43 Cmd | Arizona-Winter-School-2019 | git rev-parse HEAD
+22:03:43 Cmd | Arizona-Winter-School-2019 | git ls-remote --heads --exit-code origin master
+22:03:43 Git | Arizona-Winter-School-2019 | No remote changes, local+remote: 17ae3ec485dc06fa8e6e3b991e12a67d7db9260c
+22:03:47 Git | GSCATG-2019 | Checking for remote changes...
+22:03:47 Cmd | GSCATG-2019 | git rev-parse HEAD
+22:03:47 Cmd | GSCATG-2019 | git ls-remote --heads --exit-code origin master
+22:03:47 Git | GSCATG-2019 | No remote changes, local+remote: 4d70e6e5eb001f445c5a9ed9fc103a0432611c8e
+22:03:48 Git | Complex-Analysis | Checking for remote changes...
+22:03:48 Cmd | Complex-Analysis | git rev-parse HEAD
+22:03:48 Cmd | Complex-Analysis | git ls-remote --heads --exit-code origin master
+22:03:48 Git | dzackgarza.comv2018 | Checking for remote changes...
+22:03:48 Cmd | dzackgarza.comv2018 | git rev-parse HEAD
+22:03:48 Cmd | dzackgarza.comv2018 | git ls-remote --heads --exit-code origin master
+22:03:49 Git | Redbud-Topology-Conference-2019 | Checking for remote changes...
+22:03:49 Cmd | Redbud-Topology-Conference-2019 | git rev-parse HEAD
+22:03:49 Cmd | Redbud-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+22:03:49 Git | Complex-Analysis | No remote changes, local+remote: 8d6b6b7f1438ae92434051999a51b4e9ee87584d
+22:03:49 Git | dzackgarza.comv2018 | No remote changes, local+remote: 8215e45609dd862743dfb77a3b0730bb1d072b85
+22:03:49 Git | Redbud-Topology-Conference-2019 | No remote changes, local+remote: b730f46cbd39ee0af9583ce7046f70890a0b0e92
+22:03:49 Git | UGA-Topology-Conference-2019 | Checking for remote changes...
+22:03:49 Cmd | UGA-Topology-Conference-2019 | git rev-parse HEAD
+22:03:49 Cmd | UGA-Topology-Conference-2019 | git ls-remote --heads --exit-code origin master
+22:03:50 Git | UGA-Topology-Conference-2019 | No remote changes, local+remote: 2f2460e355ee671a576467e33127d4ba7ab119c2
+22:03:54 Git | Research | Checking for remote changes...
+22:03:54 Cmd | Research | git rev-parse HEAD
+22:03:54 Cmd | Research | git ls-remote --heads --exit-code origin master
+22:03:54 Git | Research | No remote changes, local+remote: 327c1fce14967ef35c7c5d7255299ae3ecfcd601
+22:05:34 Cmd | Complex-Analysis | git status --porcelain
+22:05:34 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+22:05:35 Local | Complex-Analysis | Activity has settled
+22:05:35 Cmd | Complex-Analysis | git status --porcelain
+22:05:35 SyncUp | Complex-Analysis | Initiated
+22:05:35 Cmd | Complex-Analysis | git add --all
+22:05:35 Cmd | Complex-Analysis | git status --porcelain
+22:05:35 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+22:05:35 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+22:05:35 Cmd | Complex-Analysis | git push --all --progress origin
+22:05:37 Git | Counting objects: 4, done.
+22:05:37 Git | Delta compression using up to 4 threads.
+22:05:37 Git | Total 4 (delta 2), reused 0 (delta 0)
+22:05:40 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+22:05:40 Git |    8d6b6b7..c3deaea  master -> master
+22:05:40 SyncUp | Complex-Analysis | Done
+22:05:40 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+22:05:45 Cmd | Complex-Analysis | git status --porcelain
+22:05:45 Cmd | Complex-Analysis | git status --porcelain
+22:05:45 Local | Complex-Analysis | Activity detected, waiting for it to settle...
+22:05:46 Local | Complex-Analysis | Activity has settled
+22:05:46 Cmd | Complex-Analysis | git status --porcelain
+22:05:47 SyncUp | Complex-Analysis | Initiated
+22:05:47 Cmd | Complex-Analysis | git add --all
+22:05:47 Cmd | Complex-Analysis | git status --porcelain
+22:05:47 Cmd | Complex-Analysis | git commit --all --file="/home/zack/SparkleShare/github.com/Complex-Analysis/.git/info/commit_message" --author="zack <dzackgarza@gmail.com>"
+22:05:47 Cmd | chmod 700 /home/zack/SparkleShare/github.com/Complex-Analysis/.git/hooks/pre-push
+22:05:47 Cmd | Complex-Analysis | git push --all --progress origin
+22:05:49 Git | Counting objects: 4, done.
+22:05:49 Git | Delta compression using up to 4 threads.
+22:05:49 Git | Total 4 (delta 3), reused 0 (delta 0)
+22:05:51 Git | To ssh://github.com/dzackgarza/Complex-Analysis.git
+22:05:51 Git |    c3deaea..cb53eb9  master -> master
+22:05:51 SyncUp | Complex-Analysis | Done
+22:05:51 Cmd | Complex-Analysis | git --no-pager log --since=1.month --name-status --date=iso --find-renames --no-merges --no-color
+22:05:55 Cmd | Complex-Analysis | git status --porcelain
+22:06:11 Cmd | dotfiles | git status --porcelain
+22:06:11 Local | dotfiles | Activity detected, waiting for it to settle...

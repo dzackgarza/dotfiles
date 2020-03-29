@@ -1,0 +1,11 @@
+
+[alsa]
+mixer-element=Master
+
+[gtkui]
+column_widths=10,275,175,10,175,175,10,100,36,10,275,275,275,10,275
+player_x=50
+player_y=1157
+
+[gtkui-layout]
+item_count=0

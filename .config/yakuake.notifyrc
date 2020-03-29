@@ -1,0 +1,12 @@
+[Event/activity]
+Execute=
+Logfile=
+Sound=
+TTS=
+
+[Event/startup]
+Action=
+Execute=
+Logfile=
+Sound=
+TTS=

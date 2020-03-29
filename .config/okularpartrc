@@ -1,0 +1,22 @@
+[Core Performance]
+MemoryLevel=Aggressive
+TextHinting=Enabled
+
+[Document]
+PaperColor=221,221,221
+RenderMode=Paper
+
+[Main View]
+ShowLeftPanel=false
+SplitterSizes=428,409
+
+[Nav Panel]
+CurrentPageOnly=true
+GroupByAuthor=false
+SidebarIconSize=32
+
+[PageView]
+EditToolBarPlacement=1
+
+[Reviews]
+AnnotationTools=<tool type="highlight" id="1"><engine type="TextSelector" color="#ffffff00"><annotation type="Highlight" color="#ffffff00"/></engine><shortcut>1</shortcut></tool>,<tool type="highlight" id="2" name="Blue Highlight"><engine type="TextSelector" color="#ff37b3ff"><annotation type="Highlight" color="#ff37b3ff" opacity="0.7"/></engine><shortcut>2</shortcut></tool>,<tool type="highlight" id="3"><engine type="TextSelector" color="#ffe1b973"><annotation type="Highlight" color="#ffe1b973" opacity="0.8"/></engine><shortcut>3</shortcut></tool>,<tool type="underline" id="4"><engine type="TextSelector" color="#ff020101"><annotation type="Underline" color="#ff020101"/></engine><shortcut>4</shortcut></tool>,<tool type="note-linked" id="5"><engine hoverIcon="tool-note" type="PickPoint" color="#ff22beb1"><annotation type="Text" color="#ff22beb1" opacity="0.7" icon="Note"/></engine><shortcut>5</shortcut></tool>
