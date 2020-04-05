@@ -1,9 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=SparkleShare
-Exec=/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=sparkleshare org.sparkleshare.SparkleShare
-Icon=org.sparkleshare.SparkleShare
-Terminal=false
-Categories=Network;FileTransfer;GNOME;GTK;
-X-GNOME-UsesNotifications=true
-X-Flatpak=org.sparkleshare.SparkleShare
