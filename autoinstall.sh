@@ -129,14 +129,16 @@ install_dotfiles () {
 }
 
 # Install Packagezs
-##yaourt --needed --noconfirm -S - < packages.list
+# yaourt --needed --noconfirm -S - < packages.list
 # todo: Install go and tewisay
 if ! [[ $(awk -F: -v user="zack" '$1 == user {print $NF}' /etc/passwd) = $(which zsh) ]]; then
   chsh -s $(which zsh)
 fi
 
 # Install oh-my-zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+if [ ! -d $HOME/.oh-my-zsh ]; then
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+fi
 
 # Install antigen
 curl -L git.io/antigen > antigen.zsh
@@ -166,11 +168,6 @@ success "Pathogen installed."
 info "Setting up vim.."
 vim +PluginInstall +qall
 success "Vim setup successful."
-
-if [ ! -d $HOME/.xmonad ]; then
-  ln -s $DOTFILES_ROOT/Xorg/xmonad $HOME/.xmonad
-  success "XMonad linked."
-fi
 
 if [ ! -d $HOME/.fzf ]; then
   info "Installing fzf..."
