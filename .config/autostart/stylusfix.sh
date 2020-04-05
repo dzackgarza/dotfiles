@@ -1,1 +1,0 @@
-/home/zack/SparkleShare/github.com/dotfiles/bin/stylusfix.sh

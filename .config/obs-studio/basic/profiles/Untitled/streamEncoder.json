@@ -1,6 +1,0 @@
-{
-    "preset": "ultrafast",
-    "profile": "baseline",
-    "rate_control": "CBR",
-    "tune": "fastdecode"
-}
