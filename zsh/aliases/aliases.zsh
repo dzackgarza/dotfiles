@@ -1,6 +1,6 @@
 # Dev Specific
-alias ls="colorls"
-alias ll="colorls -l"
+#alias ls="colorls"
+#alias ll="colorls -l"
 alias mkdir="mkdir -p"
 
 # Just git save everything
