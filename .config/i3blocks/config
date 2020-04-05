@@ -10,17 +10,6 @@ command=/home/zack/dotfiles/bin/dmenuRecentPDFs.sh
 full_text="Annotated PDFs"
 command=/home/zack/dotfiles/bin/dmenuAnnotatedPDFs.sh
 
-[battery2]
-align=left
-command=/home/zack/dotfiles/i3/battery2
-markup=pango
-interval=30
-
-[battery-plus]
-command=/home/zack/dotfiles/battery-plus
-markup=pango
-instance=BAT0
-interval=30
 
 [calendar]
 command=/home/zack/dotfiles/i3/calendar
@@ -29,7 +18,6 @@ LABEL=
 DATEFMT=+%A %B %d %l:%M %p
 HEIGHT=180
 WIDTH=220
-
 
 [cpu_usage]
 markup=pango
@@ -41,27 +29,17 @@ label=<span color='#FFFFFF' font='FontAwesome' size='x-large'> </span>
 #T_CRIT=80
 #DECIMALS=2
 
+[battery-plus]
+command=/home/zack/dotfiles/i3/batteryplus
+markup=pango
+instance=BAT0
+interval=30
+
 [temperature]
 command=/home/zack/dotfiles/i3/temperature
 markup=pango
 label=<span color='#FFFFFF' font='FontAwesome' size='large'> </span>
 interval=15
-
-
-[volume-pulseaudio]
-command=/home/zack/dotfiles/i3/volume-pulseaudio
-interval=persist
-signal=1
-LONG_FORMAT="${SYMB} ${VOL}%"
-SHORT_FORMAT="${SYMB} ${VOL}%"
-AUDIO_HIGH_SYMBOL='  '
-AUDIO_MED_THRESH=50
-AUDIO_MED_SYMBOL='  '
-AUDIO_LOW_THRESH=0
-AUDIO_LOW_SYMBOL='  '
-AUDIO_DELTA=5
-DEFAULT_COLOR="#ffffff"
-SUBSCRIBE=1
 
 [shutdown_menu]
 markup=pango
