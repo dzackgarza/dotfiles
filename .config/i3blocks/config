@@ -16,10 +16,16 @@ command=/home/zack/dotfiles/i3/battery2
 markup=pango
 interval=30
 
+[battery-plus]
+command=/home/zack/dotfiles/battery-plus
+markup=pango
+instance=BAT0
+interval=30
+
 [calendar]
 command=/home/zack/dotfiles/i3/calendar
 interval=30
-LABEL= 
+LABEL=
 DATEFMT=+%A %B %d %l:%M %p
 HEIGHT=180
 WIDTH=220
