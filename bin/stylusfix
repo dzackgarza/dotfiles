@@ -1,17 +1,20 @@
 #!/bin/bash
-xsetwacom set "ELAN Touchscreen" MapToOutput eDP1
-xsetwacom set "ELAN Touchscreen stylus" MapToOutput eDP1
-xsetwacom set "ELAN Touchscreen eraser" MapToOutput eDP1
+screen="ELAN9004:00 04F3:299E"
+stylus="ELAN9004:00 04F3:299E stylus"
+eraser="ELAN9004:00 04F3:299E eraser"
+xsetwacom set "$screen" MapToOutput eDP1
+xsetwacom set "$stylus" MapToOutput eDP1
+xsetwacom set "$eraser" MapToOutput eDP1
 
-matrix1=$(xinput list-props "ELAN Touchscreen" | grep 'Coordinate Transformation Matrix' | cut -d ':' -f 2 | xargs)
+matrix1=$(xinput list-props "$screen" | grep 'Coordinate Transformation Matrix' | cut -d ':' -f 2 | xargs)
 
 #sagescript="M = Matrix(RR, 3, ["$matrix1"]); M2 = Matrix(RR, 3, [0, 1, 0, -1, 0, 1, 0, 0, 1]); print([round(x, 2) for x in (M*M2).list()])"
 #matrix="$(sage -c  "$sagescript" | tr -d '[],')"
 matrix=$matrix1
 
-xinput set-prop "ELAN Touchscreen" --type=float "Coordinate Transformation Matrix" $matrix
-xinput set-prop "ELAN Touchscreen stylus" --type=float "Coordinate Transformation Matrix" $matrix
-xinput set-prop "ELAN Touchscreen eraser" --type=float "Coordinate Transformation Matrix" $matrix
+xinput set-prop "$screen" --type=float "Coordinate Transformation Matrix" $matrix
+xinput set-prop "$stylus" --type=float "Coordinate Transformation Matrix" $matrix
+xinput set-prop "$eraser" --type=float "Coordinate Transformation Matrix" $matrix
 
-xsetwacom set "ELAN Touchscreen stylus" PressureCurve 40 17 100 0
+#xsetwacom set "$stylus" PressureCurve 40 17 100 0
 

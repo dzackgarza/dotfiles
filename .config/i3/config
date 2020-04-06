@@ -80,16 +80,10 @@ bindsym --whole-window $mod+Shift+button1 floating toggle
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 
-# focus the parent container
-bindsym $mod+a focus parent
-
-# focus the child container
-#bindsym $mod+d focus child
-
 # workspaces
 set $ws1   1:
 set $ws2   2:
-set $ws3   3:3
+set $ws3   3:✏️
 set $ws4   4:4
 set $ws5   5:5
 set $ws6   6:6
@@ -100,6 +94,14 @@ set $ws0   10:10
 
 # Default workspaces for common programs
 assign [class="^Chromium$"] $ws1
+assign [class="Write"] $ws3
+assign [class="^Xournal"] $ws3
+# floating windows
+for_window [class="Pavucontrol"] floating enable
+for_window [class="Kalu"] floating enable
+for_window [class="Yad"] floating enable
+for_window [class="okular"] floating enable
+for_window [class=”Tilda” instance=”dropdown”] floating enable
 
 # switch to workspace
 bindsym $mod+1   workspace $ws1
@@ -176,24 +178,10 @@ client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-col
 client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color $indicator-color
 client.urgent           $urgent-bg-color   $urgent-bg-color   $text-color          $indicator-color
 
-# floating windows
-for_window [class="Pavucontrol"] floating enable
-for_window [class="Kalu"] floating enable
-for_window [class="Yad"] floating enable
-for_window [class="okular"] floating enable
-
-# Multimedia Keys
-#bindsym --locked XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') +5%
-#bindsym --locked XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') -5%
-#bindsym --locked XF86AudioMute exec --no-startup-id pactl set-sink-mute $(pacmd list-sinks |awk '/* index:/{print $3}') toggle
 
 # Brightness controls
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight +10
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -10
-
-
-# Redirect sound to headphones
-#bindsym $mod+m exec "/usr/local/bin/switch-audio-port"
 
 # Misc
 bindsym --release Print exec scrot -s -e 'xclip -selection clipboard -t "image/png" < $f'
