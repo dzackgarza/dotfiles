@@ -58,9 +58,42 @@ snippet todo
 	\todo[inline]{${1}}
 
 snippet def
-	Definition (${1})
-	: 	
+	:::{.definition title="${1}"}
+	${2}	
+	:::
 
 snippet thm
-	Theorem (${1})
-	: 	
+	:::{.theorem title="${1}"}
+	${2}	
+	:::
+
+snippet cor
+	:::{.corollarytitle="${1}"}
+	${2}	
+	:::
+
+snippet ex
+	:::{.example title="${1}"}
+	${2}	
+	:::
+
+snippet exc
+	:::{.exercise title="${1}"}
+	${2}	
+	:::
+
+snippet prop
+	:::{.proposition title="${1}"}
+	${2}	
+	:::
+
+snippet warn
+	:::{.warning title="${1}"}
+	${2}	
+	:::
+
+snippet rmk
+	:::{.remark title="${1}"}
+	${2}	
+	:::
+
