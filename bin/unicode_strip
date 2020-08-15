@@ -1,0 +1,15 @@
+#!/usr/bin/env python3
+import sys
+import fileinput
+import unicode_tex
+
+excluded_chars = ['\\', '&', '$', '{', '}', '%', ' ', '_', '~', '\'', '`', '^',     '*', '#']
+tex_replacements = unicode_tex.unicode_to_tex_map.copy()
+for char in excluded_chars:
+  tex_replacements.pop(char)
+
+with fileinput.FileInput(sys.argv[1], inplace=True, backup='.bak') as file:
+  for line in file:
+    for src, target in tex_replacements.items():
+      line = line.replace(src, target+"{}")
+    print(line, end='')

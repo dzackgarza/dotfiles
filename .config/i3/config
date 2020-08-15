@@ -1,41 +1,34 @@
 set $mod Mod4
 font pango:monospace 9
 
-#input * {
-#    #xkb_layout en
-#    xkb_variant nodeadkeys
-#    xkb_options caps:swapescape
-#}
-
 default_border pixel 1
 default_floating_border normal
 hide_edge_borders smart
+# for_window [class="^.*"] border pixel 1
 
-smart_gaps on
+
+#smart_gaps on
 gaps inner 10
 
-bar {
-  font pango:DejaVu Sans Mono, Awesome 10
-  status_command i3blocks
-  separator_symbol |
-  tray_padding 2
-  #colors {
-  #  separator "#00FFFF"
-  #}
-}
+focus_follows_mouse no
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# start a terminal
+# Start programs
 bindsym $mod+Return exec termite
 bindsym $mod+Shift+Return exec chromium
+bindsym $mod+A exec /home/zack/dotfiles/bin/dmenuAllPDFs.sh 
+bindsym $mod+O exec /home/zack/dotfiles/bin/vim_anywhere.sh
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+# bindsym --release Print exec scrot -s -e 'xclip -selection clipboard -t "image/png" < $f'
+bindsym Print exec "flameshot gui"
+bindsym $mod+z exec "$HOME/.local/bin/rft lp"
+bindsym $mod+x exec "$HOME/.local/bin/rft ss"
+bindsym $mod+c exec "$HOME/.local/bin/rft sw"
 
 # kill focused window
 bindsym $mod+w kill
-
-# start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
 bindsym $mod+j focus left
@@ -44,16 +37,10 @@ bindsym $mod+l focus up
 bindsym $mod+ntilde focus right
 
 # alternatively, you can use the cursor keys:
-#bindsym $mod+Left focus left
-#bindsym $mod+Down focus down
-#bindsym $mod+Up focus up
-#bindsym $mod+Right focus right
-
-# move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+ntilde move right
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -66,7 +53,7 @@ bindsym $mod+h split h
 bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
+bindsym $mod+space fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+Ctrl+Shift+s layout stacking
@@ -77,31 +64,44 @@ bindsym $mod+Ctrl+Shift+e layout toggle split
 bindsym $mod+Shift+space floating toggle
 bindsym --whole-window $mod+Shift+button1 floating toggle
 
-# change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
-
 # workspaces
-set $ws1   1:
-set $ws2   2:
-set $ws3   3:✏️
-set $ws4   4:4
-set $ws5   5:5
-set $ws6   6:6
-set $ws7   7:7
-set $ws8   8:8
-set $ws9   9:9
-set $ws0   10:10
+set $ws1 1:Browser
+set $ws2 2:Terminal
+set $ws3 3:PDFs
+set $ws4 4:Stylus
+set $ws5 5
+set $ws6 6
+set $ws7 7
+set $ws8 8
+set $ws9 9
+set $ws0 0
+
+# Tie some workspaces to monitors
+workspace $ws1 output HDMI1
+workspace $ws2 output HDMI1
+workspace $ws3 output eDP1
+workspace $ws4 output eDP1
 
 # Default workspaces for common programs
 assign [class="^Chromium$"] $ws1
-assign [class="Write"] $ws3
 assign [class="^Xournal"] $ws3
+assign [class="Evince"] $ws3
+assign [class="okular"] $ws3
+assign [class="Write"] $ws4
+
 # floating windows
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Kalu"] floating enable
 for_window [class="Yad"] floating enable
-for_window [class="okular"] floating enable
-for_window [class=”Tilda” instance=”dropdown”] floating enable
+for_window [class=”Tilda” instance=”dropdown”]          floating enable
+for_window [window_role="pop-up"]                       floating enable
+for_window [window_role="bubble"]                       floating enable 
+for_window [window_role="task_dialog"]                  floating enable
+for_window [window_role="Preferences"]                  floating enable
+for_window [window_type="dialog"]                       floating enable 
+for_window [window_type="menu"]                         floating enable
+no_focus [class="Zathura"]
+for_window [class="Zathura"] floating enable move position 1110px 35px
 
 # switch to workspace
 bindsym $mod+1   workspace $ws1
@@ -115,9 +115,8 @@ bindsym $mod+8   workspace $ws8
 bindsym $mod+9   workspace $ws9
 bindsym $mod+0   workspace $ws0
 
-
-bindsym $mod+Left workspace prev
-bindsym $mod+Right workspace next
+# bindsym $mod+Left workspace prev
+# bindsym $mod+Right workspace next
 
 # move focused container to workspace
 bindsym $mod+Shift+1    move container to workspace $ws1
@@ -146,12 +145,7 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym Shift+Left resize shrink width 10 px or 10 ppt
-        bindsym Shift+Up resize grow height 10 px or 10 ppt
-        bindsym Shift+Down resize shrink height 10 px or 10 ppt
-        bindsym Shift+Right resize grow width 10 px or 10 ppt
 
-        # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
         bindsym Down resize grow height 10 px or 10 ppt
         bindsym Up resize shrink height 10 px or 10 ppt
@@ -161,10 +155,9 @@ mode "resize" {
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
-
 bindsym $mod+r mode "resize"
 
-set $bg-color            #2f343f
+set $bg-color            #33F9FF 
 set $inactive-bg-color   #2f343f
 set $text-color          #f3f4f5
 set $inactive-text-color #676e7d
@@ -173,29 +166,20 @@ set $indicator-color     #a0a0a0
 
 # set window colors
 #                       border             background         text                 indicator
-client.focused          $bg-color          $bg-color          $text-color          $indicator-color
+client.focused          #33F9FF            $bg-color          $text-color          $indicator-color
 client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color $indicator-color
 client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color $indicator-color
 client.urgent           $urgent-bg-color   $urgent-bg-color   $text-color          $indicator-color
-
 
 # Brightness controls
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight +10
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -10
 
-# Misc
-bindsym --release Print exec scrot -s -e 'xclip -selection clipboard -t "image/png" < $f'
-
-# Autostart apps
-#exec --no-startup-id "nitrogen --restore"
-#exec --no-startup-id "sh -c 'sleep 10; twmnd'"
-#exec "termite"
-
 set $mode_system System: (l) lock, (e) logout, (s) suspend, (r) reboot, (S) shutdown, (R) UEFI
 mode "$mode_system" {
     bindsym l exec $lock, mode "default"
     bindsym e exit
-    bindsym s exec --no-startup-id systemctl suspend, mode "default"
+    bindsym s exec --no-startup-id systemctl hibernate , mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
     bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
     bindsym Shift+r exec --no-startup-id systemctl reboot --firmware-setup, mode "default"
@@ -205,3 +189,20 @@ mode "$mode_system" {
     bindsym Escape mode "default"
 }
 bindsym $mod+Shift+q mode "$mode_system"
+
+# bindsym Control+$mod+I workspace 2:Terminal; append_layout ~/dotfiles/vimWorkspace.json
+
+exec_always --no-startup-id sleep 1; /home/zack/dotfitles/bin/screenChanges.sh &
+exec --no-startup-id dropbox &
+exec_always --no-startup-id blueman-applet &
+exec --no-startup-id sparkleshare &
+exec_always --no-startup-id nm-applet &
+exec --no-startup-id mathpix-snipping-tool &
+exec --no-startup-id twmnd &
+exec --no-startup-id tilda -h & 
+exec_always --no-startup-id nitrogen --restore &
+exec_always --no-startup-id sleep 1; xset s off -dpms &
+exec_always --no-startup-id sleep 1; xset r rate 220 45 &
+exec_always --no-startup-id sleep 1; ~/dotfiles/bin/polybar.sh &
+exec_always --no-startup-id sleep 1; pkill redshift; redshift -x; redshift &
+
