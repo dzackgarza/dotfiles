@@ -14,13 +14,20 @@ files=''
 view=false
 totex=false
 JUSTCOMPILE=false
+slides=false
+vimPreview=false
+tohtml=false
 
-while getopts 'vf:xj' flag; do
+while getopts 'vf:hsxjzp' flag; do
   case "${flag}" in
     v) view='true' ;;
     x) totex='true' ;;
+    s) slides='true' ;;
     j) JUSTCOMPILE='true' ;;
     f) files="${OPTARG}" ;;
+    z) doSections='true' ;;
+    p) vimPreview="true";;
+    h) tohtml="true";;
     *) print_usage
        exit 1 ;;
   esac
@@ -28,16 +35,27 @@ done
 
 filepath=$(realpath "$files")
 directory=$(dirname "$filepath")
+sections="$directory/sections"
 filename=$(basename -- "$filepath")
 extension="${filename##*.}"
 filename="${filename%.*}"
 first_run=true
 status_ok=1
 
-echo "File path: $filepath"
-echo "Directory: $directory"
-echo "File name: $filename"
-echo "Extension: $extension"
+clean_up() {
+  #notify-send "PandocMake Preview" "Stopped." --urgency=critical --expire-time=5000
+  if [ "$vimPreview" = true ]; then
+    #notify-send "PandocMake Preview" "Deleting output PDF: $outfile" --urgency=critical --expire-time=5000
+    rm "$outfile";
+  fi
+  kill -9 $(jobs -p %1) > /dev/null  2>&1
+	exit
+}
+trap clean_up SIGHUP SIGINT SIGTERM 
+
+
+#echo "vimPreview: $vimPreview"
+#echo "View? $view"
 
 if [ ! -f "$filepath" ]; then
   echo "Input file not found"
@@ -46,9 +64,22 @@ fi
 
 
 pandoc_compile() {
-  echo "Output: $filepath -> $outfile"
+  if [ "$tohtml" = true ]; then
+    cat /home/zack/Notes/Latex/latexmacs.tex "$filepath" | pandoc -f markdown -r markdown+fenced_divs+tex_math_single_backslash+fenced_divs+citations+raw_html --to=html5 --mathjax -s -o "$outfile"
+  else
+    cat "$filepath" | pandoc -f markdown -F pandoc-crossref --lua-filter /home/zack/dotfiles/bin/warning-div.lua -r markdown+fenced_divs+tex_math_single_backslash+citations --template=/home/zack/Notes/Latex/pandoc_template.tex --pdf-engine=pdflatex -o "$outfile"
+  fi
+  #cat "$filepath" | pandoc -f markdown --filter pandoc-include --lua-filter /home/zack/dotfiles/bin/warning-div.lua -r markdown+fenced_divs+tex_math_single_backslash+simple_tables+table_captions+yaml_metadata_block+smart+blank_before_blockquote+backtick_code_blocks+link_attributes --template=/home/zack/Notes/Latex/pandoc_template.tex  --resource-path="$directory" --pdf-engine=pdflatex -o "$outfile" #--pdf-engine-opt=-output-driver='xdvipdfmx -z0'
+  #cat "$filepath" | pandoc -f markdown --filter pandoc-include --filter pandoc-theorem-exe --bibliography /home/zack/Notes/library.bib -r markdown+tex_math_dollars+simple_tables+table_captions+yaml_metadata_block+smart+blank_before_blockquote+backtick_code_blocks+link_attributes --template=/home/zack/Notes/Latex/pandoc_template.tex  --resource-path="$directory" --pdf-engine=pdflatex --lua-filter=/home/zack/Notes/Latex/dollar_math.lua -o "$outfile" #--pdf-engine-opt=-output-driver='xdvipdfmx -z0'
+  #cat "$filepath" | sed 's/\\\(\[\|\]\)/\n/g' | pandoc -f markdown --filter pandoc-include --filter pandoc-theorem-exe -r markdown+tex_math_dollars+simple_tables+table_captions+yaml_metadata_block+smart+blank_before_blockquote+backtick_code_blocks+link_attributes --template=/home/zack/Notes/Latex/pandoc_template.tex  --resource-path="$directory" --pdf-engine=pdflatex --lua-filter=/home/zack/Notes/Latex/dollar_math.lua -o "$outfile" #--pdf-engine-opt=-output-driver='xdvipdfmx -z0'
+  status_ok=$?
+}
+
+slides_compile() {
+  echo "SlideseOutput: $filepath -> $outfile"
   echo "Resource Path: $directory"
-  cat "$filepath" | sed 's/\\\(\[\|\]\)/\n/g' | pandoc -f markdown --filter pandoc-include --filter pandoc-theorem-exe -r markdown+tex_math_dollars+simple_tables+table_captions+yaml_metadata_block+smart+blank_before_blockquote+backtick_code_blocks+link_attributes --template=/home/zack/Notes/Latex/pandoc_template.tex  --resource-path="$directory" --pdf-engine=pdflatex --lua-filter=/home/zack/Notes/Latex/dollar_math.lua -o "$outfile" #--pdf-engine-opt=-output-driver='xdvipdfmx -z0'
+  cat "$filepath" | pandoc --from markdown --to beamer -r markdown+tex_math_single_backslash --template= /home/zack/Notes/Latex/beamer_template.latex -o "$outfile"
+  #cat "$filepath" | pandoc -f markdown -t beamer --filter pandoc-include --filter pandoc-theorem-exe -r markdown+tex_math_dollars+simple_tables+table_captions+yaml_metadata_block+smart+blank_before_blockquote+backtick_code_blocks+link_attributes --template=/home/zack/Notes/Latex/beamer_template.tex --resource-path="." --lua-filter=/home/zack/Notes/Latex/dollar_math.lua -o "$outfile" 
   status_ok=$?
 }
 
@@ -56,16 +87,28 @@ pandoc_compile() {
 
 echo "Starting..."
 while true; do
-  notify-send "PandocMake Preview" "Compiling.." --urgency=critical --expire-time=2000
+  #notify-send "PandocMake Preview" "Compiling.." --urgency=critical --expire-time=2000
   case $extension in
     "md")
       if [ "$totex" = true ]; then
         outfile="$directory/$filename.tex"
+      elif [ "$tohtml" = true ]; then
+        outfile="$directory/$filename.html"
       else
         outfile="$directory/$filename.pdf"
       fi
-      echo "Rendering markdown to $outfile"
-      pandoc_compile
+      if [ "$slides" = true ]; then
+        slides_compile
+      else
+        if [[ "$doSections" = true && -d "$sections" ]]; then
+          echo "Sections directory found. Concatenating files.."
+          awk 'FNR==1{print ""}{print}' "$sections"/*.md > "$filepath"
+          echo "cat: $sections/*.md > $filepath"
+        elif [[ "$doSections" = true ]]; then
+          echo "No sections directory: $sections"
+        fi
+        pandoc_compile
+      fi
       if [ "$JUSTCOMPILE" = true ]; then
         echo "Compile only, now exiting."
         exit 1
@@ -84,16 +127,25 @@ while true; do
     notify-send "PandocMake Preview" "Error compiling." --urgency=critical --expire-time=5000
     echo "Error compiling"
   else
+    echo "Compiled successfully."
     if [ "$first_run" = true ]; then
       echo "First run"
       if [ "$view" = true ]; then
-        okular "$outfile" &
+        xdg-open "$outfile" > /dev/null 2>&1 &
+      elif [ "$vimPreview" = true ]; then
+        zathura "$outfile" > /dev/null 2>&1 &
       fi
       first_run=false;
+    else
+      echo "Recompiled."
     fi
   fi
 
-
   # Block execution until file write
-  inotifywait -e CLOSE_WRITE -r "$directory";
+  inotifywait -e CLOSE_WRITE -r "$directory" --exclude '.*\.pdf' -qq;
+  echo "File change detected."
 done
+clean_up
+
+# ImpressJS: pandoc -V impress-url=impress.js -s -t html5 --section-divs -o impress.html impress.txt --template=/home/zack/Notes/Latex/impress-template.html --mathjax
+# Blog Post: pandoc -f markdown -r markdown+fenced_divs+tex_math_single_backslash+citations+raw_html+implicit_figures --to=html5 --mathjax -s --lua-filter=/home/zack/Notes/Latex/tikz_filter.lua --lua-filter=/home/zack/Notes/Latex/center_filter.lua 

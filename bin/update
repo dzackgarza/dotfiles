@@ -32,8 +32,9 @@ command -v apt-get >/dev/null 2>&1 && sudo apt-get update && sudo apt-get -y upg
 #test -d ~/Downlads && find ~/Downloads -name "*.djvu" -exec djvu2pdf {} \; -exec rm {} \;
 #find ~/Downloads -name "*.pdf" -exec mv {} ~/Dropbox \;
 
-clr_green "Updating 'locate' database...";
+clr_green "Updating 'locate' database and font caches...";
 sudo updatedb;
+command -v fc-cache >/dev/null 2>&1 && fc-cache; 
 #rehash;
 
 clr_blueb "Update completed.";
