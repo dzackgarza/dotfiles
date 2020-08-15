@@ -133,7 +133,7 @@ tex2jax: {
     processEscapes:true
 },
 CommonHTML: {
-    scale: (!!navigator.userAgent.match(/(mac)|(mobile)/i) ? 100 : 400)
+    scale: (!!navigator.userAgent.match(/(mac)|(mobile)/i) ? 150 : 100)
 }
 });
 MathJax.Hub.Configured();
@@ -162,6 +162,7 @@ CONFIG = {
             text-align: center;
             color: black;
             background-color: white;
+            font-size: 18pt;
         }
         """,
     'card_model_fields': [
