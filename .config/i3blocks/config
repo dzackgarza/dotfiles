@@ -1,3 +1,7 @@
+[app_launcher]
+full_text="Apps"
+command=panther_launcher > /dev/null 2>&1 &
+
 [all_pdfs]
 full_text="All PDFs"
 command=/home/zack/dotfiles/bin/dmenuAllPDFs.sh > /dev/null 2>&1 &
