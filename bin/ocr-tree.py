@@ -48,7 +48,7 @@ for dir_name, subdirs, file_list in os.walk(start_dir):
                 print(f"File already hashed: {filename}")
                 continue
             print(full_path)
-            cmd = ["ocrmypdf",  "--deskew", "--skip-text", filename, filename]
+            cmd = ["ocrmypdf",  "--clean", "--skip-text", filename, filename]
             logging.info(cmd)
             print("Running ocrmypdf...")
             proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)

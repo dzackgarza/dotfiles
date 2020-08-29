@@ -47,7 +47,7 @@ Plug 'mileszs/ack.vim'
 
 " Close delimiters
 Plug 'Raimondi/delimitMate'
-let delimitMate_matchpairs = "{:}"
+let delimitMate_matchpairs = "{:},(:)"
 
 call plug#end()
 
@@ -68,7 +68,7 @@ nnoremap <silent> ]] /^\#<CR>
 "nnoremap <silent> <Leader>lp :belowright split \| resize 5 \| term 'echo "asdsadas" && latex_preview -f "%:p" -p'<CR>
 "nnoremap <silent> <Leader>lp :belowright split :resize 5 :term latex_preview -f "%:p$ -p<CR>
 nmap <silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
-inoremap DD \( \) <Left><Left><Left>
+"inoremap nn \( \) <Left><Left><Left>
 
 
 " Press F2 in insert mode to correct last spelling mistake and jump back to
@@ -205,6 +205,18 @@ set updatetime=1000
 "set title
 "set titlestring=%{hostname()}\ \ %F\ \ %{strftime('%Y-%m-%d\ %H:%M',getftime(expand('%')))}
 
+iabbrev impies implies
+iabbrev keq leq
+iabbrev suchtat suchthat
+iabbrev pver over 
+iabbrev Rouche Rouché 
+iabbrev rouche rouché 
+iabbrev defineas definedas 
+iabbrev subet subset 
+iabbrev Etale Étale
+iabbrev etale étale
+iabbrev kapp kappa
+
 " Auto-expand macros
 function! s:Expr(default, repl)
   if getline('.')[col('.')-2]=='\'
@@ -215,13 +227,8 @@ function! s:Expr(default, repl)
 endfunction
 
 inoreab inv <c-r>=<sid>Expr('inv', '^{-1}')<cr>
-
-iabbrev impies implies
-iabbrev keq leq
-iabbrev suchtat suchthat
-iabbrev pver over 
-iabbrev Rouche Rouché 
-iabbrev rouche rouché 
+inoreab sing <c-r>=<sid>Expr('sing', '\text{sing}')<cr>
+inoreab et <c-r>=<sid>Expr('et', '\text{étale}')<cr>
 
 
 " Escape terminal
@@ -253,3 +260,9 @@ set scrolloff=999
 let g:markdown_folding = 1
 set foldcolumn=3
 set foldlevel=2
+
+augroup remember_folds
+  autocmd!
+  autocmd BufWinLeave *.md mkview
+  autocmd BufWinEnter *.md silent! loadview
+augroup END
