@@ -117,3 +117,9 @@ setopt complete_aliases
 
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
+
+
+if [ "$TMUX" = "" ]; then tmux; fi
+
+alias yay='yay --noconfirm'
+alias grep='grep -C 2'

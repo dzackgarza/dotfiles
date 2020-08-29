@@ -133,7 +133,8 @@ while true; do
       if [ "$view" = true ]; then
         xdg-open "$outfile" > /dev/null 2>&1 &
       elif [ "$vimPreview" = true ]; then
-        zathura "$outfile" > /dev/null 2>&1 &
+        # Potentially open with something more specific to do window positioning.
+        xdg-open "$outfile" > /dev/null 2>&1 &
       fi
       first_run=false;
     else

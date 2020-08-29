@@ -6,7 +6,6 @@ default_floating_border normal
 hide_edge_borders smart
 # for_window [class="^.*"] border pixel 1
 
-
 #smart_gaps on
 gaps inner 10
 
@@ -16,11 +15,11 @@ focus_follows_mouse no
 floating_modifier $mod
 
 # Start programs
-bindsym $mod+Return exec termite
 bindsym $mod+Shift+Return exec chromium
 bindsym $mod+A exec /home/zack/dotfiles/bin/dmenuAllPDFs.sh 
 bindsym $mod+O exec /home/zack/dotfiles/bin/vim_anywhere.sh
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+#bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -width 30 -show -matching fuzzy -i -dmenu -font "Clear Sans Regular 12"'
 # bindsym --release Print exec scrot -s -e 'xclip -selection clipboard -t "image/png" < $f'
 bindsym Print exec "flameshot gui"
 bindsym $mod+z exec "$HOME/.local/bin/rft lp"
@@ -77,23 +76,24 @@ set $ws9 9
 set $ws0 0
 
 # Tie some workspaces to monitors
-workspace $ws1 output HDMI1
-workspace $ws2 output HDMI1
-workspace $ws3 output eDP1
-workspace $ws4 output eDP1
+workspace $ws1 output HDMI-1
+workspace $ws2 output HDMI-1
+workspace $ws3 output eDP-1
+workspace $ws4 output eDP-1
 
 # Default workspaces for common programs
 assign [class="^Chromium$"] $ws1
 assign [class="^Xournal"] $ws3
-assign [class="Evince"] $ws3
-assign [class="okular"] $ws3
+# assign [class="Evince"] $ws3
+# assign [class="okular"] $ws3
 assign [class="Write"] $ws4
 
 # floating windows
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Kalu"] floating enable
 for_window [class="Yad"] floating enable
-for_window [class=”Tilda” instance=”dropdown”]          floating enable
+# for_window [class=”Tilda” instance=”dropdown”]          floating enable
+for_window [class=”Tilda”]          floating enable
 for_window [window_role="pop-up"]                       floating enable
 for_window [window_role="bubble"]                       floating enable 
 for_window [window_role="task_dialog"]                  floating enable
@@ -101,7 +101,7 @@ for_window [window_role="Preferences"]                  floating enable
 for_window [window_type="dialog"]                       floating enable 
 for_window [window_type="menu"]                         floating enable
 no_focus [class="Zathura"]
-for_window [class="Zathura"] floating enable move position 1110px 35px
+# for_window [class="Zathura"] floating enable move position 1110px 35px
 
 # switch to workspace
 bindsym $mod+1   workspace $ws1
@@ -192,17 +192,22 @@ bindsym $mod+Shift+q mode "$mode_system"
 
 # bindsym Control+$mod+I workspace 2:Terminal; append_layout ~/dotfiles/vimWorkspace.json
 
-exec_always --no-startup-id sleep 1; /home/zack/dotfitles/bin/screenChanges.sh &
+exec --no-startup-id unclutter
 exec --no-startup-id dropbox &
 exec_always --no-startup-id blueman-applet &
 exec --no-startup-id sparkleshare &
 exec_always --no-startup-id nm-applet &
 exec --no-startup-id mathpix-snipping-tool &
 exec --no-startup-id twmnd &
-exec --no-startup-id tilda -h & 
 exec_always --no-startup-id nitrogen --restore &
-exec_always --no-startup-id sleep 1; xset s off -dpms &
-exec_always --no-startup-id sleep 1; xset r rate 220 45 &
 exec_always --no-startup-id sleep 1; ~/dotfiles/bin/polybar.sh &
 exec_always --no-startup-id sleep 1; pkill redshift; redshift -x; redshift &
 
+
+for_window [instance="__scratchpad"] floating enable, resize set 1920px 780px, move position 0px 125px, move scratchpad, sticky enable
+exec --no-startup-id termite --name __scratchpad
+bindsym $mod+Ctrl+Return exec termite --name __scratchpad
+bindsym $mod+Return exec termite
+bindsym F12 scratchpad show
+
+default_orientation horizontal
