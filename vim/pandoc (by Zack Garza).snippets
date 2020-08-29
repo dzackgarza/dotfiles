@@ -20,13 +20,12 @@ snippet center
 	\end{center}
 
 snippet mm
-	\( ${1} \)
-
-snippet MM
 	\[	
 	${1}
 	.\]
-	${2}
+
+snippet mi
+	\( ${1} \) ${2}
 
 snippet eq
 	\begin{equation*}
@@ -58,16 +57,16 @@ snippet nn
 	${4}
 
 snippet todo
-	\todo[inline]{${1:todo}}${2}
+	\todo[inline]{${1}}${2}
 
 snippet def
-	:::{.definition title="${1:?}"}
+	:::{.definition title="${1}"}
 	${2}
 	:::
 	${3}
 
 snippet thm
-	:::{.theorem title="${1:?}"}
+	:::{.theorem title="${1}"}
 	${2}
 	:::
 	${3}
@@ -97,12 +96,12 @@ snippet exc
 	${2}
 
 snippet prop
-	:::{.proposition title="${1:?}"}
+	:::{.proposition title="${1}"}
 	${2}
 	:::
 	${3}
 
-snippet lemma
+snippet lem
 	:::{.lemma}
 	${1}
 	:::
@@ -128,6 +127,11 @@ snippet prob
 
 snippet soln
 	:::{.solution}
+	\hfill
+	:::{.concept}
+	\hfill
+
+	:::
 	${1}
 	:::
 	${2}
@@ -172,13 +176,3 @@ snippet \cl
 
 snippet \eps
 	\varepsilon
-
-snippet lab
-	\label{${1:refname}} ${2} 
-
-snippet ref
-	\hyperref[${1:refname}]{${2:displaytext}}${3}
-
-snippet ltf
-	\sum_{i=0}^{2\dim(X)} (-1)^i \tr\qty{ F^n \st H^i_c(X_{\FF_q}, \QQ_\ell)}
-
