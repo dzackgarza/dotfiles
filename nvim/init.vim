@@ -216,6 +216,8 @@ iabbrev subet subset
 iabbrev Etale Étale
 iabbrev etale étale
 iabbrev kapp kappa
+iabbrev apha alpha 
+iabbrev variabel variable 
 
 " Auto-expand macros
 function! s:Expr(default, repl)

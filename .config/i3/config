@@ -18,9 +18,7 @@ floating_modifier $mod
 bindsym $mod+Shift+Return exec chromium
 bindsym $mod+A exec /home/zack/dotfiles/bin/dmenuAllPDFs.sh 
 bindsym $mod+O exec /home/zack/dotfiles/bin/vim_anywhere.sh
-#bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -width 30 -show -matching fuzzy -i -dmenu -font "Clear Sans Regular 12"'
-# bindsym --release Print exec scrot -s -e 'xclip -selection clipboard -t "image/png" < $f'
 bindsym Print exec "flameshot gui"
 bindsym $mod+z exec "$HOME/.local/bin/rft lp"
 bindsym $mod+x exec "$HOME/.local/bin/rft ss"
@@ -76,8 +74,8 @@ set $ws9 9
 set $ws0 0
 
 # Tie some workspaces to monitors
-workspace $ws1 output HDMI-1
-workspace $ws2 output HDMI-1
+workspace $ws1 output eDP-1
+workspace $ws2 output eDP-1
 workspace $ws3 output eDP-1
 workspace $ws4 output eDP-1
 
@@ -209,5 +207,6 @@ exec --no-startup-id termite --name __scratchpad
 bindsym $mod+Ctrl+Return exec termite --name __scratchpad
 bindsym $mod+Return exec termite
 bindsym F12 scratchpad show
+bindsym F10 exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle 
 
 default_orientation horizontal

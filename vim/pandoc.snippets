@@ -49,11 +49,11 @@ snippet iff
 
 snippet nn
 
-	${1}
+	${1:?}
 	%
-	${2}
+	${2:?}
 	%
-	${3}
+	${3:definition}
 	---
 	${4}
 
@@ -139,6 +139,12 @@ snippet concept
 	:::
 	${2}
 
+snippet claim
+	:::{.claim}
+	${1}
+	:::
+	${2}
+
 snippet \txor
 	\text{ or }
 	
@@ -181,4 +187,7 @@ snippet ref
 
 snippet ltf
 	\sum_{i=0}^{2\dim(X)} (-1)^i \tr\qty{ F^n \st H^i_c(X_{\FF_q}, \QQ_\ell)}
+
+snippet \mc
+	\mathcal{${1}}${2}
 
