@@ -37,4 +37,7 @@ sudo updatedb;
 command -v fc-cache >/dev/null 2>&1 && fc-cache; 
 #rehash;
 
+updateAllNotes.sh
+cd /home/zack/Notes && git add *; git commit -am "Save"; git push;
+
 clr_blueb "Update completed.";
