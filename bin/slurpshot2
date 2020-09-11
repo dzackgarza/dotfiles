@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+
+if [[ "$1" == "" ]]; then
+    VAL=$( zenity --list --column="Select type" --text "Screendump" "Window" "Include Frame" "Rectangle" root ) || exit 0
+    case "$VAL" in
+        "Window")            VAL="window" ;;
+        "Include Frame")     VAL="frame"  ;;
+        "Rectangle")         VAL="rect"   ;;
+        "root")              VAL="root"   ;;
+    esac
+
+    set -- $VAL
+fi
+
+TMP=/tmp/dump.png
+trap "rm -f $TMP" EXIT
+
+if [[ "$SWAYSOCK" ]]; then
+
+    case "${1:-}" in
+        root)
+            # G=$( swaymsg -t get_outputs|jq -r 'select(.[].focused)|.[]|.current_mode|"\(.width)x\(.height)"' )
+            grim - > $TMP
+            ;;
+        window)
+            G=$( swaymsg -t get_tree | jq -r '.. | (.nodes? // empty)[] | if (.focused) then select(.focused) | "\(.rect.x),\(.rect.y) \(.rect.width)x\(.rect.height)" else (.floating_nodes? // empty)[] | select(.visible) | select(.focused) | "\(.rect.x),\(.rect.y) \(.rect.width)x\(.rect.height)" end' )
+            grim -g "$G" - > $TMP
+            ;;
+        frame) # this may be a bit bogus
+            T=$( swaymsg -t get_tree | jq -r '.. | (.nodes? // empty)[] | if (.focused) then select(.focused) else (.floating_nodes? // empty)[] | select(.visible) | select(.focused) end' )
+            W_WIDTH=$( echo "$T" | jq -r '.rect.width' )
+            W_HEIGHT=$( echo "$T" | jq -r '.rect.height' )
+            X=$( echo "$T" | jq -r '.rect.x' )
+            Y=$( echo "$T" | jq -r '.rect.y' )
+            DECO_WIDTH=$( echo "$T" | jq -r '.deco_rect.width' )
+            DECO_HEIGHT=$( echo "$T" | jq -r '.deco_rect.height' )
+            WIDTH=$W_WIDTH # $(( W_WIDTH + DECO_WIDTH ))
+            HEIGHT=$(( W_HEIGHT + DECO_HEIGHT ))
+            Y=$(( Y - DECO_HEIGHT ))
+            BORDER=$( echo "$T" | jq -r '.current_border_width' )
+            X=$(( X - $BORDER ))
+            Y=$(( Y - BORDER ))
+            WIDTH=$(( WIDTH + BORDER * 2 ))
+            HEIGHT=$(( HEIGHT + BORDER * 2 ))
+            grim -g "$X,$Y ${WIDTH}x${HEIGHT}" - > $TMP
+            ;;
+        *)
+            grim -g "$(slurp)" - > $TMP
+            ;;
+    esac
+    VIEWER=imv
+
+else # X11
+    case "$1" in
+        "window")    VAL=""        ;;
+        "frame")     VAL="-frame"  ;;
+        "rect")      VAL="-rect"   ;;
+        "root")      VAL="-root"   ;;
+    esac
+		set -- $VAL
+
+    case "${1:-}" in
+        -rect)
+            import $TMP
+            ;;
+        *)
+            xwd $@ | # -frame | -root | -screen | -nobdrs
+            xwdtopnm 2>/dev/null |
+            pnmtopng > $TMP
+            ;;
+    esac
+    VIEWER=feh
+fi
+
+$VIEWER $TMP
+
+F=$(
+    zenity --file-selection --file-filter='*.png' --filename=$HOME/dump.png \
+        --title="Save window dump" --save # --confirm-overwrite
+) || exit 0
+
+mv $TMP "$F"
