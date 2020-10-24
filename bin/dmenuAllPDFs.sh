@@ -11,4 +11,4 @@ while read THISBOOK; do
 done < <(find /home/zack/Dropbox/Library /home/zack/Downloads -type f -iname "*.pdf" -printf '%TY-%Tm-%Td %TT#%p\n' | grep -v Moon | cut -d "#" -f 2) 
 
 choice=$(printf "%s\n" "${!BOOKS[@]}" | dmenu -i)
-[ -z "$choice" ] || nohup xdg-open "${BOOKS[$choice]}" & disown
+[ -z "$choice" ] || nohup okular "${BOOKS[$choice]}" & disown

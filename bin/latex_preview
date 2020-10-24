@@ -18,6 +18,8 @@ slides=false
 vimPreview=false
 tohtml=false
 
+PREFIX="/home/zack/.pandoc/pandoc-templates"
+
 while getopts 'vf:hsxjzp' flag; do
   case "${flag}" in
     v) view='true' ;;
@@ -65,13 +67,10 @@ fi
 
 pandoc_compile() {
   if [ "$tohtml" = true ]; then
-    cat /home/zack/Notes/Latex/latexmacs.tex "$filepath" | pandoc -f markdown -r markdown+fenced_divs+tex_math_single_backslash+fenced_divs+citations+raw_html --to=html5 --mathjax -s -o "$outfile"
+    html_compile
   else
     cat "$filepath" | pandoc -f markdown -F pandoc-crossref --lua-filter /home/zack/dotfiles/bin/warning-div.lua -r markdown+fenced_divs+tex_math_single_backslash+citations --template=/home/zack/Notes/Latex/pandoc_template.tex --pdf-engine=pdflatex -o "$outfile"
   fi
-  #cat "$filepath" | pandoc -f markdown --filter pandoc-include --lua-filter /home/zack/dotfiles/bin/warning-div.lua -r markdown+fenced_divs+tex_math_single_backslash+simple_tables+table_captions+yaml_metadata_block+smart+blank_before_blockquote+backtick_code_blocks+link_attributes --template=/home/zack/Notes/Latex/pandoc_template.tex  --resource-path="$directory" --pdf-engine=pdflatex -o "$outfile" #--pdf-engine-opt=-output-driver='xdvipdfmx -z0'
-  #cat "$filepath" | pandoc -f markdown --filter pandoc-include --filter pandoc-theorem-exe --bibliography /home/zack/Notes/library.bib -r markdown+tex_math_dollars+simple_tables+table_captions+yaml_metadata_block+smart+blank_before_blockquote+backtick_code_blocks+link_attributes --template=/home/zack/Notes/Latex/pandoc_template.tex  --resource-path="$directory" --pdf-engine=pdflatex --lua-filter=/home/zack/Notes/Latex/dollar_math.lua -o "$outfile" #--pdf-engine-opt=-output-driver='xdvipdfmx -z0'
-  #cat "$filepath" | sed 's/\\\(\[\|\]\)/\n/g' | pandoc -f markdown --filter pandoc-include --filter pandoc-theorem-exe -r markdown+tex_math_dollars+simple_tables+table_captions+yaml_metadata_block+smart+blank_before_blockquote+backtick_code_blocks+link_attributes --template=/home/zack/Notes/Latex/pandoc_template.tex  --resource-path="$directory" --pdf-engine=pdflatex --lua-filter=/home/zack/Notes/Latex/dollar_math.lua -o "$outfile" #--pdf-engine-opt=-output-driver='xdvipdfmx -z0'
   status_ok=$?
 }
 
@@ -79,10 +78,36 @@ slides_compile() {
   echo "SlideseOutput: $filepath -> $outfile"
   echo "Resource Path: $directory"
   cat "$filepath" | pandoc --from markdown --to beamer -r markdown+tex_math_single_backslash --template= /home/zack/Notes/Latex/beamer_template.latex -o "$outfile"
-  #cat "$filepath" | pandoc -f markdown -t beamer --filter pandoc-include --filter pandoc-theorem-exe -r markdown+tex_math_dollars+simple_tables+table_captions+yaml_metadata_block+smart+blank_before_blockquote+backtick_code_blocks+link_attributes --template=/home/zack/Notes/Latex/beamer_template.tex --resource-path="." --lua-filter=/home/zack/Notes/Latex/dollar_math.lua -o "$outfile" 
   status_ok=$?
 }
 
+html_compile() {
+  cat /home/zack/Notes/Latex/latexmacs.tex "$filepath" \
+    > combined.temp ;
+
+  cat combined.temp | pandoc \
+    --from=markdown \
+    --to=markdown \
+    -r markdown+latex_macros+tex_math_single_backslash \
+    --lua-filter=/home/zack/Dropbox/rmcodeblocks.lua \
+    --lua-filter /home/zack/dotfiles/bin/warning-div.lua \
+    | sed '/^\\\%/d' > out1.temp ;
+
+  cat out1.temp | pandoc \
+    -r markdown+simple_tables+table_captions+yaml_metadata_block \
+    --to html \
+    --mathjax \
+    --template=$PREFIX/templates/tufte-html-vis.html  \
+    --css=$PREFIX/marked/kultiad-serif.css \
+    --filter pandoc-crossref \
+    --filter pandoc-citeproc \
+    --lua-filter /home/zack/Notes/Latex/tikzcd.lua \
+    --toc \
+    -V current_date="$$(date +%Y-%m-%d%n)" \
+    --self-contained \
+    -o "$outfile" ;
+  rm out1.temp combined.temp *.svg -f;
+}
 
 
 echo "Starting..."
@@ -103,7 +128,7 @@ while true; do
         if [[ "$doSections" = true && -d "$sections" ]]; then
           echo "Sections directory found. Concatenating files.."
           awk 'FNR==1{print ""}{print}' "$sections"/*.md > "$filepath"
-          echo "cat: $sections/*.md > $filepath"
+          echo "awk'd: $sections/*.md > $filepath"
         elif [[ "$doSections" = true ]]; then
           echo "No sections directory: $sections"
         fi
