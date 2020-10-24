@@ -49,6 +49,21 @@ Plug 'mileszs/ack.vim'
 Plug 'Raimondi/delimitMate'
 let delimitMate_matchpairs = "{:},(:)"
 
+" Style
+Plug 'amperser/proselint', {'rtp': 'plugins/vim/syntastic_proselint/'}
+Plug 'scrooloose/syntastic'
+let g:syntastic_markdown_checkers = ['proselint']
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
+
+
 call plug#end()
 
 " Keyboard Shortucts
@@ -218,6 +233,13 @@ iabbrev etale étale
 iabbrev kapp kappa
 iabbrev apha alpha 
 iabbrev variabel variable 
+iabbrev interset intersect 
+iabbrev lmabda lambda
+iabbrev Wely Weyl
+iabbrev rhi phi
+iabbrev lamda lambda
+iabbrev wrt with respect to 
+iabbrev nbhd neighborhood
 
 " Auto-expand macros
 function! s:Expr(default, repl)
@@ -268,3 +290,28 @@ augroup remember_folds
   autocmd BufWinLeave *.md mkview
   autocmd BufWinEnter *.md silent! loadview
 augroup END
+
+
+nnoremap <silent> <Leader>gs :call ToggleLatexMathMode()<CR>
+
+function! ToggleLatexMathMode()
+    " Get the current line and check if we find an expression surrounded by $ signs
+    let l=getline('.')
+    let inline=match(l, '\$[^$]\+\$')
+
+    " Inline to block
+    if (inline >= 0)
+        " Get the expression
+        let l=matchstr(l, '\$[^$]\+\$')
+        " Remove the surrounding $ signs
+        let expr=substitute(l, '\$', '', 'g')
+        " Remove the expression from the line
+        execute 's/\%' . inline  . 'c.\{' . ( len(l)+1 ) . '}//'
+        " Append the delimitors and the expression without $ signs
+        call append(line('.'), '\]')
+        call append(line('.'), expr)
+        call append(line('.'), '\[')
+        " Format to get the right indentation
+        normal! =}
+    endif
+endfunction

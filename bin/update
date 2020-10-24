@@ -5,6 +5,7 @@ clr_green "Updating via package manager..";
 command -v yay >/dev/null 2>&1 && yay -Syuu --noconfirm;
 command -v yay >/dev/null 2>&1 && yay -Scc --noconfirm;
 command -v apt-get >/dev/null 2>&1 && sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get dist-upgrade && sudo apt-get -y autoremove && sudo apt-get clean;
+command -v python >/dev/null 2>&1 && python -m pip install --upgrade pip
 
 #clr_green "Updating atom packages..";
 #command -v apm >/dev/null 2>&1 && apm upgrade
@@ -35,9 +36,16 @@ command -v apt-get >/dev/null 2>&1 && sudo apt-get update && sudo apt-get -y upg
 clr_green "Updating 'locate' database and font caches...";
 sudo updatedb;
 command -v fc-cache >/dev/null 2>&1 && fc-cache; 
+clr_green "Fonts updated."
 #rehash;
 
 updateAllNotes.sh
-cd /home/zack/Notes && git add *; git commit -am "Save"; git push;
+clr_green "Class Notes Updated."
+
+find /home/zack/Dropbox/Library -type f -iname "*.pdf" -exec /home/zack/dotfiles/bin/extract_annotations.py {} \;
+cd /home/zack/Notes/Annotations; cat *.md | pandoc -f markdown -t html --toc -o annotations.html -s --metadata title="PDF Annotations"; clr_green "Generated Annotations."
+cd ~/Notes && git add *; git commit -am "Save"; git push; popd; ssh zack@dzackgarza.com "cd /var/www/Notes && git pull"; clr_green "Notes repo updated."
+
+
 
 clr_blueb "Update completed.";

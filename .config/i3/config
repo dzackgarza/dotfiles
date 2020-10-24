@@ -1,4 +1,5 @@
 set $mod Mod4
+set $alt Mod1
 font pango:monospace 9
 
 default_border pixel 1
@@ -113,8 +114,8 @@ bindsym $mod+8   workspace $ws8
 bindsym $mod+9   workspace $ws9
 bindsym $mod+0   workspace $ws0
 
-# bindsym $mod+Left workspace prev
-# bindsym $mod+Right workspace next
+bindsym $mod+$alt+Down workspace prev
+bindsym $mod+$alt+Up workspace next
 
 # move focused container to workspace
 bindsym $mod+Shift+1    move container to workspace $ws1
@@ -170,8 +171,8 @@ client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-col
 client.urgent           $urgent-bg-color   $urgent-bg-color   $text-color          $indicator-color
 
 # Brightness controls
-bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight +10
-bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -10
+bindsym XF86MonBrightnessDown exec sudo light -U 10
+bindsym XF86MonBrightnessUp exec sudo light -A 10
 
 set $mode_system System: (l) lock, (e) logout, (s) suspend, (r) reboot, (S) shutdown, (R) UEFI
 mode "$mode_system" {

@@ -56,7 +56,7 @@ function Div(el)
 end
 
 -- Convert \[ ... \] to \begin{align*} ... \end{align*}
-if FORMAT:match 'latex' or FORMAT:match 'pdf' then
+if FORMAT:match 'latex' or FORMAT:match 'pdf' or FORMAT:match 'markdown' then
   function Math (m)
     if m.mathtype == "DisplayMath" then
       return pandoc.RawInline('tex', '\n\\begin{align*}'.. m.text .. '\\end{align*}')

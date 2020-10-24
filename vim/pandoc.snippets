@@ -14,6 +14,24 @@ snippet tikzcd
 	\end{tikzcd}
 	\end{center}
 
+snippet bundle
+	\begin{center}
+	\begin{tikzcd}
+	${1} \ar[r] & ${2}\ar[d] \\\\
+	 & ${3} \\\\
+	\end{tikzcd}
+	\end{center}
+	${4}
+
+snippet square
+	\begin{center}
+	\begin{tikzcd}
+	${1} & ${2} \\\\
+	${3} & ${4} \\\\
+	\end{tikzcd}
+	\end{center}
+	${5}
+
 snippet center
 	\begin{center}
 	${1}
@@ -24,9 +42,8 @@ snippet mm
 
 snippet MM
 	\[	
-	${1}
+	${1:?}
 	.\]
-	${2}
 
 snippet eq
 	\begin{equation*}
@@ -64,25 +81,21 @@ snippet def
 	:::{.definition title="${1:?}"}
 	${2}
 	:::
-	${3}
 
 snippet thm
 	:::{.theorem title="${1:?}"}
 	${2}
 	:::
-	${3}
 
 snippet proof
 	:::{.proof}
 	${1}
 	:::
-	${2}
 
 snippet cor
-	:::{.corollary title="${1}"}
+	:::{.corollary title="${1:?}"}
 	${2}
 	:::
-	${3}
 
 snippet ex
 	:::{.example}
@@ -91,22 +104,19 @@ snippet ex
 	${2}
 
 snippet exc
-	:::{.exercise}
-	${1}
-	:::
+	:::{.exercise title="${1:?}"}
 	${2}
+	:::
 
 snippet prop
 	:::{.proposition title="${1:?}"}
 	${2}
 	:::
-	${3}
 
 snippet lemma
-	:::{.lemma}
-	${1}
-	:::
+	:::{.lemma title="${1:?}"}
 	${2}
+	:::
 
 snippet warn
 	:::{.warning}
@@ -121,7 +131,7 @@ snippet rmk
 	${2}
 
 snippet prob
-	:::{.problem}
+	:::{.problem title="${1:?}"}
 	${1}
 	:::
 	${2}
