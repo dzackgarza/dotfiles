@@ -9,7 +9,7 @@ sudo ./autoinstall.sh
 ```
 
 # Dependencies
-* pacapt (If not on Arch, to abstract away the underlying package manager)
+* yaourt (If not on Arch, to abstract away the underlying package manager)
 
 # What does this script install?
 * Some OS packages (see packages.list)

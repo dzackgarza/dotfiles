@@ -1,0 +1,26 @@
+{
+  "diagnostic.displayByAle": true,
+  "suggest.enablePreview": true,
+  "suggest.minTriggerInputLength": 2,
+  "suggest.timeout": 1000,
+  "suggest.removeDuplicateItems": true,
+  "coc.source.ultisnips.enable": true,
+  "coc.source.neco.shortcut": "VIM",
+  "coc.preferences.useQuickfixForLocations": true,
+  "suggest.snippetIndicator": " \ue796",
+  "snippets.shortcut": "Snippets",
+  "snippets.priority": 95,
+  "coc.source.around.shortcut": "Around",
+  "coc.source.around.priority": 90,
+  "coc.source.buffer.shortcut": "Buffers",
+  "coc.source.buffer.priority": 85,
+  "coc.source.dictionary.shortcut": "Dict",
+  "coc.source.dictionary.priority": 80,
+  "coc.source.file.shortcut": "Files",
+  "coc.source.file.priority": 50,
+  "coc.source.emoji.shortcut": "Emoji",
+  "coc.source.emoji.priority": 20,
+  "coc.source.word.shortcut": "Top Words",
+  "coc.source.word.priority": 10
+}
+
