@@ -69,7 +69,16 @@ pandoc_compile() {
   if [ "$tohtml" = true ]; then
     html_compile
   else
-    cat "$filepath" | pandoc -f markdown -F pandoc-crossref --lua-filter /home/zack/dotfiles/bin/warning-div.lua -r markdown+fenced_divs+tex_math_single_backslash+citations --template=/home/zack/Notes/Latex/pandoc_template.tex --pdf-engine=pdflatex -o "$outfile"
+    cat "$filepath" | pandoc -f \
+      markdown -F \
+      pandoc-crossref \
+      --lua-filter /home/zack/dotfiles/bin/warning-div.lua \
+      -r markdown+fenced_divs+tex_math_single_backslash+citations \
+      --template=/home/zack/Notes/Latex/pandoc_template.tex \
+      --pdf-engine=pdflatex \
+      --reference-location=section \
+      --file-scope \
+      -o "$outfile"
   fi
   status_ok=$?
 }
