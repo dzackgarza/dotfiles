@@ -75,12 +75,12 @@ def main():
     if total_annotations < 1:
         sys.exit()
 
-    with open("/home/zack/Notes/Annotations/books_annotated.log", "a") as fp:
+    with open("/home/zack/website/assets/annotations/books_annotated.log", "a") as fp:
         fp.write(realpath + '\n')
 
     modtime = max(dates) if len(dates) > 0 else datetime.date.today()
     outdate = modtime.strftime('%m/%d/%Y')
-    outfilename = f"/home/zack/Notes/Annotations/{booktitle}.md"
+    outfilename = f"/home/zack/website/assets/annotations/{booktitle}.md"
     with open(outfilename, "w") as fp:
         fp.write(f"# {outdate}: {booktitle} ({bookauthor})\n\n")
         fp.write(f"<a href='file:///{realpath}' target='_blank'>{realpath}</a>\n\n")
