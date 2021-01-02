@@ -1,39 +1,33 @@
-extends markdown
 
-snippet MM "Math mode (display)" iA
+global !p
+texMathZones = ['texMathZone'+x for x in ['A', 'AS', 'B', 'BS', 'C', 'CS', 'D', 'DS', 'V', 'W', 'X', 'Y', 'Z']]
+# If you have http://www.drchip.org/astronaut/vim/vbafiles/amsmath.vba.gz,
+# you want to add:
+# texMathZones += ['texMathZone'+x for x in ['E', 'ES', 'F', 'FS', 'G', 'GS', 'H', 'HS', 'I', 'IS', 'J', 'JS', 'K', 'KS', 'L', 'LS']]
+texIgnoreMathZones = ['texMathText']
 
-\[	
-${1}
-.\]
-${2}
+texMathZoneIds = vim.eval('map('+str(texMathZones)+", 'hlID(v:val)')")
+texIgnoreMathZoneIds = vim.eval('map('+str(texIgnoreMathZones)+", 'hlID(v:val)')")
 
-endsnippet
+def isMath():
+    synstackids = vim.eval("synstack(line('.'), col('.') - (col('.')>=2 ? 1 : 0))")
+    if not set(texIgnoreMathZoneIds).isdisjoint(synstackids):
+        return False
+    return not set(texMathZoneIds).isdisjoint(synstackids)
+    # isdisjoint() can short-circuit as soon as a match is found
 
-# Math modes
-snippet mm "Math mode" iA
-${1}
-endsnippet
-
-snippet mc "Mathcal"
-\mathcal{${1}}${2}
-endsnippet
-
-snippet mf "Mathfrak"
-\mathfrak{${1}}${2}
-endsnippet
-
-
-
+endglobal
 
 # Tikz
-
 snippet tikz "Tikzcd (Basic)"
+
 \begin{tikzcd}
 ${1}
 \end{tikzcd}
 endsnippet
 
 snippet tikzbd "Tikz Bundle/Pullback"
+
 \begin{tikzcd}
 ${1:F} 
 	\ar[r] 
@@ -50,6 +44,7 @@ ${4:B}
 endsnippet
 
 snippet tikztri "Tikz Triangle"
+
 \begin{tikzcd}
 ${1} 
 	\ar[rd, ""]
@@ -66,6 +61,7 @@ ${3}
 endsnippet
 
 snippet tikzprod "Tikz Product (Universal Property, NW Limit)"
+
 \begin{tikzcd}
 ${1:X} 
 	\ar[drr, bend left , "f_x"] 
@@ -87,19 +83,21 @@ ${4:Y}
 endsnippet
 
 snippet tikzeq "Tikz Equalizer"
+
 \begin{tikzcd}
 ${1} 
 	\ar[r] 
 & 
-\prod_\alpha F(U_\alpha) 
+${2}
 	\ar[r, shift left=0.75ex, "f_1"] 
 	\ar[r, shift right=0.75ex, "f_2"'] 
 & 
-${4}
+${3}
 \end{tikzcd}
 endsnippet
 
 snippet tikzeq
+
 \begin{tikzcd}
 ${1} \ar[r] &
 ${2} \ar[r, shift right=0.75ex] \ar[r, shift left=0.75ex] &
@@ -107,8 +105,8 @@ ${3}
 \end{tikzcd}
 endsnippet
 
-
 snippet tikzsimp "TikzCD Simplicial Object"
+
 \begin{tikzcd}
 ${1} 
 	&
@@ -134,6 +132,7 @@ ${4}
 endsnippet
 
 snippet tikzles "TikzCD LES"
+
 \begin{tikzcd}
 ${1:A}
 	\ar[r]
@@ -154,8 +153,6 @@ ${6:A}
 \end{tikzcd}
 endsnippet
 
-
-
 snippet table "Markdown Table"
 +---+---+---+
 |   |   |   | 
@@ -165,7 +162,6 @@ snippet table "Markdown Table"
 |   |   |   |
 +---+---+---+
 endsnippet
-
 
 # Anki Cards
 snippet nn "New Anki card"
@@ -178,16 +174,12 @@ ${3:definition}
 ---
 endsnippet
 
-# Shortcuts Outside of Math Mode
-snippet iff
-$\iff$
-endsnippet
-
 snippet todo "Todo"
 \todo[inline]{${1:todo}}${2}
 endsnippet
 
 snippet mvec "Vector, 1x3 Matrix"
+
 \begin{bmatrix}
 ${1} 
 \\\\
@@ -198,6 +190,7 @@ ${3}
 endsnippet
 
 snippet cases "Cases"
+
 \begin{cases}
 ${1} & ${2} 
 \\\\
@@ -206,6 +199,7 @@ ${3} & ${4}.
 endsnippet
 
 snippet mat2 "2x2 Matrix"
+
 \begin{bmatrix}
 ${1} & ${2} 
 \\\\
@@ -214,6 +208,7 @@ ${3} & ${4}
 endsnippet
 
 snippet mat3 "3x3 Matrix"
+
 \begin{bmatrix}
 ${1} & ${2} & ${3}
 \\\\
@@ -225,6 +220,7 @@ endsnippet
 
 # Typesetting and Positioning
 snippet center "Center"
+
 \begin{center}
 ${1}
 \end{center}
@@ -235,7 +231,7 @@ snippet ww "Set image width"
 endsnippet
 
 # Footnote
-snippet ,,, "Footnote" i
+snippet ]]] "Footnote" i
 
 [^${1:refname}]
 
@@ -245,12 +241,12 @@ ${2:Footnote text}
 endsnippet
 
 # Label for Hyperlinks
-snippet lab "Label/Cref pair for internal hyperlinks"
+snippet hlab "Label/Cref pair for internal hyperlinks"
 \label{${1:refname}}
 \cref{$1}
 endsnippet
 
-snippet ref "Internal hyperlink"
+snippet href "Internal hyperlink"
 \hyperref[${1:refname}]{${2:displaytext}}${3}
 endsnippet
 
@@ -263,13 +259,13 @@ ${2}
 
 endsnippet
 
-snippet thm "Theorem"
+#snippet thm "Theorem"
 
-:::{.theorem title="${1:?}"}
-${2}
-:::
+#:::{.theorem title="${1:?}"}
+#${2}
+#:::
 
-endsnippet
+#endsnippet
 
 snippet proof "Proof"
 
@@ -415,263 +411,31 @@ ${1}
 
 endsnippet
 
-# Character Styles
-snippet tx 
-\text{${1}}
-endsnippet
-
-snippet rm
-\mathrm{${1}}
-endsnippet
-
-snippet mc
-\mathcal{${1}}
-endsnippet
-
-snippet bb
-\mathbb{${1}}
-endsnippet
-
-snippet mf
-\mathfrak{${1}}
-endsnippet
 
 # Long Commonly Used Statements
 
 ## Lefschetz Trace Formula
+context "isMath()"
 snippet ltf
 \sum_{i=0}^{2\dim(X)} (-1)^i \tr\qty{ F^n \st H^i_c(X_{\FF_q}, \QQ_\ell)}
 endsnippet
 
 ## Continuity
+context "isMath()"
 snippet cont
 \forall \varepsilon > 0,\, \exists \delta > 0 \text{ such that } \quad \abs{x-y} < \delta \implies \abs{f(x) - f(y)} < \eps
 endsnippet
 
-snippet RR "Riemann-Roch"
-Riemann-Roch
-endsnippet
-
-snippet RH "Riemann Hypothesis"
-Riemann hypothesis
-endsnippet
-
 snippet cort "Bijective Correspondence"
 \[
-\correspond{\text{ ${1} }}
+\correspond{
+	\text{${1}}
+}
 &\mapstofrom
-\correspond{\text{ ${2} }}
+\correspond{
+	\text{${2}}
+}
 \]
-endsnippet
-
-# Greek Letters
-snippet ;a "Alpha" i
-\alpha
-endsnippet
-
-snippet ;aa "Forall"
-\forall
-endsnippet
-
-snippet ;b "Beta" i
-\beta
-endsnippet
-
-snippet ;c "Chi"
-\chi
-endsnippet
-
-snippet ;d "delta" i
-\delta
-endsnippet
-
-snippet ;D "Delta" i
-\Delta
-endsnippet
-
-snippet ;e
-\epsilon
-endsnippet
-
-snippet ;ee "Exists"
-\exists
-endsnippet
-
-snippet ;f "phi" i
-\phi
-endsnippet
-
-snippet ;F "Phi" i
-\Phi
-endsnippet
-
-snippet ;g "gamma" i
-\gamma
-endsnippet
-
-snippet ;G "Gamma" iA
-\Gamma
-endsnippet
-
-snippet ;i "iota" i
-\iota
-endsnippet
-
-snippet ;k "kappa" i
-\kappa
-endsnippet
-
-snippet ;l "lambda" i
-\lambda
-endsnippet
-
-snippet ;L "Lambda" i
-\Lambda
-endsnippet
-
-snippet ;m "mu" i
-\mu
-endsnippet
-
-snippet ;n "nu" i
-\nu
-endsnippet
-
-snippet ;na
-\nabla
-endsnippet
-
-snippet ;o
-\theta
-endsnippet
-
-snippet ;O
-\Theta
-endsnippet
-
-snippet ;r "rho" i
-\rho
-endsnippet
-
-snippet ;p "pi" iA
-\pi
-endsnippet
-
-snippet ;P "Pi" i
-\Pi
-endsnippet
-
-snippet ;ps "psi" i
-\psi
-endsnippet
-
-snippet ;Ps "Psi" i
-\Psi
-endsnippet
-
-snippet ;s "sigma" i
-\sigma
-endsnippet
-
-snippet ;S "Sigma" i
-\Sigma
-endsnippet
-
-snippet ;t "tau" i
-\tau
-endsnippet
-
-snippet ;u
-\upsilon
-endsnippet
-
-snippet ;U
-\Upsilon
-endsnippet
-
-snippet ;w "omega" i
-\omega
-endsnippet
-
-snippet ;W "Omega" i
-\Omega
-endsnippet
-
-snippet ;x "xi" i
-\xi
-endsnippet
-
-snippet ;X "Xi" i
-\Xi
-endsnippet
-
-snippet ;z "zeta" i
-\zeta
-endsnippet
-
-snippet ;xx "Cross" iA
-\cross
-endsnippet
-
-# Math Mode: Reduce Keystrokes
-snippet <=
-\leq
-endsnippet
-
-snippet >=
-\geq
-endsnippet
-
-snippet ;s "Subset" i
-\subset
-endsnippet
-
-snippet ;se "Subseteq" i
-\subseteq
-endsnippet
-
-snippet ;sp "Superset" i
-\supset
-endsnippet
-
-snippet ;spe "Supseteq" i
-\supseteq
-endsnippet
-
-snippet ~= "Isomorphic" 
-\cong
-endsnippet
-
-snippet ~ "Homotopic"
-\simeq
-endsnippet
-
-snippet in
-\in 
-endsnippet
-
-snippet ts
-\ts{${1:x\in X} \st ${2:?}}
-endsnippet
-
-snippet tx
-\text{${1}}
-endsnippet
-
-snippet txor
-\text{ or }
-endsnippet
-
-snippet txand
-\text{ and }
-endsnippet
-
-snippet oo "Infinity"
-\infty
-endsnippet
-
-snippet @ "Composition"
-\circ
 endsnippet
 
 # Tracking Problems / Solutions
@@ -683,11 +447,15 @@ snippet tw "To Work"
 $\work$
 endsnippet
 
-snippet ln "Limit to Infinity"
-\lim_{n\to \infty}
+##### Unsorted
+snippet RR "Riemann-Roch"
+Riemann-Roch
 endsnippet
 
-##### Unsorted
+snippet RH "Riemann Hypothesis"
+Riemann hypothesis
+endsnippet
+
 snippet ff "Function Field"
 fraction field
 endsnippet
@@ -744,8 +512,12 @@ snippet wlog "Wlog"
 Without loss of generality,
 endsnippet
 
-snippet qc "Quasicoherent"
+snippet qcoh "Quasicoherent"
 quasicoherent 
+endsnippet
+
+snippet qcom "Quasicompact"
+quasicompact
 endsnippet
 
 snippet st "Such that"
@@ -754,10 +526,6 @@ endsnippet
 
 snippet cts "continuous"
 continuous
-endsnippet
-
-snippet st "such that"
-such that
 endsnippet
 
 snippet iso "Isomorphism"
@@ -776,54 +544,25 @@ snippet epi "epimorphism"
 epimorphism
 endsnippet
 
-snippet inj "injective"
-injective
-endsnippet
-
-snippet surj "surjective"
-surjective
-endsnippet
-
 snippet hint
 *(Hint: ${1})*
 endsnippet
 
-snippet ;t "Maps via" iA
-\mapsvia{${1:}}
+snippet algcl "Algebraically closed"
+algebraically closed 
 endsnippet
 
-snippet ksep "Separable closure"
-k^{s}
-endsnippet
+#context "isMath()"
+#snippet _ "Subscript" iA
+#_{${1}}
+#endsnippet
 
-snippet algclo "Algebraically closed"
-k = \bar{k}
-endsnippet
+#context "isMath()"
+#snippet ^ "Superscript" iA
+#^{${1}}
+#endsnippet
 
-snippet over "Over a ring/field"
-_{/${1}}
-endsnippet
+#snippet { "Parens"
+#{${1}}${2}
+#endsnippet
 
-snippet _ "Subscript" iA
-_{${1}}
-endsnippet
-
-snippet ^ "Superscript" iA
-^{${1}}
-endsnippet
-
-snippet ( "Parens" iA
-\qty{${1}}${2}
-endsnippet
-
-snippet { "Parens" iA
-{${1}}${2}
-endsnippet
-
-snippet BB "Bold" iA
-**${1}**
-endsnippet
-
-snippet II "Italics" iA
-*${1}*
-endsnippet

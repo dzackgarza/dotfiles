@@ -1,1 +1,0 @@
-/home/zack/.vim/after/ftplugin/pandoc/folding.vim

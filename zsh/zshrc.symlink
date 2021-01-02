@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Sourced only in interactive shells
 
 
@@ -5,16 +12,6 @@
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 #export PATH="$PATH:$HOME/.rvm/bin"
-
-# ZSH-specific
-#ZSH_THEME="af-magic"
-#ZSH_THEME="kphoen"
-ZSH_THEME="agnoster"
-POWERLEVEL9K_MODE="nerdfont-complete"
-POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=0
-#ZSH_THEME=powerlevel9k/powerlevel9k
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon dir)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time)
 
 # Load themes, plugins, etc
 source $ZSH/oh-my-zsh.sh
@@ -53,19 +50,52 @@ do
 done
 
 
+pasteinit() {
+  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+}
+
+pastefinish() {
+  zle -N self-insert $OLD_SELF_INSERT
+}
+
+zstyle :bracketed-paste-magic paste-init pasteinit
+zstyle :bracketed-paste-magic paste-finish pastefinish
+zstyle ':completion:*' menu select
+
+alias yay='yay --noconfirm'
+alias grep='grep -C 2'
+alias t=tmuxinator
+compdef t=tmuxinator
+setopt complete_aliases
+DISABLE_MAGIC_FUNCTIONS=true
+BCAT_BROWSER=qutebrowser
+
+# Automatically start tmux on all session
+#if [ "$TMUX" = "" ]; then tmux; fi
+
+# ZSH-specific
+# ZSH_THEME="af-magic"
+# ZSH_THEME="agnoster"
+
+#POWERLEVEL9K_MODE="nerdfont-complete"
+# ZSH_THEME=powerlevel9k/powerlevel9k
+#POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
+
 antigen use oh-my-zsh
 POWERLEVEL9K_INSTALLATION_PATH=$ANTIGEN_BUNDLES/bhilburn/powerlevel9k
 #antigen heme bhilburn/powerlevel9k powerlevel9k
 POWERLEVEL9K_COLOR_SCHEME='light'
 
+antigen theme romkatv/powerlevel10k
+
 antigen bundles <<EOBUNDLES
 command-not-found
 compleat
 tmuxinator
-zsh-users/zsh-syntax-highlighting
 zsh-users/zsh-autosuggestions
-trapd00r/zsh-syntax-highlighting-filetypes
 zsh-users/zsh-history-substring-search
+trapd00r/zsh-syntax-highlighting-filetypes
 
 EOBUNDLES
 
@@ -78,36 +108,27 @@ antigen apply
         #exit
     #fi
 #}
-
-DISABLE_MAGIC_FUNCTIONS=true
+#
 
 # Initialize fzf (fuzzy finder) if installed.
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 source /etc/profile.d/locale.sh
 
-pasteinit() {
-  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
-  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
-}
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-pastefinish() {
-  zle -N self-insert $OLD_SELF_INSERT
-}
-zstyle :bracketed-paste-magic paste-init pasteinit
-zstyle :bracketed-paste-magic paste-finish pastefinish
-zstyle ':completion:*' menu select
+# yay -S pkgfile zsh-syntax-highlighting zsh-autosuggestions
+# See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md
+# Highlighters need to come last!
+typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor line)
+source /usr/share/doc/pkgfile/command-not-found.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-alias yay='yay --noconfirm'
-alias grep='grep -C 2'
-alias t=tmuxinator
-compdef t=tmuxinator
-setopt complete_aliases
+ZSH_HIGHLIGHT_STYLES[alias]=$ZSH_HIGHLIGHT_STYLES[builtin] 
 
-# Automatically start tmux on all session
-#if [ "$TMUX" = "" ]; then tmux; fi
+alias ls='ls -altr --color=tty'
 
-# Bcat pipes directly to some brower
-BCAT_BROWSER=qutebrowser
 # Disable Ctrl-S
-stty -ixon
-
+#stty -ixon
