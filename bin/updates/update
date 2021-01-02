@@ -39,6 +39,9 @@ command -v fc-cache >/dev/null 2>&1 && fc-cache;
 clr_green "Fonts updated."
 #rehash;
 
+antigen update;
+clr_green "Updated ZSH plugins"
+
 updateAllNotes.sh
 clr_green "Class Notes Updated."
 
