@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=kdeconnect-indicator
-Comment=Client 1065d2c58d6c49dece155599594764877900000025390120 which was automatically saved
-Icon=system-run
-Type=Application
-StartupNotify=true
-X-GNOME-Autostart-startup-id=1065d2c58d6c49dece155599594764877900000025390120
-Exec=kdeconnect-indicator -session 1065d2c58d6c49dece155599594764877900000025390120_1568347528_287198

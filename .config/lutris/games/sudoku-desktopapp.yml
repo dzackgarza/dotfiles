@@ -1,7 +1,0 @@
-game:
-  appid: sudoku
-  args: ''
-  exe: /usr/bin/sudoku
-linux: {}
-system:
-  disable_runtime: true

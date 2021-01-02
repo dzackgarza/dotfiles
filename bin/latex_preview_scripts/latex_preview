@@ -16,20 +16,17 @@ totex=false
 JUSTCOMPILE=false
 slides=false
 vimPreview=false
-tohtml=false
 
 PREFIX="/home/zack/.pandoc/pandoc-templates"
 
-while getopts 'vf:hsxjzp' flag; do
+while getopts 'vf:sxjzp' flag; do
   case "${flag}" in
     v) view='true' ;;
     x) totex='true' ;;
     s) slides='true' ;;
     j) JUSTCOMPILE='true' ;;
     f) files="${OPTARG}" ;;
-    z) doSections='true' ;;
     p) vimPreview="true";;
-    h) tohtml="true";;
     *) print_usage
        exit 1 ;;
   esac
@@ -37,7 +34,6 @@ done
 
 filepath=$(realpath "$files")
 directory=$(dirname "$filepath")
-sections="$directory/sections"
 filename=$(basename -- "$filepath")
 extension="${filename##*.}"
 filename="${filename%.*}"
@@ -66,20 +62,16 @@ fi
 
 
 pandoc_compile() {
-  if [ "$tohtml" = true ]; then
-    html_compile
-  else
-    cat "$filepath" | pandoc -f \
-      markdown -F \
-      pandoc-crossref \
-      --lua-filter /home/zack/dotfiles/bin/warning-div.lua \
-      -r markdown+fenced_divs+tex_math_single_backslash+citations \
-      --template=/home/zack/Notes/Latex/pandoc_template.tex \
-      --pdf-engine=pdflatex \
-      --reference-location=section \
-      --file-scope \
-      -o "$outfile"
-  fi
+  cat "$filepath" | pandoc -f \
+    markdown -F \
+    pandoc-crossref \
+    --lua-filter /home/zack/dotfiles/bin/warning-div.lua \
+    -r markdown+fenced_divs+tex_math_single_backslash+citations \
+    --template=/home/zack/Notes/Latex/pandoc_template.tex \
+    --pdf-engine=pdflatex \
+    --reference-location=section \
+    --file-scope \
+    -o "$outfile"
   status_ok=$?
 }
 
@@ -90,34 +82,6 @@ slides_compile() {
   status_ok=$?
 }
 
-html_compile() {
-  cat /home/zack/Notes/Latex/latexmacs.tex "$filepath" \
-    > combined.temp ;
-
-  cat combined.temp | pandoc \
-    --from=markdown \
-    --to=markdown \
-    -r markdown+latex_macros+tex_math_single_backslash \
-    --lua-filter=/home/zack/Dropbox/rmcodeblocks.lua \
-    --lua-filter /home/zack/dotfiles/bin/warning-div.lua \
-    | sed '/^\\\%/d' > out1.temp ;
-
-  cat out1.temp | pandoc \
-    -r markdown+simple_tables+table_captions+yaml_metadata_block \
-    --to html \
-    --mathjax \
-    --template=$PREFIX/templates/tufte-html-vis.html  \
-    --css=$PREFIX/marked/kultiad-serif.css \
-    --filter pandoc-crossref \
-    --filter pandoc-citeproc \
-    --lua-filter /home/zack/Notes/Latex/tikzcd.lua \
-    --toc \
-    -V current_date="$$(date +%Y-%m-%d%n)" \
-    --self-contained \
-    -o "$outfile" ;
-  rm out1.temp combined.temp *.svg -f;
-}
-
 
 echo "Starting..."
 while true; do
@@ -126,21 +90,12 @@ while true; do
     "md")
       if [ "$totex" = true ]; then
         outfile="$directory/$filename.tex"
-      elif [ "$tohtml" = true ]; then
-        outfile="$directory/$filename.html"
       else
         outfile="$directory/$filename.pdf"
       fi
       if [ "$slides" = true ]; then
         slides_compile
       else
-        if [[ "$doSections" = true && -d "$sections" ]]; then
-          echo "Sections directory found. Concatenating files.."
-          awk 'FNR==1{print ""}{print}' "$sections"/*.md > "$filepath"
-          echo "awk'd: $sections/*.md > $filepath"
-        elif [[ "$doSections" = true ]]; then
-          echo "No sections directory: $sections"
-        fi
         pandoc_compile
       fi
       if [ "$JUSTCOMPILE" = true ]; then

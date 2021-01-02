@@ -15,7 +15,6 @@ fi
 
 if [ -f "$userresources" ]; then
     xrdb -merge "$userresources"
-
 fi
 
 if [ -f "$usermodmap" ]; then
@@ -34,8 +33,7 @@ setxkbmap -option terminate:ctrl_alt_bksp
 
 # Start the composition manager for window transparency.
 # Replacement for compton.
-#compton --backend glx --glx-no-stencil --xrender-sync-fence --blur-background -i 0.9 -f -D 3 --inactive-dim 0.2
-picom &
+#picom --experimental-backends &
 
 
 xinput set-prop "ELAN0511:00 04F3:3041 Touchpad" "libinput Natural Scrolling Enabled" 1
