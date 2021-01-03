@@ -18,6 +18,16 @@ def isMath():
 
 endglobal
 
+snippet MM "Math Mode (Display)"
+\[
+
+.\]
+endsnippet
+
+snippet mm "Math Mode (Inline)"
+$${1}$
+endsnippet
+
 # Tikz
 snippet tikz "Tikzcd (Basic)"
 
@@ -41,6 +51,10 @@ ${3:X}
 & 
 ${4:B} 
 \end{tikzcd}
+endsnippet
+
+snippet tikz_cartesian "Pullback / Cartesian Square Symbol"
+\arrow[uur, phantom, "\scalebox{1.5}{$\llcorner$}" , very near start, color=black]
 endsnippet
 
 snippet tikztri "Tikz Triangle"
@@ -259,13 +273,13 @@ ${2}
 
 endsnippet
 
-#snippet thm "Theorem"
+snippet theorem "Theorem"
 
-#:::{.theorem title="${1:?}"}
-#${2}
-#:::
+:::{.theorem title="${1:?}"}
+${2}
+:::
 
-#endsnippet
+endsnippet
 
 snippet proof "Proof"
 
@@ -416,13 +430,13 @@ endsnippet
 
 ## Lefschetz Trace Formula
 context "isMath()"
-snippet ltf
+snippet ltf "Lefschetz Trace Formula"
 \sum_{i=0}^{2\dim(X)} (-1)^i \tr\qty{ F^n \st H^i_c(X_{\FF_q}, \QQ_\ell)}
 endsnippet
 
 ## Continuity
 context "isMath()"
-snippet cont
+snippet cont "Definition of continuity"
 \forall \varepsilon > 0,\, \exists \delta > 0 \text{ such that } \quad \abs{x-y} < \delta \implies \abs{f(x) - f(y)} < \eps
 endsnippet
 
