@@ -50,6 +50,7 @@ cat $TMP_DIR/combined.temp | pandoc \
   --number-section \
   --filter=pandoc-crossref \
   --citeproc \
+  --lua-filter=$PANDOC_DIR/filters/html_image_filter.lua \
   --lua-filter=$PANDOC_DIR/filters/tikzcd.lua \
   --lua-filter=$PANDOC_DIR/filters/replace_symbols_html.lua \
   --lua-filter=$PANDOC_DIR/filters/convert_math_delimiters.lua \
