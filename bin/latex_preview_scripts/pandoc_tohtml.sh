@@ -39,6 +39,8 @@ fi
 [[ -z "$TMP_DIR" ]] && TMP_DIR=$(mktemp -d -t ci-XXXXXXXXXX);
 
 cat "$filepath" | pandoc_stripmacros.sh > $TMP_DIR/combined.temp ;
+
+echo "ASDSADSADASDASDAS"
   
 cat $TMP_DIR/combined.temp | pandoc \
   --quiet \
