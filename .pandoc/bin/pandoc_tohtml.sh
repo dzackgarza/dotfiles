@@ -25,9 +25,8 @@ while getopts 'f:t:vp' flag; do
   esac
 done
 
-filepath="$(realpath "$files")";
-filename="$(basename -- "$filepath")";
-directory="$(dirname "$filepath")";
+filepath=$(realpath "$files")
+filename=$(basename -- "$filepath");
 extension="${filename##*.}"
 filename="${filename%.*}"
 
