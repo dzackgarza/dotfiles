@@ -1,0 +1,13 @@
+--netrc
+
+# Mark video as watched
+--mark-watched
+
+# download playlist
+--yes-playlist
+
+# Dowload new videos only
+--download-archive ~/archive.txt
+
+# Download best quality
+-f 299+140/137+140/best
