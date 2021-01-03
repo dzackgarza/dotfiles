@@ -1,0 +1,4 @@
+start=41.362166
+speed=2.010000
+pause=yes
+af=rubberband=transients=smooth:pitch=quality:window=short,@rubber:rubberband=transients=smooth:pitch=quality:window=short

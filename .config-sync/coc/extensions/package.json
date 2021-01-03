@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "coc-dictionary": ">=1.2.2",
+    "coc-emoji": ">=1.2.3",
+    "coc-omni": ">=1.2.4",
+    "coc-snippets": ">=2.3.1",
+    "coc-spell-checker": ">=1.2.0",
+    "coc-vimlsp": ">=0.11.0",
+    "coc-vimtex": ">=1.0.4",
+    "coc-word": ">=1.2.2"
+  }
+}

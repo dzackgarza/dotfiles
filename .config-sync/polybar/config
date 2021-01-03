@@ -1,0 +1,526 @@
+[colors]
+;background = ${xrdb:color0:#222}
+background = #222
+background-alt = #444
+;foreground = ${xrdb:color7:#222}
+foreground = #dfdfdf
+foreground-alt = #555
+primary = #ffb52a
+secondary = #e60053
+alert = #bd2c40
+
+[bar/top]
+;monitor = ${env:MONITOR:HDMI-1}
+monitor = ${env:MONITOR:}
+width = 100%
+height = 27
+;offset-x = 1%
+;offset-y = 1%
+radius = 6.0
+fixed-center = true 
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 1
+line-color = #f00
+
+border-size = 2
+border-color = #00000000
+
+padding-left = 0
+padding-right = 2
+
+module-margin-left = 0
+module-margin-right = 2
+
+# fontconfigPattern:verticalOffset
+font-0 = terminus:pixelsize=10;1
+font-1 = unifont:fontformat=truetype:size=10:antialias=true;1
+font-2 = siji:pixelsize=10;1 
+font-3 = FontAwesome5Free:style=Solid:pixelsize=8:antialias=true;1
+font-4 = FontAwesome5Brands:style=Solid:pixelsize=8:antialias=true;1
+
+modules-left= i3 
+modules-center = popup-calendar i3touchmenu touchkeyboard backlight 
+modules-right = muted pulseaudio memory cpu temperature battery
+
+tray-position = ${env:TRAY:}
+tray-padding = 2
+;tray-background = #0063ff
+
+wm-restack = i3
+#override-redirect = true
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+[module/i3]
+type = internal/i3
+
+pin-workspaces = true
+strip-wsnumbers = true
+index-sort = true
+
+; Use fuzzy (partial) matching on labels when assigning 
+; icons to workspaces
+; Example: code;♚ will apply the icon to all workspaces 
+; containing 'code' in the label
+; Default: false
+fuzzy-match = true
+
+ws-icon-0 = 1; 
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-default = ?
+
+label-dimmed-underline = ${root.background}
+
+; Available tags:
+;   <label-state> (default) - gets replaced with <label-(focused|unfocused|visible|urgent)>
+;   <label-mode> (default)
+format = <label-state> <label-mode>
+
+; Available tokens:
+;   %mode%
+; Default: %mode%
+label-mode = %mode%
+label-mode-padding = 0
+label-mode-background = #e60053
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-focused =  %index% %icon% %name% 
+label-focused-foreground = #ffffff
+label-focused-background = #3f3f3f
+label-focused-underline = #fba922
+label-focused-padding = 4
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-unfocused = %index% %icon% %name%
+label-unfocused-padding = 4
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-visible = %icon% %name%
+label-visible-underline = #555555
+label-visible-padding = 4
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-urgent = %icon% %name%
+label-urgent-foreground = #000000
+label-urgent-background = #bd2c40
+label-urgent-padding = 4
+
+; Separator in between workspaces
+label-separator = |
+label-separator-padding = 0
+label-separator-foreground = #ffb52a
+
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground-alt}
+format-underline = #f90000
+label =  %percentage:2%%
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground-alt}
+format-underline = #4bffdc
+label =  %percentage_used%%
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+use-ui-max = false
+
+format-volume = <label-volume> <bar-volume>
+label-volume = VOL %percentage%%
+label-volume-foreground = ${root.foreground}
+
+label-muted = 🔇 muted
+label-muted-foreground = #666
+
+bar-volume-width = 10
+bar-volume-foreground-0 = #55aa55
+bar-volume-foreground-1 = #55aa55
+bar-volume-foreground-2 = #55aa55
+bar-volume-foreground-3 = #55aa55
+bar-volume-foreground-4 = #55aa55
+bar-volume-foreground-5 = #f5a70a
+bar-volume-foreground-6 = #ff5555
+bar-volume-gradient = false
+bar-volume-indicator = |
+bar-volume-indicator-font = 2
+bar-volume-fill = ─
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${colors.foreground-alt}
+
+[module/battery]
+type = internal/battery
+full-at = 98
+battery = BAT0
+adapter = AC
+
+format-charging = <animation-charging>   <label-charging> 
+format-discharging = <ramp-capacity> <label-discharging>
+format-full = <ramp-capacity> <label-full>
+
+ramp-capacity-0 =  
+ramp-capacity-0-foreground = #f53c3c
+ramp-capacity-1 =  
+ramp-capacity-1-foreground = #ffa900
+ramp-capacity-2 =  
+ramp-capacity-3 =  
+ramp-capacity-4 =  
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-framerate_ms = 1500
+
+[module/temperature]
+type = internal/temperature
+thermal-zone = 0
+warn-temperature = 95
+
+format = <ramp> <label>
+format-underline = #f50a4d
+format-warn = <ramp> <label-warn>
+format-warn-underline = ${self.format-underline}
+
+label =  %temperature-c%
+label-warn = %temperature-c%
+label-warn-foreground = ${colors.secondary}
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-foreground = ${colors.foreground-alt}
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+;pseudo-transparency = false
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+[module/i3touchmenu]
+type = custom/menu
+
+expand-right = true
+
+format-spacing = 1
+
+;; Open the menu
+label-open = "    "
+label-open-foreground = #FFF
+
+;; Close the menu
+label-close = 
+label-close-foreground = ${colors.secondary}
+label-separator = "    "
+label-separator-foreground = ${colors.foreground-alt}
+
+;; Launcher
+menu-0-0 = 
+menu-0-0-exec = menu-open-1
+
+;; PDF
+menu-0-8 = 
+menu-0-8-exec = menu-open-9
+
+;; Move
+menu-0-1 = 
+menu-0-1-exec = menu-open-2
+
+;; Layout
+menu-0-2 = 
+menu-0-2-exec = menu-open-3
+
+;; Split
+menu-0-3 = 
+menu-0-3-exec = menu-open-4
+
+;; Resize
+menu-0-4 = 
+menu-0-4-exec = menu-open-5
+
+;; Move to workspace
+menu-0-5 = 
+menu-0-5-exec = menu-open-6
+
+;; Kill
+menu-0-6 = 
+menu-0-6-exec = menu-open-7
+
+;; Power
+menu-0-7 ="    " 
+menu-0-7-exec = menu-open-8
+
+;; Launcher: Back to main menu
+menu-1-0 = 
+menu-1-0-exec = menu-open-0
+
+;; Launcher: chromium
+menu-1-1=
+menu-1-1-exec= chromium &
+
+menu-1-2="    "
+menu-1-2-exec = termite &
+
+menu-1-3=""
+menu-1-3-exec = calibre &
+
+menu-1-4=""
+menu-1-4-exec = nemo &
+
+;; Move: Back to main menu
+menu-2-0 = 
+menu-2-0-exec = menu-open-0
+
+;; Move: Left
+menu-2-1 = 
+menu-2-1-exec = i3-msg 'move left'
+
+;; Move: Right
+menu-2-2 = 
+menu-2-2-exec = i3-msg 'move right'
+
+;; Move: Up
+menu-2-3 = 
+menu-2-3-exec = i3-msg 'move up'
+
+;; Move: Down
+menu-2-4 = "    "
+menu-2-4-exec = i3-msg 'move down'
+
+;; Layout: Back to main menu
+menu-3-0 = 
+menu-3-0-exec = menu-open-0
+
+;; Layout: Split
+menu-3-1 = 
+menu-3-1-exec = i3-msg 'layout toggle split'
+
+;; Layout: Stacking
+menu-3-2 = 
+menu-3-2-exec = i3-msg 'layout stacking'
+
+;; Layout: Tabbed
+menu-3-3 =     
+menu-3-3-exec = i3-msg 'layout tabbed'
+
+;; Layout: Toggle floating
+menu-3-4 = "    "
+menu-3-4-exec = i3-msg 'floating toggle'
+
+;; Split: Back to main menu
+menu-4-0 = 
+menu-4-0-exec = menu-open-0
+
+;; Split: Vertical
+menu-4-1 = 
+menu-4-1-exec = i3-msg 'split v'
+
+;; Split: Horizontal
+menu-4-2 = "    "
+menu-4-2-exec = i3-msg 'split h'
+
+;; Resize: Back to main menu
+menu-5-0 = 
+menu-5-0-exec = menu-open-0
+
+;; Resize: Grow height
+menu-5-1 = 
+menu-5-1-exec = i3-msg 'resize grow height 5 px or 5 ppt'
+
+;; Resize: Shrink height
+menu-5-2 =
+menu-5-2-exec = i3-msg 'resize shrink height 5 px or 5 ppt'
+
+;; Resize: Grow width
+menu-5-3 = 
+menu-5-3-exec = i3-msg 'resize grow width 5 px or 5 ppt'
+
+;; Resize: Shrink width
+menu-5-4 = "    "
+menu-5-4-exec = i3-msg 'resize shrink width 5 px or 5 ppt'
+
+;; Move to workspace: Back to main menu
+menu-6-0 = 
+menu-6-0-exec = menu-open-0
+
+;; Move to workspace: 1
+menu-6-1 = 1
+menu-6-1-exec = i3-msg 'move container to workspace 1'
+
+;; Move to workspace: 2
+menu-6-2 = 2
+menu-6-2-exec = i3-msg 'move container to workspace 2'
+
+;; Move to workspace: 3
+menu-6-3 = 3
+menu-6-3-exec = i3-msg 'move container to workspace 3'
+
+;; Move to workspace: 4
+menu-6-4 = 4
+menu-6-4-exec = i3-msg 'move container to workspace 4'
+
+;; Move to workspace: 5
+menu-6-5 = 5
+menu-6-5-exec = i3-msg 'move container to workspace 5'
+
+;; Move to workspace: 6
+menu-6-6 = 6
+menu-6-6-exec = i3-msg 'move container to workspace 6'
+
+;; Move to workspace: 7
+menu-6-7 = 7
+menu-6-7-exec = i3-msg 'move container to workspace 7'
+
+;; Move to workspace: 8
+menu-6-8 = 8
+menu-6-8-exec = i3-msg 'move container to workspace 8'
+
+;; Move to workspace: 9
+menu-6-9 = 9
+menu-6-9-exec = i3-msg 'move container to workspace 9'
+
+;; Move to workspace: 10
+menu-6-10 = "10    "
+menu-6-10-exec = i3-msg 'move container to workspace 10'
+
+;; Kill: Back to main menu
+menu-7-0 = 
+menu-7-0-exec = menu-open-0
+
+;; Kill: Kill
+menu-7-1 = "You sure?        "
+menu-7-1-exec = i3-msg 'kill'
+
+;; Power: Back to main menu
+menu-8-0 = 
+menu-8-0-exec = menu-open-0
+
+;; Power: Suspend 
+menu-8-1 = hibernate 
+menu-8-1-exec = sudo pm-hibernate
+
+;; Power: Reboot
+menu-8-2 = reboot
+menu-8-2-exec = systemctl reboot 
+
+menu-9-0 = All 
+menu-9-0-exec = dmenuAllPDFs.sh  
+menu-9-1 = Recently Opened 
+menu-9-1-exec = dmenuRecentPDFs.sh
+menu-9-2 = Recently Annotated 
+menu-9-2-exec = dmenuAnnotatedPDFs.sh
+
+
+[module/touchkeyboard]
+;; Open onscreen keyboard (onboard)
+type=custom/text
+content="   "
+content-foreground=#fff
+click-left= dbus-send --type=method_call --print-reply --dest=org.onboard.Onboard /org/onboard/Onboard/Keyboard org.onboard.Onboard.Keyboard.ToggleVisible
+
+[module/touchredraw]
+;; Restart i3 in order to redraw polybar to fit screen orientation
+type=custom/text
+content = "    "
+content-foreground=#fff
+click-left = i3-msg 'restart'
+
+[module/popup-calendar]
+type = custom/script
+exec = popup-calendar.sh
+format-prefix = "  "
+format-prefix-foreground = ${colors.foreground-alt}
+format-underline = #2c73c9 
+interval = 5
+click-left = popup-calendar.sh --popup &
+
+
+[module/muted]
+type = custom/script
+tail = true
+interval = 1
+exec = [[ "$(mic_muted.sh)" == 'yes' ]] && echo '%{F#f00}muted ℵ' || echo '%{F#47CF54}unmuted⨌'
+
+[module/backlight]
+type = internal/backlight
+
+; Use the following command to list available cards:
+; $ ls -1 /sys/class/backlight/
+card = intel_backlight
+
+; Enable changing the backlight with the scroll wheel (unreleased)
+; NOTE: This may require additional configuration on some systems. Polybar will
+; write to `/sys/class/backlight/${self.card}/brightness` which requires polybar
+; to have write access to that file.
+; DO NOT RUN POLYBAR AS ROOT. 
+; The recommended way is to add the user to the
+; `video` group and give that group write-privileges for the `brightness` file.
+; See the ArchWiki for more information:
+; https://wiki.archlinux.org/index.php/Backlight#ACPI
+; Default: false
+enable-scroll = true
+
+; Available tags:
+;   <label> (default)
+;   <ramp>
+;   <bar>
+format = <ramp>
+
+; Available tokens:
+;   %percentage% (default)
+label = %percentage%%
+
+; Only applies if <ramp> is used
+ramp-0 = 🌕
+ramp-1 = 🌔
+ramp-2 = 🌓
+ramp-3 = 🌒
+ramp-4 = 🌑
+
+; Only applies if <bar> is used
+bar-width = 10
+bar-indicator = |
+bar-fill = ─
+bar-empty = ─
