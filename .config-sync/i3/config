@@ -1,0 +1,237 @@
+set $mod Mod4
+set $alt Mod1
+font pango:monospace 9
+
+default_border pixel 1
+default_floating_border normal
+hide_edge_borders smart
+# for_window [class="^.*"] border pixel 1
+
+#smart_gaps on
+gaps inner 10
+
+focus_follows_mouse no
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# Start programs
+bindsym $mod+Shift+Return exec chromium
+bindsym $mod+Return exec termite -e tmux -c /home/zack/.config/termite/config
+bindsym $mod+Ctrl+Return exec termite --name __scratchpad -e tmux -c /home/zack/.config/termite/scratch_config
+bindsym $mod+V exec vim_anywhere.sh
+bindsym $mod+A exec dmenuAllPDFs.sh 
+bindsym $mod+F exec faves_wm.sh 
+bindsym $mod+L exec dmenu_locate.sh 
+bindsym $mod+D exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -width 30 -show -i -dmenu -font "Clear Sans Regular 12"'
+bindsym Print exec "unclutter -idle 0 & flameshot gui; pkill unclutter"
+bindsym $mod+N exec termite --title=notetaker_window -e /home/zack/dotfiles/bin/notes/newnote.sh
+bindsym $mod+P exec "qutebrowser ':scroll down'"
+bindsym $mod+O exec "qutebrowser ':scroll up'"
+bindsym F10 exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle 
+bindsym F12 scratchpad show, move position center
+
+# Video control
+bindsym $mod+Insert             exec "mpv_toggle.sh"
+bindsym $mod+Delete             exec "mpv_rw.sh"
+bindsym $mod+Shift+Delete       exec "mpv_ff.sh"
+bindsym $mod+bracketleft        exec "mpv_slowdown.sh"
+bindsym $mod+bracketright       exec "mpv_speedup.sh"
+
+# Find Cursor
+bindsym $mod+z exec "find-cursor --size 150 --distance 4 --wait 3 --line-width 10 --color '#1193D7' -r 1 -f"
+
+# kill focused window
+bindsym $mod+w kill
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+h split h
+bindsym $mod+Shift+h split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+space fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+Ctrl+Shift+s layout stacking
+bindsym $mod+Ctrl+Shift+w layout tabbed
+bindsym $mod+Ctrl+Shift+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+bindsym --whole-window $mod+Shift+button1 floating toggle
+
+# workspaces
+set $ws1 1:Browser
+set $ws2 2:Terminal
+set $ws3 3:PDFs
+set $ws4 4:Stylus
+set $ws5 5
+set $ws6 6
+set $ws7 7
+set $ws8 8
+set $ws9 9
+set $ws0 0
+
+# Tie some workspaces to monitors
+workspace $ws1 output eDP-1
+workspace $ws2 output eDP-1
+workspace $ws3 output eDP-1
+workspace $ws4 output HDMI-1
+workspace $ws5 output HDMI-1
+workspace $ws6 output HDMI-1
+
+# Default workspaces for common programs
+# assign [class="^Chromium$"] $ws1
+# assign [class="^Xournal"] $ws3
+# assign [class="Evince"] $ws3
+# assign [class="okular"] $ws3
+# assign [class="Write"] $ws4
+# assign [class="Zathura"] $ws5
+assign [class="qutebrowser"] $ws5
+
+# floating windows: apps
+for_window [class="Pavucontrol"] floating enable
+for_window [class="Kalu"] floating enable
+for_window [class="Yad"] floating enable
+for_window [class=”Tilda”]                              floating enable
+for_window [class="Eog"]                                floating enable
+for_window [class="Nitrogen"]                           floating enable
+for_window [class="Nemo"]                               floating enable
+for_window [class="Inkscape"]                           floating enable, move position center
+
+# More floating windows
+for_window [title="notetaker_window"]                   floating enable
+for_window [window_role="pop-up"]                       floating enable
+for_window [window_role="bubble"]                       floating enable 
+for_window [window_role="task_dialog"]                  floating enable
+for_window [window_role="Preferences"]                  floating enable
+for_window [window_type="dialog"]                       floating enable 
+for_window [window_type="menu"]                         floating enable
+no_focus [class="Zathura"]
+# for_window [class="Zathura"] floating enable move position 1110px 35px
+
+# switch to workspace
+bindsym $mod+1   workspace $ws1
+bindsym $mod+2   workspace $ws2
+bindsym $mod+3   workspace $ws3
+bindsym $mod+4   workspace $ws4
+bindsym $mod+5   workspace $ws5
+bindsym $mod+6   workspace $ws6
+bindsym $mod+7   workspace $ws7
+bindsym $mod+8   workspace $ws8
+bindsym $mod+9   workspace $ws9
+bindsym $mod+0   workspace $ws0
+
+bindsym $mod+$alt+Down workspace prev
+bindsym $mod+$alt+Up workspace next
+
+# move focused container to workspace
+bindsym $mod+Shift+1    move container to workspace $ws1
+bindsym $mod+Shift+2    move container to workspace $ws2
+bindsym $mod+Shift+3    move container to workspace $ws3
+bindsym $mod+Shift+4    move container to workspace $ws4
+bindsym $mod+Shift+5    move container to workspace $ws5
+bindsym $mod+Shift+6    move container to workspace $ws6
+bindsym $mod+Shift+7    move container to workspace $ws7
+bindsym $mod+Shift+8    move container to workspace $ws8
+bindsym $mod+Shift+9    move container to workspace $ws9
+bindsym $mod+Shift+0    move container to workspace $ws0
+
+# move focused workspace between monitors
+#bindsym $mod+Ctrl+greater move workspace to output right
+#bindsym $mod+Ctrl+less move workspace to output left
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+set $bg-color            #33F9FF 
+set $inactive-bg-color   #2f343f
+set $text-color          #f3f4f5
+set $inactive-text-color #676e7d
+set $urgent-bg-color     #e53935
+set $indicator-color     #a0a0a0
+
+# set window colors
+#                       border             background         text                 indicator
+client.focused          #33F9FF            $bg-color          $text-color          $indicator-color
+client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color $indicator-color
+client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color $indicator-color
+client.urgent           $urgent-bg-color   $urgent-bg-color   $text-color          $indicator-color
+
+# Brightness controls
+bindsym XF86MonBrightnessDown exec sudo light -U 10
+bindsym XF86MonBrightnessUp exec sudo light -A 10
+
+set $mode_system System: (l) lock, (e) logout, (s) suspend, (r) reboot, (S) shutdown, (R) UEFI
+mode "$mode_system" {
+    bindsym l exec $lock, mode "default"
+    bindsym e exit
+    bindsym s exec --no-startup-id systemctl hibernate , mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
+    bindsym Shift+r exec --no-startup-id systemctl reboot --firmware-setup, mode "default"
+
+    # return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Shift+q mode "$mode_system"
+
+# bindsym Control+$mod+I workspace 2:Terminal; append_layout ~/dotfiles/vimWorkspace.json
+
+exec --no-startup-id unclutter
+exec --no-startup-id dropbox &
+exec_always --no-startup-id blueman-applet &
+exec --no-startup-id sparkleshare &
+exec_always --no-startup-id nm-applet &
+exec --no-startup-id mathpix-snipping-tool &
+exec --no-startup-id dunst &
+exec_always --no-startup-id nitrogen --restore &
+exec_always --no-startup-id sleep 1; polybar.sh &
+exec_always --no-startup-id sleep 1; pkill redshift; redshift -x; redshift &
+exec_always --no-startup-id pkill picom; picom --experimental-backends &
+
+for_window [instance="__scratchpad"] floating enable, resize set 1910px 775px,, move scratchpad, sticky enable
+exec --no-startup-id termite --name __scratchpad -e tmux -c /home/zack/.config/termite/scratch_config
+
+# swap caps lock and escape
+exec_always --no-startup-id xmodmap -e "clear lock"
+exec_always --no-startup-id xmodmap -e "keycode 9 = Caps_Lock NoSymbol Caps_Lock"
+exec_always --no-startup-id xmodmap -e "keycode 66 = Escape NoSymbol Escape"
+exec_always --no-startup-id xset r rate 280 45  
+exec_always --no-startup-id screenchanges.sh 
+
+default_orientation auto
+no_focus [class="qutebrowser"]

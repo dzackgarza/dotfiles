@@ -1,0 +1,141 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+  echo "Supply filename as argument"
+  exit 1;
+fi
+
+print_usage() {
+  printf "Usage: ..."
+  printf "-f somefile.md -j"
+}
+
+files=''
+view=false
+totex=false
+JUSTCOMPILE=false
+slides=false
+vimPreview=false
+
+PREFIX="/home/zack/.pandoc/pandoc-templates"
+
+while getopts 'vf:sxjzp' flag; do
+  case "${flag}" in
+    v) view='true' ;;
+    x) totex='true' ;;
+    s) slides='true' ;;
+    j) JUSTCOMPILE='true' ;;
+    f) files="${OPTARG}" ;;
+    p) vimPreview="true";;
+    *) print_usage
+       exit 1 ;;
+  esac
+done
+
+filepath=$(realpath "$files")
+directory=$(dirname "$filepath")
+filename=$(basename -- "$filepath")
+extension="${filename##*.}"
+filename="${filename%.*}"
+first_run=true
+status_ok=1
+
+clean_up() {
+  #notify-send "PandocMake Preview" "Stopped." --urgency=critical --expire-time=5000
+  if [ "$vimPreview" = true ]; then
+    #notify-send "PandocMake Preview" "Deleting output PDF: $outfile" --urgency=critical --expire-time=5000
+    rm "$outfile";
+  fi
+  kill -9 $(jobs -p %1) > /dev/null  2>&1
+	exit
+}
+trap clean_up SIGHUP SIGINT SIGTERM 
+
+
+#echo "vimPreview: $vimPreview"
+#echo "View? $view"
+
+if [ ! -f "$filepath" ]; then
+  echo "Input file not found"
+  exit 1;
+fi
+
+
+pandoc_compile() {
+  cat "$filepath" | pandoc -f \
+    markdown -F \
+    pandoc-crossref \
+    --lua-filter /home/zack/dotfiles/bin/warning-div.lua \
+    -r markdown+fenced_divs+tex_math_single_backslash+citations \
+    --template=/home/zack/Notes/Latex/pandoc_template.tex \
+    --pdf-engine=pdflatex \
+    --reference-location=section \
+    --file-scope \
+    -o "$outfile"
+  status_ok=$?
+}
+
+slides_compile() {
+  echo "SlideseOutput: $filepath -> $outfile"
+  echo "Resource Path: $directory"
+  cat "$filepath" | pandoc --from markdown --to beamer -r markdown+tex_math_single_backslash --template= /home/zack/Notes/Latex/beamer_template.latex -o "$outfile"
+  status_ok=$?
+}
+
+
+echo "Starting..."
+while true; do
+  #notify-send "PandocMake Preview" "Compiling.." --urgency=critical --expire-time=2000
+  case $extension in
+    "md")
+      if [ "$totex" = true ]; then
+        outfile="$directory/$filename.tex"
+      else
+        outfile="$directory/$filename.pdf"
+      fi
+      if [ "$slides" = true ]; then
+        slides_compile
+      else
+        pandoc_compile
+      fi
+      if [ "$JUSTCOMPILE" = true ]; then
+        echo "Compile only, now exiting."
+        exit 1
+      else
+        echo "Compiling and previewing.."
+      fi
+      ;;
+    "asy")
+      echo "Re-rendering..."
+      outfile="$directory/$filename.eps"
+      asy --render 0 "$filepath" -o "$outfile"
+      ;;
+  esac
+
+  if [ $status_ok -ne 0 ]; then
+    notify-send "PandocMake Preview" "Error compiling." --urgency=critical --expire-time=5000
+    echo "Error compiling"
+  else
+    echo "Compiled successfully."
+    if [ "$first_run" = true ]; then
+      echo "First run"
+      if [ "$view" = true ]; then
+        xdg-open "$outfile" > /dev/null 2>&1 &
+      elif [ "$vimPreview" = true ]; then
+        # Potentially open with something more specific to do window positioning.
+        xdg-open "$outfile" > /dev/null 2>&1 &
+      fi
+      first_run=false;
+    else
+      echo "Recompiled."
+    fi
+  fi
+
+  # Block execution until file write
+  inotifywait -e CLOSE_WRITE -r "$directory" --exclude '.*\.pdf' -qq;
+  echo "File change detected."
+done
+clean_up
+
+# ImpressJS: pandoc -V impress-url=impress.js -s -t html5 --section-divs -o impress.html impress.txt --template=/home/zack/Notes/Latex/impress-template.html --mathjax
+# Blog Post: pandoc -f markdown -r markdown+fenced_divs+tex_math_single_backslash+citations+raw_html+implicit_figures --to=html5 --mathjax -s --lua-filter=/home/zack/Notes/Latex/tikz_filter.lua --lua-filter=/home/zack/Notes/Latex/center_filter.lua 
