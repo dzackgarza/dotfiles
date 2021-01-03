@@ -1,4 +1,4 @@
-function! MarkdownFolds()
+function! CustomPandocFold()
   let h = matchstr(getline(v:lnum), '^#\+')     
   if empty(h)       
     let thisline = getline(v:lnum)
@@ -24,10 +24,20 @@ function! MarkdownFolds()
       return "a1"
     elseif match(thisline, '^\:\:\:{\.proof') >= 0
       return "a1"
+    elseif match(thisline, '^\:\:\:{\.definition') >= 0
+      return "a1"
+    elseif match(thisline, '^\:\:\:{\.fact') >= 0
+      return "a1"
+    elseif match(thisline, '^\:\:\:{\.claim') >= 0
+      return "a1"
     elseif match(thisline, '^\:\:\:{\.corollary') >= 0
       return "a1"
     elseif match(thisline, '^\:\:\:{\.lemma') >= 0
       return "a1"
+    elseif match(thisline, '^\\begin') >= 0
+      return "a1"
+    elseif match(thisline, '^\\end') >= 0
+      return "s1"
     elseif match(thisline, '^\:\:\:$') >= 0
       return "s1"
     else
@@ -39,7 +49,7 @@ function! MarkdownFolds()
 endfunction
 
 setlocal foldmethod=expr
-setlocal foldexpr=MarkdownFolds()
+setlocal foldexpr=CustomPandocFold()
 
 function! MyFoldText()
     let line = getline(v:foldstart)
