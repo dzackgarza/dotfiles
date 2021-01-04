@@ -17,7 +17,7 @@ floating_modifier $mod
 
 # Start programs
 bindsym $mod+Shift+Return exec chromium
-bindsym $mod+Return exec termite -e tmux -c /home/zack/.config/termite/config
+bindsym $mod+Return exec termite -c /home/zack/.config/termite/config
 bindsym $mod+Ctrl+Return exec termite --name __scratchpad -e tmux -c /home/zack/.config/termite/scratch_config
 bindsym $mod+V exec vim_anywhere.sh
 bindsym $mod+A exec dmenuAllPDFs.sh 
@@ -26,8 +26,8 @@ bindsym $mod+L exec dmenu_locate.sh
 bindsym $mod+D exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -width 30 -show -i -dmenu -font "Clear Sans Regular 12"'
 bindsym Print exec "unclutter -idle 0 & flameshot gui; pkill unclutter"
 bindsym $mod+N exec termite --title=notetaker_window -e /home/zack/dotfiles/bin/notes/newnote.sh
-bindsym $mod+P exec "qutebrowser ':scroll down'"
-bindsym $mod+O exec "qutebrowser ':scroll up'"
+bindsym $mod+P exec "qutebrowser ':scroll-px 0 400'"
+bindsym $mod+O exec "qutebrowser ':scroll-px 0 -400'"
 bindsym F10 exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle 
 bindsym F12 scratchpad show, move position center
 
@@ -88,9 +88,12 @@ set $ws0 0
 workspace $ws1 output eDP-1
 workspace $ws2 output eDP-1
 workspace $ws3 output eDP-1
-workspace $ws4 output HDMI-1
-workspace $ws5 output HDMI-1
-workspace $ws6 output HDMI-1
+workspace $ws4 output DVI-I-1-1
+workspace $ws5 output DVI-I-1-1
+workspace $ws6 output DVI-I-1-1
+workspace $ws7 output HDMI-1 
+workspace $ws8 output HDMI-1 
+workspace $ws9 output HDMI-1 
 
 # Default workspaces for common programs
 # assign [class="^Chromium$"] $ws1
@@ -100,6 +103,7 @@ workspace $ws6 output HDMI-1
 # assign [class="Write"] $ws4
 # assign [class="Zathura"] $ws5
 assign [class="qutebrowser"] $ws5
+assign [class="Inkscape"] $ws1
 
 # floating windows: apps
 for_window [class="Pavucontrol"] floating enable

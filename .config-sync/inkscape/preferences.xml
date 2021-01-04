@@ -31,7 +31,7 @@
        state="1" />
     <group
        id="rulers"
-       state="1" />
+       state="0" />
     <group
        id="scrollbars"
        state="1" />
@@ -126,11 +126,14 @@
       <eventcontext
          id="rect"
          style="fill:blue;"
-         usecurrent="1" />
+         usecurrent="1"
+         width="620"
+         height="320" />
       <eventcontext
          id="3dbox"
          style="stroke:none;stroke-linejoin:round;"
-         usecurrent="1">
+         usecurrent="1"
+         persp="perspective835">
         <side
            id="XYfront"
            style="fill:#8686bf;stroke:none;stroke-linejoin:round;"
@@ -162,8 +165,8 @@
          end="0"
          start="0"
          usecurrent="1"
-         rx="556.335"
-         ry="145.426" />
+         rx="50"
+         ry="35" />
       <eventcontext
          id="star"
          magnitude="5"
@@ -337,8 +340,8 @@
        live_outline="1"
        live_objects="1"
        show_helperpath="0"
-       x="733.874"
-       y="596.917"
+       x="265.85"
+       y="212.685"
        edit_clipping_paths="0"
        edit_masks="0" />
     <eventcontext
@@ -397,6 +400,11 @@
        id="paintbucket"
        style="fill:#a0a0a0;stroke:none;"
        usecurrent="1" />
+    <group
+       id="measure"
+       measure-start="358,439"
+       measure-end="357,288"
+       fontsize="10" />
   </group>
   <group
      id="palette">
@@ -540,7 +548,7 @@
        y="0"
        w="378"
        h="441"
-       visible="0"
+       visible="1"
        state="2"
        placement="1" />
     <group
@@ -564,10 +572,10 @@
     <group
        id="documentoptions"
        state="1"
-       x="1728"
-       y="1204"
+       x="32"
+       y="872"
        w="624"
-       h="832"
+       h="676"
        visible="0"
        placement="1" />
     <group
@@ -596,7 +604,7 @@
        default="org.inkscape.output.svg.inkscape"
        append_extension="1"
        enable_preview="1"
-       path="/home/zack/dotfiles/bin/notes"
+       path="/home/zack/SparkleShare/github.com/Notes/Class_Notes/2020/Spring/Moduli Spaces/sections/figures"
        use_current_dir="1" />
     <group
        id="save_copy"
@@ -607,7 +615,7 @@
     <group
        id="open"
        enable_preview="1"
-       path="/home/zack/" />
+       path="/home/zack/SparkleShare/github.com/Notes/Class_Notes/2020/Spring/Moduli Spaces/figures/" />
     <group
        id="import"
        enable_preview="1"
@@ -615,12 +623,14 @@
        ask="1"
        ask_svg="1"
        link="link"
-       scale="optimizeSpeed" />
+       scale="auto"
+       import_mode_svg="include" />
     <group
        id="debug"
        redirect="0" />
     <group
-       id="clonetiler" />
+       id="clonetiler"
+       dotrace="0" />
     <group
        id="gridtiler" />
     <group
@@ -949,12 +959,12 @@
      net.texample.tools.svg.export_tikz.effect.indent="0" />
   <group
      id="desktop"
-     style="stroke-width:1.13385827;stroke:#000000;fill:none">
+     style="stroke-width:1.88976378;fill:none;fill-rule:evenodd;stroke:#c000ac;fill-opacity:0.61406922;stroke-dashoffset:0.09999987;font-size:13.33333333px">
     <group
-       width="943"
-       height="1027"
-       x="2045"
-       y="1121"
+       width="1058"
+       height="928"
+       x="10"
+       y="980"
        fullscreen="0"
        id="geometry"
        maximized="0" />

@@ -12,7 +12,7 @@
   <int name="eraseOnImage" value="0" />
   <int name="inputSimplify" value="4" />
   <int name="inputSmoothing" value="8" />
-  <int name="lastUpdateCheck" value="1608319897" />
+  <int name="lastUpdateCheck" value="1609715712" />
   <int name="mouseMode" value="1" />
   <int name="pageColor" value="-2102820" />
   <int name="penType" value="11" />
@@ -24,7 +24,6 @@
   <int name="showAdvPrefs" value="1" />
   <int name="singleTouchMode" value="1" />
   <int name="splitLayout" value="1" />
-  <int name="strokeCounter" value="6811" />
   <int name="thumbFirstPage" value="1" />
   <int name="thumbnailSize" value="110" />
   <float name="marginLeft" value="35" />
@@ -35,17 +34,17 @@
   <float name="xRuling" value="45" />
   <float name="yRuling" value="45" />
   <string name="clippingDoc" value="/home/zack/.config/styluslabs/saved/clippings.html" />
-  <string name="currFolder" value="/home/zack/Dropbox/WriteNotes/Android/" />
+  <string name="currFolder" value="/tmp/" />
   <string name="docFileExt" value="html" />
   <string name="newDocTitleFmt" value="%b %e %Hh%M" />
-  <string name="recentDocs" value="/home/zack/Dropbox/WriteNotes/Android/Dec 22 22h03.html:::/home/zack/Dropbox/WriteNotes/Android/Dec 20 14h31.html:::/home/zack/Dropbox/WriteNotes/Android/Dec 13 23:40.html:::/home/zack/Dropbox/WriteNotes/Android/Dec 15 17:51.html:::/home/zack/Dropbox/WriteNotes/Android/Dec 18 17h35.html:::/home/zack/Dropbox/WriteNotes/Android/Dec 18 01h53.html:::/home/zack/Dec 11 22h36.html:::/home/zack/Analysis Problems.html:::/home/zack/Dropbox/WriteNotes/Android/Android/1607920801407.html:::/home/zack/Dropbox/WriteNotes/Android/Android/1608072676118.html:::/home/zack/Dropbox/WriteNotes/Android/Android/1608081665842.html" />
+  <string name="recentDocs" value="/tmp/fc76a88a9c4ffbcc140d5c01efaad89c95098108.svg:::/home/zack/Dropbox/WriteNotes/Android/Dec 22 22h03.html:::/home/zack/Dropbox/WriteNotes/Android/Dec 20 14h31.html:::/home/zack/Dropbox/WriteNotes/Android/Dec 13 23:40.html:::/home/zack/Dropbox/WriteNotes/Android/Dec 15 17:51.html:::/home/zack/Dropbox/WriteNotes/Android/Dec 18 17h35.html:::/home/zack/Dropbox/WriteNotes/Android/Dec 18 01h53.html:::/home/zack/Dec 11 22h36.html:::/home/zack/Analysis Problems.html:::/home/zack/Dropbox/WriteNotes/Android/Android/1607920801407.html:::/home/zack/Dropbox/WriteNotes/Android/Android/1608072676118.html" />
   <string name="savedColors" value="#FF000000,#FFFF0000,#FF008000,#FF0000FF" />
   <string name="savedWidths" value="1.400,2.400,4.000,8.000" />
   <string name="syncServer" value="localhost" />
   <string name="toolBars" value="docTitle,stretch,separator,action_Previous_Page,action_Next_Page,separator,actionInsert_Space,actionShow_Clippings,actionTools_Menu,separator,actionShow_Bookmarks,actionShare_Document,actionOverflow_Menu;actionDraw,actionCustom_Pen,actionStroke_Eraser,actionFree_Eraser,penColor,penWidth,stretch" />
   <string name="toolBars2" value="docTitle,stretch,actionSave,separator,tools,separator,undoRedoBtn,separator,seltools,separator,actionShow_Bookmarks,actionShow_Clippings,actionSplitView,separator,actionOverflow_Menu" />
   <string name="toolModes" value="14 20 25 23" />
-  <string name="windowState" value="10 41 1900 1029 1 0" />
+  <string name="windowState" value="10 41 1900 1029 1 2" />
   <pen color="4278190080" width="4" pressure="1" flags="0" />
   <pen color="4278190258" width="4" pressure="1" flags="0" />
   <pen color="4283150181" width="4" pressure="1" flags="0" />

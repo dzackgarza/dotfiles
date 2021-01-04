@@ -96,6 +96,16 @@ ${4:Y}
 \end{tikzcd}
 endsnippet
 
+snippet tikz_inkscape "Tikz: Including converted Inkscape"
+
+\begin{tikzpicture}
+\node (node_one) at (0,0) {
+	\includegraphics{figures/${1}} 
+};
+\end{tikzpicture}
+
+endsnippet
+
 snippet tikzeq "Tikz Equalizer"
 
 \begin{tikzcd}
