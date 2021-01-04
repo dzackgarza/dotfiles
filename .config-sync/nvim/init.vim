@@ -36,7 +36,7 @@ let g:voom_tab_key = "<c-q>"
 let g:voom_return_key = '<c-q>'
 
 " Automatically expand to math tex QUICKLY
-Plug 'brennier/quicktex'
+Plug 'dzackgarza/quicktex'
 
 Plug 'lervag/vimtex'
 
@@ -139,31 +139,29 @@ Plug 'mileszs/ack.vim'
 "let delimitMate_quotes = "\" `"
 
 " Style
-Plug 'amperser/proselint', {'rtp': 'plugins/vim/syntastic_proselint/'}
-Plug 'scrooloose/syntastic'
-let g:syntastic_markdown_checkers = ['proselint']
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
+"Plug 'amperser/proselint', {'rtp': 'plugins/vim/syntastic_proselint/'}
+"Plug 'scrooloose/syntastic'
+"let g:syntastic_markdown_checkers = ['proselint']
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 0
+"let g:syntastic_check_on_wq = 0
+"let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
 
-"Plug 'prabirshrestha/async.vim'
-"Plug 'christianrondeau/vim-base64'
 
 call plug#end()
 " }}}
 
 " {{{ Keyboard Shortcuts
 let mapleader=","
-command! W w
-command! Wq wq
-command! Q q 
-command! Qa qa 
-command! Wqa wqa
+"command! W w
+"command! Wq wq
+"command! Q q 
+"command! Qa qa 
+"command! Wqa wqa
 nnoremap <CR> :noh<CR><CR>
 noremap <silent> <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>c :let &cole=(&cole == 2) ? 0 : 2 <bar> echo 'conceallevel ' . &cole <CR>
@@ -214,7 +212,7 @@ nnoremap <Leader>o o<Esc>
 nnoremap <Leader>O O<Esc>
 
 " Write/quit in normal mode
-nnoremap <Leader>w :wq<CR>
+nnoremap <Leader>w :w<CR>
 
 " Jump around in normal mode
 "inoremap <c-]> <End><Esc>A
@@ -239,6 +237,10 @@ nnoremap ZZ :wqa<CR>
 
 " }}}
 
+" {{{ Specific Filetype Commands
+autocmd Filetype tmux setlocal foldmethod=marker
+" }}}
+
 " {{{ Pandoc
 
 " {{{ Default window settings when opening a new file.
@@ -253,65 +255,70 @@ function s:markdownSetup()
   execute bufwinnr(s:current_win) . 'wincmd w'
   " Close Nerdtree if last buffer open
   autocmd BufWinEnter,WinEnter term://* if winnr("$") <= 3  | qa | endif
-  autocmd BufWinEnter,WinEnter NERD_tree* if winnr("$") <= 3  | qa | endif
-  "autocmd BufWinEnter,WinEnter *.md if winnr("$") <= 3  | qa | endif
+  autocmd BufWinEnter,WinEnter NERD_tree* if winnr("$") <= 2  | qa | endif
+  autocmd BufWinEnter,WinEnter *VOOM* if winnr("$") <= 2  | qa | endif
   
   " Remap write/quit to close all terminals, nerdtree, voom, etc
   cnoreabbrev q q
   cnoreabbrev w wa
   cnoreabbrev wq wq
   call s:pandocSyntax()
+  call FixResizing()
 endfunction
 " }}}
 
 " {{{ Pandoc PDF and HTML preview
-function! StartPreview()
+
+function! FixResizing()
+  echo "Fixing resize"
+  let windowNr = bufwinnr("term")
+  if windowNr > 0
+    execute windowNr 'wincmd w'
+    resize 5 
+    wincmd p
+    redraw
+  endif
+endfunction
+
+let g:previews_open = 0
+
+function! StartPreview(preview_type)
   belowright split 
   resize 5 
-  term vimpreview.sh -f "%:p" -v
+  if a:preview_type == 1
+    term vimpreview.sh -f "%:p" -v
+    let g:previews_open = 1
+  elseif a:preview_type == 2
+    term vimpreview.sh -f "%:p" 
+    let g:previews_open = 1
+  elseif a:preview_type == 3
+    term pdfpreview.sh -f "%:p" -v
+    let g:previews_open = 2
+  endif
   execute "normal! G"
   wincmd p
 endfunction
-nnoremap <silent> <Leader>lp :call StartPreview()<CR>
 
-function! StartPreview2()
-  belowright split 
-  resize 5 
-  term vimpreview.sh -f "%:p" 
-  execute "normal! G"
-  wincmd p
-endfunction
-nnoremap <silent> <Leader>lpp :call StartPreview2()<CR>
+nnoremap <silent> <Leader>lp :call StartPreview(1)<CR>
+nnoremap <silent> <Leader>lpp :call StartPreview(2)<CR>
+nnoremap <silent> <Leader>lo :call StartPreview(3)<CR>
 
-function! StartPreview3()
-  belowright split 
-  resize 5 
-  term pdfpreview.sh -f "%:p" -v
-  execute "normal! G"
-  wincmd p
-endfunction
-nnoremap <silent> <Leader>lo :call StartPreview3()<CR>
+autocmd VimResized * call FixResizing()
 
-autocmd VimLeave *.md  silent! !pkill qutebrowser; pkill zathura; 
-
-function! s:win_by_bufname(bufname)
-	let bufmap = map(range(1, winnr('$')), '[bufname(winbufnr(v:val)), v:val]')
-	let thewindow = filter(bufmap, 'v:val[0] =~ a:bufname')[0][1]
-	execute thewindow 'wincmd w'
+function! KillPreviews()
+  if g:previews_open == 1
+    silent exec "!pkill qutebrowser" 
+  elseif g:previews_open == 2
+    silent exec "!pkill zathura" 
+  endif
 endfunction
 
-function! s:fixResizing()
-  call s:win_by_bufname('term')
-  resize 5 
-  wincmd p
-endfunction
-
-autocmd VimResized * call s:fixResizing()
+autocmd VimLeave *.md  call KillPreviews()
 
 " }}}
 
 " {{{ Automatically start preview?
-"autocmd VimEnter */section* call StartPreview()
+autocmd VimEnter */section* call StartPreview(1)
 "autocmd CursorHold,CursorHoldI *.md update
 "set updatetime=300
 " }}}
@@ -379,6 +386,9 @@ hi clear Conceal
 
 " Always center cursorline
 set scrolloff=999
+
+autocmd BufNewFile,BufRead *.tikz set syntax=tex
+
 
 " {{{ Folding
 let g:markdown_folding = 1
@@ -478,225 +488,12 @@ iabbrev artinian Artinian
 " Quit is only Nerdtree + one other pane is open?
 autocmd bufenter * if (winnr("$") == 2 && exists("b:NER3Tree") && b:NERDTree.isTabTree()) | qa | endif
 
-" {{{ Quicktex (Prose)
-let g:quicktex_tex = {
-    \' '   : "\<ESC>:call search('<+.*+>')\<CR>\"_c/+>/e\<CR>",
-    \'m'   : '\( <+++> \) <++>',
-    \'M'   : "\\[\<CR><+++>\<CR>.\\]\<CR><++>",
-    \'thm' : ":::{.theorem title=\"?\"}\<CR><+++>\<CR>:::",
-    \'*'   : '*<+++>*<++>',
-    \'**'   : '**<+++>**<++>',
-\'Section       : Text Shortcuts'             : 'COMMENT',
-    \'st'     : 'such that ',
-    \'homo'   : 'homomorphism ',
-    \'iso'    : 'isomorphism ',
-    \'iff'    : 'if and only if ',
-    \'wlog'   : 'without loss of generality ',
-    \'Wlog'   : 'Without loss of generality, ',
-    \'gset'   : '\(G\dash\)set ',
-    \'rmod'   : '\(R\dash\)module ',
-    \'ae'     : 'almost everywhere ',
-    \'bd'     : 'boundary ',
-    \'card'   : 'cardinality ',
-    \'char'   : 'characteristic ',
-    \'ker'    : 'kernel ',
-    \'im'     : 'image ',
-    \'def'    : 'define ',
-    \'deg'    : 'degree ',
-    \'det'    : 'determinant ',
-    \'dim'    : 'dimension ',
-    \'tf'     : 'the following: ',
-    \'gal'    : 'Galois ',
-    \'gcd'    : 'greatest common divisor ',
-    \'int'    : 'interior ',
-    \'ext'    : 'exterior ',
-    \'lcm'    : 'least common multiple ',
-    \'lim'    : 'limit ',
-    \'resp'   : 'respectively ',  
-    \'rhs'    : 'right-hand side ',
-    \'lhs'    : 'left-hand side ',
-    \'wts'    : 'want to show ',
-    \'nts'    : 'need to show ',
-    \'wrt'    : 'with respect to',
-    \'tfae'   : 'the following are equivalent ',
-    \'fd'     : 'finite-dimensional ',
-    \'fg'     : 'finitely-generated',
-    \'eg'     : 'e.g.',
-    \'Eg'     : 'E.g.',
-    \'ie'     : 'i.e.',
-    \'Ie'     : 'I.e.',
-    \'rep'    : 'representation ',
-    \'comm'   : 'commutative ',
-    \'inter'  : 'intersection ',
-    \'ab'     : 'abelian ',
-    \'cat'    : 'category ',
-    \'mod'    : "\<BS>-module ",
-    \'aka'    : 'a.k.a.'
-\}
-
-" }}}
-
-" {{{ Quicktex (Math mode)
-let g:quicktex_math = {
-    \' '        : "\<ESC>:call search('<+.*+>')\<CR>\"_c/+>/e\<CR>",
-\'Section       : Unsorted'             : 'COMMENT',
-    \'in'       : '\in ',
-    \'inv'      : '^{-1} ',
-    \'sq'       : '^{2} ',
-    \'sqrt'     : '\sqrt{<+++>} <++>',
-    \'empty'    : '\emptyset',
-    \'ex'       : '\exists ',
-    \'eq'       : '= ',
-    \'eqh'      : '\homotopic ',
-    \'all'      : '\forall ',
-    \'frac'     : '\frac{<+++>}{<++>} <++>',
-    \'recip'    : '\frac{1}{<++>} <++>',
-    \'kbar'     : '\bar{k} ',
-    \'ksep'     : 'k^{s} ',
-    \'limn'     : '\lim_{n\to\infty}',
-    \'st'       : '\st ',
-    \'le'       : '\leq ',
-    \'ge'       : '\geq ',
-    \'subs'     : '\subset ',
-    \'subse'    : '\subseteq ',
-    \'sups'     : '\supset ',
-    \'supse'    : '\supseteq ',
-    \'iso'      : '\cong ',
-    \'ts'       : '\ts{ <+++> } <++>',
-    \'text'     : '\text{ <+++> } <++>',
-    \'iff'      : '\iff ',
-    \'star' : "\<BS>^* ",
-    \'suchthat' : '\text{ such that } ',
-    \'lim'    : '\lim_{<+++>} <++>',
-    \'converges'    : '\converges_{n\to\infty} ',
-\'Section       : Short Symbols'             : 'COMMENT',
-    \'>'        : '\mapsvia{<+++>} <++>',
-    \'^'        : '^{<+++>} <++>',
-    \'_'        : '_{<+++>} <++>',
-    \'@'        : '\circ ',
-    \'@@'       : '\infty ',
-\'Section       : Greek Letters'             : 'COMMENT',
-    \'a'        : '\alpha ',
-    \'b'        : '\beta ',
-    \'c'        : '\chi ',
-    \'d'        : '\delta ',
-    \'D'        : '\Delta ',
-    \'e'        : '\epsilon ',
-    \'f'        : '\varphi ',
-    \'F'        : '\Phi ',
-    \'g'        : '\gamma ',
-    \'G'        : '\Gamma ',
-    \'k'        : '\kappa ',
-    \'i'        : '\iota ',
-    \'l'        : '\lambda ',
-    \'m'        : '\mu ',
-    \'nu'       : '\nu ',
-    \'na'       : '\nabla ',
-    \'p'        : '\pi ',
-    \'P'        : '\Pi ',
-    \'ps'       : '\psi ',
-    \'PS'       : '\Psi ',
-    \'th'       : '\theta ',
-    \'TH'       : '\Theta ',
-    \'r'        : '\rho ',
-    \'R'        : '\RR ',
-    \'s'        : '\sigma ',
-    \'S'        : '\Sigma ',
-    \'tau'      : '\tau ',
-    \'upsilon'  : '\upsilon ',
-    \'Upsilon'  : '\Upsilon ',
-    \'om'       : '\omega ',
-    \'OM'       : '\Omega ',
-    \'xi'       : '\xi ',
-    \'XI'       : '\Xi ',
-    \'x'        : '\cross ',
-    \'zeta'     : '\zeta ',
-    \'Zeta'     : '\Zeta ',
-\'Section       : Mathcal'             : 'COMMENT',
-    \'mca'      : '\mathcal{A} ',
-    \'mcb'      : '\mathcal{B} ',
-    \'mcc'      : '\mathcal{C} ',
-    \'mcd'      : '\mathcal{D} ',
-    \'mce'      : '\mathcal{E} ',
-    \'mcf'      : '\mathcal{F} ',
-    \'mcg'      : '\mathcal{G} ',
-    \'mch'      : '\mathcal{H} ',
-    \'mci'      : '\mathcal{I} ',
-    \'mcj'      : '\mathcal{J} ',
-    \'mck'      : '\mathcal{K} ',
-    \'mcl'      : '\mathcal{L} ',
-    \'mcm'      : '\mathcal{M} ',
-    \'mcn'      : '\mathcal{N} ',
-    \'mco'      : '\mathcal{O} ',
-    \'mcp'      : '\mathcal{P} ',
-    \'mcq'      : '\mathcal{Q} ',
-    \'mcr'      : '\mathcal{R} ',
-    \'mcs'      : '\mathcal{S} ',
-    \'mct'      : '\mathcal{T} ',
-    \'mcu'      : '\mathcal{U} ',
-    \'mcv'      : '\mathcal{V} ',
-    \'mcw'      : '\mathcal{W} ',
-    \'mcx'      : '\mathcal{X} ',
-    \'mcy'      : '\mathcal{Y} ',
-    \'mcz'      : '\mathcal{Z} ',
-\'Section       : Mathfrak'             : 'COMMENT',
-    \'mfa'      : '\mathfrak{A} ',
-    \'mfb'      : '\mathfrak{B} ',
-    \'mfc'      : '\mathfrak{C} ',
-    \'mfd'      : '\mathfrak{D} ',
-    \'mfe'      : '\mathfrak{E} ',
-    \'mff'      : '\mathfrak{F} ',
-    \'mfg'      : '\mathfrak{G} ',
-    \'mfh'      : '\mathfrak{H} ',
-    \'mfi'      : '\mathfrak{I} ',
-    \'mfj'      : '\mathfrak{J} ',
-    \'mfk'      : '\mathfrak{K} ',
-    \'mfl'      : '\mathfrak{L} ',
-    \'mfm'      : '\mathfrak{M} ',
-    \'mfn'      : '\mathfrak{N} ',
-    \'mfo'      : '\mathfrak{O} ',
-    \'mfp'      : '\mathfrak{P} ',
-    \'mfq'      : '\mathfrak{Q} ',
-    \'mfr'      : '\mathfrak{R} ',
-    \'mfs'      : '\mathfrak{S} ',
-    \'mft'      : '\mathfrak{T} ',
-    \'mfu'      : '\mathfrak{U} ',
-    \'mfv'      : '\mathfrak{V} ',
-    \'mfw'      : '\mathfrak{W} ',
-    \'mfx'      : '\mathfrak{X} ',
-    \'mfy'      : '\mathfrak{Y} ',
-    \'mfz'      : '\mathfrak{Z} ',
-\'Section       : MathBB'             : 'COMMENT',
-    \'mba'      : '\mathbb{A} ',
-    \'mbb'      : '\mathbb{B} ',
-    \'mbc'      : '\mathbb{C} ',
-    \'mbd'      : '\mathbb{D} ',
-    \'mbe'      : '\mathbb{E} ',
-    \'mbf'      : '\mathbb{F} ',
-    \'mbg'      : '\mathbb{G} ',
-    \'mbh'      : '\mathbb{H} ',
-    \'mbi'      : '\mathbb{I} ',
-    \'mbj'      : '\mathbb{J} ',
-    \'mbk'      : '\mathbb{K} ',
-    \'mbl'      : '\mathbb{L} ',
-    \'mbm'      : '\mathbb{M} ',
-    \'mbn'      : '\mathbb{N} ',
-    \'mbo'      : '\mathbb{O} ',
-    \'mbp'      : '\mathbb{P} ',
-    \'mbq'      : '\mathbb{Q} ',
-    \'mbr'      : '\mathbb{R} ',
-    \'mbs'      : '\mathbb{S} ',
-    \'mbt'      : '\mathbb{T} ',
-    \'mbu'      : '\mathbb{U} ',
-    \'mbv'      : '\mathbb{V} ',
-    \'mbw'      : '\mathbb{W} ',
-    \'mbx'      : '\mathbb{X} ',
-    \'mby'      : '\mathbb{Y} ',
-    \'mbz'      : '\mathbb{Z} '
-\}
-" }}}
+autocmd Filetype markdown.pandoc let g:enable_quicktex = 1
+" See `~/.config/nvim/after/ftplugin/pandoc/quicktex_dict.vim`
 
 " {{{ Custom Functions
+
+" {{{ Converting Math
 function ConvertOldMath()
     " Save cursor position
     let l:save = winsaveview()
@@ -705,9 +502,14 @@ function ConvertOldMath()
     %s/\\end{align\*}/\\]/g
     %s/\\begin{center}//g
     %s/\\end{center}//g
-    %s/X\/k/X_{\/k}/g 
-    %s/\/K/_{\/K}/g 
-    %s/\/k/_{\/k}/g 
+    "%s/X\/k/X_{\/k}/g 
+    %s/\(\a\{1}\)\/\([kKS]\)/\1_{\/\2}/g
+    %s/\(\a\{1}\)\/\(\\ell\)/\1_{\/\2}/g
+    %s/\(\a\+\)_\(\w\+\)/\1_{\2}/g
+    %s/\\red/\\mathrm{red}/g 
+    %s/\\def/\\mathrm{def}/g 
+    %s/\\obs/\\mathrm{obs}/g 
+    %s/\\directlimit/\\directlim/g 
     " Move cursor to original position
     call winrestview(l:save)
     echo "Converted math"
@@ -717,10 +519,12 @@ endfunction
 " Replace inline math $......$ with displaymath \[ ...... \]
 nnoremap <silent> <Leader>gs F$lvt$"+dxF$xwi<cr><cr><Esc>ki\[<cr><esc>"+po.\]
 
-"nnoremap <silent> <Leader>gt /$$<cr>Nhxxvtnhh"+dxxi\[<cr>.\]<esc>k"+p
-"nnoremap <silent> <Leader>gl /\$\$<cr>Nxxvnh"+dxxi\[<cr>.\]<cr><esc>kk"+p
-nnoremap <silent> <Leader>gl /\$\$<cr>NxxwvnB"+dknxxi\[<cr>.\]<cr><esc>kk:pu +<cr>
+" Replace displaymath $$......$$ with displaymath \[ ...... \]
+nnoremap <silent> <Leader>gl /\$\$<cr>Nxxwvnk$"+dknxxi\[<cr>.\]<cr><esc>kk:pu +<cr>
 
+" }}}
+
+" {{{ Inkscape and Xournal handling
 function CreateInkscape()
   let s:fig_dir = getcwd() . "/figures"
   silent exec '!mkdir -p "' . s:fig_dir . '"'
@@ -728,11 +532,24 @@ function CreateInkscape()
   if v:shell_error == 1
     echo "Error: \n" . s:outfile
   else
+    echo s:outfile
     exe "normal! a" . s:outfile . "\<Esc>"
   endif
 endfunction
 
 nmap <silent> <leader>i :call CreateInkscape()<CR>
+
+" }}} 
+
+function! SyntaxItem()
+  return synIDattr(synID(line("."),col("."),1),"name")
+endfunction
+set statusline+=%{SyntaxItem()}
+
+map <F6> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
 
 " }}}
 

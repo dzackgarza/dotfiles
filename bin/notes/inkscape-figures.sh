@@ -47,7 +47,9 @@ if [ "$choice" == "New_Inkscape" ]; then
   inkscape -D "$OUTFILE.svg" -o "$OUTFILE.pdf" --export-latex > /dev/null 2>&1;
 read -r -d '' OUT_STR<< EOM
 \begin{tikzpicture}
-\node (node_one) at (0,0) {\includegraphics{$OUTFILE}};
+\node (node_one) at (0,0) {
+  \includegraphics{$(realpath "$OUTFILE")}
+};
 \end{tikzpicture}
 EOM
   echo "$OUT_STR";
@@ -67,6 +69,7 @@ elif [ "$choice" == "New_Xournal" ]; then
 # Existing file is for Inkscape
 elif [ "$choice_ext" == "svg" ]; then
   inkscape "$FIG_DIR/$choice" > /dev/null 2>&1;
+  inkscape -D "$FIG_DIR/$choice" -o "$FIG_DIR/$choice_base.pdf" --export-latex > /dev/null 2>&1;
   exit 0;
 # Existing file is for Xornal
 elif [ "$choice_ext" == "xoj" ]; then

@@ -42,16 +42,16 @@ clr_green "Fonts updated."
 antigen update;
 clr_green "Updated ZSH plugins"
 
-updateAllNotes.sh
-clr_green "Class Notes Updated."
+#updateAllNotes.sh
+#clr_green "Class Notes Updated."
 
 #find /home/zack/Dropbox/Library -type f -iname "*.pdf" -exec /home/zack/dotfiles/bin/extract_annotations.py {} \;
 #cd /home/zack/website/assets/annotations; cat *.md | pandoc -f markdown -t html --toc -o ~/website/_pages/annotations.html -s --metadata title="PDF Annotations"; clr_green "Generated Annotations."
-cd ~/Notes && git add *; git commit -am "Save"; git push; popd; ssh zack@dzackgarza.com "cd /var/www/Notes && git pull"; 
-clr_green "Notes repo updated."
+#cd ~/Notes && git add *; git commit -am "Save"; git push; popd; ssh zack@dzackgarza.com "cd /var/www/Notes && git pull"; 
+#clr_green "Notes repo updated."
 
-/home/zack/dotfiles/bin/update_notes_corpus.sh
-clr_green "Note corpus updated."
+#/home/zack/dotfiles/bin/update_notes_corpus.sh
+#clr_green "Note corpus updated."
 
 
 clr_blueb "Update completed.";
