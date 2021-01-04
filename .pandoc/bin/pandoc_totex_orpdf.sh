@@ -45,7 +45,10 @@ filename="${filename%.*}";
 [[ -f "$directory/data.md" ]] && DATA_FILE="$directory/data.md" || DATA_FILE="$PANDOC_DIR/custom/preview_data.md";
 [[ -f "$directory/$filename.bib" ]] && BIB_FILE="$directory/$filename.bib" || BIB_FILE="$PANDOC_BIB";
 
-cp "$BIB_FILE" "$TMP_DIR/$filename.bib";
+
+if [ ! -f "$TMP_DIR/$filename.bib" ]; then
+  cp "$BIB_FILE" "$TMP_DIR/$filename.bib";
+fi
 
 cat "$filepath" | pandoc_stripmacros.sh > $TMP_DIR/combined.temp ;
 
