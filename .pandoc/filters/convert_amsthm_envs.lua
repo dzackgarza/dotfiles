@@ -46,11 +46,6 @@ function Div(el)
     --return el
   --end
 
-
-  if el.classes==nil then
-    return el
-  end
-
   el.classes[#el.classes+1] = "proofenv" 
 
   -- Prepend to this blocks contents \begin{env}[...]\label{}...

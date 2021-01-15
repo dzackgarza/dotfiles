@@ -27,6 +27,7 @@ done
 
 filepath=$(realpath "$files")
 filename=$(basename -- "$filepath");
+directory=$(dirname "$filepath")
 extension="${filename##*.}"
 filename="${filename%.*}"
 
@@ -38,13 +39,40 @@ fi
 [[ $vimpreview == true ]] && params+=("--variable=vimpreview")
 [[ -z "$TMP_DIR" ]] && TMP_DIR=$(mktemp -d -t ci-XXXXXXXXXX);
 
-[[ -f "$directory/$filename.bib" ]] && BIB_FILE="$directory/$filename.bib" || BIB_FILE="$PANDOC_BIB";
+BUILD_LOG="$directory/build.log";
+echo -e "" > "$BUILD_LOG";
+debug_print() {
+  echo "$1" >> "$BUILD_LOG";
+}
 
-#echo "$directory/$filename.bib"
+debug_print "Temp Directory: $TMP_DIR";
+
+debug_print "Checking for data file";
+if [ -f "$directory/data.yaml" ]; then 
+  debug_print "Found data.yaml";
+  DATA_FILE="$directory/data.yaml"
+else 
+  debug_print "Data file not found, using default preview data.";
+  DATA_FILE="$PANDOC_DIR/custom/preview_data.yaml";
+fi
+debug_print "Using data file: $DATA_FILE";
+
+
+debug_print "Checking for bibfile";
+try_bibfile="$directory/$filename.bib"
+if [ ! -f "$try_bibfile" ]; then
+  debug_print "Did not find bibfile: $try_bibfile";
+  BIB_FILE="$PANDOC_BIB";
+else
+  debug_print "Found bibfile: $try_bibfile";
+  BIB_FILE="$try_bibfile";
+fi
 
 cp "$BIB_FILE" "$TMP_DIR/$filename.bib";
+#cp -r "$directory/figures" .;
 
-cat "$filepath" | pandoc_stripmacros.sh > $TMP_DIR/combined.temp ;
+
+cat "$filepath" | pandoc_stripmacros.sh > "$TMP_DIR/combined.temp" ;
 
 cat >> "$TMP_DIR/combined.temp" <<- EOM
 
@@ -53,9 +81,11 @@ cat >> "$TMP_DIR/combined.temp" <<- EOM
 ::: {#refs}
 :::
 EOM
-  
-cat $TMP_DIR/combined.temp | pandoc \
+
+
+cat "$TMP_DIR/combined.temp" | pandoc \
   --quiet \
+  --metadata-file="$DATA_FILE" \
   -r markdown+simple_tables+table_captions+yaml_metadata_block+tex_math_single_backslash \
   --to html \
   --toc \
@@ -63,15 +93,17 @@ cat $TMP_DIR/combined.temp | pandoc \
   --self-contained \
   --number-section \
   --filter=pandoc-crossref \
+  --lua-filter=$PANDOC_DIR/filters/hide_solutions_html.lua \
   --lua-filter=$PANDOC_DIR/filters/tikzcd.lua \
   --lua-filter=$PANDOC_DIR/filters/replace_symbols_html.lua \
   --lua-filter=$PANDOC_DIR/filters/convert_math_delimiters.lua \
   --lua-filter=$PANDOC_DIR/filters/convert_amsthm_envs.lua \
   --template=$PANDOC_TEMPLATES/templates/tufte-html-vis.html  \
   --css=$PANDOC_TEMPLATES/marked/kultiad-serif.css \
-  --filter=pandoc-citeproc \
+  --citeproc \
   --bibliography="$TMP_DIR/$filename.bib" \
-  --csl=$PANDOC_TEMPLATES/csl/apsa.csl \
+  --metadata link-citations=true \
+  --csl=$PANDOC_TEMPLATES/csl/inventiones-mathematicae.csl \
   -V current_date="$(date +%Y-%m-%d%n)" "${params[@]}" \
   -o $TMP_DIR/out.html;
 

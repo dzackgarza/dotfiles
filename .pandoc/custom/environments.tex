@@ -15,15 +15,15 @@
 \definecolor{camel}{rgb}{0.76, 0.6, 0.42}
 \definecolor{babyblue}{rgb}{0.54, 0.81, 0.94}
 \definecolor{block-gray}{gray}{0.85}
-\definecolor{quote_eggshell}{HTML}{a29295}
+\definecolor{quote_color}{HTML}{d0c8ca}
 
 % Box for quotes 
 \usepackage{xcolor}
 \usepackage{environ}
 \NewEnviron{myblock}
 {\hspace*{.5\textwidth}
-\colorbox{quote_eggshell}{%
-\parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
+\colorbox{quote_color}{%
+\parbox{\dimexpr0.5\textwidth-2\fboxsep\relax}{%
 \small\textit{\BODY} 
 }}}
 \renewcommand{\quote}{\myblock}
@@ -108,8 +108,8 @@
   breakable,
   enhanced jigsaw,
   opacityback=0.25,
-  colframe=prop_color,
-  borderline west={4pt}{0pt}{prop_color},
+  colframe=thm_color,
+  borderline west={4pt}{0pt}{thm_color},
 }
 \newtheorem{corollary}[theorem]{Corollary}
 \numberwithin{corollary}{subsection} % important bit
@@ -172,7 +172,8 @@
   {\itshape}              % Thm head font
   {}                      % Punctuation after thm head
   {\newline}              % Space after thm head: \newline = linebreak
-  {\thmname{#1}. \thmnote{\itshape{(#3)}}}%
+  {}%         Thm head spec
+  %{\thmname{#1}. \thmnote{\itshape{(#3)}}}%
 \theoremstyle{problem}
 \tcolorboxenvironment{problem}{
   boxrule=1pt,
@@ -182,7 +183,8 @@
   opacityback=0.0,
   colframe=defn_color
 }
-\newtheorem*{problem}{Problem}
+\newtheorem{problem}{Problem}
+\numberwithin{problem}{subsection} % important bit
 
 % Claim Style
 \newtheoremstyle{claim} % name

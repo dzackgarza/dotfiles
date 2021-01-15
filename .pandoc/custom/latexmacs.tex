@@ -7,27 +7,6 @@
   \mathrel{\stackunder[2pt]{\stackon[4pt]{$#3$}{$\scriptscriptstyle#1$}}{
   $\scriptscriptstyle#2$}}
 }
-\newcommand{\ext}{\operatorname{Ext}}
-\newcommand{\Ext}{\operatorname{Ext}}
-\newcommand{\Endo}{\operatorname{End}}
-\newcommand{\Ind}{\operatorname{Ind}}
-\newcommand{\ind}{\operatorname{Ind}}
-\newcommand{\coind}{\operatorname{Coind}}
-\newcommand{\proj}{\operatorname{Proj}}
-\newcommand{\Proj}{\operatorname{Proj}}
-\newcommand{\res}{\operatorname{Res}}
-\newcommand{\Res}{\operatorname{Res}}
-\newcommand{\Hol}{\operatorname{Hol}}
-\newcommand{\Br}{\operatorname{Br}}
-\newcommand{\coh}{\operatorname{coh}}
-\newcommand{\colspace}{\operatorname{colspace}}
-\newcommand{\rowspace}{\operatorname{rowspace}}
-\newcommand{\codom}{\operatorname{codom}}
-\newcommand{\range}{\operatorname{range}}
-\newcommand{\nullspace}{\operatorname{nullspace}}
-\newcommand{\nullity}{\operatorname{nullspace}}
-\newcommand{\projection}{\operatorname{Proj}}
-\newcommand{\Der}{\operatorname{Der}}
 \renewcommand{\AA}[0]{{\mathbb{A}}}
 \newcommand{\Af}[0]{{\mathbb{A}}}
 \newcommand{\CC}[0]{{\mathbb{C}}}
@@ -41,7 +20,7 @@
 \newcommand{\HH}[0]{{\mathbb{H}}}
 \newcommand{\HP}[0]{{\mathbb{HP}}}
 \newcommand{\KK}[0]{{\mathbb{K}}}
-\newcommand{\kk}[0]{{\Bbbk}}
+\newcommand{\kk}[0]{{\mathbb{k}}}
 \newcommand{\bbm}[0]{{\mathbb{M}}}
 \newcommand{\NN}[0]{{\mathbb{N}}}
 \newcommand{\OP}[0]{{\mathbb{OP}}}
@@ -151,6 +130,8 @@
 \newcommand{\MCG}[0]{{\operatorname{MCG}}}
 \newcommand{\set}[0]{{\operatorname{Set}}}
 \newcommand{\Tor}[0]{\operatorname{Tor}}
+\newcommand{\ext}{\operatorname{Ext} }
+\newcommand{\Ext}{\operatorname{Ext}}
 \newcommand{\sets}[0]{{\operatorname{Set}}}
 \newcommand{\Sm}[0]{{\operatorname{Sm}_k}}
 \newcommand{\orr}[0]{{\operatorname{ or }}}
@@ -194,7 +175,6 @@
 \newcommand{\sm}[0]{\setminus}
 \newcommand{\smz}[0]{\setminus\theset{0}}
 \newcommand{\eps}[0]{\varepsilon}
-\newcommand{\equalsbecause}[1] {\stackrel{\mathclap{\scriptscriptstyle{#1}}}{=}}
 \newcommand{\floor}[1]{{\left\lfloor #1 \right\rfloor}}
 \newcommand{\up}[0]{\uparrow}
 \newcommand{\generators}[1]{\left\langle{#1}\right\rangle}
@@ -239,7 +219,6 @@
 \newcommand{\ms}[0]{\xrightarrow{\sim}}
 \newcommand{\from}[0]{\leftarrow}
 \newcommand{\mapstofrom}[0]{\rightleftharpoons}
-\DeclareMathOperator*{\mapbackforth}{\rightleftharpoons}
 \newcommand{\mapscorrespond}[2]{\mathrel{\operatorname*{\rightleftharpoons}_{#1}^{#2}}}
 \newcommand{\injects}[0]{\hookrightarrow}
 \newcommand{\injectsvia}[1]{\xhookrightarrow{#1}}
@@ -336,7 +315,6 @@
 \newcommand{\stirlingfirst}[2]{\genfrac{[}{]}{0pt}{}{#1}{#2}}
 \newcommand{\stirling}[2]{\genfrac\{\}{0pt}{}{#1}{#2}}
 \newcommand{\strike}[1]{{\enclose{horizontalstrike}{#1}}}
-\newcommand{\suchthat}[0]{{~\mathrel{\Big|}~}}
 \newcommand{\st}[0]{{~\mathrel{\Big|}~}}
 \newcommand{\supp}[0]{{\operatorname{supp}}}
 \newcommand{\sym}[0]{\operatorname{Sym}}
@@ -390,6 +368,30 @@
 \DeclareMathOperator{\Forall}{\forall}
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 \DeclareMathOperator*{\hocolim}{hocolim}
+\DeclareMathOperator*{\mapbackforth}{\rightleftharpoons}
+\DeclareMathOperator*{\eq}{=}
+\DeclareMathOperator{\Endo}{End}
+\DeclareMathOperator{\Ind}{Ind}
+\DeclareMathOperator{\ind}{Ind}
+\DeclareMathOperator{\coind}{Coind}
+\DeclareMathOperator{\proj}{Proj}
+\DeclareMathOperator{\Proj}{Proj}
+\DeclareMathOperator{\res}{Res}
+\DeclareMathOperator{\Res}{Res}
+\DeclareMathOperator{\Hol}{Hol}
+\DeclareMathOperator{\Br}{Br}
+\DeclareMathOperator{\coh}{coh}
+\DeclareMathOperator{\colspace}{colspace}
+\DeclareMathOperator{\rowspace}{rowspace}
+\DeclareMathOperator{\codom}{codom}
+\DeclareMathOperator{\range}{range}
+\DeclareMathOperator{\nullspace}{nullspace}
+\DeclareMathOperator{\nullity}{nullspace}
+\DeclareMathOperator{\projection}{Proj}
+\DeclareMathOperator{\Der}{Der}
+\newcommand{\Suchthat}[0]{\middle\vert}
+\newcommand{\suchthat}[0]{{~\mathrel{\Big|}~}}
+
 
 \newcommand{\contains}[0]{\supseteq}
 \newcommand{\containing}[0]{\supseteq}
@@ -413,3 +415,12 @@
 
 \newcommand\Hc[0]{{\check{H}}}
 \newcommand\Cc[0]{{\check{C}}}
+
+\def\contradiction
+{
+\tikz[baseline, x=0.2em, y=0.2em, line width=0.04em]
+\draw (0,0) -- ({4*cos(45)},{4*sin(45)})
+    (-1,1) -- ({-1 + 4*cos(45)},{1 + 4*sin(45)})
+    (-1,3) -- ({-1 + 4*cos(315)},{3 + 4*sin(315)})
+    (0,4) -- ({0 + 4*cos(315)},{4 + 4*sin(315)});
+}

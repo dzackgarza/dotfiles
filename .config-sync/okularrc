@@ -5,32 +5,53 @@ Width 1920=920
 [Desktop Entry]
 FullScreen=false
 shouldShowMenuBarComingFromFullScreen=true
-shouldShowToolBarComingFromFullScreen=false
+shouldShowToolBarComingFromFullScreen=true
 
 [MainWindow]
 Height 1080=996
 Height 1920=1866
 Height 800=746
-RestorePositionForNextInstance=false
-State=AAAA/wAAAAD9AAAAAAAAA64AAAc2AAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAA==
+State=AAAA/wAAAAD9AAAAAAAAB2wAAAPMAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAADzv////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
 Width 1920=920
 Window-Maximized 800x1280=true
-eDP-1 HDMI-1 DVI-I-1-1 Height 1080=1866
-eDP-1 HDMI-1 DVI-I-1-1 Width 1920=942
-eDP-1 HDMI-1 DVI-I-1-1 XPosition=2047
-eDP-1 HDMI-1 DVI-I-1-1 YPosition=43
+eDP-1 HDMI-1 DVI-I-1-1 Height 1080=1029
+eDP-1 HDMI-1 DVI-I-1-1 Height 1920=928
+eDP-1 HDMI-1 DVI-I-1-1 Width 1080=1058
+eDP-1 HDMI-1 DVI-I-1-1 Width 1920=1900
+eDP-1 HDMI-1 DVI-I-1-1 XPosition=1090
+eDP-1 HDMI-1 DVI-I-1-1 YPosition=1121
+eDP-1 HDMI-1 Height 1920=928
+eDP-1 HDMI-1 Width 1080=1058
+eDP-1 Height 1080=1027
+eDP-1 Width 1920=943
+eDP-1 XPosition=10
+eDP-1 YPosition=41
 
 [Print Preview]
 Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/SparkleShare/github.com/Notes/Class_Notes/2020/Fall/Etale Cohomology/EtaleCohomology.pdf
-File2[$e]=$HOME/tikz.pdf
-File3[$e]=$HOME/123.PDF
-Name1[$e]=EtaleCohomology.pdf
-Name2[$e]=tikz.pdf
-Name3[$e]=123.PDF
+File1[$e]=$HOME/Dropbox/Library/Allen Hatcher/Algebraic Topology (609)/Algebraic Topology - Allen Hatcher.pdf
+File10[$e]=$HOME/Downloads/ChapB.pdf
+File2[$e]=$HOME/Dropbox/Library/James R. Munkres/Topology (416)/Topology - James R. Munkres.pdf
+File3[$e]=$HOME/Dropbox/Library/James R. Munkres/Analysis on Manifolds (599)/Analysis on Manifolds - James R. Munkres.pdf
+File4[$e]=$HOME/SparkleShare/github.com/Qual-Review-and-Solutions/Topology/Review Doc/TopologyQualifyingExamNotes.pdf
+File5[$e]=$HOME/Downloads/ComplexAnalysis.pdf
+File6[$e]=$HOME/Dropbox/Library/Elias M. Stein, Rami Shakarchi/Complex Analysis (760)/Complex Analysis - Elias M. Stein, Rami Shakarchi.pdf
+File7[$e]=$HOME/website/courses/2021/Spring/1113/ClassCalendar.pdf
+File8[$e]=$HOME/Dropbox/Library/Fred Diamond/A First Course in Modular Forms (547)/A First Course in Modular Forms - Fred Diamond.pdf
+File9[$e]=$HOME/Downloads/YonedaExtExactSequences.pdf
+Name1[$e]=Algebraic Topology - Allen Hatcher.pdf
+Name10[$e]=ChapB.pdf
+Name2[$e]=Topology - James R. Munkres.pdf
+Name3[$e]=Analysis on Manifolds - James R. Munkres.pdf
+Name4[$e]=TopologyQualifyingExamNotes.pdf
+Name5[$e]=ComplexAnalysis.pdf
+Name6[$e]=Complex Analysis - Elias M. Stein, Rami Shakarchi.pdf
+Name7[$e]=ClassCalendar.pdf
+Name8[$e]=A First Course in Modular Forms - Fred Diamond.pdf
+Name9[$e]=YonedaExtExactSequences.pdf
