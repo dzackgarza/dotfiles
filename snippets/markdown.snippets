@@ -29,35 +29,50 @@ $${1}$
 endsnippet
 
 # Tikz
-snippet tikz "Tikzcd (Basic)"
+snippet tikzcd "Tikzcd (Basic)"
 
 \begin{tikzcd}
 ${1}
 \end{tikzcd}
 endsnippet
 
-snippet tikzbd "Tikz Bundle/Pullback"
+snippet tikz_bundle "Tikz Fiber Bundle"
 
 \begin{tikzcd}
 ${1:F} 
 	\ar[r] 
-	\ar[d]
 & 
 ${2:E}
 	\ar[d] 
 \\\\
-${3:X}
-	\ar[r]
 & 
 ${4:B} 
 \end{tikzcd}
 endsnippet
 
-snippet tikz_cartesian "Pullback / Cartesian Square Symbol"
-\arrow[uur, phantom, "\scalebox{1.5}{$\llcorner$}" , very near start, color=black]
+
+snippet tikz_pullback "Tikz Pullback"
+
+\begin{tikzcd}
+${1:X \cross_Z Y} 
+	\ar[r] 
+	\ar[d]
+& 
+${2:X}
+	\ar[d] 
+\\\\
+${3:Z}
+	\ar[r]
+& 
+${4:Y} 
+\end{tikzcd}
 endsnippet
 
-snippet tikztri "Tikz Triangle"
+snippet tikz_cartesian "Cartesian Square"
+  \arrow[dr, phantom, "\scalebox{1.5}{$\ulcorner$}" , shift right=0.4em, very near start, color=black]
+endsnippet
+
+snippet tikz_triangle "Tikz Triangle"
 
 \begin{tikzcd}
 ${1} 
@@ -74,7 +89,7 @@ ${3}
 \end{tikzcd}
 endsnippet
 
-snippet tikzprod "Tikz Product (Universal Property, NW Limit)"
+snippet tikz_product "Tikz Product (Universal Property, NW Limit)"
 
 \begin{tikzcd}
 ${1:X} 
@@ -106,7 +121,7 @@ snippet tikz_inkscape "Tikz: Including converted Inkscape"
 
 endsnippet
 
-snippet tikzeq "Tikz Equalizer"
+snippet tikz_equalizer "Tikz Equalizer"
 
 \begin{tikzcd}
 ${1} 
@@ -120,16 +135,8 @@ ${3}
 \end{tikzcd}
 endsnippet
 
-snippet tikzeq
 
-\begin{tikzcd}
-${1} \ar[r] &
-${2} \ar[r, shift right=0.75ex] \ar[r, shift left=0.75ex] &
-${3}
-\end{tikzcd}
-endsnippet
-
-snippet tikzsimp "TikzCD Simplicial Object"
+snippet tikz_simplicial "TikzCD Simplicial Object"
 
 \begin{tikzcd}
 ${1} 
@@ -155,7 +162,7 @@ ${4}
 \end{tikzcd}
 endsnippet
 
-snippet tikzles "TikzCD LES"
+snippet tikz_longexactsequence "TikzCD LES"
 
 \begin{tikzcd}
 ${1:A}
@@ -199,7 +206,8 @@ ${3:definition}
 endsnippet
 
 snippet todo "Todo"
-\todo[inline]{${1:todo}}${2}
+\todo[inline]{${1:todo}}
+
 endsnippet
 
 snippet mvec "Vector, 1x3 Matrix"
@@ -254,7 +262,11 @@ snippet ww "Set image width"
 {width=350px}
 endsnippet
 
-# Footnote
+
+snippet )ww "Set image width"
+{width=350px}
+endsnippet
+
 snippet ]]] "Footnote" i
 
 [^${1:refname}]
@@ -589,4 +601,11 @@ endsnippet
 #snippet { "Parens"
 #{${1}}${2}
 #endsnippet
+
+snippet md_table_entry "Markdown Table Entry"
+|  \( ${1} \)                          |  ${2}  \ |
+|                                      |  \( ${3} \)  |
++--------------------------------------+---------------------------------------------------------------------------------------+
+endsnippet
+
 

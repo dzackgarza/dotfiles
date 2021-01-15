@@ -104,6 +104,7 @@ workspace $ws9 output HDMI-1
 # assign [class="Zathura"] $ws5
 assign [class="qutebrowser"] $ws5
 assign [class="Inkscape"] $ws1
+assign [class="Zotero"] $ws9
 
 # floating windows: apps
 for_window [class="Pavucontrol"] floating enable
@@ -226,6 +227,7 @@ exec_always --no-startup-id nitrogen --restore &
 exec_always --no-startup-id sleep 1; polybar.sh &
 exec_always --no-startup-id sleep 1; pkill redshift; redshift -x; redshift &
 exec_always --no-startup-id pkill picom; picom --experimental-backends &
+exec --no-startup-id zotero &
 
 for_window [instance="__scratchpad"] floating enable, resize set 1910px 775px,, move scratchpad, sticky enable
 exec --no-startup-id termite --name __scratchpad -e tmux -c /home/zack/.config/termite/scratch_config

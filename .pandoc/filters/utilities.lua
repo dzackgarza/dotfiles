@@ -59,7 +59,6 @@ function starts_with(start, str)
   return str:sub(1, #start) == start
 end
 
-
 function printDebugInfo(rc)
   print(dump(rc))
   lines = {}
@@ -71,3 +70,12 @@ function printDebugInfo(rc)
   end
 end
 
+function has_value (tab, val)
+  for index, value in ipairs(tab) do
+    if value == val then
+      return true
+    end
+  end
+
+  return false
+end

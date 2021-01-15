@@ -128,7 +128,8 @@
          style="fill:blue;"
          usecurrent="1"
          width="620"
-         height="320" />
+         height="320"
+         ry="0" />
       <eventcontext
          id="3dbox"
          style="stroke:none;stroke-linejoin:round;"
@@ -314,7 +315,7 @@
        id="lpetool"
        mode="drag"
        style="fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:none;"
-       unit="mm"
+       unit="px"
        show_bbox="1" />
     <eventcontext
        id="text"
@@ -340,8 +341,8 @@
        live_outline="1"
        live_objects="1"
        show_helperpath="0"
-       x="265.85"
-       y="212.685"
+       x="101.64"
+       y="261.496"
        edit_clipping_paths="0"
        edit_masks="0" />
     <eventcontext
@@ -546,8 +547,8 @@
        page="0"
        x="0"
        y="0"
-       w="378"
-       h="441"
+       w="1"
+       h="1"
        visible="1"
        state="2"
        placement="1" />
@@ -961,10 +962,10 @@
      id="desktop"
      style="stroke-width:1.88976378;fill:none;fill-rule:evenodd;stroke:#c000ac;fill-opacity:0.61406922;stroke-dashoffset:0.09999987;font-size:13.33333333px">
     <group
-       width="1058"
-       height="928"
-       x="10"
-       y="980"
+       width="746"
+       height="480"
+       x="636"
+       y="369"
        fullscreen="0"
        id="geometry"
        maximized="0" />
