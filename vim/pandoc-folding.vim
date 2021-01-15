@@ -32,15 +32,21 @@ function! CustomPandocFold()
       return "a1"
     elseif match(thisline, '^\:\:\:{\.corollary') >= 0
       return "a1"
+    elseif match(thisline, '^\:\:\:{\.problem') >= 0
+      return "a1"
     elseif match(thisline, '^\:\:\:{\.lemma') >= 0
       return "a1"
-    elseif match(thisline, '^\\[') >= 0
+    elseif match(thisline, '^\s*\\[') >= 0
       return "a1"
-    elseif match(thisline, '^\\]') >= 0
+    elseif match(thisline, '^\s*\\]') >= 0
+      return "s1"
+    elseif match(thisline, '^\s*\.\\]') >= 0
+      return "s1"
+    elseif match(thisline, '^\s*\,\\]') >= 0
       return "s1"
     elseif match(thisline, '^\\begin') >= 0
       return "a1"
-    elseif match(thisline, '^\\end') >= 0
+    elseif match(thisline, '^[\.\,]*\\end') >= 0
       return "s1"
     elseif match(thisline, '^\:\:\:$') >= 0
       return "s1"

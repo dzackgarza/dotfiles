@@ -32,8 +32,8 @@ Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 
 Plug 'vim-voom/VOoM'
-let g:voom_tab_key = "<c-q>"
-let g:voom_return_key = '<c-q>'
+"let g:voom_tab_key = "<c-q>"
+"let g:voom_return_key = '<CR>'
 
 " Automatically expand to math tex QUICKLY
 Plug 'dzackgarza/quicktex'
@@ -53,51 +53,18 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 let g:coc_config_home = "~/dotfiles"
 let g:coc_global_extensions = [
       \ 'coc-vimtex',
-      \ 'coc-snippets',
       \ 'coc-dictionary',
       \ 'coc-word',
       \ 'coc-emoji',
       \ 'coc-spell-checker',
       \]
 
-" use <tab> for trigger completion and navigate to the next complete item
-"function! s:check_back_space() abort
-  "let col = col('.') - 1
-  "return !col || getline('.')[col - 1]  =~ '\s'
-"endfunction
-
-"inoremap <silent><expr> <Tab>
-      "\ pumvisible() ? "\<CR>" :
-      "\ <SID>check_back_space() ? "\<Tab>" :
-      "\ coc#refresh()
-"""""""""""""""""""""""""""""""""""""""""""""""""""
+imap <C-l> <Plug>(coc-snippets-expand)
+inoremap <silent><expr> <NUL> coc#refresh()
+inoremap <silent><expr> <Tab> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<Tab>"
+inoremap <expr> <cr> pumvisible() ? "<C-e><CR>" : "\<C-g>u\<CR>"
 
 """""coc-snippets test
-" Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
-
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<c-e>'
-
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-q>'
-
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
-
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-let g:coc_snippet_next = '<tab>'
-let g:coc_snippet_prev = '<s-tab>'
 
 set dictionary+=~/Notes/corpus.add
 set dictionary+=~/Notes/mathdict.utf-8.add.spl
@@ -156,6 +123,8 @@ call plug#end()
 " }}}
 
 " {{{ Keyboard Shortcuts
+
+" {{{ Remaps
 let mapleader=","
 "command! W w
 "command! Wq wq
@@ -165,8 +134,10 @@ let mapleader=","
 nnoremap <CR> :noh<CR><CR>
 noremap <silent> <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>c :let &cole=(&cole == 2) ? 0 : 2 <bar> echo 'conceallevel ' . &cole <CR>
-nnoremap <silent> [[ ?^\#<CR>
-nnoremap <silent> ]] /^\#<CR>
+"nnoremap <silent> [[ ?^\#<CR>
+nnoremap <silent> [[ ?^\:\:\:{<CR>
+"nnoremap <silent> ]] /^\#<CR>
+nnoremap <silent> ]] /^\:\:\:{<CR>
 nmap <silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
 
 " Use arrow keys in wldmenu.
@@ -175,11 +146,57 @@ cnoremap <expr> <down> wildmenumode() ? "\<right>" : "\<down>"
 cnoremap <expr> <left> wildmenumode() ? "\<up>" : "\<left>"
 cnoremap <expr> <right> wildmenumode() ? " \<bs>\<C-Z>" : "\<right>"
 
-" {{{ Folds
-" Jump to previous/next fold
+" Disable Ex mode
+map q: <Nop>
+nnoremap Q <nop>
+
+" Ctrl-Space in any mode to save
+nnoremap <c-space> :w<CR>o
+inoremap <c-space> <Esc>:w<CR>o
+
+" Save every time a new line is put in
+"inoremap <CR> <CR><Esc>:wa<CR>i
+nnoremap ZZ :wqa<CR>
+
+" }}}
+
+" {{{ Leader Shortcuts
+"
+" Insert new lines in normal mode
+nnoremap <Leader>o o<Esc>
+nnoremap <Leader>O O<Esc>
+
+" Write/quit in normal mode
+nnoremap <Leader>w :w<CR>
+
+
+
 nnoremap <silent> <leader>zj :call NextClosedFold('j')<cr>
 nnoremap <silent> <leader>zk :call NextClosedFold('k')<cr>
 
+nnoremap <silent> <Leader>lp :call StartPreview(1)<CR>
+nnoremap <silent> <Leader>lpp :call StartPreview(2)<CR>
+nnoremap <silent> <Leader>lo :call StartPreview(3)<CR>
+
+nmap <silent> <leader>i :call CreateInkscape()<CR>
+
+" Replace inline math $......$ with 
+" \[ 
+" ...... 
+" .\]
+nnoremap <silent> <Leader>gs F$xvt$"+dxi\[<cr><cr>.\]<Esc>k"+P
+"nnoremap <silent> <Leader>gs F$lvt$"+dxF$xwi<cr><cr><Esc>ki\[<cr><esc>"+po.\]
+
+" Replace inline math $......$ with \( ...... \)
+nnoremap <silent> <Leader>gb F$xvt$"+dxi\(  \)<Esc>hh"+P
+
+" Replace displaymath $$......$$ with displaymath \[ ...... \]
+nnoremap <silent> <Leader>ga /\$\$<cr>Nxxwvnk$"+dknxxi\[<esc>"+p<esc>o.\]<esc>
+
+" }}}
+
+" {{{ Folds
+" Jump to previous/next fold
 function! NextClosedFold(dir)
     let cmd = 'norm!z' . a:dir
     let view = winsaveview()
@@ -202,46 +219,11 @@ tnoremap <M-[> <Esc>
 tnoremap <C-v><Esc> <Esc>
 " }}} 
 
-" Disable Ex mode
-map q: <Nop>
-nnoremap Q <nop>
-
-
-" Insert new lines in normal mode
-nnoremap <Leader>o o<Esc>
-nnoremap <Leader>O O<Esc>
-
-" Write/quit in normal mode
-nnoremap <Leader>w :w<CR>
-
-" Jump around in normal mode
-"inoremap <c-]> <End><Esc>A
-"nnoremap <c-]> <End><Esc>A
-"inoremap <c-e> <Esc>f$a
-"nnoremap <c-e> f$a
-"inoremap <c-r> <Esc>f}a
-"nnoremap <c-r> f}a
-"inoremap <c-d> <Esc>2ji
-"nnoremap <c-d> 2ji
-
-" Ctrl-Space in any mode to save
-nnoremap <c-space> :w<CR>o
-inoremap <c-space> <Esc>:w<CR>o
-
-" Save every time a new line is put in
-"inoremap <CR> <CR><Esc>:wa<CR>i
-"nnoremap <c-q> :wqa<CR>
-"inoremap <c-q> <Esc>:wqa<CR>
-nnoremap ZZ :wqa<CR>
-
-
 " }}}
 
 " {{{ Specific Filetype Commands
 autocmd Filetype tmux setlocal foldmethod=marker
 " }}}
-
-" {{{ Pandoc
 
 " {{{ Default window settings when opening a new file.
 function s:markdownSetup()
@@ -254,9 +236,9 @@ function s:markdownSetup()
   sbuffer NERD_tree_1 |
   execute bufwinnr(s:current_win) . 'wincmd w'
   " Close Nerdtree if last buffer open
-  autocmd BufWinEnter,WinEnter term://* if winnr("$") <= 3  | qa | endif
-  autocmd BufWinEnter,WinEnter NERD_tree* if winnr("$") <= 2  | qa | endif
-  autocmd BufWinEnter,WinEnter *VOOM* if winnr("$") <= 2  | qa | endif
+  "autocmd BufWinEnter,WinEnter term://* if winnr("$") <= 3  | qa | endif
+  "autocmd BufWinEnter,WinEnter NERD_tree* if winnr("$") <= 2  | qa | endif
+  "autocmd BufWinEnter,WinEnter *VOOM* if winnr("$") <= 2  | qa | endif
   
   " Remap write/quit to close all terminals, nerdtree, voom, etc
   cnoreabbrev q q
@@ -268,7 +250,6 @@ endfunction
 " }}}
 
 " {{{ Pandoc PDF and HTML preview
-
 function! FixResizing()
   echo "Fixing resize"
   let windowNr = bufwinnr("term")
@@ -299,9 +280,6 @@ function! StartPreview(preview_type)
   wincmd p
 endfunction
 
-nnoremap <silent> <Leader>lp :call StartPreview(1)<CR>
-nnoremap <silent> <Leader>lpp :call StartPreview(2)<CR>
-nnoremap <silent> <Leader>lo :call StartPreview(3)<CR>
 
 autocmd VimResized * call FixResizing()
 
@@ -318,7 +296,7 @@ autocmd VimLeave *.md  call KillPreviews()
 " }}}
 
 " {{{ Automatically start preview?
-autocmd VimEnter */section* call StartPreview(1)
+"autocmd VimEnter */section* call StartPreview(1)
 "autocmd CursorHold,CursorHoldI *.md update
 "set updatetime=300
 " }}}
@@ -350,7 +328,7 @@ au BufNewFile,BufFilePre,BufRead *.md call s:pandocSyntax()
 au FileType voomtree syntax match someCustomes /\$\\work\$/ conceal cchar=🚩
 au FileType voomtree syntax match someCustomes /\$\\done\$/ conceal cchar=✨
 " }}}
-" }}}
+
 
 " {{{ Aesthetics
 colorscheme afterglow
@@ -486,7 +464,7 @@ iabbrev artinian Artinian
 " }}}
 
 " Quit is only Nerdtree + one other pane is open?
-autocmd bufenter * if (winnr("$") == 2 && exists("b:NER3Tree") && b:NERDTree.isTabTree()) | qa | endif
+" autocmd bufenter * if (winnr("$") == 2 && exists("b:NER3Tree") && b:NERDTree.isTabTree()) | qa | endif
 
 autocmd Filetype markdown.pandoc let g:enable_quicktex = 1
 " See `~/.config/nvim/after/ftplugin/pandoc/quicktex_dict.vim`
@@ -498,6 +476,7 @@ function ConvertOldMath()
     " Save cursor position
     let l:save = winsaveview()
     " Remove trailing whitespace
+    %s/\\definedas/\\da/g
     %s/\\begin{align\*}/\\[/g
     %s/\\end{align\*}/\\]/g
     %s/\\begin{center}//g
@@ -516,11 +495,6 @@ function ConvertOldMath()
 endfunction
 
 
-" Replace inline math $......$ with displaymath \[ ...... \]
-nnoremap <silent> <Leader>gs F$lvt$"+dxF$xwi<cr><cr><Esc>ki\[<cr><esc>"+po.\]
-
-" Replace displaymath $$......$$ with displaymath \[ ...... \]
-nnoremap <silent> <Leader>gl /\$\$<cr>Nxxwvnk$"+dknxxi\[<cr>.\]<cr><esc>kk:pu +<cr>
 
 " }}}
 
@@ -537,7 +511,6 @@ function CreateInkscape()
   endif
 endfunction
 
-nmap <silent> <leader>i :call CreateInkscape()<CR>
 
 " }}} 
 

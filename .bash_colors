@@ -41,7 +41,7 @@ CLR_WHITEB=47           # set white background
 # usage: if fn_exists "sometext"; then ... fi
 function fn_exists
 {
-    type -t "$1" | grep -q 'function'
+    type "$1" | grep -q 'function'
 }
 
 # iterate through command arguments, o allow for iterative color application
