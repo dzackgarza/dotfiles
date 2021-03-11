@@ -65,16 +65,6 @@
 \setlength{\textheight}{9.in}
 \setlength{\textwidth}{6.5in}
 
-% Inkscape figures from Vim
-\usepackage{import}
-\usepackage{pdfpages}
-\usepackage{transparent}
-
-\newcommand{\incfig}[1]{%
-    \def\svgwidth{\columnwidth}
-    \import{./figures/}{#1.pdf_tex}
-}
-
 % Pandoc-specific fixes
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
@@ -249,3 +239,24 @@
 \crefname{section}{section}{secs.}
 \Crefname{section}{Section}{Secs.}
 
+% Adjunction
+\newcommand{\longrightharpoonup}{\relbar\joinrel\rightharpoonup}
+\newcommand{\longleftharpoondown}{\leftharpoondown\joinrel\relbar}
+\makeatletter
+\newcommand{\adjtemp}[0]{%
+  \mathrel{\vcenter{%
+    \offinterlineskip\m@th
+    \ialign{%
+      \hfil$##$\hfil\cr
+      \longrightharpoonup\cr
+      \noalign{\kern-.3ex}
+      \scaleobj{0.5}{\bot}\cr
+      \longleftharpoondown\cr
+    }%
+  }}%
+}
+\newcommand{\adjunction}[4]{
+    {#3}
+    \underset{#2}{\overset{#1}{\adjtemp}}
+    {#4}
+}

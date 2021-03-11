@@ -127,14 +127,14 @@
          id="rect"
          style="fill:blue;"
          usecurrent="1"
-         width="620"
-         height="320"
-         ry="0" />
+         width="12"
+         height="12"
+         ry="6" />
       <eventcontext
          id="3dbox"
          style="stroke:none;stroke-linejoin:round;"
          usecurrent="1"
-         persp="perspective835">
+         persp="perspective839">
         <side
            id="XYfront"
            style="fill:#8686bf;stroke:none;stroke-linejoin:round;"
@@ -163,11 +163,12 @@
       <eventcontext
          id="arc"
          style="fill:red;"
-         end="0"
-         start="0"
+         end="287.999"
+         start="289.384"
          usecurrent="1"
-         rx="50"
-         ry="35" />
+         rx="115"
+         ry="95"
+         arc_type="1" />
       <eventcontext
          id="star"
          magnitude="5"
@@ -177,7 +178,8 @@
          id="spiral"
          style="fill:none;stroke:black"
          expansion="1"
-         usecurrent="0" />
+         usecurrent="0"
+         revolution="3" />
     </group>
     <group
        id="freehand"
@@ -315,7 +317,7 @@
        id="lpetool"
        mode="drag"
        style="fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:none;"
-       unit="px"
+       unit="mm"
        show_bbox="1" />
     <eventcontext
        id="text"
@@ -324,7 +326,7 @@
        font_sample="AaBbCcIiPpQq12369$\342\202\254\302\242?.;/()"
        show_sample_in_list="1"
        use_svg2="1"
-       style="fill:black;fill-opacity:1;line-height:1.25;stroke:none;font-family:sans-serif;font-style:normal;font-weight:normal;font-size:40px;"
+       style="line-height:1.25;font-family:sans-serif;font-size:40px;word-spacing:0px"
        selcue="1" />
     <eventcontext
        id="nodes"
@@ -334,15 +336,15 @@
        pathflash_unselected="0"
        pathflash_timeout="500"
        show_handles="1"
-       show_outline="0"
+       show_outline="1"
        sculpting_profile="1"
        single_node_transform_handles="0"
-       show_transform_handles="0"
+       show_transform_handles="1"
        live_outline="1"
        live_objects="1"
        show_helperpath="0"
-       x="101.64"
-       y="261.496"
+       x="452.416"
+       y="80.3904"
        edit_clipping_paths="0"
        edit_masks="0" />
     <eventcontext
@@ -400,11 +402,13 @@
     <eventcontext
        id="paintbucket"
        style="fill:#a0a0a0;stroke:none;"
-       usecurrent="1" />
+       usecurrent="1"
+       threshold="15"
+       selcue="0" />
     <group
        id="measure"
-       measure-start="358,439"
-       measure-end="357,288"
+       measure-start="1056.85,134.685"
+       measure-end="1136.85,174.685"
        fontsize="10" />
   </group>
   <group
@@ -535,7 +539,7 @@
        panel_mode="1"
        panel_ratio="100"
        panel_wrap="0"
-       palette="Inkscape default"
+       palette="LaTeX Beamer"
        panel_border="0" />
   </group>
   <group
@@ -551,11 +555,18 @@
        h="1"
        visible="1"
        state="2"
-       placement="1" />
+       placement="2" />
     <group
        id="filtereffects" />
     <group
-       id="textandfont" />
+       id="textandfont"
+       x="0"
+       y="0"
+       w="1"
+       h="1"
+       visible="1"
+       state="2"
+       placement="1" />
     <group
        id="transformation"
        applyseparately="0" />
@@ -573,15 +584,22 @@
     <group
        id="documentoptions"
        state="1"
-       x="32"
-       y="872"
+       x="353"
+       y="40"
        w="624"
-       h="676"
+       h="832"
        visible="0"
        placement="1" />
     <group
        id="preferences"
-       state="1" />
+       state="1"
+       page="18"
+       x="1581"
+       y="1153"
+       w="918"
+       h="934"
+       visible="0"
+       placement="1" />
     <group
        id="gradienteditor" />
     <group
@@ -594,9 +612,17 @@
        id="export"
        default=""
        append_extension="1"
-       path="">
+       path=""
+       x="0"
+       y="0"
+       w="382"
+       h="489"
+       visible="0"
+       state="2"
+       placement="1">
       <group
-         id="exportarea" />
+         id="exportarea"
+         value="drawing" />
       <group
          id="defaultxdpi" />
     </group>
@@ -605,7 +631,7 @@
        default="org.inkscape.output.svg.inkscape"
        append_extension="1"
        enable_preview="1"
-       path="/home/zack/SparkleShare/github.com/Notes/Class_Notes/2020/Spring/Moduli Spaces/sections/figures"
+       path="/home/zack/SparkleShare/github.com/Notes/Class_Notes/2021/Spring/FourManifolds/figures"
        use_current_dir="1" />
     <group
        id="save_copy"
@@ -616,7 +642,7 @@
     <group
        id="open"
        enable_preview="1"
-       path="/home/zack/SparkleShare/github.com/Notes/Class_Notes/2020/Spring/Moduli Spaces/figures/" />
+       path="/home/zack/SparkleShare/github.com/Notes/Class_Notes/2021/Spring/FourManifolds/sections/figures/" />
     <group
        id="import"
        enable_preview="1"
@@ -656,7 +682,13 @@
        id="extensioneditor" />
     <group
        id="trace"
-       state="1" />
+       state="1"
+       x="1764"
+       y="1399"
+       w="551"
+       h="442"
+       visible="0"
+       placement="1" />
     <group
        id="script" />
     <group
@@ -665,6 +697,18 @@
        id="colorpickerwindow" />
     <group
        id="undo-history" />
+    <group
+       id="objectattr"
+       y="0"
+       w="378"
+       h="1"
+       visible="1"
+       state="2"
+       placement="1">
+      <group
+         id=""
+         x="0" />
+    </group>
   </group>
   <group
      id="printing">
@@ -943,6 +987,9 @@
     <group
        id="font"
        unitType="2" />
+    <group
+       id="middlemousezoom"
+       value="1" />
   </group>
   <group
      id="extensions"
@@ -960,12 +1007,12 @@
      net.texample.tools.svg.export_tikz.effect.indent="0" />
   <group
      id="desktop"
-     style="stroke-width:1.88976378;fill:none;fill-rule:evenodd;stroke:#c000ac;fill-opacity:0.61406922;stroke-dashoffset:0.09999987;font-size:13.33333333px">
+     style="stroke-width:1.88976378;fill:#f4cece;fill-rule:evenodd;font-size:13.33333333px;stroke-linejoin:round">
     <group
-       width="746"
-       height="480"
-       x="636"
-       y="369"
+       width="1920"
+       height="1080"
+       x="-1"
+       y="-1"
        fullscreen="0"
        id="geometry"
        maximized="0" />
