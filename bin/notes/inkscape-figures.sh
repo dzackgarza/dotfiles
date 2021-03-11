@@ -45,11 +45,11 @@ if [ "$choice" == "New_Inkscape" ]; then
   cp "$DOTFILES_ROOT/bin/notes/inkscape_template.svg" "$OUTFILE.svg";
   inkscape "$OUTFILE.svg" > /dev/null 2>&1;
   inkscape -D "$OUTFILE.svg" -o "$OUTFILE.pdf" --export-latex > /dev/null 2>&1;
+  FILENAME=$(basename -- "$OUTFILE")
 read -r -d '' OUT_STR<< EOM
 \begin{tikzpicture}
-\node (node_one) at (0,0) {
-  \includegraphics{$(realpath "$OUTFILE")}
-};
+\fontsize{45pt}{1em} 
+\node (node_one) at (0,0) { \import{$FIG_DIR}{$FILENAME.pdf_tex} };
 \end{tikzpicture}
 EOM
   echo "$OUT_STR";

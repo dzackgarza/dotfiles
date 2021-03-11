@@ -5,9 +5,7 @@ local __author__ = 'Daniel Lindsley'
 local __version__ = 'scm-1'
 local __license__ = 'BSD'
 
-
 local index_table = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
-
 
 function to_binary(integer)
     local remaining = tonumber(integer)
@@ -30,7 +28,6 @@ end
 function from_binary(bin_bits)
     return tonumber(bin_bits, 2)
 end
-
 
 function to_base64(to_encode)
     local bit_pattern = ''
