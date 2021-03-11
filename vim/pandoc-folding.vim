@@ -20,6 +20,14 @@ function! CustomPandocFold()
       return "a1"
     elseif match(thisline, '^\:\:\:{\.remark') >= 0
       return "a1"
+    elseif match(thisline, '^\:\:\:{\.answer') >= 0
+      return "a1"
+    elseif match(thisline, '^\:\:\:{\.question') >= 0
+      return "a1"
+    elseif match(thisline, '^\:\:\:{\.conjecture') >= 0
+      return "a1"
+    elseif match(thisline, '^\:\:\:{\.observation') >= 0
+      return "a1"
     elseif match(thisline, '^\:\:\:{\.theorem') >= 0
       return "a1"
     elseif match(thisline, '^\:\:\:{\.proof') >= 0

@@ -453,7 +453,6 @@ iabbrev lmabda lambda
 iabbrev Wely Weyl
 iabbrev rhi phi
 iabbrev lamda lambda
-iabbrev nbhd neighborhood
 iabbrev tp to
 iabbrev Cech Čech
 iabbrev corss cross
@@ -461,6 +460,8 @@ iabbrev Neron Néron
 iabbrev abelain abelian
 iabbrev noetherian Noetherian
 iabbrev artinian Artinian
+iabbrev poincare Poincaré
+iabbrev Poincare Poincaré
 " }}}
 
 " Quit is only Nerdtree + one other pane is open?

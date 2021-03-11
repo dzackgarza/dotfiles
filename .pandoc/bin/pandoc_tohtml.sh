@@ -93,7 +93,6 @@ cat "$TMP_DIR/combined.temp" | pandoc \
   --self-contained \
   --number-section \
   --filter=pandoc-crossref \
-  --lua-filter=$PANDOC_DIR/filters/hide_solutions_html.lua \
   --lua-filter=$PANDOC_DIR/filters/tikzcd.lua \
   --lua-filter=$PANDOC_DIR/filters/replace_symbols_html.lua \
   --lua-filter=$PANDOC_DIR/filters/convert_math_delimiters.lua \

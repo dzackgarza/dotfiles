@@ -1,8 +1,13 @@
+\newcommand\hmmax{0}
+\newcommand\bmmax{0}
 \usepackage{stackrel}
 \usepackage{array}
-\usepackage{mathtools}
-\usepackage{amsmath, amsthm, amssymb, amsfonts, amsxtra, amscd, thmtools, xpatch}
-\usepackage{calligra, mathrsfs}
+\usepackage{mathtools, amsthm, amssymb, amsxtra, amscd, thmtools, xpatch}
+\usepackage{calligra, mathrsfs, accents}
+
+\usepackage{marvosym}
+\newcommand\contradiction[0]{\text{\Lightning}}
+
 \usepackage{colonequals}
 
 \usepackage{color}
@@ -18,6 +23,16 @@
 \newunicodechar{∞}{\infty}
 
 \usepackage{lmodern}
+
+% Inkscape figures from Vim
+\usepackage{import}
+\usepackage{pdfpages}
+\usepackage{transparent}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./figures/}{#1.pdf_tex}
+}
 
 % Tikz 
 \usepackage{tikz}
@@ -40,9 +55,11 @@
 
 % MnSymbol. Undefines lhook for some reason.
 % \udots: SW to NE
-\let\originallhook\lhook
-\usepackage{MnSymbol}% More dots
-\let\lhook\originallhook
+%\let\originallhook\lhook
+%\usepackage{MnSymbol}% More dots
+%\let\lhook\originallhook
+\usepackage{mathdots}
+\newcommand\udots{\iddots}
 
 % Optional arguments in macro definitions
 \usepackage{xargs}
@@ -51,12 +68,15 @@
 \usepackage{cancel}
 
 % Better indicator function
-\usepackage{bbm}
+\DeclareMathAlphabet{\mathbbm}{U}{bbm}{m}{n}% from bbm.sty
 \newcommand{\indic}[1]{\mathbbm{1}\left[#1\right]}
+\newcommand{\one}[0]{\mathbbm{1}}
 \newcommand{\bbone}[0]{\mathbbm{1}}
 
-% ? I forget
-\usepackage{stmaryrd}
+% Mapsfrom
+%\usepackage{stmaryrd}
+\newcommand\mapsfrom{\mathrel{\reflectbox{\ensuremath{\mapsto}}}}
+
 % Better delimiters
 %\DeclarePairedDelimiter\qty{(}{)}
   \newcommand{\qty}[1]{\left( {#1} \right)}

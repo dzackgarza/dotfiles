@@ -12,46 +12,43 @@
   <int name="eraseOnImage" value="0" />
   <int name="inputSimplify" value="4" />
   <int name="inputSmoothing" value="8" />
-  <int name="lastUpdateCheck" value="1610644394" />
-  <int name="mouseMode" value="1" />
-  <int name="pageColor" value="-2102820" />
+  <int name="lastUpdateCheck" value="1614736595" />
   <int name="penType" value="11" />
   <int name="reopenLastDoc" value="1" />
-  <int name="ruleColor" value="1161077996" />
+  <int name="ruleColor" value="2130706687" />
   <int name="sRGB" value="0" />
   <int name="savePicScaled" value="0" />
   <int name="screenDPI" value="30" />
   <int name="showAdvPrefs" value="1" />
   <int name="singleTouchMode" value="1" />
-  <int name="splitLayout" value="1" />
-  <int name="strokeCounter" value="3" />
+  <int name="strokeCounter" value="187" />
   <int name="thumbFirstPage" value="1" />
   <int name="thumbnailSize" value="110" />
-  <float name="marginLeft" value="35" />
-  <float name="pageHeight" value="1056" />
+  <float name="marginLeft" value="30" />
+  <float name="pageHeight" value="3855" />
   <float name="pageSpacing" value="40" />
-  <float name="pageWidth" value="1896" />
+  <float name="pageWidth" value="982" />
   <float name="preScale" value="1.73333001" />
-  <float name="xRuling" value="45" />
-  <float name="yRuling" value="45" />
+  <float name="xRuling" value="30" />
+  <float name="yRuling" value="30" />
   <string name="clippingDoc" value="/home/zack/.config/styluslabs/saved/clippings.html" />
-  <string name="currFolder" value="/home/zack/Dropbox/WriteNotes/1113/Section 1/" />
+  <string name="currFolder" value="/home/zack/SparkleShare/github.com/Notes/Class_Notes/2020/Talks/GSTopology/GSS/Talk 2 Morse Theory/" />
   <string name="docFileExt" value="html" />
   <string name="newDocTitleFmt" value="%b %e %Hh%M" />
-  <string name="recentDocs" value="/home/zack/Dropbox/WriteNotes/1113/Section 1/Jan 14 Friday S1.html:::/home/zack/Dropbox/WriteNotes/Jan  7 04h49.html:::/tmp/fc76a88a9c4ffbcc140d5c01efaad89c95098108.svg:::/home/zack/Dropbox/WriteNotes/Android/Dec 22 22h03.html:::/home/zack/Dropbox/WriteNotes/Android/Dec 20 14h31.html:::/home/zack/Dropbox/WriteNotes/Android/Dec 13 23:40.html:::/home/zack/Dropbox/WriteNotes/Android/Dec 15 17:51.html:::/home/zack/Dropbox/WriteNotes/Android/Dec 18 17h35.html:::/home/zack/Dropbox/WriteNotes/Android/Dec 18 01h53.html:::/home/zack/Dec 11 22h36.html:::/home/zack/Analysis Problems.html" />
+  <string name="recentDocs" value="/home/zack/SparkleShare/github.com/Notes/Class_Notes/2020/Talks/GSTopology/GSS/Talk 2 Morse Theory/Live Notes.html:::/home/zack/Dropbox/WriteNotes/Seminars/Stable Hty/Talk 1/Mar  6 23h41.html:::/home/zack/website/courses/2021/Spring/1113/Solutions/Quizzes/Quiz_5_Solutions.html:::/home/zack/website/courses/2021/Spring/1113/Solutions/Unit2/3.4_Preclass.html:::/home/zack/website/courses/2021/Spring/1113/Solutions/Unit2/3.2_Preclass.html:::/home/zack/Dropbox/WriteNotes/1113/Solutions/Exam1.html:::/home/zack/website/courses/2021/Spring/1113/Solutions/Quizzes/Test1.svgz:::/home/zack/Dropbox/Teaching/Solutions/Quizzes/Quiz_5_Solutions.html:::/home/zack/Dropbox/WriteNotes/Quals/Analysis/Feb 28 11h58.html:::/home/zack/Dropbox/WriteNotes/1113/Solutions/Test1_Recorded_Solns.svgz:::/home/zack/Dropbox/WriteNotes/1113/Lectures/Feb 22 10h19.html" />
   <string name="savedColors" value="#FF000000,#FFFF0000,#FF008000,#FF0000FF" />
   <string name="savedWidths" value="1.400,2.400,4.000,8.000" />
   <string name="syncServer" value="localhost" />
   <string name="toolBars" value="docTitle,stretch,separator,action_Previous_Page,action_Next_Page,separator,actionInsert_Space,actionShow_Clippings,actionTools_Menu,separator,actionShow_Bookmarks,actionShare_Document,actionOverflow_Menu;actionDraw,actionCustom_Pen,actionStroke_Eraser,actionFree_Eraser,penColor,penWidth,stretch" />
   <string name="toolBars2" value="docTitle,stretch,actionSave,separator,tools,separator,undoRedoBtn,separator,seltools,separator,actionShow_Bookmarks,actionShow_Clippings,actionSplitView,separator,actionOverflow_Menu" />
   <string name="toolModes" value="14 20 25 23" />
-  <string name="windowState" value="10 41 1900 1029 1 0" />
+  <string name="windowState" value="1286 42 623 1027 0 1" />
   <pen color="4278190080" width="4" pressure="1" flags="0" />
   <pen color="4278190258" width="4" pressure="1" flags="0" />
   <pen color="4283150181" width="4" pressure="1" flags="0" />
   <pen color="4291119450" width="4" pressure="1" flags="0" />
   <pen color="4290733131" width="4" pressure="1" flags="0" />
-  <pen color="4290815565" width="4" pressure="1" flags="0" />
+  <pen color="4294967295" width="40" pressure="1" flags="1" />
   <pen color="4283088346" width="4" pressure="1" flags="0" />
   <pen color="2298531584" width="140" pressure="1" flags="1" />
 </map>

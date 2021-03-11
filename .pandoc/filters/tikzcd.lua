@@ -15,11 +15,17 @@ local tikz_doc_template = [[
 
 if FORMAT:match 'latex' or FORMAT:match 'pdf' or FORMAT:match 'markdown' then
   function RawBlock(el)
+    --tprint(el)
     if not starts_with('\\begin{tikzcd}', el.text) and not starts_with('\\begin{tikzpicture}', el.text) then
+      --print("Doesn't start with tikzcd or tikzpicture")
+      return el
+    elseif starts_with('\\begin{tikzpicture}', el.text) then
+      el.text = "\\begin{figure}\n\\centering\n\\resizebox{\\columnwidth}{!}{%\n" .. el.text .. "\n}\n\\end{figure}"
+      return el
+    else
+      el.text = "\\begin{center}\n" .. el.text .. "\n\\end{center}"
       return el
     end
-    el.text = "\\begin{center}\n" .. el.text .. "\n\\end{center}"
-    return el
   end
 end
 
@@ -60,7 +66,11 @@ if FORMAT:match 'html' then
         -- Success!
       end)
     end
-    ril = pandoc.RawInline('html', '<p style="text-align:center;"> <img class="tikz" src="' .. fname .. '"></p>')
+    if starts_with('\\begin{tikzcd}', el.text) then
+      ril = pandoc.RawInline('html', '<p style="text-align:center;"> <img class="tikzcd" src="' .. fname .. '"></p>')
+    else
+      ril = pandoc.RawInline('html', '<p style="text-align:center;"> <img class="tikzpic" src="' .. fname .. '"></p>')
+    end
     return pandoc.Para(ril)
   end
 end

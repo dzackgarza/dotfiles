@@ -1,22 +1,22 @@
 output DP-1
 off
-output HDMI-1
-crtc 1
-gamma 0.769:0.769:0.714
-mode 1920x1080
-pos 0x0
-rate 60.00
-rotate left
 output DVI-I-1-1
 crtc 3
 gamma 0.769:0.769:0.714
 mode 1920x1080
-pos 1080x0
+pos 1920x0
+rate 60.00
+rotate right
+output HDMI-1
+crtc 1
+gamma 0.769:0.769:0.714
+mode 1920x1080
+pos 0x485
 rate 60.00
 output eDP-1
 crtc 0
 gamma 0.769:0.769:0.714
 mode 1920x1080
-pos 1080x1080
+pos 3000x485
 primary
 rate 60.05
