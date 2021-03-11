@@ -30,15 +30,21 @@ $for(header-includes)$
 $header-includes$
 $endfor$
 
+$for(css)$
+<link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
+$endfor$
+
 </head>
 <body>
 
 <header>
+<h1>MakeMeAQual University</h1>
+<h3>Department of Mathematics</h2>
+<h2>PhD Qualifying Examination</h2> 
+<h2>in Mathematics</h2>
 $if(date)$
 <h3 class="date">$date$</h3>
 $endif$
-<h1 class="title">MakeMeAQual University</h1>
-
 </header>
 
 $body$
