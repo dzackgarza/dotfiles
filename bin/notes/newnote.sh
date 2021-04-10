@@ -2,7 +2,7 @@
 
 now=$(date +%H:%M)
 today=$(date +%Y-%m-%d)
-outfile="$NOTES/Quick_Notes/$today.md"
+outfile="$NOTES/Obsidian/Quick_Notes/$today.md"
 
 [[ ! -f $outfile ]] && echo "# $today" > $outfile
 

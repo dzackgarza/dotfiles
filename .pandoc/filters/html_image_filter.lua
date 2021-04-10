@@ -1,4 +1,5 @@
-require "filters/utilities"
+package.path = '/home/zack/.pandoc/filters' .. package.path
+require "utilities"
 
 function Image (el)
   tprint(el)

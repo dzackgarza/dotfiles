@@ -1,5 +1,6 @@
+
 package.path = '/home/zack/.pandoc/filters/?.lua;'..package.path
-require "utilities"
+require "home/zack/.pandoc/filters/utilities.lua"
 
 local hide_proofs = false
 local kill_proofs = false
