@@ -3,7 +3,13 @@
 \newcommand{\dy}{\,dy}
 \newcommand{\ds}{\,ds}
 \newcommand{\dz}{\,dz}
+\newcommand{\barz}{\bar{z} }
+\newcommand{\dzbar}{\,d\bar{z} }
+\newcommand{\zbar}{\bar{z} }
 \newcommand{\du}{\,du}
+\newcommand{\dw}{\,dw}
+\newcommand{\dV}{\,dV}
+\newcommand{\T}{\mathrm{T}}
 \newcommand{\open}[1]{\overset{\circ}{#1}}
 \newcommand{\textoperatorname}[1]{
   \operatorname{\textnormal{#1}}
@@ -30,6 +36,7 @@
 \newcommand{\bbm}[0]{{\mathbb{M}}}
 \newcommand{\NN}[0]{{\mathbb{N}}}
 \newcommand{\OP}[0]{{\mathbb{OP}}}
+\newcommand{\LL}[0]{{\mathbb{L}}}
 \newcommand{\PP}[0]{{\mathbb{P}}}
 \newcommand{\QQ}[0]{{\mathbb{Q}}}
 \newcommand{\RP}[0]{{\mathbb{RP}}}
@@ -38,6 +45,9 @@
 \renewcommand{\SS}[0]{{\mathbb{S}}}
 \newcommand{\TT}[0]{{\mathbb{T}}}
 \newcommand{\ZZ}[0]{{\mathbb{Z}}}
+\newcommand{\ZZG}[0]{{\mathbb{Z}G}}
+\newcommand{\ZZH}[0]{{\mathbb{Z}H}}
+\newcommand{\kG}[0]{{kG}}
 \newcommand{\znz}[0]{\mathbb{Z}/n\mathbb{Z}}
 \newcommand{\zpz}[0]{\mathbb{Z}/p\mathbb{Z}}
 \newcommand{\zlz}[0]{\mathbb{Z}/\ell\mathbb{Z}}
@@ -56,6 +66,8 @@
 \newcommand{\ZHB}[0]{\operatorname{ZHB}}
 \newcommand{\QHB}[0]{\operatorname{QHB}}
 \newcommand{\ks}[0]{\operatorname{ks}}
+\newcommand{\lk}[0]{\operatorname{lk}}
+\newcommand{\nd}[0]{\operatorname{nd}}
 \newcommand{\Arg}[0]{\operatorname{Arg}}
 \newcommand{\PGL}[0]{\operatorname{PGL}}
 \newcommand{\GL}[0]{\operatorname{GL}}
@@ -68,7 +80,7 @@
 \newcommand{\Hilb}[0]{\operatorname{Hilb}}
 \newcommand{\Quot}[0]{\operatorname{Quot}}
 \newcommand{\Art}[0]{\operatorname{Art}}
-\newcommand{\red}[0]{\operatorname{red}}
+\newcommand{\red}[0]{{ \text{red} }}
 \newcommand{\Pic}[0]{{\operatorname{Pic}}}
 \newcommand{\lcm}[0]{\operatorname{lcm}}
 \newcommand{\maps}[0]{\operatorname{Maps}}
@@ -92,8 +104,9 @@
 \newcommand{\HP}[0]{{\operatorname{HP}}}
 \newcommand{\TP}[0]{{\operatorname{TP}}}
 \newcommand{\HC}[0]{{\operatorname{HC}}}
-\newcommand{\HH}[0]{{\operatorname{HH}}}
-\newcommand{\THH}[0]{{\operatorname{THH}}}
+\newcommand{\HH}[0]{{\mathbb{H}}}
+\newcommand{\HoH}[0]{{\operatorname{HH}}}
+\newcommand{\THoH}[0]{{\operatorname{THH}}}
 \newcommand{\GW}[0]{{\operatorname{GW}}}
 \newcommand{\TCH}[0]{{\operatorname{TCH}}}
 \newcommand{\Zar}[0]{{\mathrm{Zar}}}
@@ -156,6 +169,7 @@
 \newcommand{\Sch}[0]{{\mathsf{Sch}}}
 \newcommand{\sch}[0]{{\mathsf{Sch}}}
 \newcommand{\rmod}[0]{{\mathsf{R}\dash\mathsf{Mod}}}
+\newcommand{\zmod}[0]{{\mathbb{Z}\dash\mathsf{Mod}}}
 \newcommand{\modr}[0]{{\mathsf{Mod}\dash\mathsf{R}}}
 \newcommand{\mmod}[0]{{\dash\mathsf{Mod}}}
 \newcommand{\mods}[1]{{\mathsf{#1}\dash\mathsf{Mod}}}
@@ -194,7 +208,12 @@
 \newcommand{\tors}[0]{{\operatorname{tors}}}
 \newcommand{\tor}[0]{\operatorname{Tor}}
 \newcommand{\height}[0]{\operatorname{ht}}
-\newcommand{\cpt}[0]{\operatorname{compact}}
+\newcommand{\cpt}[0]{{ \text{compact} } }
+\newcommand{\Kah}[0]{{ \text{Kähler} } }
+\newcommand{\oriented}[0]{{ \text{oriented} } }
+\newcommand\compact[0]{\text{cpt}}
+\newcommand\Kahler[0]{\text{Kähler}}
+\newcommand\hyp[0]{\text{hyp}}
 \newcommand{\abs}[1]{{\left\lvert {#1} \right\rvert}}
 \newcommand{\stack}[1]{\mathclap{\substack{ #1 }}} 
 \newcommand{\qtext}[1]{{\quad \operatorname{#1} \quad}}
@@ -204,10 +223,13 @@
 \newcommand{\bd}[0]{{\del}}
 \newcommand{\bigast}[0]{{\mathop{\text{\Large $\ast$}}}}
 \newcommand{\convolve}[0]{\ast}
+\newcommand{\freeprod}[0]{\ast}
+\newcommand{\Spinc}[0]{\mathrm{Spin}^{\mathbb{C} }}
 \newcommand{\coker}[0]{\operatorname{coker}}
 \newcommand{\Mor}[0]{\operatorname{Mor}}
 \newcommand{\cone}[0]{\operatorname{cone}}
 \newcommand{\cok}[0]{\operatorname{coker}}
+\newcommand{\PD}[0]{\mathrm{PD}}
 \newcommand{\conjugate}[1]{{\overline{{#1}}}}
 \newcommand{\conj}[1]{{\overline{{#1}}}}
 \newcommand{\converges}[1]{\overset{#1}}
@@ -254,6 +276,7 @@
 \newcommand{\mfp}[0]{{\mathfrak{p}}}
 \newcommand{\mfq}[0]{{\mathfrak{q}}}
 \newcommand{\mfr}[0]{{\mathfrak{r}}}
+\newcommand{\mfs}[0]{{\mathfrak{s}}}
 \newcommand{\lieb}[0]{{\mathfrak{b}}}
 \newcommand{\liegl}[0]{{\mathfrak{gl}}}
 \newcommand{\lieg}[0]{{\mathfrak{g}}}
@@ -278,6 +301,7 @@
 \newcommand{\injects}[0]{\hookrightarrow}
 \newcommand{\diagonal}[0]{\Delta}
 \newcommand{\embeds}[0]{\hookrightarrow}
+\newcommand{\embedsvia}[1]{\xhookrightarrow{#1}}
 \newcommand{\injectsvia}[1]{\overset{#1}\injects}
 \newcommand{\surjects}[0]{\twoheadrightarrow}
 \newcommand{\surjectsvia}[2][]{
@@ -329,12 +353,17 @@
 \newcommand{\hilb}[0]{\operatorname{Hilb}}
 \newcommand{\minpoly}[0]{{\operatorname{minpoly}}}
 \newcommand{\Frame}[0]{{\operatorname{Frame}}}
+\newcommand{\Fr}[0]{{\operatorname{Fr}}}
+\newcommand{\prin}[0]{{\operatorname{Prin}}}
 \newcommand{\Taut}[0]{{\operatorname{Taut}}}
 \newcommand{\OFrame}[0]{{\operatorname{OFrame}}}
 \newcommand{\UFrame}[0]{{\operatorname{UFrame}}}
 \newcommand{\smooth}[0]{{\operatorname{sm}}}
 \newcommand{\Hom}[0]{{\operatorname{Hom}}}
-\newcommand{\shom}{\mathscr{H}\operatorname{\kern -3pt {\calligra\large om}}}
+\newcommand{\shom}{ {\mathcal{H}}\kern-0.5pt{\operatorname{om}}}
+\newcommand{\Hsh}{{ \mathcal{H} }}
+\newcommand{\CY}{{ \text{CY} }}
+\newcommand{\FS}{{ \text{FS} }}
 \newcommand{\HHom}{\mathscr{H}\kern-2pt\operatorname{om}}
 \newcommand{\Map}[0]{{\operatorname{Map}}}
 \newcommand{\multinomial}[1]{\left(\!\!{#1}\!\!\right)}
@@ -382,7 +411,8 @@
 \newcommand{\Wedgeprod}[0]{\bigvee}
 \newcommand{\Vee}[0]{\bigvee}
 \newcommand{\tensor}[0]{\otimes}
-\newcommand{\connectsum}[0]{\mathop{ \text{\Large \#} }}
+\newcommand\mypound{\scalebox{0.8}{\raisebox{0.4ex}{\#}}}
+\newcommand{\connectsum}[0]{\mathop{ \Large\mypound }}
 \newcommand{\theset}[1]{\left\{{#1}\right\}}
 \newcommand{\ts}[1]{\left\{{#1}\right\}}
 \newcommand{\infsum}[1]{\sum_{{#1=0}}^\infty}
@@ -411,7 +441,7 @@
 \renewcommand{\qed}[0]{\hfill\blacksquare}
 \renewcommand{\too}[0]{\longrightarrow}
 \renewcommand{\vector}[1]{\mathbf{#1}}
-\newcommand{\complex}[1]{{#1}^{\wait}}
+\newcommand{\complex}[1]{{#1}_{*}}
 \newcommand*\dif{\mathop{}\!\operatorname{d}}
 \newcommand{\ddt}{\tfrac{\dif}{\dif t}}
 \newcommand{\ddx}{\tfrac{\dif}{\dif x}}
@@ -434,14 +464,11 @@
 \DeclareMathOperator*{\mapbackforth}{\rightleftharpoons}
 \DeclareMathOperator*{\eq}{=}
 \DeclareMathOperator{\Endo}{End}
-\DeclareMathOperator{\Ind}{Ind}
-\DeclareMathOperator{\ind}{Ind}
-\DeclareMathOperator{\coind}{Coind}
 \DeclareMathOperator{\proj}{Proj}
 \DeclareMathOperator{\Proj}{Proj}
-\DeclareMathOperator{\res}{Res}
-\DeclareMathOperator{\Res}{Res}
 \DeclareMathOperator{\Hol}{Hol}
+\DeclareMathOperator{\Bun}{Bun}
+\DeclareMathOperator{\BiHol}{BiHol}
 \DeclareMathOperator{\Br}{Br}
 \DeclareMathOperator{\coh}{coh}
 \DeclareMathOperator{\colspace}{colspace}
@@ -452,6 +479,7 @@
 \DeclareMathOperator{\nullity}{nullspace}
 \DeclareMathOperator{\projection}{Proj}
 \DeclareMathOperator{\Der}{Der}
+\DeclareMathOperator{\len}{len}
 \newcommand{\Suchthat}[0]{\middle\vert}
 \newcommand{\suchthat}[0]{{~\mathrel{\Big|}~}}
 \newcommand{\delbar}[0]{\bar{\del}}
@@ -478,11 +506,13 @@
 \newcommand\ul[1]{\underline{#1}}
 \newcommand\constantsheaf[1]{\underline{#1}}
 \newcommand\holomorphic[0]{\text{holo}}
+\newcommand\std[0]{\text{std}}
 \newcommand\Mero[0]{\operatorname{Mero}}
-\newcommand\compact[0]{\text{cpt}}
 \newcommand\even[0]{\text{even}}
 \newcommand\odd[0]{\text{odd}}
 \newcommand\hodgestar[0]{\star}
+\newcommand\stardstar[0]{\hodgestar {d} \mkern-5mu \hodgestar}
+\newcommand\covariant[0]{\nabla}
 \newcommand\ol[1]{\overline{#1}}
 \newcommand\univcover[1]{\overline{#1}}
 \newcommand\closure[1]{\overline{#1}}
@@ -509,6 +539,7 @@
 \newcommand{\zadjoin}[1]{\mathbb{Z}\left[ {#1} \right]}
 \newcommand{\Wedgepower}[0]{\bigwedge\nolimits}
 \newcommand{\Bl}[0]{\operatorname{Bl}}
+\newcommand{\Triv}[0]{{ \operatorname{Triv}}}
 \def\multichoose#1#2{{\left(\kern-.3em\left(\genfrac{}{}{0pt}{}{#1}{#2}\right)\kern-.3em\right)}}
 \newcommand\elts[2]{{ {#1}_1, {#1}_2, \cdots, {#1}_{#2}}}
 
@@ -516,5 +547,22 @@
 \newcommand{\Totsum}[0]{\Tot^{\oplus}}
 \newcommand{\Totprod}[0]{\Tot^{\Pi}}
 \newcommand{\equalsbecause}[1]{\overset{#1}{=}}
+\newcommand{\congbecause}[1]{\overset{#1}{\cong}}
 \newcommand{\ideal}[1]{\mathcal{#1}}
 \newcommand{\forget}[0]{\mathrm{Forget}}
+\newcommand{\adjoin}[1]{ { \left[ {#1} \right] } }
+
+
+\newcommand{\cores}[0]{\operatorname{cores}}
+\newcommand{\res}[0]{\operatorname{res}}
+\newcommand{\Res}[0]{\operatorname{Res}}
+\newcommand{\infl}[0]{\operatorname{inf}}
+\newcommand{\coinfl}[0]{\operatorname{coinf}}
+\newcommand{\ind}[0]{\operatorname{ind}}
+\newcommand{\Ind}[0]{\operatorname{Ind}}
+\newcommand{\Coind}[0]{\operatorname{coInd}}
+
+\newcommand{\submfds}{\operatorname{SubMfds}}
+
+\newcommand{\quotright}[2]{ {}^{#1}\mkern-2mu/\mkern-2mu_{#2} }
+\newcommand{\quotleft}[2]{ {}_{#2}\mkern-.5mu\backslash\mkern-2mu^{#1} }

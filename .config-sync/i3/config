@@ -26,6 +26,7 @@ bindsym $mod+L exec dmenu_locate.sh
 bindsym $mod+D exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -width 30 -show -i -dmenu -font "Clear Sans Regular 12"'
 bindsym Print exec "unclutter -idle 0 & flameshot gui; pkill unclutter"
 bindsym $mod+N exec termite --title=notetaker_window -e /home/zack/dotfiles/bin/notes/newnote.sh
+bindsym $mod+M exec termite --title=notetaker_window -e /home/zack/dotfiles/bin/notes/newcard.sh
 bindsym $mod+P exec "qutebrowser ':scroll-px 0 400'"
 bindsym $mod+O exec "qutebrowser ':scroll-px 0 -400'"
 bindsym F10 exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle 
