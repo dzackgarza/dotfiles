@@ -462,6 +462,8 @@ iabbrev noetherian Noetherian
 iabbrev artinian Artinian
 iabbrev poincare Poincaré
 iabbrev Poincare Poincaré
+iabbrev kahler kähler
+iabbrev Kahler Kähler
 " }}}
 
 " Quit is only Nerdtree + one other pane is open?

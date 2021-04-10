@@ -63,7 +63,7 @@
        state="1" />
     <group
        id="rulers"
-       state="1" />
+       state="0" />
     <group
        id="scrollbars"
        state="1" />
@@ -127,14 +127,14 @@
          id="rect"
          style="fill:blue;"
          usecurrent="1"
-         width="12"
-         height="12"
-         ry="6" />
+         width="260"
+         height="210"
+         ry="0" />
       <eventcontext
          id="3dbox"
          style="stroke:none;stroke-linejoin:round;"
          usecurrent="1"
-         persp="perspective839">
+         persp="perspective850">
         <side
            id="XYfront"
            style="fill:#8686bf;stroke:none;stroke-linejoin:round;"
@@ -166,14 +166,16 @@
          end="287.999"
          start="289.384"
          usecurrent="1"
-         rx="115"
-         ry="95"
+         rx="10"
+         ry="10"
          arc_type="1" />
       <eventcontext
          id="star"
-         magnitude="5"
+         magnitude="4"
          style="fill:yellow;"
-         usecurrent="1" />
+         usecurrent="1"
+         proportion="0.5"
+         isflatsided="1" />
       <eventcontext
          id="spiral"
          style="fill:none;stroke:black"
@@ -343,8 +345,8 @@
        live_outline="1"
        live_objects="1"
        show_helperpath="0"
-       x="452.416"
-       y="80.3904"
+       x="411.249"
+       y="230.39"
        edit_clipping_paths="0"
        edit_masks="0" />
     <eventcontext
@@ -407,8 +409,8 @@
        selcue="0" />
     <group
        id="measure"
-       measure-start="1056.85,134.685"
-       measure-end="1136.85,174.685"
+       measure-start="0,0"
+       measure-end="0,0"
        fontsize="10" />
   </group>
   <group
@@ -551,20 +553,20 @@
        page="0"
        x="0"
        y="0"
-       w="1"
-       h="1"
+       w="378"
+       h="441"
        visible="1"
        state="2"
-       placement="2" />
+       placement="1" />
     <group
        id="filtereffects" />
     <group
        id="textandfont"
        x="0"
        y="0"
-       w="1"
-       h="1"
-       visible="1"
+       w="481"
+       h="329"
+       visible="0"
        state="2"
        placement="1" />
     <group
@@ -584,8 +586,8 @@
     <group
        id="documentoptions"
        state="1"
-       x="353"
-       y="40"
+       x="0"
+       y="0"
        w="624"
        h="832"
        visible="0"
@@ -619,7 +621,7 @@
        h="489"
        visible="0"
        state="2"
-       placement="1">
+       placement="5">
       <group
          id="exportarea"
          value="drawing" />
@@ -631,18 +633,18 @@
        default="org.inkscape.output.svg.inkscape"
        append_extension="1"
        enable_preview="1"
-       path="/home/zack/SparkleShare/github.com/Notes/Class_Notes/2021/Spring/FourManifolds/figures"
+       path="/home/zack/SparkleShare/github.com/Notes/Visualizations/Notes_Covers"
        use_current_dir="1" />
     <group
        id="save_copy"
-       default=""
+       default="org.inkscape.output.svg.inkscape"
        append_extension="1"
        enable_preview="1"
-       path="" />
+       path="/home/zack/SparkleShare/github.com/Notes/Visualizations/Notes_Covers" />
     <group
        id="open"
        enable_preview="1"
-       path="/home/zack/SparkleShare/github.com/Notes/Class_Notes/2021/Spring/FourManifolds/sections/figures/" />
+       path="/home/zack/dotfiles/bin/notes/" />
     <group
        id="import"
        enable_preview="1"
@@ -709,6 +711,16 @@
          id=""
          x="0" />
     </group>
+    <group
+       id="livepatheffect"
+       dialogmode="0"
+       x="0"
+       y="0"
+       w="382"
+       h="493"
+       visible="0"
+       state="2"
+       placement="5" />
   </group>
   <group
      id="printing">
@@ -1004,15 +1016,30 @@
      org.ekips.filter.plot.commandLanguage="HPGL"
      org.ekips.filter.plot.orientation="0"
      net.texample.tools.svg.export_tikz.effect.wrap="0"
-     net.texample.tools.svg.export_tikz.effect.indent="0" />
+     net.texample.tools.svg.export_tikz.effect.indent="0"
+     org.inkscape.render.grid_cartesian.border_th_unit="px"
+     org.inkscape.render.grid_cartesian.dx_unit="mm"
+     org.inkscape.render.grid_cartesian.x_div_unit="px"
+     org.inkscape.render.grid_cartesian.dy_unit="mm"
+     org.inkscape.render.grid_cartesian.y_div_unit="px"
+     org.inkscape.render.grid_cartesian.__live_effect__="0"
+     org.inkscape.render.grid_cartesian.x_divs="3"
+     org.inkscape.effect.grid.__live_effect__="0"
+     org.inkscape.effect.grid.xspacing="50"
+     org.inkscape.effect.grid.yspacing="50"
+     org.inkscape.effect.grid.yoffset="7"
+     org.ekips.filter.interp.__live_effect__="0"
+     org.ekips.filter.interp.style="1"
+     org.inkscape.output.pdf.cairorenderer.PDFversion="PDF-1.5"
+     org.inkscape.output.pdf.cairorenderer.textToPath="LaTeX" />
   <group
      id="desktop"
-     style="stroke-width:1.88976378;fill:#f4cece;fill-rule:evenodd;font-size:13.33333333px;stroke-linejoin:round">
+     style="stroke-width:1.0015748;fill:#ebebf6;fill-rule:evenodd;font-size:13.33333333px;stroke-linejoin:round;stroke:#a51d1e;fill-opacity:0.56076854">
     <group
-       width="1920"
-       height="1080"
-       x="-1"
-       y="-1"
+       width="1900"
+       height="1029"
+       x="9"
+       y="40"
        fullscreen="0"
        id="geometry"
        maximized="0" />
