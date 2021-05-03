@@ -10,5 +10,5 @@ while read THISBOOK; do
   BOOKS[$NEWNAME]=$NEWCMD
 done < <(find /home/zack/Dropbox/Library /home/zack/Downloads -type f -iname "*.pdf" -printf '%TY-%Tm-%Td %TT#%p\n' | grep -v Moon | cut -d "#" -f 2) 
 
-choice=$(printf "%s\n" "${!BOOKS[@]}" | dmenu -i)
+choice=$(printf "%s\n" "${!BOOKS[@]}" | dmenu -i )
 [ -z "$choice" ] || nohup okular "${BOOKS[$choice]}" & disown

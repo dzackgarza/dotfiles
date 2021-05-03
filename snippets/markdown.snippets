@@ -29,11 +29,11 @@ $${1}$
 endsnippet
 
 snippet flashcard "Create Ankdown Flashcard"
-Title
+${1:Title}
 %
-Content 
+${2:Content}
 %
-unsorted
+${3:unsorted}
 ---
 endsnippet
 
@@ -393,9 +393,17 @@ ${1}
 
 endsnippet
 
+snippet strat "Strategy"
+
+:::{.strategy}
+${1}
+:::
+
+endsnippet
+
+
 snippet concept "Concept Env"
 
-\envlist
 :::{.concept}
 \envlist
 ${1}
@@ -621,3 +629,13 @@ snippet md_table_entry "Markdown Table Entry"
 endsnippet
 
 
+snippet details "Details Toggle"
+<details markdown="1">
+
+<summary>
+${1}
+</summary>
+${2}
+</details>
+
+endsnippet

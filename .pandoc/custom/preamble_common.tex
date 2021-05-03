@@ -91,6 +91,11 @@
 \newcommand{\done}[0]{\scalebox{0.75}{✨}}
 \newcommand{\work}[0]{\scalebox{0.75}{🚩}}
 
+\DeclareFontFamily{U}{wncy}{}
+\DeclareFontShape{U}{wncy}{m}{n}{<->wncyr10}{}
+\DeclareSymbolFont{mcy}{U}{wncy}{m}{n}
+\DeclareMathSymbol{\Sha}{\mathord}{mcy}{"58}
+
 % Everything else
 \input{tikzmacros.tex}
 \input{latexmacs}
