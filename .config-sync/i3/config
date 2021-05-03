@@ -118,7 +118,7 @@ for_window [class="Nemo"]                               floating enable
 for_window [class="Inkscape"]                           floating enable, move position center
 
 # More floating windows
-for_window [title="notetaker_window"]                   floating enable
+for_window [title="notetaker_window"]                   floating enable, resize set 1600px 700px, move position center
 for_window [window_role="pop-up"]                       floating enable
 for_window [window_role="bubble"]                       floating enable 
 for_window [window_role="task_dialog"]                  floating enable
@@ -226,7 +226,7 @@ exec --no-startup-id mathpix-snipping-tool &
 exec --no-startup-id dunst &
 exec_always --no-startup-id nitrogen --restore &
 exec_always --no-startup-id sleep 1; polybar.sh &
-exec_always --no-startup-id sleep 1; pkill redshift; redshift -x; redshift &
+exec_always --no-startup-id sleep 1; pkill redshift; redshift -x; redshift-gtk &
 exec_always --no-startup-id pkill picom; picom --experimental-backends &
 exec --no-startup-id zotero &
 

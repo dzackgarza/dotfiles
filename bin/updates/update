@@ -39,7 +39,7 @@ command -v fc-cache >/dev/null 2>&1 && fc-cache;
 clr_green "Fonts updated."
 #rehash;
 
-antigen update;
+#antigen update;
 clr_green "Updated ZSH plugins"
 
 #updateAllNotes.sh
@@ -53,5 +53,6 @@ clr_green "Updated ZSH plugins"
 #/home/zack/dotfiles/bin/update_notes_corpus.sh
 #clr_green "Note corpus updated."
 
+update_website_and_notes.sh
 
 clr_blueb "Update completed.";

@@ -39,6 +39,8 @@ Plug 'vim-voom/VOoM'
 Plug 'dzackgarza/quicktex'
 
 Plug 'lervag/vimtex'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 """""""" Ultisnips 
 "Plug 'sirver/ultisnips'
@@ -101,8 +103,8 @@ Plug 'rakr/vim-one'
 Plug 'mileszs/ack.vim'
 
 " Close delimiters
-"Plug 'Raimondi/delimitMate'
-"let delimitMate_matchpairs = "{:}"
+Plug 'Raimondi/delimitMate'
+let delimitMate_matchpairs = "{:},(:),[:]"
 "let delimitMate_quotes = "\" `"
 
 " Style
@@ -157,6 +159,10 @@ inoremap <c-space> <Esc>:w<CR>o
 " Save every time a new line is put in
 "inoremap <CR> <CR><Esc>:wa<CR>i
 nnoremap ZZ :wqa<CR>
+
+nnoremap <C-p> :Files<Cr>
+nnoremap <C-f> :Ag<Cr>
+
 
 " }}}
 
@@ -531,4 +537,6 @@ map <F6> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<
 
 " {{{ Notes 
 "autocmd BufWritePost *note-*.md silent !buildNote.sh %:p
+" Fix resize issue on open
+autocmd VimEnter * :silent exec "!kill -s SIGWINCH $PPID"
 " }}}
