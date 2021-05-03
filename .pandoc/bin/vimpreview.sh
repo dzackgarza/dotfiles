@@ -31,6 +31,7 @@ filename="${filename%.*}"
 first_run=true
 
 #echo "(VP): $files"
+cd "$directory"
 echo "(VP) Rendering: $filepath"
 
 if [ ! -f "$filepath" ]; then
@@ -47,6 +48,7 @@ clean_up() {
 trap clean_up SIGHUP SIGINT SIGTERM 
 
 TMP_DIR=$(mktemp -d -t ci-XXXXXXXXXX);
+echo "(VP) Current directory: $(pwd)";
 echo "(VP) Temp directory: $TMP_DIR";
 
 while true; do

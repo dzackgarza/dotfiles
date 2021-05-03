@@ -45,6 +45,7 @@ debug_print() {
   echo "$1" >> "$BUILD_LOG";
 }
 
+debug_print "Current directory: $TMP_DIR";
 debug_print "Temp Directory: $TMP_DIR";
 
 debug_print "Checking for data file";
@@ -52,7 +53,8 @@ if [ -f "$directory/data.yaml" ]; then
   debug_print "Found data.yaml";
   DATA_FILE="$directory/data.yaml"
 else 
-  debug_print "Data file not found, using default preview data.";
+  debug_print "Data file not found in $directory"
+  debug_print "Using default preview data.";
   DATA_FILE="$PANDOC_DIR/custom/preview_data.yaml";
 fi
 debug_print "Using data file: $DATA_FILE";
@@ -71,8 +73,10 @@ fi
 cp "$BIB_FILE" "$TMP_DIR/$filename.bib";
 #cp -r "$directory/figures" .;
 
+SEDSTR="s/\[\[\([0-9A-Za-z\ ]\{1,\}\)\(\]\]\)/[\1](.\/\1.html)/g"
 
-cat "$filepath" | pandoc_stripmacros.sh > "$TMP_DIR/combined.temp" ;
+
+cat "$filepath" | sed "$SEDSTR" | pandoc_stripmacros.sh > "$TMP_DIR/combined.temp" ;
 
 cat >> "$TMP_DIR/combined.temp" <<- EOM
 
@@ -97,6 +101,7 @@ cat "$TMP_DIR/combined.temp" | pandoc \
   --lua-filter=$PANDOC_DIR/filters/replace_symbols_html.lua \
   --lua-filter=$PANDOC_DIR/filters/convert_math_delimiters.lua \
   --lua-filter=$PANDOC_DIR/filters/convert_amsthm_envs.lua \
+  --lua-filter=$PANDOC_DIR/filters/hide_solutions_html.lua \
   --template=$PANDOC_TEMPLATES/templates/tufte-html-vis.html  \
   --css=$PANDOC_TEMPLATES/marked/kultiad-serif.css \
   --citeproc \

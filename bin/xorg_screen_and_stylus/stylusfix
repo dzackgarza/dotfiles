@@ -16,34 +16,29 @@ xinput set-prop "$screen" --type=float "Coordinate Transformation Matrix" $matri
 xinput set-prop "$stylus" --type=float "Coordinate Transformation Matrix" $matrix
 xinput set-prop "$eraser" --type=float "Coordinate Transformation Matrix" $matrix
 
-
 xsetwacom set "$stylus" Suppress 2
 xsetwacom set "$stylus" RawSample 4
 xsetwacom set "$stylus" Threshold 27
 xsetwacom set "$stylus" PressureCurve 0 0 100 100
-xsetwacom set "$stylus" PressureRecalibration on
-xsetwacom set "$stylus" TabletPCButton off # default for tablet PCs, it's off for tablets
-xsetwacom set "$stylus" Mode Absolute 
+#xsetwacom set "$stylus" PressureRecalibration on
+#xsetwacom set "$stylus" TabletPCButton off # default for tablet PCs, it's off for tablets
+#xsetwacom set "$stylus" Mode Absolute 
 xsetwacom set "$stylus" Button 1 1
 xsetwacom set "$stylus" Button 2 3 # Needed
-xsetwacom set "$stylus" Button 3 2 
-xsetwacom set "$stylus" Gesture off
-xsetwacom set "$stylus" PanScrollThreshold 2600
-xsetwacom set "$stylus" CursorProximity 10
+#xsetwacom set "$stylus" Button 3 2 
+#xsetwacom set "$stylus" CursorProximity 10
 
-xsetwacom set "$eraser" Suppress 2
-xsetwacom set "$eraser" RawSample 4
-xsetwacom set "$eraser" Threshold 27
-xsetwacom set "$eraser" PressureCurve 0 0 100 100
-xsetwacom set "$eraser" PressureRecalibration on
-xsetwacom set "$eraser" TabletPCButton off # default for tablet PCs, it's off for tablets
-xsetwacom set "$eraser" Mode Absolute 
-xsetwacom set "$eraser" Button 1 1
-xsetwacom set "$eraser" Button 2 3 # Needed
-xsetwacom set "$eraser" Button 3 2 
-xsetwacom set "$eraser" Gesture off
-xsetwacom set "$eraser" PanScrollThreshold 2600
-xsetwacom set "$eraser" CursorProximity 10
+#xsetwacom set "$eraser" Suppress 2
+#xsetwacom set "$eraser" RawSample 4
+#xsetwacom set "$eraser" Threshold 27
+#xsetwacom set "$eraser" PressureCurve 0 0 100 100
+#xsetwacom set "$eraser" PressureRecalibration on
+#xsetwacom set "$eraser" TabletPCButton off # default for tablet PCs, it's off for tablets
+#xsetwacom set "$eraser" Mode Absolute 
+#xsetwacom set "$eraser" Button 1 1
+#xsetwacom set "$eraser" Button 2 3 # Needed
+#xsetwacom set "$eraser" Button 3 2 
+#xsetwacom set "$eraser" CursorProximity 10
 
 
 #xsetwacom set "$stylus" Area 0 0 ?? ??
