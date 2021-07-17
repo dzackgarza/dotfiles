@@ -129,6 +129,17 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 ZSH_HIGHLIGHT_STYLES[alias]=$ZSH_HIGHLIGHT_STYLES[builtin] 
 
 alias ls='ls -altr --color=tty'
+alias r="ranger"
+
+# Coloring for fzf preview in vim
+export BAT_THEME='ansi-light'
+
 
 # Disable Ctrl-S
 #stty -ixon
+
+if (( $+commands[tag] )); then
+  export TAG_SEARCH_PROG=ag  # replace with rg for ripgrep
+  tag() { command tag "$@"; source ${TAG_ALIAS_FILE:-/tmp/tag_aliases} 2>/dev/null }
+  alias ag='tag --path-to-ignore /home/zack/.ignore'
+fi

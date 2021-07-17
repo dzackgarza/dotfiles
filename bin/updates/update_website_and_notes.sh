@@ -1,6 +1,4 @@
-/home/zack/Notes/Obsidian/Quick_Notes/compile_html_notes.sh
-
-echo "Updated math journal."
+/home/zack/Notes/Obsidian/Unsorted/Quick_Notes/compile_html_notes.sh && echo "Updated math journal.";
 
 cd ~/Quals; git add -A; git commit -am "Save"; git push origin master; popd
 

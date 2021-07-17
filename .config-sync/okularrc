@@ -1,22 +1,33 @@
 Height 1080=996
-State=AAAA/wAAAAD9AAAAAAAAA68AAAPKAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAACMv////8AAAAAAAAAAA==
+State=AAAA/wAAAAD9AAAAAAAAB2wAAAOtAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAA==
 Width 1920=920
 eDP-1 HDMI-1 DVI-I-1-1 Height 1080=1027
 eDP-1 HDMI-1 DVI-I-1-1 Width 1920=943
 eDP-1 HDMI-1 DVI-I-1-1 XPosition=966
 eDP-1 HDMI-1 DVI-I-1-1 YPosition=462
+eDP-1 HDMI-1 Height 1080x1920=928
+eDP-1 HDMI-1 Height 1920x1080=998
+eDP-1 HDMI-1 Width 1080x1920=1058
+eDP-1 HDMI-1 Width 1920x1080=1900
+eDP-1 HDMI-1 XPosition 1080x1920=11
+eDP-1 HDMI-1 XPosition 1920x1080=10
+eDP-1 HDMI-1 YPosition 1080x1920=981
+eDP-1 HDMI-1 YPosition 1920x1080=72
+eDP-1 Height 1920x1080=1027
+eDP-1 Width 1920x1080=623
+eDP-1 XPosition 1920x1080=1286
+eDP-1 YPosition 1920x1080=42
 
 [Desktop Entry]
 FullScreen=false
-shouldShowMenuBarComingFromFullScreen=false
+shouldShowMenuBarComingFromFullScreen=true
 shouldShowToolBarComingFromFullScreen=false
 
 [MainWindow]
 Height 1080=996
 Height 1920=1866
 Height 800=746
-RestorePositionForNextInstance=false
-State=AAAA/wAAAAD9AAAAAAAAA68AAAHDAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAA==
+State=AAAA/wAAAAD9AAAAAAAAAnQAAAOrAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -51,46 +62,48 @@ eDP-1 HDMI-1 DVI-I-1-1 YPosition=527
 eDP-1 HDMI-1 DVI-I-1-1 YPosition 1080x1920=10
 eDP-1 HDMI-1 DVI-I-1-1 YPosition 1920x1080=527
 eDP-1 HDMI-1 Height 1080=1027
-eDP-1 HDMI-1 Height 1080x1920=618
+eDP-1 HDMI-1 Height 1080x1920=927
 eDP-1 HDMI-1 Height 1920=928
-eDP-1 HDMI-1 Height 1920x1080=1027
+eDP-1 HDMI-1 Height 1920x1080=996
 eDP-1 HDMI-1 Width 1080=1058
 eDP-1 HDMI-1 Width 1080x1920=1058
 eDP-1 HDMI-1 Width 1920=943
-eDP-1 HDMI-1 Width 1920x1080=943
+eDP-1 HDMI-1 Width 1920x1080=628
 eDP-1 HDMI-1 XPosition 1080x1920=11
-eDP-1 HDMI-1 XPosition 1920x1080=2046
-eDP-1 HDMI-1 YPosition 1080x1920=666
-eDP-1 HDMI-1 YPosition 1920x1080=42
+eDP-1 HDMI-1 XPosition 1920x1080=646
+eDP-1 HDMI-1 YPosition 1080x1920=42
+eDP-1 HDMI-1 YPosition 1920x1080=73
 eDP-1 Height 1080=1027
-eDP-1 Height 1920x1080=508
+eDP-1 Height 1920x1080=1029
 eDP-1 Width 1920=623
-eDP-1 Width 1920x1080=943
+eDP-1 Width 1920x1080=1900
 eDP-1 XPosition=1286
-eDP-1 XPosition 1920x1080=11
+eDP-1 XPosition 1920x1080=10
 eDP-1 YPosition=42
-eDP-1 YPosition 1920x1080=561
+eDP-1 YPosition 1920x1080=41
 
 [Print Preview]
 Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Library/Julio Gonzalez-Diaz, Ignacio Garcia-Jurado, M. Gloria Fiestras-Janeiro/Mathematical Game Theory (847)/Mathematical Game Theory - Julio Gonzalez-Diaz, Ignacio Garcia-Jurado.pdf
-File2[$e]=$HOME/Dropbox/Library/Anthony Knapp/Lie Groups, Lie Algebras, and Cohomology (729)/Lie Groups, Lie Algebras, and Cohomology - Anthony Knapp.pdf
-File3[$e]=$HOME/SparkleShare/github.com/Notes/Class_Notes/2019/Differential Topology/2019-08-14.pdf
-File4[$e]=$HOME/SparkleShare/github.com/Notes/Class_Notes/2019/Differential Topology/Example Problems/HW4.pdf
-File5[$e]=$HOME/SparkleShare/github.com/Notes/Class_Notes/2019/Differential Topology/ProblemSets/PSet1.pdf
-File6[$e]=$HOME/Dropbox/Library/Barnes, Roitzheim/Foundations of Stable Homotopy Theory (779)/Foundations of Stable Homotopy Theory - Barnes, Roitzheim.pdf
-File7[$e]=$HOME/Notes/Class_Notes/2021/Spring/HomologicalAlgebra/sections/exercises/Problem_Set_7_DZG.pdf
-File8[$e]=$HOME/Dropbox/Teaching/2021 Spring Quizzes/Test3.pdf
-File9[$e]=$HOME/Notes/Teaching/Precalculus/Precalculus.pdf
-Name1[$e]=Mathematical Game Theory - Julio Gonzalez-Diaz, Ignacio Garcia-Jurado.pdf
-Name2[$e]=Lie Groups, Lie Algebras, and Cohomology - Anthony Knapp.pdf
-Name3[$e]=2019-08-14.pdf
-Name4[$e]=HW4.pdf
-Name5[$e]=PSet1.pdf
-Name6[$e]=Foundations of Stable Homotopy Theory - Barnes, Roitzheim.pdf
-Name7[$e]=Problem_Set_7_DZG.pdf
-Name8[$e]=Test3.pdf
-Name9[$e]=Precalculus.pdf
+File1[$e]=$HOME/website/assets/talks/UGA_GSS_2020_03_29.pdf
+File10[$e]=$HOME/Notes/Class_Notes/2021/Summer/PCMI/1_Krashen/Krashen_Talks.pdf
+File2[$e]=$HOME/website/assets/talks/Sarkar_Wang_Pictures.pdf
+File3[$e]=$HOME/website/assets/talks/HomotopyGroupsOfSpheres.pdf
+File4[$e]=$HOME/website/assets/talks/DZG_StableHomotopyTalk_3_22_2020.pdf
+File5[$e]=$HOME/website/assets/talks/DZG CRAG Weil Conjectures.pdf
+File6[$e]=$HOME/website/assets/talks/CRAAG_July_2021_Grothendieck_Algebraic_deRham.pdf
+File7[$e]=$HOME/Dropbox/Library/Barnes, Roitzheim/Foundations of Stable Homotopy Theory (779)/Foundations of Stable Homotopy Theory - Barnes, Roitzheim.pdf
+File8[$e]=$HOME/Dropbox/Library/Elias M. Stein, Rami Shakarchi/Fourier Analysis ( (Stein and Shakarchi I) (887)/Fourier Analysis ( (Stein and Shakarchi I) - Elias M. Stein, Rami Shakarchi.pdf
+File9[$e]=$HOME/Dropbox/Library/Elias M. Stein, Rami Shakarchi/Complex Analysis (Stein and Shakarchi II) (760)/Complex Analysis (Stein and Shakarchi II) - Elias M. Stein, Rami Shakarchi.pdf
+Name1[$e]=UGA_GSS_2020_03_29.pdf
+Name10[$e]=Krashen_Talks.pdf
+Name2[$e]=Sarkar_Wang_Pictures.pdf
+Name3[$e]=HomotopyGroupsOfSpheres.pdf
+Name4[$e]=DZG_StableHomotopyTalk_3_22_2020.pdf
+Name5[$e]=DZG CRAG Weil Conjectures.pdf
+Name6[$e]=CRAAG_July_2021_Grothendieck_Algebraic_deRham.pdf
+Name7[$e]=Foundations of Stable Homotopy Theory - Barnes, Roitzheim.pdf
+Name8[$e]=Fourier Analysis ( (Stein and Shakarchi I) - Elias M. Stein, Rami Shakarchi.pdf
+Name9[$e]=Complex Analysis (Stein and Shakarchi II) - Elias M. Stein, Rami Shakarchi.pdf

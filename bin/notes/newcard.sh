@@ -1,7 +1,7 @@
 #!/bin/bash
 
 today=$(date +%Y-%m-%d)
-outfile="$NOTES/Obsidian//Flashcards/Decks/Unsorted/Unsorted.md"
+outfile="$NOTES/Obsidian/Flashcards/Decks/Unsorted/Unsorted.md"
 
 read -r -d '' NOTE_TEMPLATE_STR <<- EOM
 Title

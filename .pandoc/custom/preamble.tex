@@ -19,6 +19,11 @@
 \usepackage[usename, dvipsnames]{xcolor}
 \usepackage{datetime}
 
+% Fix TOC indenting issue.
+% Need to install this package..?
+%\usepackage[tocindentauto]{tocstyle}
+%\usetocstyle{standard}
+
 \input{preamble_common}
 
 %\let\oldexp\exp
@@ -270,3 +275,13 @@
 }
 
 %\newcommand{\prism}[0]{\Delta}
+
+\newcommand{\dualof}[1]{ {#1}^{\smash{\scalebox{.7}[1.4]{\rotatebox{90}{\guilsinglleft}}}}}
+
+\newcommand{\divides}{\bigm|}
+\newcommand{\notdivides}{%
+  \mathrel{\mkern.5mu % small adjustment
+    % superimpose \nmid to \big|
+    \ooalign{\hidewidth$\big|$\hidewidth\cr$\nmid$\cr}%
+  }%
+}

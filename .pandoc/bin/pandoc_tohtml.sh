@@ -73,7 +73,7 @@ fi
 cp "$BIB_FILE" "$TMP_DIR/$filename.bib";
 #cp -r "$directory/figures" .;
 
-SEDSTR="s/\[\[\([0-9A-Za-z\ ]\{1,\}\)\(\]\]\)/[\1](.\/\1.html)/g"
+SEDSTR="s/\[\[\([-0-9A-Za-zé_\ ]\{1,\}\)\(\]\]\)/[\1](.\/\1.html)/g"
 
 
 cat "$filepath" | sed "$SEDSTR" | pandoc_stripmacros.sh > "$TMP_DIR/combined.temp" ;
@@ -106,6 +106,7 @@ cat "$TMP_DIR/combined.temp" | pandoc \
   --css=$PANDOC_TEMPLATES/marked/kultiad-serif.css \
   --citeproc \
   --bibliography="$TMP_DIR/$filename.bib" \
+  --resource-path="$TMP_DIR" \
   --metadata link-citations=true \
   --csl=$PANDOC_TEMPLATES/csl/inventiones-mathematicae.csl \
   -V current_date="$(date +%Y-%m-%d%n)" "${params[@]}" \
