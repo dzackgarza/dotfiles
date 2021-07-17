@@ -2,14 +2,14 @@ output DP-1
 off
 output HDMI-1
 crtc 1
-gamma 0.769:0.769:0.714
+gamma 0.769:0.5:0.286
 mode 1920x1080
 pos 0x0
 rate 60.00
 rotate right
 output eDP-1
 crtc 0
-gamma 0.769:0.769:0.714
+gamma 0.769:0.5:0.286
 mode 1920x1080
 pos 1080x0
 primary

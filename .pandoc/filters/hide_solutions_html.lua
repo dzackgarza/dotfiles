@@ -23,23 +23,6 @@ function enable_hide_proofs(meta)
   end
 end
 
-if FORMAT:match "latex" or FORMAT:match "pdf" then
-  function kill_proofs_fn(el)
-    if has_value(el.classes, "solution") or (has_value(el.classes, "proof") and kill_proofs) then
-      debug_print("Is proof? " .. tostring( has_value(el.classes, "proof")))
-      debug_print("Hide proofs?" .. tostring( hide_proofs))
-      debug_print("Is solution? " .. tostring( has_value(el.classes, "solution")))
-      debug_print("Kill proofs?" .. tostring( kill_proofs))
-      return pandoc.Para(pandoc.Str("Solution/proof omitted."))
-    end
-  end
-  return {
-    { Meta = enable_hide_proofs },  -- (1)
-    { Div = kill_proofs_fn }     -- (2)
-  }
-end
-  
-
 -- Hide solution environments in HTML output using <details> <summary> ... construct
 if FORMAT:match 'html' then
   function hide_solutions(el)
@@ -59,7 +42,8 @@ if FORMAT:match 'html' then
       if kill_proofs then
         debug_print "Proof omitted"
         --return pandoc.Emph {pandoc.Str "Hello, World"}
-        return pandoc.RawBlock('html','<div>Proof/solution omitted.</div>')
+        --return pandoc.RawBlock('html','<div>Proof/solution omitted.</div>')
+        return pandoc.RawBlock('html','<div></div>')
       end
       if not hide_proofs then
         return el

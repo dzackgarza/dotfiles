@@ -29,10 +29,10 @@ border-size = 2
 border-color = #00000000
 
 padding-left = 0
-padding-right = 2
+padding-right = 10
 
 module-margin-left = 0
-module-margin-right = 2
+module-margin-right = 5
 
 # fontconfigPattern:verticalOffset
 font-0 = terminus:pixelsize=10;1

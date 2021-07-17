@@ -79,10 +79,11 @@ set spellfile=/home/zack/Notes/mathdict.utf-8.add
 " Nerdcommenter: toggle multiple lines as comments
 Plug 'scrooloose/nerdcommenter'
 "Plug 'Townk/vim-autoclose'
-Plug 'ferrine/md-img-paste.vim'
-let g:mdip_imgdir = 'figures'
+"Plug 'ferrine/md-img-paste.vim'
+"let g:mdip_imgdir = 'figures'
 Plug 'godlygeek/tabular'
 Plug 'dhruvasagar/vim-table-mode'
+
 
 " Layout and Functionality
 Plug 'scrooloose/nerdtree'
@@ -104,7 +105,7 @@ Plug 'mileszs/ack.vim'
 
 " Close delimiters
 Plug 'Raimondi/delimitMate'
-let delimitMate_matchpairs = "{:},(:),[:]"
+let delimitMate_matchpairs = "{:},(:)"
 "let delimitMate_quotes = "\" `"
 
 " Style
@@ -120,6 +121,7 @@ let delimitMate_matchpairs = "{:},(:),[:]"
 "let g:syntastic_check_on_wq = 0
 "let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
 
+Plug 'NLKNguyen/papercolor-theme'
 
 call plug#end()
 " }}}
@@ -140,7 +142,7 @@ nnoremap <Leader>c :let &cole=(&cole == 2) ? 0 : 2 <bar> echo 'conceallevel ' . 
 nnoremap <silent> [[ ?^\:\:\:{<CR>
 "nnoremap <silent> ]] /^\#<CR>
 nnoremap <silent> ]] /^\:\:\:{<CR>
-nmap <silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
+nmap <silent> <leader>p :call PasteImage()<CR>
 
 " Use arrow keys in wldmenu.
 cnoremap <expr> <up> wildmenumode() ? "\<left>" : "\<up>"
@@ -217,6 +219,7 @@ function! NextClosedFold(dir)
     endif
 endfunction
 " }}}
+"
 
 " {{{ Terminal buffers
 " Escape terminal
@@ -336,9 +339,21 @@ au FileType voomtree syntax match someCustomes /\$\\done\$/ conceal cchar=✨
 " }}}
 
 
+function! PasteImage()
+  let s = substitute(system("date '+%Y-%m-%d_%H-%M-%S' "), '\n\+$', '', '')
+  let mime_check = system("xclip -selection clip -t TARGETS -o | grep png")
+  if mime_check =~ "png"
+    let t = system("mkdir -p ./figures && xclip -selection clipboard -t image/png -o > ./figures/".s.".png")
+    let md_text = "![](figures/" . s . ".png)"
+    execute "normal! o".md_text 
+  else
+    echo "Clipboard doesn't contain an image."
+  endif
+endfunction
+
 " {{{ Aesthetics
-colorscheme afterglow
-"colorscheme flattened_light
+"set t_Co=256  
+colorscheme one
 
 " Use spaces instead of tabs (necessary for haskell/ghc)
 set tabstop=2     " Inserts 2 spaces when tab key is pressed.
@@ -540,3 +555,6 @@ map <F6> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<
 " Fix resize issue on open
 autocmd VimEnter * :silent exec "!kill -s SIGWINCH $PPID"
 " }}}
+
+
+set background=light

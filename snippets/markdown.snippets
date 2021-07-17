@@ -286,6 +286,15 @@ ${2:Footnote text}
 
 endsnippet
 
+snippet footnote "Footnote" i
+
+[^${1:refname}]
+
+[^$1]: 
+${2:Footnote text}
+
+endsnippet
+
 # Label for Hyperlinks
 snippet hlab "Label/Cref pair for internal hyperlinks"
 \label{${1:refname}}
@@ -320,6 +329,17 @@ ${2}
 :::
 
 endsnippet
+
+snippet pfl "Proof List"
+
+:::{.proof title="${1:?}"}
+\envlist
+
+${2}
+:::
+
+endsnippet
+
 
 snippet cor "Corollary"
 

@@ -51,6 +51,12 @@ TMP_DIR=$(mktemp -d -t ci-XXXXXXXXXX);
 echo "(VP) Current directory: $(pwd)";
 echo "(VP) Temp directory: $TMP_DIR";
 
+if [ ! -d "./figures" ]; then
+  mkdir ./figures;
+fi
+
+ln -s "$(realpath ./figures)" $TMP_DIR/figures
+
 while true; do
   if [[ $vimpreview == true ]]; then  
     outfile=$(pandoc_tohtml.sh -f "$filepath" -p -t "$TMP_DIR" -v);

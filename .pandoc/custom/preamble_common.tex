@@ -79,7 +79,8 @@
 
 % Better delimiters
 %\DeclarePairedDelimiter\qty{(}{)}
-  \newcommand{\qty}[1]{\left( {#1} \right)}
+\newcommand{\qty}[1]{\left( {#1} \right)}
+\newcommand{\dqty}[1]{\left( \left( {#1} \right) \right)}
 \DeclarePairedDelimiter\intvl{[}{]}
 % Big Asterisk
 \newcommand{\Conv}{\mathop{\scalebox{1.5}{\raisebox{-0.2ex}{$\ast$}}}}%
@@ -99,3 +100,14 @@
 % Everything else
 \input{tikzmacros.tex}
 \input{latexmacs}
+
+\makeatletter
+\newcommand{\colim@}[2]{%
+  \vtop{\m@th\ialign{##\cr
+    \hfil$#1\operator@font colim$\hfil\cr
+    \noalign{\nointerlineskip\kern1.5\ex@}#2\cr
+    \noalign{\nointerlineskip\kern-\ex@}\cr}}%
+}
+\newcommand{\colim}{%
+  \mathop{\mathpalette\colim@{\rightarrowfill@\scriptscriptstyle}}\nmlimits@
+}
