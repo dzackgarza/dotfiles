@@ -11,8 +11,9 @@ return {
   },
   {
   Str = function (elem)
-      if elem.text == "{{helloworld}}" then
-        return pandoc.Emph {pandoc.Str "Hello, World"}
+      if elem.text:match 'unanswered_questions' then
+        newstring = elem.text:gsub("[()]?#unanswered_questions[)]?", "")
+        return pandoc.Str(newstring)
       else
         return elem
       end

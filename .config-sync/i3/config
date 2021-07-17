@@ -231,7 +231,7 @@ exec_always --no-startup-id pkill picom; picom --experimental-backends &
 exec --no-startup-id zotero &
 
 for_window [instance="__scratchpad"] floating enable, resize set 1910px 775px,, move scratchpad, sticky enable
-exec --no-startup-id termite --name __scratchpad -e tmux -c /home/zack/.config/termite/scratch_config
+exec --no-startup-id termite --name __scratchpad -e tmux -2 -c /home/zack/.config/termite/scratch_config
 
 # swap caps lock and escape
 exec_always --no-startup-id xmodmap -e "clear lock"

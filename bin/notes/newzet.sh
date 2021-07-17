@@ -8,7 +8,7 @@ read temp_title
 
 title=$(echo $temp_title | tr -s ' ' | tr ' ' '_')
 
-outfile="$NOTES/Obsidian/zettelkasten/${today}_${title}.md"
+outfile="$NOTES/Obsidian/Unsorted/${today}_${title}.md"
 echo "Opening: $outfile"
 
 #[[ ! -f $outfile ]] 
