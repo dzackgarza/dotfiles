@@ -32,7 +32,7 @@ let g:quicktex_prose = {
     \'gmod'   : '\(G\dash\)module ',
     \'zmod'   : '\(\ZZ\dash\)module ',
     \'pgrp'   : '\(p\dash\)group',
-    \'kth'   : '\(K\dash\)theory ',
+    \'kth'   : '\(\K\dash\)theory ',
     \'ae'     : 'almost everywhere ',
     \'bd'     : 'boundary ',
     \'pt'     : 'point ',

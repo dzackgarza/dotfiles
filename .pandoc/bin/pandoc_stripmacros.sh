@@ -6,7 +6,7 @@
 
 TMP_DIR=$(mktemp -d -t pandoc-XXXXXXXXXX);
 
-cat "$PANDOC_DIR/custom/latexmacs.tex" "$input" > $TMP_DIR/combined.temp ;
+cat $PANDOC_DIR/custom/latexmacs*.tex "$input" > $TMP_DIR/combined.temp ;
 
 cat $TMP_DIR/combined.temp | pandoc \
   --quiet \
