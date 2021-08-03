@@ -1,0 +1,4 @@
+start=2.133000
+speed=1.000000
+fullscreen=yes
+af=rubberband=transients=smooth:pitch=quality:window=short,@rubber:rubberband=transients=smooth:pitch=quality:window=short
