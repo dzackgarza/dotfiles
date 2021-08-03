@@ -485,6 +485,7 @@ iabbrev poincare Poincaré
 iabbrev Poincare Poincaré
 iabbrev kahler kähler
 iabbrev Kahler Kähler
+iabbrev char ch
 " }}}
 
 " Quit is only Nerdtree + one other pane is open?
