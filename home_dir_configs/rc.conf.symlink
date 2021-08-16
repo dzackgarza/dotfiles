@@ -8,7 +8,7 @@ set mouse_enabled true
 set tilde_in_titlebar True
 setlocal path=~/Notes/Research/Notes/ReadingGeneral sort basename
 setlocal path=~/Notes/Research/Notes/ReadingGeneral sort_reverse True
-set colorscheme zenburn
+set colorscheme jungle
 set save_tabs_on_exit true
 default_linemode devicons
 map bb shell touch `date +"%%Y-%%m-%%d".md`
