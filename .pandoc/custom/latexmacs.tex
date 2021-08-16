@@ -384,7 +384,7 @@
 \newcommand{\mviso}[0]{{\mapsvia{\sim}}} 
 \newcommand{\nd}[0]{\operatorname{nd}}
 \newcommand{\nilrad}[1]{{\sqrt{0_{#1}} }}
-\newcommand{\jacobsonrad}[1]{{\sqrt{0_{#1}} }}
+\newcommand{\jacobsonrad}[1]{{J ({#1}) }}
 \newcommand{\nil}[0]{{\operatorname{nil}}}
 \newcommand{\noeth}[0]{\mathrm{Noeth}}
 \newcommand{\nonzero}[0]{^{\bullet}}
