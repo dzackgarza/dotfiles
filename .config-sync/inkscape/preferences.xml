@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <inkscape
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   version="1"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   version="1">
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd">
   <group
      id="window">
     <group
@@ -105,11 +105,14 @@
     <sodipodi:namedview
        id="base"
        pagecolor="#ffffff"
+       pageopacity="0.0"
+       pagecheckerboard="0"
        bordercolor="#666666"
        borderopacity="1.0"
        objecttolerance="10.0"
        gridtolerance="10.0"
        guidetolerance="10.0"
+       pageshadow="2"
        inkscape:pageopacity="0.0"
        inkscape:pageshadow="2"
        inkscape:window-width="640"
@@ -214,7 +217,9 @@
        tracebackground="0"
        usepressure="1"
        usetilt="0"
-       keep_selected="1">
+       keep_selected="1"
+       abs_width="1"
+       unit="mm">
       <group
          id="preset">
         <group
@@ -328,7 +333,7 @@
        font_sample="AaBbCcIiPpQq12369$\342\202\254\302\242?.;/()"
        show_sample_in_list="1"
        use_svg2="1"
-       style="line-height:1.25;font-family:sans-serif;font-size:40px;word-spacing:0px"
+       style="line-height:1.25;font-family:sans-serif;font-size:40px;word-spacing:0px;letter-spacing:0px"
        selcue="1" />
     <eventcontext
        id="nodes"
@@ -345,8 +350,8 @@
        live_outline="1"
        live_objects="1"
        show_helperpath="0"
-       x="-93.1496"
-       y="269.685"
+       x="426.85"
+       y="199.685"
        edit_clipping_paths="0"
        edit_masks="0" />
     <eventcontext
@@ -550,7 +555,7 @@
        id="toolbox" />
     <group
        id="fillstroke"
-       page="0"
+       page="2"
        x="0"
        y="0"
        w="378"
@@ -575,7 +580,9 @@
     <group
        id="align" />
     <group
-       id="xml" />
+       id="xml"
+       h="500"
+       w="300" />
     <group
        id="find" />
     <group
@@ -595,7 +602,7 @@
     <group
        id="preferences"
        state="1"
-       page="13"
+       page="9"
        x="501"
        y="73"
        w="918"
@@ -681,7 +688,9 @@
        id="treeeditor" />
     <group
        id="layers"
-       maxDepth="20" />
+       maxDepth="20"
+       w="200"
+       h="300" />
     <group
        id="extensioneditor" />
     <group
@@ -880,7 +889,7 @@
        value="0" />
     <group
        id="stickyzoom"
-       value="0" />
+       value="1" />
     <group
        id="selcue"
        value="2" />
@@ -1004,6 +1013,9 @@
     <group
        id="middlemousezoom"
        value="1" />
+    <group
+       id="defaultwindowsize"
+       value="2" />
   </group>
   <group
      id="extensions"
@@ -1042,15 +1054,15 @@
      org.inkscape.generate.grid_polar.tab="circular_div" />
   <group
      id="desktop"
-     style="stroke-width:2.64566929;fill:#55679e;fill-rule:evenodd;font-size:13.33333333px;stroke-linejoin:round;stroke:#55679e">
+     style="stroke-width:3.77952756;fill:#d5a5d0;fill-rule:evenodd;font-size:13.33333333px;stroke-linejoin:round;stroke:#000000;stroke-dashoffset:3.77952756">
     <group
-       width="1920"
-       height="1080"
-       x="-1"
-       y="-1"
+       width="943"
+       height="1027"
+       x="488"
+       y="41"
+       maximized="0"
        fullscreen="1"
-       id="geometry"
-       maximized="0" />
+       id="geometry" />
     <group
        id="XYfront" />
     <group
@@ -1152,8 +1164,13 @@
      defaultTheme="Adwaita"
      defaultIconTheme="Adwaita"
      gtkTheme="Adwaita"
-     iconTheme="Adwaita"
      menuIcons_canvas="0"
      menuIcons_layers="0"
-     menuIcons_objects="0" />
+     menuIcons_objects="0"
+     defaultPreferDarkTheme="0"
+     defaultGtkTheme="Adwaita"
+     darkTheme="0" />
+  <group
+     id="live_effects"
+     flattening="0" />
 </inkscape>
