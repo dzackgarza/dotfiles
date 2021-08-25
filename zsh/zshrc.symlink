@@ -143,3 +143,8 @@ if (( $+commands[tag] )); then
   tag() { command tag "$@"; source ${TAG_ALIAS_FILE:-/tmp/tag_aliases} 2>/dev/null }
   alias ag='tag --path-to-ignore /home/zack/.ignore'
 fi
+
+cd() {
+  [[ ! -e $argv[-1] ]] || [[ -d $argv[-1] ]] || argv[-1]=${argv[-1]%/*}
+  builtin cd "$@"
+}
