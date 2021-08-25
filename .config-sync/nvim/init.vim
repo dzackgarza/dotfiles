@@ -178,6 +178,8 @@ nnoremap <Leader>O O<Esc>
 nnoremap <Leader>w :w<CR>
 
 
+nmap <Leader>ll :let @+=expand("%:p")<CR><CR>
+nmap <Leader>ll :let @+=expand("%:p")<CR><CR>
 
 nnoremap <silent> <leader>zj :call NextClosedFold('j')<cr>
 nnoremap <silent> <leader>zk :call NextClosedFold('k')<cr>
