@@ -114,3 +114,25 @@
 \newcommand{\colim}{%
   \mathop{\mathpalette\colim@{\rightarrowfill@\scriptscriptstyle}}\nmlimits@
 }
+
+\tikzcdset{
+  diagrams={>={Straight Barb[scale=0.5]}}
+}
+
+\ExplSyntaxOn
+
+\NewDocumentCommand\stackar{ m O{} }
+{
+    \int_step_inline:nn { #1 }
+    {
+        \int_if_odd:nTF { ##1 }
+        {
+            \ar[->,yshift=\fp_eval:n {(#1-1)/2*1.5 - (##1-1)*1.5 }pt,#2]
+        }
+        {
+            \ar[<-,yshift=\fp_eval:n {(#1-1)/2*1.5 - (##1-1)*1.5 }pt,#2]
+        }
+    }
+}
+
+\ExplSyntaxOff
