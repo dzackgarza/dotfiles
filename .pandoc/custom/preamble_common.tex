@@ -5,6 +5,7 @@
 \usepackage{mathtools, amsthm, amssymb, amsxtra, amscd, thmtools, xpatch}
 \usepackage{calligra, mathrsfs, accents}
 
+
 \usepackage{marvosym}
 \newcommand\contradiction[0]{\text{\Lightning}}
 
@@ -127,12 +128,53 @@
     {
         \int_if_odd:nTF { ##1 }
         {
-            \ar[->,yshift=\fp_eval:n {(#1-1)/2*1.5 - (##1-1)*1.5 }pt,#2]
+            \ar[->,yshift=\fp_eval:n {(#1-1)/2*1.6 - (##1-1)*1.5 }pt,#2, blue]
         }
         {
-            \ar[<-,yshift=\fp_eval:n {(#1-1)/2*1.5 - (##1-1)*1.5 }pt,#2]
+            \ar[<-,yshift=\fp_eval:n {(#1-1)/2*1.6 - (##1-1)*1.5 }pt,#2, red]
         }
     }
 }
 
+\NewDocumentCommand\stackarr{ m O{} }
+{
+    \int_step_inline:nn { #1 }
+    {
+        \int_if_odd:nTF { ##1 }
+        {
+            \ar[->,yshift=\fp_eval:n {(#1-1)/2*1.6 - (##1-1)*1.5 }pt,#2]
+        }
+        {
+        }
+    }
+}
+\NewDocumentCommand\stackarl{ m O{} }
+{
+    \int_step_inline:nn { #1 }
+    {
+        \int_if_odd:nTF { ##1 }
+        {
+            \ar[<-,yshift=\fp_eval:n {(#1-1)/2*1.6 - (##1-1)*1.5 }pt,#2, red]
+        }
+    }
+}
+
+
 \ExplSyntaxOff
+
+% Example
+%\[\begin{tikzcd}
+    %\cdots
+    %\stackar{9}[r]
+    %&
+    %X_3
+    %\stackar{7}[r]
+    %&
+    %X_2
+    %\stackar{5}[r]
+    %&   
+    %X_1
+    %\stackar{3}[r]
+    %&
+    %X_0
+%\end{tikzcd}\]

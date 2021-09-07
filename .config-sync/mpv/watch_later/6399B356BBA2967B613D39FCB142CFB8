@@ -1,4 +1,3 @@
-start=4742.179203
-speed=2.000000
+start=1979.880000
+speed=2.750000
 pause=yes
-af=rubberband=transients=smooth:pitch=quality:window=short,@rubber:rubberband=transients=smooth:pitch=quality:window=short
