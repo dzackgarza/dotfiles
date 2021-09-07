@@ -166,11 +166,11 @@
       <eventcontext
          id="arc"
          style="fill:red;"
-         end="195.195"
+         end="358.869"
          start="359.223"
          usecurrent="1"
-         rx="340"
-         ry="150"
+         rx="85"
+         ry="115"
          arc_type="0" />
       <eventcontext
          id="star"
@@ -350,8 +350,8 @@
        live_outline="1"
        live_objects="1"
        show_helperpath="0"
-       x="36.8504"
-       y="499.685"
+       x="358.182"
+       y="690.334"
        edit_clipping_paths="0"
        edit_masks="0" />
     <eventcontext
@@ -555,7 +555,7 @@
        id="toolbox" />
     <group
        id="fillstroke"
-       page="1"
+       page="2"
        x="0"
        y="0"
        w="378"
@@ -1054,12 +1054,12 @@
      org.inkscape.generate.grid_polar.tab="circular_div" />
   <group
      id="desktop"
-     style="stroke-width:7.55905512;fill:#3e8213;fill-rule:evenodd;font-size:13.33333333px;stroke-linejoin:round;stroke:#3e8213;stroke-dashoffset:3.77952756">
+     style="stroke-width:3.77952756;fill:#ca4436;fill-rule:evenodd;font-size:13.33333333px;stroke-linejoin:round;stroke:#ca4436;opacity:0.2045086">
     <group
-       width="1900"
-       height="1029"
-       x="9"
-       y="56"
+       width="1920"
+       height="1080"
+       x="-1"
+       y="30"
        maximized="0"
        fullscreen="0"
        id="geometry" />
