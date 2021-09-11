@@ -555,7 +555,7 @@
        id="toolbox" />
     <group
        id="fillstroke"
-       page="2"
+       page="1"
        x="0"
        y="0"
        w="378"
@@ -1059,7 +1059,7 @@
        width="1920"
        height="1080"
        x="-1"
-       y="30"
+       y="14"
        maximized="0"
        fullscreen="0"
        id="geometry" />
