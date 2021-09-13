@@ -1,4 +1,5 @@
 rmk
+cases
 def
 cort
 ex
@@ -19,7 +20,6 @@ bigts
 tikzcd
 tikz_triangle
 slogan
-cases
 soln
 mat2
 fact
