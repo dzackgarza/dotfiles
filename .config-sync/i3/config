@@ -239,8 +239,8 @@ exec_always --no-startup-id xmodmap -e "keycode 9 = Caps_Lock NoSymbol Caps_Lock
 exec_always --no-startup-id xmodmap -e "keycode 66 = Escape NoSymbol Escape"
 exec_always --no-startup-id xset r rate 280 45  
 exec_always --no-startup-id screenchanges.sh 
-exec_always --no-startup-id xinput set-prop 17 "libinput Natural Scrolling Enabled" 1
-exec_always --no-startup-id xinput set-prop 17 "libinput Tapping Enabled" 1        
+exec_always --no-startup-id xinput set-prop "ELAN0511:00 04F3:3041 Touchpad" "libinput Natural Scrolling Enabled" 1 
+exec_always --no-startup-id xinput set-prop "ELAN0511:00 04F3:3041 Touchpad" "libinput Tapping Enabled" 1 
 
 default_orientation auto
 no_focus [class="qutebrowser"]
