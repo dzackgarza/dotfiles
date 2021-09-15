@@ -165,6 +165,7 @@ nnoremap ZZ :wqa<CR>
 nnoremap <C-p> :Files<Cr>
 nnoremap <C-f> :Ag<Cr>
 
+command W write
 
 " }}}
 
