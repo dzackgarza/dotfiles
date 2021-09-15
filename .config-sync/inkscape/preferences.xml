@@ -169,8 +169,8 @@
          end="358.869"
          start="359.223"
          usecurrent="1"
-         rx="85"
-         ry="115"
+         rx="10"
+         ry="10"
          arc_type="0" />
       <eventcontext
          id="star"
@@ -656,9 +656,9 @@
     <group
        id="import"
        enable_preview="1"
-       path=""
+       path="/home/zack/"
        ask="0"
-       ask_svg="1"
+       ask_svg="0"
        link="embed"
        scale="auto"
        import_mode_svg="include"
@@ -742,7 +742,8 @@
        add-label-comments="0" />
   </group>
   <group
-     id="options">
+     id="options"
+     onimport="0">
     <group
        id="renderingcache"
        size="512" />
@@ -1051,10 +1052,12 @@
      org.inkscape.generate.path_along_path.kind="Snake"
      org.inkscape.generate.grid_polar.a_labels="none"
      org.inkscape.generate.grid_polar.__live_effect__="0"
-     org.inkscape.generate.grid_polar.tab="circular_div" />
+     org.inkscape.generate.grid_polar.tab="circular_div"
+     org.inkscape.input.svg.scale="auto"
+     org.inkscape.input.svg.do_not_ask="1" />
   <group
      id="desktop"
-     style="stroke-width:3.77952756;fill:#ca4436;fill-rule:evenodd;font-size:13.33333333px;stroke-linejoin:round;stroke:#ca4436;opacity:0.2045086">
+     style="stroke-width:3.77952756;fill:#8f93cd;fill-rule:evenodd;font-size:13.33333333px;stroke-linejoin:round;opacity:0.52531302;stroke:#a5a5a6">
     <group
        width="1920"
        height="1080"

@@ -43,7 +43,7 @@
   <string name="toolBars" value="docTitle,stretch,separator,action_Previous_Page,action_Next_Page,separator,actionInsert_Space,actionShow_Clippings,actionTools_Menu,separator,actionShow_Bookmarks,actionShare_Document,actionOverflow_Menu;actionDraw,actionCustom_Pen,actionStroke_Eraser,actionFree_Eraser,penColor,penWidth,stretch" />
   <string name="toolBars2" value="docTitle,stretch,actionSave,separator,tools,separator,undoRedoBtn,separator,seltools,separator,actionShow_Bookmarks,actionShow_Clippings,actionSplitView,separator,actionOverflow_Menu" />
   <string name="toolModes" value="14 20 25 22" />
-  <string name="windowState" value="966 73 943 996 1 0" />
+  <string name="windowState" value="10 41 1900 1029 1 0" />
   <pen color="4294967039" width="3.5" pressure="1" flags="0" />
   <pen color="4278190258" width="4" pressure="1" flags="0" />
   <pen color="4283150181" width="4" pressure="1" flags="0" />
