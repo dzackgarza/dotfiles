@@ -105,14 +105,14 @@
     <sodipodi:namedview
        id="base"
        pagecolor="#ffffff"
-       pageopacity="0.0"
-       pagecheckerboard="0"
-       bordercolor="#666666"
-       borderopacity="1.0"
+       pageopacity="0"
+       pagecheckerboard="1"
+       bordercolor="#111111"
+       borderopacity="1"
        objecttolerance="10.0"
        gridtolerance="10.0"
        guidetolerance="10.0"
-       pageshadow="2"
+       pageshadow="0"
        inkscape:pageopacity="0.0"
        inkscape:pageshadow="2"
        inkscape:window-width="640"
@@ -130,7 +130,7 @@
          id="rect"
          style="fill:blue;"
          usecurrent="1"
-         width="620"
+         width="2343.31"
          height="460"
          ry="0" />
       <eventcontext
@@ -166,11 +166,11 @@
       <eventcontext
          id="arc"
          style="fill:red;"
-         end="358.869"
-         start="359.223"
+         end="0"
+         start="0"
          usecurrent="1"
-         rx="10"
-         ry="10"
+         rx="54.3562"
+         ry="30.464"
          arc_type="0" />
       <eventcontext
          id="star"
@@ -350,8 +350,8 @@
        live_outline="1"
        live_objects="1"
        show_helperpath="0"
-       x="358.182"
-       y="690.334"
+       x="865.462"
+       y="420.626"
        edit_clipping_paths="0"
        edit_masks="0" />
     <eventcontext
@@ -376,7 +376,7 @@
        usepressure="1"
        width="15"
        population="70"
-       mode="1"
+       mode="2"
        rotation_variation="0"
        scale_variation="0"
        standard_deviation="70"
@@ -416,7 +416,19 @@
        id="measure"
        measure-start="0,0"
        measure-end="0,0"
-       fontsize="10" />
+       fontsize="10">
+      <group
+         id="measure-start"
+         x="0"
+         y="0" />
+      <group
+         id="measure-end"
+         x="0"
+         y="0" />
+    </group>
+    <group
+       id="geometric"
+       mode="drag" />
   </group>
   <group
      id="palette">
@@ -631,7 +643,7 @@
        placement="5">
       <group
          id="exportarea"
-         value="page" />
+         value="custom" />
       <group
          id="defaultxdpi"
          value="159.76" />
@@ -641,7 +653,7 @@
        default="org.inkscape.output.svg.inkscape"
        append_extension="1"
        enable_preview="1"
-       path="/home/zack/SparkleShare/github.com/Notes/Visualizations/Notes_Covers/figures"
+       path="/home/zack/.config/inkscape/symbols"
        use_current_dir="1" />
     <group
        id="save_copy"
@@ -652,11 +664,11 @@
     <group
        id="open"
        enable_preview="1"
-       path="/home/zack/dotfiles/bin/notes/" />
+       path="/home/zack/Downloads/" />
     <group
        id="import"
        enable_preview="1"
-       path="/home/zack/"
+       path="/home/zack/Downloads/"
        ask="0"
        ask_svg="0"
        link="embed"
@@ -1017,6 +1029,15 @@
     <group
        id="defaultwindowsize"
        value="2" />
+    <group
+       id="boot"
+       canvas="light-check"
+       theme="compacted"
+       enabled="0">
+      <group
+         id="shown"
+         ver1.1="1" />
+    </group>
   </group>
   <group
      id="extensions"
@@ -1054,17 +1075,19 @@
      org.inkscape.generate.grid_polar.__live_effect__="0"
      org.inkscape.generate.grid_polar.tab="circular_div"
      org.inkscape.input.svg.scale="auto"
-     org.inkscape.input.svg.do_not_ask="1" />
+     org.inkscape.input.svg.do_not_ask="1"
+     net.texample.tools.svg.export_tikz.output.texmode="raw"
+     net.texample.tools.svg.export_tikz.output.codeoutput="figonly" />
   <group
      id="desktop"
-     style="stroke-width:3.77952756;fill:#8f93cd;fill-rule:evenodd;font-size:13.33333333px;stroke-linejoin:round;opacity:0.52531302;stroke:#a5a5a6">
+     style="stroke-width:1.88976378;fill:#b0b0ff;fill-rule:evenodd;font-size:13.33333333px;stroke:#000000;fill-opacity:0.40000001;-inkscape-stroke:none;stop-color:#000000">
     <group
        width="1920"
        height="1080"
        x="-1"
        y="14"
        maximized="0"
-       fullscreen="0"
+       fullscreen="1"
        id="geometry" />
     <group
        id="XYfront" />
@@ -1089,7 +1112,7 @@
     <group
        id="tools"
        icononly="1"
-       small="0" />
+       small="1" />
   </group>
   <group
      id="iconpreview"
@@ -1166,13 +1189,25 @@
      id="theme"
      defaultTheme="Adwaita"
      defaultIconTheme="Adwaita"
-     gtkTheme="Adwaita"
      menuIcons_canvas="0"
      menuIcons_layers="0"
      menuIcons_objects="0"
      defaultPreferDarkTheme="0"
      defaultGtkTheme="Adwaita"
-     darkTheme="0" />
+     darkTheme="0"
+     preferDarkTheme="0"
+     symbolicIcons="1"
+     symbolicDefaultBaseColors="1"
+     symbolicDefaultHighColors="1"
+     gtkTheme="Minwaita-Inkscape"
+     iconTheme="hicolor">
+    <group
+       id="multicolor"
+       symbolicBaseColor="255"
+       symbolicSuccessColor="3435973887"
+       symbolicWarningColor="2155905279"
+       symbolicErrorColor="2155905279" />
+  </group>
   <group
      id="live_effects"
      flattening="0" />

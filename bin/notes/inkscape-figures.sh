@@ -63,7 +63,7 @@ elif [ "$choice" == "New_Xournal" ]; then
   fi
   cp "$DOTFILES_ROOT/bin/notes/xournal_template.xoj" "$OUTFILE.xoj";
   xournal "$OUTFILE.xoj" > /dev/null 2>&1;
-  echo "<--! Xournal file: $OUTFILE.xoj -->";
+  echo "<!-- Xournal file: $OUTFILE.xoj -->";
   exit 0;
 # File already exists:
 # Existing file is for Inkscape
