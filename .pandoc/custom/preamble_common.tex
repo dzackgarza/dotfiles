@@ -116,6 +116,16 @@
   \mathop{\mathpalette\colim@{\rightarrowfill@\scriptscriptstyle}}\nmlimits@
 }
 
+\newcommand{\invlim@}[2]{%
+  \vtop{\m@th\ialign{##\cr
+    \hfil$#1\operator@font lim$\hfil\cr
+    \noalign{\nointerlineskip\kern1.5\ex@}#2\cr
+    \noalign{\nointerlineskip\kern-\ex@}\cr}}%
+}
+\newcommand{\invlim}{%
+  \mathop{\mathpalette\invlim@{\leftarrowfill@\scriptscriptstyle}}\nmlimits@
+}
+
 \tikzcdset{
   diagrams={>={Straight Barb[scale=0.5]}}
 }
