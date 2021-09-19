@@ -1,3 +1,6 @@
+strat
+hint
+warn
 rmk
 cases
 fact
@@ -15,7 +18,6 @@ cort
 slogan
 todo
 irr
-warn
 tikz_bundle
 pfl
 question
@@ -28,7 +30,6 @@ answer
 prob
 mat3
 concept
-strat
 conj
 obs
 ]]]
@@ -89,7 +90,6 @@ tt
 ,,
 ,,,
 ref
-hint
 (
 algc
 algclo
