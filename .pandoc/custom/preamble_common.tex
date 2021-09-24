@@ -105,6 +105,16 @@
 \input{latexmacs_commands}
 \input{latexmacs_categories.tex}
 
+%\makeatletter
+%\newcommand{\colim@}[2]{%
+  %\vtop{\m@th\ialign{##\cr
+    %\hfil$#1\operator@font colim$\hfil\cr
+    %\noalign{\nointerlineskip\kern1.5\ex@}#2\cr
+    %\noalign{\nointerlineskip\kern-\ex@}\cr}}%
+%}
+%\newcommand{\colim}{%
+  %\mathop{\mathpalette\colim@{\rightarrowfill@\scriptscriptstyle}}\nmlimits@
+%}
 \makeatletter
 \newcommand{\colim@}[2]{%
   \vtop{\m@th\ialign{##\cr
@@ -115,6 +125,14 @@
 \newcommand{\colim}{%
   \mathop{\mathpalette\colim@{\rightarrowfill@\scriptscriptstyle}}\nmlimits@
 }
+\renewcommand{\varprojlim}{%
+  \mathop{\mathpalette\varlim@{\leftarrowfill@\scriptscriptstyle}}\nmlimits@
+}
+\renewcommand{\varinjlim}{%
+  \mathop{\mathpalette\varlim@{\rightarrowfill@\scriptscriptstyle}}\nmlimits@
+}
+
+\newcommand{\directlim}[0]{\varinjlim}
 
 \newcommand{\invlim@}[2]{%
   \vtop{\m@th\ialign{##\cr
