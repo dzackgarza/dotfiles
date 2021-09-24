@@ -169,8 +169,8 @@
          end="0"
          start="0"
          usecurrent="1"
-         rx="54.3562"
-         ry="30.464"
+         rx="37.5"
+         ry="27.5"
          arc_type="0" />
       <eventcontext
          id="star"
@@ -1080,7 +1080,7 @@
      net.texample.tools.svg.export_tikz.output.codeoutput="figonly" />
   <group
      id="desktop"
-     style="stroke-width:1.88976378;fill:#b0b0ff;fill-rule:evenodd;font-size:13.33333333px;stroke:#000000;fill-opacity:0.40000001;-inkscape-stroke:none;stop-color:#000000">
+     style="stroke-width:3.77952756;fill:#bc2122;fill-rule:evenodd;font-size:13.33333333px;stroke:#bc2122;fill-opacity:0.40000001;stop-color:#000000">
     <group
        width="1920"
        height="1080"
