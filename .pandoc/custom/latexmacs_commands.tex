@@ -36,6 +36,9 @@
 \newcommand{\sheafify}[1]{ \left( #1 \right)^{\scriptscriptstyle \mathrm{sh}} }
 \newcommand{\complete}[1]{{ {}^{ \hat{#1} } }}
 \newcommand{\takecompletion}[1]{{ \overbrace{#1}^{\widehat{\hspace{4em}}}  }}
+\newcommand{\pcomplete}[0]{{ {}^{ \wedge }_{p} }}
+\newcommand{\kv}[0]{{ k_{\hat{v}} }}
+
 \newcommand{\twistleft}[2]{{ {}^{#1} #2 }}
 \newcommand{\twistright}[2]{{ #2 {}^{#1} }}
 \newcommand{\liesover}[1]{{ {}_{/ {#1}} }}
@@ -44,6 +47,15 @@
 \newcommand{\quotright}[2]{ {}^{#1}\mkern-2mu/\mkern-2mu_{#2} }
 \newcommand{\quotleft}[2]{ {}_{#2}\mkern-.5mu\backslash\mkern-2mu^{#1} }
 \newcommand{\invert}[1]{{ \left[ { \scriptstyle \frac{1}{#1} } \right] }}
-\newcommand{\pcomplete}[0]{{ {}^{ \wedge }_{p} }}
 \newcommand{\symb}[2]{{ \qty{ #1 \over #2 } }}
 
+
+\newcommand\cartpower[1]{{ {}^{ \scriptscriptstyle\times^{#1} }  }}
+\newcommand\sumpower[1]{{ {}^{ \scriptscriptstyle\oplus^{#1} }  }}
+\newcommand\prodpower[1]{{ {}^{ \scriptscriptstyle\times^{#1} }  }}
+\newcommand\tensorpower[2]{{ {}^{ \scriptstyle\otimes_{#1}^{#2} }  }}
+\newcommand\tensorpowerk[1]{{ {}^{ \scriptscriptstyle\otimes_{k}^{#1} }  }}
+\newcommand\derivedtensorpower[3]{{ {}^{ \scriptstyle {}_{#1} {\otimes_{#2}^{#3}} }  }}
+\newcommand\smashpower[1]{{ {}^{ \scriptscriptstyle\smashprod^{#1} }  }}
+\newcommand\fiberpower[2]{{ {}^{ \scriptscriptstyle\fiberprod{#1}^{#2} }  }}
+\newcommand\powers[1]{{ {}^{\cdot #1} }}
