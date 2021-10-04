@@ -1,12 +1,13 @@
-tikz_triangle
-def
-ex
-exc
-proof
-claim
 rmk
+ex
+proof
 prop
 theorem
+def
+irr
+exc
+tikz_triangle
+claim
 cor
 cort
 lem
@@ -22,7 +23,6 @@ hint
 footnote
 slogan
 todo
-irr
 tikz_bundle
 pfl
 bigts
