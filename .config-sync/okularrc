@@ -20,15 +20,14 @@ eDP-1 YPosition 1920x1080=42
 
 [Desktop Entry]
 FullScreen=false
-shouldShowMenuBarComingFromFullScreen=true
+shouldShowMenuBarComingFromFullScreen=false
 shouldShowToolBarComingFromFullScreen=false
 
 [MainWindow]
 Height 1080=996
 Height 1920=1866
 Height 800=746
-MenuBar=Disabled
-State=AAAA/wAAAAD9AAAAAAAAB2wAAAPgAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAA==
+State=AAAA/wAAAAD9AAAAAAAAA68AAAPKAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -75,36 +74,36 @@ eDP-1 HDMI-1 XPosition 1920x1080=966
 eDP-1 HDMI-1 YPosition 1080x1920=42
 eDP-1 HDMI-1 YPosition 1920x1080=73
 eDP-1 Height 1080=1027
-eDP-1 Height 1920x1080=1029
+eDP-1 Height 1920x1080=1027
 eDP-1 Width 1920=623
-eDP-1 Width 1920x1080=1900
+eDP-1 Width 1920x1080=943
 eDP-1 XPosition=1286
-eDP-1 XPosition 1920x1080=10
+eDP-1 XPosition 1920x1080=11
 eDP-1 YPosition=42
-eDP-1 YPosition 1920x1080=41
+eDP-1 YPosition 1920x1080=42
 
 [Print Preview]
 Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Teaching/Calculus/Calculus Workbook.pdf
-File10[$e]=$HOME/Dropbox/Library/Tristan Needham/Visual Complex Analysis (403)/Visual Complex Analysis - Tristan Needham.pdf
-File2[$e]=$HOME/Notes/Class_Notes/2021/Fall/RationalPoints/RationalPoints.pdf
-File3[$e]=$HOME/Notes/Class_Notes/2021/Fall/CharacteristicClasses/CharacteristicClasses.pdf
-File4[$e]=$HOME/Downloads/CharClass HW1.pdf
-File5[$e]=$HOME/Dropbox/Library/Grimaldi Ralph P_/Discrete and Combinatorial Mathematics_ An Applied Introduction (544)/Discrete and Combinatorial Mathematics_ An - Grimaldi Ralph P_.pdf
-File6[$e]=$HOME/Dropbox/Library/Kenneth Rosen/Discrete Mathematics and Its Applications (935)/Discrete Mathematics and Its Applications - Kenneth Rosen.pdf
-File7[$e]=$HOME/Dropbox/Library/Herbert S. Wilf/Generatingfunctionology (516)/Generatingfunctionology - Herbert S. Wilf.pdf
-File8[$e]=$HOME/Dropbox/Library/William Judson LeVeque/Fundamentals of Number Theory (822)/Fundamentals of Number Theory - William Judson LeVeque.pdf
-File9[$e]=$HOME/Dropbox/Library/Jerrold E. Marsden/Basic Complex Analysis (597)/Basic Complex Analysis - Jerrold E. Marsden.pdf
-Name1[$e]=Calculus Workbook.pdf
-Name10[$e]=Visual Complex Analysis - Tristan Needham.pdf
-Name2[$e]=RationalPoints.pdf
-Name3[$e]=CharacteristicClasses.pdf
-Name4[$e]=CharClass HW1.pdf
-Name5[$e]=Discrete and Combinatorial Mathematics_ An - Grimaldi Ralph P_.pdf
-Name6[$e]=Discrete Mathematics and Its Applications - Kenneth Rosen.pdf
-Name7[$e]=Generatingfunctionology - Herbert S. Wilf.pdf
-Name8[$e]=Fundamentals of Number Theory - William Judson LeVeque.pdf
-Name9[$e]=Basic Complex Analysis - Jerrold E. Marsden.pdf
+File1[$e]=$HOME/Downloads/diFiore_uchicago_0330D_14994.pdf
+File10[$e]=$HOME/Dropbox/Teaching/Calculus/Flipped Calculus 1 Solution 20.pdf
+File2[$e]=$HOME/Downloads/Topology_Qual_Fall2021.pdf
+File3[$e]=$HOME/Downloads/2008.11379.pdf
+File4[$e]=$HOME/Downloads/HarpazStableInfinityCategory2013.pdf
+File5[$e]=$HOME/Downloads/CharClass HW1.pdf
+File6[$e]=$HOME/Downloads/1250519404.pdf
+File7[$e]=$HOME/Dropbox/Teaching/Calculus/Calculus Workbook.pdf
+File8[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
+File9[$e]=$HOME/Dropbox/Library/Shrawan Kumar/Kac-Moody, their Flag Varieties and Representation Theory (924)/Kac-Moody, their Flag Varieties and Repres - Shrawan Kumar.pdf
+Name1[$e]=diFiore_uchicago_0330D_14994.pdf
+Name10[$e]=Flipped Calculus 1 Solution 20.pdf
+Name2[$e]=Topology_Qual_Fall2021.pdf
+Name3[$e]=2008.11379.pdf
+Name4[$e]=HarpazStableInfinityCategory2013.pdf
+Name5[$e]=CharClass HW1.pdf
+Name6[$e]=1250519404.pdf
+Name7[$e]=Calculus Workbook.pdf
+Name8[$e]=Algebraic Geometry - Robin Hartshorne.pdf
+Name9[$e]=Kac-Moody, their Flag Varieties and Repres - Shrawan Kumar.pdf
