@@ -130,8 +130,8 @@
          id="rect"
          style="fill:blue;"
          usecurrent="1"
-         width="130"
-         height="100"
+         width="500"
+         height="500"
          ry="0" />
       <eventcontext
          id="3dbox"
@@ -169,8 +169,8 @@
          end="0"
          start="0"
          usecurrent="1"
-         rx="17.5"
-         ry="15"
+         rx="20"
+         ry="20"
          arc_type="0" />
       <eventcontext
          id="star"
@@ -577,7 +577,7 @@
        id="toolbox" />
     <group
        id="fillstroke"
-       page="2"
+       page="1"
        x="0"
        y="0"
        w="378"
@@ -1092,14 +1092,14 @@
      org.inkscape.effect.filter.Blur.content="0" />
   <group
      id="desktop"
-     style="stroke-width:1.51181102;fill:#cc0000;fill-rule:evenodd;font-size:13.33333333px;stop-color:#000000;stroke:#cc0000;opacity:0.27612407">
+     style="stroke-width:3.77952756;fill:#669900;fill-rule:evenodd;font-size:13.33333333px;stop-color:#000000;stroke:#669900;opacity:0.27612407">
     <group
        width="1920"
        height="1080"
        x="-1"
        y="14"
        maximized="0"
-       fullscreen="1"
+       fullscreen="0"
        id="geometry" />
     <group
        id="XYfront" />
