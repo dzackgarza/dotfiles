@@ -294,8 +294,6 @@
 \newcommand{\inverselim}[0]{\varprojlim}
 \newcommand{\inv}[0]{^{-1}}
 \newcommand{\ip}[2]{{\left\langle {#1},~{#2} \right\rangle}}
-\newcommand{\isomorphic}{{ \, \mapsvia{\sim}\, }}
-\newcommand{\iso}{{ \isomorphic  }}
 \newcommand{\kG}[0]{{kG}}
 \newcommand{\kfq}[0]{K_{/\mathbb{F}_q}}
 \newcommand{\kk}[0]{{\mathbb{k}}}
@@ -340,6 +338,9 @@
 \newcommand{\mapstofrom}[0]{\rightleftharpoons}
 \newcommand{\mapstovia}[1]{\xmapsto{#1}}
 \newcommand{\mapsvia}[1]{\xrightarrow{#1}}
+\newcommand{\isomorphic}{{ \, \mapsvia{\sim}\, }}
+\newcommand{\iso}{{ \isomorphic  }}
+\newcommand{\isovia}[1]{\underset{#1}{\iso}}
 \newcommand{\injectsvia}[1]{\xhookrightarrow{#1}}
 \newcommand{\injectsfromvia}[1]{\xhookleftarrow{#1}}
 \newcommand{\maps}[0]{\operatorname{Maps}}
@@ -681,15 +682,15 @@
 \newcommand{\realize}[1]{{ \abs{#1} }}
 
 
-\newcommand{\B}[0]{{\mathsf{B}}}
-\newcommand{\E}[0]{{\mathsf{E}}}
-\newcommand{\T}[0]{{\mathsf{T}}}
+\newcommand{\B}[0]{{\mathbf{B}}}
+\newcommand{\E}[0]{{\mathbf{E}}}
+\newcommand{\T}[0]{{\mathbf{T}}}
 \newcommand{\K}[0]{{\mathsf{K}}}
 \newcommand{\G}[0]{{\mathsf{G}}}
 %\newcommand{\H}[0]{{\mathsf{H}}}
 \newcommand{\D}{{ \mathsf{D} }}
 \newcommand{\mH}{{ \mathsf{H} }}
-\newcommand{\BGL}[0]{ \mathsf{B}\mkern-3mu \operatorname{GL} }
+\newcommand{\BGL}[0]{ \mathbf{B}\mkern-3mu \operatorname{GL} }
 
 \newcommand{\RM}[1]{%
   \textup{\uppercase\expandafter{\romannumeral#1}}%

@@ -27,7 +27,7 @@ shouldShowToolBarComingFromFullScreen=false
 Height 1080=996
 Height 1920=1866
 Height 800=746
-State=AAAA/wAAAAD9AAAAAAAAA68AAAPKAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAA==
+State=AAAA/wAAAAD9AAAAAAAAB2wAAAPMAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -74,36 +74,36 @@ eDP-1 HDMI-1 XPosition 1920x1080=10
 eDP-1 HDMI-1 YPosition 1080x1920=42
 eDP-1 HDMI-1 YPosition 1920x1080=72
 eDP-1 Height 1080=1027
-eDP-1 Height 1920x1080=1027
+eDP-1 Height 1920x1080=1029
 eDP-1 Width 1920=623
-eDP-1 Width 1920x1080=943
+eDP-1 Width 1920x1080=1900
 eDP-1 XPosition=1286
-eDP-1 XPosition 1920x1080=966
+eDP-1 XPosition 1920x1080=10
 eDP-1 YPosition=42
-eDP-1 YPosition 1920x1080=42
+eDP-1 YPosition 1920x1080=41
 
 [Print Preview]
 Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Teaching/Calculus/Gateways and Exams/Exam 2/Exam2.pdf
-File10[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
-File2[$e]=$HOME/Dropbox/Library/Bjorn Poonen/Rational points on varieties (926)/Rational points on varieties - Bjorn Poonen.pdf
-File3[$e]=$HOME/Downloads/notes3.pdf
-File4[$e]=$HOME/Downloads/DerivedStacks.pdf
-File5[$e]=$HOME/Downloads/Topology_Qual_Fall2021.pdf
-File6[$e]=$HOME/Downloads/Flatness.pdf
-File7[$e]=$HOME/Downloads/2008.11379.pdf
-File8[$e]=$HOME/Downloads/1250519404.pdf
+File1[$e]=$HOME/Dropbox/Library/Bjorn Poonen/Rational points on varieties (926)/Rational points on varieties - Bjorn Poonen.pdf
+File10[$e]=$HOME/Dropbox/Library/Shrawan Kumar/Kac-Moody, their Flag Varieties and Representation Theory (924)/Kac-Moody, their Flag Varieties and Repres - Shrawan Kumar.pdf
+File2[$e]=$HOME/Downloads/notes3.pdf
+File3[$e]=$HOME/Downloads/DerivedStacks.pdf
+File4[$e]=$HOME/Downloads/Topology_Qual_Fall2021.pdf
+File5[$e]=$HOME/Downloads/Flatness.pdf
+File6[$e]=$HOME/Downloads/2008.11379.pdf
+File7[$e]=$HOME/Downloads/1250519404.pdf
+File8[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
 File9[$e]=$HOME/Dropbox/Teaching/Calculus/Calculus Workbook.pdf
-Name1[$e]=Exam2.pdf
-Name10[$e]=Algebraic Geometry - Robin Hartshorne.pdf
-Name2[$e]=Rational points on varieties - Bjorn Poonen.pdf
-Name3[$e]=notes3.pdf
-Name4[$e]=DerivedStacks.pdf
-Name5[$e]=Topology_Qual_Fall2021.pdf
-Name6[$e]=Flatness.pdf
-Name7[$e]=2008.11379.pdf
-Name8[$e]=1250519404.pdf
+Name1[$e]=Rational points on varieties - Bjorn Poonen.pdf
+Name10[$e]=Kac-Moody, their Flag Varieties and Repres - Shrawan Kumar.pdf
+Name2[$e]=notes3.pdf
+Name3[$e]=DerivedStacks.pdf
+Name4[$e]=Topology_Qual_Fall2021.pdf
+Name5[$e]=Flatness.pdf
+Name6[$e]=2008.11379.pdf
+Name7[$e]=1250519404.pdf
+Name8[$e]=Algebraic Geometry - Robin Hartshorne.pdf
 Name9[$e]=Calculus Workbook.pdf

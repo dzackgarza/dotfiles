@@ -5,7 +5,7 @@ font pango:monospace 9
 default_border pixel 1
 default_floating_border normal
 hide_edge_borders smart
-# for_window [class="^.*"] border pixel 1
+for_window [class="^.*"] border pixel 1
 
 #smart_gaps on
 gaps inner 10
@@ -18,7 +18,7 @@ floating_modifier $mod
 # Start programs
 bindsym $mod+Shift+Return exec chromium
 bindsym $mod+Return exec termite -c /home/zack/.config/termite/config
-bindsym $mod+Ctrl+Return exec termite --name __scratchpad -e tmux -c /home/zack/.config/termite/scratch_config
+bindsym $mod+Ctrl+Return exec termite --title __scratchpad -e tmux -c /home/zack/.config/termite/scratch_config
 bindsym $mod+V exec vim_anywhere.sh
 bindsym $mod+A exec dmenuAllPDFs.sh 
 bindsym $mod+F exec faves_wm.sh 
@@ -30,7 +30,7 @@ bindsym $mod+M exec termite --title=notetaker_window -e /home/zack/dotfiles/bin/
 bindsym $mod+P exec "qutebrowser ':scroll-px 0 400'"
 bindsym $mod+O exec "qutebrowser ':scroll-px 0 -400'"
 bindsym F10 exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle 
-bindsym F12 scratchpad show, move position center
+bindsym F12 scratchpad show
 
 # Video control
 bindsym $mod+Insert             exec "mpv_toggle.sh"
@@ -115,10 +115,9 @@ for_window [class=”Tilda”]                              floating enable
 for_window [class="Eog"]                                floating enable
 for_window [class="Nitrogen"]                           floating enable
 for_window [class="Nemo"]                               floating enable
-for_window [class="Inkscape"]                           floating enable, move position center
 
 # More floating windows
-for_window [title="notetaker_window"]                   floating enable, resize set 600px 300px, move position center
+for_window [title="notetaker_window"]                   floating enable, resize set 600px 300px
 for_window [window_role="pop-up"]                       floating enable
 for_window [window_role="bubble"]                       floating enable 
 for_window [window_role="task_dialog"]                  floating enable
@@ -239,8 +238,6 @@ exec_always --no-startup-id xmodmap -e "keycode 9 = Caps_Lock NoSymbol Caps_Lock
 exec_always --no-startup-id xmodmap -e "keycode 66 = Escape NoSymbol Escape"
 exec_always --no-startup-id xset r rate 280 45  
 exec_always --no-startup-id screenchanges.sh 
-exec_always --no-startup-id xinput set-prop "ELAN0511:00 04F3:3041 Touchpad" "libinput Natural Scrolling Enabled" 1 
-exec_always --no-startup-id xinput set-prop "ELAN0511:00 04F3:3041 Touchpad" "libinput Tapping Enabled" 1 
 
 default_orientation auto
 no_focus [class="qutebrowser"]

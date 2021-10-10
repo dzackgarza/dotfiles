@@ -1,8 +1,9 @@
-exc
 ex
 rmk
-proof
 lem
+theorem
+exc
+proof
 prop
 cor
 obs
@@ -11,7 +12,6 @@ tikz_bundle
 cases
 fact
 claim
-theorem
 warn
 irr
 tikz_triangle
