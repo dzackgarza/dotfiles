@@ -358,6 +358,14 @@ function! PasteImage()
   endif
 endfunction
 
+function! PasteQuiverDiagram()
+  normal  "+pdd/endopdwi> [Link to Diagram](A):w
+endfunction
+
+nmap <silent> <leader>qp :call PasteQuiverDiagram()<CR>
+
+
+
 " {{{ Aesthetics
 "set t_Co=256  
 colorscheme one

@@ -36,9 +36,9 @@ setxkbmap -option terminate:ctrl_alt_bksp
 #picom --experimental-backends &
 
 
-xinput set-prop "ELAN0511:00 04F3:3041 Touchpad" "libinput Natural Scrolling Enabled" 1
-xinput set-prop "ELAN0511:00 04F3:3041 Touchpad" "libinput Tapping Enabled" 1
 xinput set-prop "ELAN9004:00 04F3:299E stylus" "Wacom Proximity Threshold" 0.1
+xinput set-prop "ELAN0511:00 04F3:3041 Touchpad" "libinput Natural Scrolling Enabled" 1 
+xinput set-prop "ELAN0511:00 04F3:3041 Touchpad" "libinput Tapping Enabled" 1 
 
 xset s off -dpms
 xset r rate 220 45
