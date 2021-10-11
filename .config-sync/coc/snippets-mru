@@ -1,5 +1,7 @@
-ex
 rmk
+def
+ex
+warn
 lem
 theorem
 exc
@@ -7,12 +9,10 @@ proof
 prop
 cor
 obs
-def
 tikz_bundle
 cases
 fact
 claim
-warn
 irr
 tikz_triangle
 cort
