@@ -20,7 +20,7 @@ eDP-1 YPosition 1920x1080=42
 
 [Desktop Entry]
 FullScreen=false
-shouldShowMenuBarComingFromFullScreen=false
+shouldShowMenuBarComingFromFullScreen=true
 shouldShowToolBarComingFromFullScreen=false
 
 [MainWindow]
@@ -87,23 +87,23 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Library/Bjorn Poonen/Rational points on varieties (926)/Rational points on varieties - Bjorn Poonen.pdf
-File10[$e]=$HOME/Dropbox/Teaching/Calculus/Calculus Workbook.pdf
-File2[$e]=$HOME/Downloads/notes3.pdf
-File3[$e]=$HOME/Downloads/DerivedStacks.pdf
-File4[$e]=$HOME/Downloads/Topology_Qual_Fall2021.pdf
-File5[$e]=$HOME/Downloads/Flatness.pdf
-File6[$e]=$HOME/Downloads/2008.11379.pdf
-File7[$e]=$HOME/Downloads/1250519404.pdf
-File8[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
-File9[$e]=$HOME/Dropbox/Library/Shrawan Kumar/Kac-Moody, their Flag Varieties and Representation Theory (924)/Kac-Moody, their Flag Varieties and Repres - Shrawan Kumar.pdf
-Name1[$e]=Rational points on varieties - Bjorn Poonen.pdf
-Name10[$e]=Calculus Workbook.pdf
-Name2[$e]=notes3.pdf
-Name3[$e]=DerivedStacks.pdf
-Name4[$e]=Topology_Qual_Fall2021.pdf
-Name5[$e]=Flatness.pdf
-Name6[$e]=2008.11379.pdf
-Name7[$e]=1250519404.pdf
-Name8[$e]=Algebraic Geometry - Robin Hartshorne.pdf
-Name9[$e]=Kac-Moody, their Flag Varieties and Repres - Shrawan Kumar.pdf
+File1[$e]=$HOME/Downloads/DerivedStacks.pdf
+File10[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
+File2[$e]=$HOME/Downloads/Topology_Qual_Fall2021.pdf
+File3[$e]=$HOME/Downloads/Flatness.pdf
+File4[$e]=$HOME/Downloads/2008.11379.pdf
+File5[$e]=$HOME/Downloads/1250519404.pdf
+File6[$e]=$HOME/Dropbox/Library/Shrawan Kumar/Kac-Moody, their Flag Varieties and Representation Theory (924)/Kac-Moody, their Flag Varieties and Repres - Shrawan Kumar.pdf
+File7[$e]=$HOME/Dropbox/Teaching/Calculus/Calculus Workbook.pdf
+File8[$e]=$HOME/Dropbox/Library/William Judson LeVeque/Fundamentals of Number Theory (822)/Fundamentals of Number Theory - William Judson LeVeque.pdf
+File9[$e]=$HOME/Dropbox/Library/Perverse Sheaves Weil Conjectures/(Ergebnisse der Mathematik und ihrer Grenzgebiete 42) Reinhardt Kiehl (939)/(Ergebnisse der Mathematik und ihrer Grenz - Perverse Sheaves Weil Conjectures.pdf
+Name1[$e]=DerivedStacks.pdf
+Name10[$e]=Algebraic Geometry - Robin Hartshorne.pdf
+Name2[$e]=Topology_Qual_Fall2021.pdf
+Name3[$e]=Flatness.pdf
+Name4[$e]=2008.11379.pdf
+Name5[$e]=1250519404.pdf
+Name6[$e]=Kac-Moody, their Flag Varieties and Repres - Shrawan Kumar.pdf
+Name7[$e]=Calculus Workbook.pdf
+Name8[$e]=Fundamentals of Number Theory - William Judson LeVeque.pdf
+Name9[$e]=(Ergebnisse der Mathematik und ihrer Grenz - Perverse Sheaves Weil Conjectures.pdf
