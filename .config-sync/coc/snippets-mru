@@ -1,13 +1,14 @@
-rmk
+prop
 exc
+lem
+tikz_pullback
+rmk
 cor
 def
 ex
 warn
 proof
-prop
 cort
-lem
 theorem
 obs
 tikz_bundle
@@ -16,7 +17,6 @@ fact
 claim
 irr
 tikz_triangle
-tikz_pullback
 prob
 question
 soln
