@@ -1,12 +1,13 @@
+footnote
+ex
 rmk
+slogan
 proof
 claim
 theorem
 question
 exc
 cor
-footnote
-ex
 def
 todo
 fact
@@ -25,7 +26,6 @@ prob
 soln
 strat
 hint
-slogan
 pfl
 bigts
 tikzcd
