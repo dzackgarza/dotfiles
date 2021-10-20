@@ -130,8 +130,8 @@
          id="rect"
          style="fill:blue;"
          usecurrent="1"
-         width="260"
-         height="180"
+         width="516.85"
+         height="260.315"
          ry="0" />
       <eventcontext
          id="3dbox"
@@ -351,8 +351,8 @@
        live_outline="1"
        live_objects="1"
        show_helperpath="0"
-       x="745.555"
-       y="462.511"
+       x="299.381"
+       y="352.687"
        edit_clipping_paths="0"
        edit_masks="0" />
     <eventcontext
@@ -1092,14 +1092,14 @@
      org.inkscape.effect.filter.Blur.content="0" />
   <group
      id="desktop"
-     style="stroke-width:3.02362205;fill:#3366cc;fill-rule:evenodd;font-size:13.33333333px;stop-color:#000000;stroke:#000000;opacity:0.21825559">
+     style="stroke-width:3.02362205;fill:#ff9900;fill-rule:evenodd;font-size:13.33333333px;stop-color:#000000;stroke:#00cc00;opacity:0.21825559">
     <group
        width="1900"
        height="1029"
        x="10"
        y="41"
        maximized="0"
-       fullscreen="0"
+       fullscreen="1"
        id="geometry" />
     <group
        id="XYfront" />
