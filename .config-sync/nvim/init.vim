@@ -563,6 +563,13 @@ map <F6> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
+autocmd QuitPre * call <sid>TermForceCloseAll()
+function! s:TermForceCloseAll() abort
+    let term_bufs = filter(range(1, bufnr('$')), 'getbufvar(v:val, "&buftype") == "terminal"')
+    for t in term_bufs
+            execute "bd! " t
+    endfor
+endfunction
 
 " }}}
 

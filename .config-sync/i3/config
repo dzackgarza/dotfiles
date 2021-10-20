@@ -5,7 +5,7 @@ font pango:monospace 9
 default_border pixel 1
 default_floating_border normal
 hide_edge_borders smart
-for_window [class="^.*"] border pixel 1
+# for_window [class="^.*"] border pixel 1
 
 #smart_gaps on
 gaps inner 10
@@ -18,7 +18,7 @@ floating_modifier $mod
 # Start programs
 bindsym $mod+Shift+Return exec chromium
 bindsym $mod+Return exec termite -c /home/zack/.config/termite/config
-bindsym $mod+Ctrl+Return exec termite --title __scratchpad -e tmux -c /home/zack/.config/termite/scratch_config
+bindsym $mod+Ctrl+Return exec termite --name __scratchpad -e tmux -c /home/zack/.config/termite/scratch_config
 bindsym $mod+V exec vim_anywhere.sh
 bindsym $mod+A exec dmenuAllPDFs.sh 
 bindsym $mod+F exec faves_wm.sh 
@@ -30,7 +30,8 @@ bindsym $mod+M exec termite --title=notetaker_window -e /home/zack/dotfiles/bin/
 bindsym $mod+P exec "qutebrowser ':scroll-px 0 400'"
 bindsym $mod+O exec "qutebrowser ':scroll-px 0 -400'"
 bindsym F10 exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle 
-bindsym F12 scratchpad show
+bindsym F12 scratchpad show, move position center
+
 
 # Video control
 bindsym $mod+Insert             exec "mpv_toggle.sh"
@@ -115,9 +116,10 @@ for_window [class=”Tilda”]                              floating enable
 for_window [class="Eog"]                                floating enable
 for_window [class="Nitrogen"]                           floating enable
 for_window [class="Nemo"]                               floating enable
+for_window [class="Inkscape"]                           floating enable, move position center
 
 # More floating windows
-for_window [title="notetaker_window"]                   floating enable, resize set 600px 300px
+for_window [title="notetaker_window"]                   floating enable, resize set 600 500, move position 1300 100
 for_window [window_role="pop-up"]                       floating enable
 for_window [window_role="bubble"]                       floating enable 
 for_window [window_role="task_dialog"]                  floating enable
@@ -216,28 +218,17 @@ bindsym $mod+Shift+q mode "$mode_system"
 
 # bindsym Control+$mod+I workspace 2:Terminal; append_layout ~/dotfiles/vimWorkspace.json
 
-exec --no-startup-id unclutter
-exec --no-startup-id dropbox &
-exec_always --no-startup-id blueman-applet &
-exec --no-startup-id sparkleshare &
-exec_always --no-startup-id nm-applet &
-exec --no-startup-id mathpix-snipping-tool &
-exec --no-startup-id dunst &
-exec_always --no-startup-id nitrogen --restore &
-exec_always --no-startup-id sleep 1; polybar.sh &
-exec_always --no-startup-id sleep 1; pkill redshift; redshift -x; redshift-gtk &
-exec_always --no-startup-id pkill picom; picom --experimental-backends &
-exec --no-startup-id zotero &
-
-for_window [instance="__scratchpad"] floating enable, resize set 1910px 775px,, move scratchpad, sticky enable
+for_window [instance="__scratchpad"] floating enable, resize set 1800px 600px, move position center, sticky enable
 exec --no-startup-id termite --name __scratchpad -e tmux -2 -c /home/zack/.config/termite/scratch_config
-
-# swap caps lock and escape
-exec_always --no-startup-id xmodmap -e "clear lock"
-exec_always --no-startup-id xmodmap -e "keycode 9 = Caps_Lock NoSymbol Caps_Lock"
-exec_always --no-startup-id xmodmap -e "keycode 66 = Escape NoSymbol Escape"
-exec_always --no-startup-id xset r rate 280 45  
-exec_always --no-startup-id screenchanges.sh 
 
 default_orientation auto
 no_focus [class="qutebrowser"]
+
+exec --no-startup-id unclutter
+exec --no-startup-id dropbox &
+exec --no-startup-id sparkleshare &
+exec --no-startup-id mathpix-snipping-tool &
+exec --no-startup-id dunst &
+exec_always --no-startup-id /home/zack/dotfiles/bin/i3_setup.sh
+exec_always i3-layouts
+
