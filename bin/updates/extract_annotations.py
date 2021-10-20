@@ -83,8 +83,9 @@ def main():
     outfilename = f"/home/zack/Notes/annotations/{booktitle}.md"
     with open(outfilename, "w") as fp:
         fp.write(f"# {outdate}: {booktitle} ({bookauthor})\n\n")
-        fp.write(f"<a href='file:///{realpath}' target='_blank'>{realpath}</a>\n\n")
+        fp.write(f"[Link to PDF](<file:///{realpath}>)\n\n")
         fp.write(f"Last Annotation: {outdate}\n\n")
+        fp.write(f"Tags: #annotations\n\n")
         if len(popups) > 0:
             fp.write("## Notes\n\n")
             fp.write('\n'.join(popups))
