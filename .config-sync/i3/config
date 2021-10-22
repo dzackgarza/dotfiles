@@ -18,7 +18,6 @@ floating_modifier $mod
 # Start programs
 bindsym $mod+Shift+Return exec chromium
 bindsym $mod+Return exec termite -c /home/zack/.config/termite/config
-bindsym $mod+Ctrl+Return exec termite --name __scratchpad -e tmux -c /home/zack/.config/termite/scratch_config
 bindsym $mod+V exec vim_anywhere.sh
 bindsym $mod+A exec dmenuAllPDFs.sh 
 bindsym $mod+F exec faves_wm.sh 
@@ -30,7 +29,6 @@ bindsym $mod+M exec termite --title=notetaker_window -e /home/zack/dotfiles/bin/
 bindsym $mod+P exec "qutebrowser ':scroll-px 0 400'"
 bindsym $mod+O exec "qutebrowser ':scroll-px 0 -400'"
 bindsym F10 exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle 
-bindsym F12 scratchpad show, move position center
 
 
 # Video control
@@ -218,8 +216,13 @@ bindsym $mod+Shift+q mode "$mode_system"
 
 # bindsym Control+$mod+I workspace 2:Terminal; append_layout ~/dotfiles/vimWorkspace.json
 
+bindsym F12 scratchpad show, move position center
+bindsym $mod+Ctrl+Return exec termite --name __scratchpad -e tmux -c /home/zack/.config/termite/scratch_config
+
 for_window [instance="__scratchpad"] floating enable, resize set 1800px 600px, move position center, sticky enable
 exec --no-startup-id termite --name __scratchpad -e tmux -2 -c /home/zack/.config/termite/scratch_config
+for_window [instance="__scratchpad"] move scratchpad 
+
 
 default_orientation auto
 no_focus [class="qutebrowser"]
