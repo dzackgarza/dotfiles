@@ -352,8 +352,8 @@
        live_outline="1"
        live_objects="1"
        show_helperpath="0"
-       x="299.381"
-       y="352.687"
+       x="836.85"
+       y="279.685"
        edit_clipping_paths="0"
        edit_masks="0" />
     <eventcontext
@@ -578,7 +578,7 @@
        id="toolbox" />
     <group
        id="fillstroke"
-       page="2"
+       page="1"
        x="0"
        y="0"
        w="378"
