@@ -113,7 +113,7 @@ for_window [class="Yad"] floating enable
 for_window [class=”Tilda”]                              floating enable
 for_window [class="Eog"]                                floating enable
 for_window [class="Nitrogen"]                           floating enable
-for_window [class="Nemo"]                               floating enable
+for_window [class="Nemo"]                               floating disable
 for_window [class="Inkscape"]                           floating enable, move position center
 
 # More floating windows

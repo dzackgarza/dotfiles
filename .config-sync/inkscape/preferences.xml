@@ -196,14 +196,15 @@
          style="stroke-width:1px;"
          usecurrent="0"
          average_all_sketches="1"
-         pressure="0" />
+         pressure="0"
+         freehand-mode="1" />
       <eventcontext
          id="pen"
          mode="drag"
          selcue="1"
          style="stroke-width:1px;"
          usecurrent="0"
-         freehand-mode="0" />
+         freehand-mode="1" />
     </group>
     <eventcontext
        id="calligraphic"
@@ -577,7 +578,7 @@
        id="toolbox" />
     <group
        id="fillstroke"
-       page="1"
+       page="2"
        x="0"
        y="0"
        w="378"
@@ -1092,7 +1093,7 @@
      org.inkscape.effect.filter.Blur.content="0" />
   <group
      id="desktop"
-     style="stroke-width:3.02362205;fill:#ff9900;fill-rule:evenodd;font-size:13.33333333px;stop-color:#000000;stroke:#00cc00;opacity:0.21825559">
+     style="stroke-width:3.77952756;fill:#ff9900;fill-rule:evenodd;font-size:13.33333333px;stop-color:#000000;stroke:#cc0000;opacity:0.21825559">
     <group
        width="1900"
        height="1029"
