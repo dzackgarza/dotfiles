@@ -2,9 +2,25 @@
 
 now=$(date +%H:%M)
 today=$(date +%Y-%m-%d)
-outfile="$NOTES/Obsidian/Unsorted/Quick_Notes/$today.md"
+outfile="$NOTES/Obsidian/Quick_Notes/$today-quick_note.md"
 
-[[ ! -f $outfile ]] && echo "# $today" > $outfile
+read -r -d '' file_template << EOM
+---
+date: $today
+tags: [quick_notes]
+---
+
+# $today
+
+Tags:
+#untagged
+
+Refs:
+?
+
+EOM
+
+[[ ! -f $outfile ]] && echo "$file_template" > $outfile;
 
 nvim -c "norm Go" \
   -c "norm Go## $now" \

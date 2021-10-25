@@ -73,10 +73,10 @@ fi
 cp "$BIB_FILE" "$TMP_DIR/$filename.bib";
 #cp -r "$directory/figures" .;
 
-SEDSTR="s/\[\[\([-0-9A-Za-zé_\ ]\{1,\}\)\(\]\]\)/[\1](.\/\1.html)/g"
+#SEDSTR="s/\[\[\([-0-9A-Za-zé_\ ]\{1,\}\)\(\]\]\)/[\1](.\/\1.html)/g"
+# See https://regex101.com/r/7jmwwx/1
 
-
-cat "$filepath" | sed "$SEDSTR" | pandoc_stripmacros.sh > "$TMP_DIR/combined.temp" ;
+cat "$filepath" | pandoc_stripmacros.sh | sed -E 's/\\\[\\\[([^]]*)\\\]\\\]/[\1](\1.md)/g' > "$TMP_DIR/combined.temp" ;
 
 cat >> "$TMP_DIR/combined.temp" <<- EOM
 
@@ -106,7 +106,7 @@ cat "$TMP_DIR/combined.temp" | pandoc \
   --css=$PANDOC_TEMPLATES/marked/kultiad-serif.css \
   --citeproc \
   --bibliography="$TMP_DIR/$filename.bib" \
-  --resource-path="$TMP_DIR" \
+  --resource-path="$TMP_DIR:/home/zack/Notes" \
   --metadata link-citations=true \
   --csl=$PANDOC_TEMPLATES/csl/inventiones-mathematicae.csl \
   -V current_date="$(date +%Y-%m-%d%n)" "${params[@]}" \
