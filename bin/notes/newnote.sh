@@ -20,7 +20,8 @@ Refs:
 
 EOM
 
-[[ ! -f $outfile ]] && echo "$file_template" > $outfile;
+[[ ! -f "$outfile" ]] && echo "$file_template" > $outfile;
+notify-send "New Note" "Opening $outfile" --urgency=critical --expire-time=5000;
 
 nvim -c "norm Go" \
   -c "norm Go## $now" \
