@@ -7,7 +7,7 @@ command -v yay >/dev/null 2>&1 && yay -Syuu --noconfirm;
 command -v yay >/dev/null 2>&1 && yay -Scc --noconfirm;
 command -v apt-get >/dev/null 2>&1 && sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get dist-upgrade && sudo apt-get -y autoremove && sudo apt-get clean;
 command -v python >/dev/null 2>&1 && python -m pip install --upgrade pip
-command -v rvm >/dev/null 2>&1 && rvm get stable --auto && rvm reload;
+command -v rvm >/dev/null 2>&1 && sudo rvm get stable --auto && rvm reload;
 
 #clr_green "Updating atom packages..";
 #command -v apm >/dev/null 2>&1 && apm upgrade
