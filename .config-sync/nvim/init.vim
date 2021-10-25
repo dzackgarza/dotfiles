@@ -183,7 +183,6 @@ nnoremap <Leader>w :w<CR>
 
 
 nmap <Leader>ll :let @+=expand("%:p")<CR><CR>
-nmap <Leader>ll :let @+=expand("%:p")<CR><CR>
 
 nnoremap <silent> <leader>zj :call NextClosedFold('j')<cr>
 nnoremap <silent> <leader>zk :call NextClosedFold('k')<cr>
@@ -335,6 +334,7 @@ function s:pandocSyntax()
 
   syntax match DZGMathNames /title=/ contained conceal cchar= 
   "source /home/zack/dotfiles/vim/tex_conceal.vim
+
 endfunction
 au VimEnter *.md call s:markdownSetup()
 au BufNewFile,BufFilePre,BufRead *.md call s:pandocSyntax()
