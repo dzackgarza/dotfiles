@@ -19,9 +19,9 @@ floating_modifier $mod
 bindsym $mod+Shift+Return exec chromium
 bindsym $mod+Return exec termite -c /home/zack/.config/termite/config
 bindsym $mod+V exec vim_anywhere.sh
-bindsym $mod+A exec dmenuAllPDFs.sh 
 bindsym $mod+F exec faves_wm.sh 
 bindsym $mod+L exec dmenu_locate.sh 
+bindsym $mod+A exec /home/zack/dotfiles/bin/dmenu/dmenuAllPDFs.sh 
 bindsym $mod+D exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -width 30 -show -i -dmenu -font "Clear Sans Regular 12"'
 bindsym Print exec "unclutter -idle 0 & flameshot gui; pkill unclutter"
 bindsym $mod+N exec termite --title=notetaker_window -e /home/zack/dotfiles/bin/notes/newnote.sh
