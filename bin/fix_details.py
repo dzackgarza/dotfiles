@@ -1,0 +1,19 @@
+#!/usr/bin/python    
+
+import sys
+import re
+
+data = sys.stdin.readlines()
+test_str = "".join(data)
+
+regex = r"^(\<details.*\>)\n*"
+subst = "\\1\\n"
+
+result1 = re.sub(regex, subst, test_str, 0, re.MULTILINE)
+
+regex2 = r"^(\|.*\|\n\|[\-\|]*$)"
+subst2 = "\\n\\1"
+
+result2 = re.sub(regex2, subst2, result1, 0, re.MULTILINE)
+
+print(result2)

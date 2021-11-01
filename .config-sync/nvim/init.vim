@@ -165,8 +165,13 @@ inoremap <c-space> <Esc>:w<CR>o
 "inoremap <CR> <CR><Esc>:wa<CR>i
 nnoremap ZZ :wqa<CR>
 
-nnoremap <C-p> :Files<Cr>
+nnoremap <C-p> :GitFiles<Cr>
+" Provided by fzf
 nnoremap <C-f> :Ag<Cr>
+if executable('ag')
+  let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+endif
+
 
 command W write
 

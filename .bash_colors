@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 #
 # Constants and functions for terminal colors.
 # Author: Max Tsepkov <max@yogi.pw>

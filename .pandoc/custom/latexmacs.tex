@@ -118,6 +118,7 @@
 \newcommand{\Ob}[0]{{\operatorname{Ob}}}
 \newcommand{\Op}[0]{{\operatorname{Op}}}
 \newcommand{\Orb}[0]{{\mathrm{Orb}}}
+\newcommand{\Conj}[0]{{\mathrm{Conj}}}
 \newcommand{\Orth}[0]{{\operatorname{O}}}
 \newcommand{\PD}[0]{\mathrm{PD}}
 \newcommand{\PGL}[0]{\operatorname{PGL}}
@@ -229,7 +230,6 @@
 \newcommand{\ddt}{\tfrac{\dif}{\dif t}}
 \newcommand{\ddx}{\tfrac{\dif}{\dif x}}
 \newcommand{\dd}[2]{{\frac{\partial #1}{\partial #2}\,}}
-\newcommand{\decreasesto}[0]{\searrow}
 \newcommand{\definedas}[0]{\coloneqq}
 \newcommand{\del}[0]{{\partial}}
 \newcommand{\diagonal}[1]{\Delta}
@@ -283,6 +283,7 @@
 \newcommand{\homotopic}[0]{\simeq}
 \newcommand{\id}[0]{\operatorname{id}}
 \newcommand{\im}[0]{\operatorname{im}}
+\newcommand{\decreasesto}[0]{\searrow}
 \newcommand{\increasesto}[0]{\nearrow}
 \newcommand{\injectivelim}[0]{\varinjlim}
 \newcommand{\injects}[0]{\hookrightarrow}
@@ -433,7 +434,7 @@
 \newcommand{\selfmap}[0]{{\circlearrowleft}}
 \newcommand{\semidirect}[0]{\rtimes}
 \newcommand{\wreath}[0]{\wr}
-\newcommand{\size}[0]{{\#}}
+\newcommand{\size}[0]{{\sharp}}
 \newcommand{\sep}[0]{{ {}^{ \operatorname{sep} } }}
 \newcommand{\sgn}[0]{\operatorname{sgn}}
 \newcommand{\shom}{ {\mathcal{H}}\kern-0.5pt{\operatorname{om}}}
@@ -450,7 +451,6 @@
 \newcommand{\stab}[0]{{\operatorname{Stab}}}
 \newcommand{\stirlingfirst}[2]{\genfrac{[}{]}{0pt}{}{#1}{#2}}
 \newcommand{\stirling}[2]{\genfrac\{\}{0pt}{}{#1}{#2}}
-\newcommand{\st}[0]{{~\mathrel{\Big|}~}}
 \newcommand{\surjectsvia}[2][]{ \xrightarrow[#1]{#2} { \mathrel{\mkern-16mu}\rightarrow }\, }
 \newcommand{\surjects}[0]{\twoheadrightarrow}
 \newcommand{\syl}[0]{{\operatorname{Syl}}}
@@ -567,8 +567,10 @@
 \DeclareMathOperator{\soc}{Soc}
 \DeclareMathOperator{\submfds}{SubMfds}
 
+\newcommand{\st}[0]{{~\mathrel{\Big\vert}~}}
+\newcommand{\suchthat}[0]{\st}
 \newcommand{\Suchthat}[0]{\middle\vert}
-\newcommand{\suchthat}[0]{{~\mathrel{\Big|}~}}
+
 \newcommand{\delbar}[0]{{ \bar{\del}}}
 
 \newcommand{\containedin}[0]{\subseteq}

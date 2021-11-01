@@ -51,10 +51,10 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
+bindsym $mod+Shift+Left exec i3l move left 
+bindsym $mod+Shift+Down exec i3l move down
+bindsym $mod+Shift+Up exec i3l move up
+bindsym $mod+Shift+Right exec i3l move right
 
 # split in horizontal orientation
 bindsym $mod+h split h
@@ -74,15 +74,17 @@ bindsym --whole-window $mod+Shift+button1 floating toggle
 
 # workspaces
 set $ws1 1:Browser
-set $ws2 2:Terminal
-set $ws3 3:PDFs
+set $ws2 2:PDF
+set $ws3 3:?
 set $ws4 4:Stylus
-set $ws5 5
-set $ws6 6
-set $ws7 7
-set $ws8 8
-set $ws9 9
+set $ws5 5:Markdown
+set $ws6 6:?
+set $ws7 7:?
+set $ws8 8:?
+set $ws9 9:?
 set $ws0 0
+
+set $i3l vstack 0.6 to workspace $ws5
 
 # Tie some workspaces to monitors
 workspace $ws1 output eDP-1

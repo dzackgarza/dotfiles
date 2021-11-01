@@ -578,7 +578,7 @@
        id="toolbox" />
     <group
        id="fillstroke"
-       page="1"
+       page="2"
        x="0"
        y="0"
        w="378"
@@ -1093,7 +1093,7 @@
      org.inkscape.effect.filter.Blur.content="0" />
   <group
      id="desktop"
-     style="stroke-width:1.0015748;fill:#ff9900;fill-rule:evenodd;font-size:13.33333333px;stop-color:#000000;stroke:#cc0000;opacity:0.21825559">
+     style="stroke-width:1.88976378;fill:#cc0000;fill-rule:evenodd;font-size:13.33333333px;stop-color:#000000;stroke:#cc0000;opacity:0.21825559">
     <group
        width="1900"
        height="1029"
