@@ -19,7 +19,7 @@ eDP-1 XPosition 1920x1080=1286
 eDP-1 YPosition 1920x1080=42
 
 [Desktop Entry]
-FullScreen=true
+FullScreen=false
 shouldShowMenuBarComingFromFullScreen=true
 shouldShowToolBarComingFromFullScreen=false
 
@@ -27,8 +27,7 @@ shouldShowToolBarComingFromFullScreen=false
 Height 1080=996
 Height 1920=1866
 Height 800=746
-MenuBar=Disabled
-State=AAAA/wAAAAD9AAAAAAAAB4AAAAQTAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAA==
+State=AAAA/wAAAAD9AAAAAAAAB2wAAAPMAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -65,46 +64,46 @@ eDP-1 HDMI-1 DVI-I-1-1 YPosition 1920x1080=527
 eDP-1 HDMI-1 Height 1080=1027
 eDP-1 HDMI-1 Height 1080x1920=927
 eDP-1 HDMI-1 Height 1920=928
-eDP-1 HDMI-1 Height 1920x1080=1080
+eDP-1 HDMI-1 Height 1920x1080=1027
 eDP-1 HDMI-1 Width 1080=1058
 eDP-1 HDMI-1 Width 1080x1920=1058
 eDP-1 HDMI-1 Width 1920=943
-eDP-1 HDMI-1 Width 1920x1080=1920
+eDP-1 HDMI-1 Width 1920x1080=943
 eDP-1 HDMI-1 XPosition 1080x1920=11
-eDP-1 HDMI-1 XPosition 1920x1080=0
+eDP-1 HDMI-1 XPosition 1920x1080=966
 eDP-1 HDMI-1 YPosition 1080x1920=42
-eDP-1 HDMI-1 YPosition 1920x1080=0
+eDP-1 HDMI-1 YPosition 1920x1080=42
 eDP-1 Height 1080=1027
-eDP-1 Height 1920x1080=1027
+eDP-1 Height 1920x1080=1029
 eDP-1 Width 1920=623
-eDP-1 Width 1920x1080=943
+eDP-1 Width 1920x1080=1900
 eDP-1 XPosition=1286
-eDP-1 XPosition 1920x1080=966
+eDP-1 XPosition 1920x1080=10
 eDP-1 YPosition=42
-eDP-1 YPosition 1920x1080=42
+eDP-1 YPosition 1920x1080=41
 
 [Print Preview]
 Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Library/Bjorn Poonen/Rational points on varieties (926)/Rational points on varieties - Bjorn Poonen.pdf
-File10[$e]=$HOME/Dropbox/Teaching/Calculus/Solutions/Unit D Solns.pdf
-File2[$e]=$HOME/SparkleShare/github.com/Qual-Review-and-Solutions/Complex Analysis/Review Doc/Complex_Analysis_Qual_Notes.pdf
-File3[$e]=$HOME/Dropbox/Library/Rene Schoof/Catalan's Conjecture (928)/Catalan's Conjecture - Rene Schoof.pdf
-File4[$e]=$HOME/Dropbox/Library/Walter Rudin/Real and Complex Analysis (439)/Real and Complex Analysis - Walter Rudin.pdf
-File5[$e]=$HOME/Dropbox/Library/Gerald B. Folland/Real Analysis_ Modern Techniques and Their Applications (435)/Real Analysis_ Modern Techniques and Their - Gerald B. Folland.pdf
-File6[$e]=$HOME/Dropbox/Library/James R. Munkres/Topology (416)/Topology - James R. Munkres.pdf
-File7[$e]=$HOME/Dropbox/Library/Fomenko/Visual Geometry and Topology (720)/Visual Geometry and Topology - Fomenko.pdf
-File8[$e]=$HOME/Dropbox/Library/James Davis, Paul Kirk/Lecture Notes in Algebraic Topology (696)/Lecture Notes in Algebraic Topology - James Davis, Paul Kirk.pdf
-File9[$e]=$HOME/Dropbox/Teaching/Calculus/Flipped Calculus 1 Solution 20.pdf
-Name1[$e]=Rational points on varieties - Bjorn Poonen.pdf
-Name10[$e]=Unit D Solns.pdf
-Name2[$e]=Complex_Analysis_Qual_Notes.pdf
-Name3[$e]=Catalan's Conjecture - Rene Schoof.pdf
-Name4[$e]=Real and Complex Analysis - Walter Rudin.pdf
-Name5[$e]=Real Analysis_ Modern Techniques and Their - Gerald B. Folland.pdf
-Name6[$e]=Topology - James R. Munkres.pdf
-Name7[$e]=Visual Geometry and Topology - Fomenko.pdf
-Name8[$e]=Lecture Notes in Algebraic Topology - James Davis, Paul Kirk.pdf
-Name9[$e]=Flipped Calculus 1 Solution 20.pdf
+File1[$e]=$HOME/Downloads/Sign Up Sheet.pdf
+File10[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
+File2[$e]=$HOME/Downloads/Student_Fin_Exam_Info_Fa_2021.pdf
+File3[$e]=$HOME/Downloads/rnoti-p1752.pdf
+File4[$e]=$HOME/Downloads/2021-05-27.pdf
+File5[$e]=$HOME/Downloads/1703.03545.pdf
+File6[$e]=$HOME/Downloads/hilburn.pdf
+File7[$e]=$HOME/Downloads/notes3.pdf
+File8[$e]=$HOME/Downloads/Topology_Qual_Fall2021.pdf
+File9[$e]=$HOME/Dropbox/Library/James Stewart/Calculus (586)/Calculus - James Stewart.pdf
+Name1[$e]=Sign Up Sheet.pdf
+Name10[$e]=Algebraic Geometry - Robin Hartshorne.pdf
+Name2[$e]=Student_Fin_Exam_Info_Fa_2021.pdf
+Name3[$e]=rnoti-p1752.pdf
+Name4[$e]=2021-05-27.pdf
+Name5[$e]=1703.03545.pdf
+Name6[$e]=hilburn.pdf
+Name7[$e]=notes3.pdf
+Name8[$e]=Topology_Qual_Fall2021.pdf
+Name9[$e]=Calculus - James Stewart.pdf
