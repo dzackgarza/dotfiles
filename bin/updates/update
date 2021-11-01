@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/zsh
+
 source "$DOTFILES_ROOT/.bash_colors";
 
 clr_green "Updating via package manager..";
