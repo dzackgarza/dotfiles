@@ -45,8 +45,9 @@ fi
 # Unescape brackets: "\]\[" -> "]]"
 # Delete envlist lines "\envlist"
 # Remove double brackets in div titles inserted by pandoc, particularly for math: ":::{proof title="$\\GL_n$}" -> ":::{proof title="\GL_n}"
+# Unescape hashtags: "Tags: \#pdfs" -> "Tags: #pdfs"
 
-cat "$TMP_DIR/out.temp" | sed '/^\\\%/d' | sed 's/\\\[\\\[/\[\[/g' | sed 's/\\\]\\\]/\]\]/g' | sed '/^\s*\\envlist/d' | sed -e '/title/ s/\\\\/\\/g';
+cat "$TMP_DIR/out.temp" | sed '/^\\\%/d' | sed 's/\\\[\\\[/\[\[/g' | sed 's/\\\]\\\]/\]\]/g' | sed '/^\s*\\envlist/d' | sed -e '/title/ s/\\\\/\\/g' | sed 's/\\\#/\#/g';
 
 
 #cat "$TMP_DIR/out.tmp" | \
