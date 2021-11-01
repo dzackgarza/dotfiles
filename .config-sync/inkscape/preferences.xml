@@ -1095,12 +1095,12 @@
      id="desktop"
      style="stroke-width:1.88976378;fill:#cc0000;fill-rule:evenodd;font-size:13.33333333px;stop-color:#000000;stroke:#cc0000;opacity:0.21825559">
     <group
-       width="1900"
-       height="1029"
-       x="10"
-       y="41"
+       width="1920"
+       height="1080"
+       x="-1"
+       y="-1"
        maximized="0"
-       fullscreen="1"
+       fullscreen="0"
        id="geometry" />
     <group
        id="XYfront" />
