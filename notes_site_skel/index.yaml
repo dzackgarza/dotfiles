@@ -1,0 +1,209 @@
+# For documentation and available settings, see
+# https://github.com/srid/emanote/blob/master/default/index.yaml
+
+page:
+  siteTitle: Notes 
+  siteName: Notes 
+  description: "Notes"
+  headHtml: |
+    <script type="text/javascript" src="https://dzackgarza.com/assets/dist.js" data-external="1">
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config( window.mjconfig );
+    </script>
+
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+      crossorigin="anonymous" data-external="1"
+    ></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pushy/1.3.0/js/pushy.min.js" integrity="sha512-+YLFvWFpPgQOV1/PoGgIinfvZEsUpfO5YEoxH4MlBAW5lf2WAVK5F4HtWA1BvZEYqK+AWW0fb/C797ttp1fL7g==" crossorigin="anonymous" data-external="1"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pushy/1.3.0/css/pushy.min.css" integrity="sha512-qGokfFEnfziCnGfs9Dpy65qVsouyHwLFx2YUq/UScF4ojoI7P2sV1ETuV6HSqdOp5I9zIGi2S7YOJglhWE3chg==" crossorigin="anonymous" data-external="1"/>
+
+    <style>
+    .theorem, 
+    .lemma, 
+    .proposition, 
+    .corollary  {
+        border: 1px solid black;
+        border-left: 5px solid ##955670 !important;
+        background-color: ##95567075;
+        padding-left: 5px;
+        margin-left: 1%;
+        padding-left: 1%;
+    }
+
+    .theorem     > .proofenv-header,
+    .lemma       > .proofenv-header,
+    .proposition > .proofenv-header,
+    .definition  > .proofenv-header,
+    .corollary   > .proofenv-header {
+      font-style: normal !important;
+      font-weight: bold;
+      border-bottom: 2px solid black;
+      display: block;
+    }
+
+    .theorem {
+      border: 2px solid #95567050 !important;
+      background-color: #95567050;
+      border-left: 5px solid #955670 !important;
+      margin-left: 1%;
+      padding-left: 1%;
+    }
+
+    .strategy, .concept {
+      border: 2px solid black !important;
+      background-color: aliceblue;
+      margin-left: 1%;
+      padding-left: 1%;
+
+    }
+
+    .slogan {
+      background-color: wheat;
+    }
+
+    .proof {
+        border: 1px dotted;
+        border-color: #000;
+        background-color: #F3E1C075;
+        margin-left: 1%;
+    }
+    .proof:after {
+        content: "\25FC";
+        float:right;
+        margin-top: -25px;
+        margin-right: 5px;
+    }
+
+    .warnings {
+      background-color: #f8d7da;
+      border-color: #f5c6cb;
+    }
+
+    .warnings > .proofenv-header {
+      color: #721c24;
+      font-weight: bold !important;
+    }
+
+    .warnings:before{
+        content: "⚠️";
+        margin-top: -25px;
+        margin-right: 5px;
+    }
+
+
+    .definition {
+        border: 1px solid;
+        border-color: #000;
+        background-color: #27507054;
+        border-left: 5px solid #275070 !important;
+        margin-left: 1%;
+        padding-left: 1%;
+    }
+
+    .exercise {
+      border: 2px solid #A0C4FF !important;
+      background-color: #A0C4FF30;
+      border-left: 5px solid #A0C4FF !important;
+      margin-left: 1%;
+      padding-left: 1%;
+    }
+
+    .problem {
+      border 2px solid black;
+      background: aliceblue;
+      padding-left: 1%;
+    }
+
+    .solution {
+      border: outset;
+      padding-left: 1%;
+      padding-right: 2%;
+      background-image: linear-gradient(#b75ea82e, #b75ea82e)
+    }
+    .proofenv {
+        display: block;
+        margin: 12px 0;
+        font-style: normal;
+        border-right: 1px dotted black;
+        /*border-bottom: 1px dotted black;*/
+        margin-right: 1%;
+    }
+    .example {
+      background: aliceblue;
+    }
+
+    details {
+      border: 1px solid black;
+    }
+
+    .proofenv-header {
+      text-transform: capitalize;
+      font-style: italic;
+    }
+
+    .remark > p, .fact > p {
+      margin-top: 0em;
+    }
+
+    blockquote {
+      text-align: right;
+      font-style: italic;
+      background-color: #a2929554;
+      font-size: small;
+    }
+
+    .tikzcd {
+      margin: auto;
+      width: 100%;
+    }
+    .custom_aggregate {
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    .missing_link a {
+      color: #a92727 !important;
+    }
+    .container.m-auto.max-w-screen-sm.rounded-lg {
+      max-width: 500px !important;
+    }
+    </style>
+
+    <link rel="stylesheet" href="https://dzackgarza.com/rawnotes/notes.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pushy/1.3.0/js/pushy.min.js" integrity="sha512-+YLFvWFpPgQOV1/PoGgIinfvZEsUpfO5YEoxH4MlBAW5lf2WAVK5F4HtWA1BvZEYqK+AWW0fb/C797ttp1fL7g==" crossorigin="anonymous"></script>
+
+    <script>
+    $(document).ready(function() {
+      $('.proofenv').each(function() {
+        t = $(this)[0];
+        if (t.classList[0] != "proofenv") {
+          tot_str = t.classList[0] + (t.title.length > 0 ? ` (${t.title})` : "") + ":";
+          sp = $('<span class="proofenv-header">').text(tot_str)
+          $(this).prepend( sp );
+        }
+      });
+      $(".proof").wrapInner("<div><details></details></div>")
+      $(".solution").wrapInner("<div><details></details></div>")
+    });
+    </script>
+
+
+template:
+  theme: blue
+  name: /templates/layouts/book
+  layout:
+    base:
+      bodyClass: overflow-y-scroll bg-gray-400
+    note:
+      containerClass: container mx-auto max-w-screen-lg
+  sidebar:
+    collapsed: true
+  urlStrategy: direct
