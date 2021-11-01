@@ -169,8 +169,8 @@
          end="0"
          start="0"
          usecurrent="1"
-         rx="10"
-         ry="10"
+         rx="24.5182"
+         ry="21.3784"
          arc_type="0" />
       <eventcontext
          id="star"
@@ -578,7 +578,7 @@
        id="toolbox" />
     <group
        id="fillstroke"
-       page="2"
+       page="1"
        x="0"
        y="0"
        w="378"
