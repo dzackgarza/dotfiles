@@ -326,7 +326,7 @@
        id="lpetool"
        mode="drag"
        style="fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:none;"
-       unit="mm"
+       unit="px"
        show_bbox="1" />
     <eventcontext
        id="text"
@@ -1099,7 +1099,7 @@
        height="1080"
        x="-1"
        y="-1"
-       maximized="0"
+       maximized="1"
        fullscreen="0"
        id="geometry" />
     <group
