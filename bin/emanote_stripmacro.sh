@@ -18,13 +18,14 @@ cat $PANDOC_DIR/custom/latexmacs*.tex "$input" | \
 
 cat $TMP_DIR/combined.temp | pandoc \
   --quiet \
-  -r markdown+simple_tables+table_captions+yaml_metadata_block+tex_math_single_backslash+hard_line_breaks \
-  --to=markdown-grid_tables-simple_tables-multiline_tables+escaped_line_breaks \
+  -r markdown+simple_tables+table_captions+yaml_metadata_block+tex_math_single_backslash \
+  --to=markdown-grid_tables-simple_tables-multiline_tables \
   --lua-filter=$EMA_DIR/tikzcd.lua \
   --lua-filter=$EMA_DIR/convert_thm_env.lua \
   --lua-filter=$EMA_DIR/convert_math_delimiters.lua \
   --wrap=none \
   --standalone \
+  --wrap=preserve \
   -o "$TMP_DIR/out.temp"; 
 
 if [ $? -ne 0 ]; then
@@ -46,8 +47,9 @@ fi
 # Delete envlist lines "\envlist"
 # Remove double brackets in div titles inserted by pandoc, particularly for math: ":::{proof title="$\\GL_n$}" -> ":::{proof title="\GL_n}"
 # Unescape hashtags: "Tags: \#pdfs" -> "Tags: #pdfs"
+# Unescape underscores in brackets: "[[abcd\_efg.pdf]]" -> "[[abcd_efg.pdf]]"
 
-cat "$TMP_DIR/out.temp" | sed '/^\\\%/d' | sed 's/\\\[\\\[/\[\[/g' | sed 's/\\\]\\\]/\]\]/g' | sed '/^\s*\\envlist/d' | sed -e '/title/ s/\\\\/\\/g' | sed 's/\\\#/\#/g';
+cat "$TMP_DIR/out.temp" | sed '/^\\\%/d' | sed 's/\\\[\\\[/\[\[/g' | sed 's/\\\]\\\]/\]\]/g' | sed '/^\s*\\envlist/d' | sed -e '/title/ s/\\\\/\\/g' | sed 's/\\\#/\#/g' | sed -e '/\[\[/ s/\\\_/\_/g';
 
 
 #cat "$TMP_DIR/out.tmp" | \
