@@ -19,7 +19,7 @@ eDP-1 XPosition 1920x1080=1286
 eDP-1 YPosition 1920x1080=42
 
 [Desktop Entry]
-FullScreen=true
+FullScreen=false
 shouldShowMenuBarComingFromFullScreen=true
 shouldShowToolBarComingFromFullScreen=false
 
@@ -27,8 +27,7 @@ shouldShowToolBarComingFromFullScreen=false
 Height 1080=996
 Height 1920=1866
 Height 800=746
-MenuBar=Disabled
-State=AAAA/wAAAAD9AAAAAAAAB4AAAAQTAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAA==
+State=AAAA/wAAAAD9AAAAAAAAA68AAAPKAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -75,36 +74,36 @@ eDP-1 HDMI-1 XPosition 1920x1080=966
 eDP-1 HDMI-1 YPosition 1080x1920=42
 eDP-1 HDMI-1 YPosition 1920x1080=42
 eDP-1 Height 1080=1027
-eDP-1 Height 1920x1080=1080
+eDP-1 Height 1920x1080=1027
 eDP-1 Width 1920=623
-eDP-1 Width 1920x1080=1920
+eDP-1 Width 1920x1080=943
 eDP-1 XPosition=1286
-eDP-1 XPosition 1920x1080=0
+eDP-1 XPosition 1920x1080=966
 eDP-1 YPosition=42
-eDP-1 YPosition 1920x1080=0
+eDP-1 YPosition 1920x1080=42
 
 [Print Preview]
 Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Downloads/1703.03545.pdf
-File10[$e]=$HOME/Notes/Class_Notes/2021/Fall/Schemes/Schemes.pdf
-File2[$e]=$HOME/Downloads/hilburn.pdf
-File3[$e]=$HOME/Downloads/notes3.pdf
-File4[$e]=$HOME/Downloads/Topology_Qual_Fall2021.pdf
-File5[$e]=$HOME/Dropbox/Library/James Stewart/Calculus (586)/Calculus - James Stewart.pdf
-File6[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
-File7[$e]=$HOME/Dropbox/Library/Silva Souza/Berkeley Problems in Mathematics (591)/Berkeley Problems in Mathematics - Silva Souza.pdf
-File8[$e]=$HOME/Dropbox/Library/Shrawan Kumar/Kac-Moody, their Flag Varieties and Representation Theory (924)/Kac-Moody, their Flag Varieties and Repres - Shrawan Kumar.pdf
-File9[$e]=$HOME/Notes/Class_Notes/2021/Fall/FlagVarieties/FlagVarieties.pdf
-Name1[$e]=1703.03545.pdf
-Name10[$e]=Schemes.pdf
-Name2[$e]=hilburn.pdf
-Name3[$e]=notes3.pdf
-Name4[$e]=Topology_Qual_Fall2021.pdf
-Name5[$e]=Calculus - James Stewart.pdf
-Name6[$e]=Algebraic Geometry - Robin Hartshorne.pdf
-Name7[$e]=Berkeley Problems in Mathematics - Silva Souza.pdf
-Name8[$e]=Kac-Moody, their Flag Varieties and Repres - Shrawan Kumar.pdf
-Name9[$e]=FlagVarieties.pdf
+File1[$e]=$HOME/Dropbox/Library/Shrawan Kumar/Kac-Moody, their Flag Varieties and Representation Theory (924)/Kac-Moody, their Flag Varieties and Repres - Shrawan Kumar.pdf
+File10[$e]=$HOME/Dropbox/Teaching/Calculus/Gateways and Exams/Exam 3/Exam 3.pdf
+File2[$e]=$HOME/Notes/Class_Notes/2021/Fall/FlagVarieties/FlagVarieties.pdf
+File3[$e]=$HOME/Notes/Class_Notes/2021/Fall/Schemes/Schemes.pdf
+File4[$e]=$HOME/Notes/Class_Notes/2019/Differential Topology/ProblemSets/PSet1.pdf
+File5[$e]=$HOME/Notes/Class_Notes/2019/Differential Topology/2019-08-14.pdf
+File6[$e]=$HOME/Notes/Class_Notes/2019/Differential Topology/Final.pdf
+File7[$e]=$HOME/Notes/Class_Notes/2019/Differential Topology/HW1.pdf
+File8[$e]=$HOME/Notes/Class_Notes/2016 and Earlier/Algebraic Number Theory/Algebraic_Number_Theory.pdf
+File9[$e]=$HOME/Notes/Class_Notes/Algebraic Topology/Topology Notes 2.pdf
+Name1[$e]=Kac-Moody, their Flag Varieties and Repres - Shrawan Kumar.pdf
+Name10[$e]=Exam 3.pdf
+Name2[$e]=FlagVarieties.pdf
+Name3[$e]=Schemes.pdf
+Name4[$e]=PSet1.pdf
+Name5[$e]=2019-08-14.pdf
+Name6[$e]=Final.pdf
+Name7[$e]=HW1.pdf
+Name8[$e]=Algebraic_Number_Theory.pdf
+Name9[$e]=Topology Notes 2.pdf

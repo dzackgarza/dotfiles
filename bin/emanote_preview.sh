@@ -30,6 +30,7 @@ rm -rf "$TMP_DIR";
 mkdir -p "$TMP_DIR"/figures;
 cp /home/zack/notes_site_skel/* "$TMP_DIR" -r;
 cp "$BASE_DIR"/* "$TMP_DIR" -r;
+find "$TMP_DIR" -type f \( -iname 'data.yaml' \) -exec rm {} \;
 update_images
 
 while read THISFILE; do
@@ -72,5 +73,3 @@ do
     continue;
   fi
 done
-
-#rm -rf "$TMP_DIR";
