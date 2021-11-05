@@ -22,13 +22,15 @@ clean_to_temp()
 
 update_images()
 {
-  cp /home/zack/notes_site/tikzcd /var/www/notes_temp/tikzcd -r;
+  cp /home/zack/notes_site/tikzcd "$TMP_DIR"/tikzcd -r;
   find "$IMAGE_DIR"/ -type f -iname "*.png" -exec cp {} "$TMP_DIR"/figures/ \;
 }
 
+#rm  "$TMP_DIR"/attachments -rf;
 rm -rf "$TMP_DIR";
 mkdir -p "$TMP_DIR"/figures;
 cp /home/zack/notes_site_skel/* "$TMP_DIR" -r;
+ln -s /home/zack/quals/attachments "$TMP_DIR"/attachments;
 cp "$BASE_DIR"/* "$TMP_DIR" -r;
 find "$TMP_DIR" -type f \( -iname 'data.yaml' \) -exec rm {} \;
 update_images
