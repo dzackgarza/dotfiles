@@ -48,8 +48,9 @@ fi
 # Remove double brackets in div titles inserted by pandoc, particularly for math: ":::{proof title="$\\GL_n$}" -> ":::{proof title="\GL_n}"
 # Unescape hashtags: "Tags: \#pdfs" -> "Tags: #pdfs"
 # Unescape underscores in brackets: "[[abcd\_efg.pdf]]" -> "[[abcd_efg.pdf]]"
+# Unescape pipes in brackets: "[[abc.pdf\|Some text]]" -> "[[abc.pdf|Some text]]"
 
-cat "$TMP_DIR/out.temp" | sed '/^\\\%/d' | sed 's/\\\[\\\[/\[\[/g' | sed 's/\\\]\\\]/\]\]/g' | sed '/^\s*\\envlist/d' | sed -e '/title/ s/\\\\/\\/g' | sed 's/\\\#/\#/g' | sed -e '/\[\[/ s/\\\_/\_/g';
+cat "$TMP_DIR/out.temp" | sed '/^\\\%/d' | sed 's/\\\[\\\[/\[\[/g' | sed 's/\\\]\\\]/\]\]/g' | sed '/^\s*\\envlist/d' | sed -e '/title/ s/\\\\/\\/g' | sed 's/\\\#/\#/g' | sed -e '/\[\[/ s/\\\_/\_/g' | sed -e '/\[\[/ s/\\|/|/g';
 
 
 #cat "$TMP_DIR/out.tmp" | \
