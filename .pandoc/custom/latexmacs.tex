@@ -2,6 +2,7 @@
 \newcommand*{\horzbar}{\rule[.5ex]{2.5ex}{0.5pt}}
 \newcommand*{\vertbar}{\rule[-1ex]{0.5pt}{2.5ex}}
 \newcommand\Fix{ \mathrm{Fix} }
+\newcommand\CS{ \mathrm{CS} }
 \newcommand\places[1]{ \mathrm{Pl}\qty{#1} }
 \newcommand\Ell{ \mathrm{Ell} }
 \newcommand\homog{ { \mathrm{homog} } }
@@ -129,7 +130,7 @@
 \newcommand{\Places}[0]{{\operatorname{Places}}}
 \newcommand{\Presh}[0]{\presh}
 \newcommand{\QHB}[0]{\operatorname{QHB}}
-\newcommand{\QHS}[0]{\operatorname{QHS}}
+\newcommand{\QHS}[0]{\mathbb{Q}\kern-0.5pt\operatorname{HS}}
 \newcommand{\QQpadic}[0]{{ \QQ_p }}
 \newcommand{\QQ}[0]{{\mathbb{Q}}}
 \newcommand{\QQbar}[0]{{ \bar{ \mathbb{Q} } }}
@@ -151,7 +152,7 @@
 \newcommand{\SpSp}[0]{{\mathbb{S}}}
 \newcommand{\Spec}[0]{\operatorname{Spec}}
 \newcommand{\Spf}[0]{\operatorname{Spf}}
-\newcommand{\Spinc}[0]{\mathrm{Spin}^{{c} }}
+\newcommand{\Spinc}[0]{\mathrm{Spin}^{{ \scriptscriptstyle \mathbb C} }}
 \newcommand{\Spin}[0]{{\operatorname{Spin}}}
 \newcommand{\Sq}[0]{\operatorname{Sq}}
 \newcommand{\Stab}[0]{{\operatorname{Stab}}}
@@ -250,6 +251,7 @@
 \newcommand{\dual}[0]{ {}^{ \vee }}
 \newcommand{\dmu}{\,d\mu}
 \newcommand{\dr}{\,dr}
+\newcommand{\dtau}{\,d\tau}
 \newcommand{\ds}{\,ds}
 \newcommand{\dtheta}{\,d\theta}
 \newcommand{\dt}{\,dt}
@@ -315,6 +317,7 @@
 \newcommand{\lied}[0]{{\mathfrak{d}}}
 \newcommand{\lief}[0]{{\mathfrak{f}}}
 \newcommand{\liegl}[0]{{\mathfrak{gl}}}
+\newcommand{\liesu}[0]{{\mathfrak{su}}}
 \newcommand{\lieg}[0]{{\mathfrak{g}}}
 \newcommand{\lieh}[0]{{\mathfrak{h}}}
 \newcommand{\liel}[0]{{\mathfrak{l}}}
@@ -620,7 +623,7 @@
 \newcommand\dirac[0]{\mkern-3mu \not{ \partial} }
 \newcommand\laplacian[0]{\Delta}
 \newcommand\Laplacian[0]{\Delta}
-\newcommand\stardstar[0]{\hodgestar {d} \mkern-5mu \hodgestar}
+\newcommand\stardstar[0]{\hodgestar \mathrm{d} \mkern-1mu \hodgestar}
 \newcommand\covariant[0]{\nabla}
 \newcommand\ol[1]{\overline{#1}}
 \newcommand\univcover[1]{\overline{#1}}
@@ -746,8 +749,11 @@
   \operatorname{\textnormal{#1}}
 }
 \newcommand\caniso[0]{{ \underset{\can}{\iso} }}
+\renewcommand{\ae}[0]{{ \text{a.e.} }}
+\newcommand\eqae[0]{\underset{\ae}{=}}
 
 
+\newcommand{\sech}[0]{{ \mathrm{sech} }}
 
 %\newcommand{\strike}[1]{{\enclose{\horizontalstrike}{#1}}}
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
