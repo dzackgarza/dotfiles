@@ -1,5 +1,5 @@
 function! CustomPandocFold()
-  let h = matchstr(getline(v:lnum), '^#\+')     
+  let h = matchstr(getline(v:lnum), '^#\+ \+')     
   if empty(h)       
     let thisline = getline(v:lnum)
     if match(thisline, '^\:\:\:{\.solution') >= 0

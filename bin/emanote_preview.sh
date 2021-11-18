@@ -89,7 +89,7 @@ do
     emanote -L "$TMP_DIR" gen $OUT_DIR; 
     update_images
     echo "Regenerated emma site."
-    qutebrowser ':reload' &
+    qutebrowser ':reload';
     notify-send "Emanote Preview" "Website updated." --urgency=critical --expire-time=5000;
     continue;
   fi
