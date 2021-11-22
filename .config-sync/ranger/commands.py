@@ -21,14 +21,14 @@ class newf(Command):
     Creates a new markdown file labeled with today's date.
     """                                                 
     def execute(self):                                               
-        self.fm.execute_console("shell touch `date +\"%Y-%m-%d\"`.md` &")
+        self.fm.execute_console("shell touch `date +\"+%Y-%m-%d_%H-%M-%S\"`.md` &")
 
 class ag(Command):
     """:ag 'regex'
     Looks for a string in all marked paths or current dir
     """
     editor = os.getenv('EDITOR') or 'vim'
-    acmd = 'ag --smart-case --group --color --hidden'  # --search-zip
+    acmd = 'ag --smart-case --group --color --hidden --noaffinity'  # --search-zip
     qarg = re.compile(r"""^(".*"|'.*')$""")
     patterns = []
     # THINK:USE: set_clipboard on each direct ':ag' search? So I could find in vim easily
@@ -141,3 +141,64 @@ class ag(Command):
         if flg[0] == '-' and flg[1] in 'flvgprw':
             cmd += ' ' + flg
         return ['{} {}'.format(cmd, p) for p in reversed(ag.patterns)]
+
+class fzf_select(Command):
+    """
+    :fzf_select
+    Find a file using fzf.
+    With a prefix argument to select only directories.
+
+    See: https://github.com/junegunn/fzf
+    """
+
+    def execute(self):
+        import subprocess
+        import os
+        from ranger.ext.get_executables import get_executables
+
+        if 'fzf' not in get_executables():
+            self.fm.notify('Could not find fzf in the PATH.', bad=True)
+            return
+
+        fd = None
+        if 'fdfind' in get_executables():
+            fd = 'fdfind'
+        elif 'fd' in get_executables():
+            fd = 'fd'
+
+        if fd is not None:
+            hidden = ('--hidden' if self.fm.settings.show_hidden else '')
+            exclude = "--no-ignore-vcs --exclude '.git' --exclude '*.py[co]' --exclude '__pycache__'"
+            only_directories = ('--type directory' if self.quantifier else '')
+            fzf_default_command = '{} --follow {} {} {} --color=always'.format(
+                fd, hidden, exclude, only_directories
+            )
+        else:
+            hidden = ('-false' if self.fm.settings.show_hidden else r"-path '*/\.*' -prune")
+            exclude = r"\( -name '\.git' -o -iname '\.*py[co]' -o -fstype 'dev' -o -fstype 'proc' \) -prune"
+            only_directories = ('-type d' if self.quantifier else '')
+            fzf_default_command = 'find -L . -mindepth 1 {} -o {} -o {} -print | cut -b3-'.format(
+                hidden, exclude, only_directories
+            )
+
+        env = os.environ.copy()
+        env['FZF_DEFAULT_COMMAND'] = fzf_default_command
+        env['FZF_DEFAULT_OPTS'] = '--height=40% --layout=reverse --ansi --preview="{}"'.format('''
+            (
+                batcat --color=always {} ||
+                bat --color=always {} ||
+                cat {} ||
+                tree -ahpCL 3 -I '.git' -I '*.py[co]' -I '__pycache__' {}
+            ) 2>/dev/null | head -n 100
+        ''')
+
+        fzf = self.fm.execute_command('fzf --no-multi', env=env,
+                                      universal_newlines=True, stdout=subprocess.PIPE)
+        stdout, _ = fzf.communicate()
+        if fzf.returncode == 0:
+            selected = os.path.abspath(stdout.strip())
+            if os.path.isdir(selected):
+                self.fm.cd(selected)
+            else:
+                self.fm.select_file(selected)
+

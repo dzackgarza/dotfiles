@@ -4,6 +4,7 @@
 \usepackage[active, pdftex, tightpage, ifthen, calc]{preview}
 \usepackage{freetikz}
 \usepackage{xifthen}
+\usepackage{dynkin-diagrams}
 \PreviewEnvironment[]{tikzpicture}
 \PreviewEnvironment[]{pgfpicture}
 \PreviewEnvironment[]{asy}

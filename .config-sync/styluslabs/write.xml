@@ -13,7 +13,7 @@
   <int name="eraseOnImage" value="0" />
   <int name="inputSimplify" value="4" />
   <int name="inputSmoothing" value="8" />
-  <int name="lastUpdateCheck" value="1636498314" />
+  <int name="lastUpdateCheck" value="1637557363" />
   <int name="mouseMode" value="0" />
   <int name="penType" value="11" />
   <int name="reopenLastDoc" value="1" />
@@ -22,7 +22,6 @@
   <int name="screenDPI" value="30" />
   <int name="showAdvPrefs" value="1" />
   <int name="singleTouchMode" value="0" />
-  <int name="strokeCounter" value="6986" />
   <int name="thumbFirstPage" value="1" />
   <int name="thumbnailSize" value="110" />
   <float name="pageHeight" value="3090" />
@@ -35,14 +34,14 @@
   <string name="currFolder" value="/home/zack/Dropbox/WriteNotes/Calculus/" />
   <string name="docFileExt" value="svgz" />
   <string name="newDocTitleFmt" value="%b %e %Hh%M" />
-  <string name="recentDocs" value="/home/zack/Dropbox/WriteNotes/Calculus/Tuesday Lecture.svgz:::/home/zack/Dropbox/WriteNotes/Calculus/Nov 15 09h16.svgz:::/home/zack/Dropbox/WriteNotes/Calculus/Monday Lecture.svgz:::/home/zack/Dropbox/WriteNotes/Calculus/Friday Lecture.svgz:::/home/zack/Dropbox/WriteNotes/Calculus/Wednesday Lecture.svgz:::/home/zack/Dropbox/WriteNotes/Quals/Complex/Jul 21 12h52.html:::/home/zack/quals/20_Real Analysis/000_Resources/Folland Questions/Analysis Problems.html:::/home/zack/Dropbox/WriteNotes/Nov  1 18h30.svgz:::/home/zack/Dropbox/WriteNotes/Rational Pts 9-30.html:::/home/zack/Dropbox/WriteNotes/Sep 30 09h37_page002.svg:::/home/zack/Dropbox/WriteNotes/Calculus/New Folder/Oct 26 14h21.svgz" />
+  <string name="recentDocs" value="/home/zack/Dropbox/WriteNotes/Calculus/Friday Lecture.svgz:::/home/zack/Dropbox/WriteNotes/Calculus/Tuesday Lecture.svgz:::/home/zack/Dropbox/WriteNotes/Calculus/Monday Lecture.svgz:::/home/zack/Dropbox/WriteNotes/Calculus/Monday.svgz:::/home/zack/Dropbox/WriteNotes/Calculus/Archive/Nov  8 09h12.svgz:::/home/zack/Dropbox/WriteNotes/Calculus/Archive/Nov  9 14h23.svgz:::/home/zack/Dropbox/WriteNotes/Calculus/Nov 15 09h16.svgz:::/home/zack/Dropbox/WriteNotes/Calculus/Wednesday Lecture.svgz:::/home/zack/Dropbox/WriteNotes/Quals/Complex/Jul 21 12h52.html:::/home/zack/quals/20_Real Analysis/000_Resources/Folland Questions/Analysis Problems.html:::/home/zack/Dropbox/WriteNotes/Nov  1 18h30.svgz" />
   <string name="savedColors" value="#FF000000,#FFFF0000,#FF008000,#FF0000FF" />
   <string name="savedWidths" value="1.400,2.400,4.000,8.000" />
   <string name="syncServer" value="localhost" />
   <string name="toolBars" value="docTitle,stretch,separator,action_Previous_Page,action_Next_Page,separator,actionInsert_Space,actionShow_Clippings,actionTools_Menu,separator,actionShow_Bookmarks,actionShare_Document,actionOverflow_Menu;actionDraw,actionCustom_Pen,actionStroke_Eraser,actionFree_Eraser,penColor,penWidth,stretch" />
   <string name="toolBars2" value="docTitle,stretch,actionSave,separator,tools,separator,undoRedoBtn,separator,seltools,separator,actionShow_Bookmarks,actionShow_Clippings,actionSplitView,separator,actionOverflow_Menu" />
   <string name="toolModes" value="14 20 25 22" />
-  <string name="windowState" value="966 42 943 1027 0 0" />
+  <string name="windowState" value="0 0 1920 1080 0 0" />
   <pen color="4278190080" width="3.5" pressure="1" flags="0" />
   <pen color="4278190258" width="4" pressure="1" flags="0" />
   <pen color="4283150181" width="4" pressure="1" flags="0" />
