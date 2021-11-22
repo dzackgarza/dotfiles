@@ -38,3 +38,5 @@ function cphist() {
 alias vim=nvim
 
 alias f='source $DOTFILES_ROOT/bin/dmenu/faves_term.sh'
+
+alias ag='ag --noaffinity'
