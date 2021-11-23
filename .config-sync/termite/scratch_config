@@ -10,45 +10,43 @@ cursor_blink = system
 cursor_shape = block
 scrollbar = off
 
-
 [colors]
 
 # special
-foreground      = #d0c8c6
-foreground_bold = #d0c8c6
-cursor          = #d0c8c6
-# background      = #3b3228
-background      = rgba(59, 50, 40, 0.90)
+foreground      = #516d7b
+foreground_bold = #516d7b
+cursor          = #516d7b
+background      = #ebf8ff
 
 # black
-color0  = #3b3228
-color8  = #7e705a
+color0  = #161b1d
+color8  = #5a7b8c
 
 # red
-color1  = #cb6077
-color9  = #cb6077
+color1  = #d22d72
+color9  = #d22d72
 
 # green
-color2  = #beb55b
-color10 = #beb55b
+color2  = #568c3b
+color10 = #568c3b
 
 # yellow
-color3  = #f4bc87
-color11 = #f4bc87
+color3  = #8a8a0f
+color11 = #8a8a0f
 
 # blue
-color4  = #8ab3b5
-color12 = #8ab3b5
+color4  = #257fad
+color12 = #257fad
 
 # magenta
-color5  = #a89bb9
-color13 = #a89bb9
+color5  = #5d5db1
+color13 = #5d5db1
 
 # cyan
-color6  = #7bbda4
-color14 = #7bbda4
+color6  = #2d8f6f
+color14 = #2d8f6f
 
 # white
-color7  = #d0c8c6
-color15 = #f5eeeb
+color7  = #7ea2b4
+color15 = #ebf8ff
 
