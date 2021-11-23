@@ -14,6 +14,7 @@ cat $TMP_DIR/combined.temp | pandoc \
   --to=markdown \
   --lua-filter=$PANDOC_DIR/filters/convert_amsthm_envs.lua \
   --lua-filter=$PANDOC_DIR/filters/convert_math_delimiters.lua \
+  --resource-path="/home/zack/Notes/Obsidian:/home/zack/Notes" \
   --wrap=none \
   -o "$TMP_DIR/out.temp"; 
 
