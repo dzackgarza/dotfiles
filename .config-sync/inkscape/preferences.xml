@@ -352,8 +352,8 @@
        live_outline="1"
        live_objects="1"
        show_helperpath="0"
-       x="739.923"
-       y="169.661"
+       x="1401.98"
+       y="287.222"
        edit_clipping_paths="0"
        edit_masks="0" />
     <eventcontext
@@ -1100,7 +1100,7 @@
        x="-1"
        y="14"
        maximized="0"
-       fullscreen="1"
+       fullscreen="0"
        id="geometry" />
     <group
        id="XYfront" />
