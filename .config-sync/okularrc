@@ -28,7 +28,6 @@ Height 1080=996
 Height 1920=1866
 Height 800=746
 MenuBar=Disabled
-RestorePositionForNextInstance=false
 State=AAAA/wAAAAD9AAAAAAAAB4AAAAQ4AAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1080=512
@@ -90,22 +89,22 @@ Width 1920=600
 
 [Recent Files]
 File1[$e]=$HOME/Dropbox/Library/Rene Schoof/Catalan's Conjecture (928)/Catalan's Conjecture - Rene Schoof.pdf
-File10[$e]=$HOME/Dropbox/Library/Stephen W. Goode/Differential Equations and Linear Algebra (545)/Differential Equations and Linear Algebra - Stephen W. Goode.pdf
+File10[$e]=$HOME/Dropbox/Teaching/Calculus/Calculus Workbook.pdf
 File2[$e]=$HOME/SparkleShare/github.com/Notes/Obsidian/Projects/AWS2019/Typeset/AWS2019_Wickelgren.pdf
 File3[$e]=$HOME/SparkleShare/github.com/Notes/Latex/Vita/CV.pdf
 File4[$e]=$HOME/website/assets/talks/Sarkar_Wang_Pictures.pdf
 File5[$e]=$HOME/Dropbox/Teaching/Calculus/Gateways and Exams/Quiz 6/Quiz 6.pdf
 File6[$e]=$HOME/Dropbox/Teaching/Calculus/Solutions/Unit A Solns.pdf
 File7[$e]=$HOME/Dropbox/Teaching/Calculus/Gateways and Exams/Exam 4 Practice/Test_4_Practice_Problems.pdf
-File8[$e]=$HOME/Dropbox/Teaching/Calculus/Calculus Workbook.pdf
-File9[$e]=$HOME/Dropbox/Library/Bjorn Poonen/Rational points on varieties (926)/Rational points on varieties - Bjorn Poonen.pdf
+File8[$e]=$HOME/Dropbox/Library/Bjorn Poonen/Rational points on varieties (926)/Rational points on varieties - Bjorn Poonen.pdf
+File9[$e]=$HOME/Dropbox/Library/Stephen W. Goode/Differential Equations and Linear Algebra (545)/Differential Equations and Linear Algebra - Stephen W. Goode.pdf
 Name1[$e]=Catalan's Conjecture - Rene Schoof.pdf
-Name10[$e]=Differential Equations and Linear Algebra - Stephen W. Goode.pdf
+Name10[$e]=Calculus Workbook.pdf
 Name2[$e]=AWS2019_Wickelgren.pdf
 Name3[$e]=CV.pdf
 Name4[$e]=Sarkar_Wang_Pictures.pdf
 Name5[$e]=Quiz 6.pdf
 Name6[$e]=Unit A Solns.pdf
 Name7[$e]=Test_4_Practice_Problems.pdf
-Name8[$e]=Calculus Workbook.pdf
-Name9[$e]=Rational points on varieties - Bjorn Poonen.pdf
+Name8[$e]=Rational points on varieties - Bjorn Poonen.pdf
+Name9[$e]=Differential Equations and Linear Algebra - Stephen W. Goode.pdf
