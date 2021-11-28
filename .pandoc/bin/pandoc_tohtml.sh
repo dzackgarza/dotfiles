@@ -106,7 +106,7 @@ cat "$TMP_DIR/combined.temp" | pandoc \
   --css=$PANDOC_TEMPLATES/marked/kultiad-serif.css \
   --citeproc \
   --bibliography="$TMP_DIR/$filename.bib" \
-  --resource-path="$TMP_DIR:/home/zack/Notes" \
+  --resource-path="$TMP_DIR:/var/www/notes_temp:/home/zack/Notes" \
   --metadata link-citations=true \
   --csl=$PANDOC_TEMPLATES/csl/inventiones-mathematicae.csl \
   -V current_date="$(date +%Y-%m-%d%n)" "${params[@]}" \
