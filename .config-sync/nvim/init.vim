@@ -304,7 +304,7 @@ autocmd VimResized * call FixResizing()
 
 function! KillPreviews()
   if g:previews_open == 1
-    silent exec "!pkill qutebrowser" 
+    " silent exec "!pkill qutebrowser" 
   elseif g:previews_open == 2
     silent exec "!pkill zathura" 
   endif
