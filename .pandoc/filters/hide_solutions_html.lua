@@ -60,7 +60,7 @@ if FORMAT:match 'html' then
       end
         table.insert(
           el.content, 1,
-          pandoc.RawBlock("html", "<details open><summary><i>(Click to expand "..env_name..")</i></summary>")
+          pandoc.RawBlock("html", "<details><summary><i>(Click to expand "..env_name..")</i></summary>")
         )
         table.insert(
           el.content,

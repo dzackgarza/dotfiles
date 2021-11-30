@@ -231,6 +231,8 @@ $$(document).ready(function() {
       $$(this).prepend( sp );
     }
   });
+  details = document.querySelectorAll(".foldopen > details");
+  details.forEach( (detail) => { detail.setAttribute("open", "" ); } )
 });
 </script>
 
