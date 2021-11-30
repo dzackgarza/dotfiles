@@ -578,7 +578,7 @@
        id="toolbox" />
     <group
        id="fillstroke"
-       page="2"
+       page="1"
        x="0"
        y="0"
        w="378"
@@ -1093,14 +1093,14 @@
      org.inkscape.effect.filter.Blur.content="0" />
   <group
      id="desktop"
-     style="stroke-width:0.99999869;fill:#ff6600;fill-rule:evenodd;font-size:13.33333333px;stop-color:#000000;stroke:#6699ff;fill-opacity:0.458833;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:0.99999869,2.99999607">
+     style="stroke-width:3.77952766;fill:#cc0000;fill-rule:evenodd;font-size:13.33333333px;stop-color:#000000;stroke:#ff6600;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:22.67716599, 22.67716599;fill-opacity:0.51749492">
     <group
        width="1920"
        height="1080"
        x="-1"
        y="14"
        maximized="0"
-       fullscreen="1"
+       fullscreen="0"
        id="geometry" />
     <group
        id="XYfront" />
