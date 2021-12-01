@@ -1,8 +1,9 @@
-theorem
+ex
 rmk
 proof
+prop
+theorem
 cor
-ex
 def
 claim
 slogan
@@ -10,7 +11,6 @@ fact
 lem
 soln
 cases
-prop
 exc
 prob
 warn

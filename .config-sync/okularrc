@@ -19,7 +19,7 @@ eDP-1 XPosition 1920x1080=1286
 eDP-1 YPosition 1920x1080=42
 
 [Desktop Entry]
-FullScreen=false
+FullScreen=true
 shouldShowMenuBarComingFromFullScreen=false
 shouldShowToolBarComingFromFullScreen=false
 
@@ -75,36 +75,36 @@ eDP-1 HDMI-1 XPosition 1920x1080=0
 eDP-1 HDMI-1 YPosition 1080x1920=42
 eDP-1 HDMI-1 YPosition 1920x1080=0
 eDP-1 Height 1080=1027
-eDP-1 Height 1920x1080=1029
+eDP-1 Height 1920x1080=1080
 eDP-1 Width 1920=623
-eDP-1 Width 1920x1080=1900
+eDP-1 Width 1920x1080=1920
 eDP-1 XPosition=1286
-eDP-1 XPosition 1920x1080=10
+eDP-1 XPosition 1920x1080=0
 eDP-1 YPosition=42
-eDP-1 YPosition 1920x1080=41
+eDP-1 YPosition 1920x1080=0
 
 [Print Preview]
 Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Teaching/Calculus/Gateways and Exams/Exam 4 Practice/Test_4_Practice_Problems.pdf
-File10[$e]=$HOME/Dropbox/Reimbursements/MSRI/Airfare Invoice.pdf
-File2[$e]=$HOME/Downloads/Aws2022 Summary.pdf
-File3[$e]=$HOME/Downloads/DRP_Research.pdf
-File4[$e]=$HOME/Downloads/Nov 19 14h07.pdf
-File5[$e]=$HOME/MastersThesis_MagnusFries_.pdf
-File6[$e]=$HOME/Mizakhani.pdf
-File7[$e]=$HOME/02720167.pdf
-File8[$e]=$HOME/1139839377.pdf
-File9[$e]=$HOME/Dropbox/Reimbursements/MSRI/MSRI Reimbursement Form.pdf
-Name1[$e]=Test_4_Practice_Problems.pdf
-Name10[$e]=Airfare Invoice.pdf
-Name2[$e]=Aws2022 Summary.pdf
-Name3[$e]=DRP_Research.pdf
-Name4[$e]=Nov 19 14h07.pdf
-Name5[$e]=MastersThesis_MagnusFries_.pdf
-Name6[$e]=Mizakhani.pdf
-Name7[$e]=02720167.pdf
-Name8[$e]=1139839377.pdf
-Name9[$e]=MSRI Reimbursement Form.pdf
+File1[$e]=$HOME/Downloads/Nov 19 14h07.pdf
+File10[$e]=$HOME/Dropbox/Library/M. F. Atiyah, I. G. MacDonald/Commutative Algebra (756)/Commutative Algebra - M. F. Atiyah, I. G. MacDonald.pdf
+File2[$e]=$HOME/MastersThesis_MagnusFries_.pdf
+File3[$e]=$HOME/Mizakhani.pdf
+File4[$e]=$HOME/02720167.pdf
+File5[$e]=$HOME/1139839377.pdf
+File6[$e]=$HOME/Dropbox/Reimbursements/MSRI/MSRI Reimbursement Form.pdf
+File7[$e]=$HOME/Dropbox/Reimbursements/MSRI/Airfare Invoice.pdf
+File8[$e]=$HOME/Dropbox/Teaching/Calculus/Calc Overview.pdf
+File9[$e]=$HOME/Dropbox/Teaching/Calculus/Calculus Workbook.pdf
+Name1[$e]=Nov 19 14h07.pdf
+Name10[$e]=Commutative Algebra - M. F. Atiyah, I. G. MacDonald.pdf
+Name2[$e]=MastersThesis_MagnusFries_.pdf
+Name3[$e]=Mizakhani.pdf
+Name4[$e]=02720167.pdf
+Name5[$e]=1139839377.pdf
+Name6[$e]=MSRI Reimbursement Form.pdf
+Name7[$e]=Airfare Invoice.pdf
+Name8[$e]=Calc Overview.pdf
+Name9[$e]=Calculus Workbook.pdf
