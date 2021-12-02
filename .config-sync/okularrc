@@ -19,7 +19,7 @@ eDP-1 XPosition 1920x1080=1286
 eDP-1 YPosition 1920x1080=42
 
 [Desktop Entry]
-FullScreen=true
+FullScreen=false
 shouldShowMenuBarComingFromFullScreen=false
 shouldShowToolBarComingFromFullScreen=false
 
@@ -27,8 +27,7 @@ shouldShowToolBarComingFromFullScreen=false
 Height 1080=996
 Height 1920=1866
 Height 800=746
-MenuBar=Disabled
-State=AAAA/wAAAAD9AAAAAAAAB4AAAAQ4AAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAA==
+State=AAAA/wAAAAD9AAAAAAAAAv4AAAPKAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -75,36 +74,36 @@ eDP-1 HDMI-1 XPosition 1920x1080=0
 eDP-1 HDMI-1 YPosition 1080x1920=42
 eDP-1 HDMI-1 YPosition 1920x1080=0
 eDP-1 Height 1080=1027
-eDP-1 Height 1920x1080=1080
+eDP-1 Height 1920x1080=1027
 eDP-1 Width 1920=623
-eDP-1 Width 1920x1080=1920
+eDP-1 Width 1920x1080=766
 eDP-1 XPosition=1286
-eDP-1 XPosition 1920x1080=0
+eDP-1 XPosition 1920x1080=1143
 eDP-1 YPosition=42
-eDP-1 YPosition 1920x1080=0
+eDP-1 YPosition 1920x1080=42
 
 [Print Preview]
 Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Downloads/Nov 19 14h07.pdf
-File10[$e]=$HOME/Dropbox/Library/M. F. Atiyah, I. G. MacDonald/Commutative Algebra (756)/Commutative Algebra - M. F. Atiyah, I. G. MacDonald.pdf
-File2[$e]=$HOME/MastersThesis_MagnusFries_.pdf
-File3[$e]=$HOME/Mizakhani.pdf
-File4[$e]=$HOME/02720167.pdf
-File5[$e]=$HOME/1139839377.pdf
-File6[$e]=$HOME/Dropbox/Reimbursements/MSRI/MSRI Reimbursement Form.pdf
-File7[$e]=$HOME/Dropbox/Reimbursements/MSRI/Airfare Invoice.pdf
-File8[$e]=$HOME/Dropbox/Teaching/Calculus/Calc Overview.pdf
-File9[$e]=$HOME/Dropbox/Teaching/Calculus/Calculus Workbook.pdf
-Name1[$e]=Nov 19 14h07.pdf
-Name10[$e]=Commutative Algebra - M. F. Atiyah, I. G. MacDonald.pdf
-Name2[$e]=MastersThesis_MagnusFries_.pdf
-Name3[$e]=Mizakhani.pdf
-Name4[$e]=02720167.pdf
-Name5[$e]=1139839377.pdf
-Name6[$e]=MSRI Reimbursement Form.pdf
-Name7[$e]=Airfare Invoice.pdf
-Name8[$e]=Calc Overview.pdf
-Name9[$e]=Calculus Workbook.pdf
+File1[$e]=$HOME/Mizakhani.pdf
+File10[$e]=$HOME/Dropbox/Library/Gerald B. Folland/Real Analysis_ Modern Techniques and Their Applications (435)/Real Analysis_ Modern Techniques and Their - Gerald B. Folland.pdf
+File2[$e]=$HOME/02720167.pdf
+File3[$e]=$HOME/1139839377.pdf
+File4[$e]=$HOME/Dropbox/Reimbursements/MSRI/MSRI Reimbursement Form.pdf
+File5[$e]=$HOME/Dropbox/Reimbursements/MSRI/Airfare Invoice.pdf
+File6[$e]=$HOME/Dropbox/Teaching/Calculus/Calc Overview.pdf
+File7[$e]=$HOME/Dropbox/Teaching/Calculus/Calculus Workbook.pdf
+File8[$e]=$HOME/Dropbox/Library/M. F. Atiyah, I. G. MacDonald/Commutative Algebra (756)/Commutative Algebra - M. F. Atiyah, I. G. MacDonald.pdf
+File9[$e]=$HOME/Dropbox/Library/Stein/Real Analysis (Stein and Shakarchi III) (725)/Real Analysis (Stein and Shakarchi III) - Stein.pdf
+Name1[$e]=Mizakhani.pdf
+Name10[$e]=Real Analysis_ Modern Techniques and Their - Gerald B. Folland.pdf
+Name2[$e]=02720167.pdf
+Name3[$e]=1139839377.pdf
+Name4[$e]=MSRI Reimbursement Form.pdf
+Name5[$e]=Airfare Invoice.pdf
+Name6[$e]=Calc Overview.pdf
+Name7[$e]=Calculus Workbook.pdf
+Name8[$e]=Commutative Algebra - M. F. Atiyah, I. G. MacDonald.pdf
+Name9[$e]=Real Analysis (Stein and Shakarchi III) - Stein.pdf
