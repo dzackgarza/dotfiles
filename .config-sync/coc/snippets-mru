@@ -1,3 +1,5 @@
+soln
+prob
 claim
 prop
 cases
@@ -6,8 +8,6 @@ def
 rmk
 proof
 theorem
-prob
-soln
 concept
 cor
 lem
