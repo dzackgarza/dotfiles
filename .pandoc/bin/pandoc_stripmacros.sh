@@ -24,4 +24,4 @@ if [ $? -ne 0 ]; then
 fi
 
 # Send output file, but strip away any tex comments (lines starting with %)
-cat "$TMP_DIR/out.temp" | sed '/^\\\%/d'
+cat "$TMP_DIR/out.temp" | sed '/^\\\%/d' | sed '/Xournal file/d'
