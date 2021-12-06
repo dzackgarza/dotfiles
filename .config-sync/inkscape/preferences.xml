@@ -169,8 +169,8 @@
          end="0"
          start="0"
          usecurrent="1"
-         rx="220"
-         ry="50"
+         rx="20"
+         ry="20"
          arc_type="0" />
       <eventcontext
          id="star"
@@ -1093,14 +1093,14 @@
      org.inkscape.effect.filter.Blur.content="0" />
   <group
      id="desktop"
-     style="stroke-width:3.77952756;fill:#bfbfbf;fill-rule:evenodd;font-size:13.33333333px;stop-color:#000000;stroke:#bfbfbf;stroke-linecap:round;stroke-linejoin:round;fill-opacity:0.51749492;opacity:0.45969739">
+     style="stroke-width:0.75590551;fill:#3366cc;fill-rule:evenodd;font-size:13.33333333px;stop-color:#000000;stroke:#3366cc;stroke-linecap:round;stroke-linejoin:round;fill-opacity:0.51749492;opacity:0.45969739">
     <group
        width="1920"
        height="1080"
        x="-1"
        y="-1"
        maximized="0"
-       fullscreen="0"
+       fullscreen="1"
        id="geometry" />
     <group
        id="XYfront" />
