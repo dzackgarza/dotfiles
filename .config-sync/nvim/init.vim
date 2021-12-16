@@ -171,6 +171,9 @@ nnoremap <C-f> :Ag<Cr>
 if executable('ag')
   let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 endif
+nnoremap <silent> <Leader>f :Ag <C-R><C-W><CR>
+
+
 
 
 command W write

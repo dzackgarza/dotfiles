@@ -11,7 +11,8 @@ TMP_DIR=$(mktemp -d -t pandoc-XXXXXXXXXX);
 # Change ![[...]] to \!\[\[...\]\] for pandoc
 cat $PANDOC_DIR/custom/latexmacs*.tex "$input" | \
   sed 's/\!\[\[/\\!\[\[/g' | \
-  sed '/file:\/\//d' > \
+  sed '/file:\/\//d' | \
+  sed '/^^/d' > \
   $TMP_DIR/combined.temp ;
 
 # toc doesn't work with emanote yet.
@@ -50,7 +51,7 @@ fi
 # Unescape underscores in brackets: "[[abcd\_efg.pdf]]" -> "[[abcd_efg.pdf]]"
 # Unescape pipes in brackets: "[[abc.pdf\|Some text]]" -> "[[abc.pdf|Some text]]"
 
-cat "$TMP_DIR/out.temp" | sed '/^\\\%/d' | sed 's/\\\[\\\[/\[\[/g' | sed 's/\\\]\\\]/\]\]/g' | sed '/^\s*\\envlist/d' | sed -e '/title/ s/\\\\/\\/g' | sed 's/\\\#/\#/g' | sed -e '/\[\[/ s/\\\_/\_/g' | sed -e '/\[\[/ s/\\|/|/g';
+cat "$TMP_DIR/out.temp" | sed '/^\\\%/d' | sed 's/\\\[\\\[/\[\[/g' | sed 's/\\\]\\\]/\]\]/g' | sed '/^\s*\\envlist/d' | sed -e '/title/ s/\\\\/\\/g' | sed 's/\\\#/\#/g' | sed -e '/\[\[/ s/\\\_/\_/g' | sed -e '/\[\[/ s/\\|/|/g' | sed '/^^/d';
 
 
 #cat "$TMP_DIR/out.tmp" | \
