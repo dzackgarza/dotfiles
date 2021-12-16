@@ -62,7 +62,7 @@ ln -s "$TMP_DIR"/figures "$OUT_DIR"/figures;
 emanote -L "$TMP_DIR" gen $OUT_DIR;
 #cp -r /home/zack/quals/attachments/* "$OUT_DIR"/attachments;
 
-qutebrowser "http://localhost:5000/-/all.html" > /dev/null 2>&1 &
+qutebrowser "http://localhost:5000/-/all.html" > /dev/null 2>&1 & disown;
 echo "Hosted on http://localhost:5000/";
 
 inotifywait --exclude '/\..+' -m -r --format '%w%f' -e CLOSE_WRITE "$BASE_DIR" | while read f

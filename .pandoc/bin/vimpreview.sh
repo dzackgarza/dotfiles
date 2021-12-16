@@ -67,6 +67,7 @@ while true; do
   if [ "$first_run" = true ]; then
     echo "(VP) First run"
     $PREVIEW_BROWSER "$outfile" > /dev/null 2>&1 &
+    disown;
     first_run="false";
   else
     $PREVIEW_BROWSER ':reload';
