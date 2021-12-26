@@ -65,6 +65,7 @@ Options:
 
 import hashlib
 import os
+import subprocess
 import re
 import tempfile
 import textwrap
@@ -107,155 +108,10 @@ VERSION = "0.7.1"
 # Anki 2.1 has mathjax built in, but ankidroid and other clients don't.
 CARD_MATHJAX_CONTENT = textwrap.dedent(r"""
 <script>
-MathJax.Hub.Config({
-TeX: {
-    Macros: {
-        NN: ['{\\mathbb {N}}'],
-        RR: ['{\\mathbb{R}}', 0],
-        DD: ['{\\mathbb{D}}', 0],
-        ZZ: ['{\\mathbb{Z}}', 0],
-        CC: ['{\\mathbb{C}}', 0],
-        QQ: ['{\\mathbb{Q}}', 0],
-        CC: ['{\\mathbb{C}}', 0],
-        RP: ['{\\mathbb{RP}}', 0],
-        CP: ['{\\mathbb{CP}}', 0],
-        HP: ['{\\mathbb{HP}}', 0],
-        OP: ['{\\mathbb{OP}}', 0],
-        FF: ['{\\mathbb{F}}', 0],
-        GF: ['{\\mathbb{GF}}', 0],
-        PP: ['{\\mathbb{P}}', 0],
-        Af: ['{\\mathbb{A}}', 0],
-        MM: ['{\\mathbb{M}}', 0],
-        TT: ['{\\mathbb{T}}', 0],
-        Sp: ['{\\mathbb{S}}', 0],
-        KK: ['{\\mathbb{K}}', 0],
-        Gr: ['{\\text{Gr}}', 0],
-        GL: ['{\\text{GL}}', 0],
-        liegl: ['{\\mathfrak{gl}}', 0],
-        lieg: ['{\\mathfrak{g}}', 0],
-        lieb: ['{\\mathfrak{b}}', 0],
-        lieh: ['{\\mathfrak{h}}', 0],
-        lien: ['{\\mathfrak{n}}', 0],
-        ind: ['{\\mathrm{Ind}}', 0],
-        SL: ['{\\text{SL}}', 0],
-        liesl: ['{\\mathfrak{sl}}', 0],
-        SP: ['{\\text{SP}}', 0],
-        liesp: ['{\\mathfrak{sp}}', 0],
-        SO: ['{\\text{SO}}', 0],
-        lieso: ['{\\mathfrak{so}}', 0],
-        OO: ['{\\mathcal{O}}', 0],
-        mm: ['{\\mathfrak{m}}', 0],
-        pr: ['{\\mathfrak{p}}', 0],
-        dual: ['^\\vee', 0, ''],
-        Tr: ['\\mathrm{Tr}', 0],
-        spanof: ['\\mathrm{span}', 0],
-        divides: ['{~\\Bigm| ~}', 0],
-        notdivides: ['{~\\not\\Bigm| ~}', 0],
-        sym: ['\\mathrm{Sym}', 0],
-        aut: ['\\mathrm{Aut}', 0],
-        grad: ['\\mathrm{grad}', 0],
-        sign: ['\\mathrm{sign}', 0],
-        spec: ['{\\mathrm{Spec}}', 0],
-        Gal: ['{\\mathrm{Gal}}', 0],
-        suchthat: ['{~\\mathrel{\\Big|}~}', 0],
-        uniformlyconverges: ['\\rightrightarrows', 0],
-        mapsvia: ['\\xrightarrow{#1}', 1],
-        converges: ['\\overset{#1}', 1],
-        generators: ['\\left\\langle{#1}\\right\\rangle', 1],
-        theset: ['\\left\\\{ #1 \\right\\\}', 1],
-        too: ['{\\xrightarrow{#1}}', 1, ''],
-        norm: ['{\\lVert #1 \\rVert}', 1],
-        restrictionof: ['{\\left.{#1}\\right|_{#2}}', 2],
-        inner: ['{\\left\\langle {#1},~{#2} \\right\\rangle}', 2],
-        correspond: ['{\\theset{\\substack{#1}}}', 1],
-        realpart: ['{\\mathcal{Re}({#1})}', 1],
-        dd: ['{\\frac{\\partial #1}{\\partial #2}}', 2],
-        stirling: ['\\genfrac\\{\\}{0pt}{}{#1}{#2}', 2],
-        thevector: ['{\\left\[ {#1} \\right\]}', 1],
-        gens: ['{\\left\< {#1} \\right\>}', 1],
-        qty: ['{\\left( {#1} \\right)}', 1],
-        intersect: ['\\bigcap', 0],
-        union: ['\\bigcup', 0],
-        coker: ['\\mathrm{coker}', 0],
-        rank: ['\\mathrm{rank}', 0],
-        tensor: ['\\otimes', 0],
-        semidirect: ['\\rtimes', 0],
-        pt: ['\\{\\text{pt}\\}', 0],
-        bd: ['{\\del}', 0],
-        wait: ['{\\,\\cdot\\,}', 0],
-        selfmap: ['{\\circlearrowleft}', 0],
-        Tor: ['\\text{Tor}', 0],
-        tor: ['\\text{Tor}', 0],
-        ext: ['\\text{Ext}', 0],
-        actson: ['\\curvearrowright', 0],
-        actsonl: ['\\curvearrowleft', 0],
-        disjoint: ['{\\coprod}', 0],
-        dash: ['{\\hbox{-}}', 0],
-        bigast: ['{\\mathop{\\Large \\ast}}', 0],
-        from: ['\\leftarrow', 0],
-        covers: ['\\twoheadrightarrow', 0],
-        Zp: ['\\mathbb{Z}_{(p)}', 0],
-        Qp: ['\\mathbb{Q}_{(p)}', 0],
-        ZpZ: ['\\mathbb{Z}/p\\mathbb{Z}', 0],
-        ZnZ: ['\\mathbb{Z}/n\\mathbb{Z}', 0],
-        Sm: ['{\\text{Sm}_k}', 0],
-        GG: ['{\\mathbb{G}}', 0],
-        bung: ['\\text{Bun}_G', 0],
-        Aut: ['{\\text{Aut}}', 0],
-        del: ['{\\partial}', 0],
-        im: ['{\\text{im}~}', 0],
-        homotopic: ['\\simeq', 0],
-        into: ['\\to', 0],
-        cross: ['\\times', 0],
-        definedas: ['\\mathrel{\\vcenter{:}}=', 0],
-        surjects: ['\\twoheadrightarrow', 0],
-        onto: ['\\twoheadrightarrow', 0],
-        injects: ['\\hookrightarrow', 0],
-        id: ['\\text{id}', 0],
-        inv: ['^{-1}', 0],
-        normal: ['{~\\trianglelefteq~}', 0],
-        units: ['^{\\times}', 0],
-        arcsec: ['\\mathrm{arcsec}', 0],
-        multinomial: ['\\left(\\!\\!{#1}\\!\\!\\right)', 1],
-        stirlingfirst: ['\\genfrac{[}{]}{0pt}{}{#1}{#2}', 2],
-        floor: ['{\\left\\lfloor #1 \\right\\rfloor}', 1],
-        ad: ['\\mathrm{ad}', 0],
-        ch: ['\\mathrm{char}~', 0],
-        // Conflicts
-        abs: ['{\\left\\lvert #2 \\right\\rvert_{\\text{#1}}}', 2, ''],
-        vector: ['{\\mathbf{ {#1} }}', 1],
-        hom: ['\\text{Hom}', 0],
-        char: ['\\text{char}', 0]
-    },
-    extensions: [
-        "noUndefined.js", "autoload-all.js",
-        "AMSmath.js", "AMSsymbols.js", "color.js"
-    ],
-
-},
-CommonHTML: { linebreaks: { automatic: true } },
-"HTML-CSS": { linebreaks: { automatic: true } },
-SVG:        { linebreaks: { automatic: true } },
-tex2jax: {
-    inlineMath: [ ['$','$'], ['\\(','\\)'] ],
-    displayMath: [ ['$$','$$'], ['\\[','\\]'] ],
-    processEscapes:true
-},
-CommonHTML: {
-    scale: (!!navigator.userAgent.match(/(mac)|(mobile)/i) ? 150 : 100)
-}
-});
-MathJax.Hub.Configured();
-</script>
-<script type="text/javascript">
-    (function () {
-        if (typeof MathJax === "undefined") {
-            var script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
-            document.body.appendChild(script);
-        }
-    })();
+MathJax.config.tex.macros = {
+	coloneqq: ['\\mathrel{\\vcenter{:}}=', 0]
+};
+MathJax.startup.getComponents();
 </script>
 """)
 
@@ -391,23 +247,35 @@ class DeckCollection(dict):
 def field_to_html(field):
     """Need to extract the math in brackets so that it doesn't get markdowned.
     If math is separated with dollar sign it is converted to brackets."""
-    if CONFIG['dollar']:
-        for (sep, (op, cl)) in [("$$", (r"\\[", r"\\]")), ("$", (r"\\(", r"\\)"))]:
-            escaped_sep = sep.replace(r"$", r"\$")
-            # ignore escaped dollar signs when splitting the field
-            field = re.split(r"(?<!\\){}".format(escaped_sep), field)
-            # add op(en) and cl(osing) brackets to every second element of the list
-            field[1::2] = [op + e + cl for e in field[1::2]]
-            field = "".join(field)
-    else:
-        for bracket in ["(", ")", "[", "]"]:
-            field = field.replace(r"\{}".format(bracket), r"\\{}".format(bracket))
-            # backslashes, man.
+    tmp_field = field
+    temp_align = bytes(tmp_field, encoding="raw_unicode_escape")
+    (out, err) = subprocess.Popen(
+        ['pandoc_stripmacros.sh'], 
+        stdin=subprocess.PIPE, 
+        stdout=subprocess.PIPE, 
+        stderr=subprocess.PIPE
+    ).communicate(input=temp_align)
+    field = out.decode().strip()
+    print(field)
+    # if CONFIG['dollar']:
+        # for (sep, (op, cl)) in [("$$", (r"\\[", r"\\]")), ("$", (r"\\(", r"\\)"))]:
+            # escaped_sep = sep.replace(r"$", r"\$")
+            # # ignore escaped dollar signs when splitting the field
+            # field = re.split(r"(?<!\\){}".format(escaped_sep), field)
+            # # add op(en) and cl(osing) brackets to every second element of the list
+            # field[1::2] = [op + e + cl for e in field[1::2]]
+            # field = "".join(field)
+    # else:
+    for bracket in ["(", ")", "[", "]"]:
+        field = field.replace(r"\{}".format(bracket), r"\\{}".format(bracket))
+            # #backslashes, man.
+    print("~~~~~~~~~~~~~~~")
+    print(field)
 
-    if CONFIG['highlight']:
-        return highlight_markdown(field)
+    # if CONFIG['highlight']:
+        # return highlight_markdown(field)
 
-
+    print("-------------")
     return misaka.html(field, extensions=("fenced-code", "math"))
 
 
@@ -513,7 +381,7 @@ def main():
         os.chdir(initial_dir)
 
     os.system('notify-send "Ankdown" "New cards generated." --urgency=critical --expire-time=5000')
-    os.system('find /home/zack/Notes/Obsidian/Flashcards -iname "*.png" -exec cp {} /home/zack/.local/share/Anki2/User\ 1/collection.media/ \;')
+    os.system('find $MATH_FLASHCARD_DIR -iname "*.png" -exec cp {} /home/zack/.local/share/Anki2/User\ 1/collection.media/ \;')
 
 
 if __name__ == "__main__":
