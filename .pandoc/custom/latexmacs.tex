@@ -669,6 +669,8 @@
 \newcommand{\wedgeprod}[0]{\vee}
 \newcommand{\Wedgepower}[0]{\bigwedge\nolimits}
 \def\multichoose#1#2{{\left(\kern-.3em\left(\genfrac{}{}{0pt}{}{#1}{#2}\right)\kern-.3em\right)}}
+\def\rising#1#2{ \qty{#1}^{ (#2) } }
+\def\falling#1#2{ \qty{#1}_{ (#2) } }
 \newcommand\elts[2]{{ {#1}_1, {#1}_2, \cdots, {#1}_{#2}}}
 \newcommand\tselts[2]{{ \theset{ {#1}_1, {#1}_2, \cdots, {#1}_{#2} } }}
 \newcommand\mix[1]{\overset{\scriptscriptstyle {#1} }{\times}}
@@ -677,8 +679,10 @@
 \newcommand\basechange[1]{{ \fiberproduct{k} {#1} }}
 \newcommand\fprod[1]{{ \fiberproduct{#1} }}
 \newcommand\smallprod[0]{{ \scriptscriptstyle\prod }}
+\newcommand\eqLH[0]{{ \equalsbecause{\scriptscriptstyle\text{LH}} }}
 
 \newcommand{\Tot}[0]{{ \operatorname{Tot} }}
+\newcommand{\PV}[0]{{ \operatorname{PV} }}
 \newcommand{\Totsum}[0]{\Tot^{\oplus}}
 \newcommand{\Totprod}[0]{\Tot^{\Pi}}
 \newcommand{\xpn}[0]{ { x^{p^n} } }
