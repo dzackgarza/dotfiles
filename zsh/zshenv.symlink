@@ -27,6 +27,7 @@ export PANDOC_BIB=$NOTES/library.bib
 export CUSTOM_TEX_DIR=$PANDOC_DIR/custom
 export TEXINPUTS=.:$PANDOC_DIR/custom//:
 export MATH_FLASHCARD_DIR=/home/zack/SparkleShare/github.com/Math-Flashcards
+export PANDOC_RESOURCE_PATH="/var/www/notes_temp:/home/zack/Notes:/home/zack/Notes/Obsidian:/home/zack/quals"
 
 
 
