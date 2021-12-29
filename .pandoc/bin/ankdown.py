@@ -109,7 +109,9 @@ VERSION = "0.7.1"
 CARD_MATHJAX_CONTENT = textwrap.dedent(r"""
 <script>
 MathJax.config.tex.macros = {
-	coloneqq: ['\\mathrel{\\vcenter{:}}=', 0]
+	coloneqq: ['\\mathrel{\\vcenter{:}}=', 0],
+    qty: ['{\\left( {#1} \\right)}', 1],
+    divides: ["{~\\Bigm| ~}", 0]
 };
 MathJax.startup.getComponents();
 </script>
@@ -256,7 +258,7 @@ def field_to_html(field):
         stderr=subprocess.PIPE
     ).communicate(input=temp_align)
     field = out.decode().strip()
-    print(field)
+    # print(field)
     # if CONFIG['dollar']:
         # for (sep, (op, cl)) in [("$$", (r"\\[", r"\\]")), ("$", (r"\\(", r"\\)"))]:
             # escaped_sep = sep.replace(r"$", r"\$")
@@ -269,13 +271,13 @@ def field_to_html(field):
     for bracket in ["(", ")", "[", "]"]:
         field = field.replace(r"\{}".format(bracket), r"\\{}".format(bracket))
             # #backslashes, man.
-    print("~~~~~~~~~~~~~~~")
-    print(field)
+    # print("~~~~~~~~~~~~~~~")
+    # print(field)
 
     # if CONFIG['highlight']:
         # return highlight_markdown(field)
 
-    print("-------------")
+    # print("-------------")
     return misaka.html(field, extensions=("fenced-code", "math"))
 
 
@@ -382,7 +384,6 @@ def main():
 
     os.system('notify-send "Ankdown" "New cards generated." --urgency=critical --expire-time=5000')
     os.system('find $MATH_FLASHCARD_DIR -iname "*.png" -exec cp {} /home/zack/.local/share/Anki2/User\ 1/collection.media/ \;')
-
 
 if __name__ == "__main__":
     exit(main())
