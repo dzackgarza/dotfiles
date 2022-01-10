@@ -73,6 +73,7 @@ compdef t=tmuxinator
 setopt complete_aliases
 DISABLE_MAGIC_FUNCTIONS=true
 BCAT_BROWSER=qutebrowser
+setopt histignorealldups
 
 # Automatically start tmux on all session
 #if [ "$TMUX" = "" ]; then tmux; fi
