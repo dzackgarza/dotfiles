@@ -1,0 +1,8 @@
+cp ~/.pandoc/bin/LatestMakefile ./Makefile
+mkdir ./sections
+mkdir ./sections/figures
+ln -s ./sections/figures ./figures
+cp /home/zack/.pandoc/custom/latest_data.yaml ./data.yaml
+cp ~/.pandoc/custom/default.bib .
+cp ~/under_construction.png ./figures/cover.png
+nvim ./data.yaml
