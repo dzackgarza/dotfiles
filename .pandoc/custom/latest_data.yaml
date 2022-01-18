@@ -1,0 +1,14 @@
+---
+title: "SUBJECT"
+subtitle: "Lectures by LECTURER. University of Georgia, SEMESTER"
+author:
+- name: D. Zack Garza
+  affiliation: University of Georgia 
+  email: dzackgarza@gmail.com 
+date: SEMESTER
+author-note: "These are notes live-tex'd from a graduate course in SUBJECT taught by LECTURER at the University of Georgia in SEMESTER. As such, any errors or inaccuracies are almost certainly my own."
+cover-image: "figures/cover.png" 
+todos: true
+book: true
+---
+
