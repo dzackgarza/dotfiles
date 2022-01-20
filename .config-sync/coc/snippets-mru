@@ -1,7 +1,8 @@
 def
-rmk
 exc
 ex
+iso
+rmk
 soln
 question
 lem
@@ -27,7 +28,6 @@ mat2
 irr
 footnote
 tikz_bundle
-iso
 obs
 pfl
 answer
