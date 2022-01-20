@@ -2,13 +2,13 @@ pushd ~/website && git add *; git commit -am "Save"; git push; popd; ssh zack@dz
 pushd ~/Notes && git add *; git commit -am "Save"; git push; popd; ssh zack@dzackgarza.com "cd /var/www/Notes; git stash; git pull;"
 pushd ~/dotfiles; git add -A; git commit -am "Save"; git push origin master; popd;
 
-#CurrentNotes=(
-  #"/home/zack/SparkleShare/github.com/Notes/Class_Notes/2022/Spring/CommutativeAlgebra"
-  #"/home/zack/SparkleShare/github.com/Notes/Class_Notes/2022/Spring/CohomologyRepTheory"
-  #"/home/zack/SparkleShare/github.com/Notes/Class_Notes/2022/Spring/FunctionalAnalysis"
-  #"/home/zack/SparkleShare/github.com/Notes/Class_Notes/2022/Spring/SheafCohomology"
-#)
+CurrentNotes=(
+  "/home/zack/SparkleShare/github.com/Notes/Class_Notes/2022/Spring/CommutativeAlgebra"
+  "/home/zack/SparkleShare/github.com/Notes/Class_Notes/2022/Spring/CohomologyRepTheory"
+  "/home/zack/SparkleShare/github.com/Notes/Class_Notes/2022/Spring/FunctionalAnalysis"
+  "/home/zack/SparkleShare/github.com/Notes/Class_Notes/2022/Spring/SheafCohomology"
+)
 
-#for val in ${CurrentNotes[@]}; do
-   #cd $val; make clean; make all;
-#done
+for val in ${CurrentNotes[@]}; do
+   cd $val; make clean; make all;
+done
