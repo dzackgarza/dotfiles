@@ -1,8 +1,11 @@
 rmk
 ex
-lem
 def
 exc
+question
+obs
+footnote
+lem
 theorem
 proof
 warn
@@ -10,7 +13,6 @@ soln
 slogan
 prop
 iso
-question
 fact
 prob
 cases
@@ -26,9 +28,7 @@ mat3
 todo
 mat2
 irr
-footnote
 tikz_bundle
-obs
 pfl
 answer
 tikz_pullback
