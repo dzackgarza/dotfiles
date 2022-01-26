@@ -24,19 +24,25 @@
 \newcommand{\ideal}[1]{\mathcal{#1}}
 \newcommand{\adjoin}[1]{ { \left[ {#1} \right] } }
 \newcommand{\polynomialring}[1]{ { \left[ {#1} \right] } }
-\newcommand{\powerseries}[1]{ { \left[ {#1} \right] } }
-\newcommand{\functionfield}[1]{ { \left( {#1} \right) } }
 \newcommand{\htyclass}[1]{ { \left[ {#1} \right] } }
-\newcommand{\formalpowerseries}[1]{ { \left[\left[ {#1} \right] \right] } }
-\newcommand{\formalseries}[1]{ { \left[\left[ {#1} \right] \right] } }
 \newcommand{\qtext}[1]{{\quad \operatorname{#1} \quad}}
 \newcommand{\abs}[1]{{\left\lvert {#1} \right\rvert}}
 \newcommand{\stack}[1]{\mathclap{\substack{ #1 }}} 
 
+\newcommand{\powerseries}[1]{ { \left[ {#1} \right] } }
+\newcommand{\functionfield}[1]{ { \left( {#1} \right) } }
+\newcommand{\rff}[1]{ \functionfield{#1} }
+
+\newcommand{\fps}[1]{{\left[\left[ #1 \right]\right]  }}
+\newcommand{\formalseries}[1]{ \fps{#1} }
+\newcommand{\formalpowerseries}[1]{ \fps{#1} }
+\newcommand\fls[1]{{\left(\left( #1 \right)\right)  }}
+
+
 \newcommand{\nilrad}[1]{{\sqrt{0_{#1}} }}
 \newcommand{\jacobsonrad}[1]{{J ({#1}) }}
 \newcommand{\localize}[1]{ \left[ { \scriptstyle { {#1}\inv}  } \right]}
-\newcommand{\primelocalize}[1]{ \left[ { \scriptstyle { { \qty{ {#1}^c } }\inv}  } \right]}
+\newcommand{\primelocalize}[1]{ \left[ { \scriptstyle { { ({#1}^c) }\inv}  } \right]}
 \newcommand{\plocalize}[1]{\primelocalize{#1}}
 \newcommand{\sheafify}[1]{ \left( #1 \right)^{\scriptscriptstyle \mathrm{sh}} }
 \newcommand{\complete}[1]{{ {}_{ \hat{#1} } }}
@@ -50,6 +56,7 @@
 \newcommand{\liesover}[1]{{ {}_{/ {#1}} }}
 \newcommand{\liesabove}[1]{{ {}_{/ {#1}} }}
 \newcommand{\slice}[1]{_{/ {#1}} }
+\newcommand{\coslice}[1]{_{{#1/}} }
 \newcommand{\quotright}[2]{ {}^{#1}\mkern-2mu/\mkern-2mu_{#2} }
 \newcommand{\quotleft}[2]{ {}_{#2}\mkern-.5mu\backslash\mkern-2mu^{#1} }
 \newcommand{\invert}[1]{{ \left[ { \scriptstyle \frac{1}{#1} } \right] }}
@@ -72,4 +79,5 @@
 
 
 \newcommand{\inner}[2]{{\left\langle {#1},~{#2} \right\rangle}}
+\newcommand{\inp}[2]{{\left\langle {#1},~{#2} \right\rangle}}
 \newcommand{\poisbrack}[2]{{\left\{ {#1},~{#2} \right\} }}
