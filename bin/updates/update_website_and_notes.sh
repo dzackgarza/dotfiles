@@ -5,9 +5,9 @@ CurrentNotes=(
   "/home/zack/SparkleShare/github.com/Notes/Class_Notes/2022/Spring/SheafCohomology"
 )
 
-for val in ${CurrentNotes[@]}; do
-   cd $val; make clean; make all;
-done
+#for val in ${CurrentNotes[@]}; do
+   #cd $val; make clean; make all;
+#done
 
 pushd ~/website && git add *; git commit -am "Save"; git push; popd; ssh zack@dzackgarza.com ". ~/.rvm/scripts/rvm && ~/updateWebsite.sh"; 
 pushd ~/Notes && git add *; git commit -am "Save"; git push; popd; ssh zack@dzackgarza.com "cd /var/www/Notes; git stash; git pull;"
