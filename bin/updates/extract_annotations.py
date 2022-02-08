@@ -7,7 +7,7 @@ import time
 import datetime
 
 def cleanString(somestr):
-    fewer_spaces = ' '.join(somestr.split()).replace("- ", "").translate(str.maketrans({"(": r"\(", ")": r"\)", ".": r"\.", "_": r"\_", "*": r"\*"}))
+    fewer_spaces = ' '.join(somestr.split()).replace("- ", "").translate(str.maketrans({"(": r"\(", ")": r"\)", ".": r"\.", "_": r"\_", "*": r"\*", ":":" "}))
     return(fewer_spaces)
 
 def main():
@@ -80,7 +80,7 @@ def main():
 
     modtime = max(dates) if len(dates) > 0 else datetime.date.today()
     outdate = modtime.strftime('%m/%d/%Y')
-    outfilename = f"/home/zack/Notes/annotations/{booktitle}.md"
+    outfilename = f"/home/zack/Dropbox/annotations/{booktitle}.md"
     with open(outfilename, "w") as fp:
         fp.write(f"# {outdate}: {booktitle} ({bookauthor})\n\n")
         fp.write(f"[Link to PDF](<file:///{realpath}>)\n\n")
