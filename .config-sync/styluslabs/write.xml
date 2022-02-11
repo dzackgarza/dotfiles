@@ -13,7 +13,7 @@
   <int name="eraseOnImage" value="0" />
   <int name="inputSimplify" value="4" />
   <int name="inputSmoothing" value="8" />
-  <int name="lastUpdateCheck" value="1643342051" />
+  <int name="lastUpdateCheck" value="1644380220" />
   <int name="mouseMode" value="0" />
   <int name="penType" value="11" />
   <int name="reopenLastDoc" value="1" />
@@ -34,7 +34,7 @@
   <string name="currFolder" value="/home/zack/Dropbox/Teaching/Calculus/Fall 2021 Calc/2021 Fall Calculus Lecture Notes/" />
   <string name="docFileExt" value="svgz" />
   <string name="newDocTitleFmt" value="%b %e %Hh%M" />
-  <string name="recentDocs" value="/home/zack/Dropbox/Teaching/Calculus/Fall 2021 Calc/2021 Fall Calculus Lecture Notes/Monday.svgz:::/home/zack/Dropbox/Teaching/Calculus/Fall 2021 Calc/2021 Fall Calculus Lecture Notes/Friday Lecture.svgz:::/home/zack/Dropbox/Teaching/Calculus/Fall 2021 Calc/2021 Fall Calculus Lecture Notes/Tuesday Lecture.svgz:::/home/zack/Dropbox/Teaching/Calculus/Fall 2021 Calc/2021 Fall Calculus Lecture Notes/Sep  7 00h57.svgz:::/home/zack/Dropbox/Teaching/Calculus/Fall 2021 Calc/2021 Fall Calculus Lecture Notes/Sep 30 23h46.svgz:::/home/zack/Dropbox/Teaching/Calculus/Fall 2021 Calc/2021 Fall Calculus Lecture Notes/Sep 27 22h18.svgz:::/home/zack/Dropbox/Teaching/Calculus/Fall 2021 Calc/2021 Fall Calculus Lecture Notes/Sep 21 11h23.svgz:::/home/zack/Dropbox/Teaching/Calculus/Fall 2021 Calc/2021 Fall Calculus Lecture Notes/Aug 30 00h04.svgz:::/home/zack/Dropbox/Teaching/Calculus/Fall 2021 Calc/2021 Fall Calculus Lecture Notes/Aug 26 23h05.svgz:::/home/zack/Dropbox/Teaching/Calculus/Fall 2021 Calc/2021 Fall Calculus Lecture Notes/Aug 25 21h48.html:::/home/zack/Dropbox/Teaching/Calculus/Fall 2021 Calc/2021 Fall Calculus Lecture Notes/Aug 19 19h53.html" />
+  <string name="recentDocs" value="/home/zack/Dropbox/Teaching/Calculus/Fall 2021 Calc/2021 Fall Calculus Lecture Notes/Aug 19 19h53.html:::/home/zack/Dropbox/Teaching/Calculus/Fall 2021 Calc/2021 Fall Calculus Lecture Notes/14-9-2021 Lecture_page001.svg:::/home/zack/Dropbox/Teaching/Calculus/Fall 2021 Calc/2021 Fall Calculus Lecture Notes/14-9-2021 Lecture.html:::/home/zack/Dropbox/Teaching/Calculus/Fall 2021 Calc/2021 Fall Calculus Lecture Notes/Oct 25 09h15.svgz:::/home/zack/Dropbox/Teaching/Calculus/Fall 2021 Calc/2021 Fall Calculus Lecture Notes/Oct 24 21h09.svgz:::/home/zack/Dropbox/Teaching/Calculus/Fall 2021 Calc/2021 Fall Calculus Lecture Notes/Oct 21 23h55.svgz:::/home/zack/Dropbox/Teaching/Calculus/Fall 2021 Calc/2021 Fall Calculus Lecture Notes/Oct 20 09h16.svgz:::/home/zack/Dropbox/Teaching/Calculus/Fall 2021 Calc/2021 Fall Calculus Lecture Notes/Oct 19 14h48.svgz:::/home/zack/Dropbox/Teaching/Calculus/Fall 2021 Calc/2021 Fall Calculus Lecture Notes/Oct  1 20h15.svgz:::/home/zack/Dropbox/Teaching/Calculus/Fall 2021 Calc/2021 Fall Calculus Lecture Notes/Nov  2 23h18.svgz:::/home/zack/Dropbox/Teaching/Calculus/Fall 2021 Calc/2021 Fall Calculus Lecture Notes/Nov  1 09h10.svgz" />
   <string name="savedColors" value="#FF000000,#FFFF0000,#FF008000,#FF0000FF" />
   <string name="savedWidths" value="1.400,2.400,4.000,8.000" />
   <string name="syncServer" value="localhost" />
