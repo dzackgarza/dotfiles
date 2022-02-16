@@ -3,6 +3,7 @@ CurrentNotes=(
   "/home/zack/SparkleShare/github.com/Notes/Class_Notes/2022/Spring/CohomologyRepTheory"
   "/home/zack/SparkleShare/github.com/Notes/Class_Notes/2022/Spring/FunctionalAnalysis"
   "/home/zack/SparkleShare/github.com/Notes/Class_Notes/2022/Spring/SheafCohomology"
+  "/home/zack/SparkleShare/github.com/Notes/Class_Notes/2022/Spring/ContactTopology"
 )
 
 for val in ${CurrentNotes[@]}; do
