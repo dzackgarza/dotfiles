@@ -1,14 +1,15 @@
+question
+warn
+proof
+lem
+cor
 rmk
 obs
-proof
 theorem
-cor
 cases
 prop
 claim
-lem
 ex
-warn
 soln
 exc
 def
@@ -17,7 +18,6 @@ mat2
 prob
 nn
 fact
-question
 slogan
 iso
 surj
