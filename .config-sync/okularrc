@@ -27,7 +27,7 @@ shouldShowToolBarComingFromFullScreen=false
 Height 1080=996
 Height 1920=1866
 Height 800=746
-State=AAAA/wAAAAD9AAAAAAAAAm8AAAPIAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
+State=AAAA/wAAAAD9AAAAAAAABH4AAAPIAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -76,9 +76,9 @@ eDP-1 HDMI-1 YPosition 1920x1080=2202
 eDP-1 Height 1080=1027
 eDP-1 Height 1920x1080=1027
 eDP-1 Width 1920=623
-eDP-1 Width 1920x1080=623
+eDP-1 Width 1920x1080=1150
 eDP-1 XPosition=1286
-eDP-1 XPosition 1920x1080=1286
+eDP-1 XPosition 1920x1080=759
 eDP-1 YPosition=42
 eDP-1 YPosition 1920x1080=42
 
@@ -88,6 +88,7 @@ Width 1920=600
 
 [Recent Files]
 File1[$e]=$HOME/Dropbox/Teaching/Calculus/Gateways and Exams/Exam 2/Exam2.pdf
+File10[$e]=$HOME/Dropbox/Library/HANSJORG GEIGES/An Introduction to Contact Topology (966)/An Introduction to Contact Topology - HANSJORG GEIGES.pdf
 File2[$e]=$HOME/Dropbox/Library/Ravi Vakil/The Rising Sea_ Foundations of Algebraic Geometry (786)/The Rising Sea_ Foundations of Algebraic G - Ravi Vakil.pdf
 File3[$e]=$HOME/sheaves.pdf
 File4[$e]=$HOME/Dropbox/Teaching/Calculus/Gateways and Exams/Quiz 1/Gateway_1_Attempt_2.pdf
@@ -97,6 +98,7 @@ File7[$e]=$HOME/Dropbox/Teaching/Calculus/Gateways and Exams/Quiz 4/Quiz 4.pdf
 File8[$e]=$HOME/Dropbox/Library/Jarod Alper/Introduction to Stacks and Moduli (899)/Introduction to Stacks and Moduli - Jarod Alper.pdf
 File9[$e]=$HOME/cech.dvi
 Name1[$e]=Exam2.pdf
+Name10[$e]=An Introduction to Contact Topology - HANSJORG GEIGES.pdf
 Name2[$e]=The Rising Sea_ Foundations of Algebraic G - Ravi Vakil.pdf
 Name3[$e]=sheaves.pdf
 Name4[$e]=Gateway_1_Attempt_2.pdf
