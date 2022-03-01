@@ -1,7 +1,9 @@
+rmk
+conj
+exc
+surj
 proof
 prop
-rmk
-exc
 def
 warn
 theorem
@@ -13,7 +15,6 @@ answer
 ex
 cor
 cases
-conj
 cort
 mat2
 slogan
@@ -23,7 +24,6 @@ footnote
 prob
 nn
 iso
-surj
 concept
 ff
 mat3
