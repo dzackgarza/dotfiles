@@ -23,6 +23,7 @@ let g:quicktex_prose = {
     \'iso'    : 'isomorphism ',
     \'ifff'    : 'if and only if ',
     \'padic'    : '\(p\dash \)adic ',
+    \'ladic'    : '\(\ell\dash \)adic ',
     \'wlog'   : 'without loss of generality, ',
     \'Wlog'   : 'Without loss of generality, ',
     \'acs'   : 'almost complex structure ',
