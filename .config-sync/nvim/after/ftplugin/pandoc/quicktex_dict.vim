@@ -24,6 +24,7 @@ let g:quicktex_prose = {
     \'ifff'    : 'if and only if ',
     \'padic'    : '\(p\dash \)adic ',
     \'ladic'    : '\(\ell\dash \)adic ',
+    \'lfns'    : '\(L\dash \)functions ',
     \'wlog'   : 'without loss of generality, ',
     \'Wlog'   : 'Without loss of generality, ',
     \'acs'   : 'almost complex structure ',
