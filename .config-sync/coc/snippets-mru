@@ -1,15 +1,16 @@
+answer
+question
 rmk
+slogan
 ex
 proof
 theorem
-question
 fact
 prop
 cor
 def
 warn
 tikz_bundle
-answer
 claim
 exc
 obs
@@ -21,7 +22,6 @@ surj
 cases
 cort
 mat2
-slogan
 soln
 prob
 nn
