@@ -8,5 +8,5 @@ cat "$unresolved_links.bak" | awk '{print gsub(",",","), $0}' | sort -nr | cut -
 rm "$unresolved_links.bak";
 
 unlinked_files="/home/zack/Notes/Obsidian/unlinked files output.md";
-sed -E '/\.svg|\.png|\.sty|\.asy|\.pdf|\.jpg|\.eps|\.fls|\.JPG|\.pgf|\.zip|\.gif|\.PNG|\.pbsdat/d' -i $unlinked_files;
+sed -E '/\.svg|\.png|\.sty|\.asy|\.pdf|\.jpg|\.eps|\.fls|\.JPG|\.pgf|\.zip|\.gif|\.PNG|\.pbsdat/d' -i "$unlinked_files";
 
