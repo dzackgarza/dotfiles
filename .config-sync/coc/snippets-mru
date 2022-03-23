@@ -1,8 +1,9 @@
 exc
-rmk
-theorem
-def
 ex
+def
+rmk
+iso
+theorem
 prop
 cases
 proof
@@ -25,7 +26,6 @@ surj
 mat2
 prob
 nn
-iso
 concept
 ff
 mat3
