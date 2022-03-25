@@ -1,12 +1,13 @@
-exc
-ex
-def
+flashcard
 rmk
-iso
+def
+proof
 theorem
+ex
+exc
+iso
 prop
 cases
-proof
 cor
 soln
 lem
@@ -40,7 +41,6 @@ tikzcd
 ]]]
 table
 hlab
-flashcard
 details
 DD
 RR
