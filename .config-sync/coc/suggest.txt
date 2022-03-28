@@ -1,3 +1,7 @@
+claim|claim|snippets
+pro|prop|snippets
+prob|prob|snippets
+prob|problem|around
 constan|constantsheaf|around
 constant|constantsheaf|around
 cohomo|cohomology|around
