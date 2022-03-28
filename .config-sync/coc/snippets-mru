@@ -1,3 +1,6 @@
+claim
+prop
+prob
 rmk
 ex
 soln
@@ -8,7 +11,6 @@ theorem
 flashcard
 def
 iso
-prop
 cases
 lem
 slogan
@@ -19,13 +21,11 @@ obs
 answer
 warn
 tikz_bundle
-claim
 footnote
 conj
 hint
 surj
 mat2
-prob
 nn
 concept
 ff
