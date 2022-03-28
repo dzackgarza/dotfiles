@@ -1,3 +1,14 @@
+Stipc|Stipsicz|dictionary
+Geogra|Geography|word
+classifica|classification|dictionary
+characterist|characteristic|dictionary
+chara|character|dictionary
+holomo|holomorphy|dictionary
+signat|signatures|around
+connec|connect|dictionary
+nonne|nonnegative|dictionary
+soln|soln|snippets
+soln|solving|word
 thm|theorem|snippets
 differenti|differential|dictionary
 def|def|snippets
@@ -43,7 +54,6 @@ Sheae|Sheaves|around
 Flasq|Flasque|dictionary
 acyc|acyclic|around
 corolla|corollary|dictionary
-soln|soln|snippets
 exc|exc|snippets
 flasqe|flasque|around
 flase|flasque|around
@@ -92,7 +102,6 @@ inductive|inductive|dictionary
 Friendland|Friendlander|dictionary
 character|characteristic|around
 cases|cases|snippets
-characterist|characteristic|dictionary
 Hil|Hilbert|around
 growt|growth|dictionary
 particular|particular|dictionary
