@@ -1,3 +1,10 @@
+neighb|neighborhood|dictionary
+neigh|neighborhood|dictionary
+eery|every|around
+soln|soln|snippets
+solution|solution|around
+proof|proof|snippets
+claim|claim|snippets
 diffeomo|diffeomorphic|around
 Sg|Sigma_g|dictionary
 homeo|homeomorphic|around
@@ -40,7 +47,6 @@ holomo|holomorphy|dictionary
 signat|signatures|around
 connec|connect|dictionary
 nonne|nonnegative|dictionary
-soln|soln|snippets
 soln|solving|word
 differenti|differential|dictionary
 def|def|snippets
@@ -68,8 +74,6 @@ Zaris|Zariski|dictionary
 Groth|Grothendieck|dictionary
 Upcom|Upcoming|dictionary
 sandwich|sandwiched|dictionary
-proof|proof|snippets
-claim|claim|snippets
 proo|proof|snippets
 pro|prop|snippets
 prob|prob|snippets
