@@ -1,15 +1,21 @@
+sct|sections|around
+rmk|rmk|snippets
+ex|ex|snippets
+contractibl|contractible|dictionary
+proof|proof|snippets
+prop|prop|snippets
+monom|monomial|dictionary
+isomo|isomorphic|dictionary
 resolvin|resolving|dictionary
 acy|acyclic|around
 soln|soln|snippets
 isomo|isomorphic|around
 asymptoticall|asymptotically|dictionary
-ex|ex|snippets
 filtrati|filtrations|around
 def|def|snippets
 exerci|exercise|around
 exc|exc|snippets
 homog|homogeneous|around
-rmk|rmk|snippets
 necess|necessarily|dictionary
 minim|minimal|dictionary
 injecvi|injectivity|dictionary
@@ -44,7 +50,6 @@ coml|complex|dictionary
 vanis|vanishing|around
 Srr|Serre|around
 highligted|highlighted|dictionary
-proof|proof|snippets
 discon|discontinuous|around
 Copro|Coproducts|around
 arbitra|arbitrary|dictionary
@@ -69,7 +74,6 @@ envlst|envlist|dictionary
 Dedek|Dedekind|around
 separab|separable|dictionary
 Dedei|Dedekind|around
-isomo|isomorphic|dictionary
 localize|localize|around
 satisi|satisfies|around
 Dedekin|Dedekind|around
@@ -99,7 +103,6 @@ indecomposa|indecomposable|dictionary
 subvar|subvariety|dictionary
 Invention|Inventiones|dictionary
 stratificat|stratification|dictionary
-prop|prop|snippets
 properti|properties|dictionary
 precise|precise|dictionary
 vari|varieties|around
