@@ -1,4 +1,23 @@
+resolutio|resolution|around
+colum|column|dictionary
+resolu|resolution|around
+descen|descend|dictionary
 rmk|rmk|snippets
+dimens|dimension|around
+vanises|vanishes|dictionary
+cohomolo|cohomology|dictionary
+flasq|flasque|around
+flasqu|flasque|around
+flas|flashcard|snippets
+flase|flasque|dictionary
+injecti|injective|around
+injec|injective|around
+acy|acyclic|around
+Grothe|Grothendieck|dictionary
+prop|prop|snippets
+acy|acyclic|dictionary
+ex|ex|snippets
+spec|spectral|around
 resolutio|resolution|dictionary
 Kama|Kawamata|around
 thm|theorem|snippets
@@ -8,7 +27,6 @@ characterist|characteristic|dictionary
 whc|which|around
 multi|multiple|around
 eff|effective|around
-ex|ex|snippets
 Goren|Gorenstein|dictionary
 finitel|finitely|around
 def|def|snippets
@@ -28,7 +46,6 @@ conditi|condition|dictionary
 finitene|finiteness|dictionary
 inclus|inclusion|dictionary
 transcen|transcendence|dictionary
-dimens|dimension|around
 subsp|subspace|dictionary
 satisf|satisfies|around
 satisf|satisfy|dictionary
@@ -74,7 +91,6 @@ essentia|essentially|dictionary
 pluris|plurisubharmonic|around
 plurisu|plurisubharmonic|around
 tangenci|tangencies|dictionary
-prop|prop|snippets
 lapla|laplacian|around
 dimens|dimension|dictionary
 pluri|plurisubharmonic|around
@@ -138,7 +154,6 @@ contractibl|contractible|dictionary
 monom|monomial|dictionary
 isomo|isomorphic|dictionary
 resolvin|resolving|dictionary
-acy|acyclic|around
 isomo|isomorphic|around
 asymptoticall|asymptotically|dictionary
 filtrati|filtrations|around
@@ -324,8 +339,6 @@ Suffici|Sufficient|dictionary
 quasicoh|quasicoherent|dictionary
 paracomp|paracompact|dictionary
 Haus|Hausdorff|dictionary
-flas|flashcard|snippets
-flasqu|flasque|around
 flas|flasque|dictionary
 Flase|Flasque|dictionary
 acycl|acyclicity|dictionary

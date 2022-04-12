@@ -1,6 +1,8 @@
 rmk
-theorem
+flashcard
+prop
 ex
+theorem
 def
 claim
 proof
@@ -8,12 +10,10 @@ soln
 exc
 iso
 lem
-prop
 prob
 question
 conj
 cor
-flashcard
 cases
 slogan
 cort
