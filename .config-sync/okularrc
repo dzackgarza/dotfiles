@@ -19,7 +19,7 @@ eDP-1 XPosition 1920x1080=1143
 eDP-1 YPosition 1920x1080=42
 
 [Desktop Entry]
-FullScreen=true
+FullScreen=false
 shouldShowMenuBarComingFromFullScreen=true
 shouldShowToolBarComingFromFullScreen=false
 
@@ -27,9 +27,7 @@ shouldShowToolBarComingFromFullScreen=false
 Height 1080=996
 Height 1920=1866
 Height 800=746
-MenuBar=Disabled
-RestorePositionForNextInstance=false
-State=AAAA/wAAAAD9AAAAAAAAB4AAAAQTAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
+State=AAAA/wAAAAD9AAAAAAAAAm8AAAPIAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -76,36 +74,36 @@ eDP-1 HDMI-1 XPosition 1920x1080=10
 eDP-1 HDMI-1 YPosition 1080x1920=42
 eDP-1 HDMI-1 YPosition 1920x1080=41
 eDP-1 Height 1080=1027
-eDP-1 Height 1920x1080=1080
+eDP-1 Height 1920x1080=1027
 eDP-1 Width 1920=623
-eDP-1 Width 1920x1080=1920
+eDP-1 Width 1920x1080=623
 eDP-1 XPosition=1286
-eDP-1 XPosition 1920x1080=0
+eDP-1 XPosition 1920x1080=1286
 eDP-1 YPosition=42
-eDP-1 YPosition 1920x1080=0
+eDP-1 YPosition 1920x1080=42
 
 [Print Preview]
 Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Teaching/Calculus/Spring 2022 Calc/Quizzes and Exams/Exam 3/Exam 3.pdf
-File10[$e]=$HOME/Dropbox/Library/Analysis Introduction to Further Topics in Analysis-Princeton University Press (2011) Functiona/Functional Analysis ( (Stein and Shakarchi IV) (888)/Functional Analysis ( (Stein and Shakarchi - Analysis Introduction to Further Topics in.pdf
-File2[$e]=$HOME/Dropbox/Library/James E. Humphreys/Linear Algebraic Groups (825)/Linear Algebraic Groups - James E. Humphreys.pdf
-File3[$e]=$HOME/SparkleShare/github.com/Research/Undergrad/Homotopy Groups of Spheres/Table Hty Spheres.pdf
-File4[$e]=$HOME/Downloads/Local_Algebra.pdf
-File5[$e]=$HOME/Downloads/Complex_cobordism_Hamiltonian_loops_and_global_Kur.pdf
-File6[$e]=$HOME/Downloads/CV.pdf
-File7[$e]=$HOME/Downloads/Seminar Georgia 2021.pdf
-File8[$e]=$HOME/Dropbox/Library/Elias M. Stein, Rami Shakarchi/Fourier Analysis ( (Stein and Shakarchi I) (887)/Fourier Analysis ( (Stein and Shakarchi I) - Elias M. Stein, Rami Shakarchi.pdf
-File9[$e]=$HOME/Dropbox/Library/John B. Conway/A Course in Functional Analysis (561)/A Course in Functional Analysis - John B. Conway.pdf
-Name1[$e]=Exam 3.pdf
-Name10[$e]=Functional Analysis ( (Stein and Shakarchi - Analysis Introduction to Further Topics in.pdf
-Name2[$e]=Linear Algebraic Groups - James E. Humphreys.pdf
-Name3[$e]=Table Hty Spheres.pdf
-Name4[$e]=Local_Algebra.pdf
-Name5[$e]=Complex_cobordism_Hamiltonian_loops_and_global_Kur.pdf
-Name6[$e]=CV.pdf
-Name7[$e]=Seminar Georgia 2021.pdf
-Name8[$e]=Fourier Analysis ( (Stein and Shakarchi I) - Elias M. Stein, Rami Shakarchi.pdf
-Name9[$e]=A Course in Functional Analysis - John B. Conway.pdf
+File1[$e]=$HOME/SparkleShare/github.com/Research/Undergrad/Homotopy Groups of Spheres/Table Hty Spheres.pdf
+File10[$e]=$HOME/Dropbox/Library/Categories Fukaya/(Zurich Lectures in Advanced Mathematics) Paul Seidel (989)/(Zurich Lectures in Advanced Mathematics) - Categories Fukaya.pdf
+File2[$e]=$HOME/Downloads/Complex_cobordism_Hamiltonian_loops_and_global_Kur.pdf
+File3[$e]=$HOME/Downloads/CV.pdf
+File4[$e]=$HOME/Downloads/Seminar Georgia 2021.pdf
+File5[$e]=$HOME/Dropbox/Library/Elias M. Stein, Rami Shakarchi/Fourier Analysis ( (Stein and Shakarchi I) (887)/Fourier Analysis ( (Stein and Shakarchi I) - Elias M. Stein, Rami Shakarchi.pdf
+File6[$e]=$HOME/Dropbox/Library/John B. Conway/A Course in Functional Analysis (561)/A Course in Functional Analysis - John B. Conway.pdf
+File7[$e]=$HOME/Dropbox/Library/Analysis Introduction to Further Topics in Analysis-Princeton University Press (2011) Functiona/Functional Analysis ( (Stein and Shakarchi IV) (888)/Functional Analysis ( (Stein and Shakarchi - Analysis Introduction to Further Topics in.pdf
+File8[$e]=$HOME/Downloads/Local_Algebra.pdf
+File9[$e]=$HOME/Dropbox/Library/John Willard Milnor/Singular points of complex hypersurfaces (968)/Singular points of complex hypersurfaces - John Willard Milnor.pdf
+Name1[$e]=Table Hty Spheres.pdf
+Name10[$e]=(Zurich Lectures in Advanced Mathematics) - Categories Fukaya.pdf
+Name2[$e]=Complex_cobordism_Hamiltonian_loops_and_global_Kur.pdf
+Name3[$e]=CV.pdf
+Name4[$e]=Seminar Georgia 2021.pdf
+Name5[$e]=Fourier Analysis ( (Stein and Shakarchi I) - Elias M. Stein, Rami Shakarchi.pdf
+Name6[$e]=A Course in Functional Analysis - John B. Conway.pdf
+Name7[$e]=Functional Analysis ( (Stein and Shakarchi - Analysis Introduction to Further Topics in.pdf
+Name8[$e]=Local_Algebra.pdf
+Name9[$e]=Singular points of complex hypersurfaces - John Willard Milnor.pdf
