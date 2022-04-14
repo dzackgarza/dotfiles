@@ -1,11 +1,14 @@
 rmk|rmk|snippets
+ex|ex|snippets
+lem|lem|snippets
+spectra|spectra|dictionary
+Ill|Illusie|dictionary
 propert|properties|around
 def|def|snippets
 Zaris|Zariski|around
 distinguish|distinguished|around
 proof|proof|snippets
 collec|collection|around
-lem|lem|snippets
 Realiz|Realization|dictionary
 emptyet|emptyset|around
 classificatio|classification|around
@@ -16,7 +19,6 @@ homogen|homogeneous|around
 automo|automorphisms|dictionary
 homogen|homogenous|dictionary
 Noether|Noetherian|around
-ex|ex|snippets
 compone|component|dictionary
 Noet|Noetherian|around
 decomposi|decomposition|dictionary
