@@ -130,8 +130,8 @@
          id="rect"
          style="fill:blue;"
          usecurrent="1"
-         width="880"
-         height="480"
+         width="760"
+         height="539.685"
          ry="0" />
       <eventcontext
          id="3dbox"
@@ -421,8 +421,8 @@
        selcue="0"
        autogap="1"
        channels="0"
-       offset="0.1"
-       offsetunits="cm" />
+       offset="1"
+       offsetunits="mm" />
     <group
        id="measure"
        measure-start="0,0"
@@ -1100,7 +1100,7 @@
        x="488"
        y="41"
        maximized="0"
-       fullscreen="0"
+       fullscreen="1"
        id="geometry" />
     <group
        id="XYfront" />
