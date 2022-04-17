@@ -1,10 +1,20 @@
 rmk|rmk|snippets
+cobi|cobicomplex|around
+differen|differentials|around
 ex|ex|snippets
+cases|cases|snippets
+def|def|snippets
+thm|theorem|snippets
+exc|exc|snippets
+soln|soln|snippets
+hint|hint|snippets
+show|showed|dictionary
+cotange|cotangent|around
+slogan|slogan|snippets
 lem|lem|snippets
 spectra|spectra|dictionary
 Ill|Illusie|dictionary
 propert|properties|around
-def|def|snippets
 Zaris|Zariski|around
 distinguish|distinguished|around
 proof|proof|snippets
@@ -56,7 +66,6 @@ acy|acyclic|dictionary
 spec|spectral|around
 resolutio|resolution|dictionary
 Kama|Kawamata|around
-thm|theorem|snippets
 rm|rmk|snippets
 lift|liftability|around
 characterist|characteristic|dictionary
@@ -87,8 +96,6 @@ satisf|satisfy|dictionary
 doma|domain|around
 whc|which|word
 filt|filtration|around
-soln|soln|snippets
-exc|exc|snippets
 nonzer|nonzero|dictionary
 nonnega|nonnegative|dictionary
 negativ|negative|dictionary
@@ -396,7 +403,6 @@ fract|fraction|around
 contin|continued|around
 inductive|inductive|dictionary
 Friendland|Friendlander|dictionary
-cases|cases|snippets
 Hil|Hilbert|around
 growt|growth|dictionary
 particular|particular|dictionary
@@ -451,7 +457,6 @@ ef|effaceable|around
 Univera|Universal|dictionary
 monomo|monomorphism|around
 Efface|Effaceable|around
-slogan|slogan|snippets
 monomo|monomorphism|dictionary
 effa|effaceable|around
 hands|handshake|emoji
