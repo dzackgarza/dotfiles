@@ -1,0 +1,146 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage{amsmath,amsthm,amssymb,mathrsfs,color}
+\usepackage[all]{xy}
+\usepackage{url}
+\usepackage{slashed}
+\usepackage{geometry}
+\geometry{margin=1in}
+% for accentsx
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{enumitem}
+\setlist[enumerate]{itemsep=2pt,parsep=2pt,before={\parskip=2pt}}
+
+\usepackage[colorlinks=true,hyperindex, linkcolor=magenta, pagebackref=false, citecolor=cyan,pdfpagelabels]{hyperref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Theorems %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newtheorem{theorem}{Theorem}[subsection]
+\newtheorem*{theorem*}{Theorem}
+\newtheorem*{definition*}{Definition}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{variant}[theorem]{Variant}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{warning}[theorem]{Warning}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{convention}[theorem]{Convention}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{assumption}[theorem]{Assumption}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Theorems %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+\usepackage[usename, dvipsnames]{xcolor}
+\usepackage{datetime}
+
+\input{preamble_common}
+
+\usepackage{booktabs}
+\usepackage[textwidth=25mm, textsize=tiny]{todonotes}
+\usepackage{csquotes}
+\usepackage{longtable}
+\usepackage{tabularx}
+%\usepackage{centernot}
+% \centernot\whatever
+% Nice math font that journals use
+%\usepackage[lite]{mtpro2}
+%\usepackage{mathrsfs}
+
+
+% Pandoc-specific fixes
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% Non-tikz graphics
+\usepackage{amscd}
+\usepackage{spectralsequences}
+
+% Figures
+\usepackage{graphicx}
+% Make figures stay where you put them!
+\usepackage{float}
+\floatplacement{figure}{H}
+
+\usepackage{svg}
+
+\def\envlist{
+\leavevmode \vspace{-1.00\baselineskip} 
+}
+
+
+
+
+% Adjunction
+\newcommand{\longrightharpoonup}{\relbar\joinrel\rightharpoonup}
+\newcommand{\longleftharpoondown}{\leftharpoondown\joinrel\relbar}
+\makeatletter
+\newcommand{\adjtemp}[0]{%
+  \mathrel{\vcenter{%
+    \offinterlineskip\m@th
+    \ialign{%
+      \hfil$##$\hfil\cr
+      \longrightharpoonup\cr
+      \noalign{\kern-.3ex}
+      \scaleobj{0.5}{\bot}\cr
+      \longleftharpoondown\cr
+    }%
+  }}%
+}
+\newcommand{\adjunction}[4]{
+    {#3}
+    \underset{#2}{\overset{#1}{\adjtemp}}
+    {#4}
+}
+
+
+\newcommand{\prism}{
+  \begin{tikzpicture}[xscale = 0.07, yscale=0.15]
+  \draw[line width=0.1mm, -] (-1, 0) -- (1, 0) -- (0, 1) -- (-1, 0);
+  \draw[line width=0.1mm, -] (-0.55, 0) -- (0.12, 0.85);
+  \end{tikzpicture}
+}
+
+%\newcommand{\prism}[0]{\Delta}
+
+\newcommand{\dualof}[1]{ {#1}^{\smash{\scalebox{.7}[1.4]{\rotatebox{90}{\guilsinglleft}}}}}
+
+\newcommand{\divides}{\bigm|}
+\newcommand{\notdivides}{%
+  \mathrel{\mkern.5mu % small adjustment
+    % superimpose \nmid to \big|
+    \ooalign{\hidewidth$\big|$\hidewidth\cr$\nmid$\cr}%
+  }%
+}
+
+\newcommand{\dcoset}[3]{
+    \scriptscriptstyle
+    {\textstyle #1}
+    \mkern-4mu\scalebox{1.5}{$\diagdown$}\mkern-5mu^{\textstyle #2}
+    \mkern-4mu\scalebox{1.5}{$\diagup$}\mkern-5mu{\textstyle #3} 
+}
+\newcommand{\dcosetl}[2]{
+    \scriptscriptstyle
+    {\textstyle #1}
+    \mkern-4mu\scalebox{1.5}{$\diagdown$}\mkern-5mu^{\textstyle #2}
+}
+\newcommand{\dcosetr}[2]{
+    \scriptscriptstyle
+    {\textstyle #1}
+    \mkern-4mu\scalebox{1.5}{$\diagup$}\mkern-5mu{\textstyle #2} 
+}
+
+
+\newcommand{\leftquotient}[2]{
+  {\textstyle #1}
+  \mkern-4mu\scalebox{1.5}{$\diagdown$}\mkern-5mu^{\textstyle #2}
+}
