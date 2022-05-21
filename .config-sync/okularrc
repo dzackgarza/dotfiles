@@ -27,7 +27,7 @@ shouldShowToolBarComingFromFullScreen=false
 Height 1080=996
 Height 1920=1866
 Height 800=746
-State=AAAA/wAAAAD9AAAAAAAAAv4AAAPIAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
+State=AAAA/wAAAAD9AAAAAAAAB2wAAAPKAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -74,13 +74,13 @@ eDP-1 HDMI-1 XPosition 1920x1080=10
 eDP-1 HDMI-1 YPosition 1080x1920=42
 eDP-1 HDMI-1 YPosition 1920x1080=41
 eDP-1 Height 1080=1027
-eDP-1 Height 1920x1080=1027
+eDP-1 Height 1920x1080=1029
 eDP-1 Width 1920=623
-eDP-1 Width 1920x1080=766
+eDP-1 Width 1920x1080=1900
 eDP-1 XPosition=1286
-eDP-1 XPosition 1920x1080=1143
+eDP-1 XPosition 1920x1080=10
 eDP-1 YPosition=42
-eDP-1 YPosition 1920x1080=42
+eDP-1 YPosition 1920x1080=41
 
 [Print Preview]
 Height 1080=500
@@ -88,22 +88,22 @@ Width 1920=600
 
 [Recent Files]
 File1[$e]=$HOME/Dropbox/Library/Michael Artin/Algebra (601)/Algebra - Michael Artin.pdf
-File10[$e]=$HOME/Downloads/UGA at Oxford/Garza - OX Summer 2022 Program Asst.pdf
+File10[$e]=$HOME/Dropbox/Library/Barnes, Roitzheim/Foundations of Stable Homotopy Theory (779)/Foundations of Stable Homotopy Theory - Barnes, Roitzheim.pdf
 File2[$e]=$HOME/Dropbox/Teaching/Calculus/Gateways and Exams/Exam 4/Exam 4.pdf
 File3[$e]=$HOME/Dropbox/Library/Philip Griffiths, John Morgan/Rational Homotopy Theory and Differential Forms (436)/Rational Homotopy Theory and Differential - Philip Griffiths, John Morgan.pdf
 File4[$e]=$HOME/out.pdf
 File5[$e]=$HOME/SparkleShare/github.com/Notes/Class_Notes/2022/Projects/HtyTalks/FloerHomotopy.pdf
 File6[$e]=$HOME/Downloads/Travel Checklist - OX Summer 2022.pdf
 File7[$e]=$HOME/Dropbox/Library/Steven Krantz/A Mathematician's Survival Guide (723)/A Mathematician's Survival Guide - Steven Krantz.pdf
-File8[$e]=$HOME/Dropbox/Library/Barnes, Roitzheim/Foundations of Stable Homotopy Theory (779)/Foundations of Stable Homotopy Theory - Barnes, Roitzheim.pdf
-File9[$e]=$HOME/SparkleShare/github.com/Notes/Class_Notes/Independent/Algebraic Topology/Topology Notes.pdf
+File8[$e]=$HOME/SparkleShare/github.com/Notes/Class_Notes/Independent/Algebraic Topology/Topology Notes.pdf
+File9[$e]=$HOME/Downloads/UGA at Oxford/Garza - OX Summer 2022 Program Asst.pdf
 Name1[$e]=Algebra - Michael Artin.pdf
-Name10[$e]=Garza - OX Summer 2022 Program Asst.pdf
+Name10[$e]=Foundations of Stable Homotopy Theory - Barnes, Roitzheim.pdf
 Name2[$e]=Exam 4.pdf
 Name3[$e]=Rational Homotopy Theory and Differential - Philip Griffiths, John Morgan.pdf
 Name4[$e]=out.pdf
 Name5[$e]=FloerHomotopy.pdf
 Name6[$e]=Travel Checklist - OX Summer 2022.pdf
 Name7[$e]=A Mathematician's Survival Guide - Steven Krantz.pdf
-Name8[$e]=Foundations of Stable Homotopy Theory - Barnes, Roitzheim.pdf
-Name9[$e]=Topology Notes.pdf
+Name8[$e]=Topology Notes.pdf
+Name9[$e]=Garza - OX Summer 2022 Program Asst.pdf
