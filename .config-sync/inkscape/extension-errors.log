@@ -1,3 +1,15 @@
+Extension "Export to TikZ path" failed to load because a dependency was not met.
+Dependency:
+	type: file
+	location: extensions
+	string: inkex.py
+
+Extension "Export as TikZ code for use with LaTeX" failed to load because a dependency was not met.
+Dependency:
+	type: file
+	location: extensions
+	string: inkex.py
+
 Extension "Export to PDF via Scribus" failed to load because a dependency was not met.
 Dependency:
 	type: executable
