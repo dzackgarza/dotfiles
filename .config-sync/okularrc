@@ -19,7 +19,7 @@ eDP-1 XPosition 1920x1080=1143
 eDP-1 YPosition 1920x1080=42
 
 [Desktop Entry]
-FullScreen=false
+FullScreen=true
 shouldShowMenuBarComingFromFullScreen=true
 shouldShowToolBarComingFromFullScreen=false
 
@@ -27,8 +27,8 @@ shouldShowToolBarComingFromFullScreen=false
 Height 1080=996
 Height 1920=1866
 Height 800=746
-RestorePositionForNextInstance=false
-State=AAAA/wAAAAD9AAAAAAAAAv4AAAPIAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
+MenuBar=Disabled
+State=AAAA/wAAAAD9AAAAAAAAB4AAAAQTAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -75,36 +75,36 @@ eDP-1 HDMI-1 XPosition 1920x1080=10
 eDP-1 HDMI-1 YPosition 1080x1920=42
 eDP-1 HDMI-1 YPosition 1920x1080=41
 eDP-1 Height 1080=1027
-eDP-1 Height 1920x1080=1027
+eDP-1 Height 1920x1080=1080
 eDP-1 Width 1920=623
-eDP-1 Width 1920x1080=766
+eDP-1 Width 1920x1080=1920
 eDP-1 XPosition=1286
-eDP-1 XPosition 1920x1080=1143
+eDP-1 XPosition 1920x1080=0
 eDP-1 YPosition=42
-eDP-1 YPosition 1920x1080=42
+eDP-1 YPosition 1920x1080=0
 
 [Print Preview]
 Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Library/William Judson LeVeque/Fundamentals of Number Theory (822)/Fundamentals of Number Theory - William Judson LeVeque.pdf
-File10[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
-File2[$e]=$HOME/Dropbox/Library/Apostol/Introduction to Analytic Number Theory (902)/Introduction to Analytic Number Theory - Apostol.pdf
-File3[$e]=$HOME/Dropbox/Library/J. S. Milne/Algebraic Number Theory (603)/Algebraic Number Theory - J. S. Milne.pdf
-File4[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
-File5[$e]=$HOME/Dropbox/Library/Miles Reid/Undergraduate Algebraic Geometry (666)/Undergraduate Algebraic Geometry - Miles Reid.pdf
-File6[$e]=$HOME/Dropbox/Library/David Steven Dummit/Abstract Algebra (656)/Abstract Algebra - David Steven Dummit.pdf
-File7[$e]=$HOME/Dropbox/Library/William Fulton, Joe Harris/Representation Theory_ A First Course (668)/Representation Theory_ A First Course - William Fulton, Joe Harris.pdf
-File8[$e]=$HOME/Dropbox/Library/Anthony Knapp/Lie Groups, Lie Algebras, and Cohomology (729)/Lie Groups, Lie Algebras, and Cohomology - Anthony Knapp.pdf
-File9[$e]=$HOME/Dropbox/Library/V. S. Varadarajan/Lie Algebras Lie Groups & Representations (884)/Lie Algebras Lie Groups & Representations - V. S. Varadarajan.pdf
-Name1[$e]=Fundamentals of Number Theory - William Judson LeVeque.pdf
-Name10[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
-Name2[$e]=Introduction to Analytic Number Theory - Apostol.pdf
-Name3[$e]=Algebraic Number Theory - J. S. Milne.pdf
-Name4[$e]=Algebraic Geometry - Robin Hartshorne.pdf
-Name5[$e]=Undergraduate Algebraic Geometry - Miles Reid.pdf
-Name6[$e]=Abstract Algebra - David Steven Dummit.pdf
-Name7[$e]=Representation Theory_ A First Course - William Fulton, Joe Harris.pdf
-Name8[$e]=Lie Groups, Lie Algebras, and Cohomology - Anthony Knapp.pdf
-Name9[$e]=Lie Algebras Lie Groups & Representations - V. S. Varadarajan.pdf
+File1[$e]=$HOME/Dropbox/Library/William Fulton, Joe Harris/Representation Theory_ A First Course (668)/Representation Theory_ A First Course - William Fulton, Joe Harris.pdf
+File10[$e]=$HOME/Dropbox/Library/Unknown/Geek Speak (993)/Geek Speak - Unknown.pdf
+File2[$e]=$HOME/Dropbox/Library/Anthony Knapp/Lie Groups, Lie Algebras, and Cohomology (729)/Lie Groups, Lie Algebras, and Cohomology - Anthony Knapp.pdf
+File3[$e]=$HOME/Dropbox/Library/V. S. Varadarajan/Lie Algebras Lie Groups & Representations (884)/Lie Algebras Lie Groups & Representations - V. S. Varadarajan.pdf
+File4[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
+File5[$e]=$HOME/Dropbox/Library/Audin/Morse Theory and Floer Homology (778)/Morse Theory and Floer Homology - Audin.pdf
+File6[$e]=$HOME/Dropbox/Library/Jean Pierre Serre/Linear Representations of Finite Groups (635)/Linear Representations of Finite Groups - Jean Pierre Serre.pdf
+File7[$e]=$HOME/Downloads/UGA at Oxford/Garza - OX Summer 2022 Program Asst.pdf
+File8[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
+File9[$e]=$HOME/Dropbox/Library/Unknown/Even a geek (994)/Even a geek - Unknown.pdf
+Name1[$e]=Representation Theory_ A First Course - William Fulton, Joe Harris.pdf
+Name10[$e]=Geek Speak - Unknown.pdf
+Name2[$e]=Lie Groups, Lie Algebras, and Cohomology - Anthony Knapp.pdf
+Name3[$e]=Lie Algebras Lie Groups & Representations - V. S. Varadarajan.pdf
+Name4[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
+Name5[$e]=Morse Theory and Floer Homology - Audin.pdf
+Name6[$e]=Linear Representations of Finite Groups - Jean Pierre Serre.pdf
+Name7[$e]=Garza - OX Summer 2022 Program Asst.pdf
+Name8[$e]=Algebraic Geometry - Robin Hartshorne.pdf
+Name9[$e]=Even a geek - Unknown.pdf

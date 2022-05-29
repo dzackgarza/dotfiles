@@ -229,11 +229,11 @@ for_window [instance="__scratchpad"] move scratchpad
 default_orientation auto
 no_focus [class="qutebrowser"]
 
-exec --no-startup-id unclutter
+exec_always --no-startup-id /home/zack/dotfiles/bin/i3_setup.sh &
+exec --no-startup-id unclutter &
 exec --no-startup-id dropbox &
 exec --no-startup-id sparkleshare &
 exec --no-startup-id mathpix-snipping-tool &
 exec --no-startup-id dunst &
-exec_always --no-startup-id /home/zack/dotfiles/bin/i3_setup.sh
-exec_always i3-layouts
+exec_always i3-layouts &
 
