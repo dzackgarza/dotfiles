@@ -19,7 +19,7 @@ eDP-1 XPosition 1920x1080=1143
 eDP-1 YPosition 1920x1080=42
 
 [Desktop Entry]
-FullScreen=true
+FullScreen=false
 shouldShowMenuBarComingFromFullScreen=true
 shouldShowToolBarComingFromFullScreen=false
 
@@ -27,8 +27,7 @@ shouldShowToolBarComingFromFullScreen=false
 Height 1080=996
 Height 1920=1866
 Height 800=746
-RestorePositionForNextInstance=false
-State=AAAA/wAAAAD9AAAAAAAAAm8AAAPIAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
+State=AAAA/wAAAAD9AAAAAAAAB2wAAAPKAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -75,36 +74,36 @@ eDP-1 HDMI-1 XPosition 1920x1080=10
 eDP-1 HDMI-1 YPosition 1080x1920=42
 eDP-1 HDMI-1 YPosition 1920x1080=41
 eDP-1 Height 1080=1027
-eDP-1 Height 1920x1080=1027
+eDP-1 Height 1920x1080=1029
 eDP-1 Width 1920=623
-eDP-1 Width 1920x1080=623
+eDP-1 Width 1920x1080=1900
 eDP-1 XPosition=1286
-eDP-1 XPosition 1920x1080=1286
+eDP-1 XPosition 1920x1080=10
 eDP-1 YPosition=42
-eDP-1 YPosition 1920x1080=42
+eDP-1 YPosition 1920x1080=41
 
 [Print Preview]
 Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Library/William Fulton, Joe Harris/Representation Theory_ A First Course (668)/Representation Theory_ A First Course - William Fulton, Joe Harris.pdf
-File10[$e]=$HOME/Notes/Class_Notes/2022/Spring/CohomologyRepTheory/CohomologyRepTheory.pdf
-File2[$e]=$HOME/Dropbox/Library/Anthony Knapp/Lie Groups, Lie Algebras, and Cohomology (729)/Lie Groups, Lie Algebras, and Cohomology - Anthony Knapp.pdf
-File3[$e]=$HOME/Dropbox/Library/V. S. Varadarajan/Lie Algebras Lie Groups & Representations (884)/Lie Algebras Lie Groups & Representations - V. S. Varadarajan.pdf
-File4[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
-File5[$e]=$HOME/Dropbox/Library/Audin/Morse Theory and Floer Homology (778)/Morse Theory and Floer Homology - Audin.pdf
-File6[$e]=$HOME/Dropbox/Library/Jean Pierre Serre/Linear Representations of Finite Groups (635)/Linear Representations of Finite Groups - Jean Pierre Serre.pdf
-File7[$e]=$HOME/Downloads/UGA at Oxford/Garza - OX Summer 2022 Program Asst.pdf
-File8[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
-File9[$e]=$HOME/Downloads/Books/(Nankai Tracts in Mathematics 1) Johan L. Dupont - Scissors Congruences, Group Homology and Characteristic Classes (Nankai Tracts in Mathematics, V. 1.)-World Scientific Publishing Company (2001).pdf
-Name1[$e]=Representation Theory_ A First Course - William Fulton, Joe Harris.pdf
-Name10[$e]=CohomologyRepTheory.pdf
-Name2[$e]=Lie Groups, Lie Algebras, and Cohomology - Anthony Knapp.pdf
-Name3[$e]=Lie Algebras Lie Groups & Representations - V. S. Varadarajan.pdf
-Name4[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
-Name5[$e]=Morse Theory and Floer Homology - Audin.pdf
-Name6[$e]=Linear Representations of Finite Groups - Jean Pierre Serre.pdf
-Name7[$e]=Garza - OX Summer 2022 Program Asst.pdf
-Name8[$e]=Algebraic Geometry - Robin Hartshorne.pdf
-Name9[$e]=(Nankai Tracts in Mathematics 1) Johan L. Dupont - Scissors Congruences, Group Homology and Characteristic Classes (Nankai Tracts in Mathematics, V. 1.)-World Scientific Publishing Company (2001).pdf
+File1[$e]=$HOME/Dropbox/Library/Audin/Morse Theory and Floer Homology (778)/Morse Theory and Floer Homology - Audin.pdf
+File10[$e]=$HOME/Notes/Class_Notes/2022/Spring/SheafCohomology/SheafCohomology.pdf
+File2[$e]=$HOME/Dropbox/Library/Jean Pierre Serre/Linear Representations of Finite Groups (635)/Linear Representations of Finite Groups - Jean Pierre Serre.pdf
+File3[$e]=$HOME/Downloads/UGA at Oxford/Garza - OX Summer 2022 Program Asst.pdf
+File4[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
+File5[$e]=$HOME/Downloads/Books/(Nankai Tracts in Mathematics 1) Johan L. Dupont - Scissors Congruences, Group Homology and Characteristic Classes (Nankai Tracts in Mathematics, V. 1.)-World Scientific Publishing Company (2001).pdf
+File6[$e]=$HOME/Notes/Class_Notes/2022/Spring/CohomologyRepTheory/CohomologyRepTheory.pdf
+File7[$e]=$HOME/Notes/Class_Notes/2022/Spring/CommutativeAlgebra/CommutativeAlgebra.pdf
+File8[$e]=$HOME/Notes/Class_Notes/2022/Spring/ContactTopology/Contact.pdf
+File9[$e]=$HOME/Notes/Class_Notes/2022/Spring/FunctionalAnalysis/FunctionalAnalysis.pdf
+Name1[$e]=Morse Theory and Floer Homology - Audin.pdf
+Name10[$e]=SheafCohomology.pdf
+Name2[$e]=Linear Representations of Finite Groups - Jean Pierre Serre.pdf
+Name3[$e]=Garza - OX Summer 2022 Program Asst.pdf
+Name4[$e]=Algebraic Geometry - Robin Hartshorne.pdf
+Name5[$e]=(Nankai Tracts in Mathematics 1) Johan L. Dupont - Scissors Congruences, Group Homology and Characteristic Classes (Nankai Tracts in Mathematics, V. 1.)-World Scientific Publishing Company (2001).pdf
+Name6[$e]=CohomologyRepTheory.pdf
+Name7[$e]=CommutativeAlgebra.pdf
+Name8[$e]=Contact.pdf
+Name9[$e]=FunctionalAnalysis.pdf
