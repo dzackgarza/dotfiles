@@ -4,8 +4,8 @@ xmodmap -e "clear lock";
 xmodmap -e "keycode 9 = Caps_Lock NoSymbol Caps_Lock";
 xmodmap -e "keycode 66 = Escape NoSymbol Escape";
 xset r rate 280 45;
-xinput set-prop 15 "libinput Natural Scrolling Enabled" 1;
-xinput set-prop 15 "libinput Tapping Enabled" 1;
+xinput set-prop "ELAN0511:00 04F3:3041 Touchpad" "libinput Natural Scrolling Enabled" 1;
+xinput set-prop "ELAN0511:00 04F3:3041 Touchpad" "libinput Tapping Enabled" 1;
 
 #screenChanges.sh;
 nitrogen --restore &
