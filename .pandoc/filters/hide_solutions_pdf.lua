@@ -41,10 +41,10 @@ if FORMAT:match "latex" or FORMAT:match "pdf" then
     debug_print("Is solution? " .. tostring( has_value(el.classes, "solution")))
     debug_print("Kill proofs?" .. tostring( kill_proofs))
 
-    if has_value(el.classes, "solution")  then return pandoc.Para(pandoc.Str("Solution omitted."))
-    elseif has_value(el.classes, "proof")  then return pandoc.Para(pandoc.Str("Proof omitted."))
-    elseif has_value(el.classes, "strategy")  then return pandoc.Para(pandoc.Str("Hint/strategy omitted."))
-    elseif has_value(el.classes, "concept")  then return pandoc.Para(pandoc.Str("Relevant concepts omitted."))
+    if has_value(el.classes, "solution")  then return pandoc.Para(pandoc.Emph {pandoc.Str "Solution omitted." })
+    elseif has_value(el.classes, "proof")  then return pandoc.Para(pandoc.Emph {pandoc.Str "Proof omitted."})
+    elseif has_value(el.classes, "strategy")  then return pandoc.Para(pandoc.Emph {pandoc.Str "Strategy omitted."})
+    elseif has_value(el.classes, "concept")  then return pandoc.Para(pandoc.Emph {pandoc.Str "Concept review omitted."})
     else return el
     end
 
