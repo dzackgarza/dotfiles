@@ -27,7 +27,7 @@ shouldShowToolBarComingFromFullScreen=false
 Height 1080=996
 Height 1920=1866
 Height 800=746
-State=AAAA/wAAAAD9AAAAAAAAAv4AAAPIAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
+State=AAAA/wAAAAD9AAAAAAAAAv4AAAHBAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -74,36 +74,32 @@ eDP-1 HDMI-1 XPosition 1920x1080=10
 eDP-1 HDMI-1 YPosition 1080x1920=42
 eDP-1 HDMI-1 YPosition 1920x1080=41
 eDP-1 Height 1080=1027
-eDP-1 Height 1920x1080=1027
+eDP-1 Height 1920x1080=508
 eDP-1 Width 1920=623
 eDP-1 Width 1920x1080=766
 eDP-1 XPosition=1286
 eDP-1 XPosition 1920x1080=1143
 eDP-1 YPosition=42
-eDP-1 YPosition 1920x1080=42
+eDP-1 YPosition 1920x1080=561
 
 [Print Preview]
 Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Library/James Humphreys/Representations of Semisimple Lie Algebras in the BGG Category O (758)/Representations of Semisimple Lie Algebras - James Humphreys.pdf
-File10[$e]=$HOME/Dropbox/Library/Joe Harris/Algebraic Geometry_ A First Course (606)/Algebraic Geometry_ A First Course - Joe Harris.pdf
-File2[$e]=$HOME/Dropbox/Library/William Fulton/Introduction to toric varieties (1006)/Introduction to toric varieties - William Fulton.pdf
+File1[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
+File2[$e]=$HOME/Dropbox/Library/Joe Harris/Algebraic Geometry_ A First Course (606)/Algebraic Geometry_ A First Course - Joe Harris.pdf
 File3[$e]=$HOME/Downloads/David Cox, John Little, Hal Schenck - Toric Varieties.pdf
-File4[$e]=$HOME/Downloads/Rational Hty Theory.pdf
-File5[$e]=$HOME/Downloads/tamsamani_SHH.pdf
-File6[$e]=$HOME/Downloads/Combined.Truth.Readings.pdf
-File7[$e]=$HOME/Downloads/gron1.ps
-File8[$e]=$HOME/Downloads/1970128 Kervaire Milnor Groups of Homotopy Spheres.pdf
-File9[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
-Name1[$e]=Representations of Semisimple Lie Algebras - James Humphreys.pdf
-Name10[$e]=Algebraic Geometry_ A First Course - Joe Harris.pdf
-Name2[$e]=Introduction to toric varieties - William Fulton.pdf
+File4[$e]=$HOME/Downloads/Proposed Graduate Courses 2022-2023.pdf
+File5[$e]=$HOME/Downloads/1412.6194.pdf
+File6[$e]=$HOME/Downloads/1200775324.pdf
+File7[$e]=$HOME/Dropbox/Library/Charles A. Weibel/An Introduction to Homological Algebra (489)/An Introduction to Homological Algebra - Charles A. Weibel.pdf
+File8[$e]=$HOME/Dropbox/Library/David Steven Dummit/Abstract Algebra (656)/Abstract Algebra - David Steven Dummit.pdf
+Name1[$e]=Algebraic Geometry - Robin Hartshorne.pdf
+Name2[$e]=Algebraic Geometry_ A First Course - Joe Harris.pdf
 Name3[$e]=David Cox, John Little, Hal Schenck - Toric Varieties.pdf
-Name4[$e]=Rational Hty Theory.pdf
-Name5[$e]=tamsamani_SHH.pdf
-Name6[$e]=Combined.Truth.Readings.pdf
-Name7[$e]=gron1.ps
-Name8[$e]=1970128 Kervaire Milnor Groups of Homotopy Spheres.pdf
-Name9[$e]=Algebraic Geometry - Robin Hartshorne.pdf
+Name4[$e]=Proposed Graduate Courses 2022-2023.pdf
+Name5[$e]=1412.6194.pdf
+Name6[$e]=1200775324.pdf
+Name7[$e]=An Introduction to Homological Algebra - Charles A. Weibel.pdf
+Name8[$e]=Abstract Algebra - David Steven Dummit.pdf
