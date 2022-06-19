@@ -13,9 +13,9 @@
 \newcommand\compact[0]{\operatorname{cpt}}
 \newcommand\hyp[0]{{\operatorname{hyp}}}
 \newcommand\jan{\operatorname{Jan}}
-\newcommand\Cone{\operatorname{Cone}}
-\newcommand\Conv{\operatorname{Conv}}
 \newcommand\curl{\operatorname{curl}}
+\newcommand\EZ{\operatorname{EZ}}
+\newcommand\Sim{\operatorname{Sim}}
 \newcommand\kbar{ { \bar{k} } }
 \newcommand\ksep{ { k\sep } }
 \newcommand\mypound{\scalebox{0.8}{\raisebox{0.4ex}{\#}}}
@@ -276,6 +276,7 @@
 \newcommand{\da}[0]{\coloneqq}
 \newcommand{\ddd}[2]{{\frac{d #1}{d #2}\,}}
 \newcommand{\ddim}[0]{\operatorname{ddim}}
+\newcommand{\area}[0]{\operatorname{area}}
 \newcommand{\ddt}{\tfrac{\dif}{\dif t}}
 \newcommand{\ddx}{\tfrac{\dif}{\dif x}}
 \newcommand{\dd}[2]{{\frac{\partial #1}{\partial #2}\,}}
@@ -362,6 +363,7 @@
 \newcommand{\kxn}[0]{k[x_1, \cdots, x_{n}]}
 \newcommand{\kx}[1]{k[x_1, \cdots, x_{#1}]}
 \newcommand{\lci}[0]{\mathrm{lci}}
+\newcommand{\SC}[0]{\mathrm{SC}}
 \newcommand{\tb}[0]{\mathrm{tb}}
 \newcommand{\lcm}[0]{\operatorname{lcm}}
 \newcommand{\liealgk}[0]{{ \liealg_{/k} }}
@@ -405,13 +407,15 @@
 \newcommand{\mapstovia}[1]{\xmapsto{#1}}
 \newcommand{\mapsvia}[1]{\xrightarrow{#1}}
 \newcommand{\torational}[0]{\dashrightarrow}
-\newcommand{\birational}[0]{\underset{\sim}{\torational}}
+\newcommand{\birational}[0]{\overset{\sim}{\torational}}
+\newcommand{\sbirational}[0]{\overset{\sim_{ \stab} }{\torational}}
 \newcommand{\isomorphic}{{ \, \mapsvia{\sim}\, }}
 \newcommand{\iso}{ \isomorphic  }
 \newcommand{\qiso}{ \homotopic }
 \newcommand{\isovia}[1]{\underset{#1}{\iso}}
 \newcommand{\isoin}[1]{\overset{#1}{\iso}}
 \newcommand{\injectsvia}[1]{\xhookrightarrow{#1}}
+\newcommand{\injectsfrom}[0]{\hookleftarrow}
 \newcommand{\embedsdense}[0]{{ \underset{ {\scriptscriptstyle\mathrm{dense}} }{\hookrightarrow} }}
 \newcommand{\injectsfromvia}[1]{\xhookleftarrow{#1}}
 \newcommand{\maps}[0]{\operatorname{Maps}}
