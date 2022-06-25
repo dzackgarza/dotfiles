@@ -90,6 +90,7 @@ Width 1920=600
 
 [Recent Files]
 File1[$e]=$HOME/Downloads/tx080500586p.pdf
+File10[$e]=$HOME/Downloads/2022 Talbot Talk Outline V3.pdf
 File2[$e]=$HOME/Downloads/document20220620155539.pdf
 File3[$e]=$HOME/Downloads/1506.06200.pdf
 File4[$e]=$HOME/Downloads/Xian.pdf
@@ -99,6 +100,7 @@ File7[$e]=$HOME/Mizakhani.pdf
 File8[$e]=$HOME/Sheaf_Theory_Exercises.pdf
 File9[$e]=$HOME/DRP2018_Syllabus.pdf
 Name1[$e]=tx080500586p.pdf
+Name10[$e]=2022 Talbot Talk Outline V3.pdf
 Name2[$e]=document20220620155539.pdf
 Name3[$e]=1506.06200.pdf
 Name4[$e]=Xian.pdf
