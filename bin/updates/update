@@ -1,4 +1,4 @@
-#!/bin/zsh
+##!/bin/zsh
 
 source "$DOTFILES_ROOT/.bash_colors";
 
@@ -6,15 +6,15 @@ clr_green "Updating via package manager..";
 sudo pacman --sync --refresh --sysupgrade;
 command -v yay >/dev/null 2>&1 && yay -Syuu --noconfirm;
 command -v yay >/dev/null 2>&1 && yay -Scc --noconfirm;
-command -v apt-get >/dev/null 2>&1 && sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get dist-upgrade && sudo apt-get -y autoremove && sudo apt-get clean;
-command -v rvm >/dev/null 2>&1 && sudo rvm get stable --auto && rvm reload;
+#command -v apt-get >/dev/null 2>&1 && sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get dist-upgrade && sudo apt-get -y autoremove && sudo apt-get clean;
+#command -v rvm >/dev/null 2>&1 && sudo rvm get stable --auto && rvm reload;
 
 #clr_green "Updating atom packages..";
 #command -v apm >/dev/null 2>&1 && apm upgrade
 
-clr_green "Updating pip..";
-command -v pip3  >/dev/null 2>&1 && pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U;
-command -v python >/dev/null 2>&1 && python -m pip install --upgrade pip
+#clr_green "Updating pip..";
+#command -v pip3  >/dev/null 2>&1 && pip3 list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip3 install -U;
+#command -v python >/dev/null 2>&1 && python -m pip install --upgrade pip
 
 #clr_green "Updating calibre library..";
 #calibre library update
