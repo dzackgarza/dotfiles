@@ -1,3 +1,5 @@
+rmk|rmk|snippets
+conj|conj|snippets
 Teichm|Teichmüller|around
 compactific|compactification|dictionary
 ensemb|ensembles|around
@@ -5,7 +7,6 @@ invar|invariants|around
 polylo|polylogarithms|around
 Teich|Teichmüller|around
 question|question|snippets
-rmk|rmk|snippets
 mono|monodromy|around
 ensembl|ensembles|around
 Tei|Teichmüller|around
@@ -62,7 +63,6 @@ decomposab|decomposable|dictionary
 |beer|emoji
 Wald|Waldhausen|dictionary
 analo|analog|around
-conj|conj|snippets
 begini|beginning|dictionary
 Goncha|Goncharov|around
 queston|question|snippets
