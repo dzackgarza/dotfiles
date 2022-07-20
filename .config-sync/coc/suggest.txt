@@ -1,6 +1,13 @@
+ex|ex|snippets
+rmk|rmk|snippets
+Sched|Schedler|around
+thm|theorem|snippets
+Sch|Schedler|around
+destab|destabilizing|around
+parameter|parameter|dictionary
+resolution|resolutions|around
 Lehn|Lehner|around
 Atk|Atkin|around
-rmk|rmk|snippets
 Fuchsi|Fuchsian|dictionary
 inuce|induce|dictionary
 Frob|Frobenius|around
@@ -10,11 +17,9 @@ holomo|holomorphy|dictionary
 Froben|Frobenii|dictionary
 ellip|elliptic|around
 gene|generalize|around
-thm|theorem|snippets
 Pluck|Plucker|dictionary
 polyl|polylogarithm|around
 Gonchar|Goncharov|around
-ex|ex|snippets
 coprodu|coproduct|around
 corpdo|correspdoning|dictionary
 Dege|Degeneracy|dictionary
@@ -383,7 +388,6 @@ chara|character|dictionary
 Kiri|Kirillov|dictionary
 repre|representation|around
 irred|irreducible|around
-parameter|parameter|dictionary
 Langla|Langlands|around
 compat|compatible|dictionary
 respecti|respectively|dictionary
@@ -993,7 +997,3 @@ supru|supremum|dictionary
 Noetheri|Noetherian|around
 Zaris|Zariski|dictionary
 Groth|Grothendieck|dictionary
-Upcom|Upcoming|dictionary
-sandwich|sandwiched|dictionary
-proo|proof|snippets
-pro|prop|snippets
