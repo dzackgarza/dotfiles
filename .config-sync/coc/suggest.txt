@@ -1,4 +1,10 @@
 rmk|rmk|snippets
+thm|theorem|snippets
+gitq|gitquotient|around
+Grassmann|Grassmannian|around
+varety|variety|dictionary
+Gelf|Gelfand|dictionary
+Grasm|Grassmanian|dictionary
 Adi|Adinkras|around
 Adin|Adinkras|around
 Adink|Adinkras|around
@@ -14,7 +20,6 @@ constr|constrct|dictionary
 isomo|isomorphism|around
 antic|anticanonical|around
 Sieb|Siebert|around
-thm|theorem|snippets
 ex|ex|snippets
 coordinte|coordinate|dictionary
 logari|logarithm|dictionary
@@ -173,7 +178,6 @@ irredu|irreducible|dictionary
 defini|defining|dictionary
 homoge|homogenous|dictionary
 Kontse|Kontsevich|dictionary
-Grassmann|Grassmannian|around
 pot|potential|dictionary
 analag|analagous|dictionary
 enuma|enumerative|around
@@ -993,7 +997,3 @@ sture|structure|around
 Lgendri|Legendrian|around
 Legendr|Legendrian|dictionary
 Heeg|Heegaard|around
-Heega|Heegard|dictionary
-dimenson|dimensional|around
-comul|comultiplication|dictionary
-envelop|enveloping|dictionary
