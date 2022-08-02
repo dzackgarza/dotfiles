@@ -19,7 +19,7 @@ eDP-1 XPosition 1920x1080=1143
 eDP-1 YPosition 1920x1080=42
 
 [Desktop Entry]
-FullScreen=false
+FullScreen=true
 shouldShowMenuBarComingFromFullScreen=true
 shouldShowToolBarComingFromFullScreen=false
 
@@ -27,8 +27,7 @@ shouldShowToolBarComingFromFullScreen=false
 Height 1080=996
 Height 1920=1866
 Height 800=746
-RestorePositionForNextInstance=false
-State=AAAA/wAAAAD9AAAAAAAAA68AAAPIAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
+State=AAAA/wAAAAD9AAAAAAAAB2wAAAPKAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -75,13 +74,13 @@ eDP-1 HDMI-1 XPosition 1920x1080=10
 eDP-1 HDMI-1 YPosition 1080x1920=42
 eDP-1 HDMI-1 YPosition 1920x1080=41
 eDP-1 Height 1080=1027
-eDP-1 Height 1920x1080=1027
+eDP-1 Height 1920x1080=1029
 eDP-1 Width 1920=623
-eDP-1 Width 1920x1080=943
+eDP-1 Width 1920x1080=1900
 eDP-1 XPosition=1286
-eDP-1 XPosition 1920x1080=966
+eDP-1 XPosition 1920x1080=10
 eDP-1 YPosition=42
-eDP-1 YPosition 1920x1080=42
+eDP-1 YPosition 1920x1080=41
 
 [Print Preview]
 Height 1080=500
@@ -89,6 +88,7 @@ Width 1920=600
 
 [Recent Files]
 File1[$e]=$HOME/Dropbox/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
+File10[$e]=$HOME/Downloads/978-1-4757-5323-3_2.pdf
 File2[$e]=$HOME/Dropbox/Library/Bjorn Poonen/Rational points on varieties (926)/Rational points on varieties - Bjorn Poonen.pdf
 File3[$e]=$HOME/Dropbox/Document Archive/Financial/Reimbursements/2022 Summer Conference/INI Cambridge/AirBnB Lodging Invoice.pdf
 File4[$e]=$HOME/Dropbox/Document Archive/Financial/Reimbursements/2022 Summer Conference/INI Cambridge/AirBnB Lodging Receipt.pdf
@@ -98,6 +98,7 @@ File7[$e]=$HOME/Downloads/0-387-21577-8_20.pdf
 File8[$e]=$HOME/Downloads/216class12.ps
 File9[$e]=$HOME/Downloads/2022 Intro to Toric Geometry.pdf
 Name1[$e]=Cox et al. - 2011 - Toric varieties.pdf
+Name10[$e]=978-1-4757-5323-3_2.pdf
 Name2[$e]=Rational points on varieties - Bjorn Poonen.pdf
 Name3[$e]=AirBnB Lodging Invoice.pdf
 Name4[$e]=AirBnB Lodging Receipt.pdf
