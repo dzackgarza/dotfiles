@@ -19,7 +19,7 @@ eDP-1 XPosition 1920x1080=1143
 eDP-1 YPosition 1920x1080=42
 
 [Desktop Entry]
-FullScreen=true
+FullScreen=false
 shouldShowMenuBarComingFromFullScreen=true
 shouldShowToolBarComingFromFullScreen=false
 
@@ -27,7 +27,6 @@ shouldShowToolBarComingFromFullScreen=false
 Height 1080=996
 Height 1920=1866
 Height 800=746
-RestorePositionForNextInstance=false
 State=AAAA/wAAAAD9AAAAAAAAB2wAAAPKAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
@@ -88,23 +87,23 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
-File10[$e]=$HOME/Downloads/978-1-4757-5323-3_2.pdf
-File2[$e]=$HOME/Dropbox/Library/Bjorn Poonen/Rational points on varieties (926)/Rational points on varieties - Bjorn Poonen.pdf
-File3[$e]=$HOME/Dropbox/Document Archive/Financial/Reimbursements/2022 Summer Conference/INI Cambridge/AirBnB Lodging Invoice.pdf
-File4[$e]=$HOME/Dropbox/Document Archive/Financial/Reimbursements/2022 Summer Conference/INI Cambridge/AirBnB Lodging Receipt.pdf
-File5[$e]=$HOME/Downloads/BSD Notes.pdf
-File6[$e]=$HOME/Downloads/1810.08953.pdf
-File7[$e]=$HOME/Downloads/0-387-21577-8_20.pdf
-File8[$e]=$HOME/Downloads/216class12.ps
-File9[$e]=$HOME/Downloads/2022 Intro to Toric Geometry.pdf
-Name1[$e]=Cox et al. - 2011 - Toric varieties.pdf
-Name10[$e]=978-1-4757-5323-3_2.pdf
-Name2[$e]=Rational points on varieties - Bjorn Poonen.pdf
-Name3[$e]=AirBnB Lodging Invoice.pdf
-Name4[$e]=AirBnB Lodging Receipt.pdf
-Name5[$e]=BSD Notes.pdf
-Name6[$e]=1810.08953.pdf
-Name7[$e]=0-387-21577-8_20.pdf
-Name8[$e]=216class12.ps
-Name9[$e]=2022 Intro to Toric Geometry.pdf
+File1[$e]=$HOME/Dropbox/Library/Bjorn Poonen/Rational points on varieties (926)/Rational points on varieties - Bjorn Poonen.pdf
+File10[$e]=$HOME/Dropbox/Zotero/storage/TYXWJW2J/Fulton - 1993 - Introduction to toric varieties.pdf
+File2[$e]=$HOME/Dropbox/Document Archive/Financial/Reimbursements/2022 Summer Conference/INI Cambridge/AirBnB Lodging Invoice.pdf
+File3[$e]=$HOME/Dropbox/Document Archive/Financial/Reimbursements/2022 Summer Conference/INI Cambridge/AirBnB Lodging Receipt.pdf
+File4[$e]=$HOME/Downloads/BSD Notes.pdf
+File5[$e]=$HOME/Downloads/1810.08953.pdf
+File6[$e]=$HOME/Downloads/0-387-21577-8_20.pdf
+File7[$e]=$HOME/Downloads/216class12.ps
+File8[$e]=$HOME/Downloads/2022 Intro to Toric Geometry.pdf
+File9[$e]=$HOME/Downloads/978-1-4757-5323-3_2.pdf
+Name1[$e]=Rational points on varieties - Bjorn Poonen.pdf
+Name10[$e]=Fulton - 1993 - Introduction to toric varieties.pdf
+Name2[$e]=AirBnB Lodging Invoice.pdf
+Name3[$e]=AirBnB Lodging Receipt.pdf
+Name4[$e]=BSD Notes.pdf
+Name5[$e]=1810.08953.pdf
+Name6[$e]=0-387-21577-8_20.pdf
+Name7[$e]=216class12.ps
+Name8[$e]=2022 Intro to Toric Geometry.pdf
+Name9[$e]=978-1-4757-5323-3_2.pdf
