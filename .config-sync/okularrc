@@ -28,6 +28,7 @@ Height 1080=996
 Height 1920=1866
 Height 800=746
 MenuBar=Disabled
+RestorePositionForNextInstance=false
 State=AAAA/wAAAAD9AAAAAAAAB4AAAAQTAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
@@ -89,7 +90,7 @@ Width 1920=600
 
 [Recent Files]
 File1[$e]=$HOME/Downloads/BSD Notes.pdf
-File10[$e]=$HOME/Dropbox/Library/Martin Schlichenmaier/An Introduction to Riemann Surfaces, Algebraic Curves, and Moduli Spaces (803)/An Introduction to Riemann Surfaces, Algeb - Martin Schlichenmaier.pdf
+File10[$e]=$HOME/Dropbox/Library/Jurgen Jost/Compact Riemann Surfaces_ An Introduction (570)/Compact Riemann Surfaces_ An Introduction - Jurgen Jost.pdf
 File2[$e]=$HOME/Downloads/1810.08953.pdf
 File3[$e]=$HOME/Downloads/0-387-21577-8_20.pdf
 File4[$e]=$HOME/Downloads/216class12.ps
@@ -99,7 +100,7 @@ File7[$e]=$HOME/Dropbox/Library/Tadao Oda/Convex Bodies & Algebraic Geometry_ An
 File8[$e]=$HOME/Dropbox/Library/Dominic D. Joyce/Riemannian Holonomy Groups and Calibrated Geometry (1014)/Riemannian Holonomy Groups and Calibrated - Dominic D. Joyce.pdf
 File9[$e]=$HOME/Dropbox/Zotero/storage/TYXWJW2J/Fulton - 1993 - Introduction to toric varieties.pdf
 Name1[$e]=BSD Notes.pdf
-Name10[$e]=An Introduction to Riemann Surfaces, Algeb - Martin Schlichenmaier.pdf
+Name10[$e]=Compact Riemann Surfaces_ An Introduction - Jurgen Jost.pdf
 Name2[$e]=1810.08953.pdf
 Name3[$e]=0-387-21577-8_20.pdf
 Name4[$e]=216class12.ps
