@@ -10,8 +10,12 @@ xinput set-prop "ELAN0511:00 04F3:3041 Touchpad" "libinput Tapping Enabled" 1;
 #screenChanges.sh;
 nitrogen --restore &
 pkill polybar & polybar.sh > /var/log/polybar.log 2>&1
-pkill redshift; redshift -x; redshift-gtk &
-pkill picom; picom --experimental-backends &
-pkill nm-applet & nm-applet &
+pkill redshift & redshift -x & redshift-gtk &
+pkill picom & picom --experimental-backends &
+nm-applet &
 pkill blueman-applet & blueman-applet &
 i3l vstack 0.6
+
+mimeo --add application/pdf okular.desktop
+mimeo --add text/markdown custom_nvim.desktop
+
