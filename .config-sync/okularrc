@@ -19,7 +19,7 @@ eDP-1 XPosition 1920x1080=1143
 eDP-1 YPosition 1920x1080=42
 
 [Desktop Entry]
-FullScreen=true
+FullScreen=false
 shouldShowMenuBarComingFromFullScreen=true
 shouldShowToolBarComingFromFullScreen=false
 
@@ -27,8 +27,7 @@ shouldShowToolBarComingFromFullScreen=false
 Height 1080=996
 Height 1920=1866
 Height 800=746
-MenuBar=Disabled
-State=AAAA/wAAAAD9AAAAAAAAB4AAAAQTAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
+State=AAAA/wAAAAD9AAAAAAAAAv4AAAPIAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -75,36 +74,32 @@ eDP-1 HDMI-1 XPosition 1920x1080=10
 eDP-1 HDMI-1 YPosition 1080x1920=42
 eDP-1 HDMI-1 YPosition 1920x1080=41
 eDP-1 Height 1080=1027
-eDP-1 Height 1920x1080=1080
+eDP-1 Height 1920x1080=1027
 eDP-1 Width 1920=623
-eDP-1 Width 1920x1080=1920
+eDP-1 Width 1920x1080=766
 eDP-1 XPosition=1286
-eDP-1 XPosition 1920x1080=0
+eDP-1 XPosition 1920x1080=1143
 eDP-1 YPosition=42
-eDP-1 YPosition 1920x1080=0
+eDP-1 YPosition 1920x1080=42
 
 [Print Preview]
 Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Library/Gerald B. Folland/Real Analysis_ Modern Techniques and Their Applications (435)/Real Analysis_ Modern Techniques and Their - Gerald B. Folland.pdf
-File10[$e]=$HOME/SparkleShare/github.com/dzackgarza.comv2018/courses/2022/1113/Fall/2022-Fall-Syallabus-Math-1113.pdf
-File2[$e]=$HOME/Dropbox/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
-File3[$e]=$HOME/Dropbox/Document Archive/Financial/Old Finances/2022 Spring GSS/2022-02-01.pdf
-File4[$e]=$HOME/Dropbox/Library/Dominic D. Joyce/Riemannian Holonomy Groups and Calibrated Geometry (1014)/Riemannian Holonomy Groups and Calibrated - Dominic D. Joyce.pdf
-File5[$e]=$HOME/Downloads/Lie Algebra Qual Notes.pdf
-File6[$e]=$HOME/Downloads/Japan_Colloquium_June_27_2018.pdf
-File7[$e]=$HOME/website/courses/2019/2019-08-19-Note-16-38 Section 1.pdf
-File8[$e]=$HOME/website/courses/2019/2019-08-19-Note-16-42 Section 2.pdf
-File9[$e]=$HOME/website/courses/2022/1113/Fall/2022-Fall-Syallabus-Math-1113.pdf
-Name1[$e]=Real Analysis_ Modern Techniques and Their - Gerald B. Folland.pdf
-Name10[$e]=2022-Fall-Syallabus-Math-1113.pdf
-Name2[$e]=Cox et al. - 2011 - Toric varieties.pdf
-Name3[$e]=2022-02-01.pdf
-Name4[$e]=Riemannian Holonomy Groups and Calibrated - Dominic D. Joyce.pdf
-Name5[$e]=Lie Algebra Qual Notes.pdf
-Name6[$e]=Japan_Colloquium_June_27_2018.pdf
-Name7[$e]=2019-08-19-Note-16-38 Section 1.pdf
-Name8[$e]=2019-08-19-Note-16-42 Section 2.pdf
-Name9[$e]=2022-Fall-Syallabus-Math-1113.pdf
+File1[$e]=$HOME/Downloads/Japan_Colloquium_June_27_2018.pdf
+File2[$e]=$HOME/website/courses/2019/2019-08-19-Note-16-38 Section 1.pdf
+File3[$e]=$HOME/website/courses/2019/2019-08-19-Note-16-42 Section 2.pdf
+File4[$e]=$HOME/website/courses/2022/1113/Fall/2022-Fall-Syallabus-Math-1113.pdf
+File5[$e]=$HOME/SparkleShare/github.com/dzackgarza.comv2018/courses/2022/1113/Fall/2022-Fall-Syallabus-Math-1113.pdf
+File6[$e]=$HOME/website/courses/2020/Fall/1113/Lectures/Mar 25 21h35 Logs and Intro Trig.pdf
+File7[$e]=$HOME/website/courses/2020/Fall/1113/Lectures/Notes_201112_031450.pdf
+File8[$e]=$HOME/Dropbox/Teaching/Precalculus/Worksheets/1.1 Preclass.pdf
+Name1[$e]=Japan_Colloquium_June_27_2018.pdf
+Name2[$e]=2019-08-19-Note-16-38 Section 1.pdf
+Name3[$e]=2019-08-19-Note-16-42 Section 2.pdf
+Name4[$e]=2022-Fall-Syallabus-Math-1113.pdf
+Name5[$e]=2022-Fall-Syallabus-Math-1113.pdf
+Name6[$e]=Mar 25 21h35 Logs and Intro Trig.pdf
+Name7[$e]=Notes_201112_031450.pdf
+Name8[$e]=1.1 Preclass.pdf
