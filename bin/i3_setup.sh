@@ -18,4 +18,4 @@ i3l vstack 0.6
 
 mimeo --add application/pdf okular.desktop
 mimeo --add text/markdown custom_nvim.desktop
-
+mimeo --add text/html chromium.desktop
