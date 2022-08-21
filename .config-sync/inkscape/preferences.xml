@@ -169,8 +169,8 @@
          end="0"
          start="0"
          usecurrent="1"
-         rx="36.4646539162465"
-         ry="109.393954539862"
+         rx="16.5735662265084"
+         ry="12.0616654523714"
          arc_type="0" />
       <eventcontext
          id="star"
@@ -197,7 +197,7 @@
          usecurrent="0"
          average_all_sketches="1"
          pressure="0"
-         freehand-mode="0" />
+         freehand-mode="2" />
       <eventcontext
          id="pen"
          mode="drag"
@@ -583,7 +583,7 @@
        id="toolbox" />
     <group
        id="fillstroke"
-       page="2"
+       page="1"
        x="0"
        y="0"
        w="378"
@@ -630,7 +630,7 @@
     <group
        id="preferences"
        state="1"
-       page="1"
+       page="12"
        x="501"
        y="73"
        w="918"
@@ -1110,12 +1110,12 @@
      id="desktop"
      style="stroke-width:1.0015748;fill:#cc0000;fill-rule:evenodd;font-size:13.33333333px;stop-color:#000000;stroke:#cc0000;stroke-linecap:round;stroke-linejoin:round;fill-opacity:0.51749492;opacity:0.45969739">
     <group
-       width="943"
-       height="1027"
-       x="488"
-       y="41"
+       width="1920"
+       height="1080"
+       x="-1"
+       y="14"
        maximized="0"
-       fullscreen="1"
+       fullscreen="0"
        id="geometry" />
     <group
        id="XYfront" />
@@ -1143,7 +1143,7 @@
        icononly="1"
        small="1"
        iconsize="16"
-       width="39">
+       width="31">
       <group
          id="buttons" />
     </group>
