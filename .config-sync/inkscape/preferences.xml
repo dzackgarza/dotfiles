@@ -169,8 +169,8 @@
          end="0"
          start="0"
          usecurrent="1"
-         rx="153.368405319574"
-         ry="26.8417911078986"
+         rx="17.3395472248708"
+         ry="17.3395472248708"
          arc_type="0" />
       <eventcontext
          id="star"
@@ -1114,8 +1114,8 @@
        height="1027"
        x="488"
        y="41"
-       maximized="1"
-       fullscreen="0"
+       maximized="0"
+       fullscreen="1"
        id="geometry" />
     <group
        id="XYfront" />
