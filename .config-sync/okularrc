@@ -28,7 +28,7 @@ Height 1080=996
 Height 1920=1866
 Height 800=746
 RestorePositionForNextInstance=false
-State=AAAA/wAAAAD9AAAAAAAAAv4AAAPIAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
+State=AAAA/wAAAAD9AAAAAAAAB2wAAAPKAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -75,39 +75,39 @@ eDP-1 HDMI-1 XPosition 1920x1080=10
 eDP-1 HDMI-1 YPosition 1080x1920=42
 eDP-1 HDMI-1 YPosition 1920x1080=41
 eDP-1 Height 1080=1027
-eDP-1 Height 1920x1080=1027
+eDP-1 Height 1920x1080=1029
 eDP-1 Width 1920=623
-eDP-1 Width 1920x1080=766
+eDP-1 Width 1920x1080=1900
 eDP-1 XPosition=1286
-eDP-1 XPosition 1920x1080=1143
+eDP-1 XPosition 1920x1080=10
 eDP-1 YPosition=42
-eDP-1 YPosition 1920x1080=42
+eDP-1 YPosition 1920x1080=41
 
 [Print Preview]
 Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Downloads/Talbot PDFs/Talk13.pdf
-File10[$e]=$HOME/Dropbox/Zotero/storage/JYT94TJB/Hartshorne - 2008 - Algebraic geometry.pdf
-File2[$e]=$HOME/Downloads/Talbot PDFs/Talk14.pdf
-File3[$e]=$HOME/Downloads/Talbot PDFs/Talk16.pdf
-File4[$e]=$HOME/Downloads/Talbot PDFs/Talk17.pdf
-File5[$e]=$HOME/Downloads/Talbot PDFs/Talk18.pdf
-File6[$e]=$HOME/Dropbox/Zotero/storage/TYXWJW2J/Fulton - 1993 - Introduction to toric varieties.pdf
-File7[$e]=$HOME/Dropbox/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
-File8[$e]=$HOME/Dropbox/Library/Vassilliev/Picard Lefschetz Theory (990)/Picard Lefschetz Theory - Vassilliev.pdf
-File9[$e]=$HOME/Dropbox/Library/Unknown/Fukaya Categories and Picard Lefschetz theory (989)/Fukaya Categories and Picard Lefschetz the - Unknown.pdf
-Name1[$e]=Talk13.pdf
-Name10[$e]=Hartshorne - 2008 - Algebraic geometry.pdf
-Name2[$e]=Talk14.pdf
-Name3[$e]=Talk16.pdf
-Name4[$e]=Talk17.pdf
-Name5[$e]=Talk18.pdf
-Name6[$e]=Fulton - 1993 - Introduction to toric varieties.pdf
-Name7[$e]=Cox et al. - 2011 - Toric varieties.pdf
-Name8[$e]=Picard Lefschetz Theory - Vassilliev.pdf
-Name9[$e]=Fukaya Categories and Picard Lefschetz the - Unknown.pdf
+File1[$e]=$HOME/Downloads/Talbot PDFs/Talk16.pdf
+File10[$e]=$HOME/Dropbox/Library/Hiller/Geometry of Coxeter Groups (1010)/Geometry of Coxeter Groups - Hiller.pdf
+File2[$e]=$HOME/Downloads/Talbot PDFs/Talk17.pdf
+File3[$e]=$HOME/Downloads/Talbot PDFs/Talk18.pdf
+File4[$e]=$HOME/Dropbox/Zotero/storage/TYXWJW2J/Fulton - 1993 - Introduction to toric varieties.pdf
+File5[$e]=$HOME/Dropbox/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
+File6[$e]=$HOME/Dropbox/Library/Vassilliev/Picard Lefschetz Theory (990)/Picard Lefschetz Theory - Vassilliev.pdf
+File7[$e]=$HOME/Dropbox/Library/Unknown/Fukaya Categories and Picard Lefschetz theory (989)/Fukaya Categories and Picard Lefschetz the - Unknown.pdf
+File8[$e]=$HOME/Dropbox/Zotero/storage/JYT94TJB/Hartshorne - 2008 - Algebraic geometry.pdf
+File9[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
+Name1[$e]=Talk16.pdf
+Name10[$e]=Geometry of Coxeter Groups - Hiller.pdf
+Name2[$e]=Talk17.pdf
+Name3[$e]=Talk18.pdf
+Name4[$e]=Fulton - 1993 - Introduction to toric varieties.pdf
+Name5[$e]=Cox et al. - 2011 - Toric varieties.pdf
+Name6[$e]=Picard Lefschetz Theory - Vassilliev.pdf
+Name7[$e]=Fukaya Categories and Picard Lefschetz the - Unknown.pdf
+Name8[$e]=Hartshorne - 2008 - Algebraic geometry.pdf
+Name9[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
 
 [UiSettings]
 ColorScheme=Maia
