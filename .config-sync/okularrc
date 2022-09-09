@@ -28,7 +28,6 @@ Height 1080=996
 Height 1920=1866
 Height 800=746
 MenuBar=Disabled
-RestorePositionForNextInstance=false
 State=AAAA/wAAAAD9AAAAAAAAB2wAAAPgAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
@@ -89,26 +88,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Library/Vassilliev/Picard Lefschetz Theory (990)/Picard Lefschetz Theory - Vassilliev.pdf
-File10[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
-File2[$e]=$HOME/Dropbox/Library/Unknown/Fukaya Categories and Picard Lefschetz theory (989)/Fukaya Categories and Picard Lefschetz the - Unknown.pdf
-File3[$e]=$HOME/Dropbox/Zotero/storage/JYT94TJB/Hartshorne - 2008 - Algebraic geometry.pdf
-File4[$e]=$HOME/Dropbox/Library/Hiller/Geometry of Coxeter Groups (1010)/Geometry of Coxeter Groups - Hiller.pdf
-File5[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
-File6[$e]=$HOME/Dropbox/Zotero/storage/TYXWJW2J/Fulton - 1993 - Introduction to toric varieties.pdf
-File7[$e]=$HOME/Dropbox/Library/Herbert S. Wilf/Generatingfunctionology (516)/Generatingfunctionology - Herbert S. Wilf.pdf
-File8[$e]=$HOME/Downloads/Humphreys Solns.pdf
-File9[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz2.pdf
-Name1[$e]=Picard Lefschetz Theory - Vassilliev.pdf
-Name10[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
-Name2[$e]=Fukaya Categories and Picard Lefschetz the - Unknown.pdf
-Name3[$e]=Hartshorne - 2008 - Algebraic geometry.pdf
-Name4[$e]=Geometry of Coxeter Groups - Hiller.pdf
-Name5[$e]=Algebraic Geometry - Robin Hartshorne.pdf
-Name6[$e]=Fulton - 1993 - Introduction to toric varieties.pdf
-Name7[$e]=Generatingfunctionology - Herbert S. Wilf.pdf
-Name8[$e]=Humphreys Solns.pdf
-Name9[$e]=Quiz2.pdf
+File1[$e]=$HOME/Dropbox/Library/Unknown/Fukaya Categories and Picard Lefschetz theory (989)/Fukaya Categories and Picard Lefschetz the - Unknown.pdf
+File10[$e]=$HOME/Dropbox/Library/Lee/Introduction to Smooth Manifolds (2012) (736)/Introduction to Smooth Manifolds (2012) - Lee.pdf
+File2[$e]=$HOME/Dropbox/Zotero/storage/JYT94TJB/Hartshorne - 2008 - Algebraic geometry.pdf
+File3[$e]=$HOME/Dropbox/Library/Hiller/Geometry of Coxeter Groups (1010)/Geometry of Coxeter Groups - Hiller.pdf
+File4[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
+File5[$e]=$HOME/Dropbox/Zotero/storage/TYXWJW2J/Fulton - 1993 - Introduction to toric varieties.pdf
+File6[$e]=$HOME/Dropbox/Library/Herbert S. Wilf/Generatingfunctionology (516)/Generatingfunctionology - Herbert S. Wilf.pdf
+File7[$e]=$HOME/Downloads/Humphreys Solns.pdf
+File8[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz2.pdf
+File9[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
+Name1[$e]=Fukaya Categories and Picard Lefschetz the - Unknown.pdf
+Name10[$e]=Introduction to Smooth Manifolds (2012) - Lee.pdf
+Name2[$e]=Hartshorne - 2008 - Algebraic geometry.pdf
+Name3[$e]=Geometry of Coxeter Groups - Hiller.pdf
+Name4[$e]=Algebraic Geometry - Robin Hartshorne.pdf
+Name5[$e]=Fulton - 1993 - Introduction to toric varieties.pdf
+Name6[$e]=Generatingfunctionology - Herbert S. Wilf.pdf
+Name7[$e]=Humphreys Solns.pdf
+Name8[$e]=Quiz2.pdf
+Name9[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
 
 [UiSettings]
 ColorScheme=Maia
