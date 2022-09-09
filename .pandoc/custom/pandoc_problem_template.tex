@@ -43,11 +43,6 @@ $if(book)$
 \rule{\linewidth}{2pt}
 }
 \titlehead{
-  $if(cover-image)$
-  \begin{center}
-  \includegraphics[width=\linewidth,height=0.45\textheight,keepaspectratio]{$cover-image$}
-  \end{center}
-  $endif$
   $if(author-note)$
    \begin{minipage}{.35\linewidth}
     \begin{flushleft}
@@ -78,10 +73,6 @@ $else$
 $endif$
 
 
-$if(highlighting-macros)$
-$highlighting-macros$
-$endif$
-
 $if(csl-refs)$
 \newlength{\cslhangindent}
 \setlength{\cslhangindent}{1.5em}
@@ -109,47 +100,10 @@ $if(author)$
 \end{flushleft}
 $endif$
 
-
-\newpage
-
-$if(notoc)$
-$else$
-% Note: addsec only in KomaScript
 \addsec{Table of Contents}
 \tableofcontents
-\newpage
-$endif$
 
 $body$
-
-$if(book)$
-$if(todos)$
-\addsec{ToDos}
-\listoftodos[List of Todos]
-\cleardoublepage
-$endif$
-
-% Hook into amsthm environments to list them.
-\addsec{Definitions}
-\renewcommand{\listtheoremname}{}
-\listoftheorems[ignoreall,show={definition}, numwidth=3.5em]
-\cleardoublepage
-
-\addsec{Theorems}
-\renewcommand{\listtheoremname}{}
-\listoftheorems[ignoreall,show={theorem,proposition}, numwidth=3.5em]
-\cleardoublepage
-
-\addsec{Exercises}
-\renewcommand{\listtheoremname}{}
-\listoftheorems[ignoreall,show={exercise}, numwidth=3.5em]
-\cleardoublepage
-
-\addsec{Figures}
-\listoffigures
-\cleardoublepage
-
-$endif$
 
 
 $if(bibliography)$
