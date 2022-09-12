@@ -1,4 +1,4 @@
-#! /usr/bin/bash
+#!/bin/zsh
 
 source "$DOTFILES_ROOT/.bash_colors";
 
