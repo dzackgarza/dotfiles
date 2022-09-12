@@ -19,7 +19,7 @@ eDP-1 XPosition 1920x1080=1143
 eDP-1 YPosition 1920x1080=42
 
 [Desktop Entry]
-FullScreen=true
+FullScreen=false
 shouldShowMenuBarComingFromFullScreen=true
 shouldShowToolBarComingFromFullScreen=false
 
@@ -27,8 +27,7 @@ shouldShowToolBarComingFromFullScreen=false
 Height 1080=996
 Height 1920=1866
 Height 800=746
-MenuBar=Disabled
-State=AAAA/wAAAAD9AAAAAAAAB4AAAAQTAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
+State=AAAA/wAAAAD9AAAAAAAABH4AAAPIAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -75,39 +74,37 @@ eDP-1 HDMI-1 XPosition 1920x1080=10
 eDP-1 HDMI-1 YPosition 1080x1920=42
 eDP-1 HDMI-1 YPosition 1920x1080=41
 eDP-1 Height 1080=1027
-eDP-1 Height 1920x1080=1080
+eDP-1 Height 1920x1080=1027
 eDP-1 Width 1920=623
-eDP-1 Width 1920x1080=1920
+eDP-1 Width 1920x1080=1150
 eDP-1 XPosition=1286
-eDP-1 XPosition 1920x1080=0
+eDP-1 XPosition 1920x1080=759
 eDP-1 YPosition=42
-eDP-1 YPosition 1920x1080=0
+eDP-1 YPosition 1920x1080=42
 
 [Print Preview]
 Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Zotero/storage/JYT94TJB/Hartshorne - 2008 - Algebraic geometry.pdf
-File10[$e]=$HOME/Downloads/lecture4_01_18.ps
-File2[$e]=$HOME/Dropbox/Library/Hiller/Geometry of Coxeter Groups (1010)/Geometry of Coxeter Groups - Hiller.pdf
-File3[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
-File4[$e]=$HOME/Dropbox/Zotero/storage/TYXWJW2J/Fulton - 1993 - Introduction to toric varieties.pdf
-File5[$e]=$HOME/Dropbox/Library/Herbert S. Wilf/Generatingfunctionology (516)/Generatingfunctionology - Herbert S. Wilf.pdf
-File6[$e]=$HOME/Downloads/Humphreys Solns.pdf
-File7[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz2.pdf
-File8[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
-File9[$e]=$HOME/Dropbox/Library/Lee/Introduction to Smooth Manifolds (2012) (736)/Introduction to Smooth Manifolds (2012) - Lee.pdf
-Name1[$e]=Hartshorne - 2008 - Algebraic geometry.pdf
-Name10[$e]=lecture4_01_18.ps
-Name2[$e]=Geometry of Coxeter Groups - Hiller.pdf
-Name3[$e]=Algebraic Geometry - Robin Hartshorne.pdf
-Name4[$e]=Fulton - 1993 - Introduction to toric varieties.pdf
-Name5[$e]=Generatingfunctionology - Herbert S. Wilf.pdf
-Name6[$e]=Humphreys Solns.pdf
-Name7[$e]=Quiz2.pdf
-Name8[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
-Name9[$e]=Introduction to Smooth Manifolds (2012) - Lee.pdf
+File1[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
+File2[$e]=$HOME/Dropbox/Library/Herbert S. Wilf/Generatingfunctionology (516)/Generatingfunctionology - Herbert S. Wilf.pdf
+File3[$e]=$HOME/Downloads/Humphreys Solns.pdf
+File4[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz2.pdf
+File5[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
+File6[$e]=$HOME/Dropbox/Library/Lee/Introduction to Smooth Manifolds (2012) (736)/Introduction to Smooth Manifolds (2012) - Lee.pdf
+File7[$e]=$HOME/Dropbox/Zotero/storage/TYXWJW2J/Fulton - 1993 - Introduction to toric varieties.pdf
+File8[$e]=$HOME/Dropbox/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
+File9[$e]=$HOME/Downloads/GeertPopmaMSc Toric Geometry.pdf
+Name1[$e]=Algebraic Geometry - Robin Hartshorne.pdf
+Name2[$e]=Generatingfunctionology - Herbert S. Wilf.pdf
+Name3[$e]=Humphreys Solns.pdf
+Name4[$e]=Quiz2.pdf
+Name5[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
+Name6[$e]=Introduction to Smooth Manifolds (2012) - Lee.pdf
+Name7[$e]=Fulton - 1993 - Introduction to toric varieties.pdf
+Name8[$e]=Cox et al. - 2011 - Toric varieties.pdf
+Name9[$e]=GeertPopmaMSc Toric Geometry.pdf
 
 [UiSettings]
 ColorScheme=Maia
