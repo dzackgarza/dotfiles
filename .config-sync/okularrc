@@ -27,7 +27,8 @@ shouldShowToolBarComingFromFullScreen=false
 Height 1080=996
 Height 1920=1866
 Height 800=746
-State=AAAA/wAAAAD9AAAAAAAABH4AAAPIAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
+RestorePositionForNextInstance=false
+State=AAAA/wAAAAD9AAAAAAAAB2wAAAPKAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -74,37 +75,39 @@ eDP-1 HDMI-1 XPosition 1920x1080=10
 eDP-1 HDMI-1 YPosition 1080x1920=42
 eDP-1 HDMI-1 YPosition 1920x1080=41
 eDP-1 Height 1080=1027
-eDP-1 Height 1920x1080=1027
+eDP-1 Height 1920x1080=1029
 eDP-1 Width 1920=623
-eDP-1 Width 1920x1080=1150
+eDP-1 Width 1920x1080=1900
 eDP-1 XPosition=1286
-eDP-1 XPosition 1920x1080=759
+eDP-1 XPosition 1920x1080=10
 eDP-1 YPosition=42
-eDP-1 YPosition 1920x1080=42
+eDP-1 YPosition 1920x1080=41
 
 [Print Preview]
 Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
-File2[$e]=$HOME/Dropbox/Library/Herbert S. Wilf/Generatingfunctionology (516)/Generatingfunctionology - Herbert S. Wilf.pdf
-File3[$e]=$HOME/Downloads/Humphreys Solns.pdf
-File4[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz2.pdf
-File5[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
-File6[$e]=$HOME/Dropbox/Library/Lee/Introduction to Smooth Manifolds (2012) (736)/Introduction to Smooth Manifolds (2012) - Lee.pdf
-File7[$e]=$HOME/Dropbox/Zotero/storage/TYXWJW2J/Fulton - 1993 - Introduction to toric varieties.pdf
-File8[$e]=$HOME/Dropbox/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
-File9[$e]=$HOME/Downloads/GeertPopmaMSc Toric Geometry.pdf
-Name1[$e]=Algebraic Geometry - Robin Hartshorne.pdf
-Name2[$e]=Generatingfunctionology - Herbert S. Wilf.pdf
-Name3[$e]=Humphreys Solns.pdf
-Name4[$e]=Quiz2.pdf
-Name5[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
-Name6[$e]=Introduction to Smooth Manifolds (2012) - Lee.pdf
-Name7[$e]=Fulton - 1993 - Introduction to toric varieties.pdf
-Name8[$e]=Cox et al. - 2011 - Toric varieties.pdf
-Name9[$e]=GeertPopmaMSc Toric Geometry.pdf
+File1[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz2.pdf
+File10[$e]=$HOME/Downloads/Lectureplan672.pdf
+File2[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
+File3[$e]=$HOME/Dropbox/Library/Lee/Introduction to Smooth Manifolds (2012) (736)/Introduction to Smooth Manifolds (2012) - Lee.pdf
+File4[$e]=$HOME/Downloads/In-Class Test 1 Review.pdf
+File5[$e]=$HOME/Downloads/Math 1113 Exam 1 Review.pdf
+File6[$e]=$HOME/Downloads/Precalc Exam 1 Draft.pdf
+File7[$e]=$HOME/Downloads/Lectures up to quiz 1.pdf
+File8[$e]=$HOME/Downloads/GeertPopmaMSc Toric Geometry.pdf
+File9[$e]=$HOME/Downloads/ToricLectures.pdf
+Name1[$e]=Quiz2.pdf
+Name10[$e]=Lectureplan672.pdf
+Name2[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
+Name3[$e]=Introduction to Smooth Manifolds (2012) - Lee.pdf
+Name4[$e]=In-Class Test 1 Review.pdf
+Name5[$e]=Math 1113 Exam 1 Review.pdf
+Name6[$e]=Precalc Exam 1 Draft.pdf
+Name7[$e]=Lectures up to quiz 1.pdf
+Name8[$e]=GeertPopmaMSc Toric Geometry.pdf
+Name9[$e]=ToricLectures.pdf
 
 [UiSettings]
 ColorScheme=Maia
