@@ -88,26 +88,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
-File10[$e]=$HOME/Downloads/Lectureplan672.pdf
-File2[$e]=$HOME/Dropbox/Library/Lee/Introduction to Smooth Manifolds (2012) (736)/Introduction to Smooth Manifolds (2012) - Lee.pdf
-File3[$e]=$HOME/Downloads/In-Class Test 1 Review.pdf
-File4[$e]=$HOME/Downloads/Math 1113 Exam 1 Review.pdf
-File5[$e]=$HOME/Downloads/Precalc Exam 1 Draft.pdf
-File6[$e]=$HOME/Downloads/Lectures up to quiz 1.pdf
-File7[$e]=$HOME/Downloads/GeertPopmaMSc Toric Geometry.pdf
-File8[$e]=$HOME/Downloads/ToricLectures.pdf
-File9[$e]=$HOME/Dropbox/Library/Tadao Oda/Convex Bodies & Algebraic Geometry_ An introduction to the theory of toric varieties (1012)/Convex Bodies & Algebraic Geometry_ An int - Tadao Oda.pdf
-Name1[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
-Name10[$e]=Lectureplan672.pdf
-Name2[$e]=Introduction to Smooth Manifolds (2012) - Lee.pdf
-Name3[$e]=In-Class Test 1 Review.pdf
-Name4[$e]=Math 1113 Exam 1 Review.pdf
-Name5[$e]=Precalc Exam 1 Draft.pdf
-Name6[$e]=Lectures up to quiz 1.pdf
-Name7[$e]=GeertPopmaMSc Toric Geometry.pdf
-Name8[$e]=ToricLectures.pdf
-Name9[$e]=Convex Bodies & Algebraic Geometry_ An int - Tadao Oda.pdf
+File1[$e]=$HOME/Downloads/Lectures up to quiz 1.pdf
+File10[$e]=$HOME/Dropbox/Library/Herbert S. Wilf/Generatingfunctionology (516)/Generatingfunctionology - Herbert S. Wilf.pdf
+File2[$e]=$HOME/Downloads/GeertPopmaMSc Toric Geometry.pdf
+File3[$e]=$HOME/Downloads/ToricLectures.pdf
+File4[$e]=$HOME/Downloads/Lectureplan672.pdf
+File5[$e]=$HOME/Dropbox/Library/Tadao Oda/Convex Bodies & Algebraic Geometry_ An introduction to the theory of toric varieties (1012)/Convex Bodies & Algebraic Geometry_ An int - Tadao Oda.pdf
+File6[$e]=$HOME/Dropbox/Library/James Humphreys/Representations of Semisimple Lie Algebras in the BGG Category O (758)/Representations of Semisimple Lie Algebras - James Humphreys.pdf
+File7[$e]=$HOME/Dropbox/Zotero/storage/TYXWJW2J/Fulton - 1993 - Introduction to toric varieties.pdf
+File8[$e]=$HOME/Dropbox/Library/Hiller/Geometry of Coxeter Groups (1010)/Geometry of Coxeter Groups - Hiller.pdf
+File9[$e]=$HOME/Dropbox/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
+Name1[$e]=Lectures up to quiz 1.pdf
+Name10[$e]=Generatingfunctionology - Herbert S. Wilf.pdf
+Name2[$e]=GeertPopmaMSc Toric Geometry.pdf
+Name3[$e]=ToricLectures.pdf
+Name4[$e]=Lectureplan672.pdf
+Name5[$e]=Convex Bodies & Algebraic Geometry_ An int - Tadao Oda.pdf
+Name6[$e]=Representations of Semisimple Lie Algebras - James Humphreys.pdf
+Name7[$e]=Fulton - 1993 - Introduction to toric varieties.pdf
+Name8[$e]=Geometry of Coxeter Groups - Hiller.pdf
+Name9[$e]=Cox et al. - 2011 - Toric varieties.pdf
 
 [UiSettings]
 ColorScheme=Maia
