@@ -27,6 +27,7 @@ shouldShowToolBarComingFromFullScreen=false
 Height 1080=996
 Height 1920=1866
 Height 800=746
+RestorePositionForNextInstance=false
 State=AAAA/wAAAAD9AAAAAAAAB2wAAAPKAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
@@ -87,26 +88,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/WriteNotes/Ratonal Points 9_30.pdf
-File10[$e]=$HOME/Dropbox/Zotero/storage/FKYJCUPN/Huybrechts - 2016 - Lectures on K3 Surfaces.pdf
-File2[$e]=$HOME/Dropbox/WriteNotes/Schemes 9_29.pdf
-File3[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
-File4[$e]=$HOME/Downloads/Books2/Mukai.pdf
-File5[$e]=$HOME/Dropbox/Library/Vassilliev/Picard Lefschetz Theory (990)/Picard Lefschetz Theory - Vassilliev.pdf
-File6[$e]=$HOME/Dropbox/Library/Unknown/Fukaya Categories and Picard Lefschetz theory (989)/Fukaya Categories and Picard Lefschetz the - Unknown.pdf
-File7[$e]=$HOME/Dropbox/Teaching/Precalculus/Exams/Exam1.pdf
-File8[$e]=$HOME/Dropbox/Zotero/storage/JYT94TJB/Hartshorne - 2008 - Algebraic geometry.pdf
-File9[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
-Name1[$e]=Ratonal Points 9_30.pdf
-Name10[$e]=Huybrechts - 2016 - Lectures on K3 Surfaces.pdf
-Name2[$e]=Schemes 9_29.pdf
-Name3[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
-Name4[$e]=Mukai.pdf
-Name5[$e]=Picard Lefschetz Theory - Vassilliev.pdf
-Name6[$e]=Fukaya Categories and Picard Lefschetz the - Unknown.pdf
-Name7[$e]=Exam1.pdf
-Name8[$e]=Hartshorne - 2008 - Algebraic geometry.pdf
-Name9[$e]=Algebraic Geometry - Robin Hartshorne.pdf
+File1[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
+File10[$e]=$HOME/Dropbox/Teaching/Precalculus/2020 Fall Quizzes/Quiz 7 Friday Oct 7th.pdf
+File2[$e]=$HOME/Downloads/Books2/Mukai.pdf
+File3[$e]=$HOME/Dropbox/Library/Vassilliev/Picard Lefschetz Theory (990)/Picard Lefschetz Theory - Vassilliev.pdf
+File4[$e]=$HOME/Dropbox/Library/Unknown/Fukaya Categories and Picard Lefschetz theory (989)/Fukaya Categories and Picard Lefschetz the - Unknown.pdf
+File5[$e]=$HOME/Dropbox/Teaching/Precalculus/Exams/Exam1.pdf
+File6[$e]=$HOME/Dropbox/Zotero/storage/JYT94TJB/Hartshorne - 2008 - Algebraic geometry.pdf
+File7[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
+File8[$e]=$HOME/Dropbox/Zotero/storage/FKYJCUPN/Huybrechts - 2016 - Lectures on K3 Surfaces.pdf
+File9[$e]=$HOME/Dropbox/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
+Name1[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
+Name10[$e]=Quiz 7 Friday Oct 7th.pdf
+Name2[$e]=Mukai.pdf
+Name3[$e]=Picard Lefschetz Theory - Vassilliev.pdf
+Name4[$e]=Fukaya Categories and Picard Lefschetz the - Unknown.pdf
+Name5[$e]=Exam1.pdf
+Name6[$e]=Hartshorne - 2008 - Algebraic geometry.pdf
+Name7[$e]=Algebraic Geometry - Robin Hartshorne.pdf
+Name8[$e]=Huybrechts - 2016 - Lectures on K3 Surfaces.pdf
+Name9[$e]=Cox et al. - 2011 - Toric varieties.pdf
 
 [UiSettings]
 ColorScheme=Maia
