@@ -87,26 +87,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
-File10[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
-File2[$e]=$HOME/Dropbox/Zotero/storage/FKYJCUPN/Huybrechts - 2016 - Lectures on K3 Surfaces.pdf
-File3[$e]=$HOME/Dropbox/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
-File4[$e]=$HOME/Dropbox/Teaching/Precalculus/2020 Fall Quizzes/Quiz 7 Friday Oct 7th.pdf
-File5[$e]=$HOME/Dropbox/Teaching/Precalculus/Fall 2022 Quizzes/Quiz 4.pdf
-File6[$e]=$HOME/Dropbox/Library/Donald E. Knuth/The TeXbook (963)/The TeXbook - Donald E. Knuth.pdf
-File7[$e]=$HOME/Downloads/ToricLectures.pdf
-File8[$e]=$HOME/Downloads/216class12.pdf
-File9[$e]=$HOME/Downloads/Math 1113 Exam 1 Review.pdf
-Name1[$e]=Algebraic Geometry - Robin Hartshorne.pdf
-Name10[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
-Name2[$e]=Huybrechts - 2016 - Lectures on K3 Surfaces.pdf
-Name3[$e]=Cox et al. - 2011 - Toric varieties.pdf
-Name4[$e]=Quiz 7 Friday Oct 7th.pdf
-Name5[$e]=Quiz 4.pdf
-Name6[$e]=The TeXbook - Donald E. Knuth.pdf
-Name7[$e]=ToricLectures.pdf
-Name8[$e]=216class12.pdf
-Name9[$e]=Math 1113 Exam 1 Review.pdf
+File1[$e]=$HOME/Dropbox/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
+File10[$e]=$HOME/Notes/Class_Notes/2022/Fall/LieAlgebras/sections/HW3.pdf
+File2[$e]=$HOME/Dropbox/Teaching/Precalculus/2020 Fall Quizzes/Quiz 7 Friday Oct 7th.pdf
+File3[$e]=$HOME/Dropbox/Teaching/Precalculus/Fall 2022 Quizzes/Quiz 4.pdf
+File4[$e]=$HOME/Dropbox/Library/Donald E. Knuth/The TeXbook (963)/The TeXbook - Donald E. Knuth.pdf
+File5[$e]=$HOME/Downloads/ToricLectures.pdf
+File6[$e]=$HOME/Downloads/216class12.pdf
+File7[$e]=$HOME/Downloads/Math 1113 Exam 1 Review.pdf
+File8[$e]=$HOME/Downloads/Humphreys Solns.pdf
+File9[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
+Name1[$e]=Cox et al. - 2011 - Toric varieties.pdf
+Name10[$e]=HW3.pdf
+Name2[$e]=Quiz 7 Friday Oct 7th.pdf
+Name3[$e]=Quiz 4.pdf
+Name4[$e]=The TeXbook - Donald E. Knuth.pdf
+Name5[$e]=ToricLectures.pdf
+Name6[$e]=216class12.pdf
+Name7[$e]=Math 1113 Exam 1 Review.pdf
+Name8[$e]=Humphreys Solns.pdf
+Name9[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
 
 [UiSettings]
 ColorScheme=Maia
