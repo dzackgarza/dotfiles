@@ -130,8 +130,8 @@
          id="rect"
          style="fill:blue;"
          usecurrent="1"
-         width="185.396896722748"
-         height="114.581584780235"
+         width="587.712902159204"
+         height="394.705522191807"
          ry="0" />
       <eventcontext
          id="3dbox"
@@ -169,8 +169,8 @@
          end="0"
          start="0"
          usecurrent="1"
-         rx="30.3978506974347"
-         ry="30.3978506974347"
+         rx="16.9090529314176"
+         ry="16.9090529314176"
          arc_type="0" />
       <eventcontext
          id="star"
@@ -583,7 +583,7 @@
        id="toolbox" />
     <group
        id="fillstroke"
-       page="2"
+       page="1"
        x="0"
        y="0"
        w="378"
