@@ -28,7 +28,7 @@ Height 1080=996
 Height 1920=1866
 Height 800=746
 RestorePositionForNextInstance=false
-State=AAAA/wAAAAD9AAAAAAAAB2wAAAPKAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
+State=AAAA/wAAAAD9AAAAAAAAA68AAAOzAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -75,39 +75,39 @@ eDP-1 HDMI-1 XPosition 1920x1080=10
 eDP-1 HDMI-1 YPosition 1080x1920=42
 eDP-1 HDMI-1 YPosition 1920x1080=41
 eDP-1 Height 1080=1027
-eDP-1 Height 1920x1080=1029
+eDP-1 Height 1920x1080=1006
 eDP-1 Width 1920=623
-eDP-1 Width 1920x1080=1900
+eDP-1 Width 1920x1080=943
 eDP-1 XPosition=1286
-eDP-1 XPosition 1920x1080=10
+eDP-1 XPosition 1920x1080=966
 eDP-1 YPosition=42
-eDP-1 YPosition 1920x1080=41
+eDP-1 YPosition 1920x1080=63
 
 [Print Preview]
 Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Downloads/Humphreys Solns.pdf
-File10[$e]=$HOME/Notes/Class_Notes/2022/Fall/LieAlgebras/sections/HW3.pdf
-File2[$e]=$HOME/Downloads/Books2/Mukai.pdf
-File3[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz4.pdf
-File4[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz 5 Friday Sep 25.pdf
-File5[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz 7 Friday March 5.pdf
-File6[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz 7 Friday Oct 7th.pdf
-File7[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz 8 Friday Oct 14th.pdf
-File8[$e]=$HOME/Dropbox/Teaching/Precalculus/2020 Fall Quizzes/Quiz 7 Friday Oct 7th.pdf
-File9[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
-Name1[$e]=Humphreys Solns.pdf
-Name10[$e]=HW3.pdf
-Name2[$e]=Mukai.pdf
-Name3[$e]=Quiz4.pdf
-Name4[$e]=Quiz 5 Friday Sep 25.pdf
-Name5[$e]=Quiz 7 Friday March 5.pdf
-Name6[$e]=Quiz 7 Friday Oct 7th.pdf
-Name7[$e]=Quiz 8 Friday Oct 14th.pdf
-Name8[$e]=Quiz 7 Friday Oct 7th.pdf
-Name9[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
+File1[$e]=$HOME/Downloads/Books2/Mukai.pdf
+File10[$e]=$HOME/Downloads/lectu14.ps
+File2[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz4.pdf
+File3[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz 5 Friday Sep 25.pdf
+File4[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz 7 Friday March 5.pdf
+File5[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz 7 Friday Oct 7th.pdf
+File6[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz 8 Friday Oct 14th.pdf
+File7[$e]=$HOME/Dropbox/Teaching/Precalculus/2020 Fall Quizzes/Quiz 7 Friday Oct 7th.pdf
+File8[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
+File9[$e]=$HOME/Notes/Class_Notes/2022/Fall/LieAlgebras/sections/HW3.pdf
+Name1[$e]=Mukai.pdf
+Name10[$e]=lectu14.ps
+Name2[$e]=Quiz4.pdf
+Name3[$e]=Quiz 5 Friday Sep 25.pdf
+Name4[$e]=Quiz 7 Friday March 5.pdf
+Name5[$e]=Quiz 7 Friday Oct 7th.pdf
+Name6[$e]=Quiz 8 Friday Oct 14th.pdf
+Name7[$e]=Quiz 7 Friday Oct 7th.pdf
+Name8[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
+Name9[$e]=HW3.pdf
 
 [UiSettings]
 ColorScheme=Maia
