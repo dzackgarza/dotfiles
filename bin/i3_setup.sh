@@ -17,9 +17,13 @@ pkill blueman-applet & blueman-applet &
 copyq &
 i3l vstack 0.6
 
-mimeo --add text/markdown custom_nvim.desktop
-mimeo --add text/html chromium.desktop
-mimeo --add application/pdf okularApplication_pdf.desktop
-mimeo --add application/postscript okularApplication_pdf.desktop
-mimeo --add text/x-tex gummi.desktop
+mimeo --add text/markdown custom_nvim.desktop;
+mimeo --add text/plain custom_nvim.desktop;
+xdg-mime default custom_nvim.desktop text/plain;
+mimeo --add text/html chromium.desktop;
+mimeo --add application/pdf okularApplication_pdf.desktop;
+mimeo --add application/postscript okularApplication_pdf.desktop;
+xdg-mime default okularApplication_pdf.desktop application/postscript;
+mimeo --add text/x-tex gummi.desktop;
+mimeo --update;
 
