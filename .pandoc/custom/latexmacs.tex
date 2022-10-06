@@ -27,6 +27,7 @@
 \newcommand{\Ag}[0]{{\mathcal{A}_g}}
 \newcommand{\Mg}[0]{{\mathcal{M}_g}}
 \newcommand{\mgbar}[0]{\bar{\Mg}}
+\newcommand{\Mgbar}[0]{\bar{\Mg}}
 \newcommand{\agbar}[0]{\bar{\Ag}}
 \newcommand{\Ahat}[0]{\hat{ \operatorname{A}}_g }
 \newcommand{\Ann}[0]{\operatorname{Ann}}
@@ -658,6 +659,7 @@
 \DeclareMathOperator{\Symb}{Symb}
 \DeclareMathOperator{\Taut}{Taut}
 \DeclareMathOperator{\Th}{Th}
+\DeclareMathOperator{\triv}{triv}
 \DeclareMathOperator{\Triv}{Triv}
 \DeclareMathOperator{\UFrame}{UFrame}
 \DeclareMathOperator{\Isom}{Isom}
@@ -860,6 +862,13 @@
 \newcommand{\fourcase}[4]{
 \begin{cases}{#1} & {#2} \\ {#3} & {#4}\end{cases} 
 }
+\newcommand{\cvec}[2]{{
+\begin{bmatrix}
+  {#1}
+\\
+  {#2}
+\end{bmatrix}
+}}
 \newcommand{\matt}[4]{{
 \begin{bmatrix}
   {#1} & {#2} 
