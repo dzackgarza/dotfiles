@@ -19,7 +19,7 @@ eDP-1 XPosition 1920x1080=1143
 eDP-1 YPosition 1920x1080=42
 
 [Desktop Entry]
-FullScreen=false
+FullScreen=true
 shouldShowMenuBarComingFromFullScreen=true
 shouldShowToolBarComingFromFullScreen=false
 
@@ -27,7 +27,7 @@ shouldShowToolBarComingFromFullScreen=false
 Height 1080=996
 Height 1920=1866
 Height 800=746
-RestorePositionForNextInstance=false
+MenuBar=Disabled
 State=AAAA/wAAAAD9AAAAAAAAB2wAAAO0AAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
@@ -81,33 +81,33 @@ eDP-1 Width 1920x1080=1900
 eDP-1 XPosition=1286
 eDP-1 XPosition 1920x1080=10
 eDP-1 YPosition=42
-eDP-1 YPosition 1920x1080=63
+eDP-1 YPosition 1920x1080=0
 
 [Print Preview]
 Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Downloads/Higher algebra notes.pdf
-File10[$e]=$HOME/Dropbox/Downloads/Books2/Mukai.pdf
-File2[$e]=$HOME/Downloads/Lie Algebra Qual Notes.pdf
-File3[$e]=$HOME/Downloads/CoursenotesHodge.pdf
-File4[$e]=$HOME/Downloads/BSD Notes.pdf
-File5[$e]=$HOME/Downloads/Rezk SAG.pdf
-File6[$e]=$HOME/Downloads/Computing with Toric Varieties.pdf
-File7[$e]=$HOME/Downloads/picard.pdf
-File8[$e]=$HOME/Downloads/9702155.pdf
-File9[$e]=$HOME/Downloads/2111.04694.pdf
-Name1[$e]=Higher algebra notes.pdf
-Name10[$e]=Mukai.pdf
-Name2[$e]=Lie Algebra Qual Notes.pdf
-Name3[$e]=CoursenotesHodge.pdf
-Name4[$e]=BSD Notes.pdf
-Name5[$e]=Rezk SAG.pdf
-Name6[$e]=Computing with Toric Varieties.pdf
-Name7[$e]=picard.pdf
-Name8[$e]=9702155.pdf
-Name9[$e]=2111.04694.pdf
+File1[$e]=$HOME/Downloads/Lie Algebra Qual Notes.pdf
+File10[$e]=$HOME/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
+File2[$e]=$HOME/Downloads/CoursenotesHodge.pdf
+File3[$e]=$HOME/Downloads/BSD Notes.pdf
+File4[$e]=$HOME/Downloads/Rezk SAG.pdf
+File5[$e]=$HOME/Downloads/Computing with Toric Varieties.pdf
+File6[$e]=$HOME/Downloads/picard.pdf
+File7[$e]=$HOME/Downloads/9702155.pdf
+File8[$e]=$HOME/Downloads/2111.04694.pdf
+File9[$e]=$HOME/Dropbox/Downloads/Books2/Mukai.pdf
+Name1[$e]=Lie Algebra Qual Notes.pdf
+Name10[$e]=Cox et al. - 2011 - Toric varieties.pdf
+Name2[$e]=CoursenotesHodge.pdf
+Name3[$e]=BSD Notes.pdf
+Name4[$e]=Rezk SAG.pdf
+Name5[$e]=Computing with Toric Varieties.pdf
+Name6[$e]=picard.pdf
+Name7[$e]=9702155.pdf
+Name8[$e]=2111.04694.pdf
+Name9[$e]=Mukai.pdf
 
 [UiSettings]
 ColorScheme=Maia
