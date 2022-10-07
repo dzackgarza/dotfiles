@@ -169,8 +169,8 @@
          end="0"
          start="0"
          usecurrent="1"
-         rx="7.26963403656736"
-         ry="7.26963403656725"
+         rx="17.8490706316129"
+         ry="17.8490706316129"
          arc_type="0" />
       <eventcontext
          id="star"
@@ -352,8 +352,8 @@
        live_outline="1"
        live_objects="1"
        show_helperpath="0"
-       x="666.073671419876"
-       y="252.561862025788"
+       x="267.263563354424"
+       y="107.420220657934"
        edit_clipping_paths="0"
        edit_masks="0" />
     <eventcontext
@@ -583,7 +583,7 @@
        id="toolbox" />
     <group
        id="fillstroke"
-       page="2"
+       page="1"
        x="0"
        y="0"
        w="378"
@@ -1108,14 +1108,14 @@
      org.inkscape.effect.filter.Blur.content="0" />
   <group
      id="desktop"
-     style="stroke-width:1.0015748;fill:#003399;fill-rule:evenodd;font-size:13.33333333px;stop-color:#000000;stroke:#003399;stroke-linecap:round;stroke-linejoin:round;opacity:0.45969739;fill-opacity:0.27681112;stroke-dasharray:1.00157475, 1.00157475">
+     style="stroke-width:0;fill:#6699ff;fill-rule:evenodd;font-size:13.33333333px;stop-color:#000000;stroke:#aa0000;stroke-linecap:round;stroke-linejoin:round;opacity:0.45969739;fill-opacity:0.27681112;stroke-dasharray:2.0031495, 1.00157475">
     <group
-       width="943"
-       height="1027"
-       x="488"
-       y="41"
+       width="1920"
+       height="1080"
+       x="-1"
+       y="14"
        maximized="0"
-       fullscreen="1"
+       fullscreen="0"
        id="geometry" />
     <group
        id="XYfront" />
