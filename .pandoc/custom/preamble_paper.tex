@@ -13,6 +13,14 @@
 \setlist[enumerate]{itemsep=2pt,parsep=2pt,before={\parskip=2pt}}
 
 \usepackage[colorlinks=true,hyperindex, linkcolor=magenta, pagebackref=false, citecolor=cyan,pdfpagelabels]{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linktoc=all;
+    linkcolor=wine-stain,
+    citecolor=black,
+    filecolor=black,
+    urlcolor=black
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Theorems %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newtheorem{theorem}{Theorem}[subsection]
@@ -66,7 +74,32 @@
 \usepackage{spectralsequences}
 
 % Figures
+
 \usepackage{graphicx}
+% Redefine \includegraphics so that, unless explicit options are
+% given, the image width will not exceed the width or the height of the page.
+% Images get their normal width if they fit onto the page, but
+% are scaled down if they would overflow the margins.
+\makeatletter
+\def\ScaleWidthIfNeeded{%
+ \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\def\ScaleHeightIfNeeded{%
+  \ifdim\Gin@nat@height>0.9\textheight
+    0.9\textheight
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\setkeys{Gin}{width=\ScaleWidthIfNeeded,height=\ScaleHeightIfNeeded,keepaspectratio}%
+%%%%%%%%%%%%%%
+
 % Make figures stay where you put them!
 \usepackage{float}
 \floatplacement{figure}{H}
