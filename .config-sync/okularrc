@@ -88,26 +88,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Downloads/BSD Notes.pdf
-File10[$e]=$HOME/Dropbox/WriteNotes/Quiz Solutions/Quiz 4 Solns.pdf
-File2[$e]=$HOME/Downloads/Rezk SAG.pdf
-File3[$e]=$HOME/Downloads/Computing with Toric Varieties.pdf
-File4[$e]=$HOME/Downloads/picard.pdf
-File5[$e]=$HOME/Downloads/9702155.pdf
-File6[$e]=$HOME/Downloads/2111.04694.pdf
-File7[$e]=$HOME/Dropbox/Downloads/Books2/Mukai.pdf
-File8[$e]=$HOME/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
-File9[$e]=$HOME/Dropbox/WriteNotes/Quiz Solutions/Quiz 5 Solutions.pdf
-Name1[$e]=BSD Notes.pdf
-Name10[$e]=Quiz 4 Solns.pdf
-Name2[$e]=Rezk SAG.pdf
-Name3[$e]=Computing with Toric Varieties.pdf
-Name4[$e]=picard.pdf
-Name5[$e]=9702155.pdf
-Name6[$e]=2111.04694.pdf
-Name7[$e]=Mukai.pdf
-Name8[$e]=Cox et al. - 2011 - Toric varieties.pdf
-Name9[$e]=Quiz 5 Solutions.pdf
+File1[$e]=$HOME/Downloads/picard.pdf
+File10[$e]=$HOME/Dropbox/Library/John Milnor, James D. Stasheff/Characteristic Classes (654)/Characteristic Classes - John Milnor, James D. Stasheff.pdf
+File2[$e]=$HOME/Downloads/9702155.pdf
+File3[$e]=$HOME/Downloads/2111.04694.pdf
+File4[$e]=$HOME/Dropbox/Downloads/Books2/Mukai.pdf
+File5[$e]=$HOME/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
+File6[$e]=$HOME/Dropbox/WriteNotes/Quiz Solutions/Quiz 5 Solutions.pdf
+File7[$e]=$HOME/Dropbox/WriteNotes/Quiz Solutions/Quiz 4 Solns.pdf
+File8[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
+File9[$e]=$HOME/Dropbox/Library/Allen Hatcher/Vector Bundles and K Theory (407)/Vector Bundles and K Theory - Allen Hatcher.pdf
+Name1[$e]=picard.pdf
+Name10[$e]=Characteristic Classes - John Milnor, James D. Stasheff.pdf
+Name2[$e]=9702155.pdf
+Name3[$e]=2111.04694.pdf
+Name4[$e]=Mukai.pdf
+Name5[$e]=Cox et al. - 2011 - Toric varieties.pdf
+Name6[$e]=Quiz 5 Solutions.pdf
+Name7[$e]=Quiz 4 Solns.pdf
+Name8[$e]=Algebraic Geometry - Robin Hartshorne.pdf
+Name9[$e]=Vector Bundles and K Theory - Allen Hatcher.pdf
 
 [UiSettings]
 ColorScheme=Maia
