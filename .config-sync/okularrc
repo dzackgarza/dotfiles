@@ -19,7 +19,7 @@ eDP-1 XPosition 1920x1080=1143
 eDP-1 YPosition 1920x1080=42
 
 [Desktop Entry]
-FullScreen=true
+FullScreen=false
 shouldShowMenuBarComingFromFullScreen=true
 shouldShowToolBarComingFromFullScreen=false
 
@@ -28,7 +28,7 @@ Height 1080=996
 Height 1920=1866
 Height 800=746
 RestorePositionForNextInstance=false
-State=AAAA/wAAAAD9AAAAAAAAB2wAAAO0AAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
+State=AAAA/wAAAAD9AAAAAAAAB4AAAAP9AAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -77,42 +77,42 @@ eDP-1 HDMI-1 YPosition 1080x1920=42
 eDP-1 HDMI-1 YPosition 1920x1080=41
 eDP-1 Height 1080=1027
 eDP-1 Height 1920x1080=486
-eDP-1 Height 1920x1080 eDP-1=1007
+eDP-1 Height 1920x1080 eDP-1=1080
 eDP-1 Width 1920=623
 eDP-1 Width 1920x1080=1150
-eDP-1 Width 1920x1080 eDP-1=1900
+eDP-1 Width 1920x1080 eDP-1=1920
 eDP-1 XPosition=1286
 eDP-1 XPosition 1920x1080=759
-eDP-1 XPosition 1920x1080 eDP-1=10
+eDP-1 XPosition 1920x1080 eDP-1=0
 eDP-1 YPosition=42
 eDP-1 YPosition 1920x1080=582
-eDP-1 YPosition 1920x1080 eDP-1=63
+eDP-1 YPosition 1920x1080 eDP-1=0
 
 [Print Preview]
 Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
-File10[$e]=$HOME/Downloads/mar98.ps.gz
-File2[$e]=$HOME/Dropbox/WriteNotes/Quiz Solutions/Quiz 5 Solutions.pdf
-File3[$e]=$HOME/Dropbox/WriteNotes/Quiz Solutions/Quiz 4 Solns.pdf
-File4[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
-File5[$e]=$HOME/Dropbox/Library/Allen Hatcher/Vector Bundles and K Theory (407)/Vector Bundles and K Theory - Allen Hatcher.pdf
-File6[$e]=$HOME/Dropbox/Library/John Milnor, James D. Stasheff/Characteristic Classes (654)/Characteristic Classes - John Milnor, James D. Stasheff.pdf
-File7[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
-File8[$e]=$HOME/Downloads/HW1.pdf
-File9[$e]=$HOME/Downloads/heck.ps
-Name1[$e]=Cox et al. - 2011 - Toric varieties.pdf
-Name10[$e]=mar98.ps.gz
-Name2[$e]=Quiz 5 Solutions.pdf
-Name3[$e]=Quiz 4 Solns.pdf
-Name4[$e]=Algebraic Geometry - Robin Hartshorne.pdf
-Name5[$e]=Vector Bundles and K Theory - Allen Hatcher.pdf
-Name6[$e]=Characteristic Classes - John Milnor, James D. Stasheff.pdf
-Name7[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
-Name8[$e]=HW1.pdf
-Name9[$e]=heck.ps
+File1[$e]=$HOME/Dropbox/WriteNotes/Quiz Solutions/Quiz 5 Solutions.pdf
+File10[$e]=$HOME/Zotero/storage/TYXWJW2J/Fulton - 1993 - Introduction to toric varieties.pdf
+File2[$e]=$HOME/Dropbox/WriteNotes/Quiz Solutions/Quiz 4 Solns.pdf
+File3[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
+File4[$e]=$HOME/Dropbox/Library/Allen Hatcher/Vector Bundles and K Theory (407)/Vector Bundles and K Theory - Allen Hatcher.pdf
+File5[$e]=$HOME/Dropbox/Library/John Milnor, James D. Stasheff/Characteristic Classes (654)/Characteristic Classes - John Milnor, James D. Stasheff.pdf
+File6[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
+File7[$e]=$HOME/Downloads/HW1.pdf
+File8[$e]=$HOME/Downloads/heck.ps
+File9[$e]=$HOME/Downloads/mar98.ps.gz
+Name1[$e]=Quiz 5 Solutions.pdf
+Name10[$e]=Fulton - 1993 - Introduction to toric varieties.pdf
+Name2[$e]=Quiz 4 Solns.pdf
+Name3[$e]=Algebraic Geometry - Robin Hartshorne.pdf
+Name4[$e]=Vector Bundles and K Theory - Allen Hatcher.pdf
+Name5[$e]=Characteristic Classes - John Milnor, James D. Stasheff.pdf
+Name6[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
+Name7[$e]=HW1.pdf
+Name8[$e]=heck.ps
+Name9[$e]=mar98.ps.gz
 
 [UiSettings]
 ColorScheme=Maia
