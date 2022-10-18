@@ -31,6 +31,7 @@ if FORMAT:match 'html' then
         or has_value(el.classes, "proof") 
         or has_value(el.classes, "strategy")
         or has_value(el.classes, "concept")
+        or has_value(el.classes, "flashcard")
       ) then
         return el
       end
@@ -57,6 +58,8 @@ if FORMAT:match 'html' then
         env_name = "concept"
       elseif has_value(el.classes, "strategy") then
         env_name = "strategy"
+      elseif has_value(el.classes, "flashcard") then
+        env_name = "flashcard"
       end
         table.insert(
           el.content, 1,
