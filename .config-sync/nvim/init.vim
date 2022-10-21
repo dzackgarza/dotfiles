@@ -518,6 +518,8 @@ iabbrev Poincare Poincaré
 iabbrev kahler kähler
 iabbrev Kahler Kähler
 iabbrev char ch
+iabbrev detla delta
+iabbrev Detla Delta
 " }}}
 
 " Quit is only Nerdtree + one other pane is open?
