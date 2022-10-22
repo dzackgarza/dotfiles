@@ -27,7 +27,6 @@ shouldShowToolBarComingFromFullScreen=false
 Height 1080=996
 Height 1920=1866
 Height 800=746
-RestorePositionForNextInstance=false
 State=AAAA/wAAAAD9AAAAAAAAB2wAAAO0AAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
@@ -86,7 +85,7 @@ eDP-1 XPosition 1920x1080=759
 eDP-1 XPosition 1920x1080 eDP-1=10
 eDP-1 YPosition=42
 eDP-1 YPosition 1920x1080=582
-eDP-1 YPosition 1920x1080 eDP-1=63
+eDP-1 YPosition 1920x1080 eDP-1=172
 
 [Print Preview]
 Height 1080=500
@@ -94,23 +93,25 @@ Width 1920=600
 
 [Recent Files]
 File1[$e]=$HOME/Dropbox/Library/Vassilliev/Picard Lefschetz Theory (990)/Picard Lefschetz Theory - Vassilliev.pdf
+File10[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
 File2[$e]=$HOME/Dropbox/Library/Unknown/Fukaya Categories and Picard Lefschetz theory (989)/Fukaya Categories and Picard Lefschetz the - Unknown.pdf
-File3[$e]=$HOME/Zotero/storage/TYXWJW2J/Fulton - 1993 - Introduction to toric varieties.pdf
-File4[$e]=$HOME/Notes/Class_Notes/2022/Fall/Moduli/sections/HW1.pdf
-File5[$e]=$HOME/Downloads/Books2/Mukai.pdf
-File6[$e]=$HOME/Dropbox/WriteNotes/Quiz Solutions/Exam 2 Solutions.pdf
-File7[$e]=$HOME/Dropbox/Teaching/Precalculus/Lecture Material/Vectors and Complex Numbers.pdf
-File8[$e]=$HOME/Dropbox/Teaching/Precalculus/Lecture Material/Exponentials Logs Interest .pdf
-File9[$e]=$HOME/Dropbox/Teaching/Precalculus/Lecture Material/Radians Degrees Arc Length.pdf
+File3[$e]=$HOME/Notes/Class_Notes/2022/Fall/Moduli/sections/HW1.pdf
+File4[$e]=$HOME/Downloads/Books2/Mukai.pdf
+File5[$e]=$HOME/Dropbox/WriteNotes/Quiz Solutions/Exam 2 Solutions.pdf
+File6[$e]=$HOME/Dropbox/Teaching/Precalculus/Lecture Material/Vectors and Complex Numbers.pdf
+File7[$e]=$HOME/Dropbox/Teaching/Precalculus/Lecture Material/Exponentials Logs Interest .pdf
+File8[$e]=$HOME/Dropbox/Teaching/Precalculus/Lecture Material/Radians Degrees Arc Length.pdf
+File9[$e]=$HOME/Zotero/storage/TYXWJW2J/Fulton - 1993 - Introduction to toric varieties.pdf
 Name1[$e]=Picard Lefschetz Theory - Vassilliev.pdf
+Name10[$e]=Algebraic Geometry - Robin Hartshorne.pdf
 Name2[$e]=Fukaya Categories and Picard Lefschetz the - Unknown.pdf
-Name3[$e]=Fulton - 1993 - Introduction to toric varieties.pdf
-Name4[$e]=HW1.pdf
-Name5[$e]=Mukai.pdf
-Name6[$e]=Exam 2 Solutions.pdf
-Name7[$e]=Vectors and Complex Numbers.pdf
-Name8[$e]=Exponentials Logs Interest .pdf
-Name9[$e]=Radians Degrees Arc Length.pdf
+Name3[$e]=HW1.pdf
+Name4[$e]=Mukai.pdf
+Name5[$e]=Exam 2 Solutions.pdf
+Name6[$e]=Vectors and Complex Numbers.pdf
+Name7[$e]=Exponentials Logs Interest .pdf
+Name8[$e]=Radians Degrees Arc Length.pdf
+Name9[$e]=Fulton - 1993 - Introduction to toric varieties.pdf
 
 [UiSettings]
 ColorScheme=Maia
