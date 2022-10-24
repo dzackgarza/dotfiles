@@ -19,7 +19,7 @@ eDP-1 XPosition 1920x1080=1143
 eDP-1 YPosition 1920x1080=42
 
 [Desktop Entry]
-FullScreen=false
+FullScreen=true
 shouldShowMenuBarComingFromFullScreen=true
 shouldShowToolBarComingFromFullScreen=false
 
@@ -27,7 +27,8 @@ shouldShowToolBarComingFromFullScreen=false
 Height 1080=996
 Height 1920=1866
 Height 800=746
-State=AAAA/wAAAAD9AAAAAAAAAv4AAAOzAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
+MenuBar=Disabled
+State=AAAA/wAAAAD9AAAAAAAAB4AAAAQTAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -76,42 +77,42 @@ eDP-1 HDMI-1 YPosition 1080x1920=42
 eDP-1 HDMI-1 YPosition 1920x1080=41
 eDP-1 Height 1080=1027
 eDP-1 Height 1920x1080=486
-eDP-1 Height 1920x1080 eDP-1=1006
+eDP-1 Height 1920x1080 eDP-1=1080
 eDP-1 Width 1920=623
 eDP-1 Width 1920x1080=1150
-eDP-1 Width 1920x1080 eDP-1=766
+eDP-1 Width 1920x1080 eDP-1=1920
 eDP-1 XPosition=1286
 eDP-1 XPosition 1920x1080=759
-eDP-1 XPosition 1920x1080 eDP-1=1143
+eDP-1 XPosition 1920x1080 eDP-1=0
 eDP-1 YPosition=42
 eDP-1 YPosition 1920x1080=582
-eDP-1 YPosition 1920x1080 eDP-1=63
+eDP-1 YPosition 1920x1080 eDP-1=0
 
 [Print Preview]
 Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Library/Unknown/Fukaya Categories and Picard Lefschetz theory (989)/Fukaya Categories and Picard Lefschetz the - Unknown.pdf
-File10[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
-File2[$e]=$HOME/Zotero/storage/TYXWJW2J/Fulton - 1993 - Introduction to toric varieties.pdf
-File3[$e]=$HOME/Notes/Class_Notes/2022/Fall/Moduli/sections/HW1.pdf
-File4[$e]=$HOME/Downloads/Books2/Mukai.pdf
-File5[$e]=$HOME/Dropbox/WriteNotes/Quiz Solutions/Exam 2 Solutions.pdf
-File6[$e]=$HOME/Dropbox/Teaching/Precalculus/Lecture Material/Vectors and Complex Numbers.pdf
-File7[$e]=$HOME/Dropbox/Teaching/Precalculus/Lecture Material/Exponentials Logs Interest .pdf
-File8[$e]=$HOME/Dropbox/Teaching/Precalculus/Lecture Material/Radians Degrees Arc Length.pdf
-File9[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
-Name1[$e]=Fukaya Categories and Picard Lefschetz the - Unknown.pdf
-Name10[$e]=Algebraic Geometry - Robin Hartshorne.pdf
-Name2[$e]=Fulton - 1993 - Introduction to toric varieties.pdf
-Name3[$e]=HW1.pdf
-Name4[$e]=Mukai.pdf
-Name5[$e]=Exam 2 Solutions.pdf
-Name6[$e]=Vectors and Complex Numbers.pdf
-Name7[$e]=Exponentials Logs Interest .pdf
-Name8[$e]=Radians Degrees Arc Length.pdf
-Name9[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
+File1[$e]=$HOME/Dropbox/WriteNotes/Quiz Solutions/Exam 2 Solutions.pdf
+File10[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz10.pdf
+File2[$e]=$HOME/Dropbox/Teaching/Precalculus/Lecture Material/Vectors and Complex Numbers.pdf
+File3[$e]=$HOME/Dropbox/Teaching/Precalculus/Lecture Material/Exponentials Logs Interest .pdf
+File4[$e]=$HOME/Dropbox/Teaching/Precalculus/Lecture Material/Radians Degrees Arc Length.pdf
+File5[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
+File6[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
+File7[$e]=$HOME/orals/attachments/Algebraic Geometry All Tripos.pdf
+File8[$e]=$HOME/lectu14.pdf
+File9[$e]=$HOME/Downloads/lectu14.ps
+Name1[$e]=Exam 2 Solutions.pdf
+Name10[$e]=Quiz10.pdf
+Name2[$e]=Vectors and Complex Numbers.pdf
+Name3[$e]=Exponentials Logs Interest .pdf
+Name4[$e]=Radians Degrees Arc Length.pdf
+Name5[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
+Name6[$e]=Algebraic Geometry - Robin Hartshorne.pdf
+Name7[$e]=Algebraic Geometry All Tripos.pdf
+Name8[$e]=lectu14.pdf
+Name9[$e]=lectu14.ps
 
 [UiSettings]
 ColorScheme=Maia
