@@ -28,7 +28,7 @@ Height 1080=996
 Height 1920=1866
 Height 800=746
 MenuBar=Disabled
-State=AAAA/wAAAAD9AAAAAAAAB2wAAAPgAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
+State=AAAA/wAAAAD9AAAAAAAAAv4AAAPeAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -77,42 +77,42 @@ eDP-1 HDMI-1 YPosition 1080x1920=42
 eDP-1 HDMI-1 YPosition 1920x1080=41
 eDP-1 Height 1080=1027
 eDP-1 Height 1920x1080=486
-eDP-1 Height 1920x1080 eDP-1=1029
+eDP-1 Height 1920x1080 eDP-1=1027
 eDP-1 Width 1920=623
 eDP-1 Width 1920x1080=1150
-eDP-1 Width 1920x1080 eDP-1=1900
+eDP-1 Width 1920x1080 eDP-1=766
 eDP-1 XPosition=1286
 eDP-1 XPosition 1920x1080=759
-eDP-1 XPosition 1920x1080 eDP-1=10
+eDP-1 XPosition 1920x1080 eDP-1=1143
 eDP-1 YPosition=42
 eDP-1 YPosition 1920x1080=582
-eDP-1 YPosition 1920x1080 eDP-1=41
+eDP-1 YPosition 1920x1080 eDP-1=42
 
 [Print Preview]
 Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Notes/Class_Notes/2022/Fall/LieAlgebras/sections/HW5.pdf
-File10[$e]=$HOME/Dropbox/Library/Herbert S. Wilf/Generatingfunctionology (516)/Generatingfunctionology - Herbert S. Wilf.pdf
-File2[$e]=$HOME/Downloads/Books2/K3s with Picard Number 1.pdf
-File3[$e]=$HOME/Downloads/Books2/Mukai.pdf
-File4[$e]=$HOME/Dropbox/Library/Philip Griffiths, Joseph Harris/Principles of Algebraic Geometry (447)/Principles of Algebraic Geometry - Philip Griffiths, Joseph Harris.pdf
-File5[$e]=$HOME/Dropbox/Library/Richard Hartley, Andrew Zisserman/Multiple View Geometry in Computer Vision (833)/Multiple View Geometry in Computer Vision - Richard Hartley, Andrew Zisserman.pdf
-File6[$e]=$HOME/Zotero/storage/C9R5V6NN/(London Mathematical Society Lecture Note Series 384) Raf Cluckers, Johannes Nicaise, Julien Sebag - Motivic Integration and its Interactions with Model Theory and Non-Archimedean Geometry_ Volume 2-C.pdf
-File7[$e]=$HOME/Dropbox/Library/David A. Forsyth/Computer Vision_ A Modern Approach_ A Modern Approach (563)/Computer Vision_ A Modern Approach_ A Mode - David A. Forsyth.pdf
-File8[$e]=$HOME/Dropbox/Library/Tadao Oda/Convex Bodies & Algebraic Geometry_ An introduction to the theory of toric varieties (1012)/Convex Bodies & Algebraic Geometry_ An int - Tadao Oda.pdf
-File9[$e]=$HOME/Downloads/Books2/Shifrin Algebra.pdf
-Name1[$e]=HW5.pdf
-Name10[$e]=Generatingfunctionology - Herbert S. Wilf.pdf
-Name2[$e]=K3s with Picard Number 1.pdf
-Name3[$e]=Mukai.pdf
-Name4[$e]=Principles of Algebraic Geometry - Philip Griffiths, Joseph Harris.pdf
-Name5[$e]=Multiple View Geometry in Computer Vision - Richard Hartley, Andrew Zisserman.pdf
-Name6[$e]=(London Mathematical Society Lecture Note Series 384) Raf Cluckers, Johannes Nicaise, Julien Sebag - Motivic Integration and its Interactions with Model Theory and Non-Archimedean Geometry_ Volume 2-C.pdf
-Name7[$e]=Computer Vision_ A Modern Approach_ A Mode - David A. Forsyth.pdf
-Name8[$e]=Convex Bodies & Algebraic Geometry_ An int - Tadao Oda.pdf
-Name9[$e]=Shifrin Algebra.pdf
+File1[$e]=$HOME/Downloads/Books2/K3s with Picard Number 1.pdf
+File10[$e]=$HOME/Algebra Exam Review Sheet.pdf
+File2[$e]=$HOME/Downloads/Books2/Mukai.pdf
+File3[$e]=$HOME/Dropbox/Library/Philip Griffiths, Joseph Harris/Principles of Algebraic Geometry (447)/Principles of Algebraic Geometry - Philip Griffiths, Joseph Harris.pdf
+File4[$e]=$HOME/Dropbox/Library/Richard Hartley, Andrew Zisserman/Multiple View Geometry in Computer Vision (833)/Multiple View Geometry in Computer Vision - Richard Hartley, Andrew Zisserman.pdf
+File5[$e]=$HOME/Zotero/storage/C9R5V6NN/(London Mathematical Society Lecture Note Series 384) Raf Cluckers, Johannes Nicaise, Julien Sebag - Motivic Integration and its Interactions with Model Theory and Non-Archimedean Geometry_ Volume 2-C.pdf
+File6[$e]=$HOME/Dropbox/Library/David A. Forsyth/Computer Vision_ A Modern Approach_ A Modern Approach (563)/Computer Vision_ A Modern Approach_ A Mode - David A. Forsyth.pdf
+File7[$e]=$HOME/Dropbox/Library/Tadao Oda/Convex Bodies & Algebraic Geometry_ An introduction to the theory of toric varieties (1012)/Convex Bodies & Algebraic Geometry_ An int - Tadao Oda.pdf
+File8[$e]=$HOME/Downloads/Books2/Shifrin Algebra.pdf
+File9[$e]=$HOME/Dropbox/Library/Herbert S. Wilf/Generatingfunctionology (516)/Generatingfunctionology - Herbert S. Wilf.pdf
+Name1[$e]=K3s with Picard Number 1.pdf
+Name10[$e]=Algebra Exam Review Sheet.pdf
+Name2[$e]=Mukai.pdf
+Name3[$e]=Principles of Algebraic Geometry - Philip Griffiths, Joseph Harris.pdf
+Name4[$e]=Multiple View Geometry in Computer Vision - Richard Hartley, Andrew Zisserman.pdf
+Name5[$e]=(London Mathematical Society Lecture Note Series 384) Raf Cluckers, Johannes Nicaise, Julien Sebag - Motivic Integration and its Interactions with Model Theory and Non-Archimedean Geometry_ Volume 2-C.pdf
+Name6[$e]=Computer Vision_ A Modern Approach_ A Mode - David A. Forsyth.pdf
+Name7[$e]=Convex Bodies & Algebraic Geometry_ An int - Tadao Oda.pdf
+Name8[$e]=Shifrin Algebra.pdf
+Name9[$e]=Generatingfunctionology - Herbert S. Wilf.pdf
 
 [UiSettings]
 ColorScheme=Maia
