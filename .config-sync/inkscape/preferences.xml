@@ -352,8 +352,8 @@
        live_outline="1"
        live_objects="1"
        show_helperpath="0"
-       x="362.079208818898"
-       y="325.073049448819"
+       x="516.170056875526"
+       y="101.517517234274"
        edit_clipping_paths="0"
        edit_masks="0" />
     <eventcontext
@@ -1108,7 +1108,7 @@
      org.inkscape.effect.filter.Blur.content="0" />
   <group
      id="desktop"
-     style="stroke-width:1.0015748;fill:#000000;fill-rule:evenodd;font-size:13.33333333px;stop-color:#000000;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;opacity:0.45969739;stroke-dasharray:1.00157475, 2.0031495">
+     style="stroke-width:1.0015748;fill:#ff6600;fill-rule:evenodd;font-size:13.33333333px;stop-color:#000000;stroke:#6699ff;stroke-linecap:round;stroke-linejoin:round;opacity:0.45969739;stroke-dasharray:1.00157475, 2.0031495;fill-opacity:0.20657212">
     <group
        width="943"
        height="1027"
