@@ -37,13 +37,13 @@
 \newcommand{\stack}[1]{\mathclap{\substack{ #1 }}} 
 \newcommand{\freezmod}[1]{\ZZ\left[ {#1} \right] } 
 
-\newcommand{\powerseries}[1]{ { \left[ {#1} \right] } }
 \newcommand{\functionfield}[1]{ { \left( {#1} \right) } }
 \newcommand{\rff}[1]{ \functionfield{#1} }
 
-\newcommand{\fps}[1]{{\left[\left[ #1 \right]\right]  }}
+\newcommand{\fps}[1]{{\llbracket #1 \rrbracket  }}
 \newcommand{\formalseries}[1]{ \fps{#1} }
 \newcommand{\formalpowerseries}[1]{ \fps{#1} }
+\newcommand{\powerseries}[1]{ \fps{#1} }
 \newcommand\fls[1]{{\left(\left( #1 \right)\right)  }}
 
 \newcommand\lshriek[0]{{}_{!}}
@@ -51,7 +51,7 @@
 
 \newcommand{\nilrad}[1]{{\sqrt{0_{#1}} }}
 \newcommand{\jacobsonrad}[1]{{J ({#1}) }}
-\newcommand{\localize}[1]{ \left[ { \scriptstyle { {#1}\inv}  } \right]}
+\newcommand{\localize}[1]{ \left[ { \scriptstyle { {#1}\inv}  } \right] }
 \newcommand{\primelocalize}[1]{ \left[ { \scriptstyle { { ({#1}^c) }\inv}  } \right]}
 \newcommand{\plocalize}[1]{\primelocalize{#1}}
 \newcommand{\sheafify}[1]{ \left( #1 \right)^{\scriptscriptstyle \mathrm{sh}} }
@@ -94,3 +94,6 @@
 \newcommand\tl[2]{{ #1_1, \cdots, #1_{#2} }}
 \newcommand\tlz[2]{{ #1_0, \cdots, #1_{#2} }}
 \newcommand\tsl[3]{ \ts{ {#1}_{#2}, \cdots, {#1}_{#3} } }
+
+\newcommand{\cofinal}[0]{\mathsf{\emptyset} }
+\newcommand{\final}[0]{\ts{\pt}}
