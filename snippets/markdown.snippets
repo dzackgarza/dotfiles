@@ -121,7 +121,7 @@ ${4:Y}
 \end{tikzcd}
 endsnippet
 
-snippet tikz_inkscape "Tikz: Including converted Inkscape"
+snippet inkscape_tikz "Tikz: Including converted Inkscape"
 
 \begin{tikzpicture}
 \node (node_one) at (0,0) {
@@ -131,7 +131,7 @@ snippet tikz_inkscape "Tikz: Including converted Inkscape"
 
 endsnippet
 
-snippet tikz_equalizer "Tikz Equalizer"
+snippet equalizer_tikz "Tikz Equalizer"
 
 \begin{tikzcd}
 ${1} 
@@ -146,33 +146,7 @@ ${3}
 endsnippet
 
 
-snippet tikz_simplicial "TikzCD Simplicial Object"
-
-\begin{tikzcd}
-${1} 
-	&
-${2} 
-	\arrow[l] 
-	&
-${3}
-	\arrow[l, shift left]
-	\arrow[l, shift right] 
-	&
-${4}
-	\arrow[l]
-	\arrow[l, shift left=2]
-	\arrow[l, shift right=2]
-	&
-\cdots
-	\arrow[l, shift left=0.75]
-	\arrow[l, shift right=0.75]
-	\arrow[l, shift left=2.25]
-	\arrow[l, shift right=2.25]
-	&
-\end{tikzcd}
-endsnippet
-
-snippet tikz_longexactsequence "TikzCD LES"
+snippet LES_tikz "TikzCD LES"
 
 \begin{tikzcd}
 ${1:A}
@@ -671,5 +645,64 @@ ${1}
 </summary>
 ${2}
 </details>
+
+endsnippet
+
+snippet equalizer_tikz "Simplicial Resolution"
+
+\begin{tikzcd}
+    \cdots
+    \stackar{9}[r]
+    &
+    ${4}
+    \stackar{7}[r]
+    &
+    ${3}
+    \stackar{5}[r]
+    &   
+    ${2}
+    \stackar{3}[r]
+    &
+    ${1}
+\end{tikzcd}
+
+endsnippet
+
+
+snippet simplicialrestikz "Simplicial Resolution"
+
+\begin{tikzcd}
+    \cdots
+    \stackar{9}[r]
+    &
+    ${4}
+    \stackar{7}[r]
+    &
+    ${3}
+    \stackar{5}[r]
+    &   
+    ${2}
+    \stackar{3}[r]
+    &
+    ${1}
+\end{tikzcd}
+
+endsnippet
+
+snippet cosimplicialres_equalizer_tikz "Simplicial Resolution"
+
+\begin{tikzcd}
+    ${1}
+    \stackar{3}[r]
+    &
+    ${2}
+    \stackar{5}[r]
+    &   
+    ${3}
+    \stackar{7}[r]
+    &
+    ${4}
+    \stackar{9}[r]
+\end{tikzcd}
 
 endsnippet
