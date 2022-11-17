@@ -40,11 +40,15 @@
 \newcommand{\functionfield}[1]{ { \left( {#1} \right) } }
 \newcommand{\rff}[1]{ \functionfield{#1} }
 
+
 \newcommand{\fps}[1]{{\llbracket #1 \rrbracket  }}
 \newcommand{\formalseries}[1]{ \fps{#1} }
 \newcommand{\formalpowerseries}[1]{ \fps{#1} }
 \newcommand{\powerseries}[1]{ \fps{#1} }
-\newcommand\fls[1]{{\left(\left( #1 \right)\right)  }}
+\newcommand\fls[1]{(\hspace{-0.25em}( #1 )\hspace{-0.22em}) }
+
+\newcommand\laurent[1]{\fls{#1}}
+\newcommand\laurentseries[1]{\fls{#1}}
 
 \newcommand\lshriek[0]{{}_{!}}
 \newcommand\pushf[0]{{}^{*}}
