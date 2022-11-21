@@ -27,7 +27,6 @@ shouldShowToolBarComingFromFullScreen=false
 Height 1080=996
 Height 1920=1866
 Height 800=746
-RestorePositionForNextInstance=false
 State=AAAA/wAAAAD9AAAAAAAAA68AAAPIAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
@@ -93,26 +92,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Algebra Exam Review Sheet (Solutions).pdf
-File10[$e]=$HOME/quals/40_Topology/TexDocs/QualTopology.pdf
-File2[$e]=$HOME/Downloads/Books2/Shifrin Algebra.pdf
-File3[$e]=$HOME/Dropbox/Library/Vassilliev/Picard Lefschetz Theory (990)/Picard Lefschetz Theory - Vassilliev.pdf
-File4[$e]=$HOME/Dropbox/Library/Unknown/Fukaya Categories and Picard Lefschetz theory (989)/Fukaya Categories and Picard Lefschetz the - Unknown.pdf
-File5[$e]=$HOME/Zotero/storage/TYXWJW2J/Fulton - 1993 - Introduction to toric varieties.pdf
-File6[$e]=$HOME/Dropbox/Teaching/Precalculus/Exams/Exam 3 Friday Nov 18.pdf
-File7[$e]=$HOME/Dropbox/Library/Herbert S. Wilf/Generatingfunctionology (516)/Generatingfunctionology - Herbert S. Wilf.pdf
-File8[$e]=$HOME/quals/20_Real_Analysis/TexDocs/QualReal.pdf
-File9[$e]=$HOME/quals/30_Complex_Analysis/TexDocs/QualComplex.pdf
-Name1[$e]=Algebra Exam Review Sheet (Solutions).pdf
-Name10[$e]=QualTopology.pdf
-Name2[$e]=Shifrin Algebra.pdf
-Name3[$e]=Picard Lefschetz Theory - Vassilliev.pdf
-Name4[$e]=Fukaya Categories and Picard Lefschetz the - Unknown.pdf
-Name5[$e]=Fulton - 1993 - Introduction to toric varieties.pdf
-Name6[$e]=Exam 3 Friday Nov 18.pdf
-Name7[$e]=Generatingfunctionology - Herbert S. Wilf.pdf
-Name8[$e]=QualReal.pdf
-Name9[$e]=QualComplex.pdf
+File1[$e]=$HOME/Dropbox/Library/Vassilliev/Picard Lefschetz Theory (990)/Picard Lefschetz Theory - Vassilliev.pdf
+File10[$e]=$HOME/Downloads/Books2/Shifrin Algebra.pdf
+File2[$e]=$HOME/Dropbox/Library/Unknown/Fukaya Categories and Picard Lefschetz theory (989)/Fukaya Categories and Picard Lefschetz the - Unknown.pdf
+File3[$e]=$HOME/Zotero/storage/TYXWJW2J/Fulton - 1993 - Introduction to toric varieties.pdf
+File4[$e]=$HOME/Dropbox/Teaching/Precalculus/Exams/Exam 3 Friday Nov 18.pdf
+File5[$e]=$HOME/Dropbox/Library/Herbert S. Wilf/Generatingfunctionology (516)/Generatingfunctionology - Herbert S. Wilf.pdf
+File6[$e]=$HOME/quals/20_Real_Analysis/TexDocs/QualReal.pdf
+File7[$e]=$HOME/quals/30_Complex_Analysis/TexDocs/QualComplex.pdf
+File8[$e]=$HOME/quals/40_Topology/TexDocs/QualTopology.pdf
+File9[$e]=$HOME/Downloads/lectu14.ps
+Name1[$e]=Picard Lefschetz Theory - Vassilliev.pdf
+Name10[$e]=Shifrin Algebra.pdf
+Name2[$e]=Fukaya Categories and Picard Lefschetz the - Unknown.pdf
+Name3[$e]=Fulton - 1993 - Introduction to toric varieties.pdf
+Name4[$e]=Exam 3 Friday Nov 18.pdf
+Name5[$e]=Generatingfunctionology - Herbert S. Wilf.pdf
+Name6[$e]=QualReal.pdf
+Name7[$e]=QualComplex.pdf
+Name8[$e]=QualTopology.pdf
+Name9[$e]=lectu14.ps
 
 [UiSettings]
 ColorScheme=Maia
