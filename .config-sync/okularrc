@@ -28,7 +28,7 @@ Height 1080=996
 Height 1920=1866
 Height 800=746
 RestorePositionForNextInstance=false
-State=AAAA/wAAAAD9AAAAAAAAAnQAAAPIAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
+State=AAAA/wAAAAD9AAAAAAAAB2wAAAPKAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -77,42 +77,42 @@ eDP-1 HDMI-1 YPosition 1080x1920=42
 eDP-1 HDMI-1 YPosition 1920x1080=41
 eDP-1 Height 1080=1027
 eDP-1 Height 1920x1080=486
-eDP-1 Height 1920x1080 eDP-1=1027
+eDP-1 Height 1920x1080 eDP-1=1029
 eDP-1 Width 1920=623
 eDP-1 Width 1920x1080=1150
-eDP-1 Width 1920x1080 eDP-1=628
+eDP-1 Width 1920x1080 eDP-1=1900
 eDP-1 XPosition=1286
 eDP-1 XPosition 1920x1080=759
-eDP-1 XPosition 1920x1080 eDP-1=646
+eDP-1 XPosition 1920x1080 eDP-1=10
 eDP-1 YPosition=42
 eDP-1 YPosition 1920x1080=582
-eDP-1 YPosition 1920x1080 eDP-1=42
+eDP-1 YPosition 1920x1080 eDP-1=41
 
 [Print Preview]
 Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Downloads/lectu14.ps
-File10[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz13.pdf
-File2[$e]=$HOME/Downloads/Books2/Shifrin Algebra.pdf
-File3[$e]=$HOME/Dropbox/Graham.pdf
-File4[$e]=$HOME/SparkleShare/github.com/Notes/Class_Notes/2022/Fall/Moduli/sections/HW2.pdf
-File5[$e]=$HOME/Zotero/storage/JYT94TJB/Hartshorne - 2008 - Algebraic geometry.pdf
-File6[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
-File7[$e]=$HOME/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
-File8[$e]=$HOME/Downloads/Period domain.pdf
-File9[$e]=$HOME/Downloads/216class4748.ps
-Name1[$e]=lectu14.ps
-Name10[$e]=Quiz13.pdf
-Name2[$e]=Shifrin Algebra.pdf
-Name3[$e]=Graham.pdf
-Name4[$e]=HW2.pdf
-Name5[$e]=Hartshorne - 2008 - Algebraic geometry.pdf
-Name6[$e]=Algebraic Geometry - Robin Hartshorne.pdf
-Name7[$e]=Cox et al. - 2011 - Toric varieties.pdf
-Name8[$e]=Period domain.pdf
-Name9[$e]=216class4748.ps
+File1[$e]=$HOME/Dropbox/Graham.pdf
+File10[$e]=$HOME/Downloads/Books2/Shifrin Algebra.pdf
+File2[$e]=$HOME/SparkleShare/github.com/Notes/Class_Notes/2022/Fall/Moduli/sections/HW2.pdf
+File3[$e]=$HOME/Zotero/storage/JYT94TJB/Hartshorne - 2008 - Algebraic geometry.pdf
+File4[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
+File5[$e]=$HOME/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
+File6[$e]=$HOME/Downloads/Period domain.pdf
+File7[$e]=$HOME/Downloads/216class4748.ps
+File8[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz13.pdf
+File9[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz11.pdf
+Name1[$e]=Graham.pdf
+Name10[$e]=Shifrin Algebra.pdf
+Name2[$e]=HW2.pdf
+Name3[$e]=Hartshorne - 2008 - Algebraic geometry.pdf
+Name4[$e]=Algebraic Geometry - Robin Hartshorne.pdf
+Name5[$e]=Cox et al. - 2011 - Toric varieties.pdf
+Name6[$e]=Period domain.pdf
+Name7[$e]=216class4748.ps
+Name8[$e]=Quiz13.pdf
+Name9[$e]=Quiz11.pdf
 
 [UiSettings]
 ColorScheme=Maia
