@@ -94,25 +94,25 @@ Width 1920=600
 
 [Recent Files]
 File1[$e]=$HOME/Dropbox/Graham.pdf
-File10[$e]=$HOME/Downloads/Books2/Shifrin Algebra.pdf
+File10[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
 File2[$e]=$HOME/SparkleShare/github.com/Notes/Class_Notes/2022/Fall/Moduli/sections/HW2.pdf
 File3[$e]=$HOME/Zotero/storage/JYT94TJB/Hartshorne - 2008 - Algebraic geometry.pdf
-File4[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
-File5[$e]=$HOME/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
-File6[$e]=$HOME/Downloads/Period domain.pdf
-File7[$e]=$HOME/Downloads/216class4748.ps
-File8[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz13.pdf
-File9[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz11.pdf
+File4[$e]=$HOME/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
+File5[$e]=$HOME/Downloads/Period domain.pdf
+File6[$e]=$HOME/Downloads/216class4748.ps
+File7[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz13.pdf
+File8[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz11.pdf
+File9[$e]=$HOME/Downloads/Books2/Shifrin Algebra.pdf
 Name1[$e]=Graham.pdf
-Name10[$e]=Shifrin Algebra.pdf
+Name10[$e]=Algebraic Geometry - Robin Hartshorne.pdf
 Name2[$e]=HW2.pdf
 Name3[$e]=Hartshorne - 2008 - Algebraic geometry.pdf
-Name4[$e]=Algebraic Geometry - Robin Hartshorne.pdf
-Name5[$e]=Cox et al. - 2011 - Toric varieties.pdf
-Name6[$e]=Period domain.pdf
-Name7[$e]=216class4748.ps
-Name8[$e]=Quiz13.pdf
-Name9[$e]=Quiz11.pdf
+Name4[$e]=Cox et al. - 2011 - Toric varieties.pdf
+Name5[$e]=Period domain.pdf
+Name6[$e]=216class4748.ps
+Name7[$e]=Quiz13.pdf
+Name8[$e]=Quiz11.pdf
+Name9[$e]=Shifrin Algebra.pdf
 
 [UiSettings]
 ColorScheme=Maia
