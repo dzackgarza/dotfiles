@@ -13,7 +13,7 @@
   <int name="eraseOnImage" value="0" />
   <int name="inputSimplify" value="4" />
   <int name="inputSmoothing" value="8" />
-  <int name="lastUpdateCheck" value="1667964934" />
+  <int name="lastUpdateCheck" value="1670111703" />
   <int name="mouseMode" value="0" />
   <int name="penType" value="11" />
   <int name="reopenLastDoc" value="1" />
@@ -22,7 +22,7 @@
   <int name="screenDPI" value="30" />
   <int name="showAdvPrefs" value="1" />
   <int name="singleTouchMode" value="0" />
-  <int name="strokeCounter" value="947" />
+  <int name="strokeCounter" value="12" />
   <int name="thumbFirstPage" value="1" />
   <int name="thumbnailSize" value="110" />
   <float name="pageHeight" value="3090" />
@@ -35,7 +35,7 @@
   <string name="currFolder" value="/home/zack/Dropbox/WriteNotes/Quiz Solutions/" />
   <string name="docFileExt" value="svgz" />
   <string name="newDocTitleFmt" value="%b %e %Hh%M" />
-  <string name="recentDocs" value="/home/zack/Dropbox/WriteNotes/Quiz Solutions/Quiz 2 Solutions.svgz:::/home/zack/Dropbox/WriteNotes/Quiz Solutions/Quiz 1 Solutions.svgz:::/home/zack/Dropbox/WriteNotes/Quiz Solutions/Quiz 7.svgz:::/home/zack/Dropbox/WriteNotes/Archive/1113/Lectures/Q13.html:::/home/zack/Dropbox/WriteNotes/Archive/1113/Lectures/Q12.html:::/home/zack/Dropbox/WriteNotes/Archive/1113/Lectures/Q11.html:::/home/zack/Dropbox/WriteNotes/Archive/1113/Lectures/2020-01-25_Monday.html:::/home/zack/Dropbox/WriteNotes/Archive/1113/Writeups/Jan 16 00h37.html:::/home/zack/Dropbox/WriteNotes/Archive/1113/May  4 22h10.html:::/home/zack/Dropbox/WriteNotes/Archive/1113/Lectures/Q10.html:::/home/zack/Dropbox/WriteNotes/Quiz Solutions/Exam 2.svgz" />
+  <string name="recentDocs" value="/home/zack/Dropbox/WriteNotes/Quiz Solutions/Exam 3 Friday Nov 18.svgz:::/home/zack/Dropbox/WriteNotes/Quiz Solutions/Quiz 2 Solutions.svgz:::/home/zack/Dropbox/WriteNotes/Quiz Solutions/Quiz 1 Solutions.svgz:::/home/zack/Dropbox/WriteNotes/Quiz Solutions/Quiz 7.svgz:::/home/zack/Dropbox/WriteNotes/Archive/1113/Lectures/Q13.html:::/home/zack/Dropbox/WriteNotes/Archive/1113/Lectures/Q12.html:::/home/zack/Dropbox/WriteNotes/Archive/1113/Lectures/Q11.html:::/home/zack/Dropbox/WriteNotes/Archive/1113/Lectures/2020-01-25_Monday.html:::/home/zack/Dropbox/WriteNotes/Archive/1113/Writeups/Jan 16 00h37.html:::/home/zack/Dropbox/WriteNotes/Archive/1113/May  4 22h10.html:::/home/zack/Dropbox/WriteNotes/Archive/1113/Lectures/Q10.html" />
   <string name="savedColors" value="#FF000000,#FFFF0000,#FF008000,#FF0000FF" />
   <string name="savedWidths" value="1.400,2.400,4.000,8.000" />
   <string name="syncServer" value="localhost" />
