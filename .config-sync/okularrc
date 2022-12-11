@@ -27,9 +27,7 @@ shouldShowToolBarComingFromFullScreen=false
 Height 1080=996
 Height 1920=1866
 Height 800=746
-MenuBar=Disabled
-RestorePositionForNextInstance=false
-State=AAAA/wAAAAD9AAAAAAAAB2wAAAPgAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
+State=AAAA/wAAAAD9AAAAAAAAAdQAAAPIAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -78,42 +76,42 @@ eDP-1 HDMI-1 YPosition 1080x1920=42
 eDP-1 HDMI-1 YPosition 1920x1080=41
 eDP-1 Height 1080=1027
 eDP-1 Height 1920x1080=486
-eDP-1 Height 1920x1080 eDP-1=1029
+eDP-1 Height 1920x1080 eDP-1=1027
 eDP-1 Width 1920=623
 eDP-1 Width 1920x1080=1150
-eDP-1 Width 1920x1080 eDP-1=1900
+eDP-1 Width 1920x1080 eDP-1=468
 eDP-1 XPosition=1286
 eDP-1 XPosition 1920x1080=759
-eDP-1 XPosition 1920x1080 eDP-1=10
+eDP-1 XPosition 1920x1080 eDP-1=486
 eDP-1 YPosition=42
 eDP-1 YPosition 1920x1080=582
-eDP-1 YPosition 1920x1080 eDP-1=41
+eDP-1 YPosition 1920x1080 eDP-1=42
 
 [Print Preview]
 Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Downloads/Period domain.pdf
-File10[$e]=$HOME/AlgSolns.pdf
-File2[$e]=$HOME/Downloads/216class4748.ps
-File3[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz13.pdf
-File4[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz11.pdf
-File5[$e]=$HOME/Downloads/Books2/Shifrin Algebra.pdf
+File1[$e]=$HOME/Downloads/216class4748.ps
+File10[$e]=$HOME/Notes/Class_Notes/2022/Fall/Orals/0_Study Guides/output.pdf
+File2[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz13.pdf
+File3[$e]=$HOME/Dropbox/Teaching/Precalculus/2021 Spring Quizzes/Quiz11.pdf
+File4[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
+File5[$e]=$HOME/Downloads/cyclicI.ps
 File6[$e]=$HOME/Dropbox/Library/Robin Hartshorne/Algebraic Geometry (607)/Algebraic Geometry - Robin Hartshorne.pdf
-File7[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
-File8[$e]=$HOME/Downloads/cyclicI.ps
-File9[$e]=$HOME/Zotero/storage/TYXWJW2J/Fulton - 1993 - Introduction to toric varieties.pdf
-Name1[$e]=Period domain.pdf
-Name10[$e]=AlgSolns.pdf
-Name2[$e]=216class4748.ps
-Name3[$e]=Quiz13.pdf
-Name4[$e]=Quiz11.pdf
-Name5[$e]=Shifrin Algebra.pdf
+File7[$e]=$HOME/orals/ReadingDoc.pdf
+File8[$e]=$HOME/Downloads/Books2/Shifrin Algebra.pdf
+File9[$e]=$HOME/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
+Name1[$e]=216class4748.ps
+Name10[$e]=output.pdf
+Name2[$e]=Quiz13.pdf
+Name3[$e]=Quiz11.pdf
+Name4[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
+Name5[$e]=cyclicI.ps
 Name6[$e]=Algebraic Geometry - Robin Hartshorne.pdf
-Name7[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
-Name8[$e]=cyclicI.ps
-Name9[$e]=Fulton - 1993 - Introduction to toric varieties.pdf
+Name7[$e]=ReadingDoc.pdf
+Name8[$e]=Shifrin Algebra.pdf
+Name9[$e]=Cox et al. - 2011 - Toric varieties.pdf
 
 [UiSettings]
 ColorScheme=Maia
