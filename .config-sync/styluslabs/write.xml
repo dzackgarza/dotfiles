@@ -22,7 +22,7 @@
   <int name="screenDPI" value="30" />
   <int name="showAdvPrefs" value="1" />
   <int name="singleTouchMode" value="0" />
-  <int name="strokeCounter" value="500" />
+  <int name="strokeCounter" value="521" />
   <int name="thumbFirstPage" value="1" />
   <int name="thumbnailSize" value="110" />
   <float name="pageHeight" value="3090" />
