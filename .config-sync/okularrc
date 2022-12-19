@@ -27,7 +27,6 @@ shouldShowToolBarComingFromFullScreen=false
 Height 1080=996
 Height 1920=1866
 Height 800=746
-RestorePositionForNextInstance=false
 State=AAAA/wAAAAD9AAAAAAAAA68AAAPIAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
@@ -93,26 +92,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Downloads/s00229-015-0744-8.pdf
-File10[$e]=$HOME/Dropbox/WriteNotes/Quiz Solutions/Quiz 9 Solutions.pdf
-File2[$e]=$HOME/Downloads/Nov 20 14h46.pdf
-File3[$e]=$HOME/Downloads/lectu14.ps
-File4[$e]=$HOME/Downloads/\\.pdf
-File5[$e]=$HOME/Downloads/hwk2.pdf
-File6[$e]=$HOME/Downloads/(Oxford graduate texts in mathematics, 6) Qing Liu - Algebraic geometry and arithmetic curves-Oxford University Press (2006).pdf
-File7[$e]=$HOME/Downloads/Customer Form Airports.pdf.pdf
-File8[$e]=$HOME/Downloads/AGNES/Groome itinerary.pdf
-File9[$e]=$HOME/Downloads/AGNES/Valley Invoice.pdf
-Name1[$e]=s00229-015-0744-8.pdf
-Name10[$e]=Quiz 9 Solutions.pdf
-Name2[$e]=Nov 20 14h46.pdf
-Name3[$e]=lectu14.ps
-Name4[$e]=\\.pdf
-Name5[$e]=hwk2.pdf
-Name6[$e]=(Oxford graduate texts in mathematics, 6) Qing Liu - Algebraic geometry and arithmetic curves-Oxford University Press (2006).pdf
-Name7[$e]=Customer Form Airports.pdf.pdf
-Name8[$e]=Groome itinerary.pdf
-Name9[$e]=Valley Invoice.pdf
+File1[$e]=$HOME/Downloads/lectu14.ps
+File10[$e]=$HOME/Downloads/15211 Pre EC.pdf
+File2[$e]=$HOME/Downloads/\\.pdf
+File3[$e]=$HOME/Downloads/hwk2.pdf
+File4[$e]=$HOME/Downloads/(Oxford graduate texts in mathematics, 6) Qing Liu - Algebraic geometry and arithmetic curves-Oxford University Press (2006).pdf
+File5[$e]=$HOME/Downloads/Customer Form Airports.pdf.pdf
+File6[$e]=$HOME/Downloads/AGNES/Groome itinerary.pdf
+File7[$e]=$HOME/Downloads/AGNES/Valley Invoice.pdf
+File8[$e]=$HOME/Dropbox/WriteNotes/Quiz Solutions/Quiz 9 Solutions.pdf
+File9[$e]=$HOME/Dropbox/WriteNotes/Quiz Solutions/Exam 3 Solutions.pdf
+Name1[$e]=lectu14.ps
+Name10[$e]=15211 Pre EC.pdf
+Name2[$e]=\\.pdf
+Name3[$e]=hwk2.pdf
+Name4[$e]=(Oxford graduate texts in mathematics, 6) Qing Liu - Algebraic geometry and arithmetic curves-Oxford University Press (2006).pdf
+Name5[$e]=Customer Form Airports.pdf.pdf
+Name6[$e]=Groome itinerary.pdf
+Name7[$e]=Valley Invoice.pdf
+Name8[$e]=Quiz 9 Solutions.pdf
+Name9[$e]=Exam 3 Solutions.pdf
 
 [UiSettings]
 ColorScheme=Maia
