@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo updatedb;
+
 # Set up an empty array to store the file names
 files=()
 
@@ -33,6 +35,7 @@ for file in "${files[@]}"; do
     echo "$apkg_name";
     # If the file exists, run the make_flashcards.sh script on it
     lists_to_anki.py "$file" "$apkg_name";
+    mdimages_to_anki_collection.sh "$file";
   else
     # If the file doesn't exist, print a message
     echo "Error: file $file does not exist"
