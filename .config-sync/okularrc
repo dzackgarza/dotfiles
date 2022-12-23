@@ -92,26 +92,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Downloads/lectu14.ps
-File10[$e]=$HOME/Downloads/15211 Pre EC.pdf
-File2[$e]=$HOME/Downloads/\\.pdf
-File3[$e]=$HOME/Downloads/hwk2.pdf
-File4[$e]=$HOME/Downloads/(Oxford graduate texts in mathematics, 6) Qing Liu - Algebraic geometry and arithmetic curves-Oxford University Press (2006).pdf
-File5[$e]=$HOME/Downloads/Customer Form Airports.pdf.pdf
-File6[$e]=$HOME/Downloads/AGNES/Groome itinerary.pdf
-File7[$e]=$HOME/Downloads/AGNES/Valley Invoice.pdf
-File8[$e]=$HOME/Dropbox/WriteNotes/Quiz Solutions/Quiz 9 Solutions.pdf
-File9[$e]=$HOME/Dropbox/WriteNotes/Quiz Solutions/Exam 3 Solutions.pdf
-Name1[$e]=lectu14.ps
-Name10[$e]=15211 Pre EC.pdf
-Name2[$e]=\\.pdf
-Name3[$e]=hwk2.pdf
-Name4[$e]=(Oxford graduate texts in mathematics, 6) Qing Liu - Algebraic geometry and arithmetic curves-Oxford University Press (2006).pdf
-Name5[$e]=Customer Form Airports.pdf.pdf
-Name6[$e]=Groome itinerary.pdf
-Name7[$e]=Valley Invoice.pdf
-Name8[$e]=Quiz 9 Solutions.pdf
-Name9[$e]=Exam 3 Solutions.pdf
+File1[$e]=$HOME/Downloads/\\.pdf
+File10[$e]=$HOME/Dropbox/Library/Charles A. Weibel/An Introduction to Homological Algebra (489)/An Introduction to Homological Algebra - Charles A. Weibel.pdf
+File2[$e]=$HOME/Downloads/hwk2.pdf
+File3[$e]=$HOME/Downloads/(Oxford graduate texts in mathematics, 6) Qing Liu - Algebraic geometry and arithmetic curves-Oxford University Press (2006).pdf
+File4[$e]=$HOME/Downloads/Customer Form Airports.pdf.pdf
+File5[$e]=$HOME/Downloads/AGNES/Groome itinerary.pdf
+File6[$e]=$HOME/Downloads/AGNES/Valley Invoice.pdf
+File7[$e]=$HOME/Dropbox/WriteNotes/Quiz Solutions/Quiz 9 Solutions.pdf
+File8[$e]=$HOME/Dropbox/WriteNotes/Quiz Solutions/Exam 3 Solutions.pdf
+File9[$e]=$HOME/Downloads/15211 Pre EC.pdf
+Name1[$e]=\\.pdf
+Name10[$e]=An Introduction to Homological Algebra - Charles A. Weibel.pdf
+Name2[$e]=hwk2.pdf
+Name3[$e]=(Oxford graduate texts in mathematics, 6) Qing Liu - Algebraic geometry and arithmetic curves-Oxford University Press (2006).pdf
+Name4[$e]=Customer Form Airports.pdf.pdf
+Name5[$e]=Groome itinerary.pdf
+Name6[$e]=Valley Invoice.pdf
+Name7[$e]=Quiz 9 Solutions.pdf
+Name8[$e]=Exam 3 Solutions.pdf
+Name9[$e]=15211 Pre EC.pdf
 
 [UiSettings]
 ColorScheme=Maia
