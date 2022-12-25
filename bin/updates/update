@@ -58,4 +58,9 @@ clr_green "Updated ZSH plugins"
 
 update_website_and_notes.sh
 
+clr_green "Updated website and pushed notes to github."
+
+cd ~/orals/rawnotes/0_Study\ Guides && make_flashcards.sh;
+clr_green "Updated flashcards"
+
 clr_blueb "Update completed.";
