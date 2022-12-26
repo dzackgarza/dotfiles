@@ -79,7 +79,7 @@ def delete_stuff(s):
   pattern = r'\B#\w+'
   r2 = re.sub(pattern, '', s)
   # Remove dates
-  pattern = r'\d{4}-\d{2}-\d{2}'
+  pattern = r'\b\d{4}-\d{2}-\d{2}\b(?![-_])'
   r3 = re.sub(pattern, '', r2).strip()
   # Remove unicode
   pattern = r'[^\x00-\x7F]+'
