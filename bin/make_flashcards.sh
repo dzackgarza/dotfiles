@@ -1,5 +1,17 @@
 #!/bin/bash
 
+copy_images=false
+
+# Parse the argument using getopts
+# The "f" option expects a value of "true" or "false"
+while getopts ":f:" opt; do
+  case $opt in
+    f) copy_images=$OPTARG;;
+    \?) echo "Invalid option: -$OPTARG" >&2; exit 1;;
+    :) echo "Option -$OPTARG requires an argument." >&2; exit 1;;
+  esac
+done
+
 sudo updatedb;
 
 # Set up an empty array to store the file names
@@ -16,7 +28,6 @@ while IFS= read -r -d '' file; do
     echo "Adding file:"
     files+=("$file")
     echo $file
-    echo $yaml;
     echo "********************************"
   fi
 done < <(find . -name '*.md' -print0 | sort -z)
@@ -35,7 +46,12 @@ for file in "${files[@]}"; do
     echo "$apkg_name";
     # If the file exists, run the make_flashcards.sh script on it
     lists_to_anki.py "$file" "$apkg_name";
-    mdimages_to_anki_collection.sh "$file";
+    if $copy_images; then
+      echo "Copying images from $file";
+      mdimages_to_anki_collection.py "$file";
+    else
+      echo "Not copying images from $file";
+    fi
   else
     # If the file doesn't exist, print a message
     echo "Error: file $file does not exist"
