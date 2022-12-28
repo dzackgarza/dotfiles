@@ -103,7 +103,7 @@ def run_external_program(filename):
   # Return the output as a generator that yields lines one at a time
   return result.stdout.decode('utf-8').split('\n')
 
-lines = run_external_program(filename)
+lines = [r for r in run_external_program(filename) if r != '']
 
 # Parse the file and create flashcards
 question = None
@@ -112,7 +112,7 @@ for line in lines:
   # print(line)
   # If the line is unindented, it is a new question
   if not line.startswith(' ') and not line.startswith('\t'):
-    # If the previous line was an indented answer, create a flashcard
+    # If the previous line was an indented answer, create a flashcard if r != '']
     if question and answer:
       flashcard = genanki.Note(model=model, fields=[field_to_html(question), field_to_html(answer) ])
       deck.add_note(flashcard)
@@ -121,7 +121,7 @@ for line in lines:
   # If the line is indented, it is part of the answer
   else:
     # print("Found indented line, adding answer")
-    answer += line.strip() + '\n'
+    answer += line.strip() + '\n\n'
 
 # If the last line of the file is an indented answer, create a flashcard
 if question and answer:
