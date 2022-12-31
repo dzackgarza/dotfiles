@@ -39,7 +39,8 @@ CARD_MATHJAX_CONTENT = textwrap.dedent(r"""
 MathJax.config.tex.macros = {
 	coloneqq: ['\\mathrel{\\vcenter{:}}=', 0],
     qty: ['{\\left( {#1} \\right)}', 1],
-    divides: ["{~\\Bigm| ~}", 0]
+    divides: ["{~\\Bigm| ~}", 0],
+    colim: ["\mathrm{colim}", 0]
 };
 MathJax.startup.getComponents();
 </script>
