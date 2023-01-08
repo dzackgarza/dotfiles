@@ -60,7 +60,7 @@ update_website_and_notes.sh
 
 clr_green "Updated website and pushed notes to github."
 
-update_all_flashcards.sh:
+/home/zack/dotfiles/bin/update_all_flashcards.sh;
 clr_green "Updated flashcards"
 
 clr_blueb "Update completed.";
