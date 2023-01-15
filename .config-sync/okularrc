@@ -92,26 +92,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Downloads/mar98.ps.gz
-File10[$e]=$HOME/Downloads/Books Spring 2022/Goss Basic Structures of Function Field Arithmetic-Springer (1996).pdf
-File2[$e]=$HOME/Downloads/cyclicI.ps
-File3[$e]=$HOME/Downloads/Final_Reflections.pdf
-File4[$e]=$HOME/Downloads/GSS Reimbursements/12-2.pdf
-File5[$e]=$HOME/Dropbox/Library/Arnaud Beauville/Complex Algebraic Surfaces, 2nd ed_ (877)/Complex Algebraic Surfaces, 2nd ed_ - Arnaud Beauville.pdf
-File6[$e]=$HOME/Downloads/Spring 2022 Books/Hochschild Witherspoon.pdf
-File7[$e]=$HOME/Downloads/s00032-017-0273-x.pdf
-File8[$e]=$HOME/Downloads/yetter-drinfeld-module-categories.pdf
-File9[$e]=$HOME/Downloads/Carlitz-Modules.pdf
-Name1[$e]=mar98.ps.gz
-Name10[$e]=Goss Basic Structures of Function Field Arithmetic-Springer (1996).pdf
-Name2[$e]=cyclicI.ps
-Name3[$e]=Final_Reflections.pdf
-Name4[$e]=12-2.pdf
-Name5[$e]=Complex Algebraic Surfaces, 2nd ed_ - Arnaud Beauville.pdf
-Name6[$e]=Hochschild Witherspoon.pdf
-Name7[$e]=s00032-017-0273-x.pdf
-Name8[$e]=yetter-drinfeld-module-categories.pdf
-Name9[$e]=Carlitz-Modules.pdf
+File1[$e]=$HOME/Downloads/s00032-017-0273-x.pdf
+File10[$e]=$HOME/Zotero/storage/FKYJCUPN/Huybrechts - 2016 - Lectures on K3 Surfaces.pdf
+File2[$e]=$HOME/Downloads/yetter-drinfeld-module-categories.pdf
+File3[$e]=$HOME/Downloads/Carlitz-Modules.pdf
+File4[$e]=$HOME/Downloads/Books Spring 2022/Goss Basic Structures of Function Field Arithmetic-Springer (1996).pdf
+File5[$e]=$HOME/Downloads/Haiyang Talk Additive polynomials.pdf
+File6[$e]=$HOME/Downloads/UGA Postdocs advice.pdf
+File7[$e]=$HOME/Downloads/Peter Talk Carlitz-Modules.pdf
+File8[$e]=$HOME/Winter 2022 Reading Group Talk Final.pdf
+File9[$e]=$HOME/Downloads/Books Spring 2022/Hochschild Witherspoon.pdf
+Name1[$e]=s00032-017-0273-x.pdf
+Name10[$e]=Huybrechts - 2016 - Lectures on K3 Surfaces.pdf
+Name2[$e]=yetter-drinfeld-module-categories.pdf
+Name3[$e]=Carlitz-Modules.pdf
+Name4[$e]=Goss Basic Structures of Function Field Arithmetic-Springer (1996).pdf
+Name5[$e]=Haiyang Talk Additive polynomials.pdf
+Name6[$e]=UGA Postdocs advice.pdf
+Name7[$e]=Peter Talk Carlitz-Modules.pdf
+Name8[$e]=Winter 2022 Reading Group Talk Final.pdf
+Name9[$e]=Hochschild Witherspoon.pdf
 
 [UiSettings]
 ColorScheme=Maia
