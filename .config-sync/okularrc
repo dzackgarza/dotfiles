@@ -27,7 +27,6 @@ shouldShowToolBarComingFromFullScreen=false
 Height 1080=996
 Height 1920=1866
 Height 800=746
-RestorePositionForNextInstance=false
 State=AAAA/wAAAAD9AAAAAAAAB2wAAAPKAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
@@ -93,26 +92,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Downloads/Reimbursements/GSS Fall 2022 Reimbursements/11-11.pdf
-File10[$e]=$HOME/Downloads/part3_gr_lectures_2017.pdf
-File2[$e]=$HOME/Downloads/Reimbursements/GSS Fall 2022 Reimbursements/11-17.pdf
-File3[$e]=$HOME/Downloads/Reimbursements/GSS Fall 2022 Reimbursements/12-2.pdf
-File4[$e]=$HOME/Downloads/Reimbursements/CAMS Fall 2022/CAMS Activity Form.pdf
-File5[$e]=$HOME/Downloads/Reimbursements/GSS Fall 2022 Reimbursements/GSS Activity Form.pdf
-File6[$e]=$HOME/Zotero/storage/FKYJCUPN/Huybrechts - 2016 - Lectures on K3 Surfaces.pdf
-File7[$e]=$HOME/SparkleShare/github.com/Qual-Review-and-Solutions/Algebra/UGA Question (with solutions)/UGA_Algebra_Qual_Solutions.pdf
-File8[$e]=$HOME/Dropbox/Library/Sarnak, Peter/Some applications of modular forms (916)/Some applications of modular forms - Sarnak, Peter.pdf
-File9[$e]=$HOME/Dropbox/Library/Wolf P. Barth, Klaus Hulek, Chris A. M. Peters, Antonius van de Ven/Compact Complex Surfaces (999)/Compact Complex Surfaces - Wolf P. Barth, Klaus Hulek, Chris A. M. Pe.pdf
-Name1[$e]=11-11.pdf
-Name10[$e]=part3_gr_lectures_2017.pdf
-Name2[$e]=11-17.pdf
-Name3[$e]=12-2.pdf
-Name4[$e]=CAMS Activity Form.pdf
-Name5[$e]=GSS Activity Form.pdf
-Name6[$e]=Huybrechts - 2016 - Lectures on K3 Surfaces.pdf
-Name7[$e]=UGA_Algebra_Qual_Solutions.pdf
-Name8[$e]=Some applications of modular forms - Sarnak, Peter.pdf
-Name9[$e]=Compact Complex Surfaces - Wolf P. Barth, Klaus Hulek, Chris A. M. Pe.pdf
+File1[$e]=$HOME/Downloads/Reimbursements/GSS Fall 2022 Reimbursements/11-17.pdf
+File10[$e]=$HOME/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
+File2[$e]=$HOME/Downloads/Reimbursements/GSS Fall 2022 Reimbursements/12-2.pdf
+File3[$e]=$HOME/Downloads/Reimbursements/CAMS Fall 2022/CAMS Activity Form.pdf
+File4[$e]=$HOME/Downloads/Reimbursements/GSS Fall 2022 Reimbursements/GSS Activity Form.pdf
+File5[$e]=$HOME/Zotero/storage/FKYJCUPN/Huybrechts - 2016 - Lectures on K3 Surfaces.pdf
+File6[$e]=$HOME/SparkleShare/github.com/Qual-Review-and-Solutions/Algebra/UGA Question (with solutions)/UGA_Algebra_Qual_Solutions.pdf
+File7[$e]=$HOME/Dropbox/Library/Sarnak, Peter/Some applications of modular forms (916)/Some applications of modular forms - Sarnak, Peter.pdf
+File8[$e]=$HOME/Dropbox/Library/Wolf P. Barth, Klaus Hulek, Chris A. M. Peters, Antonius van de Ven/Compact Complex Surfaces (999)/Compact Complex Surfaces - Wolf P. Barth, Klaus Hulek, Chris A. M. Pe.pdf
+File9[$e]=$HOME/Downloads/part3_gr_lectures_2017.pdf
+Name1[$e]=11-17.pdf
+Name10[$e]=Cox et al. - 2011 - Toric varieties.pdf
+Name2[$e]=12-2.pdf
+Name3[$e]=CAMS Activity Form.pdf
+Name4[$e]=GSS Activity Form.pdf
+Name5[$e]=Huybrechts - 2016 - Lectures on K3 Surfaces.pdf
+Name6[$e]=UGA_Algebra_Qual_Solutions.pdf
+Name7[$e]=Some applications of modular forms - Sarnak, Peter.pdf
+Name8[$e]=Compact Complex Surfaces - Wolf P. Barth, Klaus Hulek, Chris A. M. Pe.pdf
+Name9[$e]=part3_gr_lectures_2017.pdf
 
 [UiSettings]
 ColorScheme=Maia
