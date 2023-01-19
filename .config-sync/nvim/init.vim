@@ -42,6 +42,8 @@ Plug 'lervag/vimtex'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
+Plug 'evansalter/vim-checklist'
+
 """""""" Ultisnips 
 "Plug 'sirver/ultisnips'
 "let g:UltiSnipsExpandTrigger = '<nop>'
