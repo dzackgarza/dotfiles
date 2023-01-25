@@ -27,8 +27,7 @@ shouldShowToolBarComingFromFullScreen=false
 Height 1080=996
 Height 1920=1866
 Height 800=746
-RestorePositionForNextInstance=false
-State=AAAA/wAAAAD9AAAAAAAAA68AAAPtAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAA=
+State=AAAA/wAAAAD9AAAAAAAABH4AAAPtAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -80,10 +79,10 @@ eDP-1 Height 1920x1080=486
 eDP-1 Height 1920x1080 eDP-1=1027
 eDP-1 Width 1920=623
 eDP-1 Width 1920x1080=1150
-eDP-1 Width 1920x1080 eDP-1=943
+eDP-1 Width 1920x1080 eDP-1=1150
 eDP-1 XPosition=1286
 eDP-1 XPosition 1920x1080=759
-eDP-1 XPosition 1920x1080 eDP-1=966
+eDP-1 XPosition 1920x1080 eDP-1=759
 eDP-1 YPosition=42
 eDP-1 YPosition 1920x1080=582
 eDP-1 YPosition 1920x1080 eDP-1=42
@@ -94,25 +93,25 @@ Width 1920=600
 
 [Recent Files]
 File1[$e]=$HOME/Dropbox/Library/Wolf P. Barth, Klaus Hulek, Chris A. M. Peters, Antonius van de Ven/Compact Complex Surfaces (999)/Compact Complex Surfaces - Wolf P. Barth, Klaus Hulek, Chris A. M. Pe.pdf
-File10[$e]=$HOME/Downloads/Books Spring 2022/Hochschild Witherspoon.pdf
+File10[$e]=$HOME/Downloads/Tutoring/Math2700 Schedule-SP2023.pdf
 File2[$e]=$HOME/Downloads/part3_gr_lectures_2017.pdf
 File3[$e]=$HOME/Zotero/storage/FKYJCUPN/Huybrechts - 2016 - Lectures on K3 Surfaces.pdf
 File4[$e]=$HOME/Dropbox/Library/Philip Griffiths, Joseph Harris/Principles of Algebraic Geometry (447)/Principles of Algebraic Geometry - Philip Griffiths, Joseph Harris.pdf
 File5[$e]=$HOME/Dropbox/Library/Arnaud Beauville/Complex Algebraic Surfaces, 2nd ed_ (877)/Complex Algebraic Surfaces, 2nd ed_ - Arnaud Beauville.pdf
 File6[$e]=$HOME/Downloads/Books Spring 2022/Goss Basic Structures of Function Field Arithmetic-Springer (1996).pdf
 File7[$e]=$HOME/Downloads/Worksheet 1.6A (solutions).pdf
-File8[$e]=$HOME/Downloads/Tutoring/Math2700 Schedule-SP2023.pdf
-File9[$e]=$HOME/Downloads/Tutoring/Paul (Paul Blanchard) Blanchard, Robert L. Devaney, Glen R. Hall - Differential Equations-Brooks (2012).pdf
+File8[$e]=$HOME/Downloads/Tutoring/Paul (Paul Blanchard) Blanchard, Robert L. Devaney, Glen R. Hall - Differential Equations-Brooks (2012).pdf
+File9[$e]=$HOME/Downloads/Books Spring 2022/Hochschild Witherspoon.pdf
 Name1[$e]=Compact Complex Surfaces - Wolf P. Barth, Klaus Hulek, Chris A. M. Pe.pdf
-Name10[$e]=Hochschild Witherspoon.pdf
+Name10[$e]=Math2700 Schedule-SP2023.pdf
 Name2[$e]=part3_gr_lectures_2017.pdf
 Name3[$e]=Huybrechts - 2016 - Lectures on K3 Surfaces.pdf
 Name4[$e]=Principles of Algebraic Geometry - Philip Griffiths, Joseph Harris.pdf
 Name5[$e]=Complex Algebraic Surfaces, 2nd ed_ - Arnaud Beauville.pdf
 Name6[$e]=Goss Basic Structures of Function Field Arithmetic-Springer (1996).pdf
 Name7[$e]=Worksheet 1.6A (solutions).pdf
-Name8[$e]=Math2700 Schedule-SP2023.pdf
-Name9[$e]=Paul (Paul Blanchard) Blanchard, Robert L. Devaney, Glen R. Hall - Differential Equations-Brooks (2012).pdf
+Name8[$e]=Paul (Paul Blanchard) Blanchard, Robert L. Devaney, Glen R. Hall - Differential Equations-Brooks (2012).pdf
+Name9[$e]=Hochschild Witherspoon.pdf
 
 [UiSettings]
 ColorScheme=Maia
