@@ -26,7 +26,9 @@ bindsym $mod+D exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -width 30 -sh
 bindsym Print exec "unclutter -idle 0 & flameshot gui; pkill unclutter"
 bindsym $mod+N exec termite --title=notetaker_window -e /home/zack/dotfiles/bin/notes/newnote.sh
 bindsym $mod+M exec termite --title=notetaker_window -e /home/zack/dotfiles/bin/notes/newcard.sh
-bindsym F10 exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle 
+#bindsym F10 exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle 
+bindsym F10 exec --no-startup-id playerctl play-pause
+bindsym F9 exec --no-startup-id playerctl position 10- 
 
 
 # Video control
