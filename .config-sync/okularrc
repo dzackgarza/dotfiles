@@ -27,7 +27,6 @@ shouldShowToolBarComingFromFullScreen=false
 Height 1080=996
 Height 1920=1866
 Height 800=746
-RestorePositionForNextInstance=false
 State=AAAA/wAAAAD9AAAAAAAAB2wAAAPvAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
@@ -94,25 +93,25 @@ Width 1920=600
 
 [Recent Files]
 File1[$e]=$HOME/Dropbox/Library/Philip Griffiths, Joseph Harris/Principles of Algebraic Geometry (447)/Principles of Algebraic Geometry - Philip Griffiths, Joseph Harris.pdf
-File10[$e]=$HOME/Downloads/Tutoring/Math2700 Schedule-SP2023.pdf
+File10[$e]=$HOME/Zotero/storage/FKYJCUPN/Huybrechts - 2016 - Lectures on K3 Surfaces.pdf
 File2[$e]=$HOME/Dropbox/Library/Arnaud Beauville/Complex Algebraic Surfaces, 2nd ed_ (877)/Complex Algebraic Surfaces, 2nd ed_ - Arnaud Beauville.pdf
 File3[$e]=$HOME/Downloads/Books Spring 2022/Goss Basic Structures of Function Field Arithmetic-Springer (1996).pdf
 File4[$e]=$HOME/Downloads/Worksheet 1.6A (solutions).pdf
 File5[$e]=$HOME/Downloads/Tutoring/Paul (Paul Blanchard) Blanchard, Robert L. Devaney, Glen R. Hall - Differential Equations-Brooks (2012).pdf
 File6[$e]=$HOME/Downloads/Books Spring 2022/Hochschild Witherspoon.pdf
 File7[$e]=$HOME/Downloads/Books Spring 2022/Mukai.pdf
-File8[$e]=$HOME/Zotero/storage/FKYJCUPN/Huybrechts - 2016 - Lectures on K3 Surfaces.pdf
-File9[$e]=$HOME/Downloads/Books Spring 2022/curves.pdf
+File8[$e]=$HOME/Downloads/Books Spring 2022/curves.pdf
+File9[$e]=$HOME/Downloads/Tutoring/Math2700 Schedule-SP2023.pdf
 Name1[$e]=Principles of Algebraic Geometry - Philip Griffiths, Joseph Harris.pdf
-Name10[$e]=Math2700 Schedule-SP2023.pdf
+Name10[$e]=Huybrechts - 2016 - Lectures on K3 Surfaces.pdf
 Name2[$e]=Complex Algebraic Surfaces, 2nd ed_ - Arnaud Beauville.pdf
 Name3[$e]=Goss Basic Structures of Function Field Arithmetic-Springer (1996).pdf
 Name4[$e]=Worksheet 1.6A (solutions).pdf
 Name5[$e]=Paul (Paul Blanchard) Blanchard, Robert L. Devaney, Glen R. Hall - Differential Equations-Brooks (2012).pdf
 Name6[$e]=Hochschild Witherspoon.pdf
 Name7[$e]=Mukai.pdf
-Name8[$e]=Huybrechts - 2016 - Lectures on K3 Surfaces.pdf
-Name9[$e]=curves.pdf
+Name8[$e]=curves.pdf
+Name9[$e]=Math2700 Schedule-SP2023.pdf
 
 [UiSettings]
 ColorScheme=Maia
