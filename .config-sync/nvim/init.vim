@@ -59,7 +59,6 @@ let g:coc_global_extensions = [
       \ 'coc-vimtex',
       \ 'coc-dictionary',
       \ 'coc-word',
-      \ 'coc-emoji',
       \ 'coc-spell-checker',
       \]
 
