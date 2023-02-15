@@ -169,8 +169,8 @@
          end="0"
          start="0"
          usecurrent="1"
-         rx="19.5268231489527"
-         ry="19.5268231489527"
+         rx="12.6135815597896"
+         ry="13.3679247277928"
          arc_type="0" />
       <eventcontext
          id="star"
@@ -583,7 +583,7 @@
        id="toolbox" />
     <group
        id="fillstroke"
-       page="1"
+       page="2"
        x="0"
        y="0"
        w="378"
@@ -1108,7 +1108,7 @@
      org.inkscape.effect.filter.Blur.content="0" />
   <group
      id="desktop"
-     style="stroke-width:1.88976378;fill:#003399;fill-rule:evenodd;font-size:13.33333333px;stop-color:#000000;stroke:#003399;stroke-linecap:round;stroke-linejoin:round;opacity:0.45969739;fill-opacity:0.81982237;stroke-dasharray:1.88976378, 1.88976378">
+     style="stroke-width:1.88976378;fill:#669900;fill-rule:evenodd;font-size:13.33333333px;stop-color:#000000;stroke:#669900;stroke-linecap:round;stroke-linejoin:round;opacity:0.45969739;fill-opacity:0.81982237;stroke-dasharray:1.88976378, 1.88976378">
     <group
        width="943"
        height="1027"
@@ -1143,7 +1143,7 @@
        icononly="1"
        small="1"
        iconsize="16"
-       width="98">
+       width="203">
       <group
          id="buttons" />
     </group>
