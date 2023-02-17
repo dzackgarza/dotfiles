@@ -24,7 +24,7 @@ eDP-1 YPosition 1920x1080=42
 eDP-1 YPosition 1920x1080 eDP-1=41
 
 [Desktop Entry]
-FullScreen=true
+FullScreen=false
 shouldShowMenuBarComingFromFullScreen=true
 shouldShowToolBarComingFromFullScreen=true
 
@@ -32,8 +32,8 @@ shouldShowToolBarComingFromFullScreen=true
 Height 1080=996
 Height 1920=1866
 Height 800=746
-MenuBar=Disabled
-State=AAAA/wAAAAD9AAAAAAAABT4AAAPIAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAA=
+RestorePositionForNextInstance=false
+State=AAAA/wAAAAD9AAAAAAAAB2wAAAPKAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -82,42 +82,42 @@ eDP-1 HDMI-1 YPosition 1080x1920=42
 eDP-1 HDMI-1 YPosition 1920x1080=41
 eDP-1 Height 1080=1027
 eDP-1 Height 1920x1080=486
-eDP-1 Height 1920x1080 eDP-1=1027
+eDP-1 Height 1920x1080 eDP-1=1029
 eDP-1 Width 1920=623
 eDP-1 Width 1920x1080=1150
-eDP-1 Width 1920x1080 eDP-1=1342
+eDP-1 Width 1920x1080 eDP-1=1900
 eDP-1 XPosition=1286
 eDP-1 XPosition 1920x1080=759
-eDP-1 XPosition 1920x1080 eDP-1=567
+eDP-1 XPosition 1920x1080 eDP-1=10
 eDP-1 YPosition=42
 eDP-1 YPosition 1920x1080=582
-eDP-1 YPosition 1920x1080 eDP-1=0
+eDP-1 YPosition 1920x1080 eDP-1=41
 
 [Print Preview]
 Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Library/Jean-Pierre Serre/A Course in Arithmetic (1045)/A Course in Arithmetic - Jean-Pierre Serre.pdf
-File10[$e]=$HOME/Downloads/Tutoring/Math2700Exam1FA14Key.pdf
-File2[$e]=$HOME/Dropbox/Library/Arnaud Beauville/Complex Algebraic Surfaces, 2nd ed_ (877)/Complex Algebraic Surfaces, 2nd ed_ - Arnaud Beauville.pdf
-File3[$e]=$HOME/Dropbox/Library/Daniel Huybrechts/Complex Geometry_ An Introduction (497)/Complex Geometry_ An Introduction - Daniel Huybrechts.pdf
-File4[$e]=$HOME/Downloads/Tutoring/Math2700 Schedule-SP2023.pdf
-File5[$e]=$HOME/Feb Talk Draft Final.pdf
-File6[$e]=$HOME/Dropbox/Library/Douglas C. Ravenel/Complex Cobordism and Stable Homotopy Groups of Spheres (569)/Complex Cobordism and Stable Homotopy Grou - Douglas C. Ravenel.pdf
-File7[$e]=$HOME/Dropbox/Library/James Ward Brown/Complex Variables and Applications (572)/Complex Variables and Applications - James Ward Brown.pdf
-File8[$e]=$HOME/Dropbox/Library/John B. Conway/Function of One Complex Variable I (555)/Function of One Complex Variable I - John B. Conway.pdf
-File9[$e]=$HOME/Downloads/Tutoring/Paul (Paul Blanchard) Blanchard, Robert L. Devaney, Glen R. Hall - Differential Equations-Brooks (2012).pdf
-Name1[$e]=A Course in Arithmetic - Jean-Pierre Serre.pdf
-Name10[$e]=Math2700Exam1FA14Key.pdf
-Name2[$e]=Complex Algebraic Surfaces, 2nd ed_ - Arnaud Beauville.pdf
-Name3[$e]=Complex Geometry_ An Introduction - Daniel Huybrechts.pdf
-Name4[$e]=Math2700 Schedule-SP2023.pdf
-Name5[$e]=Feb Talk Draft Final.pdf
-Name6[$e]=Complex Cobordism and Stable Homotopy Grou - Douglas C. Ravenel.pdf
-Name7[$e]=Complex Variables and Applications - James Ward Brown.pdf
-Name8[$e]=Function of One Complex Variable I - John B. Conway.pdf
-Name9[$e]=Paul (Paul Blanchard) Blanchard, Robert L. Devaney, Glen R. Hall - Differential Equations-Brooks (2012).pdf
+File1[$e]=$HOME/Downloads/Tutoring/Math2700 Schedule-SP2023.pdf
+File10[$e]=$HOME/Dropbox/Library/Dusa McDuff/Introduction to Symplectic Topology (672)/Introduction to Symplectic Topology - Dusa McDuff.pdf
+File2[$e]=$HOME/Feb Talk Draft Final.pdf
+File3[$e]=$HOME/Dropbox/Library/Douglas C. Ravenel/Complex Cobordism and Stable Homotopy Groups of Spheres (569)/Complex Cobordism and Stable Homotopy Grou - Douglas C. Ravenel.pdf
+File4[$e]=$HOME/Dropbox/Library/James Ward Brown/Complex Variables and Applications (572)/Complex Variables and Applications - James Ward Brown.pdf
+File5[$e]=$HOME/Dropbox/Library/John B. Conway/Function of One Complex Variable I (555)/Function of One Complex Variable I - John B. Conway.pdf
+File6[$e]=$HOME/Downloads/Tutoring/Paul (Paul Blanchard) Blanchard, Robert L. Devaney, Glen R. Hall - Differential Equations-Brooks (2012).pdf
+File7[$e]=$HOME/Zotero/storage/FKYJCUPN/Huybrechts - 2016 - Lectures on K3 Surfaces.pdf
+File8[$e]=$HOME/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
+File9[$e]=$HOME/Draft 2 Talk.pdf
+Name1[$e]=Math2700 Schedule-SP2023.pdf
+Name10[$e]=Introduction to Symplectic Topology - Dusa McDuff.pdf
+Name2[$e]=Feb Talk Draft Final.pdf
+Name3[$e]=Complex Cobordism and Stable Homotopy Grou - Douglas C. Ravenel.pdf
+Name4[$e]=Complex Variables and Applications - James Ward Brown.pdf
+Name5[$e]=Function of One Complex Variable I - John B. Conway.pdf
+Name6[$e]=Paul (Paul Blanchard) Blanchard, Robert L. Devaney, Glen R. Hall - Differential Equations-Brooks (2012).pdf
+Name7[$e]=Huybrechts - 2016 - Lectures on K3 Surfaces.pdf
+Name8[$e]=Cox et al. - 2011 - Toric varieties.pdf
+Name9[$e]=Draft 2 Talk.pdf
 
 [UiSettings]
 ColorScheme=Maia
