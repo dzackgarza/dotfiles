@@ -130,8 +130,8 @@
          id="rect"
          style="fill:blue;"
          usecurrent="1"
-         width="612.013794906497"
-         height="331.877479853593"
+         width="287.257849024975"
+         height="71.8405007189657"
          ry="0" />
       <eventcontext
          id="3dbox"
@@ -169,8 +169,8 @@
          end="0"
          start="0"
          usecurrent="1"
-         rx="12.6135815597896"
-         ry="13.3679247277928"
+         rx="67.568304106945"
+         ry="4.55474808460145"
          arc_type="0" />
       <eventcontext
          id="star"
@@ -352,8 +352,8 @@
        live_outline="1"
        live_objects="1"
        show_helperpath="0"
-       x="634.854187783749"
-       y="373.428130674106"
+       x="438.637861417323"
+       y="310.597714015748"
        edit_clipping_paths="0"
        edit_masks="0" />
     <eventcontext
@@ -583,7 +583,7 @@
        id="toolbox" />
     <group
        id="fillstroke"
-       page="2"
+       page="1"
        x="0"
        y="0"
        w="378"
