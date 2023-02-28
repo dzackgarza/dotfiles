@@ -32,7 +32,7 @@ shouldShowToolBarComingFromFullScreen=true
 Height 1080=996
 Height 1920=1866
 Height 800=746
-State=AAAA/wAAAAD9AAAAAAAAAi8AAAPIAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAA=
+State=AAAA/wAAAAD9AAAAAAAAB2wAAAPKAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -81,42 +81,42 @@ eDP-1 HDMI-1 YPosition 1080x1920=42
 eDP-1 HDMI-1 YPosition 1920x1080=41
 eDP-1 Height 1080=1027
 eDP-1 Height 1920x1080=486
-eDP-1 Height 1920x1080 eDP-1=1027
+eDP-1 Height 1920x1080 eDP-1=1029
 eDP-1 Width 1920=623
 eDP-1 Width 1920x1080=1150
-eDP-1 Width 1920x1080 eDP-1=559
+eDP-1 Width 1920x1080 eDP-1=1900
 eDP-1 XPosition=1286
 eDP-1 XPosition 1920x1080=759
-eDP-1 XPosition 1920x1080 eDP-1=11
+eDP-1 XPosition 1920x1080 eDP-1=10
 eDP-1 YPosition=42
 eDP-1 YPosition 1920x1080=582
-eDP-1 YPosition 1920x1080 eDP-1=42
+eDP-1 YPosition 1920x1080 eDP-1=41
 
 [Print Preview]
 Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Library/Dusa McDuff/Introduction to Symplectic Topology (672)/Introduction to Symplectic Topology - Dusa McDuff.pdf
-File10[$e]=$HOME/2nd Spring II 2023 Orientation.pdf
-File2[$e]=$HOME/Dropbox/Library/Wolf P. Barth, Klaus Hulek, Chris A. M. Peters, Antonius van de Ven/Compact Complex Surfaces (999)/Compact Complex Surfaces - Wolf P. Barth, Klaus Hulek, Chris A. M. Pe.pdf
-File3[$e]=$HOME/Downloads/Tutoring/Math2700 Schedule-SP2023.pdf
-File4[$e]=$HOME/Advising Wed Feb 15.pdf
-File5[$e]=$HOME/Advising Wed Feb 22.pdf
-File6[$e]=$HOME/Downloads/Passport.pdf
-File7[$e]=$HOME/Downloads/Borcherds Lie Groups.pdf
-File8[$e]=$HOME/Zotero/storage/HGU2NFC2/Harder and Thompson - 2015 - The Geometry and Moduli of K3 Surfaces.pdf
-File9[$e]=$HOME/Dropbox/Library/Arnaud Beauville/Complex Algebraic Surfaces, 2nd ed_ (877)/Complex Algebraic Surfaces, 2nd ed_ - Arnaud Beauville.pdf
-Name1[$e]=Introduction to Symplectic Topology - Dusa McDuff.pdf
-Name10[$e]=2nd Spring II 2023 Orientation.pdf
-Name2[$e]=Compact Complex Surfaces - Wolf P. Barth, Klaus Hulek, Chris A. M. Pe.pdf
-Name3[$e]=Math2700 Schedule-SP2023.pdf
-Name4[$e]=Advising Wed Feb 15.pdf
-Name5[$e]=Advising Wed Feb 22.pdf
-Name6[$e]=Passport.pdf
-Name7[$e]=Borcherds Lie Groups.pdf
-Name8[$e]=Harder and Thompson - 2015 - The Geometry and Moduli of K3 Surfaces.pdf
-Name9[$e]=Complex Algebraic Surfaces, 2nd ed_ - Arnaud Beauville.pdf
+File1[$e]=$HOME/Downloads/Tutoring/Math2700 Schedule-SP2023.pdf
+File10[$e]=$HOME/Dropbox/Library/Hiller/Geometry of Coxeter Groups (1010)/Geometry of Coxeter Groups - Hiller.pdf
+File2[$e]=$HOME/Advising Wed Feb 15.pdf
+File3[$e]=$HOME/Advising Wed Feb 22.pdf
+File4[$e]=$HOME/Downloads/Passport.pdf
+File5[$e]=$HOME/Downloads/Borcherds Lie Groups.pdf
+File6[$e]=$HOME/Zotero/storage/HGU2NFC2/Harder and Thompson - 2015 - The Geometry and Moduli of K3 Surfaces.pdf
+File7[$e]=$HOME/Dropbox/Library/Arnaud Beauville/Complex Algebraic Surfaces, 2nd ed_ (877)/Complex Algebraic Surfaces, 2nd ed_ - Arnaud Beauville.pdf
+File8[$e]=$HOME/2nd Spring II 2023 Orientation.pdf
+File9[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
+Name1[$e]=Math2700 Schedule-SP2023.pdf
+Name10[$e]=Geometry of Coxeter Groups - Hiller.pdf
+Name2[$e]=Advising Wed Feb 15.pdf
+Name3[$e]=Advising Wed Feb 22.pdf
+Name4[$e]=Passport.pdf
+Name5[$e]=Borcherds Lie Groups.pdf
+Name6[$e]=Harder and Thompson - 2015 - The Geometry and Moduli of K3 Surfaces.pdf
+Name7[$e]=Complex Algebraic Surfaces, 2nd ed_ - Arnaud Beauville.pdf
+Name8[$e]=2nd Spring II 2023 Orientation.pdf
+Name9[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
 
 [UiSettings]
 ColorScheme=Maia
