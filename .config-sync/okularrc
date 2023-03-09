@@ -97,26 +97,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Downloads/Reimbursements/GSS Fall 2022 Reimbursements/Emails/GSS Emails.pdf
-File10[$e]=$HOME/quals/10_Algebra/TexDocs/QualAlgebra.pdf
-File2[$e]=$HOME/Downloads/Reimbursements/GSS Fall 2022 Reimbursements/12-2.pdf
-File3[$e]=$HOME/Downloads/Reimbursements/GSS Fall 2022 Reimbursements/CombinedReceipts.pdf
-File4[$e]=$HOME/Checkout _ University of Oxford.pdf
-File5[$e]=$HOME/GHS-Handbook of Moduli copy.pdf
-File6[$e]=$HOME/s00229-021-01356-w.pdf
-File7[$e]=$HOME/2nd Spring II 2023 Orientation.pdf
-File8[$e]=$HOME/Hochschild Feb15.pdf
-File9[$e]=$HOME/quals/20_Real_Analysis/TexDocs/QualReal.pdf
-Name1[$e]=GSS Emails.pdf
-Name10[$e]=QualAlgebra.pdf
-Name2[$e]=12-2.pdf
-Name3[$e]=CombinedReceipts.pdf
-Name4[$e]=Checkout _ University of Oxford.pdf
-Name5[$e]=GHS-Handbook of Moduli copy.pdf
-Name6[$e]=s00229-021-01356-w.pdf
-Name7[$e]=2nd Spring II 2023 Orientation.pdf
-Name8[$e]=Hochschild Feb15.pdf
-Name9[$e]=QualReal.pdf
+File1[$e]=$HOME/Downloads/Reimbursements/GSS Fall 2022 Reimbursements/CombinedReceipts.pdf
+File10[$e]=$HOME/quals/40_Topology/TexDocs/QualTopology.pdf
+File2[$e]=$HOME/Checkout _ University of Oxford.pdf
+File3[$e]=$HOME/GHS-Handbook of Moduli copy.pdf
+File4[$e]=$HOME/s00229-021-01356-w.pdf
+File5[$e]=$HOME/2nd Spring II 2023 Orientation.pdf
+File6[$e]=$HOME/Hochschild Feb15.pdf
+File7[$e]=$HOME/quals/20_Real_Analysis/TexDocs/QualReal.pdf
+File8[$e]=$HOME/quals/10_Algebra/TexDocs/QualAlgebra.pdf
+File9[$e]=$HOME/quals/30_Complex_Analysis/TexDocs/QualComplex.pdf
+Name1[$e]=CombinedReceipts.pdf
+Name10[$e]=QualTopology.pdf
+Name2[$e]=Checkout _ University of Oxford.pdf
+Name3[$e]=GHS-Handbook of Moduli copy.pdf
+Name4[$e]=s00229-021-01356-w.pdf
+Name5[$e]=2nd Spring II 2023 Orientation.pdf
+Name6[$e]=Hochschild Feb15.pdf
+Name7[$e]=QualReal.pdf
+Name8[$e]=QualAlgebra.pdf
+Name9[$e]=QualComplex.pdf
 
 [UiSettings]
 ColorScheme=Maia
