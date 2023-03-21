@@ -35,7 +35,9 @@ def find_file(filename):
 # Function that converts an image to text using the MathPix OCR API
 def image_to_text(image_string):
     # Read the image file
+    print("Looking for image: " + image_string)
     file_path = find_file(image_string)
+    print("Found: " + file_path) 
     with open(file_path, 'rb') as image_file:
         image = image_file.read()
 
