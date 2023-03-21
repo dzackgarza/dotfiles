@@ -29,10 +29,16 @@ shouldShowMenuBarComingFromFullScreen=true
 shouldShowToolBarComingFromFullScreen=true
 
 [MainWindow]
+1920x1080 screen: Height=1080
+1920x1080 screen: Width=1920
+1920x1080 screen: XPosition=0
+1920x1080 screen: YPosition=0
 Height 1080=996
 Height 1920=1866
 Height 800=746
-State=AAAA/wAAAAD9AAAAAAAAA68AAAPIAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAA=
+MenuBar=Disabled
+RestorePositionForNextInstance=false
+State=AAAA/wAAAAD9AAAAAAAAB4AAAAQ4AAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -84,10 +90,10 @@ eDP-1 Height 1920x1080=486
 eDP-1 Height 1920x1080 eDP-1=1027
 eDP-1 Width 1920=623
 eDP-1 Width 1920x1080=1150
-eDP-1 Width 1920x1080 eDP-1=943
+eDP-1 Width 1920x1080 eDP-1=623
 eDP-1 XPosition=1286
 eDP-1 XPosition 1920x1080=759
-eDP-1 XPosition 1920x1080 eDP-1=966
+eDP-1 XPosition 1920x1080 eDP-1=1286
 eDP-1 YPosition=42
 eDP-1 YPosition 1920x1080=582
 eDP-1 YPosition 1920x1080 eDP-1=42
@@ -97,26 +103,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Checkout _ University of Oxford.pdf
-File10[$e]=$HOME/Dropbox/Library/Goss/Basic Structures of Function Field Arithmetic (1043)/Basic Structures of Function Field Arithme - Goss.pdf
-File2[$e]=$HOME/GHS-Handbook of Moduli copy.pdf
-File3[$e]=$HOME/s00229-021-01356-w.pdf
-File4[$e]=$HOME/2nd Spring II 2023 Orientation.pdf
-File5[$e]=$HOME/Hochschild Feb15.pdf
-File6[$e]=$HOME/quals/20_Real_Analysis/TexDocs/QualReal.pdf
-File7[$e]=$HOME/quals/10_Algebra/TexDocs/QualAlgebra.pdf
-File8[$e]=$HOME/quals/30_Complex_Analysis/TexDocs/QualComplex.pdf
-File9[$e]=$HOME/quals/40_Topology/TexDocs/QualTopology.pdf
-Name1[$e]=Checkout _ University of Oxford.pdf
-Name10[$e]=Basic Structures of Function Field Arithme - Goss.pdf
-Name2[$e]=GHS-Handbook of Moduli copy.pdf
-Name3[$e]=s00229-021-01356-w.pdf
-Name4[$e]=2nd Spring II 2023 Orientation.pdf
-Name5[$e]=Hochschild Feb15.pdf
-Name6[$e]=QualReal.pdf
-Name7[$e]=QualAlgebra.pdf
-Name8[$e]=QualComplex.pdf
-Name9[$e]=QualTopology.pdf
+File1[$e]=$HOME/Advising Wednesday March Pre.pdf
+File10[$e]=$HOME/Downloads/UGA at Oxford/Excursion summary_v2a.pdf
+File2[$e]=$HOME/Advising Wednesday March 15.pdf
+File3[$e]=$HOME/Dropbox/Library/Goss/Basic Structures of Function Field Arithmetic (1043)/Basic Structures of Function Field Arithme - Goss.pdf
+File4[$e]=$HOME/Downloads/Tutoring/Math2700 Schedule-SP2023.pdf
+File5[$e]=$HOME/Dropbox/Library/Fred Diamond/A First Course in Modular Forms (547)/A First Course in Modular Forms - Fred Diamond.pdf
+File6[$e]=$HOME/Notes/Class_Notes/2023/Spring/AutForms/AutomorphicForms.pdf
+File7[$e]=$HOME/Drinfeld Final Draft.pdf
+File8[$e]=$HOME/Downloads/UGA at Oxford/Computer Policies.pdf
+File9[$e]=$HOME/Downloads/UGA at Oxford/Contact Info.pdf
+Name1[$e]=Advising Wednesday March Pre.pdf
+Name10[$e]=Excursion summary_v2a.pdf
+Name2[$e]=Advising Wednesday March 15.pdf
+Name3[$e]=Basic Structures of Function Field Arithme - Goss.pdf
+Name4[$e]=Math2700 Schedule-SP2023.pdf
+Name5[$e]=A First Course in Modular Forms - Fred Diamond.pdf
+Name6[$e]=AutomorphicForms.pdf
+Name7[$e]=Drinfeld Final Draft.pdf
+Name8[$e]=Computer Policies.pdf
+Name9[$e]=Contact Info.pdf
 
 [UiSettings]
 ColorScheme=Maia
