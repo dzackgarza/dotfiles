@@ -36,7 +36,7 @@ shouldShowToolBarComingFromFullScreen=true
 Height 1080=996
 Height 1920=1866
 Height 800=746
-State=AAAA/wAAAAD9AAAAAAAAAv4AAAPIAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAA=
+State=AAAA/wAAAAD9AAAAAAAAAv4AAAHAAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -101,26 +101,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Advising Wednesday March 15.pdf
-File10[$e]=$HOME/Downloads/Tutoring/Exam2ASP13AnswerKey(1).pdf
-File2[$e]=$HOME/Dropbox/Library/Goss/Basic Structures of Function Field Arithmetic (1043)/Basic Structures of Function Field Arithme - Goss.pdf
-File3[$e]=$HOME/Downloads/Tutoring/Math2700 Schedule-SP2023.pdf
-File4[$e]=$HOME/Dropbox/Library/Fred Diamond/A First Course in Modular Forms (547)/A First Course in Modular Forms - Fred Diamond.pdf
-File5[$e]=$HOME/Notes/Class_Notes/2023/Spring/AutForms/AutomorphicForms.pdf
-File6[$e]=$HOME/Drinfeld Final Draft.pdf
-File7[$e]=$HOME/Downloads/UGA at Oxford/Computer Policies.pdf
-File8[$e]=$HOME/Downloads/UGA at Oxford/Contact Info.pdf
-File9[$e]=$HOME/Downloads/UGA at Oxford/Excursion summary_v2a.pdf
-Name1[$e]=Advising Wednesday March 15.pdf
-Name10[$e]=Exam2ASP13AnswerKey(1).pdf
-Name2[$e]=Basic Structures of Function Field Arithme - Goss.pdf
-Name3[$e]=Math2700 Schedule-SP2023.pdf
-Name4[$e]=A First Course in Modular Forms - Fred Diamond.pdf
-Name5[$e]=AutomorphicForms.pdf
-Name6[$e]=Drinfeld Final Draft.pdf
-Name7[$e]=Computer Policies.pdf
-Name8[$e]=Contact Info.pdf
-Name9[$e]=Excursion summary_v2a.pdf
+File1[$e]=$HOME/Dropbox/Library/Fred Diamond/A First Course in Modular Forms (547)/A First Course in Modular Forms - Fred Diamond.pdf
+File10[$e]=$HOME/Notes/Latex/Misc_Docs/handwriting.pdf
+File2[$e]=$HOME/Notes/Class_Notes/2023/Spring/AutForms/AutomorphicForms.pdf
+File3[$e]=$HOME/Drinfeld Final Draft.pdf
+File4[$e]=$HOME/Downloads/UGA at Oxford/Computer Policies.pdf
+File5[$e]=$HOME/Downloads/UGA at Oxford/Contact Info.pdf
+File6[$e]=$HOME/Downloads/UGA at Oxford/Excursion summary_v2a.pdf
+File7[$e]=$HOME/Downloads/Tutoring/Exam2ASP13AnswerKey(1).pdf
+File8[$e]=$HOME/Downloads/UGA at Oxford/Travel Checklist - OX Summer 2022.pdf
+File9[$e]=$HOME/Downloads/UGA at Oxford/Summer 2022 - ADMIN Schedule_v1.2.pdf
+Name1[$e]=A First Course in Modular Forms - Fred Diamond.pdf
+Name10[$e]=handwriting.pdf
+Name2[$e]=AutomorphicForms.pdf
+Name3[$e]=Drinfeld Final Draft.pdf
+Name4[$e]=Computer Policies.pdf
+Name5[$e]=Contact Info.pdf
+Name6[$e]=Excursion summary_v2a.pdf
+Name7[$e]=Exam2ASP13AnswerKey(1).pdf
+Name8[$e]=Travel Checklist - OX Summer 2022.pdf
+Name9[$e]=Summer 2022 - ADMIN Schedule_v1.2.pdf
 
 [UiSettings]
 ColorScheme=Maia
