@@ -102,26 +102,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Library/Fred Diamond/A First Course in Modular Forms (547)/A First Course in Modular Forms - Fred Diamond.pdf
-File10[$e]=$HOME/Notes/Latex/Misc_Docs/handwriting.pdf
-File2[$e]=$HOME/Notes/Class_Notes/2023/Spring/AutForms/AutomorphicForms.pdf
-File3[$e]=$HOME/Drinfeld Final Draft.pdf
-File4[$e]=$HOME/Downloads/UGA at Oxford/Computer Policies.pdf
-File5[$e]=$HOME/Downloads/UGA at Oxford/Contact Info.pdf
-File6[$e]=$HOME/Downloads/UGA at Oxford/Excursion summary_v2a.pdf
-File7[$e]=$HOME/Downloads/Tutoring/Exam2ASP13AnswerKey(1).pdf
-File8[$e]=$HOME/Downloads/UGA at Oxford/Travel Checklist - OX Summer 2022.pdf
-File9[$e]=$HOME/Downloads/UGA at Oxford/Summer 2022 - ADMIN Schedule_v1.2.pdf
-Name1[$e]=A First Course in Modular Forms - Fred Diamond.pdf
-Name10[$e]=handwriting.pdf
-Name2[$e]=AutomorphicForms.pdf
-Name3[$e]=Drinfeld Final Draft.pdf
-Name4[$e]=Computer Policies.pdf
-Name5[$e]=Contact Info.pdf
-Name6[$e]=Excursion summary_v2a.pdf
-Name7[$e]=Exam2ASP13AnswerKey(1).pdf
-Name8[$e]=Travel Checklist - OX Summer 2022.pdf
-Name9[$e]=Summer 2022 - ADMIN Schedule_v1.2.pdf
+File1[$e]=$HOME/Downloads/Rapoport-Zink Spaces Study group HT2023 schedule.pdf
+File10[$e]=$HOME/Dropbox/Library/Administrador/DjVu Document (1049)/DjVu Document - Administrador.pdf
+File2[$e]=$HOME/Downloads/221228_UGAPoster_2022-12-28_2023-03-03.pdf
+File3[$e]=$HOME/Downloads/PrelimSeminarSchedule16Mar.pdf
+File4[$e]=$HOME/Downloads/GHS-Handbook of Moduli copy.pdf
+File5[$e]=$HOME/Downloads/hyperkahler mirro rsysmetry.pdf
+File6[$e]=$HOME/Downloads/Mirror Symmetric.pdf
+File7[$e]=$HOME/Downloads/lect2.ps
+File8[$e]=$HOME/Downloads/88 Geometry of K3s.pdf
+File9[$e]=$HOME/Dropbox/Library/BrianB/ALM24_HM1_BOOK.pdf (1056)/ALM24_HM1_BOOK.pdf - BrianB.pdf
+Name1[$e]=Rapoport-Zink Spaces Study group HT2023 schedule.pdf
+Name10[$e]=DjVu Document - Administrador.pdf
+Name2[$e]=221228_UGAPoster_2022-12-28_2023-03-03.pdf
+Name3[$e]=PrelimSeminarSchedule16Mar.pdf
+Name4[$e]=GHS-Handbook of Moduli copy.pdf
+Name5[$e]=hyperkahler mirro rsysmetry.pdf
+Name6[$e]=Mirror Symmetric.pdf
+Name7[$e]=lect2.ps
+Name8[$e]=88 Geometry of K3s.pdf
+Name9[$e]=ALM24_HM1_BOOK.pdf - BrianB.pdf
 
 [UiSettings]
 ColorScheme=Maia
