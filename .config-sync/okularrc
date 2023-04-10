@@ -29,15 +29,14 @@ shouldShowMenuBarComingFromFullScreen=true
 shouldShowToolBarComingFromFullScreen=true
 
 [MainWindow]
-1920x1080 screen: Height=1029
-1920x1080 screen: Width=1900
-1920x1080 screen: XPosition=10
-1920x1080 screen: YPosition=41
+1920x1080 screen: Height=1027
+1920x1080 screen: Width=623
+1920x1080 screen: XPosition=1286
+1920x1080 screen: YPosition=42
 Height 1080=996
 Height 1920=1866
 Height 800=746
-RestorePositionForNextInstance=false
-State=AAAA/wAAAAD9AAAAAAAAB2wAAAPKAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAA=
+State=AAAA/wAAAAD9AAAAAAAAAm8AAAPIAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -102,26 +101,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Downloads/Rapoport-Zink Spaces Study group HT2023 schedule.pdf
-File10[$e]=$HOME/Dropbox/Library/Administrador/DjVu Document (1049)/DjVu Document - Administrador.pdf
-File2[$e]=$HOME/Downloads/221228_UGAPoster_2022-12-28_2023-03-03.pdf
-File3[$e]=$HOME/Downloads/PrelimSeminarSchedule16Mar.pdf
-File4[$e]=$HOME/Downloads/GHS-Handbook of Moduli copy.pdf
-File5[$e]=$HOME/Downloads/hyperkahler mirro rsysmetry.pdf
-File6[$e]=$HOME/Downloads/Mirror Symmetric.pdf
-File7[$e]=$HOME/Downloads/lect2.ps
-File8[$e]=$HOME/Downloads/88 Geometry of K3s.pdf
-File9[$e]=$HOME/Dropbox/Library/BrianB/ALM24_HM1_BOOK.pdf (1056)/ALM24_HM1_BOOK.pdf - BrianB.pdf
-Name1[$e]=Rapoport-Zink Spaces Study group HT2023 schedule.pdf
-Name10[$e]=DjVu Document - Administrador.pdf
-Name2[$e]=221228_UGAPoster_2022-12-28_2023-03-03.pdf
-Name3[$e]=PrelimSeminarSchedule16Mar.pdf
-Name4[$e]=GHS-Handbook of Moduli copy.pdf
-Name5[$e]=hyperkahler mirro rsysmetry.pdf
-Name6[$e]=Mirror Symmetric.pdf
-Name7[$e]=lect2.ps
-Name8[$e]=88 Geometry of K3s.pdf
-Name9[$e]=ALM24_HM1_BOOK.pdf - BrianB.pdf
+File1[$e]=$HOME/Downloads/GHS-Handbook of Moduli copy.pdf
+File10[$e]=$HOME/SparkleShare/github.com/Notes/Obsidian/attachments/sernesioverviewdefth.pdf
+File2[$e]=$HOME/Downloads/hyperkahler mirro rsysmetry.pdf
+File3[$e]=$HOME/Downloads/Mirror Symmetric.pdf
+File4[$e]=$HOME/Downloads/lect2.ps
+File5[$e]=$HOME/Downloads/88 Geometry of K3s.pdf
+File6[$e]=$HOME/Dropbox/Library/BrianB/ALM24_HM1_BOOK.pdf (1056)/ALM24_HM1_BOOK.pdf - BrianB.pdf
+File7[$e]=$HOME/Dropbox/Library/Administrador/DjVu Document (1049)/DjVu Document - Administrador.pdf
+File8[$e]=$HOME/Dropbox/Library/Kovacs, Sandor, Kollar, Janos/Singularities of the Minimal Model Program (1058)/Singularities of the Minimal Model Program - Kovacs, Sandor, Kollar, Janos.pdf
+File9[$e]=$HOME/website/assets/pdfs/QualTopologySolnsMach2023.pdf
+Name1[$e]=GHS-Handbook of Moduli copy.pdf
+Name10[$e]=sernesioverviewdefth.pdf
+Name2[$e]=hyperkahler mirro rsysmetry.pdf
+Name3[$e]=Mirror Symmetric.pdf
+Name4[$e]=lect2.ps
+Name5[$e]=88 Geometry of K3s.pdf
+Name6[$e]=ALM24_HM1_BOOK.pdf - BrianB.pdf
+Name7[$e]=DjVu Document - Administrador.pdf
+Name8[$e]=Singularities of the Minimal Model Program - Kovacs, Sandor, Kollar, Janos.pdf
+Name9[$e]=QualTopologySolnsMach2023.pdf
 
 [UiSettings]
 ColorScheme=Maia
