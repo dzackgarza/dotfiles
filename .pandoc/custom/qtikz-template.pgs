@@ -37,6 +37,9 @@
         \fi}},
     postaction = decorate}}
 
+\usepackage{tikzit}
+\input{sample.tikzstyles}
+
 \begin{document}
 
 

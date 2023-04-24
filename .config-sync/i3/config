@@ -64,7 +64,9 @@ bindsym $mod+Shift+h split v
 bindsym $mod+space fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+Ctrl+Shift+s layout stacking
+bindsym $mod+Ctrl+Shift+v exec i3l vstack 0.6 && notify-send 'Layout vstack'
+bindsym $mod+Ctrl+Shift+h exec i3l hstack 0.6 && notify-send 'Layout vstack'
+#bindsym $mod+Ctrl+Shift+s layout stacking
 bindsym $mod+Ctrl+Shift+w layout tabbed
 bindsym $mod+Ctrl+Shift+e layout toggle split
 
