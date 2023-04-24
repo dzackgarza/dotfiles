@@ -29,14 +29,14 @@ shouldShowMenuBarComingFromFullScreen=true
 shouldShowToolBarComingFromFullScreen=true
 
 [MainWindow]
-1920x1080 screen: Height=1027
-1920x1080 screen: Width=1519
-1920x1080 screen: XPosition=11
-1920x1080 screen: YPosition=42
+1920x1080 screen: Height=508
+1920x1080 screen: Width=766
+1920x1080 screen: XPosition=1143
+1920x1080 screen: YPosition=561
 Height 1080=996
 Height 1920=1866
 Height 800=746
-State=AAAA/wAAAAD9AAAAAAAABe8AAAPIAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAA=
+State=AAAA/wAAAAD9AAAAAAAAAv4AAAHBAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAA=
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -101,26 +101,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Downloads/88 Geometry of K3s.pdf
-File10[$e]=$HOME/HH Talk Draft 2.pdf
-File2[$e]=$HOME/Dropbox/Library/BrianB/ALM24_HM1_BOOK.pdf (1056)/ALM24_HM1_BOOK.pdf - BrianB.pdf
-File3[$e]=$HOME/Dropbox/Library/Administrador/DjVu Document (1049)/DjVu Document - Administrador.pdf
-File4[$e]=$HOME/Dropbox/Library/Kovacs, Sandor, Kollar, Janos/Singularities of the Minimal Model Program (1058)/Singularities of the Minimal Model Program - Kovacs, Sandor, Kollar, Janos.pdf
-File5[$e]=$HOME/website/assets/pdfs/QualTopologySolnsMach2023.pdf
-File6[$e]=$HOME/SparkleShare/github.com/Notes/Obsidian/attachments/sernesioverviewdefth.pdf
-File7[$e]=$HOME/Dropbox/Library/Witherspoon/Hochschild Cohomology (1042)/Hochschild Cohomology - Witherspoon.pdf
-File8[$e]=$HOME/Week of Apr 10 Luca.pdf
-File9[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
-Name1[$e]=88 Geometry of K3s.pdf
-Name10[$e]=HH Talk Draft 2.pdf
-Name2[$e]=ALM24_HM1_BOOK.pdf - BrianB.pdf
-Name3[$e]=DjVu Document - Administrador.pdf
-Name4[$e]=Singularities of the Minimal Model Program - Kovacs, Sandor, Kollar, Janos.pdf
-Name5[$e]=QualTopologySolnsMach2023.pdf
-Name6[$e]=sernesioverviewdefth.pdf
-Name7[$e]=Hochschild Cohomology - Witherspoon.pdf
-Name8[$e]=Week of Apr 10 Luca.pdf
-Name9[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
+File1[$e]=$HOME/SparkleShare/github.com/Notes/Obsidian/attachments/sernesioverviewdefth.pdf
+File10[$e]=$HOME/Downloads/(Cambridge Mathematical Library) Avner Ash, David Mumford, Michael Rapoport, Yung-sheng Tai - Smooth Compactifications of Locally Symmetric Varieties-Cambridge University Press (2010).pdf
+File2[$e]=$HOME/Dropbox/Library/Witherspoon/Hochschild Cohomology (1042)/Hochschild Cohomology - Witherspoon.pdf
+File3[$e]=$HOME/Week of Apr 10 Luca.pdf
+File4[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
+File5[$e]=$HOME/HH Talk Draft 2.pdf
+File6[$e]=$HOME/Downloads/Tutoring/Paul (Paul Blanchard) Blanchard, Robert L. Devaney, Glen R. Hall - Differential Equations-Brooks (2012).pdf
+File7[$e]=$HOME/Dropbox/Library/Charles A. Weibel/An Introduction to Homological Algebra (489)/An Introduction to Homological Algebra - Charles A. Weibel.pdf
+File8[$e]=$HOME/Downloads/978-3-540-30615-3.pdf
+File9[$e]=$HOME/Downloads/Sterk.pdf
+Name1[$e]=sernesioverviewdefth.pdf
+Name10[$e]=(Cambridge Mathematical Library) Avner Ash, David Mumford, Michael Rapoport, Yung-sheng Tai - Smooth Compactifications of Locally Symmetric Varieties-Cambridge University Press (2010).pdf
+Name2[$e]=Hochschild Cohomology - Witherspoon.pdf
+Name3[$e]=Week of Apr 10 Luca.pdf
+Name4[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
+Name5[$e]=HH Talk Draft 2.pdf
+Name6[$e]=Paul (Paul Blanchard) Blanchard, Robert L. Devaney, Glen R. Hall - Differential Equations-Brooks (2012).pdf
+Name7[$e]=An Introduction to Homological Algebra - Charles A. Weibel.pdf
+Name8[$e]=978-3-540-30615-3.pdf
+Name9[$e]=Sterk.pdf
 
 [UiSettings]
 ColorScheme=Maia
