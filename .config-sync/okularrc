@@ -28,15 +28,19 @@ FullScreen=false
 shouldShowMenuBarComingFromFullScreen=true
 shouldShowToolBarComingFromFullScreen=true
 
+[General]
+LockSidebar=true
+ShowSidebar=false
+
 [MainWindow]
-1920x1080 screen: Height=508
-1920x1080 screen: Width=766
-1920x1080 screen: XPosition=1143
-1920x1080 screen: YPosition=561
+1920x1080 screen: Height=1027
+1920x1080 screen: Width=943
+1920x1080 screen: XPosition=966
+1920x1080 screen: YPosition=42
 Height 1080=996
 Height 1920=1866
 Height 800=746
-State=AAAA/wAAAAD9AAAAAAAAAv4AAAHBAAAABAAAAAQAAAAIAAAACPwAAAACAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAACAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAAAAACIAYQBuAG4AbwB0AGEAdABpAG8AbgBUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAA=
+State=AAAA/wAAAAD9AAAAAQAAAAAAAAFpAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyP////8A///+AAADrwAAA8gAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -101,26 +105,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/SparkleShare/github.com/Notes/Obsidian/attachments/sernesioverviewdefth.pdf
-File10[$e]=$HOME/Downloads/(Cambridge Mathematical Library) Avner Ash, David Mumford, Michael Rapoport, Yung-sheng Tai - Smooth Compactifications of Locally Symmetric Varieties-Cambridge University Press (2010).pdf
-File2[$e]=$HOME/Dropbox/Library/Witherspoon/Hochschild Cohomology (1042)/Hochschild Cohomology - Witherspoon.pdf
-File3[$e]=$HOME/Week of Apr 10 Luca.pdf
-File4[$e]=$HOME/Dropbox/Library/J.E. Humphreys/Introduction to Lie Algebras and Representation Theory (727)/Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
-File5[$e]=$HOME/HH Talk Draft 2.pdf
-File6[$e]=$HOME/Downloads/Tutoring/Paul (Paul Blanchard) Blanchard, Robert L. Devaney, Glen R. Hall - Differential Equations-Brooks (2012).pdf
-File7[$e]=$HOME/Dropbox/Library/Charles A. Weibel/An Introduction to Homological Algebra (489)/An Introduction to Homological Algebra - Charles A. Weibel.pdf
-File8[$e]=$HOME/Downloads/978-3-540-30615-3.pdf
-File9[$e]=$HOME/Downloads/Sterk.pdf
-Name1[$e]=sernesioverviewdefth.pdf
-Name10[$e]=(Cambridge Mathematical Library) Avner Ash, David Mumford, Michael Rapoport, Yung-sheng Tai - Smooth Compactifications of Locally Symmetric Varieties-Cambridge University Press (2010).pdf
-Name2[$e]=Hochschild Cohomology - Witherspoon.pdf
-Name3[$e]=Week of Apr 10 Luca.pdf
-Name4[$e]=Introduction to Lie Algebras and Represent - J.E. Humphreys.pdf
-Name5[$e]=HH Talk Draft 2.pdf
-Name6[$e]=Paul (Paul Blanchard) Blanchard, Robert L. Devaney, Glen R. Hall - Differential Equations-Brooks (2012).pdf
-Name7[$e]=An Introduction to Homological Algebra - Charles A. Weibel.pdf
-Name8[$e]=978-3-540-30615-3.pdf
-Name9[$e]=Sterk.pdf
+File1[$e]=$HOME/Dropbox/Library/Morris Tenenbaum/Ordinary Differential Equations_ An Elementary Textbook for Students of Mathematics, Engineerin (453)/Ordinary Differential Equations_ An Elemen - Morris Tenenbaum.pdf
+File10[$e]=$HOME/Dropbox/Document Archive/Archive/Water Bill Rates.pdf
+File2[$e]=$HOME/Dropbox/Library/Hiller/Geometry of Coxeter Groups (1010)/Geometry of Coxeter Groups - Hiller.pdf
+File3[$e]=$HOME/Downloads/Tutoring/Paul (Paul Blanchard) Blanchard, Robert L. Devaney, Glen R. Hall - Differential Equations-Brooks (2012).pdf
+File4[$e]=$HOME/Dropbox/Document Archive/Archive/Health/https___patientportal.uhs.uga.edu_messages_message_print.PDF
+File5[$e]=$HOME/Dropbox/Document Archive/Archive/Health/messages_message_print.pdf
+File6[$e]=$HOME/Dropbox/Document Archive/Archive/Moving Docs/Alamo 767.pdf
+File7[$e]=$HOME/Dropbox/Document Archive/Archive/Moving Docs/Alamo 857.pdf
+File8[$e]=$HOME/Dropbox/Document Archive/Archive/Moving Docs/Avis 600s t0 800.pdf
+File9[$e]=$HOME/Dropbox/Document Archive/Archive/Traffic Details.pdf
+Name1[$e]=Ordinary Differential Equations_ An Elemen - Morris Tenenbaum.pdf
+Name10[$e]=Water Bill Rates.pdf
+Name2[$e]=Geometry of Coxeter Groups - Hiller.pdf
+Name3[$e]=Paul (Paul Blanchard) Blanchard, Robert L. Devaney, Glen R. Hall - Differential Equations-Brooks (2012).pdf
+Name4[$e]=https___patientportal.uhs.uga.edu_messages_message_print.PDF
+Name5[$e]=messages_message_print.pdf
+Name6[$e]=Alamo 767.pdf
+Name7[$e]=Alamo 857.pdf
+Name8[$e]=Avis 600s t0 800.pdf
+Name9[$e]=Traffic Details.pdf
 
 [UiSettings]
 ColorScheme=Maia

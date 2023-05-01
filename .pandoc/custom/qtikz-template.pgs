@@ -40,6 +40,9 @@
 \usepackage{tikzit}
 \input{sample.tikzstyles}
 
+\usepackage{tkz-euclide}
+\usepackage{tikzit}
+
 \begin{document}
 
 
