@@ -76,9 +76,9 @@ bindsym --whole-window $mod+Shift+button1 floating toggle
 
 # workspaces
 set $ws1 1:Browser
-set $ws2 2:PDF
-set $ws3 3:?
-set $ws4 4:Stylus
+set $ws2 2:Browser
+set $ws3 3:Obsidian
+set $ws4 4:Notion
 set $ws5 5:Markdown
 set $ws6 6:?
 set $ws7 7:?
