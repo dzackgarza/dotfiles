@@ -105,26 +105,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Library/Morris Tenenbaum/Ordinary Differential Equations_ An Elementary Textbook for Students of Mathematics, Engineerin (453)/Ordinary Differential Equations_ An Elemen - Morris Tenenbaum.pdf
-File10[$e]=$HOME/Dropbox/Document Archive/Archive/Water Bill Rates.pdf
-File2[$e]=$HOME/Dropbox/Library/Hiller/Geometry of Coxeter Groups (1010)/Geometry of Coxeter Groups - Hiller.pdf
-File3[$e]=$HOME/Downloads/Tutoring/Paul (Paul Blanchard) Blanchard, Robert L. Devaney, Glen R. Hall - Differential Equations-Brooks (2012).pdf
-File4[$e]=$HOME/Dropbox/Document Archive/Archive/Health/https___patientportal.uhs.uga.edu_messages_message_print.PDF
-File5[$e]=$HOME/Dropbox/Document Archive/Archive/Health/messages_message_print.pdf
-File6[$e]=$HOME/Dropbox/Document Archive/Archive/Moving Docs/Alamo 767.pdf
-File7[$e]=$HOME/Dropbox/Document Archive/Archive/Moving Docs/Alamo 857.pdf
-File8[$e]=$HOME/Dropbox/Document Archive/Archive/Moving Docs/Avis 600s t0 800.pdf
-File9[$e]=$HOME/Dropbox/Document Archive/Archive/Traffic Details.pdf
-Name1[$e]=Ordinary Differential Equations_ An Elemen - Morris Tenenbaum.pdf
-Name10[$e]=Water Bill Rates.pdf
-Name2[$e]=Geometry of Coxeter Groups - Hiller.pdf
-Name3[$e]=Paul (Paul Blanchard) Blanchard, Robert L. Devaney, Glen R. Hall - Differential Equations-Brooks (2012).pdf
-Name4[$e]=https___patientportal.uhs.uga.edu_messages_message_print.PDF
-Name5[$e]=messages_message_print.pdf
-Name6[$e]=Alamo 767.pdf
-Name7[$e]=Alamo 857.pdf
-Name8[$e]=Avis 600s t0 800.pdf
-Name9[$e]=Traffic Details.pdf
+File1[$e]=$HOME/Dropbox/Document Archive/Archive/Health/https___patientportal.uhs.uga.edu_messages_message_print.PDF
+File10[$e]=$HOME/Downloads/Tutoring/999AnswerKeyMath2700Exam1SP23.pdf
+File2[$e]=$HOME/Dropbox/Document Archive/Archive/Health/messages_message_print.pdf
+File3[$e]=$HOME/Dropbox/Document Archive/Archive/Moving Docs/Alamo 767.pdf
+File4[$e]=$HOME/Dropbox/Document Archive/Archive/Moving Docs/Alamo 857.pdf
+File5[$e]=$HOME/Dropbox/Document Archive/Archive/Moving Docs/Avis 600s t0 800.pdf
+File6[$e]=$HOME/Dropbox/Document Archive/Archive/Traffic Details.pdf
+File7[$e]=$HOME/Dropbox/Document Archive/Archive/Water Bill Rates.pdf
+File8[$e]=$HOME/Downloads/Tutoring/Laplace Transform Practice.pdf
+File9[$e]=$HOME/Downloads/Tutoring/Exam2ASP13AnswerKey(1).pdf
+Name1[$e]=https___patientportal.uhs.uga.edu_messages_message_print.PDF
+Name10[$e]=999AnswerKeyMath2700Exam1SP23.pdf
+Name2[$e]=messages_message_print.pdf
+Name3[$e]=Alamo 767.pdf
+Name4[$e]=Alamo 857.pdf
+Name5[$e]=Avis 600s t0 800.pdf
+Name6[$e]=Traffic Details.pdf
+Name7[$e]=Water Bill Rates.pdf
+Name8[$e]=Laplace Transform Practice.pdf
+Name9[$e]=Exam2ASP13AnswerKey(1).pdf
 
 [UiSettings]
 ColorScheme=Maia
