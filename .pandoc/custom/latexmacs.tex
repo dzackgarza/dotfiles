@@ -23,6 +23,8 @@
 \newcommand\rref{\operatorname{RREF}}
 \newcommand\RREF{\operatorname{RREF}}
 \newcommand{\Tatesymbol}{\operatorname{TateSymb}}
+\newcommand{\Vor}{\operatorname{Vor}}
+\newcommand{\Star}{\operatorname{Star}}
 \newcommand\tilt[0]{ {}^{ \flat }}
 \newcommand\vecc[2]{\textcolor{#1}{\textbf{#2}}}
 \newcommand{\Af}[0]{{\mathbf{A}}}
@@ -529,11 +531,10 @@
 \newcommand{\nonzero}[0]{^{\bullet}}
 \newcommand{\normalneq}{\mathrel{\reflectbox{$\trianglerightneq$}}}
 \newcommand{\normal}[0]{{~\trianglelefteq~}}
-\newcommand{\norm}[1]{{\left\lVert {#1} \right\rVert}}
-\newcommand{\normm}[1]{{\left\lVert \left\lVert {#1} \right\rVert\right\rVert}}
 \newcommand{\notimplies}[0]{\centernot\implies}
 \newcommand{\onto}[0]{\twoheadhthtarrow}
-\newcommand{\open}[1]{\overset{\circ}{#1}}
+
+
 \newcommand{\op}[0]{^{\operatorname{op}}}
 \newcommand{\ord}[0]{{\operatorname{Ord}}}
 \newcommand{\order}[0]{{\operatorname{Ord}}}
@@ -541,7 +542,6 @@
 \newcommand{\orr}[0]{{\operatorname{ or }}}
 \newcommand{\padic}[0]{p\dash\text{adic}}
 \newcommand{\pic}[0]{{\operatorname{Pic}}}
-\newcommand{\pnorm}[2]{{\left\lVert {#1} \right\rVert}_{#2}}
 \newcommand{\poly}[0]{\mathrm{poly}}
 \newcommand{\prim}[0]{{\operatorname{prim}}}
 \newcommand{\projectivelim}[0]{\varprojlim}
@@ -909,28 +909,6 @@
 }
 \DeclareMathOperator{\righttriplearrows} {{\; \tikz{ \foreach \y in {0, 0.1, 0.2} { \draw [-stealth] (0, \y) -- +(0.5, 0);}} \; }}
 \DeclareMathOperator*{\mapbackforth}{\rightleftharpoons}
-\newcommand{\fourcase}[4]{
-\begin{cases}{#1} & {#2} \\ {#3} & {#4}\end{cases} 
-}
-\newcommand{\cvec}[2]{{ \begin{bmatrix} {#1} \\ {#2} \end{bmatrix} }}
-\newcommand{\matt}[4]{{ \begin{bmatrix} {#1} & {#2}  \\ {#3} & {#4} \end{bmatrix} }}
-\newcommand{\mattt}[9]{{
-\begin{bmatrix}
-  {#1} & {#2} & {#3}
-\\
-  {#4} & {#5} & {#6}
-\\
-  {#7} & {#8} & {#9}
-\end{bmatrix}
-}}
-
-\newcommand\stacksymbol[3]{
-  \mathrel{\stackunder[2pt]{\stackon[4pt]{$#3$}{$\scriptscriptstyle#1$}}{
-  $\scriptscriptstyle#2$}}
-}
-\newcommand{\textoperatorname}[1]{
-  \operatorname{\textnormal{#1}}
-}
 % idk man
 \newcommand\caniso[0]{{ \underset{\can}{\iso} }}
 \renewcommand{\ae}[0]{{ \text{a.e.} }}
