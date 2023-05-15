@@ -111,3 +111,31 @@
 \newcommand{\roof}[3]{ #1 {\, \scriptstyle {}^\swarrow\, } #2 {\, \scriptstyle {}^\searrow\,} #3 }
 \newcommand{\catspan}[3]{\roof{#1}{#2}{#3}}
 \newcommand{\bbcpt}[1]{\overline{ #1 }^{\bb}}
+
+\newcommand{\norm}[1]{{\left\lVert {#1} \right\rVert}}
+\newcommand{\normm}[1]{{\left\lVert \left\lVert {#1} \right\rVert\right\rVert}}
+\newcommand{\open}[1]{\overset{\circ}{#1}}
+\newcommand{\pnorm}[2]{{\left\lVert {#1} \right\rVert}_{#2}}
+
+\newcommand{\fourcase}[4]{
+\begin{cases}{#1} & {#2} \\ {#3} & {#4}\end{cases} 
+}
+\newcommand{\cvec}[2]{{ \begin{bmatrix} {#1} \\ {#2} \end{bmatrix} }}
+\newcommand{\matt}[4]{{ \begin{bmatrix} {#1} & {#2}  \\ {#3} & {#4} \end{bmatrix} }}
+\newcommand{\mattt}[9]{{
+\begin{bmatrix}
+  {#1} & {#2} & {#3}
+\\
+  {#4} & {#5} & {#6}
+\\
+  {#7} & {#8} & {#9}
+\end{bmatrix}
+}}
+
+\newcommand\stacksymbol[3]{
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{$#3$}{$\scriptscriptstyle#1$}}{
+  $\scriptscriptstyle#2$}}
+}
+\newcommand{\textoperatorname}[1]{
+  \operatorname{\textnormal{#1}}
+}
