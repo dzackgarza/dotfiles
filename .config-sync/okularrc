@@ -40,7 +40,6 @@ ShowSidebar=false
 Height 1080=996
 Height 1920=1866
 Height 800=746
-RestorePositionForNextInstance=false
 State=AAAA/wAAAAD9AAAAAQAAAAAAAAFpAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyP////8A///+AAADrwAAA8gAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1080=512
@@ -106,26 +105,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Document Archive/Archive/Traffic Details.pdf
-File10[$e]=$HOME/Dropbox/Library/Springer/Linear Algebraic Groups (931)/Linear Algebraic Groups - Springer.pdf
-File2[$e]=$HOME/Dropbox/Document Archive/Archive/Water Bill Rates.pdf
-File3[$e]=$HOME/Downloads/Tutoring/Laplace Transform Practice.pdf
-File4[$e]=$HOME/Downloads/Tutoring/Exam2ASP13AnswerKey(1).pdf
-File5[$e]=$HOME/Downloads/Tutoring/999AnswerKeyMath2700Exam1SP23.pdf
-File6[$e]=$HOME/.cache/.fr-D9KF41/Isometric Grid Dot Paper.pdf
-File7[$e]=$HOME/Dropbox/Library/Elias M. Stein, Rami Shakarchi/Complex Analysis (Stein and Shakarchi II) (760)/Complex Analysis (Stein and Shakarchi II) - Elias M. Stein, Rami Shakarchi.pdf
-File8[$e]=$HOME/Dropbox/Library/Conway, Sloane/Sphere Packings, Lattices, and Groups (1057)/Sphere Packings, Lattices, and Groups - Conway, Sloane.pdf
-File9[$e]=$HOME/Dropbox/Library/James E. Humphreys/Linear Algebraic Groups (825)/Linear Algebraic Groups - James E. Humphreys.pdf
-Name1[$e]=Traffic Details.pdf
-Name10[$e]=Linear Algebraic Groups - Springer.pdf
-Name2[$e]=Water Bill Rates.pdf
-Name3[$e]=Laplace Transform Practice.pdf
-Name4[$e]=Exam2ASP13AnswerKey(1).pdf
-Name5[$e]=999AnswerKeyMath2700Exam1SP23.pdf
-Name6[$e]=Isometric Grid Dot Paper.pdf
-Name7[$e]=Complex Analysis (Stein and Shakarchi II) - Elias M. Stein, Rami Shakarchi.pdf
-Name8[$e]=Sphere Packings, Lattices, and Groups - Conway, Sloane.pdf
-Name9[$e]=Linear Algebraic Groups - James E. Humphreys.pdf
+File1[$e]=$HOME/s00229-021-01356-w.pdf
+File10[$e]=$HOME/viberg2.pdf
+File2[$e]=$HOME/Surfaces K3.pdf
+File3[$e]=$HOME/SB_1982-1983__25__217_0.pdf
+File4[$e]=$HOME/Athens Reservations - Groome Transportation - Book Now.pdf
+File5[$e]=$HOME/1-_Prelims_on_Symplectic_geometry_and_J-holomorphic_curves.pdf
+File6[$e]=$HOME/Downloads/Deformations of Algebraic Schemes.pdf
+File7[$e]=$HOME/Downloads/Laza R., Schutt M., Yui N. (eds.) Calabi-Yau varieties.. arithmetic, geometry and physics (FIM034, Springer, 2015)(ISBN 9781493928293)(O)(542s) MAg .pdf
+File8[$e]=$HOME/Downloads/s00222-015-0640-6 (1).pdf
+File9[$e]=$HOME/vinberg.dvi.ps
+Name1[$e]=s00229-021-01356-w.pdf
+Name10[$e]=viberg2.pdf
+Name2[$e]=Surfaces K3.pdf
+Name3[$e]=SB_1982-1983__25__217_0.pdf
+Name4[$e]=Athens Reservations - Groome Transportation - Book Now.pdf
+Name5[$e]=1-_Prelims_on_Symplectic_geometry_and_J-holomorphic_curves.pdf
+Name6[$e]=Deformations of Algebraic Schemes.pdf
+Name7[$e]=Laza R., Schutt M., Yui N. (eds.) Calabi-Yau varieties.. arithmetic, geometry and physics (FIM034, Springer, 2015)(ISBN 9781493928293)(O)(542s) MAg .pdf
+Name8[$e]=s00222-015-0640-6 (1).pdf
+Name9[$e]=vinberg.dvi.ps
 
 [UiSettings]
 ColorScheme=Maia
