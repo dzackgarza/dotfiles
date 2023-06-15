@@ -33,14 +33,14 @@ LockSidebar=true
 ShowSidebar=false
 
 [MainWindow]
-1920x1080 screen: Height=1027
-1920x1080 screen: Width=943
-1920x1080 screen: XPosition=966
-1920x1080 screen: YPosition=42
+1920x1080 screen: Height=508
+1920x1080 screen: Width=958
+1920x1080 screen: XPosition=951
+1920x1080 screen: YPosition=561
 Height 1080=996
 Height 1920=1866
 Height 800=746
-State=AAAA/wAAAAD9AAAAAQAAAAAAAAFpAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyP////8A///+AAADrwAAA8gAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAA==
+State=AAAA/wAAAAD9AAAAAQAAAAAAAAFpAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyP////8A///+AAADvgAAAcEAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -105,26 +105,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/s00229-021-01356-w.pdf
-File10[$e]=$HOME/viberg2.pdf
-File2[$e]=$HOME/Surfaces K3.pdf
-File3[$e]=$HOME/SB_1982-1983__25__217_0.pdf
-File4[$e]=$HOME/Athens Reservations - Groome Transportation - Book Now.pdf
-File5[$e]=$HOME/1-_Prelims_on_Symplectic_geometry_and_J-holomorphic_curves.pdf
-File6[$e]=$HOME/Downloads/Deformations of Algebraic Schemes.pdf
-File7[$e]=$HOME/Downloads/Laza R., Schutt M., Yui N. (eds.) Calabi-Yau varieties.. arithmetic, geometry and physics (FIM034, Springer, 2015)(ISBN 9781493928293)(O)(542s) MAg .pdf
-File8[$e]=$HOME/Downloads/s00222-015-0640-6 (1).pdf
-File9[$e]=$HOME/vinberg.dvi.ps
-Name1[$e]=s00229-021-01356-w.pdf
-Name10[$e]=viberg2.pdf
-Name2[$e]=Surfaces K3.pdf
-Name3[$e]=SB_1982-1983__25__217_0.pdf
-Name4[$e]=Athens Reservations - Groome Transportation - Book Now.pdf
-Name5[$e]=1-_Prelims_on_Symplectic_geometry_and_J-holomorphic_curves.pdf
-Name6[$e]=Deformations of Algebraic Schemes.pdf
-Name7[$e]=Laza R., Schutt M., Yui N. (eds.) Calabi-Yau varieties.. arithmetic, geometry and physics (FIM034, Springer, 2015)(ISBN 9781493928293)(O)(542s) MAg .pdf
-Name8[$e]=s00222-015-0640-6 (1).pdf
-Name9[$e]=vinberg.dvi.ps
+File1[$e]=$HOME/1-s2.0-S0022404911002532-main.pdf
+File10[$e]=$HOME/Dropbox/Library/Gross, Huybrechts, Joyce/Calabi-Yau Manifolds and Their Friends (1050)/Calabi-Yau Manifolds and Their Friends - Gross, Huybrechts, Joyce.pdf
+File2[$e]=$HOME/1-_Prelims_on_Symplectic_geometry_and_J-holomorphic_curves.pdf
+File3[$e]=$HOME/gitclones/Enriques/main.pdf
+File4[$e]=$HOME/Downloads/Reimbursements/Gmail - Air Canada - 23 Feb 2023_ Atlanta - Calgary (Booking Reference_ 2JXH9B).pdf
+File5[$e]=$HOME/Downloads/Reimbursements/BANF/Gmail - Air Canada - 23 Feb 2023_ Atlanta - Calgary (Booking Reference_ 2JXH9B).pdf
+File6[$e]=$HOME/Downloads/Reimbursements/BANF/CalgaryBanff.pdf
+File7[$e]=$HOME/Dropbox/Library/Mark Gross/Calabi-Yau Manifolds and Related Geometries (587)/Calabi-Yau Manifolds and Related Geometrie - Mark Gross.pdf
+File8[$e]=$HOME/Downloads/(Mathematical surveys and monographs 68) David A. Cox, Sheldon Katz - Mirror symmetry and algebraic geometry-American Mathematical Society (1999).pdf
+File9[$e]=$HOME/Dropbox/Library/Dominic D. Joyce/Riemannian Holonomy Groups and Calibrated Geometry (1014)/Riemannian Holonomy Groups and Calibrated - Dominic D. Joyce.pdf
+Name1[$e]=1-s2.0-S0022404911002532-main.pdf
+Name10[$e]=Calabi-Yau Manifolds and Their Friends - Gross, Huybrechts, Joyce.pdf
+Name2[$e]=1-_Prelims_on_Symplectic_geometry_and_J-holomorphic_curves.pdf
+Name3[$e]=main.pdf
+Name4[$e]=Gmail - Air Canada - 23 Feb 2023_ Atlanta - Calgary (Booking Reference_ 2JXH9B).pdf
+Name5[$e]=Gmail - Air Canada - 23 Feb 2023_ Atlanta - Calgary (Booking Reference_ 2JXH9B).pdf
+Name6[$e]=CalgaryBanff.pdf
+Name7[$e]=Calabi-Yau Manifolds and Related Geometrie - Mark Gross.pdf
+Name8[$e]=(Mathematical surveys and monographs 68) David A. Cox, Sheldon Katz - Mirror symmetry and algebraic geometry-American Mathematical Society (1999).pdf
+Name9[$e]=Riemannian Holonomy Groups and Calibrated - Dominic D. Joyce.pdf
 
 [UiSettings]
 ColorScheme=Maia
