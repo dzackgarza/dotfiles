@@ -4,12 +4,17 @@
 % \tikzstyle{NAME}=[PROPERTY LIST]
 
 % Node styles
-\tikzstyle{white node}=[fill=white, tikzit category=nodes, shape=circle, draw=black]
-\tikzstyle{black node}=[fill=black , shape=circle, draw=black, tikzit category=nodes]
-\tikzstyle{green node}=[tikzit fill=green, fill=green, shape=circle, draw=black, tikzit category=nodes]
-\tikzstyle{yellow square}=[draw=black, fill=yellow, shape=rectangle]
-\tikzstyle{blue node 2}=[fill={rgb,255: red,128; green,0; blue,128}, draw=black, shape=circle, tikzit fill=blue]
+\tikzstyle{white node}=[fill=white, tikzit category=nodes, shape=circle, draw=black, tikzit fill=white, scale=0.5]
+\tikzstyle{black node}=[fill=black, shape=circle, draw=black, tikzit category=nodes, tikzit fill=black, scale=0.5]
+\tikzstyle{doubled node}=[fill=white, double, tikzit category=nodes, shape=circle, draw=black, tikzit fill=white, scale=0.5]
+\tikzstyle{starred node}=[fill=red, tikzit category=nodes, shape=star, draw=red, tikzit fill=red, cross out, draw, solid, red, inner sep=2pt]
 
 % Edge styles
-\tikzstyle{dashed edge}=[<->, dashed]
-\tikzstyle{blue pointer}=[->, draw=blue]
+\tikzstyle{plain edge}=[-] 
+\tikzstyle{dashed edge}=[-, densely dashed] 
+\tikzstyle{thick edge}=[-, line width=2.0pt] 
+\tikzstyle{double edge}=[-, double distance=0.5mm] 
+\tikzstyle{triple edge}=[-, double distance=0.5mm, postaction={draw}] 
+\tikzstyle{Arrow}=[->]
+\tikzstyle{Doubled Arrow}=[->, double distance=0.5mm]
+\tikzstyle{Dashed Arrow}=[->, densely dashed]
