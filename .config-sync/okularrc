@@ -30,17 +30,18 @@ shouldShowToolBarComingFromFullScreen=true
 
 [General]
 LockSidebar=true
-ShowSidebar=false
+ShowSidebar=true
 
 [MainWindow]
-1920x1080 screen: Height=508
-1920x1080 screen: Width=958
-1920x1080 screen: XPosition=951
-1920x1080 screen: YPosition=561
+1920x1080 screen: Height=1029
+1920x1080 screen: Width=1900
+1920x1080 screen: XPosition=10
+1920x1080 screen: YPosition=41
 Height 1080=996
 Height 1920=1866
 Height 800=746
-State=AAAA/wAAAAD9AAAAAQAAAAAAAAFpAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyP////8A///+AAADvgAAAcEAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAA==
+RestorePositionForNextInstance=false
+State=AAAA/wAAAAD9AAAAAQAAAAAAAAEgAAADyvwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgEAAAA7AAADygAAAO8A///+AAAGRgAAA8oAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -105,26 +106,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/1-s2.0-S0022404911002532-main.pdf
-File10[$e]=$HOME/Dropbox/Library/Gross, Huybrechts, Joyce/Calabi-Yau Manifolds and Their Friends (1050)/Calabi-Yau Manifolds and Their Friends - Gross, Huybrechts, Joyce.pdf
-File2[$e]=$HOME/1-_Prelims_on_Symplectic_geometry_and_J-holomorphic_curves.pdf
-File3[$e]=$HOME/gitclones/Enriques/main.pdf
-File4[$e]=$HOME/Downloads/Reimbursements/Gmail - Air Canada - 23 Feb 2023_ Atlanta - Calgary (Booking Reference_ 2JXH9B).pdf
-File5[$e]=$HOME/Downloads/Reimbursements/BANF/Gmail - Air Canada - 23 Feb 2023_ Atlanta - Calgary (Booking Reference_ 2JXH9B).pdf
-File6[$e]=$HOME/Downloads/Reimbursements/BANF/CalgaryBanff.pdf
-File7[$e]=$HOME/Dropbox/Library/Mark Gross/Calabi-Yau Manifolds and Related Geometries (587)/Calabi-Yau Manifolds and Related Geometrie - Mark Gross.pdf
-File8[$e]=$HOME/Downloads/(Mathematical surveys and monographs 68) David A. Cox, Sheldon Katz - Mirror symmetry and algebraic geometry-American Mathematical Society (1999).pdf
-File9[$e]=$HOME/Dropbox/Library/Dominic D. Joyce/Riemannian Holonomy Groups and Calibrated Geometry (1014)/Riemannian Holonomy Groups and Calibrated - Dominic D. Joyce.pdf
-Name1[$e]=1-s2.0-S0022404911002532-main.pdf
-Name10[$e]=Calabi-Yau Manifolds and Their Friends - Gross, Huybrechts, Joyce.pdf
-Name2[$e]=1-_Prelims_on_Symplectic_geometry_and_J-holomorphic_curves.pdf
-Name3[$e]=main.pdf
-Name4[$e]=Gmail - Air Canada - 23 Feb 2023_ Atlanta - Calgary (Booking Reference_ 2JXH9B).pdf
-Name5[$e]=Gmail - Air Canada - 23 Feb 2023_ Atlanta - Calgary (Booking Reference_ 2JXH9B).pdf
-Name6[$e]=CalgaryBanff.pdf
-Name7[$e]=Calabi-Yau Manifolds and Related Geometrie - Mark Gross.pdf
-Name8[$e]=(Mathematical surveys and monographs 68) David A. Cox, Sheldon Katz - Mirror symmetry and algebraic geometry-American Mathematical Society (1999).pdf
-Name9[$e]=Riemannian Holonomy Groups and Calibrated - Dominic D. Joyce.pdf
+File1[$e]=$HOME/Dropbox/Library/James R. Munkres/Topology (416)/Topology - James R. Munkres.pdf
+File10[$e]=$HOME/Downloads/Pre-DepartureOrientationSummer2023_v1-corrected4-20.pdf
+File2[$e]=$HOME/Dropbox/Library/Victor Guillemin/Differential Topology (542)/Differential Topology - Victor Guillemin.pdf
+File3[$e]=$HOME/Dropbox/Library/Ryszard Engelking/General Topology (517)/General Topology - Ryszard Engelking.pdf
+File4[$e]=$HOME/Dropbox/Library/Colin Conrad Adams/Introduction to Topology_ Pure and Applied (481)/Introduction to Topology_ Pure and Applied - Colin Conrad Adams.pdf
+File5[$e]=$HOME/Downloads/(Mathematical_surveys_and_monographs_68)_David_A._Cox _Sheldon_K.pdf
+File6[$e]=$HOME/1-_Prelims_on_Symplectic_geometry_and_J-holomorphic_curves.pdf
+File7[$e]=$HOME/gitclones/Enriques/main.pdf
+File8[$e]=$HOME/Downloads/UK to Barcelona Boarding Pass.pdf
+File9[$e]=$HOME/Downloads/Kindle/Robert Moore, Douglas Gillette - King, Warrior, Magician, Lover_ Rediscovering the Archetypes of the Mature Masculine (1900) - libgen.li.mobi
+Name1[$e]=Topology - James R. Munkres.pdf
+Name10[$e]=Pre-DepartureOrientationSummer2023_v1-corrected4-20.pdf
+Name2[$e]=Differential Topology - Victor Guillemin.pdf
+Name3[$e]=General Topology - Ryszard Engelking.pdf
+Name4[$e]=Introduction to Topology_ Pure and Applied - Colin Conrad Adams.pdf
+Name5[$e]=(Mathematical_surveys_and_monographs_68)_David_A._Cox _Sheldon_K.pdf
+Name6[$e]=1-_Prelims_on_Symplectic_geometry_and_J-holomorphic_curves.pdf
+Name7[$e]=main.pdf
+Name8[$e]=UK to Barcelona Boarding Pass.pdf
+Name9[$e]=Robert Moore, Douglas Gillette - King, Warrior, Magician, Lover_ Rediscovering the Archetypes of the Mature Masculine (1900) - libgen.li.mobi
 
 [UiSettings]
 ColorScheme=Maia
