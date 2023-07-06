@@ -30,18 +30,17 @@ shouldShowToolBarComingFromFullScreen=true
 
 [General]
 LockSidebar=true
-ShowSidebar=true
+ShowSidebar=false
 
 [MainWindow]
-1920x1080 screen: Height=1029
-1920x1080 screen: Width=1900
-1920x1080 screen: XPosition=10
-1920x1080 screen: YPosition=41
+1920x1080 screen: Height=1027
+1920x1080 screen: Width=943
+1920x1080 screen: XPosition=966
+1920x1080 screen: YPosition=42
 Height 1080=996
 Height 1920=1866
 Height 800=746
-RestorePositionForNextInstance=false
-State=AAAA/wAAAAD9AAAAAQAAAAAAAAEgAAADyvwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgEAAAA7AAADygAAAO8A///+AAAGRgAAA8oAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAA==
+State=AAAA/wAAAAD9AAAAAQAAAAAAAAEgAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyAAAAO8A///+AAADrwAAA8gAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -106,26 +105,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Library/James R. Munkres/Topology (416)/Topology - James R. Munkres.pdf
-File10[$e]=$HOME/Downloads/Pre-DepartureOrientationSummer2023_v1-corrected4-20.pdf
-File2[$e]=$HOME/Dropbox/Library/Victor Guillemin/Differential Topology (542)/Differential Topology - Victor Guillemin.pdf
-File3[$e]=$HOME/Dropbox/Library/Ryszard Engelking/General Topology (517)/General Topology - Ryszard Engelking.pdf
-File4[$e]=$HOME/Dropbox/Library/Colin Conrad Adams/Introduction to Topology_ Pure and Applied (481)/Introduction to Topology_ Pure and Applied - Colin Conrad Adams.pdf
-File5[$e]=$HOME/Downloads/(Mathematical_surveys_and_monographs_68)_David_A._Cox _Sheldon_K.pdf
-File6[$e]=$HOME/1-_Prelims_on_Symplectic_geometry_and_J-holomorphic_curves.pdf
-File7[$e]=$HOME/gitclones/Enriques/main.pdf
-File8[$e]=$HOME/Downloads/UK to Barcelona Boarding Pass.pdf
-File9[$e]=$HOME/Downloads/Kindle/Robert Moore, Douglas Gillette - King, Warrior, Magician, Lover_ Rediscovering the Archetypes of the Mature Masculine (1900) - libgen.li.mobi
-Name1[$e]=Topology - James R. Munkres.pdf
-Name10[$e]=Pre-DepartureOrientationSummer2023_v1-corrected4-20.pdf
-Name2[$e]=Differential Topology - Victor Guillemin.pdf
-Name3[$e]=General Topology - Ryszard Engelking.pdf
-Name4[$e]=Introduction to Topology_ Pure and Applied - Colin Conrad Adams.pdf
-Name5[$e]=(Mathematical_surveys_and_monographs_68)_David_A._Cox _Sheldon_K.pdf
-Name6[$e]=1-_Prelims_on_Symplectic_geometry_and_J-holomorphic_curves.pdf
-Name7[$e]=main.pdf
-Name8[$e]=UK to Barcelona Boarding Pass.pdf
-Name9[$e]=Robert Moore, Douglas Gillette - King, Warrior, Magician, Lover_ Rediscovering the Archetypes of the Mature Masculine (1900) - libgen.li.mobi
+File1[$e]=$HOME/Dropbox/Library/Victor Guillemin/Differential Topology (542)/Differential Topology - Victor Guillemin.pdf
+File10[$e]=$HOME/Downloads/Jun 23 17h19 Sterk Coxeter Diagrams.pdf
+File2[$e]=$HOME/Dropbox/Library/Ryszard Engelking/General Topology (517)/General Topology - Ryszard Engelking.pdf
+File3[$e]=$HOME/Dropbox/Library/Colin Conrad Adams/Introduction to Topology_ Pure and Applied (481)/Introduction to Topology_ Pure and Applied - Colin Conrad Adams.pdf
+File4[$e]=$HOME/Downloads/(Mathematical_surveys_and_monographs_68)_David_A._Cox _Sheldon_K.pdf
+File5[$e]=$HOME/1-_Prelims_on_Symplectic_geometry_and_J-holomorphic_curves.pdf
+File6[$e]=$HOME/gitclones/Enriques/main.pdf
+File7[$e]=$HOME/Downloads/UK to Barcelona Boarding Pass.pdf
+File8[$e]=$HOME/Downloads/Kindle/Robert Moore, Douglas Gillette - King, Warrior, Magician, Lover_ Rediscovering the Archetypes of the Mature Masculine (1900) - libgen.li.mobi
+File9[$e]=$HOME/Downloads/Pre-DepartureOrientationSummer2023_v1-corrected4-20.pdf
+Name1[$e]=Differential Topology - Victor Guillemin.pdf
+Name10[$e]=Jun 23 17h19 Sterk Coxeter Diagrams.pdf
+Name2[$e]=General Topology - Ryszard Engelking.pdf
+Name3[$e]=Introduction to Topology_ Pure and Applied - Colin Conrad Adams.pdf
+Name4[$e]=(Mathematical_surveys_and_monographs_68)_David_A._Cox _Sheldon_K.pdf
+Name5[$e]=1-_Prelims_on_Symplectic_geometry_and_J-holomorphic_curves.pdf
+Name6[$e]=main.pdf
+Name7[$e]=UK to Barcelona Boarding Pass.pdf
+Name8[$e]=Robert Moore, Douglas Gillette - King, Warrior, Magician, Lover_ Rediscovering the Archetypes of the Mature Masculine (1900) - libgen.li.mobi
+Name9[$e]=Pre-DepartureOrientationSummer2023_v1-corrected4-20.pdf
 
 [UiSettings]
 ColorScheme=Maia
