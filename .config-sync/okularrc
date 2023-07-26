@@ -33,14 +33,14 @@ LockSidebar=true
 ShowSidebar=false
 
 [MainWindow]
-1920x1080 screen: Height=333
+1920x1080 screen: Height=508
 1920x1080 screen: Width=766
 1920x1080 screen: XPosition=1143
-1920x1080 screen: YPosition=736
+1920x1080 screen: YPosition=561
 Height 1080=996
 Height 1920=1866
 Height 800=746
-State=AAAA/wAAAAD9AAAAAQAAAAAAAAEgAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyP////8A///+AAAC/gAAARIAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAA==
+State=AAAA/wAAAAD9AAAAAQAAAAAAAAEgAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyP////8A///+AAAC/gAAAcEAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -105,26 +105,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Downloads/(Mathematical_surveys_and_monographs_68)_David_A._Cox _Sheldon_K.pdf
-File10[$e]=$HOME/Sterk.pdf
-File2[$e]=$HOME/1-_Prelims_on_Symplectic_geometry_and_J-holomorphic_curves.pdf
-File3[$e]=$HOME/gitclones/Enriques/main.pdf
-File4[$e]=$HOME/Downloads/UK to Barcelona Boarding Pass.pdf
-File5[$e]=$HOME/Downloads/Kindle/Robert Moore, Douglas Gillette - King, Warrior, Magician, Lover_ Rediscovering the Archetypes of the Mature Masculine (1900) - libgen.li.mobi
-File6[$e]=$HOME/Downloads/Pre-DepartureOrientationSummer2023_v1-corrected4-20.pdf
-File7[$e]=$HOME/Downloads/Jun 23 17h19 Sterk Coxeter Diagrams.pdf
-File8[$e]=$HOME/PPN235181684_0256.pdf
-File9[$e]=$HOME/EnriquesProject.pdf
-Name1[$e]=(Mathematical_surveys_and_monographs_68)_David_A._Cox _Sheldon_K.pdf
-Name10[$e]=Sterk.pdf
-Name2[$e]=1-_Prelims_on_Symplectic_geometry_and_J-holomorphic_curves.pdf
-Name3[$e]=main.pdf
-Name4[$e]=UK to Barcelona Boarding Pass.pdf
-Name5[$e]=Robert Moore, Douglas Gillette - King, Warrior, Magician, Lover_ Rediscovering the Archetypes of the Mature Masculine (1900) - libgen.li.mobi
-Name6[$e]=Pre-DepartureOrientationSummer2023_v1-corrected4-20.pdf
-Name7[$e]=Jun 23 17h19 Sterk Coxeter Diagrams.pdf
-Name8[$e]=PPN235181684_0256.pdf
-Name9[$e]=EnriquesProject.pdf
+File1[$e]=$HOME/Downloads/UK to Barcelona Boarding Pass.pdf
+File10[$e]=$HOME/EnriquesProject.pdf
+File2[$e]=$HOME/Downloads/Kindle/Robert Moore, Douglas Gillette - King, Warrior, Magician, Lover_ Rediscovering the Archetypes of the Mature Masculine (1900) - libgen.li.mobi
+File3[$e]=$HOME/Downloads/Pre-DepartureOrientationSummer2023_v1-corrected4-20.pdf
+File4[$e]=$HOME/PPN235181684_0256.pdf
+File5[$e]=$HOME/Sterk.pdf
+File6[$e]=$HOME/Banff Post/IMG_5834.HEIC
+File7[$e]=$HOME/test.ps
+File8[$e]=$HOME/Downloads/Jun 23 17h19 Sterk Coxeter Diagrams.pdf
+File9[$e]=$HOME/Downloads/Thursday Excursion.pdf
+Name1[$e]=UK to Barcelona Boarding Pass.pdf
+Name10[$e]=EnriquesProject.pdf
+Name2[$e]=Robert Moore, Douglas Gillette - King, Warrior, Magician, Lover_ Rediscovering the Archetypes of the Mature Masculine (1900) - libgen.li.mobi
+Name3[$e]=Pre-DepartureOrientationSummer2023_v1-corrected4-20.pdf
+Name4[$e]=PPN235181684_0256.pdf
+Name5[$e]=Sterk.pdf
+Name6[$e]=IMG_5834.HEIC
+Name7[$e]=test.ps
+Name8[$e]=Jun 23 17h19 Sterk Coxeter Diagrams.pdf
+Name9[$e]=Thursday Excursion.pdf
 
 [UiSettings]
 ColorScheme=Maia
