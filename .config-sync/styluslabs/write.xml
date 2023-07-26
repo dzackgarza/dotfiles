@@ -13,7 +13,7 @@
   <int name="eraseOnImage" value="0" />
   <int name="inputSimplify" value="4" />
   <int name="inputSmoothing" value="8" />
-  <int name="lastUpdateCheck" value="1687173681" />
+  <int name="lastUpdateCheck" value="1689079174" />
   <int name="mouseMode" value="0" />
   <int name="penType" value="11" />
   <int name="reopenLastDoc" value="1" />
@@ -22,7 +22,6 @@
   <int name="screenDPI" value="30" />
   <int name="showAdvPrefs" value="1" />
   <int name="singleTouchMode" value="0" />
-  <int name="strokeCounter" value="27" />
   <int name="thumbFirstPage" value="1" />
   <int name="thumbnailSize" value="110" />
   <float name="pageHeight" value="3090" />
@@ -32,17 +31,17 @@
   <float name="xRuling" value="60" />
   <float name="yRuling" value="60" />
   <string name="clippingDoc" value="/home/zack/.config/styluslabs/saved/clippings.html" />
-  <string name="currFolder" value="/home/zack/Dropbox/WriteNotes/" />
+  <string name="currFolder" value="/home/zack/Dropbox/WriteNotes/Enriques/" />
   <string name="docFileExt" value="svgz" />
   <string name="newDocTitleFmt" value="%b %e %Hh%M" />
-  <string name="recentDocs" value="/home/zack/Dropbox/WriteNotes/Jun 19 12h21.svgz:::/home/zack/Dropbox/WriteNotes/May 29 17h53.svgz:::/home/zack/Dropbox/WriteNotes/Apr 12 16h08.svgz:::/home/zack/spheres_and_balls.svg:::/home/zack/hexagonal_lattice.svg:::/home/zack/Dropbox/WriteNotes/Enriques/May 17 18h36.svgz:::/home/zack/Dropbox/WriteNotes/Enriques/May  4 13h28.svgz:::/home/zack/Dropbox/WriteNotes/Enriques/Apr 23 13h40.svgz:::/home/zack/Dropbox/WriteNotes/Enriques/Apr 27 11h01.svgz:::/home/zack/Dropbox/WriteNotes/Enriques/Apr 28 12h44.svgz:::/home/zack/Dropbox/WriteNotes/Enriques/May  3 14h19.svgz" />
+  <string name="recentDocs" value="/home/zack/Dropbox/WriteNotes/Enriques/May 17 18h36.svgz:::/home/zack/Dropbox/WriteNotes/Enriques/Jun  9 09h41.svgz:::/home/zack/Dropbox/WriteNotes/Enriques/Jun  7 08h46.svgz:::/home/zack/Dropbox/WriteNotes/Enriques/Jun  6 13h48.svgz:::/home/zack/Dropbox/WriteNotes/Enriques/Jul  6 18h45.svgz:::/home/zack/Dropbox/WriteNotes/Enriques/Jul 10 11h46.svgz:::/home/zack/Dropbox/WriteNotes/Enriques/IASs.svgz:::/home/zack/Dropbox/WriteNotes/Enriques/Apr 28 12h44.svgz:::/home/zack/Dropbox/WriteNotes/Enriques/Apr 27 11h01.svgz:::/home/zack/Dropbox/WriteNotes/Enriques/Apr 23 13h40.svgz:::/home/zack/Dropbox/WriteNotes/Enriques/Apr 17 12h25.svgz" />
   <string name="savedColors" value="#FF000000,#FFFF0000,#FF008000,#FF0000FF" />
   <string name="savedWidths" value="1.400,2.400,4.000,8.000" />
   <string name="syncServer" value="localhost" />
   <string name="toolBars" value="docTitle,stretch,separator,action_Previous_Page,action_Next_Page,separator,actionInsert_Space,actionShow_Clippings,actionTools_Menu,separator,actionShow_Bookmarks,actionShare_Document,actionOverflow_Menu;actionDraw,actionCustom_Pen,actionStroke_Eraser,actionFree_Eraser,penColor,penWidth,stretch" />
   <string name="toolBars2" value="docTitle,stretch,actionSave,separator,tools,separator,undoRedoBtn,separator,seltools,separator,actionShow_Bookmarks,actionShow_Clippings,actionSplitView,separator,actionOverflow_Menu" />
   <string name="toolModes" value="14 20 25 22" />
-  <string name="windowState" value="10 41 1900 1029 0 0" />
+  <string name="windowState" value="0 0 1920 1080 0 0" />
   <pen color="4278190080" width="3.5" pressure="1" flags="0" />
   <pen color="4278190258" width="4" pressure="1" flags="0" />
   <pen color="4283150181" width="4" pressure="1" flags="0" />

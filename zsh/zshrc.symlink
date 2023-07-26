@@ -156,4 +156,4 @@ cd() {
 alias ag="ag --noaffinity"
 
 export NODE_OPTIONS=--openssl-legacy-provider
-
+export CUDADIR=/opt/cuda
