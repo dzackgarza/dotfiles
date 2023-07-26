@@ -4,11 +4,14 @@ import mistune
 import sys
 import subprocess
 
+from mistune.renderers.markdown import MarkdownRenderer
+
+
 # Store the file name in a variable
 file_name = sys.argv[1]
 
 # Define a custom renderer class that stores the file names of image links
-class ImageLinkRenderer(mistune.Renderer):
+class ImageLinkRenderer(MarkdownRenderer):
     def __init__(self):
         self.image_links = []
         # Add an options attribute to the class
