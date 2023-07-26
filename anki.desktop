@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Anki
+GenericName=Flashcard
+Comment=Flashcards
+Icon=vim
+TryExec=nvim
+Exec=/home/zack/.local/bin/anki
+NoDisplay=false
+Categories=TextEditor;Utility;
+StartupNotify=false
+Terminal=false

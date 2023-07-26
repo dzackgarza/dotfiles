@@ -238,4 +238,5 @@ exec --no-startup-id sparkleshare &
 exec --no-startup-id mathpix-snipping-tool &
 exec --no-startup-id dunst &
 exec_always i3-layouts &
+exec_always setxkbmap -option caps:escape &
 
