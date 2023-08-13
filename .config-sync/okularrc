@@ -105,26 +105,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Library/Allen Hatcher/Algebraic Topology (609)/Algebraic Topology - Allen Hatcher.pdf
-File10[$e]=$HOME/Downloads/IAS Notes.pdf
-File2[$e]=$HOME/Downloads/Jun 23 17h19 Sterk Coxeter Diagrams.pdf
-File3[$e]=$HOME/Downloads/itinerary.pdf
-File4[$e]=$HOME/Downloads/Krantz Reading 2.pdf
-File5[$e]=$HOME/Downloads/GRE.pdf
-File6[$e]=$HOME/Downloads/Garza - OX Summer 2023 Assistantship Offer Letter.pdf
-File7[$e]=$HOME/Downloads/sepe.pdf
-File8[$e]=$HOME/Dropbox/WriteNotes/Seminars and Talks/Zack Talbot Talk Live Tablet Notes.pdf
-File9[$e]=$HOME/Downloads/Boundary Strata Notes.pdf
-Name1[$e]=Algebraic Topology - Allen Hatcher.pdf
-Name10[$e]=IAS Notes.pdf
-Name2[$e]=Jun 23 17h19 Sterk Coxeter Diagrams.pdf
-Name3[$e]=itinerary.pdf
-Name4[$e]=Krantz Reading 2.pdf
-Name5[$e]=GRE.pdf
-Name6[$e]=Garza - OX Summer 2023 Assistantship Offer Letter.pdf
-Name7[$e]=sepe.pdf
-Name8[$e]=Zack Talbot Talk Live Tablet Notes.pdf
-Name9[$e]=Boundary Strata Notes.pdf
+File1[$e]=$HOME/Downloads/Jun 23 17h19 Sterk Coxeter Diagrams.pdf
+File10[$e]=$HOME/Dropbox/Library/William Fulton, Joe Harris/Representation Theory_ A First Course (668)/Representation Theory_ A First Course - William Fulton, Joe Harris.pdf
+File2[$e]=$HOME/Downloads/itinerary.pdf
+File3[$e]=$HOME/Downloads/Krantz Reading 2.pdf
+File4[$e]=$HOME/Downloads/GRE.pdf
+File5[$e]=$HOME/Downloads/Garza - OX Summer 2023 Assistantship Offer Letter.pdf
+File6[$e]=$HOME/Downloads/sepe.pdf
+File7[$e]=$HOME/Dropbox/WriteNotes/Seminars and Talks/Zack Talbot Talk Live Tablet Notes.pdf
+File8[$e]=$HOME/Downloads/Boundary Strata Notes.pdf
+File9[$e]=$HOME/Downloads/IAS Notes.pdf
+Name1[$e]=Jun 23 17h19 Sterk Coxeter Diagrams.pdf
+Name10[$e]=Representation Theory_ A First Course - William Fulton, Joe Harris.pdf
+Name2[$e]=itinerary.pdf
+Name3[$e]=Krantz Reading 2.pdf
+Name4[$e]=GRE.pdf
+Name5[$e]=Garza - OX Summer 2023 Assistantship Offer Letter.pdf
+Name6[$e]=sepe.pdf
+Name7[$e]=Zack Talbot Talk Live Tablet Notes.pdf
+Name8[$e]=Boundary Strata Notes.pdf
+Name9[$e]=IAS Notes.pdf
 
 [UiSettings]
 ColorScheme=Maia
