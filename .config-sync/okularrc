@@ -24,7 +24,7 @@ eDP-1 YPosition 1920x1080=42
 eDP-1 YPosition 1920x1080 eDP-1=41
 
 [Desktop Entry]
-FullScreen=false
+FullScreen=true
 shouldShowMenuBarComingFromFullScreen=true
 shouldShowToolBarComingFromFullScreen=true
 
@@ -33,14 +33,20 @@ LockSidebar=true
 ShowSidebar=false
 
 [MainWindow]
-1920x1080 screen: Height=1027
-1920x1080 screen: Width=943
-1920x1080 screen: XPosition=966
-1920x1080 screen: YPosition=42
+1920x1080 screen: Height=1080
+1920x1080 screen: Width=1920
+1920x1080 screen: XPosition=0
+1920x1080 screen: YPosition=0
+2 screens: Height=1027
+2 screens: Width=1120
+2 screens: XPosition=11
+2 screens: YPosition=42
+HDMI-1 eDP-1=eDP-1
 Height 1080=996
 Height 1920=1866
 Height 800=746
-State=AAAA/wAAAAD9AAAAAQAAAAAAAAEgAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyP////8A///+AAADrwAAA8gAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAA==
+MenuBar=Disabled
+State=AAAA/wAAAAD9AAAAAQAAAAAAAAEgAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyP////8A///+AAAHgAAABDgAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -105,26 +111,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Downloads/Jun 23 17h19 Sterk Coxeter Diagrams.pdf
-File10[$e]=$HOME/Dropbox/Library/William Fulton, Joe Harris/Representation Theory_ A First Course (668)/Representation Theory_ A First Course - William Fulton, Joe Harris.pdf
-File2[$e]=$HOME/Downloads/itinerary.pdf
-File3[$e]=$HOME/Downloads/Krantz Reading 2.pdf
-File4[$e]=$HOME/Downloads/GRE.pdf
-File5[$e]=$HOME/Downloads/Garza - OX Summer 2023 Assistantship Offer Letter.pdf
-File6[$e]=$HOME/Downloads/sepe.pdf
-File7[$e]=$HOME/Dropbox/WriteNotes/Seminars and Talks/Zack Talbot Talk Live Tablet Notes.pdf
-File8[$e]=$HOME/Downloads/Boundary Strata Notes.pdf
-File9[$e]=$HOME/Downloads/IAS Notes.pdf
-Name1[$e]=Jun 23 17h19 Sterk Coxeter Diagrams.pdf
-Name10[$e]=Representation Theory_ A First Course - William Fulton, Joe Harris.pdf
-Name2[$e]=itinerary.pdf
-Name3[$e]=Krantz Reading 2.pdf
-Name4[$e]=GRE.pdf
-Name5[$e]=Garza - OX Summer 2023 Assistantship Offer Letter.pdf
-Name6[$e]=sepe.pdf
-Name7[$e]=Zack Talbot Talk Live Tablet Notes.pdf
-Name8[$e]=Boundary Strata Notes.pdf
-Name9[$e]=IAS Notes.pdf
+File1[$e]=$HOME/Downloads/notes.pdf
+File10[$e]=$HOME/Dropbox/WriteNotes/handwriting_warmup.pdf
+File2[$e]=$HOME/Downloads/Cool pics.pdf
+File3[$e]=$HOME/Downloads/Spectra Poster.pdf
+File4[$e]=$HOME/gitclones/Enriques/main.pdf
+File5[$e]=$HOME/Downloads/ORIGINAL RESEARCH/Paper Draft Jul 31.pdf
+File6[$e]=$HOME/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
+File7[$e]=$HOME/Dropbox/Library/Ana Cannas da Silva/Lectures on Symplectic Geometry (839)/Lectures on Symplectic Geometry - Ana Cannas da Silva.pdf
+File8[$e]=$HOME/Dropbox/WriteNotes/Exam 1 Solutions.pdf
+File9[$e]=$HOME/Dropbox/WriteNotes/handwriting_extended.pdf
+Name1[$e]=notes.pdf
+Name10[$e]=handwriting_warmup.pdf
+Name2[$e]=Cool pics.pdf
+Name3[$e]=Spectra Poster.pdf
+Name4[$e]=main.pdf
+Name5[$e]=Paper Draft Jul 31.pdf
+Name6[$e]=Cox et al. - 2011 - Toric varieties.pdf
+Name7[$e]=Lectures on Symplectic Geometry - Ana Cannas da Silva.pdf
+Name8[$e]=Exam 1 Solutions.pdf
+Name9[$e]=handwriting_extended.pdf
 
 [UiSettings]
 ColorScheme=Maia
