@@ -24,7 +24,7 @@ eDP-1 YPosition 1920x1080=42
 eDP-1 YPosition 1920x1080 eDP-1=41
 
 [Desktop Entry]
-FullScreen=true
+FullScreen=false
 shouldShowMenuBarComingFromFullScreen=true
 shouldShowToolBarComingFromFullScreen=true
 
@@ -33,10 +33,10 @@ LockSidebar=true
 ShowSidebar=false
 
 [MainWindow]
-1920x1080 screen: Height=1080
-1920x1080 screen: Width=1920
-1920x1080 screen: XPosition=0
-1920x1080 screen: YPosition=0
+1920x1080 screen: Height=1027
+1920x1080 screen: Width=943
+1920x1080 screen: XPosition=966
+1920x1080 screen: YPosition=42
 2 screens: Height=1027
 2 screens: Width=1120
 2 screens: XPosition=11
@@ -45,8 +45,7 @@ HDMI-1 eDP-1=eDP-1
 Height 1080=996
 Height 1920=1866
 Height 800=746
-MenuBar=Disabled
-State=AAAA/wAAAAD9AAAAAQAAAAAAAAEgAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyP////8A///+AAAHgAAABDgAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAA==
+State=AAAA/wAAAAD9AAAAAQAAAAAAAAEgAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyP////8A///+AAADrwAAA8gAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -111,26 +110,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Downloads/notes.pdf
-File10[$e]=$HOME/Dropbox/WriteNotes/handwriting_warmup.pdf
-File2[$e]=$HOME/Downloads/Cool pics.pdf
-File3[$e]=$HOME/Downloads/Spectra Poster.pdf
-File4[$e]=$HOME/gitclones/Enriques/main.pdf
-File5[$e]=$HOME/Downloads/ORIGINAL RESEARCH/Paper Draft Jul 31.pdf
-File6[$e]=$HOME/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
-File7[$e]=$HOME/Dropbox/Library/Ana Cannas da Silva/Lectures on Symplectic Geometry (839)/Lectures on Symplectic Geometry - Ana Cannas da Silva.pdf
-File8[$e]=$HOME/Dropbox/WriteNotes/Exam 1 Solutions.pdf
-File9[$e]=$HOME/Dropbox/WriteNotes/handwriting_extended.pdf
-Name1[$e]=notes.pdf
-Name10[$e]=handwriting_warmup.pdf
-Name2[$e]=Cool pics.pdf
-Name3[$e]=Spectra Poster.pdf
-Name4[$e]=main.pdf
-Name5[$e]=Paper Draft Jul 31.pdf
-Name6[$e]=Cox et al. - 2011 - Toric varieties.pdf
-Name7[$e]=Lectures on Symplectic Geometry - Ana Cannas da Silva.pdf
-Name8[$e]=Exam 1 Solutions.pdf
-Name9[$e]=handwriting_extended.pdf
+File1[$e]=$HOME/Downloads/Alg Ch 0.pdf
+File10[$e]=$HOME/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
+File2[$e]=$HOME/Downloads/notes.pdf
+File3[$e]=$HOME/Downloads/PrelimSeminarSchedule22Mar_2023-03-22.pdf
+File4[$e]=$HOME/Downloads/FeminineMystique.pdf
+File5[$e]=$HOME/Downloads/research statement Zhiwei Zheng 2018.pdf
+File6[$e]=$HOME/Dropbox/shared-sterk-enriques/questions.pdf
+File7[$e]=$HOME/Dropbox/shared-sterk-enriques/Notes/Cusps.pdf
+File8[$e]=$HOME/Dropbox/shared-sterk-enriques/Notes/Diagrams.pdf
+File9[$e]=$HOME/Dropbox/shared-sterk-enriques/Notes/Vinberg algorithm H(2)+E8+E8.pdf
+Name1[$e]=Alg Ch 0.pdf
+Name10[$e]=Cox et al. - 2011 - Toric varieties.pdf
+Name2[$e]=notes.pdf
+Name3[$e]=PrelimSeminarSchedule22Mar_2023-03-22.pdf
+Name4[$e]=FeminineMystique.pdf
+Name5[$e]=research statement Zhiwei Zheng 2018.pdf
+Name6[$e]=questions.pdf
+Name7[$e]=Cusps.pdf
+Name8[$e]=Diagrams.pdf
+Name9[$e]=Vinberg algorithm H(2)+E8+E8.pdf
 
 [UiSettings]
 ColorScheme=Maia
