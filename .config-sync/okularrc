@@ -33,10 +33,10 @@ LockSidebar=true
 ShowSidebar=false
 
 [MainWindow]
-1920x1080 screen: Height=1027
-1920x1080 screen: Width=628
-1920x1080 screen: XPosition=646
-1920x1080 screen: YPosition=42
+1920x1080 screen: Height=1080
+1920x1080 screen: Width=1920
+1920x1080 screen: XPosition=0
+1920x1080 screen: YPosition=0
 2 screens: Height=1027
 2 screens: Width=1120
 2 screens: XPosition=11
@@ -45,8 +45,9 @@ HDMI-1 eDP-1=eDP-1
 Height 1080=996
 Height 1920=1866
 Height 800=746
+MenuBar=Disabled
 RestorePositionForNextInstance=false
-State=AAAA/wAAAAD9AAAAAQAAAAAAAAEgAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyP////8A///+AAACdAAAA8gAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAA==
+State=AAAA/wAAAAD9AAAAAQAAAAAAAAEgAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyP////8A///+AAAHgAAABDgAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -111,26 +112,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Downloads/notes.pdf
-File10[$e]=$HOME/Dropbox/shared-sterk-enriques/Notes/Cusps.pdf
-File2[$e]=$HOME/Downloads/PrelimSeminarSchedule22Mar_2023-03-22.pdf
-File3[$e]=$HOME/Downloads/FeminineMystique.pdf
-File4[$e]=$HOME/Downloads/research statement Zhiwei Zheng 2018.pdf
-File5[$e]=$HOME/Dropbox/shared-sterk-enriques/questions.pdf
-File6[$e]=$HOME/Dropbox/shared-sterk-enriques/Notes/Diagrams.pdf
-File7[$e]=$HOME/Dropbox/shared-sterk-enriques/Notes/Vinberg algorithm H(2)+E8+E8.pdf
-File8[$e]=$HOME/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
-File9[$e]=$HOME/Downloads/schaffler_luca_201708_phd.pdf
-Name1[$e]=notes.pdf
-Name10[$e]=Cusps.pdf
-Name2[$e]=PrelimSeminarSchedule22Mar_2023-03-22.pdf
-Name3[$e]=FeminineMystique.pdf
-Name4[$e]=research statement Zhiwei Zheng 2018.pdf
-Name5[$e]=questions.pdf
-Name6[$e]=Diagrams.pdf
-Name7[$e]=Vinberg algorithm H(2)+E8+E8.pdf
-Name8[$e]=Cox et al. - 2011 - Toric varieties.pdf
-Name9[$e]=schaffler_luca_201708_phd.pdf
+File1[$e]=$HOME/Dropbox/shared-sterk-enriques/Paper V1/OverleafVersion/V1.pdf
+File10[$e]=$HOME/Dropbox/shared-sterk-enriques/Paper V1/OverleafVersion/V2.pdf
+File2[$e]=$HOME/Downloads/641448c9Of1bbO48e9O9c0dO7ac221beb90718a85288445.pdf
+File3[$e]=$HOME/Dropbox/shared-sterk-enriques/Valery's notes/cusps/cusps.pdf
+File4[$e]=$HOME/Dropbox/shared-sterk-enriques/Meeting notes/Sept 5, 2023.pdf
+File5[$e]=$HOME/Dropbox/shared-sterk-enriques/Valery's notes/Involutions, Sep 2, 2023.pdf
+File6[$e]=$HOME/Dropbox/shared-sterk-enriques/Notes-Luca-Zack/Compact_moduli_deg_2_Enriques.pdf
+File7[$e]=$HOME/Dropbox/shared-sterk-enriques/Notes-Luca-Zack/NotesOnEnriquesIAS.pdf
+File8[$e]=$HOME/Downloads/insurance card 2023-2024.pdf
+File9[$e]=$HOME/Dropbox/shared-sterk-enriques/Paper V1/V2.pdf
+Name1[$e]=V1.pdf
+Name10[$e]=V2.pdf
+Name2[$e]=641448c9Of1bbO48e9O9c0dO7ac221beb90718a85288445.pdf
+Name3[$e]=cusps.pdf
+Name4[$e]=Sept 5, 2023.pdf
+Name5[$e]=Involutions, Sep 2, 2023.pdf
+Name6[$e]=Compact_moduli_deg_2_Enriques.pdf
+Name7[$e]=NotesOnEnriquesIAS.pdf
+Name8[$e]=insurance card 2023-2024.pdf
+Name9[$e]=V2.pdf
 
 [UiSettings]
 ColorScheme=Maia

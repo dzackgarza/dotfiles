@@ -27,3 +27,5 @@
         default = simple
 [pull]
 	ff = only
+[credential]
+	helper = store
