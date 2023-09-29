@@ -24,9 +24,9 @@ eDP-1 YPosition 1920x1080=42
 eDP-1 YPosition 1920x1080 eDP-1=41
 
 [Desktop Entry]
-FullScreen=false
-shouldShowMenuBarComingFromFullScreen=true
-shouldShowToolBarComingFromFullScreen=true
+FullScreen=true
+shouldShowMenuBarComingFromFullScreen=false
+shouldShowToolBarComingFromFullScreen=false
 
 [General]
 LockSidebar=true
@@ -37,16 +37,15 @@ ShowSidebar=false
 1920x1080 screen: Width=1920
 1920x1080 screen: XPosition=0
 1920x1080 screen: YPosition=0
-2 screens: Height=1027
-2 screens: Width=1120
-2 screens: XPosition=11
-2 screens: YPosition=42
-HDMI-1 eDP-1=eDP-1
+2 screens: Height=1869
+2 screens: Width=1060
+2 screens: XPosition=1930
+2 screens: YPosition=41
+HDMI-1 eDP-1=HDMI-1
 Height 1080=996
 Height 1920=1866
 Height 800=746
 MenuBar=Disabled
-RestorePositionForNextInstance=false
 State=AAAA/wAAAAD9AAAAAQAAAAAAAAEgAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyP////8A///+AAAHgAAABDgAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1080=512
@@ -112,26 +111,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/shared-sterk-enriques/Paper V1/OverleafVersion/V1.pdf
-File10[$e]=$HOME/Dropbox/shared-sterk-enriques/Paper V1/OverleafVersion/V2.pdf
-File2[$e]=$HOME/Downloads/641448c9Of1bbO48e9O9c0dO7ac221beb90718a85288445.pdf
-File3[$e]=$HOME/Dropbox/shared-sterk-enriques/Valery's notes/cusps/cusps.pdf
-File4[$e]=$HOME/Dropbox/shared-sterk-enriques/Meeting notes/Sept 5, 2023.pdf
-File5[$e]=$HOME/Dropbox/shared-sterk-enriques/Valery's notes/Involutions, Sep 2, 2023.pdf
+File1[$e]=$HOME/Dropbox/Library/Elias M. Stein, Rami Shakarchi/Fourier Analysis ( (Stein and Shakarchi I) (887)/Fourier Analysis ( (Stein and Shakarchi I) - Elias M. Stein, Rami Shakarchi.pdf
+File10[$e]=$HOME/Dropbox/Library/Anatoly Fomenko/Homotopical Topology (707)/Homotopical Topology - Anatoly Fomenko.pdf
+File2[$e]=$HOME/Dropbox/Library/Milnor/Symmetric Bilinear Forms (1049)/Symmetric Bilinear Forms - Milnor.pdf
+File3[$e]=$HOME/Zotero/storage/ECGEDUCP/Goncharov - 1996 - Volumes of hyperbolic manifolds and mixed Tate mot.pdf
+File4[$e]=$HOME/Dropbox/shared-sterk-enriques/Valery's notes/Involutions, Sep 2, 2023.pdf
+File5[$e]=$HOME/Dropbox/shared-sterk-enriques/Meeting notes/Sept 5, 2023.pdf
 File6[$e]=$HOME/Dropbox/shared-sterk-enriques/Notes-Luca-Zack/Compact_moduli_deg_2_Enriques.pdf
 File7[$e]=$HOME/Dropbox/shared-sterk-enriques/Notes-Luca-Zack/NotesOnEnriquesIAS.pdf
-File8[$e]=$HOME/Downloads/insurance card 2023-2024.pdf
-File9[$e]=$HOME/Dropbox/shared-sterk-enriques/Paper V1/V2.pdf
-Name1[$e]=V1.pdf
-Name10[$e]=V2.pdf
-Name2[$e]=641448c9Of1bbO48e9O9c0dO7ac221beb90718a85288445.pdf
-Name3[$e]=cusps.pdf
-Name4[$e]=Sept 5, 2023.pdf
-Name5[$e]=Involutions, Sep 2, 2023.pdf
+File8[$e]=$HOME/Dropbox/Library/Unknown/An Introduction to Stable Homotopy Theory (687)/An Introduction to Stable Homotopy Theory - Unknown.pdf
+File9[$e]=$HOME/Dropbox/Library/Bott/Differential Forms in Algebraic Topology (753)/Differential Forms in Algebraic Topology - Bott.pdf
+Name1[$e]=Fourier Analysis ( (Stein and Shakarchi I) - Elias M. Stein, Rami Shakarchi.pdf
+Name10[$e]=Homotopical Topology - Anatoly Fomenko.pdf
+Name2[$e]=Symmetric Bilinear Forms - Milnor.pdf
+Name3[$e]=Goncharov - 1996 - Volumes of hyperbolic manifolds and mixed Tate mot.pdf
+Name4[$e]=Involutions, Sep 2, 2023.pdf
+Name5[$e]=Sept 5, 2023.pdf
 Name6[$e]=Compact_moduli_deg_2_Enriques.pdf
 Name7[$e]=NotesOnEnriquesIAS.pdf
-Name8[$e]=insurance card 2023-2024.pdf
-Name9[$e]=V2.pdf
+Name8[$e]=An Introduction to Stable Homotopy Theory - Unknown.pdf
+Name9[$e]=Differential Forms in Algebraic Topology - Bott.pdf
 
 [UiSettings]
 ColorScheme=Maia
