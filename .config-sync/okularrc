@@ -25,7 +25,7 @@ eDP-1 YPosition 1920x1080 eDP-1=41
 
 [Desktop Entry]
 FullScreen=false
-shouldShowMenuBarComingFromFullScreen=false
+shouldShowMenuBarComingFromFullScreen=true
 shouldShowToolBarComingFromFullScreen=false
 
 [General]
@@ -33,10 +33,10 @@ LockSidebar=true
 ShowSidebar=false
 
 [MainWindow]
-1920x1080 screen: Height=1080
-1920x1080 screen: Width=1920
-1920x1080 screen: XPosition=0
-1920x1080 screen: YPosition=0
+1920x1080 screen: Height=1027
+1920x1080 screen: Width=943
+1920x1080 screen: XPosition=966
+1920x1080 screen: YPosition=42
 2 screens: Height=1920
 2 screens: Width=1080
 2 screens: XPosition=1920
@@ -45,9 +45,7 @@ HDMI-1 eDP-1=HDMI-1
 Height 1080=996
 Height 1920=1866
 Height 800=746
-MenuBar=Disabled
-RestorePositionForNextInstance=false
-State=AAAA/wAAAAD9AAAAAQAAAAAAAACRAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyP////8A///+AAAHgAAABBMAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAA==
+State=AAAA/wAAAAD9AAAAAQAAAAAAAACRAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyP////8A///+AAADrwAAA8gAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -112,26 +110,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/shared-sterk-enriques/paper/fig-sterk-allcusps.pdf
-File10[$e]=$HOME/Dropbox/paper wip/fig-18-0-0.pdf
-File2[$e]=$HOME/Downloads/ProjectTest/figures/fig-par2-ell.pdf
-File3[$e]=$HOME/Dropbox/Teaching/Precalculus/2022 Fall Quizzes/Quiz 4.pdf
-File4[$e]=$HOME/Dropbox/Teaching/Precalculus/2022 Fall Quizzes/Quiz 5.pdf
-File5[$e]=$HOME/Dropbox/Teaching/Precalculus/2022 Fall Quizzes/Quiz 7.pdf
-File6[$e]=$HOME/Dropbox/Teaching/Precalculus/2022 Fall Quizzes/Quiz 9.pdf
-File7[$e]=$HOME/Dropbox/Library/William Fulton/Introduction to toric varieties (1006)/Introduction to toric varieties - William Fulton.pdf
+File1[$e]=$HOME/Research Statement.pdf
+File10[$e]=$HOME/Dropbox/Library/Audin/Morse Theory and Floer Homology (778)/Morse Theory and Floer Homology - Audin.pdf
+File2[$e]=$HOME/Downloads/BF01409342.pdf
+File3[$e]=$HOME/Dropbox/Library/David Steven Dummit/Abstract Algebra (656)/Abstract Algebra - David Steven Dummit.pdf
+File4[$e]=$HOME/Dropbox/shared-sterk-enriques/Paper writing/V4 Paper Outline.pdf
+File5[$e]=$HOME/Dropbox/shared-sterk-enriques/Paper writing/V3.pdf
+File6[$e]=$HOME/Zotero/storage/HGU2NFC2/Harder and Thompson - 2015 - The Geometry and Moduli of K3 Surfaces.pdf
+File7[$e]=$HOME/Dropbox/shared-sterk-enriques/Valery's notes/Zooms/Zoom Nov 4, 2023.pdf
 File8[$e]=$HOME/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
-File9[$e]=$HOME/Dropbox/shared-sterk-enriques/paper/en-valery-Nov1.pdf
-Name1[$e]=fig-sterk-allcusps.pdf
-Name10[$e]=fig-18-0-0.pdf
-Name2[$e]=fig-par2-ell.pdf
-Name3[$e]=Quiz 4.pdf
-Name4[$e]=Quiz 5.pdf
-Name5[$e]=Quiz 7.pdf
-Name6[$e]=Quiz 9.pdf
-Name7[$e]=Introduction to toric varieties - William Fulton.pdf
+File9[$e]=$HOME/Downloads/Zoom Nov 7.pdf
+Name1[$e]=Research Statement.pdf
+Name10[$e]=Morse Theory and Floer Homology - Audin.pdf
+Name2[$e]=BF01409342.pdf
+Name3[$e]=Abstract Algebra - David Steven Dummit.pdf
+Name4[$e]=V4 Paper Outline.pdf
+Name5[$e]=V3.pdf
+Name6[$e]=Harder and Thompson - 2015 - The Geometry and Moduli of K3 Surfaces.pdf
+Name7[$e]=Zoom Nov 4, 2023.pdf
 Name8[$e]=Cox et al. - 2011 - Toric varieties.pdf
-Name9[$e]=en-valery-Nov1.pdf
+Name9[$e]=Zoom Nov 7.pdf
 
 [UiSettings]
 ColorScheme=Maia
