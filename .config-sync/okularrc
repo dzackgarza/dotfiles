@@ -33,19 +33,19 @@ LockSidebar=true
 ShowSidebar=false
 
 [MainWindow]
-1920x1080 screen: Height=1027
-1920x1080 screen: Width=943
-1920x1080 screen: XPosition=966
-1920x1080 screen: YPosition=42
-2 screens: Height=1920
-2 screens: Width=1080
-2 screens: XPosition=1920
-2 screens: YPosition=0
+1920x1080 screen: Height=508
+1920x1080 screen: Width=766
+1920x1080 screen: XPosition=1143
+1920x1080 screen: YPosition=561
+2 screens: Height=1058
+2 screens: Width=943
+2 screens: XPosition=2886
+2 screens: YPosition=11
 HDMI-1 eDP-1=HDMI-1
 Height 1080=996
 Height 1920=1866
 Height 800=746
-State=AAAA/wAAAAD9AAAAAQAAAAAAAACRAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyP////8A///+AAADrwAAA8gAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAA==
+State=AAAA/wAAAAD9AAAAAQAAAAAAAACRAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyP////8A///+AAAC/gAAAcEAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -110,26 +110,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Research Statement.pdf
-File10[$e]=$HOME/Dropbox/Library/Audin/Morse Theory and Floer Homology (778)/Morse Theory and Floer Homology - Audin.pdf
-File2[$e]=$HOME/Downloads/BF01409342.pdf
-File3[$e]=$HOME/Dropbox/Library/David Steven Dummit/Abstract Algebra (656)/Abstract Algebra - David Steven Dummit.pdf
-File4[$e]=$HOME/Dropbox/shared-sterk-enriques/Paper writing/V4 Paper Outline.pdf
-File5[$e]=$HOME/Dropbox/shared-sterk-enriques/Paper writing/V3.pdf
-File6[$e]=$HOME/Zotero/storage/HGU2NFC2/Harder and Thompson - 2015 - The Geometry and Moduli of K3 Surfaces.pdf
-File7[$e]=$HOME/Dropbox/shared-sterk-enriques/Valery's notes/Zooms/Zoom Nov 4, 2023.pdf
-File8[$e]=$HOME/Zotero/storage/RC2B4ITE/Cox et al. - 2011 - Toric varieties.pdf
-File9[$e]=$HOME/Downloads/Zoom Nov 7.pdf
-Name1[$e]=Research Statement.pdf
-Name10[$e]=Morse Theory and Floer Homology - Audin.pdf
-Name2[$e]=BF01409342.pdf
-Name3[$e]=Abstract Algebra - David Steven Dummit.pdf
-Name4[$e]=V4 Paper Outline.pdf
-Name5[$e]=V3.pdf
-Name6[$e]=Harder and Thompson - 2015 - The Geometry and Moduli of K3 Surfaces.pdf
-Name7[$e]=Zoom Nov 4, 2023.pdf
-Name8[$e]=Cox et al. - 2011 - Toric varieties.pdf
-Name9[$e]=Zoom Nov 7.pdf
+File1[$e]=$HOME/Downloads/Quiz 4 Solutions.pdf
+File10[$e]=$HOME/Notes/Class_Notes/2023/Spring/k3surfaces/K3Surfaces.pdf
+File2[$e]=$HOME/Downloads/Quiz 4 Wednesday Oct 4th.pdf
+File3[$e]=$HOME/Downloads/Exam 3 Review.pdf
+File4[$e]=$HOME/Downloads/Skin Products Invoice.pdf
+File5[$e]=$HOME/Dropbox/shared-sterk-enriques/Valery's notes/Zooms/Zoom Nov 4, 2023.pdf
+File6[$e]=$HOME/Dropbox/Library/Apostol/Introduction to Analytic Number Theory (902)/Introduction to Analytic Number Theory - Apostol.pdf
+File7[$e]=$HOME/Dropbox/shared-sterk-enriques/Valery's notes/Zoom Nov 11, 2023.pdf
+File8[$e]=$HOME/Dropbox/shared-sterk-enriques/paper/en-dzg-Nov16.pdf
+File9[$e]=$HOME/website.pdf
+Name1[$e]=Quiz 4 Solutions.pdf
+Name10[$e]=K3Surfaces.pdf
+Name2[$e]=Quiz 4 Wednesday Oct 4th.pdf
+Name3[$e]=Exam 3 Review.pdf
+Name4[$e]=Skin Products Invoice.pdf
+Name5[$e]=Zoom Nov 4, 2023.pdf
+Name6[$e]=Introduction to Analytic Number Theory - Apostol.pdf
+Name7[$e]=Zoom Nov 11, 2023.pdf
+Name8[$e]=en-dzg-Nov16.pdf
+Name9[$e]=website.pdf
 
 [UiSettings]
 ColorScheme=Maia
