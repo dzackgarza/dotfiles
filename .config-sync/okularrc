@@ -25,7 +25,7 @@ eDP-1 YPosition 1920x1080 eDP-1=41
 
 [Desktop Entry]
 FullScreen=false
-shouldShowMenuBarComingFromFullScreen=true
+shouldShowMenuBarComingFromFullScreen=false
 shouldShowToolBarComingFromFullScreen=false
 
 [General]
@@ -33,10 +33,10 @@ LockSidebar=true
 ShowSidebar=false
 
 [MainWindow]
-1920x1080 screen: Height=508
-1920x1080 screen: Width=766
-1920x1080 screen: XPosition=1143
-1920x1080 screen: YPosition=561
+1920x1080 screen: Height=1027
+1920x1080 screen: Width=1150
+1920x1080 screen: XPosition=759
+1920x1080 screen: YPosition=42
 2 screens: Height=1058
 2 screens: Width=943
 2 screens: XPosition=2886
@@ -45,7 +45,9 @@ HDMI-1 eDP-1=HDMI-1
 Height 1080=996
 Height 1920=1866
 Height 800=746
-State=AAAA/wAAAAD9AAAAAQAAAAAAAACRAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyP////8A///+AAAC/gAAAcEAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAA==
+MenuBar=Disabled
+RestorePositionForNextInstance=false
+State=AAAA/wAAAAD9AAAAAQAAAAAAAACRAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyP////8A///+AAAEfgAAA94AAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -110,26 +112,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Downloads/Quiz 4 Solutions.pdf
-File10[$e]=$HOME/Notes/Class_Notes/2023/Spring/k3surfaces/K3Surfaces.pdf
-File2[$e]=$HOME/Downloads/Quiz 4 Wednesday Oct 4th.pdf
-File3[$e]=$HOME/Downloads/Exam 3 Review.pdf
-File4[$e]=$HOME/Downloads/Skin Products Invoice.pdf
-File5[$e]=$HOME/Dropbox/shared-sterk-enriques/Valery's notes/Zooms/Zoom Nov 4, 2023.pdf
-File6[$e]=$HOME/Dropbox/Library/Apostol/Introduction to Analytic Number Theory (902)/Introduction to Analytic Number Theory - Apostol.pdf
-File7[$e]=$HOME/Dropbox/shared-sterk-enriques/Valery's notes/Zoom Nov 11, 2023.pdf
-File8[$e]=$HOME/Dropbox/shared-sterk-enriques/paper/en-dzg-Nov16.pdf
-File9[$e]=$HOME/website.pdf
-Name1[$e]=Quiz 4 Solutions.pdf
-Name10[$e]=K3Surfaces.pdf
-Name2[$e]=Quiz 4 Wednesday Oct 4th.pdf
-Name3[$e]=Exam 3 Review.pdf
-Name4[$e]=Skin Products Invoice.pdf
-Name5[$e]=Zoom Nov 4, 2023.pdf
-Name6[$e]=Introduction to Analytic Number Theory - Apostol.pdf
-Name7[$e]=Zoom Nov 11, 2023.pdf
-Name8[$e]=en-dzg-Nov16.pdf
-Name9[$e]=website.pdf
+File1[$e]=$HOME/Dropbox/shared-sterk-enriques/paper/en-phil-Nov30b.pdf
+File10[$e]=$HOME/2023-12-02.pdf
+File2[$e]=$HOME/Downloads/Job Applications/Diversity Statement.pdf
+File3[$e]=$HOME/Downloads/Job Applications/Cover Letters/Carnegie-Mellon-PDRF.pdf
+File4[$e]=$HOME/Downloads/Job Applications/Cover Letters/SUNY-RAP.pdf
+File5[$e]=$HOME/Downloads/Job Applications/Cover Letters/SUNY-ML.pdf
+File6[$e]=$HOME/Downloads/Job Applications/Cover Letters/Michigan State FS2024RARTG.pdf
+File7[$e]=$HOME/Dropbox/shared-sterk-enriques/paper/en-valery-Dec1b.pdf
+File8[$e]=$HOME/Downloads/Job Applications/Cover Letters/template.pdf
+File9[$e]=$HOME/Downloads/Job Applications/Cover Letters/Northwestern-PERFECT.pdf
+Name1[$e]=en-phil-Nov30b.pdf
+Name10[$e]=2023-12-02.pdf
+Name2[$e]=Diversity Statement.pdf
+Name3[$e]=Carnegie-Mellon-PDRF.pdf
+Name4[$e]=SUNY-RAP.pdf
+Name5[$e]=SUNY-ML.pdf
+Name6[$e]=Michigan State FS2024RARTG.pdf
+Name7[$e]=en-valery-Dec1b.pdf
+Name8[$e]=template.pdf
+Name9[$e]=Northwestern-PERFECT.pdf
 
 [UiSettings]
 ColorScheme=Maia
