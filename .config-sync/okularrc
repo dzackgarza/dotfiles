@@ -30,7 +30,7 @@ shouldShowToolBarComingFromFullScreen=false
 
 [General]
 LockSidebar=true
-ShowSidebar=true
+ShowSidebar=false
 
 [MainWindow]
 1920x1080 screen: Height=1027
@@ -45,8 +45,7 @@ HDMI-1 eDP-1=HDMI-1
 Height 1080=996
 Height 1920=1866
 Height 800=746
-MenuBar=Disabled
-State=AAAA/wAAAAD9AAAAAQAAAAAAAACWAAAD3vwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgEAAAAlAAAD3gAAAO8A///+AAADEwAAA94AAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAA==
+State=AAAA/wAAAAD9AAAAAQAAAAAAAABaAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyP////8A///+AAADrwAAA8gAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -111,26 +110,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Downloads/D2LCCExport_417297_FCAS MATH2250 Teaching Materials_2023121446.imscc_FILES/сontent/i0b797fd5-785d-4280-82bd-21a3161ee535/DerDNE.pdf
-File10[$e]=$HOME/Dropbox/Library/Barnes, Roitzheim/Foundations of Stable Homotopy Theory (779)/Foundations of Stable Homotopy Theory - Barnes, Roitzheim.pdf
-File2[$e]=$HOME/Downloads/D2LCCExport_417297_FCAS MATH2250 Teaching Materials_2023121446.imscc_FILES/сontent/i0b5372a3-c370-4f4f-84d7-0526e1d50ae5/velocity.pdf
-File3[$e]=$HOME/Downloads/D2LCCExport_417297_FCAS MATH2250 Teaching Materials_2023121446.imscc_FILES/сontent/i1ea53b0a-8930-44b0-add1-961bcf02deb2/Fundamental Theorem.pdf
-File4[$e]=$HOME/Downloads/Tutoring/1113/Exam 1 Sp 2023.pdf
-File5[$e]=$HOME/Downloads/Tutoring/1113/Exam 1 Review.pdf
-File6[$e]=$HOME/Downloads/Complex/Fall2023UndergraduateComplexAnalysisPsets.pdf
-File7[$e]=$HOME/Downloads/Tutoring/1113/Final Exam Sp 2023.pdf
-File8[$e]=$HOME/Research Statement.pdf
-File9[$e]=$HOME/Dropbox/Job Applications/Cover Letters/McMaster.pdf
-Name1[$e]=DerDNE.pdf
-Name10[$e]=Foundations of Stable Homotopy Theory - Barnes, Roitzheim.pdf
-Name2[$e]=velocity.pdf
-Name3[$e]=Fundamental Theorem.pdf
-Name4[$e]=Exam 1 Sp 2023.pdf
-Name5[$e]=Exam 1 Review.pdf
-Name6[$e]=Fall2023UndergraduateComplexAnalysisPsets.pdf
-Name7[$e]=Final Exam Sp 2023.pdf
-Name8[$e]=Research Statement.pdf
-Name9[$e]=McMaster.pdf
+File1[$e]=$HOME/Downloads/1-s2.0-0040938389900086-main.pdf
+File10[$e]=$HOME/Dropbox/Document Archive/InsuranceCard.pdf
+File2[$e]=$HOME/Downloads/RosenblumResearchStatementDetailed.pdf
+File3[$e]=$HOME/Downloads/Diversity statements.pdf
+File4[$e]=$HOME/Downloads/Final-ell-comparison.pdf
+File5[$e]=$HOME/Downloads/Sterk_Maximal_Connected_Elliptic_Subdiagram_Classification_1_to_5.pdf
+File6[$e]=$HOME/Downloads/Sterk 2 Classification Code.pdf
+File7[$e]=$HOME/Downloads/quickref-linalg.pdf
+File8[$e]=$HOME/Downloads/BFb0090294.pdf
+File9[$e]=$HOME/Downloads/Skin Products Invoice.pdf
+Name1[$e]=1-s2.0-0040938389900086-main.pdf
+Name10[$e]=InsuranceCard.pdf
+Name2[$e]=RosenblumResearchStatementDetailed.pdf
+Name3[$e]=Diversity statements.pdf
+Name4[$e]=Final-ell-comparison.pdf
+Name5[$e]=Sterk_Maximal_Connected_Elliptic_Subdiagram_Classification_1_to_5.pdf
+Name6[$e]=Sterk 2 Classification Code.pdf
+Name7[$e]=quickref-linalg.pdf
+Name8[$e]=BFb0090294.pdf
+Name9[$e]=Skin Products Invoice.pdf
 
 [UiSettings]
 ColorScheme=Maia
