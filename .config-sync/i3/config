@@ -224,6 +224,7 @@ bindsym $mod+Shift+q mode "$mode_system"
 bindsym F12 scratchpad show, move position center
 bindsym $mod+Ctrl+Return exec termite --name __scratchpad -e tmux -c /home/zack/.config/termite/scratch_config
 
+for_window [instance="__obsidian_note"] floating disable, resize set 800px 600px, move position right
 for_window [instance="__scratchpad"] floating enable, resize set 1800px 600px, move position center, sticky enable
 exec --no-startup-id termite --name __scratchpad -e tmux -2 -c /home/zack/.config/termite/scratch_config
 for_window [instance="__scratchpad"] move scratchpad 

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-termite --title=notetaker_window -e "nvim '$1'" &
+termite --title=__obsidian_note -e "nvim '$1'" &
