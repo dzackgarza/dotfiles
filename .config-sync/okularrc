@@ -34,8 +34,8 @@ ShowSidebar=false
 
 [MainWindow]
 1920x1080 screen: Height=1027
-1920x1080 screen: Width=943
-1920x1080 screen: XPosition=966
+1920x1080 screen: Width=766
+1920x1080 screen: XPosition=1143
 1920x1080 screen: YPosition=42
 2 screens: Height=1027
 2 screens: Width=943
@@ -45,8 +45,8 @@ HDMI-1 eDP-1=HDMI-1
 Height 1080=996
 Height 1920=1866
 Height 800=746
-RestorePositionForNextInstance=false
-State=AAAA/wAAAAD9AAAAAQAAAAAAAABaAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyP////8A///+AAADrwAAA8gAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAA==
+MenuBar=Disabled
+State=AAAA/wAAAAD9AAAAAQAAAAAAAABaAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyP////8A///+AAAC/gAAA94AAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -111,26 +111,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Downloads/Sterk_Maximal_Connected_Elliptic_Subdiagram_Classification_1_to_5.pdf
-File10[$e]=$HOME/Dropbox/shared-sterk-enriques/Meeting notes/Sept 5, 2023.pdf
-File2[$e]=$HOME/Downloads/Sterk 2 Classification Code.pdf
-File3[$e]=$HOME/Downloads/quickref-linalg.pdf
-File4[$e]=$HOME/Downloads/BFb0090294.pdf
-File5[$e]=$HOME/Downloads/Skin Products Invoice.pdf
-File6[$e]=$HOME/Dropbox/Document Archive/InsuranceCard.pdf
-File7[$e]=$HOME/Dropbox/shared-sterk-enriques/Notes (DZG)/Old  Notes/2023-06-31 Paper Draft.pdf
-File8[$e]=$HOME/Dropbox/shared-sterk-enriques/Notes-Luca-Zack/B8-surface.pdf
-File9[$e]=$HOME/Dropbox/shared-sterk-enriques/Enriques article/GM_Enriques_1906_2.pdf
-Name1[$e]=Sterk_Maximal_Connected_Elliptic_Subdiagram_Classification_1_to_5.pdf
-Name10[$e]=Sept 5, 2023.pdf
-Name2[$e]=Sterk 2 Classification Code.pdf
-Name3[$e]=quickref-linalg.pdf
-Name4[$e]=BFb0090294.pdf
-Name5[$e]=Skin Products Invoice.pdf
-Name6[$e]=InsuranceCard.pdf
-Name7[$e]=2023-06-31 Paper Draft.pdf
-Name8[$e]=B8-surface.pdf
-Name9[$e]=GM_Enriques_1906_2.pdf
+File1[$e]=$HOME/Dropbox/Document Archive/InsuranceCard.pdf
+File10[$e]=$HOME/Dropbox/Library/Stein/Real Analysis (Stein and Shakarchi III) (725)/Real Analysis (Stein and Shakarchi III) - Stein.pdf
+File2[$e]=$HOME/Dropbox/shared-sterk-enriques/Notes (DZG)/Old  Notes/2023-06-31 Paper Draft.pdf
+File3[$e]=$HOME/Dropbox/shared-sterk-enriques/Notes-Luca-Zack/B8-surface.pdf
+File4[$e]=$HOME/Dropbox/shared-sterk-enriques/Enriques article/GM_Enriques_1906_2.pdf
+File5[$e]=$HOME/Dropbox/shared-sterk-enriques/Meeting notes/Sept 5, 2023.pdf
+File6[$e]=$HOME/Dropbox/shared-sterk-enriques/Notes-Luca-Zack/NotesOnEnriquesIAS.pdf
+File7[$e]=$HOME/Dropbox/shared-sterk-enriques/Notes-Luca-Zack/Symmetries Coxeter diagram (18,2,0).pdf
+File8[$e]=$HOME/Dropbox/Job Applications/Cover Letters/UIUC.pdf
+File9[$e]=$HOME/Downloads/Tutoring/1113/Exam 1 Review.pdf
+Name1[$e]=InsuranceCard.pdf
+Name10[$e]=Real Analysis (Stein and Shakarchi III) - Stein.pdf
+Name2[$e]=2023-06-31 Paper Draft.pdf
+Name3[$e]=B8-surface.pdf
+Name4[$e]=GM_Enriques_1906_2.pdf
+Name5[$e]=Sept 5, 2023.pdf
+Name6[$e]=NotesOnEnriquesIAS.pdf
+Name7[$e]=Symmetries Coxeter diagram (18,2,0).pdf
+Name8[$e]=UIUC.pdf
+Name9[$e]=Exam 1 Review.pdf
 
 [UiSettings]
 ColorScheme=Maia
