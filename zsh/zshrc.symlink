@@ -16,6 +16,10 @@ fi
 # Add SAGE to path
 export PATH="$PATH:/home/zack/gitclones/sage/local/bin"
 
+
+# Add SAGE to path
+export PATH="$PATH:/home/zack/go/bin"
+
 # Load themes, plugins, etc
 source $ZSH/oh-my-zsh.sh
 
