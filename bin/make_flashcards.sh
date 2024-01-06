@@ -17,20 +17,25 @@ sudo updatedb;
 # Set up an empty array to store the file names
 files=()
 
+echo "Finding files"
 while IFS= read -r -d '' file; do
     myArr+=("$line")
   # Parse the YAML header metadata
-  yaml=$(grep -E '^---$' "$file" -B 1)
+  yaml=$(cat "$file" | yq --front-matter=extract '.flashcard')
 
   # Check if the "flashcard" variable is present in the YAML header
-  if echo "$yaml" | grep -q "flashcard"; then
+  echo "Checking if markdown file ($file) is a flashcard..."
+  echo "$yaml"
+  if [ "$yaml" = "null" ]; then
+    echo "Not a flashcard."
+  else
     # If the "flashcard" variable is present, add the file name to the array
     echo "Adding file:"
     files+=("$file")
     echo $file
     echo "********************************"
   fi
-done < <(find . -name '*.md' -print0 | sort -z)
+done < <(find . -maxdepth 1 -name '*.md' -print0| sort -z)
 
 # Iterate over the array of file names
 for file in "${files[@]}"; do
@@ -57,3 +62,4 @@ for file in "${files[@]}"; do
     echo "Error: file $file does not exist"
   fi
 done
+echo "Done."
