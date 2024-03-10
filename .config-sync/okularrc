@@ -25,7 +25,7 @@ eDP-1 YPosition 1920x1080 eDP-1=41
 
 [Desktop Entry]
 FullScreen=false
-shouldShowMenuBarComingFromFullScreen=false
+shouldShowMenuBarComingFromFullScreen=true
 shouldShowToolBarComingFromFullScreen=false
 
 [General]
@@ -33,20 +33,21 @@ LockSidebar=true
 ShowSidebar=false
 
 [MainWindow]
-1920x1080 screen: Height=1027
-1920x1080 screen: Width=943
-1920x1080 screen: XPosition=966
-1920x1080 screen: YPosition=42
-2 screens: Height=1027
-2 screens: Width=943
-2 screens: XPosition=966
-2 screens: YPosition=42
-HDMI-1 eDP-1=HDMI-1
+1920x1080 screen: Height=1080
+1920x1080 screen: Width=1920
+1920x1080 screen: XPosition=0
+1920x1080 screen: YPosition=0
+2 screens: Height=1080
+2 screens: Width=1920
+2 screens: XPosition=1080
+2 screens: YPosition=0
+HDMI-1 eDP-1=eDP-1
 Height 1080=996
 Height 1920=1866
 Height 800=746
 MenuBar=Disabled
-State=AAAA/wAAAAD9AAAAAQAAAAAAAABaAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyP////8A///+AAADrwAAA94AAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAA==
+RestorePositionForNextInstance=false
+State=AAAA/wAAAAD9AAAAAQAAAAAAAABaAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyP////8A///+AAAHgAAABBMAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -111,26 +112,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/shared-sterk-enriques/paper/fig-maxconn-ell.pdf
-File10[$e]=$HOME/Dropbox/shared-sterk-enriques/paper/fig-square.pdf
-File2[$e]=$HOME/Dropbox/shared-sterk-enriques/paper/fig-k3-cusps-circled.pdf
-File3[$e]=$HOME/Dropbox/shared-sterk-enriques/paper/figs3-figure1.pdf
-File4[$e]=$HOME/Dropbox/shared-sterk-enriques/paper/fig-ells-2.pdf
-File5[$e]=$HOME/Dropbox/shared-sterk-enriques/paper/fig-19-1cusps.pdf
-File6[$e]=$HOME/Dropbox/shared-sterk-enriques/paper/fig-sterk5.pdf
-File7[$e]=$HOME/Dropbox/shared-sterk-enriques/paper/fig-maxdegs.pdf
-File8[$e]=$HOME/Dropbox/shared-sterk-enriques/paper/fig-sterk-allcusps.pdf
-File9[$e]=$HOME/Dropbox/shared-sterk-enriques/paper/fig-triangle-square.pdf
-Name1[$e]=fig-maxconn-ell.pdf
-Name10[$e]=fig-square.pdf
-Name2[$e]=fig-k3-cusps-circled.pdf
-Name3[$e]=figs3-figure1.pdf
-Name4[$e]=fig-ells-2.pdf
-Name5[$e]=fig-19-1cusps.pdf
-Name6[$e]=fig-sterk5.pdf
-Name7[$e]=fig-maxdegs.pdf
-Name8[$e]=fig-sterk-allcusps.pdf
-Name9[$e]=fig-triangle-square.pdf
+File1[$e]=$HOME/Downloads/ATL-PHL AGNES Flight Receipt.pdf
+File10[$e]=$HOME/Zotero/storage/2HY4CPNL/Hunt - 1996 - The geometry of some special arithmetic quotients.pdf
+File2[$e]=$HOME/Downloads/ATL AGNES Airport Shuttle Receipts.pdf
+File3[$e]=$HOME/Dropbox/Teaching/Calculus/2024 Spring Calculus I/Quizzes/Quiz 3_4/Quiz 3_4.pdf
+File4[$e]=$HOME/Dropbox/Teaching/Calculus/Sp 2024 Calc Material/Quiz 5/Quiz 3.pdf
+File5[$e]=$HOME/Dropbox/Teaching/Calculus/Sp 2024 Calc Material/Quiz 5/Quiz 5.pdf
+File6[$e]=$HOME/Zotero/storage/R376DTH8/Barth and Peters - 1983 - Automorphisms of Enriques Surfaces..pdf
+File7[$e]=$HOME/Dropbox/shared-sterk-enriques/archived paper versions/V1.pdf
+File8[$e]=$HOME/Dropbox/shared-sterk-enriques/archived paper versions/V3.pdf
+File9[$e]=$HOME/Dropbox/WriteNotes/Sp 2024 Calc/Exam2 Solutions.pdf
+Name1[$e]=ATL-PHL AGNES Flight Receipt.pdf
+Name10[$e]=Hunt - 1996 - The geometry of some special arithmetic quotients.pdf
+Name2[$e]=ATL AGNES Airport Shuttle Receipts.pdf
+Name3[$e]=Quiz 3_4.pdf
+Name4[$e]=Quiz 3.pdf
+Name5[$e]=Quiz 5.pdf
+Name6[$e]=Barth and Peters - 1983 - Automorphisms of Enriques Surfaces..pdf
+Name7[$e]=V1.pdf
+Name8[$e]=V3.pdf
+Name9[$e]=Exam2 Solutions.pdf
 
 [UiSettings]
 ColorScheme=Maia
