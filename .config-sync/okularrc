@@ -45,9 +45,7 @@ HDMI-1 eDP-1=eDP-1
 Height 1080=996
 Height 1920=1866
 Height 800=746
-MenuBar=Disabled
 RestorePositionForNextInstance=false
-State=AAAA/wAAAAD9AAAAAQAAAAAAAABaAAADyPwCAAAAAfsAAAAcAG8AawB1AGwAYQByAF8AcwBpAGQAZQBiAGEAcgAAAAA7AAADyP////8A///+AAAHgAAABBMAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAABAAAAAQAAACwAcQB1AGkAYwBrAEEAbgBuAG8AdABhAHQAaQBvAG4AVABvAG8AbABCAGEAcgIAAAAA/////wAAAAAAAAAAAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1080=512
 Width 1280=932
@@ -112,26 +110,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Downloads/ATL-PHL AGNES Flight Receipt.pdf
-File10[$e]=$HOME/Zotero/storage/2HY4CPNL/Hunt - 1996 - The geometry of some special arithmetic quotients.pdf
-File2[$e]=$HOME/Downloads/ATL AGNES Airport Shuttle Receipts.pdf
-File3[$e]=$HOME/Dropbox/Teaching/Calculus/2024 Spring Calculus I/Quizzes/Quiz 3_4/Quiz 3_4.pdf
-File4[$e]=$HOME/Dropbox/Teaching/Calculus/Sp 2024 Calc Material/Quiz 5/Quiz 3.pdf
-File5[$e]=$HOME/Dropbox/Teaching/Calculus/Sp 2024 Calc Material/Quiz 5/Quiz 5.pdf
-File6[$e]=$HOME/Zotero/storage/R376DTH8/Barth and Peters - 1983 - Automorphisms of Enriques Surfaces..pdf
-File7[$e]=$HOME/Dropbox/shared-sterk-enriques/archived paper versions/V1.pdf
-File8[$e]=$HOME/Dropbox/shared-sterk-enriques/archived paper versions/V3.pdf
-File9[$e]=$HOME/Dropbox/WriteNotes/Sp 2024 Calc/Exam2 Solutions.pdf
-Name1[$e]=ATL-PHL AGNES Flight Receipt.pdf
-Name10[$e]=Hunt - 1996 - The geometry of some special arithmetic quotients.pdf
-Name2[$e]=ATL AGNES Airport Shuttle Receipts.pdf
-Name3[$e]=Quiz 3_4.pdf
-Name4[$e]=Quiz 3.pdf
-Name5[$e]=Quiz 5.pdf
-Name6[$e]=Barth and Peters - 1983 - Automorphisms of Enriques Surfaces..pdf
-Name7[$e]=V1.pdf
-Name8[$e]=V3.pdf
-Name9[$e]=Exam2 Solutions.pdf
+File1[$e]=$HOME/Dropbox/WriteNotes/Sp 2024 Calc/Exam2 Solutions.pdf
+File10[$e]=$HOME/Dropbox/Teaching/Calculus/2024 Spring Calculus I/Quizzes/Exam 1/Exam 1 Makeup.pdf
+File2[$e]=$HOME/Zotero/storage/2HY4CPNL/Hunt - 1996 - The geometry of some special arithmetic quotients.pdf
+File3[$e]=$HOME/Dropbox/Teaching/Precalculus/Solutions/Unit 1/1.1_Solns.pdf
+File4[$e]=$HOME/Dropbox/Teaching/Precalculus/Solutions/Unit 1/1.3_Solns.pdf
+File5[$e]=$HOME/Dropbox/Teaching/Precalculus/Solutions/Unit 1/1.4_Solns.pdf
+File6[$e]=$HOME/Dropbox/Teaching/Precalculus/Solutions/Unit 1/1.5_Solns.pdf
+File7[$e]=$HOME/Dropbox/Teaching/Precalculus/Solutions/Unit 1/1.6a_Solns.pdf
+File8[$e]=$HOME/Zotero/storage/SRG3N5PI/Cossec - 1983 - Projective Models of Enriques Surfaces..pdf
+File9[$e]=$HOME/Dropbox/Library/David Steven Dummit/Abstract Algebra (656)/Abstract Algebra - David Steven Dummit.pdf
+Name1[$e]=Exam2 Solutions.pdf
+Name10[$e]=Exam 1 Makeup.pdf
+Name2[$e]=Hunt - 1996 - The geometry of some special arithmetic quotients.pdf
+Name3[$e]=1.1_Solns.pdf
+Name4[$e]=1.3_Solns.pdf
+Name5[$e]=1.4_Solns.pdf
+Name6[$e]=1.5_Solns.pdf
+Name7[$e]=1.6a_Solns.pdf
+Name8[$e]=Cossec - 1983 - Projective Models of Enriques Surfaces..pdf
+Name9[$e]=Abstract Algebra - David Steven Dummit.pdf
 
 [UiSettings]
 ColorScheme=Maia
