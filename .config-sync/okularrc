@@ -110,26 +110,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/WriteNotes/Sp 2024 Calc/Exam2 Solutions.pdf
-File10[$e]=$HOME/Dropbox/Teaching/Calculus/2024 Spring Calculus I/Quizzes/Exam 1/Exam 1 Makeup.pdf
-File2[$e]=$HOME/Zotero/storage/2HY4CPNL/Hunt - 1996 - The geometry of some special arithmetic quotients.pdf
-File3[$e]=$HOME/Dropbox/Teaching/Precalculus/Solutions/Unit 1/1.1_Solns.pdf
-File4[$e]=$HOME/Dropbox/Teaching/Precalculus/Solutions/Unit 1/1.3_Solns.pdf
-File5[$e]=$HOME/Dropbox/Teaching/Precalculus/Solutions/Unit 1/1.4_Solns.pdf
-File6[$e]=$HOME/Dropbox/Teaching/Precalculus/Solutions/Unit 1/1.5_Solns.pdf
-File7[$e]=$HOME/Dropbox/Teaching/Precalculus/Solutions/Unit 1/1.6a_Solns.pdf
-File8[$e]=$HOME/Zotero/storage/SRG3N5PI/Cossec - 1983 - Projective Models of Enriques Surfaces..pdf
-File9[$e]=$HOME/Dropbox/Library/David Steven Dummit/Abstract Algebra (656)/Abstract Algebra - David Steven Dummit.pdf
-Name1[$e]=Exam2 Solutions.pdf
-Name10[$e]=Exam 1 Makeup.pdf
-Name2[$e]=Hunt - 1996 - The geometry of some special arithmetic quotients.pdf
-Name3[$e]=1.1_Solns.pdf
-Name4[$e]=1.3_Solns.pdf
-Name5[$e]=1.4_Solns.pdf
-Name6[$e]=1.5_Solns.pdf
-Name7[$e]=1.6a_Solns.pdf
-Name8[$e]=Cossec - 1983 - Projective Models of Enriques Surfaces..pdf
-Name9[$e]=Abstract Algebra - David Steven Dummit.pdf
+File1[$e]=$HOME/Dropbox/Teaching/Precalculus/Solutions/Unit 1/1.1_Solns.pdf
+File10[$e]=$HOME/Zotero/storage/MSTMKYH7/Nikulin - 1980 - INTEGRAL SYMMETRIC BILINEAR FORMS AND SOME OF THEI.pdf
+File2[$e]=$HOME/Dropbox/Teaching/Precalculus/Solutions/Unit 1/1.3_Solns.pdf
+File3[$e]=$HOME/Dropbox/Teaching/Precalculus/Solutions/Unit 1/1.4_Solns.pdf
+File4[$e]=$HOME/Dropbox/Teaching/Precalculus/Solutions/Unit 1/1.5_Solns.pdf
+File5[$e]=$HOME/Dropbox/Teaching/Precalculus/Solutions/Unit 1/1.6a_Solns.pdf
+File6[$e]=$HOME/Zotero/storage/SRG3N5PI/Cossec - 1983 - Projective Models of Enriques Surfaces..pdf
+File7[$e]=$HOME/Dropbox/Library/David Steven Dummit/Abstract Algebra (656)/Abstract Algebra - David Steven Dummit.pdf
+File8[$e]=$HOME/Dropbox/Teaching/Calculus/2024 Spring Calculus I/Quizzes/Exam 1/Exam 1 Makeup.pdf
+File9[$e]=$HOME/r-a-delta lattice verifications.pdf
+Name1[$e]=1.1_Solns.pdf
+Name10[$e]=Nikulin - 1980 - INTEGRAL SYMMETRIC BILINEAR FORMS AND SOME OF THEI.pdf
+Name2[$e]=1.3_Solns.pdf
+Name3[$e]=1.4_Solns.pdf
+Name4[$e]=1.5_Solns.pdf
+Name5[$e]=1.6a_Solns.pdf
+Name6[$e]=Cossec - 1983 - Projective Models of Enriques Surfaces..pdf
+Name7[$e]=Abstract Algebra - David Steven Dummit.pdf
+Name8[$e]=Exam 1 Makeup.pdf
+Name9[$e]=r-a-delta lattice verifications.pdf
 
 [UiSettings]
 ColorScheme=Maia

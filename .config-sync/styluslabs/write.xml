@@ -32,17 +32,17 @@
   <float name="xRuling" value="60" />
   <float name="yRuling" value="60" />
   <string name="clippingDoc" value="/home/zack/.config/styluslabs/saved/clippings.html" />
-  <string name="currFolder" value="/home/zack/Dropbox/WriteNotes/Sp 2024 Calc/" />
+  <string name="currFolder" value="/home/zack/Dropbox/WriteNotes/Research/Coble/" />
   <string name="docFileExt" value="svgz" />
   <string name="newDocTitleFmt" value="%b %e %Hh%M" />
-  <string name="recentDocs" value="/home/zack/Dropbox/WriteNotes/Sp 2024 Calc/Mar 11 09h36.svgz:::/home/zack/Dropbox/WriteNotes/Sp 2024 Calc/Mar  1 09h12.svgz:::/home/zack/Dropbox/WriteNotes/Sp 2024 Calc/Feb 26 09h15.svgz:::/home/zack/Dropbox/WriteNotes/Feb 27 15h09.svgz:::/home/zack/Dropbox/WriteNotes/Mar  1 15h04.svgz:::/home/zack/Dropbox/WriteNotes/Mar 12 15h22.svgz:::/home/zack/Dropbox/Teaching/Precalculus/Solutions/Unit 2/3.3_3.4_Practice.html:::/home/zack/Dropbox/Teaching/Precalculus/Solutions/Unit 2/3.2_Preclass.html:::/home/zack/Dropbox/Teaching/Precalculus/Solutions/Unit 2/3.1_Preclass.html:::/home/zack/Dropbox/Teaching/Precalculus/Solutions/Unit 1/Worksheet_1.6a.html:::/home/zack/Dropbox/Teaching/Precalculus/Solutions/Unit 1/Sep  8 18h04.html" />
+  <string name="recentDocs" value="/home/zack/Dropbox/WriteNotes/Research/Coble/Jan 17 10h35.svgz:::/home/zack/Dropbox/WriteNotes/Research/Coble/Feb 26 19h50.svgz:::/home/zack/Dropbox/WriteNotes/Sp 2024 Calc/Mar 11 09h36.svgz:::/home/zack/Dropbox/WriteNotes/Sp 2024 Calc/Mar  1 09h12.svgz:::/home/zack/Dropbox/WriteNotes/Sp 2024 Calc/Feb 26 09h15.svgz:::/home/zack/Dropbox/WriteNotes/Feb 27 15h09.svgz:::/home/zack/Dropbox/WriteNotes/Mar  1 15h04.svgz:::/home/zack/Dropbox/WriteNotes/Mar 12 15h22.svgz:::/home/zack/Dropbox/Teaching/Precalculus/Solutions/Unit 2/3.3_3.4_Practice.html:::/home/zack/Dropbox/Teaching/Precalculus/Solutions/Unit 2/3.2_Preclass.html:::/home/zack/Dropbox/Teaching/Precalculus/Solutions/Unit 2/3.1_Preclass.html" />
   <string name="savedColors" value="#FF000000,#FFFF0000,#FF008000,#FF0000FF" />
   <string name="savedWidths" value="1.400,2.400,4.000,8.000" />
   <string name="syncServer" value="localhost" />
   <string name="toolBars" value="docTitle,stretch,separator,action_Previous_Page,action_Next_Page,separator,actionInsert_Space,actionShow_Clippings,actionTools_Menu,separator,actionShow_Bookmarks,actionShare_Document,actionOverflow_Menu;actionDraw,actionCustom_Pen,actionStroke_Eraser,actionFree_Eraser,penColor,penWidth,stretch" />
   <string name="toolBars2" value="docTitle,stretch,actionSave,separator,tools,separator,undoRedoBtn,separator,seltools,separator,actionShow_Bookmarks,actionShow_Clippings,actionSplitView,separator,actionOverflow_Menu" />
   <string name="toolModes" value="14 20 25 22" />
-  <string name="windowState" value="966 42 943 1027 0 0" />
+  <string name="windowState" value="10 41 1900 1029 0 0" />
   <pen color="4278190080" width="3.5" pressure="1" flags="0" />
   <pen color="4278190258" width="4" pressure="1" flags="0" />
   <pen color="4283150181" width="4" pressure="1" flags="0" />
