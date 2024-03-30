@@ -24,7 +24,7 @@ eDP-1 YPosition 1920x1080=42
 eDP-1 YPosition 1920x1080 eDP-1=41
 
 [Desktop Entry]
-FullScreen=false
+FullScreen=true
 shouldShowMenuBarComingFromFullScreen=true
 shouldShowToolBarComingFromFullScreen=false
 
@@ -45,6 +45,7 @@ HDMI-1 eDP-1=eDP-1
 Height 1080=996
 Height 1920=1866
 Height 800=746
+MenuBar=Disabled
 RestorePositionForNextInstance=false
 ToolBarsMovable=Disabled
 Width 1080=512
@@ -110,26 +111,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Teaching/Precalculus/Solutions/Unit 1/1.1_Solns.pdf
-File10[$e]=$HOME/Zotero/storage/MSTMKYH7/Nikulin - 1980 - INTEGRAL SYMMETRIC BILINEAR FORMS AND SOME OF THEI.pdf
-File2[$e]=$HOME/Dropbox/Teaching/Precalculus/Solutions/Unit 1/1.3_Solns.pdf
-File3[$e]=$HOME/Dropbox/Teaching/Precalculus/Solutions/Unit 1/1.4_Solns.pdf
-File4[$e]=$HOME/Dropbox/Teaching/Precalculus/Solutions/Unit 1/1.5_Solns.pdf
-File5[$e]=$HOME/Dropbox/Teaching/Precalculus/Solutions/Unit 1/1.6a_Solns.pdf
-File6[$e]=$HOME/Zotero/storage/SRG3N5PI/Cossec - 1983 - Projective Models of Enriques Surfaces..pdf
-File7[$e]=$HOME/Dropbox/Library/David Steven Dummit/Abstract Algebra (656)/Abstract Algebra - David Steven Dummit.pdf
-File8[$e]=$HOME/Dropbox/Teaching/Calculus/2024 Spring Calculus I/Quizzes/Exam 1/Exam 1 Makeup.pdf
-File9[$e]=$HOME/r-a-delta lattice verifications.pdf
-Name1[$e]=1.1_Solns.pdf
-Name10[$e]=Nikulin - 1980 - INTEGRAL SYMMETRIC BILINEAR FORMS AND SOME OF THEI.pdf
-Name2[$e]=1.3_Solns.pdf
-Name3[$e]=1.4_Solns.pdf
-Name4[$e]=1.5_Solns.pdf
-Name5[$e]=1.6a_Solns.pdf
-Name6[$e]=Cossec - 1983 - Projective Models of Enriques Surfaces..pdf
-Name7[$e]=Abstract Algebra - David Steven Dummit.pdf
-Name8[$e]=Exam 1 Makeup.pdf
-Name9[$e]=r-a-delta lattice verifications.pdf
+File1[$e]=$HOME/Dropbox/Library/Unknown/prelims.dvi (1083)/prelims.dvi - Unknown.pdf
+File10[$e]=$HOME/Dropbox/Library/M. F. Atiyah, I. G. MacDonald/Commutative Algebra (756)/Commutative Algebra - M. F. Atiyah, I. G. MacDonald.pdf
+File2[$e]=$HOME/Dropbox/Library/Unknown/hodgetheory (1080)/hodgetheory - Unknown.pdf
+File3[$e]=$HOME/Dropbox/Library/Unknown/A Course in Hodge Theory (1080)/A Course in Hodge Theory - Unknown.pdf
+File4[$e]=$HOME/Dropbox/Library/Unknown/Untitled (1079)/Untitled - Unknown.pdf
+File5[$e]=$HOME/Dropbox/Library/Author/Title (1077)/Title - Author.pdf
+File6[$e]=$HOME/Dropbox/Library/Unknown/KollarModuliGeneralType (1076)/KollarModuliGeneralType - Unknown.pdf
+File7[$e]=$HOME/Dropbox/Library/nmk/titlepage (1072)/titlepage - nmk.pdf
+File8[$e]=$HOME/Dropbox/Teaching/Calculus/2024 Spring Calculus I/Quizzes/Quiz 7/Quiz 6.pdf
+File9[$e]=$HOME/Downloads/Solutions Unit D.pdf
+Name1[$e]=prelims.dvi - Unknown.pdf
+Name10[$e]=Commutative Algebra - M. F. Atiyah, I. G. MacDonald.pdf
+Name2[$e]=hodgetheory - Unknown.pdf
+Name3[$e]=A Course in Hodge Theory - Unknown.pdf
+Name4[$e]=Untitled - Unknown.pdf
+Name5[$e]=Title - Author.pdf
+Name6[$e]=KollarModuliGeneralType - Unknown.pdf
+Name7[$e]=titlepage - nmk.pdf
+Name8[$e]=Quiz 6.pdf
+Name9[$e]=Solutions Unit D.pdf
 
 [UiSettings]
 ColorScheme=Maia
