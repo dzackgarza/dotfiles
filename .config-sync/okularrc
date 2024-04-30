@@ -25,7 +25,7 @@ eDP-1 YPosition 1920x1080 eDP-1=41
 
 [Desktop Entry]
 FullScreen=true
-shouldShowMenuBarComingFromFullScreen=true
+shouldShowMenuBarComingFromFullScreen=false
 shouldShowToolBarComingFromFullScreen=false
 
 [General]
@@ -111,26 +111,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/Library/Unknown/prelims.dvi (1083)/prelims.dvi - Unknown.pdf
-File10[$e]=$HOME/Dropbox/Library/M. F. Atiyah, I. G. MacDonald/Commutative Algebra (756)/Commutative Algebra - M. F. Atiyah, I. G. MacDonald.pdf
-File2[$e]=$HOME/Dropbox/Library/Unknown/hodgetheory (1080)/hodgetheory - Unknown.pdf
-File3[$e]=$HOME/Dropbox/Library/Unknown/A Course in Hodge Theory (1080)/A Course in Hodge Theory - Unknown.pdf
-File4[$e]=$HOME/Dropbox/Library/Unknown/Untitled (1079)/Untitled - Unknown.pdf
-File5[$e]=$HOME/Dropbox/Library/Author/Title (1077)/Title - Author.pdf
-File6[$e]=$HOME/Dropbox/Library/Unknown/KollarModuliGeneralType (1076)/KollarModuliGeneralType - Unknown.pdf
-File7[$e]=$HOME/Dropbox/Library/nmk/titlepage (1072)/titlepage - nmk.pdf
-File8[$e]=$HOME/Dropbox/Teaching/Calculus/2024 Spring Calculus I/Quizzes/Quiz 7/Quiz 6.pdf
-File9[$e]=$HOME/Downloads/Solutions Unit D.pdf
-Name1[$e]=prelims.dvi - Unknown.pdf
-Name10[$e]=Commutative Algebra - M. F. Atiyah, I. G. MacDonald.pdf
-Name2[$e]=hodgetheory - Unknown.pdf
-Name3[$e]=A Course in Hodge Theory - Unknown.pdf
-Name4[$e]=Untitled - Unknown.pdf
-Name5[$e]=Title - Author.pdf
-Name6[$e]=KollarModuliGeneralType - Unknown.pdf
-Name7[$e]=titlepage - nmk.pdf
-Name8[$e]=Quiz 6.pdf
-Name9[$e]=Solutions Unit D.pdf
+File1[$e]=$HOME/Downloads/Solutions Unit E.pdf
+File10[$e]=$HOME/Dropbox/AJ 2024 AG Notes/Apr 13 17h51.pdf
+File2[$e]=$HOME/Downloads/Representation Theory DRP Notes.pdf
+File3[$e]=$HOME/Dropbox/Teaching/Calculus/2024 Spring Calculus I/Quizzes and Exams/Exam 4/Exam 4.pdf
+File4[$e]=$HOME/Dropbox/shared-sterk-enriques/paper/fig-en-allcusps.pdf
+File5[$e]=$HOME/Dropbox/shared-sterk-enriques/Valery's notes/cusps/fig-18-1cusps.pdf
+File6[$e]=$HOME/Dropbox/shared-sterk-enriques/Valery's notes/cusps/fig-18-allcusps.pdf
+File7[$e]=$HOME/Dropbox/shared-sterk-enriques/Valery's notes/cusps/fig-19-1cusps.pdf
+File8[$e]=$HOME/Dropbox/shared-sterk-enriques/Valery's notes/cusps/fig-en-allcusps.pdf
+File9[$e]=$HOME/Dropbox/shared-sterk-enriques/Valery's notes/cusps/fig-enriques0.pdf
+Name1[$e]=Solutions Unit E.pdf
+Name10[$e]=Apr 13 17h51.pdf
+Name2[$e]=Representation Theory DRP Notes.pdf
+Name3[$e]=Exam 4.pdf
+Name4[$e]=fig-en-allcusps.pdf
+Name5[$e]=fig-18-1cusps.pdf
+Name6[$e]=fig-18-allcusps.pdf
+Name7[$e]=fig-19-1cusps.pdf
+Name8[$e]=fig-en-allcusps.pdf
+Name9[$e]=fig-enriques0.pdf
 
 [UiSettings]
 ColorScheme=Maia
