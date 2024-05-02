@@ -111,26 +111,26 @@ Height 1080=500
 Width 1920=600
 
 [Recent Files]
-File1[$e]=$HOME/Dropbox/shared-sterk-enriques/paper/fig-en-allcusps.pdf
-File10[$e]=$HOME/[8th] James Stewart - Student Solutions Manual, Chapters 1-11 for Stewart’s Single Variable Calculus, 8th (2015, Brooks Cole).pdf
-File2[$e]=$HOME/Dropbox/shared-sterk-enriques/Valery's notes/cusps/fig-18-1cusps.pdf
-File3[$e]=$HOME/Dropbox/shared-sterk-enriques/Valery's notes/cusps/fig-18-allcusps.pdf
-File4[$e]=$HOME/Dropbox/shared-sterk-enriques/Valery's notes/cusps/fig-19-1cusps.pdf
-File5[$e]=$HOME/Dropbox/shared-sterk-enriques/Valery's notes/cusps/fig-en-allcusps.pdf
-File6[$e]=$HOME/Dropbox/shared-sterk-enriques/Valery's notes/cusps/fig-enriques0.pdf
-File7[$e]=$HOME/Dropbox/AJ 2024 AG Notes/Apr 13 17h51.pdf
-File8[$e]=$HOME/Dropbox/Library/James Stewart/Calculus_ Student Solutions Manual (584)/Calculus_ Student Solutions Manual - James Stewart.pdf
-File9[$e]=$HOME/Dropbox/Library/James Stewart/Calculus (586)/Calculus - James Stewart.pdf
-Name1[$e]=fig-en-allcusps.pdf
-Name10[$e]=[8th] James Stewart - Student Solutions Manual, Chapters 1-11 for Stewart’s Single Variable Calculus, 8th (2015, Brooks Cole).pdf
-Name2[$e]=fig-18-1cusps.pdf
-Name3[$e]=fig-18-allcusps.pdf
-Name4[$e]=fig-19-1cusps.pdf
-Name5[$e]=fig-en-allcusps.pdf
-Name6[$e]=fig-enriques0.pdf
-Name7[$e]=Apr 13 17h51.pdf
-Name8[$e]=Calculus_ Student Solutions Manual - James Stewart.pdf
-Name9[$e]=Calculus - James Stewart.pdf
+File1[$e]=$HOME/Dropbox/shared-sterk-enriques/Valery's notes/cusps/fig-18-1cusps.pdf
+File10[$e]=$HOME/SparkleShare/github.com/dzackgarza.comv2018/assets/books/output.pdf
+File2[$e]=$HOME/Dropbox/shared-sterk-enriques/Valery's notes/cusps/fig-18-allcusps.pdf
+File3[$e]=$HOME/Dropbox/shared-sterk-enriques/Valery's notes/cusps/fig-19-1cusps.pdf
+File4[$e]=$HOME/Dropbox/shared-sterk-enriques/Valery's notes/cusps/fig-en-allcusps.pdf
+File5[$e]=$HOME/Dropbox/shared-sterk-enriques/Valery's notes/cusps/fig-enriques0.pdf
+File6[$e]=$HOME/Dropbox/AJ 2024 AG Notes/Apr 13 17h51.pdf
+File7[$e]=$HOME/Dropbox/Library/James Stewart/Calculus_ Student Solutions Manual (584)/Calculus_ Student Solutions Manual - James Stewart.pdf
+File8[$e]=$HOME/Dropbox/Library/James Stewart/Calculus (586)/Calculus - James Stewart.pdf
+File9[$e]=$HOME/[8th] James Stewart - Student Solutions Manual, Chapters 1-11 for Stewart’s Single Variable Calculus, 8th (2015, Brooks Cole).pdf
+Name1[$e]=fig-18-1cusps.pdf
+Name10[$e]=output.pdf
+Name2[$e]=fig-18-allcusps.pdf
+Name3[$e]=fig-19-1cusps.pdf
+Name4[$e]=fig-en-allcusps.pdf
+Name5[$e]=fig-enriques0.pdf
+Name6[$e]=Apr 13 17h51.pdf
+Name7[$e]=Calculus_ Student Solutions Manual - James Stewart.pdf
+Name8[$e]=Calculus - James Stewart.pdf
+Name9[$e]=[8th] James Stewart - Student Solutions Manual, Chapters 1-11 for Stewart’s Single Variable Calculus, 8th (2015, Brooks Cole).pdf
 
 [UiSettings]
 ColorScheme=Maia
