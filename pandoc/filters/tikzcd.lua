@@ -1,10 +1,10 @@
 local system = require 'pandoc.system'
-package.path = package.path .. ';' .. '/home/zack/.pandoc/filters/?.lua;'
+package.path = package.path .. ';' .. '/home/dzack/.pandoc/filters/?.lua;'
 require "utilities"
 
 local tikz_doc_template = [[
 \documentclass{standalone}
-\input{/home/zack/.pandoc/custom/preamble_common}
+\input{/home/dzack/.pandoc/custom/preamble_common}
 \begin{document}
 \nopagecolor
 %s
