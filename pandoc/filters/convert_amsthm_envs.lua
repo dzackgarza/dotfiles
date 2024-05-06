@@ -1,4 +1,4 @@
-package.path = package.path .. ';' .. '/home/zack/.pandoc/filters/?.lua;'
+package.path = package.path .. ';' .. '/home/dzack/.pandoc/filters/?.lua;'
 require "utilities"
 
 -- In markdown, changes

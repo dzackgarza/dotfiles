@@ -5,7 +5,7 @@ export EDITOR=nvim
 export VISUAL=nvim
 export PAGER=less
 export SHELL=/bin/zsh
-export TERM=xterm-256color
+export TERM=alacritty
 export JEKYLL_EDITOR=typora
 export ZSH=$HOME/.oh-my-zsh
 
@@ -20,13 +20,13 @@ done
 export BCAT_BROWSER=qutebrowser
 
 export NOTES=$HOME/Notes
-export PANDOC_DIR=$HOME/.pandoc
+export PANDOC_DIR=$DOTFILES_ROOT/pandoc
 export PATH="$PANDOC_DIR/bin:$PATH"
 export PANDOC_TEMPLATES=$PANDOC_DIR/pandoc-templates
 export PANDOC_BIB=$NOTES/library.bib
 export CUSTOM_TEX_DIR=$PANDOC_DIR/custom
 export TEXINPUTS=.:$PANDOC_DIR/custom//:
-export MATH_FLASHCARD_DIR=/home/zack/SparkleShare/github.com/Math-Flashcards
-export PANDOC_RESOURCE_PATH="/var/www/notes_temp:/home/zack/Notes:/home/zack/Notes/Obsidian:/home/zack/quals"
+export MATH_FLASHCARD_DIR="$HOME/SparkleShare/github.com/Math-Flashcards"
+export PANDOC_RESOURCE_PATH="/var/www/notes_temp:$NOTES:$NOTES/Obsidian:$HOME/quals"
 
-if [ -e /home/zack/.nix-profile/etc/profile.d/nix.sh ]; then . /home/zack/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+if [ -e /home/dzack/.nix-profile/etc/profile.d/nix.sh ]; then . /home/dzack/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
