@@ -1,2 +1,0 @@
-pkill mono;
-pkill dropbox;
