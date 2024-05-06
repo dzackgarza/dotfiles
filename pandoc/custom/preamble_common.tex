@@ -1,0 +1,212 @@
+\newcommand\hmmax{0}
+\newcommand\bmmax{0}
+\usepackage{stackrel}
+\usepackage{array}
+\usepackage{mathtools, amsthm, amssymb, amsxtra, amscd, thmtools, xpatch}
+\usepackage{calligra, mathrsfs, accents}
+
+
+\usepackage{marvosym}
+\newcommand\contradiction[0]{\text{\Lightning}}
+
+\usepackage{colonequals}
+
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+%\usepackage{unicode-math}
+\usepackage{newunicodechar}
+\newunicodechar{ε}{\varepsilon}
+\newunicodechar{δ}{\delta}
+\newunicodechar{≤}{\leq}
+\newunicodechar{∈}{\in}
+\newunicodechar{⊆}{\subseteq}
+\newunicodechar{Λ}{\Lambda}
+\newunicodechar{∞}{\infty}
+
+\usepackage{lmodern}
+
+% Inkscape figures from Vim
+\usepackage{import}
+\usepackage{pdfpages}
+\usepackage{transparent}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./figures/}{#1.pdf_tex}
+}
+
+% Tikz 
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, cd, fadings, patterns, calc, matrix, positioning, decorations, decorations.pathreplacing, decorations.markings, shapes, backgrounds, fit, shapes.geometric, intersections, hobby, shapes.misc}
+\tikzfading[name=fade out, inner color=transparent!0, outer color=transparent!100]
+\usepackage{tikz-layers}
+\usepackage{ifthen}
+\usepackage{xifthen}
+\usepackage{tikz-3dplot}
+\usepackage{quiver}
+
+% Axis environment
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage[inline]{asymptote}
+
+% Fancy symbols
+\usepackage{adforn}
+\usepackage{pgfornament}
+
+% MnSymbol. Undefines lhook for some reason.
+% \udots: SW to NE
+%\let\originallhook\lhook
+%\usepackage{MnSymbol}% More dots
+%\let\lhook\originallhook
+\usepackage{mathdots}
+\newcommand\udots{\iddots}
+
+% Optional arguments in macro definitions
+\usepackage{xargs}
+
+% ? I forget
+\usepackage{cancel}
+
+% Better indicator function
+\DeclareMathAlphabet{\mathbbm}{U}{bbm}{m}{n}% from bbm.sty
+\newcommand{\indic}[1]{\mathbbm{1}\left[#1\right]}
+\newcommand{\one}[0]{\mathbbm{1}}
+\newcommand{\bbone}[0]{\mathbbm{1}}
+
+% Mapsfrom
+%\usepackage{stmaryrd}
+\newcommand\mapsfrom{\mathrel{\reflectbox{\ensuremath{\mapsto}}}}
+
+% Better delimiters
+%\DeclarePairedDelimiter\qty{(}{)}
+\newcommand{\qty}[1]{\left( {#1} \right)}
+\newcommand{\dqty}[1]{\left( \left( {#1} \right) \right)}
+\DeclarePairedDelimiter\intvl{[}{]}
+% Big Asterisk
+\newcommand{\Conv}{\mathop{\scalebox{1.5}{\raisebox{-0.2ex}{$\ast$}}}}%
+% No more phi please
+\let\origphi\phi
+\let\phi\varphi
+% Include emoji
+%\usepackage{apple_emoji}
+%\newcommand{\done}[0]{\scalebox{0.75}{✨}}
+%\newcommand{\work}[0]{\scalebox{0.75}{🚩}}
+
+\DeclareFontFamily{U}{wncy}{}
+\DeclareFontShape{U}{wncy}{m}{n}{<->wncyr10}{}
+\DeclareSymbolFont{mcy}{U}{wncy}{m}{n}
+\DeclareMathSymbol{\Sha}{\mathord}{mcy}{"58}
+\usepackage{stmaryrd}
+
+
+% Everything else
+\input{tikzmacros.tex}
+\input{latexmacs}
+\input{latexmacs_spectra}
+\input{latexmacs_commands}
+\input{latexmacs_categories.tex}
+
+%\makeatletter
+%\newcommand{\colim@}[2]{%
+  %\vtop{\m@th\ialign{##\cr
+    %\hfil$#1\operator@font colim$\hfil\cr
+    %\noalign{\nointerlineskip\kern1.5\ex@}#2\cr
+    %\noalign{\nointerlineskip\kern-\ex@}\cr}}%
+%}
+%\newcommand{\colim}{%
+  %\mathop{\mathpalette\colim@{\rightarrowfill@\scriptscriptstyle}}\nmlimits@
+%}
+\makeatletter
+\newcommand{\colim@}[2]{%
+  \vtop{\m@th\ialign{##\cr
+    \hfil$#1\operator@font colim$\hfil\cr
+    \noalign{\nointerlineskip\kern1.5\ex@}#2\cr
+    \noalign{\nointerlineskip\kern-\ex@}\cr}}%
+}
+\newcommand{\colim}{%
+  \mathop{\mathpalette\colim@{\rightarrowfill@\scriptscriptstyle}}\nmlimits@
+}
+\renewcommand{\varprojlim}{%
+  \mathop{\mathpalette\varlim@{\leftarrowfill@\scriptscriptstyle}}\nmlimits@
+}
+\renewcommand{\varinjlim}{%
+  \mathop{\mathpalette\varlim@{\rightarrowfill@\scriptscriptstyle}}\nmlimits@
+}
+
+\newcommand{\directlim}[0]{\varinjlim}
+
+\newcommand{\invlim@}[2]{%
+  \vtop{\m@th\ialign{##\cr
+    \hfil$#1\operator@font lim$\hfil\cr
+    \noalign{\nointerlineskip\kern1.5\ex@}#2\cr
+    \noalign{\nointerlineskip\kern-\ex@}\cr}}%
+}
+\newcommand{\invlim}{%
+  \mathop{\mathpalette\invlim@{\leftarrowfill@\scriptscriptstyle}}\nmlimits@
+}
+
+\newcommand{\cocolim}{\invlim}
+
+\tikzcdset{
+  diagrams={>={Straight Barb[scale=0.5]}}
+}
+
+\ExplSyntaxOn
+
+\NewDocumentCommand\stackar{ m O{} }
+{
+    \int_step_inline:nn { #1 }
+    {
+        \int_if_odd:nTF { ##1 }
+        {
+            \ar[->,yshift=\fp_eval:n {(#1-1)/2*1.6 - (##1-1)*1.5 }pt,#2]
+        }
+        {
+            \ar[<-,yshift=\fp_eval:n {(#1-1)/2*1.6 - (##1-1)*1.5 }pt,#2]
+        }
+    }
+}
+
+\NewDocumentCommand\stackarr{ m O{} }
+{
+    \int_step_inline:nn { #1 }
+    {
+        \int_if_odd:nTF { ##1 }
+        {
+            \ar[->,yshift=\fp_eval:n {(#1-1)/2*1.6 - (##1-1)*1.5 }pt,#2]
+        }
+        {
+        }
+    }
+}
+\NewDocumentCommand\stackarl{ m O{} }
+{
+    \int_step_inline:nn { #1 }
+    {
+        \int_if_odd:nTF { ##1 }
+        {
+            \ar[<-,yshift=\fp_eval:n {(#1-1)/2*1.6 - (##1-1)*1.5 }pt,#2]
+        }
+    }
+}
+
+
+\ExplSyntaxOff
+
+% Example
+%\[\begin{tikzcd}
+    %\cdots
+    %\stackar{9}[r]
+    %&
+    %X_3
+    %\stackar{7}[r]
+    %&
+    %X_2
+    %\stackar{5}[r]
+    %&   
+    %X_1
+    %\stackar{3}[r]
+    %&
+    %X_0
+%\end{tikzcd}\]

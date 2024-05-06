@@ -1,0 +1,71 @@
+\documentclass[11pt, a4paper, bibliography=totoc, parskip=full]{scrartcl}
+
+\input{preamble_common}
+\usepackage[active, pdftex, tightpage, ifthen, calc]{preview}
+\usepackage{freetikz}
+\usepackage{xifthen}
+\usepackage{dynkin-diagrams}
+\usepackage{tikz-3dplot}
+
+\PreviewEnvironment[]{tikzpicture}
+\PreviewEnvironment[]{pgfpicture}
+\PreviewEnvironment[]{asy}
+\DeclareSymbolFont{symbolsb}{OMS}{cmsy}{m}{n}
+\SetSymbolFont{symbolsb}{bold}{OMS}{cmsy}{b}{n}
+\DeclareSymbolFontAlphabet{\mathcal}{symbolsb}
+
+\makeatletter
+\def\tikz@Get@x@coor#1,#2\tikz@sentinel{%
+  \pgfmathparse{int(round(#1/1cm))}}
+\def\tikz@Get@y@coor#1,#2\tikz@sentinel{%
+  \pgfmathparse{int(round(#2/1cm))}}
+\tikzset{%
+  show grid integer coordinates/.style = {%
+    decoration = {%
+      show path construction, 
+      moveto code = {%
+        \expandafter\tikz@Get@x@coor\tikzinputsegmentfirst\tikz@sentinel
+        \edef\tikz@tempa{\pgfmathresult}%
+        \expandafter\tikz@Get@x@coor\tikzinputsegmentlast\tikz@sentinel
+        \edef\tikz@tempb{\pgfmathresult}%
+        \pgfmathparse{equal(\tikz@tempa,\tikz@tempb)}%
+        \ifnum\pgfmathresult=1\relax
+        \node[anchor=north] at (\tikzinputsegmentfirst) {%
+          \tikz@tempa};
+        \else
+        \node[anchor=east] at (\tikzinputsegmentfirst) {%
+          \expandafter\tikz@Get@y@coor\tikzinputsegmentfirst\tikz@sentinel
+          \pgfmathresult};
+        \fi}},
+    postaction = decorate}}
+
+\usepackage{tikzit}
+%\input{sample.tikzstyles}
+
+\usepackage{tkz-euclide}
+\usepackage{tikzit}
+
+\tikzset{wh/.style={draw, circle, inner sep=2.5pt, fill=white}} % white
+\tikzset{swh/.style={draw, circle, inner sep=2pt, fill=white}}  % small white
+\tikzset{dwh/.style={draw, circle, inner sep=3.5pt, fill=white}}% double white
+\tikzset{bl/.style={draw=black, circle, inner sep=2.5pt, fill=black}} % black
+% lines
+\tikzset{do/.style={double, double distance=1.5pt}} % double
+\tikzset{bo/.style={line width=2pt}} % bold
+\tikzset{da/.style={red, dashed}}    % dashed
+\tikzset{hlt/.style={cyan, double=cyan, double distance=.25cm, opacity=.3,
+      line cap=round, rounded corners}}
+
+\begin{document}
+
+
+%\tikzset{%
+%  node distance=2em, auto,
+%  empty/.style={draw=black, circle, fill=white, minimum size=2.5em, inner sep=0.1ex},
+%  filled/.style={draw=black, circle, fill=black!15, minimum size=2.5em, inner sep=0.1ex},
+%  arrow/.style={->, -{Stealth[length=.6em, inset=0pt]}, line width=0.7pt},
+%  every picture/.append style={show background grid}
+%}
+
+<>
+\end{document}

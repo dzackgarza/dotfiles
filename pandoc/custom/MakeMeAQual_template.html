@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"$if(lang)$ lang="$lang$" xml:lang="$lang$"$endif$>
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+$if(date-meta)$
+<meta name="date" content="$date-meta$" />
+$endif$
+
+<script type="text/javascript" src="https://dzackgarza.com/assets/dist.js" data-external="1">
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config( window.mjconfig );
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<meta name="description" content="$if(description)$$description$$else$$pagetitle$$endif$">
+
+<title>$if(title-prefix)$$title-prefix$ - $endif$$pagetitle$</title>
+
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+$for(css)$
+<link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
+$endfor$
+
+</head>
+<body>
+
+<header>
+<h1>MakeMeAQual University</h1>
+<h3>Department of Mathematics</h2>
+<h2>PhD Qualifying Examination</h2> 
+<h2>in Mathematics</h2>
+$if(date)$
+<h3 class="date">$date$</h3>
+$endif$
+</header>
+
+$body$
+
+</body>
+</html>

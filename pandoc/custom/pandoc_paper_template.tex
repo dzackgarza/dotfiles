@@ -1,0 +1,34 @@
+\input{"preamble_paper.tex"}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\usepackage[msc-links]{amsrefs}
+\usepackage[style=alphabetic]{biblatex}
+%\bibliography{/home/zack/Notes/library.bib}
+
+$for(bibliography)$
+\addbibresource{$bibliography$}
+$endfor$
+
+\begin{document}
+
+%\date{}
+
+\title{$title$}
+  $for(author)$\author{$author.name$} $endfor$
+\maketitle
+
+\begin{abstract}
+  $abstract$
+\end{abstract}
+
+\tableofcontents
+
+\newpage
+
+$body$
+
+\newpage
+\printbibliography[title=Bibliography]
+
+\end{document}

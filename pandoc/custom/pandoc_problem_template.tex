@@ -1,0 +1,115 @@
+\input{"preamble.tex"}
+
+$for(bibliography)$
+\addbibresource{$bibliography$}
+$endfor$
+
+\let\Begin\begin
+\let\End\end
+\newcommand\wrapenv[1]{#1}
+
+\makeatletter
+\def\ScaleWidthIfNeeded{%
+ \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\def\ScaleHeightIfNeeded{%
+  \ifdim\Gin@nat@height>0.9\textheight
+    0.9\textheight
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\setkeys{Gin}{width=\ScaleWidthIfNeeded,height=\ScaleHeightIfNeeded,keepaspectratio}%
+
+$if(book)$
+\title{
+\rule{\linewidth}{1pt} \\
+\textbf{
+  $if(title)$
+  $title$
+  $else$
+  Title
+  $endif$
+}
+  $if(subtitle)$
+  \\ {\normalsize $subtitle$} \\
+  $endif$
+\rule{\linewidth}{2pt}
+}
+\titlehead{
+  $if(author-note)$
+   \begin{minipage}{.35\linewidth}
+    \begin{flushleft}
+      \vspace{2em}
+      {\fontsize{6pt}{2pt} \textit{Notes: $author-note$ } } \\
+    \end{flushleft}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{.65\linewidth}
+    \end{minipage}
+  $endif$
+}
+
+$else$
+\title{
+\textbf{
+  $if(title)$
+  $title$
+  $else$
+  Title
+  $endif$
+}
+  $if(subtitle)$
+  \\ {\normalsize $subtitle$} \\
+  $endif$
+}
+
+$endif$
+
+
+$if(csl-refs)$
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newenvironment{cslreferences}%
+  {$if(csl-hanging-indent)$\setlength{\parindent}{0pt}%
+  \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces$endif$}%
+  {\par}
+$endif$
+
+$if(hidesolutions)$
+\RenewEnviron{solution}{}% or \RenewEnviron{solution*}{\par}
+$endif$
+
+
+\begin{document}
+
+\date{}
+\maketitle
+$if(author)$
+\begin{flushleft}
+\textit{$for(author)$$author.name$$sep$ \and $endfor$} \\
+\textit{$for(author)$$author.affiliation$$sep$ \and $endfor$} \\
+  \textit{$for(author)$\href{mailto: $author.email$}{$author.email$}$sep$ \and $endfor$} \\
+{\tiny \textit{Last updated:} $current_date$ }
+\end{flushleft}
+$endif$
+
+\addsec{Table of Contents}
+\tableofcontents
+
+$body$
+
+
+$if(bibliography)$
+\newpage
+\printbibliography[title=Bibliography]
+$endif$
+
+
+\end{document}
