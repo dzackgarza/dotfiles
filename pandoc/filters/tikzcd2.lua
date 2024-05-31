@@ -1,5 +1,5 @@
 local system = require 'pandoc.system'
-package.path = '/home/zack/.pandoc/filters' .. package.path
+package.path = '/home/dzack/.pandoc/filters' .. package.path
 require "utilities"
 
 local tikz_doc_template = [[

@@ -1,4 +1,4 @@
-package.path = '/home/zack/.pandoc/filters' .. package.path
+package.path = '/home/dzack/.pandoc/filters' .. package.path
 require "utilities"
 
 function Image (el)

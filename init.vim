@@ -26,7 +26,7 @@ set termguicolors     " enable true colors support
 " }}}
 
 " {{{ Plugins
-call plug#begin('~/.vim/plugged')
+call plug#begin()
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
@@ -36,7 +36,7 @@ Plug 'vim-voom/VOoM'
 "let g:voom_return_key = '<CR>'
 
 " Automatically expand to math tex QUICKLY
-Plug 'dzackgarza/quicktex'
+" Plug 'dzackgarza/quicktex'
 
 Plug 'lervag/vimtex'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -73,7 +73,7 @@ set dictionary+=~/Notes/corpus.add
 set dictionary+=~/Notes/mathdict.utf-8.add.spl
 "set complete+=kspell
 set spelllang=en
-set spellfile=/home/zack/Notes/mathdict.utf-8.add
+set spellfile=/home/dzack/Notes/mathdict.utf-8.add
 """"""""
 
 " Commands
@@ -87,7 +87,7 @@ Plug 'dhruvasagar/vim-table-mode'
 
 
 " Layout and Functionality
-Plug 'scrooloose/nerdtree'
+Plug 'preservim/nerdtree'
 " Hides "Press ? for help"
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
@@ -125,7 +125,8 @@ let delimitMate_matchpairs = "{:},(:)"
 "let g:syntastic_check_on_wq = 0
 "let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
 
-Plug 'NLKNguyen/papercolor-theme'
+"Plug 'NLKNguyen/papercolor-theme'
+Plug 'folke/tokyonight.nvim'
 
 call plug#end()
 " }}}
@@ -253,11 +254,11 @@ function s:markdownSetup()
   " Open panes
   let s:current_win = winnr()
   " Open Nerdtree and hide it
-  NERDTree | wincmd p | NERDTreeFind | wincmd p | NERDTreeToggle
+  "NERDTree | wincmd p | NERDTreeFind | wincmd p | NERDTreeToggle
   " Open Voom and split Nerdtree above it
   Voom pandoc
-  sbuffer NERD_tree_1 |
-  execute bufwinnr(s:current_win) . 'wincmd w'
+  "sbuffer NERD_tree_1 |
+  "execute bufwinnr(s:current_win) . 'wincmd w'
   " Close Nerdtree if last buffer open
   "autocmd BufWinEnter,WinEnter term://* if winnr("$") <= 3  | qa | endif
   "autocmd BufWinEnter,WinEnter NERD_tree* if winnr("$") <= 2  | qa | endif
@@ -386,7 +387,7 @@ inoremap <C-z> <C-r>=ZoteroCite()<CR>
 
 " {{{ Aesthetics
 "set t_Co=256  
-colorscheme one
+colorscheme wombat
 
 " Use spaces instead of tabs (necessary for haskell/ghc)
 set tabstop=2     " Inserts 2 spaces when tab key is pressed.
@@ -526,7 +527,7 @@ iabbrev Detla Delta
 " Quit is only Nerdtree + one other pane is open?
 " autocmd bufenter * if (winnr("$") == 2 && exists("b:NER3Tree") && b:NERDTree.isTabTree()) | qa | endif
 
-autocmd Filetype markdown.pandoc let g:enable_quicktex = 1
+" autocmd Filetype markdown.pandoc let g:enable_quicktex = 1
 " See `~/.config/nvim/after/ftplugin/pandoc/quicktex_dict.vim`
 
 " {{{ Custom Functions
@@ -601,3 +602,5 @@ autocmd VimEnter * :silent exec "!kill -s SIGWINCH $PPID"
 
 
 set background=light
+setlocal conceallevel=2
+hi clear conceal

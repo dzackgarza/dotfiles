@@ -1,0 +1,64 @@
+#!/usr/bin/env python
+
+import os
+import re
+import requests
+import sys
+import json
+import subprocess
+import io
+
+from PyQt5.QtGui import QImage, qRgb
+from PIL import ImageGrab
+from PIL import Image
+
+
+# MathPix API credentials
+APP_ID = 'dzackgarza_gmail_com_6431f8_2115fb'
+APP_KEY = 'fbf29df0be9949b51c8dfdf731da563ddb832652dffc7a5d007848b37ce96728'
+
+# MathPix API endpoint
+ENDPOINT = 'https://api.mathpix.com/v3/text'
+
+# Function that converts an image to text using the MathPix OCR API
+def image_to_text():
+
+    with open("/tmp/mathpix_temp.png", 'rb') as image_file:
+        image = image_file.read()
+
+    # print("Sending request...") 
+    # Set the request headers
+    headers = {
+        'app_id': APP_ID,
+        'app_key': APP_KEY
+    }
+
+    # Send the request to the MathPix API
+    response = requests.post(ENDPOINT,
+        files={"file": image },
+        data={
+        "options_json": json.dumps({
+            "math_inline_delimiters": ["$", "$"],
+            "math_display_delimiters": ["$$", "$$"],
+            "rm_spaces": True
+        })
+        },
+        headers=headers
+    )
+
+    # Parse the response
+    result = response.json()
+    # print("Parsing response..")
+    # print(result)
+
+    # Return the text output
+    return result['text']
+
+def main():
+    text_results = image_to_text()
+    subprocess.run(["notify-send", "Mathpix", "Done processing. Result: " + text_results])
+    print(text_results)
+    sys.exit(1)
+
+if __name__ == "__main__":
+    main()
