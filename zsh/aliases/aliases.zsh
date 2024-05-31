@@ -35,8 +35,9 @@ function cphist() {
   history 2 | tail -1 | awk '{ first=$1; $1=""; print $0; }' | pbcopy
 }
 
-alias vim=nvim
 
 alias f='source $DOTFILES_ROOT/bin/dmenu/faves_term.sh'
 
 alias ag='ag --noaffinity'
+
+alias vim=nvim

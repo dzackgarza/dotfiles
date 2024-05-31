@@ -1,5 +1,5 @@
 local system = require 'pandoc.system'
-package.path = package.path .. ';' .. '/home/zack/.pandoc/filters/?.lua;'
+package.path = package.path .. ';' .. '/home/dzack/.pandoc/filters/?.lua;'
 require "utilities"
 
 function debug_print(some_str)
