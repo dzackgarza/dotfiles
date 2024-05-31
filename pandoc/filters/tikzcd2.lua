@@ -4,7 +4,7 @@ require "utilities"
 
 local tikz_doc_template = [[
 \documentclass{standalone}
-\input{/home/zack/.pandoc/custom/preamble_common}
+\input{/home/dzack/.pandoc/custom/preamble_common}
 \begin{document}
 \nopagecolor
 %s
