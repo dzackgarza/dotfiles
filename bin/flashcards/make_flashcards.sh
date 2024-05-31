@@ -19,22 +19,29 @@ files=()
 
 echo "Finding files"
 while IFS= read -r -d '' file; do
-    myArr+=("$line")
+  myArr+=("$line")
+  if grep -q "flashcard:" "$file"; then
+    echo "$file-- is a flashcard. Adding..."
+    files+=("$file")
+    echo "********************************"
+  else 
+    echo "Not a flashcard."
+  fi
   # Parse the YAML header metadata
-  yaml=$(cat "$file" | yq --front-matter=extract '.flashcard')
+  #yaml=$(cat "$file" | yq --front-matter=extract '.flashcard')
 
   # Check if the "flashcard" variable is present in the YAML header
-  echo "Checking if markdown file ($file) is a flashcard..."
-  echo "$yaml"
-  if [ "$yaml" = "null" ]; then
-    echo "Not a flashcard."
-  else
-    # If the "flashcard" variable is present, add the file name to the array
-    echo "Adding file:"
-    files+=("$file")
-    echo $file
-    echo "********************************"
-  fi
+  #echo "Checking if markdown file ($file) is a flashcard..."
+  #echo "$yaml"
+  #if [ "$yaml" = "null" ]; then
+    #echo "Not a flashcard."
+  #else
+    #If the "flashcard" variable is present, add the file name to the array
+    #echo "Adding file:"
+    #files+=("$file")
+    #echo $file
+    #echo "********************************"
+  #fi
 done < <(find . -maxdepth 1 -name '*.md' -print0| sort -z)
 
 # Iterate over the array of file names
@@ -47,7 +54,7 @@ for file in "${files[@]}"; do
     # Remove the ".md" extension from the file name
     output_name="${file_name%.md}";
     # Print the output file name with the ".apkg" extension
-    apkg_name="/home/zack/flashcards/${output_name}.apkg";
+    apkg_name="$HOME/flashcards/${output_name}.apkg";
     echo "$apkg_name";
     # If the file exists, run the make_flashcards.sh script on it
     lists_to_anki.py "$file" "$apkg_name";
