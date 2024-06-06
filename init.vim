@@ -36,7 +36,7 @@ Plug 'vim-voom/VOoM'
 "let g:voom_return_key = '<CR>'
 
 " Automatically expand to math tex QUICKLY
-" Plug 'dzackgarza/quicktex'
+Plug 'dzackgarza/quicktex'
 
 Plug 'lervag/vimtex'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -60,6 +60,7 @@ let g:coc_global_extensions = [
       \ 'coc-dictionary',
       \ 'coc-word',
       \ 'coc-spell-checker',
+      \ 'coc-snippets',
       \]
 
 imap <C-l> <Plug>(coc-snippets-expand)
@@ -386,8 +387,8 @@ noremap <leader>z "=ZoteroCite()<CR>p
 inoremap <C-z> <C-r>=ZoteroCite()<CR>
 
 " {{{ Aesthetics
-"set t_Co=256  
-colorscheme wombat
+set t_Co=256  
+colorscheme tokyonight-moon
 
 " Use spaces instead of tabs (necessary for haskell/ghc)
 set tabstop=2     " Inserts 2 spaces when tab key is pressed.
@@ -527,7 +528,7 @@ iabbrev Detla Delta
 " Quit is only Nerdtree + one other pane is open?
 " autocmd bufenter * if (winnr("$") == 2 && exists("b:NER3Tree") && b:NERDTree.isTabTree()) | qa | endif
 
-" autocmd Filetype markdown.pandoc let g:enable_quicktex = 1
+autocmd Filetype markdown.pandoc let g:enable_quicktex = 1
 " See `~/.config/nvim/after/ftplugin/pandoc/quicktex_dict.vim`
 
 " {{{ Custom Functions

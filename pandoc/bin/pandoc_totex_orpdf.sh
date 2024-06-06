@@ -77,7 +77,6 @@ cat "$TMP_DIR/combined.temp" | pandoc \
 		--lua-filter=$PANDOC_DIR/filters/tikzcd.lua \
     --lua-filter=$PANDOC_DIR/filters/convert_amsthm_envs.lua \
     --lua-filter=$PANDOC_DIR/filters/convert_math_delimiters.lua \
-    --lua-filter=$PANDOC_DIR/filters/hide_solutions_pdf.lua \
 		--bibliography="$filename.bib" \
 		--biblatex \
     -V current_date="$(date +%Y-%m-%d%n)" "${params[@]}" \
