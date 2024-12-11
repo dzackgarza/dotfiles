@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PREVIEW_BROWSER=qutebrowser
+PREVIEW_BROWSER=google-chrome-stable
 
 if [ $# -eq 0 ]; then
   echo "Supply filename as argument"
@@ -70,7 +70,9 @@ while true; do
     disown;
     first_run="false";
   else
-    $PREVIEW_BROWSER ':reload';
+    echo "Reload browser."
+    #$PREVIEW_BROWSER "$outfile" > /dev/null 2>&1 &
+    #$PREVIEW_BROWSER ':reload';
   fi
   inotifywait -e CLOSE_WRITE -r "$directory" --exclude '.*\.pdf' -qq;
   echo "File change detected."

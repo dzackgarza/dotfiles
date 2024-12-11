@@ -23,11 +23,11 @@ while getopts 'd:' flag; do
   esac
 done
 
-#echo "$FIG_DIR"
 [ ! -d "$FIG_DIR" ] && (echo "Directory not found." && exit 1;)
+#echo "Found figure directory."
 
-SVG_FILES="$(  find "$FIG_DIR" -type f -name "*.svg" -o -name "*.xoj" | sort -r | sed 's#.*/##' )" 
-choice=`( ( echo -e "New_Inkscape\tNew_Xournal\t$SVG_FILES" | awk -vRS="\t" -vORS="\n" '1' ) | dmenu -i --keep-right)`
+SVG_FILES="$(  find "$FIG_DIR/" -type f -name "*.svg" -o -name "*.xoj" | sort -r | sed 's#.*/##' )" 
+choice=`( ( echo -e "New_Inkscape\tNew_Xournal\t$SVG_FILES" | awk -vRS="\t" -vORS="\n" '1' ) | dmenu -i)`
 
 choice_base="${choice%.*}"
 choice_ext="${choice##*.}"

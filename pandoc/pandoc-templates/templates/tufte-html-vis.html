@@ -14,6 +14,8 @@ $if(url)$<meta property="og:url" content="$url$" />$endif$
 $if(cover-image)$<meta property="og:image" content="$url$$cover-image$" />$endif$
 $if(description)$<meta property="og:description" content="$description$" />$endif$
 $if(github-repo)$<meta name="github-repo" content="$github-repo$" />$endif$
+$if(reload)$<meta http-equiv="refresh" content="5" />$endif$
+
 
 $for(author-meta)$
 <meta name="author" content="$author-meta$" />
@@ -83,8 +85,10 @@ $endif$
   crossorigin="anonymous" data-external="1"
 ></script>
 
-<script src="https://dzackgarza.com/assets/pushy.min.js" crossorigin="anonymous" data-external="1"></script>
-<link rel="stylesheet" href="https://dzackgarza.com/assets/pushy.min.css" crossorigin="anonymous" data-external="1"/>
+<!--<script src="https://dzackgarza.com/assets/pushy.min.js" crossorigin="anonymous" data-external="1"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pushy/1.4.0/js/pushy.min.js" integrity="sha512-Aw5sF95+oD1easId1AUrHSHtNgeqUq0HM69CvSWAerMrB6vUqMDmOfNAoYeL1t0Y+85sWdY5Og4s7XVqqoCWXg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!--<link rel="stylesheet" href="https://dzackgarza.com/assets/pushy.min.css" crossorigin="anonymous" data-external="1"/>-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pushy/1.4.0/css/pushy.min.css" integrity="sha512-t9XgtW+6fclSmC40J6dyCPBBsc/9Jd5hQrqc8LEhg8zuQyOpi7UMckM8U6lXuw265vTPYhG8+527qWNIMrKiZA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 $if(abstract)$
 <style type="text/css">
