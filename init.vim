@@ -358,15 +358,15 @@ au FileType voomtree syntax match someCustomes /\$\\done\$/ conceal cchar=✨
 function! PasteImage()
   let this_file_dir = expand("%:p:h")
   let s = substitute(system("date '+%Y-%m-%d_%H-%M-%S' "), '\n\+$', '', '')
-  let mime_check = system("xclip -selection clip -t TARGETS -o | grep png")
-  if mime_check =~ "png"
-    let t = system("mkdir -p '".this_file_dir."/figures' && xclip -selection clipboard -t image/png -o > '".this_file_dir."/figures/".s.".png'")
-    echo t
-    let md_text = "![](figures/" . s . ".png)"
-    execute "normal! o".md_text 
-  else
-    echo "Clipboard doesn't contain an image."
-  endif
+  "let mime_check = system("xclip -selection clip -t TARGETS -o | grep png")
+  "if mime_check =~ "png"
+  let t = system("mkdir -p '".this_file_dir."/figures' && wl-paste > '".this_file_dir."/figures/".s.".png'")
+  echo t
+  let md_text = "![](figures/" . s . ".png)"
+  execute "normal! o".md_text 
+  "else
+    "echo "Clipboard doesn't contain an image."
+  "endif
 endfunction
 
 function! PasteQuiverDiagram()
@@ -378,13 +378,15 @@ nmap <silent> <leader>qp :call PasteQuiverDiagram()<CR>
 function! ZoteroCite()
   " pick a format based on the filetype (customize at will)
   let format = &filetype =~ '.*tex' ? 'citep' : 'pandoc'
-  let api_call = 'http://127.0.0.1:23119/better-bibtex/cayw?format='.format.'&brackets=1'
+  let api_call = 'http://127.0.0.1:23119/better-bibtex/cayw?format=cite&brackets=1'
   let ref = system('curl -s '.shellescape(api_call))
   return ref
 endfunction
 
 noremap <leader>z "=ZoteroCite()<CR>p
 inoremap <C-z> <C-r>=ZoteroCite()<CR>
+
+inoremap <expr> <c-x><c-m> fzf#vim#complete("find_all_latex_labels.sh")
 
 " {{{ Aesthetics
 set t_Co=256  

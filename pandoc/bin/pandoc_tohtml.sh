@@ -94,14 +94,14 @@ cat "$TMP_DIR/combined.temp" | pandoc \
   --to html \
   --toc \
   --mathjax \
-  --self-contained \
+  --embed-resources \
+  --standalone \
   --number-section \
   --filter=pandoc-crossref \
   --lua-filter=$PANDOC_DIR/filters/tikzcd.lua \
   --lua-filter=$PANDOC_DIR/filters/replace_symbols_html.lua \
   --lua-filter=$PANDOC_DIR/filters/convert_math_delimiters.lua \
   --lua-filter=$PANDOC_DIR/filters/convert_amsthm_envs.lua \
-  --lua-filter=$PANDOC_DIR/filters/hide_solutions_html.lua \
   --template=$PANDOC_TEMPLATES/templates/tufte-html-vis.html  \
   --css=$PANDOC_TEMPLATES/marked/kultiad-serif.css \
   --citeproc \

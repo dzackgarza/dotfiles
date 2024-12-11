@@ -186,6 +186,7 @@ if has('conceal')
   syn match texMathSymbol '\\mathcal{F}' contained conceal cchar=𝓕
   syn match texMathSymbol '\\mathcal{G}' contained conceal cchar=𝓖
   syn match texMathSymbol '\\mcg' contained conceal cchar=𝓖
+  syn match texMathSymbol '\\cG' contained conceal cchar=𝓖
   syn match texMathSymbol '\\mathcal{H}' contained conceal cchar=𝓗
   syn match texMathSymbol '\\mch' contained conceal cchar=𝓗
   syn match texMathSymbol '\\mathcal{I}' contained conceal cchar=𝓘
@@ -208,6 +209,7 @@ if has('conceal')
   syn match texMathSymbol '\\mathcal{V}' contained conceal cchar=𝓥
   syn match texMathSymbol '\\mathcal{W}' contained conceal cchar=𝓦
   syn match texMathSymbol '\\mathcal{X}' contained conceal cchar=𝓧
+  syn match texMathSymbol '\\cX' contained conceal cchar=𝓧
   syn match texMathSymbol '\\mathcal{Y}' contained conceal cchar=𝓨
   syn match texMathSymbol '\\mathcal{Z}' contained conceal cchar=𝓩
   syn match texMathSymbol '\\syl' contained conceal cchar=𝓢
@@ -281,6 +283,7 @@ if has('conceal')
   syn match texDelimiter '\\}' contained conceal cchar=}
   syn match texMathSymbol '\\setminus\>' contained conceal cchar=\
   syn match texMathSymbol '\\definedas' contained conceal cchar=≔
+  syn match texMathSymbol '\\da' contained conceal cchar=≔
   syn match texMathSymbol '\\#' contained conceal cchar=#
   "syn match texMathSymbol '\\,' contained conceal cchar=
   "syn match texMathSymbol '\\ ' contained conceal cchar=

@@ -21,7 +21,7 @@ done
 export BCAT_BROWSER=qutebrowser
 
 export NOTES=$HOME/Notes
-export PANDOC_DIR=$DOTFILES_ROOT/pandoc
+export PANDOC_DIR=$HOME/.pandoc
 export PATH="$PANDOC_DIR/bin:$PATH"
 export PANDOC_TEMPLATES=$PANDOC_DIR/pandoc-templates
 export PANDOC_BIB=$NOTES/library.bib
