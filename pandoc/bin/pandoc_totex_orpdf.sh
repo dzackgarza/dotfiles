@@ -73,7 +73,7 @@ cat "$TMP_DIR/combined.temp" | pandoc \
     --quiet \
     --metadata-file="$DATA_FILE" \
     -r markdown+fenced_divs+tex_math_single_backslash+citations \
-    --template=$PANDOC_DIR/custom/pandoc_template.tex \
+    --template=$PANDOC_DIR/custom/pandoc_paper_template.tex \
 		--lua-filter=$PANDOC_DIR/filters/tikzcd.lua \
     --lua-filter=$PANDOC_DIR/filters/convert_amsthm_envs.lua \
     --lua-filter=$PANDOC_DIR/filters/convert_math_delimiters.lua \

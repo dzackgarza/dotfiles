@@ -19,7 +19,13 @@
 % \usepackage{sty-en} 
 
 \usepackage{tikz-cd, bm}
-\usepackage{tikzit}
+\usepackage{markdown}
+\usepackage{ragged2e} % for '\RaggedRight' macro (suppress full justification)
+\usepackage{boxedminipage}
+
+%\usepackage{tikzit}
+\usepackage{/home/dzack/Notes/tikzit}
+
 
 \usepackage{todonotes}
 \usepackage[pdftex]{hyperref}
@@ -64,14 +70,14 @@
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 
-% \bibliographystyle{amsalpha}
-% \bibliography{references}
-% \usepackage[
-% style=alphabetic,
-% sorting=ynt
-% ]{biblatex}
-% \addbibresource{references.bib}
-
+\makeatletter
+\renewcommand\subsection{\@startsection{subsection}{2}%
+  \z@{-.5\linespacing\@plus-.7\linespacing}{.5\linespacing}%
+  {\normalfont\Large\scshape}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}%
+  \z@{.5\linespacing\@plus.7\linespacing}{-.5em}%
+  {\normalfont\Large\scshape}}
+\makeatother
 
 \renewcommand{\hat}{\widehat}
 % \renewcommand{\bar}{\overline}
@@ -80,15 +86,29 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
-\usepackage{DZG_Style}
+\usepackage{/home/dzack/Notes/DZG_Style}
 \usepackage{cleveref}
 \usepackage{booktabs}
+\usepackage{tabularx}
 \usepackage{longtable}
 
 %\usepackage{/home/dzack/Notes/tikzit}
-\input{/home/dzack/Notes/sample.tikzstyles}
+\input{/home/dzack/.pandoc/custom/sample.tikzstyles}
+\input{/home/dzack/.pandoc/custom/tikz_macros}
 
-
+\usepackage{environ}
+\makeatletter
+\newsavebox{\measure@tikzpicture}
+\NewEnviron{scaletikzpicturetowidth}[1]{%
+  \def\tikz@width{#1}%
+  \def\tikzscale{1}\begin{lrbox}{\measure@tikzpicture}%
+  \BODY
+  \end{lrbox}%
+  \pgfmathparse{#1/\wd\measure@tikzpicture}%
+  \edef\tikzscale{\pgfmathresult}%
+  \BODY
+}
+\makeatother
 
 \title{$title$}
 \date{$date$}

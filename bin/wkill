@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Get click position using slurp (returns geometry like 123x456)
+pos=$(slurp -f "%x %y") || exit 1
+read -r click_x click_y <<< "$pos"
+
+# Get sway tree and find the window under the cursor
+window_id=$(swaymsg -t get_tree | jq \
+  --argjson x "$click_x" --argjson y "$click_y" '
+  recurse(.nodes[]?, .floating_nodes[]?) |
+  select(.type == "con" and .rect != null) |
+  select($x >= .rect.x and $x <= (.rect.x + .rect.width) and
+         $y >= .rect.y and $y <= (.rect.y + .rect.height)) |
+  .id' | head -n 1)
+
+if [ -n "$window_id" ]; then
+  swaymsg "[con_id=$window_id]" kill
+else
+  notify-send "waykill" "No window found under cursor"
+fi

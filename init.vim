@@ -30,6 +30,10 @@ call plug#begin()
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
+Plug 'tpope/vim-commentary'
+
+Plug 'm00qek/baleia.nvim'
+
 
 Plug 'vim-voom/VOoM'
 "let g:voom_tab_key = "<c-q>"
@@ -248,6 +252,8 @@ tnoremap <C-v><Esc> <Esc>
 
 " {{{ Specific Filetype Commands
 autocmd Filetype tmux setlocal foldmethod=marker
+command! BaleiaColorize lua require('baleia').setup().once(vim.api.nvim_get_current_buf())
+autocmd BufReadPost *.log lua require('baleia').setup().once(vim.api.nvim_get_current_buf())
 " }}}
 
 " {{{ Default window settings when opening a new file.
@@ -447,7 +453,7 @@ set nowb
 set noswapfile
 set mouse=a                     " Allow mouse selection
 set encoding=utf-8
-let &termencoding=&encoding
+"let &termencoding=&encoding
 
 
 " {{{ Persistent Undo
@@ -607,3 +613,12 @@ autocmd VimEnter * :silent exec "!kill -s SIGWINCH $PPID"
 set background=light
 setlocal conceallevel=2
 hi clear conceal
+set statusline+=%F
+
+autocmd BufNewFile,BufRead *.sage set filetype=python
+
+autocmd BufNewFile,BufRead *.g set filetype=gap 
+autocmd BufNewFile,BufRead *.g setlocal commentstring=#\ %s
+autocmd BufNewFile,BufRead *.g setlocal comments=:#
+
+
