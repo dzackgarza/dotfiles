@@ -21,6 +21,7 @@
   "coc.source.emoji.shortcut": "Emoji",
   "coc.source.emoji.priority": 20,
   "coc.source.word.shortcut": "Top Words",
-  "coc.source.word.priority": 10
+  "coc.source.word.priority": 10,
+  "snippets.ultisnips.pythonPrompt": false
 }
 

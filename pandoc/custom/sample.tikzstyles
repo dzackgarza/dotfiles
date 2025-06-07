@@ -8,6 +8,8 @@
 \tikzstyle{black node}=[fill=black, shape=circle, draw=black, tikzit category=nodes, tikzit fill=black, scale=0.5]
 \tikzstyle{doubled node}=[fill=white, double, tikzit category=nodes, shape=circle, draw=black, tikzit fill=white, scale=0.5]
 \tikzstyle{starred node}=[fill=red, tikzit category=nodes, shape=star, draw=red, tikzit fill=red, cross out, draw, solid, red, inner sep=2pt]
+\tikzstyle{two node}=[style=black node]
+\tikzstyle{four node}=[style=white node]
 
 % Edge styles
 \tikzstyle{plain edge}=[-] 
@@ -18,3 +20,6 @@
 \tikzstyle{Arrow}=[->]
 \tikzstyle{Doubled Arrow}=[->, double distance=0.5mm]
 \tikzstyle{Dashed Arrow}=[->, densely dashed]
+
+\tikzstyle{cusp curve}=[rectangle, draw, minimum width=1.5cm]
+\tikzstyle{cusp point}=[fill=white, tikzit category=nodes, shape=circle, draw=black, tikzit fill=white, scale=0.5]
