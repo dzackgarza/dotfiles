@@ -45,16 +45,6 @@
 \usepackage{tkz-euclide}
 \usepackage{tikzit}
 
-\tikzset{wh/.style={draw, circle, inner sep=2.5pt, fill=white}} % white
-\tikzset{swh/.style={draw, circle, inner sep=2pt, fill=white}}  % small white
-\tikzset{dwh/.style={draw, circle, inner sep=3.5pt, fill=white}}% double white
-\tikzset{bl/.style={draw=black, circle, inner sep=2.5pt, fill=black}} % black
-% lines
-\tikzset{do/.style={double, double distance=1.5pt}} % double
-\tikzset{bo/.style={line width=2pt}} % bold
-\tikzset{da/.style={red, dashed}}    % dashed
-\tikzset{hlt/.style={cyan, double=cyan, double distance=.25cm, opacity=.3,
-      line cap=round, rounded corners}}
 
 \begin{document}
 

@@ -1,0 +1,14 @@
+#!/bin/bash
+#!/bin/bash
+
+if [ $# -lt 1 ]; then
+  echo "Usage: $0 <pattern> [path]"
+  exit 1
+fi
+
+pattern=$1
+path=${2:-.}
+
+# Use absolute paths for find, xargs, and rg
+/usr/bin/find -L "$path" -type f -print0 | /usr/bin/xargs -0 /usr/bin/rg --no-follow --no-ignore --color=auto "$pattern"
+

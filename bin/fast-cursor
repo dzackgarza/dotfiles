@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+folder=""
+
+if [[ -d "$1" ]]; then
+  folder="$1"
+  shift
+fi
+
+env \
+  XDG_SESSION_TYPE=wayland \
+  MOZ_ENABLE_WAYLAND=1 \
+  WAYLAND_DISPLAY=${WAYLAND_DISPLAY:-wayland-1} \
+  QT_QPA_PLATFORM=wayland \
+  SDL_VIDEODRIVER=wayland \
+  /usr/lib/electron34/electron /usr/lib/cursor/out/cli.js \
+  "$folder" "$@"
