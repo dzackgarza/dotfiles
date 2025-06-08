@@ -4,7 +4,7 @@
 Throughout this section, $R$ is an integral domain which we often take to be $\ZZ$.
 We write $k$ for its field of fractions, often taken to be $\QQ$.
 We write the group of units as $R\units$, and $L, M$ are generally finitely generated projective $R$-modules.
-Over $R=\ZZ$, these will be regarded as free modules of finite $\ZZ$-rank.
+Over $R=\ZZ$, these will bemake regarded as free modules of finite $\ZZ$-rank.
 We write $\ZZpadic$ for the ring of $p$-adic integers, and $\QQpadic$ for its field of fractions.
 We write $\beta$ for a general symmetric bilinear form.
 If $S$ is an $\ZZ$-module, we write $L_S \da L \tensor_\ZZ S$ for the base change of $L$ to an $S$-module.

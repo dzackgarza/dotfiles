@@ -11,7 +11,7 @@ setup: build
 
 # Run the standalone Pandoc test (depends on build)
 .PHONY: test
-test: build
+test: clean build
 	# Run all tests (currently only Pandoc HTML/CSS test)
 	npx ts-node test_pandoc.ts
 
@@ -23,7 +23,7 @@ test-webview-html: build
 # Package the extension and install it in Cursor
 # Always remove the old extension from ~/.cursor/extensions before installing to avoid caching issues
 .PHONY: deploy
-deploy: build
+deploy: clean build
 	rm -rf ~/.cursor/extensions/test.hello-world-0.0.1
 	npx --yes vsce package
 	cursor --install-extension hello-world-0.0.1.vsix
@@ -35,6 +35,9 @@ clean:
 	rm -rf out/
 	rm -f *.log
 	rm -f *.testoutput
+	rm -f ../webview_test_output.*
+	rm -f ../test_pandoc_direct.html
+	rm -f *.html
 
 # Remove all build artifacts, logs, and test outputs
 .PHONY: clean-all
@@ -55,5 +58,5 @@ clean-all:
 #   make test   # Build and run Pandoc test
 #   make test-webview-html # Build, run test, and save webview HTML output
 #   make deploy # Remove old extension, package, and install in Cursor
-#   make clean  # Remove build artifacts and logs
+#   make clean  # Remove build artifacts and logs 
 #   make clean-all  # Remove all build artifacts, logs, and test outputs 

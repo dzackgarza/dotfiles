@@ -36,20 +36,41 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.convertMarkdownToFinalHtml = convertMarkdownToFinalHtml;
 const pandocUtil_1 = require("./pandocUtil");
 const fs = __importStar(require("fs"));
-async function convertMarkdownToFinalHtml(md, debugBasePath, templatePath, pandocArgs = []) {
-    // Step 1: Pandoc (standalone)
+async function convertMarkdownToFinalHtml(md, debugBasePath, templatePath, pandocArgs = [], logDir, timestamp, log) {
+    if (log)
+        log('convertMarkdownToFinalHtml: called');
+    // Save stripped markdown after macro stripping
+    let strippedMd = undefined;
     const html = await new Promise((resolve, reject) => {
-        (0, pandocUtil_1.runPandoc)(md, (code, html, err) => {
+        (0, pandocUtil_1.runPandoc)(md, (code, html, err, stripped, pandocCmd, pandocStdout, pandocStderr) => {
+            if (log) {
+                log('Pandoc command: ' + (pandocCmd || 'unknown'));
+                log('Pandoc return code: ' + code);
+                if (pandocStdout)
+                    log('Pandoc stdout: ' + pandocStdout);
+                if (pandocStderr)
+                    log('Pandoc stderr: ' + pandocStderr);
+            }
+            if (stripped && logDir && timestamp) {
+                const strippedPath = require('path').join(logDir, `stripped_${timestamp}.md`);
+                fs.writeFileSync(strippedPath, stripped, 'utf8');
+                if (log)
+                    log('Saved stripped markdown to ' + strippedPath);
+            }
             if (code !== 0) {
-                reject(new Error(`Pandoc failed with code ${code}: ${err}`));
+                if (log)
+                    log('Pandoc failed with code ' + code + ': ' + err);
+                reject(new Error('Pandoc failed with code ' + code + ': ' + err));
             }
             else {
                 resolve(html);
             }
-        }, templatePath, pandocArgs);
+        }, templatePath, pandocArgs, logDir, timestamp, log);
     });
     if (debugBasePath) {
         fs.writeFileSync(debugBasePath + '.final.html', html, 'utf8');
     }
+    if (log)
+        log('convertMarkdownToFinalHtml: finished');
     return html;
 }
