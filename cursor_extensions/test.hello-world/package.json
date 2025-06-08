@@ -9,7 +9,8 @@
 		"cursor": "^1.0.0"
 	},
 	"activationEvents": [
-		"*"
+		"onCommand:hello-world.sayHello",
+		"onCommand:hello-world.showMarkdownWebview"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -17,10 +18,25 @@
 			{
 				"command": "hello-world.sayHello",
 				"title": "Hello World: Say Hello"
+			},
+			{
+				"command": "hello-world.showMarkdownWebview",
+				"title": "Hello World: Show Markdown Webview"
 			}
 		]
 	},
 	"__metadata": {
 		"size": 826
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://example.com/repo.git"
+	},
+	"license": "SEE LICENSE IN LICENSE",
+	"dependencies": {
+		"typescript": "^5.8.3"
+	},
+	"devDependencies": {
+		"@types/node": "^22.15.30"
 	}
 }

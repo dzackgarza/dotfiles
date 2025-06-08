@@ -1,0 +1,20 @@
+[2025-06-08T01:58:06.012Z] Invoking: pandoc -f gfm -t html --lua-filter /home/dzack/dotfiles/cursor_extensions/checkboxes.lua
+[2025-06-08T01:58:06.453Z] Pandoc exited with code 0
+[2025-06-08T02:04:10.521Z] [NO-OP] Would invoke: /usr/bin/pandoc ...
+[2025-06-08T02:04:10.521Z] [NO-OP] Received markdown (first 100 chars): # Checkbox Test
+
+- [ ] Unchecked item
+- [x] Checked item
+- [X] Checked item (uppercase)
+- Regular it
+[2025-06-08T02:05:17.901Z] [NO-OP] Would invoke: /usr/bin/pandoc ...
+[2025-06-08T02:05:17.901Z] [NO-OP] Received markdown (first 100 chars): # Checkbox Test
+
+- [ ] Unchecked item
+- [x] Checked item
+- [X] Checked item (uppercase)
+- Regular it
+[2025-06-08T02:10:46.875Z] Invoking: pandoc -f gfm -t html
+[2025-06-08T02:10:47.537Z] Pandoc exited with code 0
+[2025-06-08T02:12:47.347Z] Invoking: pandoc -f gfm -t html
+[2025-06-08T02:12:47.579Z] Pandoc exited with code 0
