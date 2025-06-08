@@ -12,12 +12,13 @@ setup: build
 # Run the standalone Pandoc test (depends on build)
 .PHONY: test
 test: build
-	node out/test_pandoc.js
+	# Run all tests (currently only Pandoc HTML/CSS test)
+	npx ts-node test_pandoc.ts
 
 # Package the extension and install it in Cursor
 # Always remove the old extension from ~/.cursor/extensions before installing to avoid caching issues
 .PHONY: deploy
-deploy:
+deploy: build
 	rm -rf ~/.cursor/extensions/test.hello-world-0.0.1
 	npx --yes vsce package
 	cursor --install-extension hello-world-0.0.1.vsix
@@ -26,6 +27,9 @@ deploy:
 .PHONY: clean
 clean:
 	rm -f hello-world-0.0.1.vsix out/pandoc_debug.log
+	rm -rf out/
+	rm -f *.log
+	rm -f *.testoutput
 
 # Usage:
 #   make build  # Compile all TypeScript files

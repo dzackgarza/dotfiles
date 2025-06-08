@@ -1,0 +1,7 @@
+PASS: .remark block parsed to <div class="remark">
+PASS: .definition block parsed to <div class="definition">
+PASS: .lemma block parsed to <div class="lemma">
+PASS: .theorem block parsed to <div class="theorem">
+PASS: .proof block parsed to <div class="proof">
+PASS: .proposition block parsed to <div class="proposition">
+PASS: .corollary block parsed to <div class="corollary">
