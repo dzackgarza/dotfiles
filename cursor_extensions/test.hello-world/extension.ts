@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
-import { runPandoc } from './pandocUtil';
+import * as path from 'path';
+import { convertMarkdownToFinalHtml } from './conversionPipeline';
 
 export function activate(context: vscode.ExtensionContext) {
   // Hello World command
@@ -8,8 +9,8 @@ export function activate(context: vscode.ExtensionContext) {
   });
   context.subscriptions.push(disposable);
 
-  // Minimal Pandoc-based Markdown webview
-  let webviewDisposable = vscode.commands.registerCommand('hello-world.showMarkdownWebview', function () {
+  // Markdown webview command
+  let webviewDisposable = vscode.commands.registerCommand('hello-world.showMarkdownWebview', async function () {
     const editor = vscode.window.activeTextEditor;
     if (!editor || editor.document.languageId !== 'markdown') {
       vscode.window.showErrorMessage('Please open a Markdown file to preview.');
@@ -19,24 +20,21 @@ export function activate(context: vscode.ExtensionContext) {
       'markdownWebview',
       'Markdown Webview',
       vscode.ViewColumn.Beside,
-      {}
+      { enableScripts: true }
     );
     const md = editor.document.getText();
-    runPandoc(md, (code: number, html: string, err: string) => {
-      if (code !== 0) {
-        let logTail = '';
-        const logPath = require('path').resolve(__dirname, 'pandoc_debug.log');
-        try {
-          const logContent = require('fs').readFileSync(logPath, 'utf8').split('\n');
-          logTail = logContent.slice(-20).join('\n');
-        } catch (e: any) {
-          logTail = 'Could not read pandoc_debug.log: ' + (e.stack || e);
-        }
-        panel.webview.html = `<pre>Pandoc failed with code ${code}\n\n--- pandoc_debug.log (last 20 lines) ---\n${logTail}</pre>`;
-      } else {
-        panel.webview.html = html;
-      }
-    });
+    // Use canonical conversion pipeline, output debug files in workspace root
+    const debugBasePath = path.resolve(__dirname, '../../webview_debug');
+    try {
+      const pandocTemplatePath = '/home/dzack/dotfiles/cursor_extensions/test.hello-world/pandoc_webview_template.html';
+      const pandocArgs = [
+        '--template', pandocTemplatePath,
+      ];
+      const finalHtml = await convertMarkdownToFinalHtml(md, debugBasePath, pandocTemplatePath, pandocArgs);
+      panel.webview.html = finalHtml;
+    } catch (e: any) {
+      panel.webview.html = `<!DOCTYPE html><html><body><pre>Failed to render: ${e.stack || e}</pre></body></html>`;
+    }
     return;
   });
   context.subscriptions.push(webviewDisposable);

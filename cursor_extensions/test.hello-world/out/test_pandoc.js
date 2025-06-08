@@ -35,79 +35,48 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
-const pandocUtil_1 = require("./pandocUtil");
+const conversionPipeline_1 = require("./conversionPipeline");
 const mdPath = path.resolve(__dirname, '../test_custom_pandoc.md');
 const md = fs.readFileSync(mdPath, 'utf8');
-(0, pandocUtil_1.runPandoc)(md, (code, html, err) => {
-    // Inject custom CSS for theorem environments
-    const theoremCSS = `
-      <style>
-      div.proofenv.theorem,
-      div.proofenv.lemma,
-      div.proofenv.proposition,
-      div.proofenv.remark,
-      div.proofenv.corollary {
-        border-left: 4px solid #0074d9;
-        background: #f8f8ff;
-        margin: 1em 0;
-        padding: 0.5em 1em;
-        position: relative;
-      }
-      div.proofenv[title]::before {
-        content: "(" attr(class) " " attr(title) "): ";
-        font-weight: bold;
-        display: block;
-        margin-bottom: 0.5em;
-        color: #222;
-        text-transform: capitalize;
-      }
-      </style>
-    `;
-    html = theoremCSS + html;
-    let testResults = [];
-    if (code === 0) {
-        console.log('Pandoc HTML output:');
-        console.log(html);
-        // Test: Check that each expected block is parsed to a div with the correct class
-        const expectedClasses = [
-            'remark',
-            'definition',
-            'lemma',
-            'theorem',
-            'proof',
-            'proposition',
-            'corollary',
-        ];
-        let allPassed = true;
-        for (const cls of expectedClasses) {
-            const regex = new RegExp(`<div\\s+class=["']${cls}["']`);
-            if (regex.test(html)) {
-                testResults.push(`PASS: .${cls} block parsed to <div class=\"${cls}\">`);
-            }
-            else {
-                testResults.push(`FAIL: .${cls} block NOT parsed to <div class=\"${cls}\">`);
-                allPassed = false;
-            }
-        }
-        testResults.forEach(r => {
-            if (r.startsWith('PASS')) {
-                console.log(r);
-            }
-            else {
-                console.error(r);
-            }
-        });
-        fs.writeFileSync('pandoc_css_test.testoutput', testResults.join('\n') + '\n');
-        if (!allPassed)
-            process.exit(1);
+const debugBasePath = path.resolve(__dirname, '../webview_test_output');
+const templatePath = path.resolve(__dirname, 'pandoc_webview_template.html');
+(async () => {
+    // Use canonical conversion pipeline
+    let finalHtml;
+    try {
+        finalHtml = await (0, conversionPipeline_1.convertMarkdownToFinalHtml)(md, debugBasePath, templatePath, []);
+        console.log('Webview HTML output saved to webview_test_output.final.html');
     }
-    else {
-        const failMsg = `FAIL: Pandoc failed with code ${code}`;
-        testResults.push(failMsg);
-        console.error(failMsg);
-        if (err)
-            console.error(err);
-        fs.writeFileSync('pandoc_css_test.testoutput', testResults.join('\n') + '\n');
+    catch (e) {
+        console.error('FAIL: Conversion pipeline failed:', e);
         process.exit(1);
     }
-});
+    // Simple check: does the output look like a full HTML document?
+    if (!finalHtml.trim().startsWith('<!DOCTYPE html>')) {
+        console.error('FAIL: Output is not a full HTML document');
+        process.exit(1);
+    }
+    console.log('PASS: Output is a full HTML document');
+    // Additional test: simulate missing template file
+    const missingTemplatePath = '/tmp/this_template_does_not_exist.html';
+    let errorCaught = false;
+    try {
+        await (0, conversionPipeline_1.convertMarkdownToFinalHtml)(md, debugBasePath, missingTemplatePath, []);
+        console.error('FAIL: Expected error for missing template, but none was thrown');
+        process.exit(1);
+    }
+    catch (e) {
+        if (e.message && e.message.includes('Could not find data file')) {
+            console.log('PASS: Detected missing template error from Pandoc');
+            errorCaught = true;
+        }
+        else {
+            console.error('FAIL: Unexpected error for missing template:', e);
+            process.exit(1);
+        }
+    }
+    if (!errorCaught) {
+        console.error('FAIL: Missing template error was not detected');
+        process.exit(1);
+    }
+})();

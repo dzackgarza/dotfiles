@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Pandoc Webview</title>
+  <style>
+    div.remark {
+      border-left: 3px solid #888;
+      margin: 1em 0;
+      padding: 0.5em 1em;
+      background: #f9f9f9;
+      position: relative;
+    }
+    div.remark strong.remark-label {
+      font-weight: bold;
+      color: #444;
+      margin-right: 0.5em;
+    }
+  </style>
+</head>
+<body>
+$body$
+<script>
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('div.remark').forEach(function(div) {
+      if (!div.querySelector('strong.remark-label')) {
+        var label = document.createElement('strong');
+        label.className = 'remark-label';
+        label.textContent = 'remark: ';
+        div.insertBefore(label, div.firstChild);
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html> 
