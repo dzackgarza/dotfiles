@@ -11,7 +11,7 @@ const templatePath = path.resolve(__dirname, 'pandoc_webview_template.html');
   // Use canonical conversion pipeline
   let finalHtml: string;
   try {
-    finalHtml = await convertMarkdownToFinalHtml(md, debugBasePath, templatePath, []);
+    finalHtml = await convertMarkdownToFinalHtml(md, debugBasePath, templatePath, ['--mathjax']);
     console.log('Webview HTML output saved to webview_test_output.final.html');
   } catch (e: any) {
     console.error('FAIL: Conversion pipeline failed:', e);

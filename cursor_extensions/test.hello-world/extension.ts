@@ -29,6 +29,7 @@ export function activate(context: vscode.ExtensionContext) {
       const pandocTemplatePath = '/home/dzack/dotfiles/cursor_extensions/test.hello-world/pandoc_webview_template.html';
       const pandocArgs = [
         '--template', pandocTemplatePath,
+        '--mathjax',
       ];
       const finalHtml = await convertMarkdownToFinalHtml(md, debugBasePath, pandocTemplatePath, pandocArgs);
       panel.webview.html = finalHtml;

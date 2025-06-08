@@ -59,6 +59,7 @@ function activate(context) {
             const pandocTemplatePath = '/home/dzack/dotfiles/cursor_extensions/test.hello-world/pandoc_webview_template.html';
             const pandocArgs = [
                 '--template', pandocTemplatePath,
+                '--mathjax',
             ];
             const finalHtml = await (0, conversionPipeline_1.convertMarkdownToFinalHtml)(md, debugBasePath, pandocTemplatePath, pandocArgs);
             panel.webview.html = finalHtml;

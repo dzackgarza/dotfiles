@@ -4,14 +4,71 @@
   <meta charset="utf-8" />
   <title>Pandoc Webview</title>
   <style>
-    div.remark {
+    /* Base style for all theorem-like environments */
+    div.theorem, div.definition, div.proposition, div.lemma, div.corollary, div.conjecture, div.variant, div.fact, div.question, div.remark, div.exercise, div.warning, div.example, div.notation, div.convention, div.construction, div.claim, div.assumption, div.problem, div.solution, div.strategy, div.concept, div.concepts, div.answer, div.observation, div.nb, div.note, div.warnings, div.slogan {
       border-left: 3px solid #888;
       margin: 1em 0;
       padding: 0.5em 1em;
       background: #f9f9f9;
       position: relative;
+      border-radius: 4px;
     }
-    div.remark strong.remark-label {
+    /* Highlighted types */
+    div.warning, div.warnings {
+      border-left-color: #e67e22;
+      background: #fff7ec;
+    }
+    div.example, div.exercise, div.solution {
+      border-left-color: #2980b9;
+      background: #f0f7fa;
+    }
+    div.remark, div.nb, div.note {
+      border-left: none;
+      background: none;
+      padding-left: 0;
+    }
+    div.conjecture {
+      border-left-color: #8e44ad;
+      background: #f7f0fa;
+    }
+    div.answer {
+      border-left-color: #27ae60;
+      background: #f3faf4;
+    }
+    div.slogan {
+      border-left-color: #16a085;
+      background: #e6faf7;
+    }
+    /* Label style */
+    div.theorem strong.theorem-label,
+    div.definition strong.definition-label,
+    div.proposition strong.proposition-label,
+    div.lemma strong.lemma-label,
+    div.corollary strong.corollary-label,
+    div.conjecture strong.conjecture-label,
+    div.variant strong.variant-label,
+    div.fact strong.fact-label,
+    div.question strong.question-label,
+    div.remark strong.remark-label,
+    div.exercise strong.exercise-label,
+    div.warning strong.warning-label,
+    div.example strong.example-label,
+    div.notation strong.notation-label,
+    div.convention strong.convention-label,
+    div.construction strong.construction-label,
+    div.claim strong.claim-label,
+    div.assumption strong.assumption-label,
+    div.problem strong.problem-label,
+    div.solution strong.solution-label,
+    div.strategy strong.strategy-label,
+    div.concept strong.concept-label,
+    div.concepts strong.concepts-label,
+    div.answer strong.answer-label,
+    div.observation strong.observation-label,
+    div.nb strong.nb-label,
+    div.note strong.note-label,
+    div.warnings strong.warnings-label,
+    div.slogan strong.slogan-label {
       font-weight: bold;
       color: #444;
       margin-right: 0.5em;
@@ -23,16 +80,25 @@ $body$
 <script>
 (function() {
   document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('div.remark').forEach(function(div) {
-      if (!div.querySelector('strong.remark-label')) {
-        var label = document.createElement('strong');
-        label.className = 'remark-label';
-        label.textContent = 'remark: ';
-        div.insertBefore(label, div.firstChild);
-      }
+    // List of all amsthm-like environments to label
+    var envs = 'theorem,definition,proposition,lemma,corollary,conjecture,variant,fact,question,remark,exercise,warning,example,notation,convention,construction,claim,assumption,problem,solution,strategy,concept,concepts,answer,observation,nb,note,warnings,slogan'.split(',');
+    envs.forEach(function(env) {
+      document.querySelectorAll('div.' + env).forEach(function(div) {
+        // Only add label if not already present
+        if (!div.querySelector('strong.' + env + '-label')) {
+          var label = document.createElement('strong');
+          label.className = env + '-label';
+          // Capitalize first letter
+          var labelText = env.charAt(0).toUpperCase() + env.slice(1);
+          label.textContent = labelText + ': ';
+          div.insertBefore(label, div.firstChild);
+        }
+      });
     });
   });
 })();
 </script>
+<script src="mathjax_config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_HTML"></script>
 </body>
 </html> 

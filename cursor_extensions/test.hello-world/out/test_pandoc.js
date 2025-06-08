@@ -44,7 +44,7 @@ const templatePath = path.resolve(__dirname, 'pandoc_webview_template.html');
     // Use canonical conversion pipeline
     let finalHtml;
     try {
-        finalHtml = await (0, conversionPipeline_1.convertMarkdownToFinalHtml)(md, debugBasePath, templatePath, []);
+        finalHtml = await (0, conversionPipeline_1.convertMarkdownToFinalHtml)(md, debugBasePath, templatePath, ['--mathjax']);
         console.log('Webview HTML output saved to webview_test_output.final.html');
     }
     catch (e) {
