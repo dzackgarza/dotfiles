@@ -23,7 +23,7 @@
   - A scroll-synced, side-by-side Markdown viewer (edit on left, Pandoc-rendered preview on right)
 - **Requirements:**
   - Must use Pandoc for all Markdown rendering
-  - Should support all Pandoc features, including math, tables, and checkboxes
+  - Should support all Pandoc features, including math and tables
   - Should be visually modern and easy to use
 
 ---

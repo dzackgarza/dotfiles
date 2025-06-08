@@ -6,11 +6,25 @@ import * as fs from 'fs';
 
 declare const __dirname: string;
 
-export function runPandoc(md: string, callback: (code: number, html: string, err: string) => void) {
+export interface PandocOptions {
+  pandocPath?: string;
+  inputFormat?: string;
+  outputFormat?: string;
+  extraArgs?: string[];
+}
+
+export function runPandoc(
+  md: string,
+  callback: (code: number, html: string, err: string) => void
+) {
   const logPath = path.resolve(__dirname, 'pandoc_debug.log');
   const timestamp = new Date().toISOString();
-  fs.appendFileSync(logPath, `[${timestamp}] Invoking: pandoc -f markdown -t html\n`);
-  const pandoc = spawn('pandoc', ['-f', 'markdown', '-t', 'html']);
+  const pandocPath = '/usr/bin/pandoc';
+  const inputFormat = 'markdown';
+  const outputFormat = 'html';
+  const args = ['-f', inputFormat, '-t', outputFormat];
+  fs.appendFileSync(logPath, `[${timestamp}] Invoking: ${pandocPath} ${args.join(' ')}\n`);
+  const pandoc = spawn(pandocPath, args);
   let html = '';
   let err = '';
   pandoc.stdout.on('data', (data) => { html += data.toString(); });
