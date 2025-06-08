@@ -2,10 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const { runPandoc } = require('./pandocUtil.js');
 const mdPath = path.resolve(__dirname, '../../test_checkboxes.md');
-const luaFilterPath = path.resolve(__dirname, '../../checkboxes.lua');
 const md = fs.readFileSync(mdPath, 'utf8');
 const { spawn } = require('child_process');
-const pandoc = spawn('pandoc', ['-f', 'gfm', '-t', 'html', '--lua-filter', luaFilterPath]);
+const pandoc = spawn('pandoc', ['-f', 'markdown', '-t', 'html']);
 let html = '';
 pandoc.stdout.on('data', (data) => { html += data.toString(); });
 pandoc.on('close', (code) => {

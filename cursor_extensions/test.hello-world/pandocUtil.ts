@@ -9,8 +9,8 @@ declare const __dirname: string;
 export function runPandoc(md: string, callback: (code: number, html: string, err: string) => void) {
   const logPath = path.resolve(__dirname, 'pandoc_debug.log');
   const timestamp = new Date().toISOString();
-  fs.appendFileSync(logPath, `[${timestamp}] Invoking: pandoc -f gfm -t html\n`);
-  const pandoc = spawn('pandoc', ['-f', 'gfm', '-t', 'html']);
+  fs.appendFileSync(logPath, `[${timestamp}] Invoking: pandoc -f markdown -t html\n`);
+  const pandoc = spawn('pandoc', ['-f', 'markdown', '-t', 'html']);
   let html = '';
   let err = '';
   pandoc.stdout.on('data', (data) => { html += data.toString(); });

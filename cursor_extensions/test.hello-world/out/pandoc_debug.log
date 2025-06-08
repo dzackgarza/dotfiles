@@ -18,3 +18,14 @@
 [2025-06-08T02:10:47.537Z] Pandoc exited with code 0
 [2025-06-08T02:12:47.347Z] Invoking: pandoc -f gfm -t html
 [2025-06-08T02:12:47.579Z] Pandoc exited with code 0
+[2025-06-08T02:17:48.488Z] Invoking: pandoc -f gfm -t html --lua-filter /home/dzack/dotfiles/cursor_extensions/checkboxes.lua
+[2025-06-08T02:17:49.047Z] Pandoc exited with code 0
+[2025-06-08T02:18:39.381Z] Invoking: pandoc -f gfm -t html --lua-filter /home/dzack/dotfiles/cursor_extensions/checkboxes.lua
+[2025-06-08T02:18:39.564Z] Pandoc exited with code 0
+[2025-06-08T02:44:18.456Z] Invoking: pandoc -f gfm -t html --lua-filter /home/dzack/dotfiles/cursor_extensions/checkboxes.lua
+[2025-06-08T02:44:19.070Z] Pandoc exited with code 83
+[2025-06-08T02:44:19.070Z] Pandoc stderr: Error running filter /home/dzack/dotfiles/cursor_extensions/checkboxes.lua:
+cannot open /home/dzack/dotfiles/cursor_extensions/checkboxes.lua: No such file or directory
+
+[2025-06-08T02:46:33.905Z] Invoking: pandoc -f markdown -t html
+[2025-06-08T02:46:34.528Z] Pandoc exited with code 0

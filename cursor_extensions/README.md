@@ -5,8 +5,7 @@
 ## Current Functionality
 
 - Adds a command to Cursor's command palette: **Show Markdown Webview**
-- When run on a Markdown file, opens a webview that renders the file using Pandoc (with GitHub-Flavored Markdown support)
-- Uses the official Pandoc Lua filter `checkboxes.lua` to render Markdown checkboxes as real HTML checkboxes in the preview
+- When run on a Markdown file, opens a webview that renders the file using Pandoc (with all standard Pandoc markdown features)
 - The extension is symlinked from this dotfiles directory for version control
 
 ## Instructions for LLM Contributors
