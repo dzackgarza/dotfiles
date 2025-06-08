@@ -7,7 +7,9 @@ const md = fs.readFileSync(mdPath, 'utf8');
 const debugBasePath = path.resolve(__dirname, '../webview_test_output');
 const templatePath = path.resolve(__dirname, 'pandoc_webview_template.html');
 
-(async () => {
+console.log('Using template path:', templatePath);
+
+(async () => { 
   // Use canonical conversion pipeline
   let finalHtml: string;
   try {

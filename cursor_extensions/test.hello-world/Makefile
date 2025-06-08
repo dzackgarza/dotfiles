@@ -11,7 +11,7 @@ setup: build
 
 # Run the standalone Pandoc test (depends on build)
 .PHONY: test
-test: clean build
+test: clean build test-stripmacros
 	# Run all tests (currently only Pandoc HTML/CSS test)
 	npx ts-node test_pandoc.ts
 
@@ -60,3 +60,7 @@ clean-all:
 #   make deploy # Remove old extension, package, and install in Cursor
 #   make clean  # Remove build artifacts and logs 
 #   make clean-all  # Remove all build artifacts, logs, and test outputs 
+
+.PHONY: test-stripmacros
+test-stripmacros: build
+	npx ts-node test_stripmacros.ts 

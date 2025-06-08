@@ -1,5 +1,0 @@
-[2025-06-08T10:00:53.532Z] Invoking: /home/dzack/dotfiles/bin/pandoc/pandoc_stripmacros.sh < /tmp/pandoc_input_2505643_1749376853532.md
-[2025-06-08T10:00:54.785Z] Invoking: /usr/bin/pandoc -f markdown -t html5 /tmp/pandoc_stripped_2505643_1749376853532.md -o /tmp/pandoc_output_2505643_1749376853532.html --standalone --template=/home/dzack/dotfiles/cursor_extensions/test.hello-world/pandoc_webview_template.html --mathjax
-[2025-06-08T10:00:54.986Z] Pandoc exited with code 97
-[2025-06-08T10:00:54.986Z] Pandoc stderr: Could not find data file /usr/share/haskell-pandoc/data/templates/pandoc_webview_template.html
-
