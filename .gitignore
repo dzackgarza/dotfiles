@@ -10,3 +10,28 @@ Xorg/xmonad/xmonad.errors
 
 .cabal-sandbox/
 vim/vim/bundle/*
+**/*node_modules*
+
+# Node.js dependencies
+node_modules/
+
+# TypeScript build outputs
+*.js
+*.js.map
+out/
+
+# VSCode/Editor settings
+.vscode/
+
+# Logs
+*.log
+
+# Extension/package artifacts
+*.vsix
+
+# Test outputs
+PandocPreview/test/outputs/
+
+# Misc
+.DS_Store
+.env
