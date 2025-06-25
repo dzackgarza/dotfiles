@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# copyfile.sh — copy contents of a file to the Wayland clipboard using wl-copy
+
+# Exit immediately on error
+set -e
+
+# Check for exactly one argument
+if [[ $# -ne 1 ]]; then
+  echo "Usage: $0 filename" >&2
+  exit 1
+fi
+
+# Verify the file exists and is readable
+if [[ ! -f "$1" ]]; then
+  echo "Error: File not found: $1" >&2
+  exit 1
+fi
+
+# Copy contents to clipboard
+cat "$1" | wl-copy

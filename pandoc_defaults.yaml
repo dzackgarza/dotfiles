@@ -1,0 +1,42 @@
+from: markdown
+to: pdf
+pdf-engine: pdflatex
+toc: true
+number-sections: true
+output-file: default.pdf
+filters:
+  - /home/dzack/dotfiles/include-files.lua
+  - /home/dzack/dotfiles/insert-section-id.lua
+
+variables:
+  fontsize: 11pt
+  geometry: margin=1in
+  documentclass: article
+  secnumdepth: 4
+  toc-depth: 2
+  include-auto: true
+  header-includes:
+    - |
+      \usepackage{amsmath}
+      \usepackage{amssymb}
+      \usepackage{amsfonts}
+      \usepackage{mathtools}
+      \usepackage{microtype}
+      \usepackage{hyperref}
+      \usepackage{cleveref}
+      \usepackage{booktabs}
+    - |
+      % Delimiter macros for consistent spacing
+      \newcommand{\qty}[1]{\left( #1 \right)}
+      \newcommand{\bqty}[1]{\left[ #1 \right]}
+      \newcommand{\Bqty}[1]{\left\{ #1 \right\}}
+      \newcommand{\abs}[1]{\left| #1 \right|}
+      \newcommand{\eval}[1]{\left. #1 \right|}
+      \newcommand{\continuedline}{\qquad\qquad\qquad}
+      % Left/Right delimiter macros
+      \newcommand{\lqty}[1]{\left( #1 \right.}
+      \newcommand{\rqty}[1]{\left. #1 \right)}
+      \newcommand{\lbqty}[1]{\left[ #1 \right.]}
+      \newcommand{\rbqty}[1]{\left. #1 \right]}
+      \newcommand{\lBqty}[1]{\left\{ #1 \right.}
+      \newcommand{\rBqty}[1]{\left. #1 \right\}}

@@ -1,0 +1,10 @@
+#!/bin/bash
+# Usage: unlock <directory>
+# Recursively set all files in the given directory to read/write for the user
+if [ -z "$1" ]; then
+  echo "Usage: $0 <directory>"
+  exit 1
+fi
+find "$1" -type f -exec chmod u+rw {} +
+find "$1" -type d -exec chmod u+rwx {} +
+echo "Unlocked all files in $1 (read/write)" 
