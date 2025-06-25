@@ -1,4 +1,6 @@
-package.path = package.path .. ';' .. '/home/dzack/.pandoc/filters/?.lua;'
+-- Get the directory of this script to find utilities.lua relatively
+local script_dir = debug.getinfo(1, "S").source:match("@(.*)[\\/]") or "."
+package.path = package.path .. ';' .. script_dir .. '/?.lua;'
 require "utilities"
 
 -- In markdown, changes

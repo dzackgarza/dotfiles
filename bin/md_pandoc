@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+# Usage: md_pandoc.sh [--here] file.md
+
+set -e
+
+if [[ $# -lt 1 || $# -gt 2 ]]; then
+  echo "Usage: $0 [--here] input.md"
+  exit 1
+fi
+
+# Flag parsing
+if [[ "$1" == "--here" ]]; then
+  here=true
+  input="$2"
+else
+  here=false
+  input="$1"
+fi
+
+# Validate input
+if [[ ! -f "$input" ]]; then
+  echo "Error: File '$input' not found."
+  exit 1
+fi
+
+defaults_path="$HOME/dotfiles/pandoc_defaults.yaml"
+
+# Determine output location
+filename="${input##*/}"
+basename="${filename%.*}"
+if $here; then
+  output="${basename}.pdf"
+else
+  tmpdir=$(mktemp -d)
+  output="${tmpdir}/${basename}.pdf"
+fi
+
+# Build pandoc command
+cmd=(pandoc "$input" --defaults="$defaults_path" -M include-auto -o "$output")
+
+# Print and run
+echo "Running: ${cmd[*]}"
+"${cmd[@]}"
+
+# Print absolute path to generated PDF
+full_output_path="$(realpath "$output")"
+echo "PDF generated at: $full_output_path"
+
+# Open PDF
+xdg-open "$output" & disown
+

@@ -1,0 +1,10 @@
+#!/bin/bash
+# Usage: lock <directory>
+# Recursively set all files in the given directory to read-only
+if [ -z "$1" ]; then
+  echo "Usage: $0 <directory>"
+  exit 1
+fi
+find "$1" -type f -exec chmod 444 {} +
+find "$1" -type d -exec chmod 555 {} +
+echo "Locked all files in $1 (read-only)" 

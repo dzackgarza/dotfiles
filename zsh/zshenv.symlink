@@ -119,7 +119,6 @@ fi
 #    and ensure ~/.local_secrets is in your .gitignore file.
 #
 # For now, this key is placed here as per your request:
-export OPENAI_API_KEY="password" # TODO: Replace "password" with your actual key and use a secure method.
 
 # ------------------------------------------------------------------------------
 # End of .zshenv
