@@ -1,0 +1,22 @@
+echo "=== CPU ==="
+lscpu | grep -E 'Model name|Socket|Core\(s\)|Thread|MHz|Flags' | sed 's/^/  /'
+echo
+echo "=== Memory ==="
+free -h | awk '/Mem:/ {printf "  Total RAM: %s, Used: %s, Free: %s\n", $2, $3, $4}'
+echo
+echo "=== Caches ==="
+lscpu | grep 'cache' | sed 's/^/  /'
+echo
+echo "=== GPU ==="
+GPU=$(lspci | grep -iE 'vga|3d|display')
+echo "  $GPU"
+if grep -qi intel <<< "$GPU"; then
+  VRAM=$(grep -i 'size' /var/log/Xorg.0.log 2>/dev/null | grep -i 'video' | tail -1)
+  echo "  Detected Intel GPU VRAM: ${VRAM:-Unknown}"
+elif grep -qi amd <<< "$GPU"; then
+  VRAM=$(ls /sys/class/drm/*/mem_info_vram_total 2>/dev/null | xargs cat 2>/dev/null | awk '{printf "%.1f GiB\n", $1/1024/1024/1024}')
+  echo "  Detected AMD GPU VRAM: ${VRAM:-Unknown}"
+else
+  echo "  VRAM: Unknown or NVIDIA (install drivers to use nvidia-smi)"
+fi
+

@@ -1,0 +1,465 @@
+#!/usr/bin/env python3
+"""
+Real-Time Speech-to-Text Typing via Vosk + wtype + Async Grammar Correction
+------------------------------------------------
+
+This script streams microphone audio, performs real-time speech recognition
+using Vosk, and simulates typing the transcribed words into the currently
+focused Wayland window using `wtype`.
+
+Features:
+- Low-latency word streaming using partial recognition results
+- Full sentence correction using final results
+- Async grammar correction updates
+- Finalized sentence storage and retyping on correction
+- Graceful termination (Ctrl+C) preserves the best partial
+- Rule-based normalization: capitalization and punctuation
+- Text is injected via clipboard + Ctrl+A + Ctrl+V
+- Maintains an internal model of the displayed text for absolute correctness verification.
+- Implements a highly minimalist workaround for a "first letter missing" bug by simply prepending a space to the very first output.
+- Background loads heavy models (Vosk and Transformers) to enable faster startup for audio listening.
+- Uses an external program (arecord) to buffer initial audio to a temporary file, ensuring no words are lost during startup.
+- Resets Vosk's internal state after processing buffered audio to prevent repetition of words from live stream.
+- **Clears the audio queue (q) after processing buffered audio to prevent repetition from "stale" live audio.**
+
+Dependencies:
+- vosk (Python bindings + offline model)
+- sounddevice
+- wtype (Wayland virtual keyboard)
+- wl-clipboard (wl-copy, wl-paste)
+- transformers (for grammar correction model)
+- torch
+- arecord (external command-line tool for initial audio capture)
+
+"""
+
+import queue
+import sounddevice as sd
+from vosk import Model, KaldiRecognizer
+import subprocess
+import json
+import time
+import signal
+import sys
+import threading
+import concurrent.futures
+import os # For file operations
+import wave # For reading WAV file
+
+# === Config
+MODEL_PATH = "/home/dzack/Downloads/vosk-model-small-en-us-0.15"
+BLOCK_SIZE = 4000  # 0.25 sec @ 16kHz
+TEMP_AUDIO_FILE = "/tmp/stt_startup_audio.wav"
+INITIAL_BUFFER_DURATION = 10 # seconds to record initial audio
+ARECORD_CMD = ["arecord", "-f", "S16_LE", "-r", "16000", "-c", "1", "-d", str(INITIAL_BUFFER_DURATION), TEMP_AUDIO_FILE]
+# You might need to adjust ARECORD_CMD for your specific microphone device, e.g., ["arecord", "-D", "plughw:1,0", ...]
+
+# === Audio queue
+q = queue.Queue()
+def callback(indata, frames, time_, status):
+    if status:
+        print(status, flush=True)
+    q.put(bytes(indata))
+
+# === Typing + Clipboard actions
+def wtype_raw(text): # Renamed to avoid confusion with wrapper functions
+    """Simulates typing the given text into the active window (raw subprocess call)."""
+    subprocess.run(["wtype", text])
+
+def ctrl_a():
+    """Selects all text using Ctrl+A."""
+    subprocess.run(["wtype", "-M", "ctrl", "-P", "a", "-p", "a", "-m", "ctrl"])
+    time.sleep(0.05)
+
+def ctrl_v():
+    """Pastes text using Ctrl+V."""
+    subprocess.run(["wtype", "-M", "ctrl", "-P", "v", "-p", "v", "-m", "ctrl"])
+    time.sleep(0.05)
+
+def clipboard_paste_raw(text): # Renamed
+    """Copies text to clipboard and then pastes it, replacing current selection (raw subprocess calls)."""
+    subprocess.run(["wl-copy"], input=text.encode())
+    time.sleep(0.05)
+    ctrl_a()
+    time.sleep(0.05)
+    ctrl_v()
+    time.sleep(0.05)
+
+# === State
+canonical_list = []
+current_partial = ""
+current_display_text = ""
+internal_display_string = ""
+last_typed_wtype_output = ""
+canonical_lock = threading.Lock()
+is_typing_word5_or_later = False
+has_output_started = False 
+
+# === Global variables for background model loading
+vosk_recognizer = None
+tokenizer_global = None
+model_global = None
+device_global = None
+vosk_model_ready = threading.Event()
+grammar_models_ready = threading.Event()
+
+
+# === Model Loader Thread Function
+def model_loader_worker():
+    """Loads Vosk and Transformers models in a background thread."""
+    global vosk_recognizer, tokenizer_global, model_global, device_global, \
+           vosk_model_ready, grammar_models_ready
+
+    print("INFO: Background loading models...")
+
+    # Load Vosk Model
+    try:
+        vosk_model_instance = Model(MODEL_PATH)
+        vosk_recognizer = KaldiRecognizer(vosk_model_instance, 16000)
+        vosk_model_ready.set()
+        print("INFO: Vosk model loaded.")
+    except Exception as e:
+        print(f"ERROR: Failed to load Vosk model: {e}")
+        vosk_model_ready.set()
+        vosk_recognizer = None
+
+    # Load Transformers Models
+    try:
+        tokenizer_global = T5Tokenizer.from_pretrained('prithivida/grammar_error_correcter_v1')
+        model_global = T5ForConditionalGeneration.from_pretrained('prithivida/grammar_error_correcter_v1')
+        device_global = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        model_global.to(device_global)
+        model_global.eval()
+        grammar_models_ready.set()
+        print("INFO: Transformers models loaded.")
+    except Exception as e:
+        print(f"ERROR: Failed to load Transformers models: {e}")
+        grammar_models_ready.set()
+        tokenizer_global = None
+        model_global = None
+        device_global = None
+
+
+# === Grammar correction functions (now use global models, wait for readiness)
+executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
+
+def grammar_correct(text):
+    """Performs grammar correction using the T5 model, waiting for it to load if necessary."""
+    if not grammar_models_ready.is_set():
+        print("WARNING: Grammar model not yet loaded. Waiting for correction (max 30s)...")
+        grammar_models_ready.wait(timeout=30)
+        if not grammar_models_ready.is_set():
+            print("ERROR: Grammar models failed to load or timed out. Skipping correction for this input.")
+            return text
+
+    if tokenizer_global is None or model_global is None:
+        print("ERROR: Grammar models are not available. Skipping correction.")
+        return text
+
+    input_text = "gec: " + text
+    inputs = tokenizer_global.encode(input_text, return_tensors='pt', max_length=512, truncation=True).to(device_global)
+    outputs = model_global.generate(inputs, max_length=512, num_beams=4, early_stopping=True)
+    corrected = tokenizer_global.decode(outputs[0], skip_special_tokens=True)
+    return corrected
+
+# === Normalization
+def punctuate(text):
+    """Adds a period if sentence does not end with punctuation."""
+    text = text.strip()
+    if text and not text.endswith(('.', '?', '!')):
+        text += "."
+    return text
+
+def capitalize_first_letter(text):
+    """Capitalizes the first letter of the text, handling leading spaces."""
+    first_char_idx = -1
+    for i, char in enumerate(text):
+        if not char.isspace():
+            first_char_idx = i
+            break
+    
+    if first_char_idx == -1:
+        return text 
+    
+    return text[:first_char_idx] + text[first_char_idx].upper() + text[first_char_idx+1:]
+
+def normalize_sentence(text):
+    """Applies basic normalization (capitalization and punctuation) to a sentence."""
+    return capitalize_first_letter(punctuate(text))
+
+# === Display Abstraction and Tracking
+def wtype_and_track(text_to_type):
+    """Writes using wtype and updates the internal display string."""
+    global internal_display_string, last_typed_wtype_output, has_output_started
+    
+    text_to_type_to_send = text_to_type 
+
+    if not has_output_started:
+        # Implement the "prepend a space" workaround for the very first output.
+        if text_to_type:
+            text_to_type_to_send = " " + text_to_type 
+        has_output_started = True 
+
+    wtype_raw(text_to_type_to_send)
+    
+    internal_display_string += text_to_type 
+    last_typed_wtype_output = text_to_type_to_send 
+
+def clipboard_paste_and_track(text_to_paste):
+    """Pastes using clipboard and updates the internal display string."""
+    global internal_display_string, last_typed_wtype_output, has_output_started
+
+    if not has_output_started:
+        has_output_started = True
+
+    clipboard_paste_raw(text_to_paste)
+    internal_display_string = text_to_paste
+    last_typed_wtype_output = ""
+
+# === Functional
+def get_canonical_display_text():
+    """Combines canonical_list parts, ensuring proper spacing and stripping trailing space."""
+    with canonical_lock:
+        return "".join(canonical_list).strip()
+
+def update_display_and_type(new_partial_text):
+    """
+    Updates current_display_text (S1) and performs typing actions (wtype or clipboard_paste)
+    using the internal display string to guide decisions.
+    """
+    global current_display_text, last_typed_wtype_output, is_typing_word5_or_later, current_partial, internal_display_string
+
+    old_current_partial_for_delta = current_partial
+    current_partial = new_partial_text
+
+    full_display_raw_canonical_part = get_canonical_display_text()
+    processed_partial_text = new_partial_text.strip()
+    
+    if processed_partial_text:
+        starts_new_sentence_in_s1 = False
+        if not full_display_raw_canonical_part:
+            starts_new_sentence_in_s1 = True
+        elif full_display_raw_canonical_part.strip().endswith(('.', '?', '!')):
+            starts_new_sentence_in_s1 = True
+        
+        if starts_new_sentence_in_s1:
+            processed_partial_text = capitalize_first_letter(processed_partial_text)
+        
+        if full_display_raw_canonical_part and not full_display_raw_canonical_part.endswith(" "):
+            full_display_raw_combined = full_display_raw_canonical_part + " " + processed_partial_text
+        else:
+            full_display_raw_combined = full_display_raw_canonical_part + processed_partial_text
+
+    else:
+        full_display_raw_combined = full_display_raw_canonical_part
+
+    current_display_text = capitalize_first_letter(full_display_raw_combined.strip())
+
+    if is_typing_word5_or_later:
+        clipboard_paste_and_track(current_display_text)
+        print(f"S1='{current_display_text}', wtype='{last_typed_wtype_output}'")
+        return
+
+    if current_display_text.startswith(internal_display_string):
+        suffix_to_type = current_display_text[len(internal_display_string):]
+        if suffix_to_type:
+            needs_capitalization_for_wtype_output = False
+            if not internal_display_string:
+                needs_capitalization_for_wtype_output = True
+            elif internal_display_string and internal_display_string.strip().endswith(('.', '?', '!')):
+                needs_capitalization_for_wtype_output = True
+            
+            if needs_capitalization_for_wtype_output:
+                suffix_to_type = capitalize_first_letter(suffix_to_type)
+            
+            wtype_and_track(suffix_to_type)
+            print(f"S1='{current_display_text}', wtype='{last_typed_wtype_output}'")
+        else:
+            print(f"S1='{current_display_text}', wtype='{last_typed_wtype_output}'")
+    else:
+        clipboard_paste_and_track(current_display_text)
+        print(f"S1='{current_display_text}', wtype='{last_typed_wtype_output}'")
+    
+    if internal_display_string != current_display_text:
+        print(f"ERROR: Display mismatch!")
+        print(f"  Internal: '{internal_display_string}'")
+        print(f"  Desired (S1): '{current_display_text}'")
+
+
+def on_correction_done(fut, original_idx):
+    """
+    Callback for when grammar correction is complete.
+    This function re-calculates the full display text and re-pastes it,
+    handling the "behind the scenes fix" behavior.
+    """
+    global canonical_list, current_display_text, last_typed_wtype_output
+    try:
+        corrected_sentence = fut.result()
+        if corrected_sentence and not corrected_sentence.endswith(" "):
+            corrected_sentence += " "
+
+        with canonical_lock:
+            if original_idx < len(canonical_list):
+                canonical_list[original_idx] = corrected_sentence
+
+        full_text_to_paste_raw = get_canonical_display_text()
+        if current_partial.strip():
+            if full_text_to_paste_raw and not full_text_to_paste_raw.endswith(" "):
+                full_text_to_paste_raw += " "
+            full_text_to_paste_raw += current_partial.strip()
+        
+        current_display_text = capitalize_first_letter(full_text_to_paste_raw.strip())
+        
+        clipboard_paste_and_track(current_display_text)
+        print(f"S1='{current_display_text}', wtype='{last_typed_wtype_output}'")
+
+    except Exception as e:
+        print(f"Correction error for index {original_idx}: {e}")
+
+def finalize_sentence(text):
+    """
+    Finalizes a detected sentence from Vosk, adds it to canonical_list,
+    and triggers asynchronous grammar correction.
+    """
+    global canonical_list, current_partial, is_typing_word5_or_later
+
+    sentence = normalize_sentence(text)
+    if sentence:
+        if not sentence.endswith(" "):
+            sentence += " "
+        
+        with canonical_lock:
+            original_idx = len(canonical_list)
+            canonical_list.append(sentence)
+
+        if len(canonical_list) >= 5:
+            is_typing_word5_or_later = True
+        
+        current_partial = ""
+        
+        update_display_and_type("")
+
+        future = executor.submit(grammar_correct, sentence.strip())
+        future.add_done_callback(lambda fut: on_correction_done(fut, original_idx))
+
+def finalize_on_exit(sig=None, frame=None):
+    """Handles graceful exit, flushing any remaining partial input."""
+    print("\n[!] Interrupted. Finalizing partial input...")
+    global current_display_text, last_typed_wtype_output
+    
+    final_text_on_exit_raw = get_canonical_display_text()
+    if current_partial.strip():
+        if final_text_on_exit_raw and not final_text_on_exit_raw.endswith(" "):
+            final_text_on_exit_raw += " "
+        final_text_on_exit_raw += current_partial.strip()
+
+    current_display_text = capitalize_first_letter(final_text_on_exit_raw.strip())
+    
+    if current_display_text:
+        clipboard_paste_and_track(current_display_text)
+        print(f"Final S1 on exit: '{current_display_text}'")
+    sys.exit(0)
+
+# Set up signal handlers for graceful exit
+signal.signal(signal.SIGINT, finalize_on_exit)
+signal.signal(signal.SIGTERM, finalize_on_exit)
+
+# === Main execution block ===
+# Start the model loader thread BEFORE starting the audio stream.
+model_loader_thread = threading.Thread(target=model_loader_worker, daemon=True)
+model_loader_thread.start()
+
+# --- External audio capture for initial buffering ---
+arecord_process = None
+try:
+    if os.path.exists(TEMP_AUDIO_FILE):
+        os.remove(TEMP_AUDIO_FILE)
+    print(f"INFO: Starting external audio capture to {TEMP_AUDIO_FILE}...")
+    arecord_process = subprocess.Popen(ARECORD_CMD, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    print("Listening (Ctrl+C to stop)...")
+except FileNotFoundError:
+    print(f"ERROR: '{ARECORD_CMD[0]}' command not found. Please install arecord (e.g., pulseaudio-utils or alsa-utils). Falling back to direct stream.")
+    arecord_process = None 
+except Exception as e:
+    print(f"ERROR: Failed to start external audio capture: {e}. Falling back to direct stream.")
+    arecord_process = None
+
+# --- Main audio processing loop ---
+with sd.RawInputStream(samplerate=16000, blocksize=400, dtype='int16', channels=1, callback=callback):
+    # Wait for Vosk model to be loaded and ready for processing
+    if not vosk_model_ready.is_set():
+        print("INFO: Waiting for Vosk model to load before processing audio (max 60s).")
+        vosk_model_ready.wait(timeout=60)
+        if not vosk_model_ready.is_set() or vosk_recognizer is None:
+            print("ERROR: Vosk model failed to load or initialize. Exiting.")
+            sys.exit(1)
+
+    # If external capture was successful, process its buffered audio first
+    if arecord_process:
+        print("INFO: Stopping external audio capture and processing buffered audio...")
+        arecord_process.terminate() # Stop recording
+        try:
+            arecord_process.wait(timeout=5) # Wait for process to terminate
+            if os.path.exists(TEMP_AUDIO_FILE):
+                with wave.open(TEMP_AUDIO_FILE, 'rb') as wf:
+                    if wf.getnchannels() != 1 or wf.getsampwidth() != 2 or wf.getframerate() != 16000:
+                        print("WARNING: Initial audio file format mismatch. Skipping buffered audio processing.")
+                    else:
+                        frames_to_read = wf.getnframes()
+                        print(f"INFO: Processing {frames_to_read / wf.getframerate():.2f} seconds of buffered audio.")
+                        
+                        while frames_to_read > 0:
+                            num_frames = min(frames_to_read, BLOCK_SIZE // wf.getsampwidth())
+                            audio_data = wf.readframes(num_frames)
+                            if not audio_data:
+                                break # End of file
+                            
+                            # Process buffered audio through Vosk
+                            if vosk_recognizer.AcceptWaveform(audio_data):
+                                result = json.loads(vosk_recognizer.Result())
+                                recognized_text = result.get("text", "")
+                                if recognized_text:
+                                    finalize_sentence(recognized_text)
+                            else:
+                                part = json.loads(vosk_recognizer.PartialResult()).get("partial", "")
+                                if part != current_partial:
+                                    update_display_and_type(part)
+                            
+                            frames_to_read -= num_frames
+                os.remove(TEMP_AUDIO_FILE) # Clean up temp file
+                print("INFO: Buffered audio processing complete.")
+                
+                # --- Crucial for avoiding repetition: Reset Vosk state after buffered audio ---
+                vosk_recognizer.Reset()
+                print("INFO: Vosk recognizer reset after processing buffered audio.")
+
+                # --- NEW: Clear the audio queue (q) ---
+                # This removes any live audio captured by sounddevice *before* Vosk was reset,
+                # preventing it from being re-processed after the reset.
+                with q.mutex: # Acquire mutex for thread-safe clearing
+                    q.queue.clear()
+                print("INFO: Audio queue cleared after processing buffered audio.")
+
+            else:
+                print("WARNING: Initial audio file not found after recording. May have failed.")
+        except subprocess.TimeoutExpired:
+            print("ERROR: arecord process did not terminate gracefully.")
+            arecord_process.kill()
+        except Exception as e:
+            print(f"ERROR: Failed to process buffered audio: {e}")
+
+    # --- Start processing live audio from the sounddevice stream ---
+    buf = b"" # Reset buffer after potential initial file processing
+    while True:
+        buf += q.get() # Get audio from queue (filled by sd.RawInputStream callback)
+        while len(buf) >= BLOCK_SIZE:
+            chunk, buf = buf[:BLOCK_SIZE], buf[BLOCK_SIZE:]
+            if vosk_recognizer.AcceptWaveform(chunk):
+                result = json.loads(vosk_recognizer.Result())
+                recognized_text = result.get("text", "")
+                if recognized_text:
+                    finalize_sentence(recognized_text)
+            else:
+                part = json.loads(vosk_recognizer.PartialResult()).get("partial", "")
+                if part != current_partial: 
+                    update_display_and_type(part)

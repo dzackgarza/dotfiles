@@ -1,0 +1,36 @@
+#!/bin/bash
+# Save this as: /home/dzack/dotfiles/bin/stt-hold
+
+STT_SCRIPT="/home/dzack/dotfiles/bin/stt"
+PID_FILE="/tmp/stt_hold.pid"
+
+# Function to start STT
+start_stt() {
+    if [ ! -f "$PID_FILE" ]; then
+        $STT_SCRIPT &
+        echo $! > "$PID_FILE"
+    fi
+}
+
+# Function to stop STT
+stop_stt() {
+    if [ -f "$PID_FILE" ]; then
+        kill $(cat "$PID_FILE") 2>/dev/null
+        rm -f "$PID_FILE"
+    fi
+    pkill -f "$STT_SCRIPT" 2>/dev/null
+}
+
+# Handle the action
+case "$1" in
+    start)
+        start_stt
+        ;;
+    stop)
+        stop_stt
+        ;;
+    *)
+        echo "Usage: $0 {start|stop}"
+        exit 1
+        ;;
+esac

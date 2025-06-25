@@ -1,0 +1,284 @@
+#!/usr/bin/env bash
+# smart-pandoc-debugger — Quickly identify and fix syntax errors in your Markdown + LaTeX math
+#
+# Purpose:
+#   This script is a high-level wrapper and test runner for the Smart Diagnostic Engine (SDE).
+#   The SDE helps authors detect and resolve common syntax errors in Markdown documents
+#   containing LaTeX math that prevent successful document builds (typically to PDF via LaTeX).
+#
+#   The SDE (invoked via intake.py) aims to detect issues such as:
+#     - Unclosed or mismatched math delimiters ($, $$, \left/\right)
+#     - Unbalanced braces or brackets in math expressions
+#     - Undefined or misspelled LaTeX commands
+#     - Improperly nested or unmatched LaTeX environments
+#     - Presence of problematic Unicode or invalid UTF-8 in math or text
+#     - Stray characters causing compilation failures
+#
+#   When invoked for diagnostics, this script passes Markdown (from a file or stdin)
+#   to `intake.py`. `intake.py` then initiates the SDE V5.1 pipeline, which constructs
+#   a `DiagnosticJob` JSON object and passes it to `coordinator.py`. The coordinator
+#   orchestrates various services to analyze the Markdown and/or intermediate TeX.
+#   The SDE outputs a `final_user_report_summary` containing clear, concise error
+#   messages, its approximate location, and suggestions for fixing the Markdown/math.
+#
+# Usage:
+#   ./smart-pandoc-debugger [input.md]
+#   printf "markdown content" | ./smart-pandoc-debugger
+#
+#   On success (aspirational for full SDE V5.1):
+#     Prints "Build successful." or a similar success report.
+#     (The current intake.py + stub coordinator.py will output a stub success message.)
+#
+#   On failure:
+#     Prints detailed, user-friendly error diagnostics with highlighted context
+#     (this is the `final_user_report_summary` from the SDE).
+#
+#   Run with `--test` to verify error detection on common failure scenarios.
+#   These tests define expectations for the fully implemented SDE V5.1.
+#
+
+set -eo pipefail
+
+# SDE_ENTRY_POINT: Path to the intake.py script which starts the SDE V5.1 pipeline.
+# Allow override for local development.
+SDE_ENTRY_POINT="${SDE_ENTRY_POINT:-$HOME/gitclones/smart-pandoc-debugger/intake.py}"
+COLOUT="${COLOUT:-colout}"  # color highlighting utility; required for test output clarity
+
+# Check if colout is available
+if ! command -v "$COLOUT" &> /dev/null; then
+    echo "Warning: 'colout' command not found. Test output will not be colorized."
+    COLOUT="cat" # Fallback to cat if colout is not found
+fi
+
+
+# Runs a single test case: feeds input Markdown to SDE (via intake.py)
+# and verifies expected error message.
+# For V3-style tests, it also checks for an expected source component if provided.
+# NOTE: The "expected_source_component" check relies on specific DEBUG output format
+#       which may not be present or may differ in the SDE V5.1's final_user_report_summary.
+#       This part of the test might need adjustment as SDE V5.1 reporting is finalized.
+#       The primary check is for the user-facing message.
+run_test() {
+  local test_name="$1"
+  local input_md="$2"
+  local expected_user_message="$3"
+  local expected_source_component="${4:-}" # Optional: e.g., "Proofreader", "Oracle"
+
+  echo
+  echo "=============================="
+  echo " Test: $test_name"
+  echo "------------------------------"
+  echo "Input Markdown:"
+  printf '%b\n' "$input_md" | sed 's/^/  /' # Indent input for clarity
+  echo "------------------------------"
+
+
+  set +e
+  # Invoke SDE via intake.py, passing Markdown via stdin.
+  # Capture combined stdout and stderr from the SDE pipeline.
+  # Note: DEBUG=true can be prepended here if SDE debug output is desired for tests.
+  #       e.g., output=$(DEBUG=true printf '%b' "$input_md" | python3 "$SDE_ENTRY_POINT" 2>&1)
+  output=$(printf '%b' "$input_md" | python3 "$SDE_ENTRY_POINT" 2>&1)
+  status=$?
+  set -e
+
+  echo "Raw Output from SDE (via intake.py, status: $status):"
+  echo "$output" | sed 's/^/  /' # Indent output for clarity
+  echo "------------------------------"
+
+  # Highlight error-related output for quick visual parsing
+  # These keywords are general; specific report format from SDE V5.1 might vary.
+  echo "Formatted Output:"
+  echo "$output" \
+    | $COLOUT "Error:" red \
+    | $COLOUT "Problem detected" red \
+    | $COLOUT "Hint:" yellow \
+    | $COLOUT "Context:" blue \
+    | $COLOUT "Details:" magenta \
+    | $COLOUT "DEBUG:" cyan \
+    | $COLOUT "Outcome:" green \
+    | sed 's/^/  /' # Indent for clarity
+  echo "------------------------------"
+
+
+  local test_passed=true
+  local failure_reason=""
+
+  # 1. Check for expected user-facing message
+  #    This is the primary validation for the test.
+  if ! echo "$output" | grep -qF -- "$expected_user_message"; then
+    test_passed=false
+    failure_reason+="User message FAIL (did NOT find: '$expected_user_message')\n"
+  fi
+
+  # 2. Check for expected source component (if specified)
+  #    WARNING: This check assumes a "# DEBUG: SourceComponent: ..." line in the output.
+  #    The SDE V5.1's `final_user_report_summary` might integrate this information
+  #    differently, or it might only be available if DEBUG=true is explicitly passed
+  #    to intake.py. This check may need to be adapted or removed based on
+  #    the actual SDE V5.1 output format.
+  if [[ -n "$expected_source_component" ]]; then
+    if ! echo "$output" | grep -qF -- "# DEBUG: SourceComponent: $expected_source_component"; then
+      test_passed=false
+      failure_reason+="Source component FAIL (did NOT find DEBUG line for: '$expected_source_component')\n"
+      failure_reason+="  (Note: SDE V5.1 might report component origin differently or not in debug by default.)\n"
+    fi
+  fi
+
+  # 3. Check exit status (should generally be non-zero for error tests,
+  #    but SDE V5.1 might exit 0 if it successfully generated a report for a user error).
+  #    For these specific tests, we still expect non-zero if an error is found and reported.
+  #    A successful PDF compilation (no errors) would be a 0, but these tests are for errors.
+  #    The SDE V5.1 design mentions exit code 0 if diagnostics are *successfully generated*.
+  #    This test logic assumes that if `expected_user_message` indicates an error,
+  #    the exit status should reflect that an issue was processed (e.g., non-zero for "error found").
+  #    This may need refinement based on SDE's final exit code strategy.
+  if [[ $status -eq 0 && -n "$expected_user_message" && "$expected_user_message" != *"Success"* && "$expected_user_message" != *"Build successful"* ]]; then
+      # If an error message was expected, but status is 0, it's ambiguous.
+      # For now, let's assume error tests should yield non-zero from the SDE pipeline.
+      # The stub coordinator currently exits 0. This will cause test "failures" on this check.
+      test_passed=false
+      failure_reason+="Exit status UNCERTAIN (expected non-zero for error, got $status. SDE V5.1 may exit 0 on successful *reporting* of an error.)\n"
+  elif [[ $status -ne 0 && (-z "$expected_user_message" || "$expected_user_message" == *"Success"* || "$expected_user_message" == *"Build successful"*) ]]; then
+      # If success was expected, but status is non-zero
+      test_passed=false
+      failure_reason+="Exit status FAIL (expected zero for success, got $status)\n"
+  fi
+
+
+  echo "Test Expectations:"
+  echo "  - User Message Snippet: '$expected_user_message'"
+  if [[ -n "$expected_source_component" ]]; then
+    echo "  - Expected Source Component (DEBUG line): '$expected_source_component' (see warning above)"
+  fi
+  echo "  - Expected Exit Status: Non-zero for errors, 0 for clean success (test logic may need refinement for SDE V5.1)."
+  echo "------------------------------"
+
+  if $test_passed; then
+    echo
+    echo -e "\e[32mTest result: PASS\e[0m"
+  else
+    echo
+    echo -e "\e[91mTest result: FAIL\e[0m"
+    echo -e "Reasons:\n$(echo -e "$failure_reason" | sed 's/^/  /') "
+    echo -e "NOTE: Failures are expected if running against the SDE V5.1 stub coordinator, as it produces generic output."
+  fi
+  echo "=============================="
+  echo
+}
+
+if [[ "$1" == "test" || "$1" == "--test" ]]; then
+  echo "Running SDE V5.1 Target State Tests..."
+  echo "NOTE: These tests define future expectations for user messages and potentially component attribution from the SDE."
+  echo "The full SDE V5.1 system (intake.py, coordinator.py, and services) will need to be implemented to pass these."
+  echo "Running against the current intake.py + stub coordinator.py will likely show many failures."
+  echo "------------------------------------------------------------------------------------"
+
+  # --- V3 User-Centric Expected Diagnostics & Component Attribution (Targets for SDE V5.1) ---
+  # Format: run_test "Test Name" "Markdown Input" "Expected User Message Snippet" "ExpectedSourceComponent (via DEBUG line, may change)"
+
+  run_test "Unclosed \\left delimiter" \
+    '\n$$\n\\left( x + y\n$$\n' \
+    "Error: Unmatched '\\left( x + y' — missing a matching '\\right)' delimiter. Review your math expression." \
+    "Proofreader" # Or a TexLogInvestigatorService lead
+
+  run_test "Unterminated inline math" \
+    'Text with broken math: $x + y + z\nMore text without closing $' \
+    "Error: Unterminated math mode — started with '$' but no closing '$' found for 'x + y + z'. Add a closing '$'." \
+    "Proofreader" # Or a MarkdownFaultMinerService lead
+
+  run_test "Extra closing brace in inline math" \
+    'Math with extra brace: $x^2 + y^2 = z^2}$' \
+    "Error: Unexpected closing brace '}' found in '$x^2 + y^2 = z^2}$'. Check for an extra '}' or a missing opening '$'." \
+    "Proofreader"
+
+  run_test "Unbalanced curly braces in math" \
+    'Inline math: $\\frac{1}{2$\n' \
+    "Error: Unbalanced brace in '$\\frac{1}{2$' — a '{' is opened but not closed. Add a matching '}'." \
+    "Proofreader"
+
+  run_test "Mismatched brackets in display math" \
+    '\\[ \\left[ x + y \\right) \\]' \
+    "Error: Mismatched delimiters in '\\[ \\left[ x + y \\right) \\]' — '\\left[' should be paired with '\\right]' not '\\right)'." \
+    "Proofreader"
+
+  run_test "Undefined LaTeX command in math" \
+    '$\\unknowcommand{test}$' \
+    "Error: Undefined command '\\unknowcommand' in '$\\unknowcommand{test}$'. Check for typos or ensure the necessary LaTeX package is included." \
+    "Oracle" # Or TexLogInvestigatorService + OracleService for remedy
+
+  run_test "Stray closing brace in \\frac" \
+    '\\[ \\frac{1}{2}} \\]' \
+    "Error: Extra closing brace '}' in '\\[ \\frac{1}{2}} \\]'. Review the structure of your fraction." \
+    "Proofreader"
+
+  run_test "Missing \\end{align}" \
+    '\\begin{align}\na &= b + c \\\\ d &= e + f\n' \
+    "Error: Unclosed environment 'align' — started with '\\begin{align}' but no matching '\\end{align}' found. Ensure all environments are properly closed." \
+    "Oracle" # Or TexLogInvestigatorService + OracleService
+
+  run_test "Nested dollar signs confusion" \
+    'Inline math: $f(x) = 2$ and $g(x) = $x^2$' \
+    "Error: Possible nested math mode in '$g(x) = $x^2$' — an inline '$' seems to appear within another. Check your math delimiters." \
+    "Proofreader" # Or MarkdownFaultMinerService
+
+  run_test "Bare backslash in text (non-math)" \
+    'Hello \ world' \
+    "Error: Stray backslash '\\' in 'Hello \\ world'. If it's for a special character, use proper LaTeX; if for math, enclose in '$...$'." \
+    "Proofreader" # Or MarkdownFaultMinerService
+
+  run_test "Non-breaking space inside math" \
+    $'Math with nbsp: $x + y$' \
+    "Error: Non-breaking space (U+00A0) found in '$x + y$'. Replace with a standard space for LaTeX compatibility." \
+    "Proofreader"
+
+  run_test "Unicode characters in math (e.g. Greek)" \
+    'Math: $α + β$' \
+    "Error: Unicode math character 'α' in '$α + β$'. For best LaTeX compatibility, use LaTeX commands like '\\alpha', '\\beta'." \
+    "Proofreader"
+
+  run_test "Too many unmatched environment ends" \
+    '\\end{equation}' \
+    "Error: Unexpected '\\end{equation}' — no corresponding '\\begin{equation}' was found. Check your environment blocks." \
+    "Oracle" # Or TexLogInvestigatorService
+
+  run_test "Improperly nested environments" \
+    '\\begin{itemize}\n\\item One\n\\begin{enumerate}\n\\item Nested\n\\end{itemize}' \
+    "Error: Environment nesting problem near '\\end{itemize}' — it seems to close 'enumerate' instead of 'itemize'. Check environment order." \
+    "Oracle" # Or TexLogInvestigatorService
+
+  run_test "Bad UTF-8 byte sequence in input" \
+    $'Math: $x + y$\nBad UTF-8: \xC3\x28' \
+    "Error: Invalid UTF-8 sequence detected in your document. Check the file encoding or look for corrupted characters." \
+    "Proofreader" # Or an early stage service
+
+  exit 0
+fi
+
+# Default mode: run SDE diagnostic tool on user input.
+# SDE_ENTRY_POINT (intake.py) expects Markdown content on its stdin.
+
+# Ensure SDE_ENTRY_POINT (intake.py) exists and is executable (though it's a Python script,
+# the check for existence is good practice).
+if [[ ! -f "$SDE_ENTRY_POINT" ]]; then
+    echo "Error: SDE entry point script (intake.py) not found at '$SDE_ENTRY_POINT'" >&2
+    exit 1
+fi
+
+if [[ -n "$1" ]]; then
+    # First argument is present, assume it's an input file.
+    input_file="$1"
+    if [[ ! -f "$input_file" ]]; then
+        echo "Error: Input file '$input_file' not found." >&2
+        exit 1
+    fi
+    if [[ ! -r "$input_file" ]]; then
+        echo "Error: Input file '$input_file' not readable." >&2
+        exit 1
+    fi
+    # Pass file content to intake.py via stdin
+    cat "$input_file" | python3 "$SDE_ENTRY_POINT"
+else
+    # No arguments, read from stdin directly for intake.py
+    python3 "$SDE_ENTRY_POINT"
+fi
