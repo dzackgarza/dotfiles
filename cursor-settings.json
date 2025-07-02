@@ -1,0 +1,149 @@
+{
+  // ─── Cursor AI Automation ─────────────────────────────────────
+  "cursor.general.enableShadowWorkspace": true,
+  // Allows Cursor's AI to make and test file edits behind the scenes without interrupting your workspace.
+
+  "cursor.composer.shouldAllowCustomModes": true,
+  // Enables advanced modes in the AI composer, allowing more flexible and powerful AI interactions.
+
+  "cursor.cmdk.autoSelect": true,
+  // Automatically selects the top suggestion in the Cmd+K command palette, speeding up AI-driven workflows.
+
+  "cursor.cmdk.useThemedDiffBackground2": true,
+  // Uses a themed diff background that improves visual clarity in suggested code changes.
+
+  "cursor.chat.autoSuggestFixes": true,
+  // After errors appear (e.g., terminal or compile errors), Cursor auto-suggests fixes, reducing manual troubleshooting.
+
+  "cursor.experimental.enableAgents": true,
+  // Enables multi-step AI agents that can autonomously perform complex sequences of actions.
+
+  "cursor.chat.terminalShowHoverHint": false,
+  // Disables hover hints in terminal chat to reduce visual clutter.
+
+  "cursor.telemetry.disable": false,
+  // Keeps telemetry enabled to help improve Cursor’s future features and AI models.
+
+  // ─── Standard Editor Behavior ────────────────────────────────
+  "editor.tabSize": 4,
+  // Standard tab width of 4 spaces — aligns with most programming language conventions.
+
+  "editor.insertSpaces": true,
+  // Inserts spaces when pressing Tab, ensuring consistent indentation across different editors.
+
+  "editor.detectIndentation": true,
+  // Allows editor to automatically detect indentation style of existing files for seamless editing.
+
+  "editor.renderWhitespace": "boundary",
+  // Visually shows whitespace characters at indentation boundaries for better code readability.
+
+  "editor.rulers": [80, 100],
+  // Displays vertical rulers at 80 and 100 characters to encourage readable line lengths.
+
+  "editor.minimap.enabled": false,
+  // Disables the minimap sidebar to reduce distractions and save screen space.
+
+  "editor.wordWrap": "off",
+  // Disables soft word wrapping to keep lines visually intact — preferred for code editing.
+
+  "editor.cursorBlinking": "blink",
+  // Standard blinking cursor for familiar text input experience.
+
+  "editor.smoothScrolling": false,
+  // Disables smooth scrolling for more immediate response when navigating code.
+
+  "editor.stickyScroll.enabled": false,
+  // Disables sticky scroll (header pinning) for a cleaner, less cluttered viewport.
+
+  // ─── UI Minimalism ───────────────────────────────────────────
+  "workbench.startupEditor": "none",
+  // Disables any welcome or startup editor for faster startup and less distraction.
+
+  "workbench.editor.enablePreview": false,
+  // Keeps all opened files fully open without preview mode to avoid accidental tab closure.
+
+  "workbench.editor.showTabs": "multiple",
+  // Hides the activity bar (sidebar icons) to reduce visual clutter.
+
+  "window.commandCenter": true,
+  // Disables the command center UI element to simplify the interface.
+
+  "breadcrumbs.enabled": false,
+  // Turns off breadcrumbs (file & symbol navigation) for minimalism.
+
+  // ─── Terminal Setup ──────────────────────────────────────────
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  // Sets default integrated terminal shell to zsh for a powerful shell environment.
+
+  "terminal.integrated.scrollback": 10000,
+  // Allows large scrollback buffer in terminal for reviewing long outputs.
+
+  "terminal.integrated.fontSize": 13,
+  // Sets terminal font size to a readable but space-efficient size.
+
+  "terminal.integrated.persistentSessionReviveProcess": "never",
+  // Prevents automatic restoration of terminal processes on reload to avoid stale sessions.
+
+  "terminal.integrated.enableMultiLinePasteWarning": false,
+  // Disables annoying warnings when pasting multiple lines into the terminal.
+
+  "terminal.integrated.copyOnSelection": true,
+  // Enables copy-on-select behavior to streamline copying terminal output.
+
+  // ─── File Tree & Git ─────────────────────────────────────────
+  "explorer.excludeGitIgnore": true,
+  // Hides files ignored by Git in the file explorer for a cleaner project view.
+
+  "explorer.confirmDelete": false,
+  // Disables confirmation prompts when deleting files for faster workflow (be careful!).
+
+  "git.enabled": true,
+  // Enables Git integration.
+
+  "git.autofetch": true,
+  // Automatically fetches changes from remotes to keep repository status up to date.
+
+  "git.autofetchPeriod": 300,
+  // Sets fetch interval to 5 minutes.
+
+  "git.confirmSync": false,
+  // Disables confirmation dialogs when synchronizing to streamline Git operations.
+
+  "git.enableSmartCommit": true,
+  // Enables committing all staged changes without opening a commit message prompt when possible.
+
+  // ─── File Handling ───────────────────────────────────────────
+  "files.autoSave": "onFocusChange",
+  // Automatically saves files when editor loses focus to reduce data loss risk.
+
+  "files.trimTrailingWhitespace": true,
+  // Automatically removes trailing whitespace on save to keep code clean.
+
+  "files.insertFinalNewline": true,
+  // Ensures files end with a newline for POSIX compatibility.
+
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/.DS_Store": true,
+    "**/*.pyc": true
+  },
+  // Hides common unwanted system or language-generated files from explorer.
+
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.git": true
+  },
+  // Excludes large or irrelevant folders from search for speed and relevance.
+
+  // ─── Extension Handling ──────────────────────────────────────
+  "extensions.ignoreRecommendations": true,
+  // Disables extension recommendations popups to avoid distractions.
+
+  "extensions.autoUpdate": false,
+  "workbench.activityBar.location": "hidden",
+  "explorer.confirmDragAndDrop": false,
+  "workbench.colorTheme": "Monokai Dimmed",
+  "workbench.statusBar.visible": false
+  // Disables auto-updating extensions to maintain stable environment (update manually).
+}

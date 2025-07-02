@@ -1,0 +1,56 @@
+---
+alwaysApply: false
+description: Mathematics-focused UI with MathJax support, out-of-the-box frameworks,
+  established themes only
+globs:
+- '**/*.html'
+- '**/*.css'
+- '**/*.js'
+- '**/*.tsx'
+- '**/*.jsx'
+- '**/*.vue'
+- '**/*.svelte'
+---
+
+# Frontend and UI for Mathematics-Focused Hobby Projects
+
+## Mathematics-First UI Design
+- **ALL UIs MUST HANDLE MATHJAX OUTPUT WELL** - assume mathematical content everywhere
+- Use frameworks that integrate well with MathJax/KaTeX rendering
+- Test mathematical notation rendering in all UI components
+- **MATHEMATICAL CONTENT IS PRIMARY** - design around equations, formulas, symbols
+
+## Use Established Themes and Color Schemes Only
+- **WE DO NOT CHOOSE COLOR SCHEMES OURSELVES, EVER**
+- Import palettes from well-known libraries or use their defaults
+- Use popular, well-known, out-of-the-box themes exclusively
+- Examples: Material Design colors, Bootstrap themes, Tailwind default palette
+- **NEVER CREATE CUSTOM COLORS** - use predefined design systems
+
+## Use Out-of-the-Box UI Frameworks
+- **WE DO NOT MAKE AESTHETIC DECISIONS OURSELVES**
+- Use modern frameworks and libraries that handle styling by default
+- **FRAMEWORKS SHOULD MAKE THINGS LOOK GOOD AUTOMATICALLY**
+- Don't create custom CSS or design systems for hobby projects
+- Examples: Tailwind CSS, Bootstrap, Material-UI, Chakra UI, Ant Design
+
+## Mathematical Content Integration
+- Ensure framework supports MathJax/KaTeX without conflicts
+- Use frameworks with good typography for mathematical symbols
+- Test equation rendering in cards, modals, tables, and lists
+- **CRASH if mathematical content doesn't render properly**
+
+## Framework Selection for Mathematics
+- Does it work well with MathJax out of the box?
+- Does it have good typography defaults for mathematical content?
+- Are there established themes available?
+- Does it handle responsive mathematical notation?
+- **CHOOSE FRAMEWORKS THAT SUPPORT MATHEMATICAL RENDERING**
+
+## Mathematical Libraries Integration
+- **MathJax** - comprehensive LaTeX rendering
+- **KaTeX** - fast mathematical notation rendering
+- **Plotly** - interactive mathematical plots and graphs
+- **D3.js** - custom mathematical visualizations
+- Use frameworks that integrate well with these libraries
+---

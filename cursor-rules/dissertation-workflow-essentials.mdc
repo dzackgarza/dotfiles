@@ -1,0 +1,136 @@
+---
+description: "Essential workflow for dissertation development including CLI usage, validation requirements, and quality standards"
+globs: ["writing/sections/**", "dev/scripts/**", "AGENTS.md"]
+alwaysApply: false
+---
+
+# Dissertation Workflow Essentials
+
+## Critical Setup Sequence
+
+**ALWAYS start with canonical environment setup:**
+
+```bash
+# From repository root
+source diss-setup
+
+# Verify CLI is available
+diss --help
+```
+
+## Primary Development Commands
+
+### File Validation (MOST IMPORTANT)
+```bash
+# Test single file compilation (main debugging tool)
+diss validate single writing/sections/1_chapter/filename.md
+
+# Validate all files
+diss validate
+
+# Generate comprehensive status report
+diss report
+```
+
+### Building and Status
+```bash
+# Build individual file to PDF
+diss build single pdf filename.md
+
+# Quick system health check
+diss health-check
+
+# Find undefined LaTeX macros
+diss undefined-macros
+```
+
+## Zero-Tolerance Compilation Policy
+
+**CRITICAL**: All files MUST compile before any PR submission. This is enforced by pre-commit hooks.
+
+- Pre-commit validation tests ALL markdown files individually
+- Any compilation failure blocks the commit
+- Use `diss validate single FILE` to debug issues before committing
+
+## Style Guide Compliance
+
+### Required Reading Order
+1. [STYLE.md](mdc:STYLE.md) - Main index and quick reference
+2. [MARKDOWN_STYLE.md](mdc:MARKDOWN_STYLE.md) - Technical formatting rules
+3. [MATHEMATICAL_STYLE.md](mdc:MATHEMATICAL_STYLE.md) - Mathematical notation standards
+
+### Non-Negotiable Requirements
+
+**DZG Macro System** - NEVER use standard LaTeX:
+- ❌ `\frac{a}{b}` → ✅ `{a \over b}`
+- ❌ `\mid` → ✅ `\st` 
+- ❌ `\mathbb{Z}` → ✅ `\ZZ`
+- ❌ `\langle g,h \rangle` → ✅ `\gens{g,h}`
+
+**Clean Diff Philosophy** - Content must start on NEW LINE:
+```markdown
+✅ CORRECT:
+:::{.theorem title="Main Result"}
+The statement goes here.
+:::
+
+❌ FORBIDDEN:
+:::{.theorem title="Main Result"} The statement goes here.
+```
+
+**Cross-References** - Normal text, NOT code:
+- ❌ `See \`cref{def-lattices-101}\`` 
+- ✅ `See \cref{def-lattices-101}`
+
+## Quality Assurance Workflow
+
+### Before Making Changes
+1. Check current status: `diss report`
+2. Understand which files are currently working
+3. Plan changes to maintain compilation success
+
+### After Making Changes
+1. Test individual files: `diss validate single FILE`
+2. Run full validation: `diss validate`
+3. Verify mathematical integrity is preserved
+4. Commit only when 100% validation passes
+
+### Emergency Debugging
+If `diss-setup` fails, use lightweight environment:
+```bash
+source diss-debug-env
+DISS-VALIDATE filename.md
+DISS-REPORT  # Generates markdown checklist
+```
+
+## File Organization
+
+### Source Content
+- [writing/sections/1_chapter/](mdc:writing/sections/1_chapter/) - Chapter 1 (Lattice Theory) - 32 files
+- [writing/sections/2_chapter/](mdc:writing/sections/2_chapter/) - Chapter 2 (Compactifications) - 14 files
+
+### Critical Development Files
+- [dev/tex/templates/DZG-Macros.sty](mdc:dev/tex/templates/DZG-Macros.sty) - 1,472 lines of custom macros
+- [diss-setup](mdc:diss-setup) - Canonical environment loader
+- [AGENTS.md](mdc:AGENTS.md) - Comprehensive agent instructions
+
+## Success Metrics
+
+### Individual File Success
+```bash
+diss validate single filename.md
+# Expected: "✅ SUCCESS: No obvious issues found"
+```
+
+### Overall Project Success
+```bash
+diss report
+# Target: 100% success rate for all files
+```
+
+### Mathematical Integrity
+- **NEVER change mathematical content** - only fix LaTeX syntax
+- Fixed files must contain EXACTLY the same mathematics
+- Only syntactic fixes allowed, no semantic changes
+
+This workflow ensures consistent, high-quality dissertation development with professional standards and comprehensive quality assurance.

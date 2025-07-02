@@ -1,0 +1,208 @@
+---
+description: "Professional GitHub collaboration protocol including PR workflow, reviewer response standards, and quality assurance requirements"
+globs: [".github/**", "**/PR*.md", "**/*.md"]
+alwaysApply: false
+---
+
+# GitHub Collaboration Protocol
+
+## Critical Tools - Use GitHub CLI Only
+
+**MANDATORY**: Always use `gh` CLI tools, never the fetch_pull_request tool. The fetch_pull_request tool only shows diffs, not actual reviewer feedback.
+
+### Essential Commands
+```bash
+# Find PRs for current branch
+gh pr list --head BRANCH_NAME
+
+# Read complete PR details including reviewer comments
+gh pr view PR_NUMBER
+
+# Get inline comments (the real reviewer issues)
+gh api repos/OWNER/REPO/pulls/PR_NUMBER/comments
+
+# Get comment IDs for exact backlinking
+gh api repos/OWNER/REPO/pulls/PR_NUMBER/comments --jq '.[] | {id: .id, line: .line}'
+```
+
+## Pre-Submission Requirements
+
+### Mandatory Validation
+**CRITICAL**: All files must compile before PR submission:
+
+```bash
+# REQUIRED before any PR
+diss validate
+
+# Individual file testing during development
+diss validate single filename.md
+
+# Generate fresh status report
+diss report
+```
+
+### Branch Creation
+Use descriptive branch names:
+```bash
+git checkout -b fix/latex-compilation-errors
+git checkout -b feature/chapter3-content
+git checkout -b style/clean-diff-implementation
+```
+
+### Commit Message Standards
+Use detailed, structured commit messages:
+```
+Fix LaTeX compilation errors in Chapter 1 files
+
+- Fixed undefined macro issues in 5 files (\ZZ, \RR definitions)
+- Added missing DZG macro imports to template
+- All files now compile successfully (100% pass rate)
+- No mathematical content changed, only LaTeX syntax fixes
+
+Verified with: diss validate
+```
+
+## Professional Reviewer Response Protocol
+
+### 1. Read ALL Feedback Sources
+```bash
+# Main review body
+gh pr view PR_NUMBER
+
+# Inline comments (critical - these are the real issues)
+gh api repos/OWNER/REPO/pulls/PR_NUMBER/comments
+
+# Distinguish real feedback from automated suggestions
+# Ignore: "Comments suppressed due to low confidence"
+# Focus on: Actual reviewer comments with specific technical issues
+```
+
+### 2. Systematic Issue Resolution
+
+**Address each comment with**:
+- Specific fix with technical details
+- Verification method
+- Commit reference
+- Exact comment backlinking
+
+### 3. Professional Response Template
+
+```markdown
+Thank you for the thorough review! I've addressed all your comments:
+
+### 1. **Re: [specific issue]** ([Line X Comment](https://github.com/owner/repo/pull/12#issuecomment-ID))
+- ✅ **Fixed in commit [hash]**: [explanation of fix]
+- 🧪 **Verification**: [how to test/verify the fix]
+- 📝 **Details**: [additional context if needed]
+
+### 2. **Re: [next issue]** ([Line Y Comment](https://github.com/owner/repo/pull/12#issuecomment-ID))
+[Same format with exact backlink...]
+
+## ✅ All Changes Tested
+- [Testing evidence]
+- [Verification steps taken]  
+- No regressions introduced
+
+The PR is ready for re-review. Please let me know if anything needs further clarification!
+```
+
+### 4. Exact Comment Backlinking
+
+**CRITICAL**: Always backlink to exact comments for maximum professionalism:
+
+**Link Format**: `https://github.com/OWNER/REPO/pull/PR_NUMBER#issuecomment-COMMENT_ID`
+
+**How to get comment links**:
+1. From `gh pr view` output (URLs shown)
+2. From API: Use comment ID from `gh api` call
+3. Browser: Right-click comment timestamp, copy link
+
+**Example backlinking**:
+- `([Line 16 Comment](https://github.com/dzackgarza/diss/pull/12#issuecomment-3011026363))`
+- `([Security Issue](https://github.com/owner/repo/pull/12#issuecomment-123456))`
+
+### 5. Post Response
+```bash
+# Draft response first
+echo "response content" > response.md
+
+# Post comprehensive response
+gh pr comment PR_NUMBER --body-file response.md
+
+# Verify response posted correctly
+gh pr view PR_NUMBER --comments
+```
+
+## Common Reviewer Comment Patterns
+
+### Missing Imports
+- **Pattern**: "Add import X" or "NameError: name 'X' is not defined"
+- **Fix**: Add exact import specified, test with `python -c "from module import Class"`
+- **Response**: Include verification command in response
+
+### Security Issues  
+- **Pattern**: "Avoid hardcoding API keys", "Load from environment variable"
+- **Fix**: Use `os.getenv()` with proper error handling
+- **Response**: Show environment variable loading code and fallback logic
+
+### Code Quality
+- **Pattern**: "Factor out common logic", "Extract helper method"
+- **Fix**: Create helper method, eliminate duplication
+- **Response**: Reference specific commit and method name
+
+### Mathematical Content
+- **Pattern**: LaTeX compilation errors, undefined macros
+- **Fix**: Add to [DZG-Macros.sty](mdc:dev/tex/templates/DZG-Macros.sty) or use existing macros
+- **Response**: Show `diss validate single` success
+
+## Quality Standards
+
+### Pre-Commit Validation
+- **Enforced**: Zero-tolerance compilation policy via pre-commit hooks
+- **Blocks**: Any compilation failure prevents commit
+- **Override**: `git commit --no-verify` (NOT RECOMMENDED)
+
+### Testing Evidence Required
+For each fix, provide:
+1. **Immediate verification**: Test fix as you make it
+2. **Regression testing**: Run existing test suite  
+3. **Integration testing**: Test multi-component interactions
+4. **Documentation**: Update relevant docs if behavior changes
+
+## Success Patterns - Proven Examples
+
+### PR #12 Success Story
+**Challenge**: Initially addressed wrong issues (automated suggestions)
+**Correction**: Used GitHub CLI to find real reviewer feedback
+**Implementation**: Fixed security and code quality issues systematically
+**Response**: Professional response with exact comment backlinks
+**Outcome**: ✅ **Successfully merged**
+
+### Key Success Factors
+1. **GitHub CLI over fetch_pull_request**: Essential for complete context
+2. **Exact comment backlinking**: Dramatically improves reviewer experience
+3. **Systematic resolution**: Address each comment with evidence
+4. **Professional communication**: Structured responses with verification
+5. **Learning from mistakes**: Correcting course when initial approach wrong
+
+## Communication Standards
+
+### Professional Tone
+- **Respectful**: Treat feedback as improvement opportunities
+- **Systematic**: Address each comment individually
+- **Evidence-based**: Provide concrete verification steps
+- **Traceable**: Link fixes to specific commits
+
+### Response Timing
+- **Prompt**: Address comments quickly to maintain momentum
+- **Quality over speed**: Take time to understand underlying concerns
+- **Clarification**: Ask questions rather than guessing when uncertain
+
+### Follow-up Protocol
+- **Monitor**: Watch for re-review requests
+- **Responsive**: Answer follow-up questions promptly
+- **Learning**: Document patterns for future PRs
+
+This protocol ensures professional, systematic collaboration that builds reviewer trust and leads to successful PR merges.
+
+For technical requirements, see [AGENTS.md](mdc:AGENTS.md) section on PR workflows.

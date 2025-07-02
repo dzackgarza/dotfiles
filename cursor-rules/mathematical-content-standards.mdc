@@ -1,0 +1,205 @@
+---
+description: "Comprehensive mathematical content standards including DZG macros, verification code, and proof structure requirements"
+globs: ["**/*.md", "**/*.tex"]
+alwaysApply: false
+---
+
+# Mathematical Content Standards
+
+## DZG Macro System - MANDATORY
+
+**CRITICAL**: The dissertation uses custom DZG macros defined in [DZG-Macros.sty](mdc:dev/tex/templates/DZG-Macros.sty). Using standard LaTeX breaks semantic consistency.
+
+### Forbidden → Required Mappings
+
+**Most Critical Violations:**
+- `\frac{a}{b}` → `{a \over b}` (fraction syntax)
+- `\mid` → `\st` (set comprehension "such that")
+- `\mathbb{Z}`, `\mathbb{R}` → `\ZZ`, `\RR` (bold not blackboard)
+- `\langle g,h \rangle` → `\gens{g,h}` (generating sets)
+- `\hookrightarrow` → `\embeds` (semantic embedding)
+- `\epsilon` → `\eps` (preferred epsilon)
+
+**Number Systems:**
+- `\mathbb{N}` → `\NN` (natural numbers)
+- `\mathbb{Q}` → `\QQ` (rationals) 
+- `\mathbb{C}` → `\CC` (complex numbers)
+- `\mathbb{F}` → `\FF` (finite fields)
+
+**Operators & Functions:**
+- `\coloneqq` → `\da` (defined as)
+- `\partial` → `\del` (partial derivative)
+- `\cup`, `\cap` → `\union`, `\intersect` (set operations)
+- `\setminus` → `\sm` (set minus)
+
+**Before Writing Math**: Always check [DZG-Macros.sty](mdc:dev/tex/templates/DZG-Macros.sty) for existing definitions.
+
+## Display Mathematics Format
+
+### Required Structure
+All display math MUST use `align*` with proper formatting:
+
+```latex
+
+\begin{align*}
+f(x) &= 3x + 2
+\\
+     &= 3(x + \frac{2}{3})
+\\
+     &= 3x + 2
+.\end{align*}
+
+```
+
+### Key Requirements
+1. **Spacing**: Blank lines before and after math blocks
+2. **Alignment**: Visual alignment of `&` symbols in source
+3. **Line breaks**: `\\` on separate lines
+4. **Punctuation**: ALWAYS include mathematical punctuation (periods, commas)
+5. **No `\[ \]`**: Never use `\[` and `\]` - always use `align*`
+
+### Mathematical Punctuation Examples
+
+**End of sentence:**
+```latex
+\begin{align*}
+\sum_{n=1}^{\infty} \frac{1}{n^2} &= \frac{\pi^2}{6}
+.\end{align*}
+```
+
+**Multiple expressions:**
+```latex
+\begin{align*}
+\det(A) &= a_{11}a_{22} - a_{12}a_{21},
+\\
+\tr(A) &= a_{11} + a_{22},
+\\
+\rank(A) &= 2
+.\end{align*}
+```
+
+## Fenced Div Structure
+
+### Clean Diff Philosophy
+**MANDATORY**: Content must start on NEW LINE after environment declaration:
+
+```markdown
+✅ CORRECT:
+:::{.theorem title="Main Result"}
+The statement of the theorem goes here.
+:::
+
+❌ FORBIDDEN:
+:::{.theorem title="Main Result"} The statement goes here.
+```
+
+### Available Environments
+- `:::{.theorem}` - Main theoretical results
+- `:::{.lemma}` - Auxiliary results
+- `:::{.proposition}` - Intermediate results
+- `:::{.corollary}` - Direct consequences
+- `:::{.definition}` - Formal definitions
+- `:::{.proof}` - Proofs
+- `:::{.example}` - Illustrative examples
+- `:::{.remark}` - Additional commentary
+
+## Computer Verification Integration
+
+### Strongly Encouraged Practice
+Include verification code as labeled code blocks directly in thesis files:
+
+````markdown
+:::{.theorem title="Example Theorem"}
+Statement of the theorem.
+:::
+
+```sagemath
+# Computational verification
+for n in range(1, 10):
+    assert property_holds(n), f"Failed at n={n}"
+print("Verification passed")
+```
+
+```lean
+theorem example_theorem (n : ℕ) : property n := by
+  -- formal proof sketch
+```
+
+:::{.proof}
+Human-readable proof here.
+:::
+````
+
+### Benefits
+- Research integrity during development
+- Automatic stripping during PDF compilation
+- Syntax highlighting in editors
+- Easy extraction for testing
+- Future formalization support
+
+## Cross-References and Citations
+
+### Cross-Reference Format
+**CRITICAL**: Cross-references are normal text, NOT code:
+
+- ❌ `See \`cref{def-lattices-101}\`` 
+- ✅ `See \cref{def-lattices-101}`
+- ❌ `\`Cref{thm-main-result}\`` 
+- ✅ `\Cref{thm-main-result}`
+
+### Human-Friendly ID System
+Use systematic IDs: `type-prefix-title-slug-file-number`
+
+Examples:
+- `#def-lattices-101` (Definition of lattices in file 101)
+- `#thm-even-definite-unimod-115` (Theorem about even definite unimodular)
+- `#prop-group-action-122` (Proposition about group actions)
+
+### Citations
+Use standard LaTeX format without backticks:
+```markdown
+As shown in \cite{author2023}, the result follows.
+```
+
+## Proof Structure Standards
+
+### Proof Writing Principles
+1. **Variable Declaration**: Always declare types - "Let $n \in \NN$"
+2. **Logical Flow**: Use clear implications with `$\implies$`
+3. **Justifications**: Include brief reasoning - "[Algebra]", "[By Theorem 2.3]"
+4. **Atomic Steps**: One mathematical operation per numbered step
+
+### Example Structure
+```markdown
+:::{.theorem title="Square of Odd Integer"}
+The square of an odd integer is odd.
+:::
+
+:::{.proof}
+1. Let $n \in 2\ZZ + 1$. Then $\exists k \in \ZZ$ such that $n = 2k + 1$.
+
+2. $\implies n^2 = (2k + 1)^2 = 4k^2 + 4k + 1 = 2(2k^2 + 2k) + 1$ [Algebra]
+
+3. Let $m = 2k^2 + 2k$. Since $k \in \ZZ$, we have $m \in \ZZ$ [Closure]
+
+4. $\implies n^2 = 2m + 1 \in 2\ZZ + 1$ [Definition of odd]
+
+5. Therefore, the square of an odd integer is odd.
+:::
+```
+
+## Quality Assurance
+
+### Before Finalizing Content
+1. **Logical Flow**: Does each step follow from previous ones?
+2. **Notation Consistency**: All notation used consistently?
+3. **DZG Compliance**: No forbidden standard LaTeX commands?
+4. **Compilation**: Does `diss validate single FILE` pass?
+
+### Mathematical Integrity Rule
+**NEVER change mathematical semantic content** - only fix LaTeX syntax. Fixed files must contain exactly the same mathematics as originals.
+
+For complete style guidelines, see:
+- [MATHEMATICAL_STYLE.md](mdc:MATHEMATICAL_STYLE.md) - Full mathematical conventions
+- [MARKDOWN_STYLE.md](mdc:MARKDOWN_STYLE.md) - Technical formatting rules
+- [FORMALIZATION_GUIDE.md](mdc:FORMALIZATION_GUIDE.md) - Computer verification patterns

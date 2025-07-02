@@ -1,0 +1,5 @@
+i2c_hid.no_acpi=1
+i2c_hid.reset=1
+i2c_hid.poll=1
+acpi_enforce_resources=lax
+

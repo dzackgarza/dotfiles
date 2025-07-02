@@ -1,0 +1,150 @@
+---
+alwaysApply: false
+description: Standards for professional reviewer responses, including comment backlinking,
+  resolution documentation, and verification evidence
+globs:
+- '**/*.md'
+- .github/**
+---
+
+# Professional Reviewer Response Protocols
+
+## Systematic Approach to Addressing Review Feedback
+
+For any collaborative writing project with peer review (academic papers, technical documentation, grant proposals), implement **systematic reviewer response protocols** to demonstrate professionalism and ensure thorough issue resolution.
+
+### Core Response Structure
+
+**1. Comprehensive Context Gathering**
+```bash
+# For GitHub/GitLab projects
+gh pr view PR_NUMBER                    # Main review
+gh api repos/owner/repo/pulls/PR_NUMBER/comments  # Inline comments
+
+# For traditional review systems
+# Read ALL feedback: main review + inline comments + suggestions
+# Distinguish between automated suggestions and human reviewer feedback
+```
+
+**2. Systematic Issue Cataloging**
+Create numbered list of all reviewer concerns:
+```markdown
+## Reviewer Response Summary
+
+### Issues Identified:
+1. **Content Issue**: [Specific concern from reviewer]
+2. **Technical Issue**: [Compilation/formatting problem]
+3. **Clarity Issue**: [Unclear explanation or argument]
+4. **Methodology Issue**: [Approach or verification concern]
+```
+
+**3. Individual Issue Resolution**
+For each issue, provide:
+- **Specific Fix**: Exactly what was changed
+- **Verification Method**: How to confirm the fix works
+- **Commit Reference**: Link to specific changes (if applicable)
+- **Acknowledgment**: Recognition of the reviewer's insight
+
+### Response Template
+
+```markdown
+### [Issue #] **Re: [Specific Issue Title]**
+([Direct link to reviewer comment if available])
+
+✅ **Resolution**: [Specific action taken]
+
+🔧 **Implementation**: [Technical details of fix]
+
+🧪 **Verification**: [How to confirm fix works]
+- Command to run: `specific validation command`
+- Expected output: `expected result`
+
+📝 **Commit**: [Link to specific commit if applicable]
+
+💡 **Acknowledgment**: [Recognition of reviewer's insight]
+```
+
+### Platform-Specific Implementations
+
+**GitHub Pull Requests**:
+```markdown
+### 1. **Re: Missing import statement** ([Line 16 Comment](https://github.com/owner/repo/pull/12#issuecomment-ID))
+
+✅ **Resolution**: Added missing import for required module
+
+🔧 **Implementation**: Added `from module import Class` to imports section
+
+🧪 **Verification**: Run `python -c "from module import Class"` - no ImportError
+
+📝 **Commit**: Fixed in commit abc123def
+
+💡 **Acknowledgment**: Thank you for catching this dependency issue - it would have caused runtime errors.
+```
+
+**Traditional Academic Review**:
+```markdown
+### Response to Reviewer 2, Comment 3 (Page 15, Line 23)
+
+**Original Concern**: "The methodology section lacks detail about validation procedures."
+
+**Resolution**: Expanded methodology section (pages 15-16) with comprehensive validation workflow
+
+**Changes Made**:
+- Added validation procedure subsection (3.2.1)
+- Included step-by-step verification protocol
+- Added references to validation literature [Smith2023, Jones2024]
+
+**Result**: Methodology section now provides complete replication instructions
+```
+
+### Quality Standards
+
+**Completeness**: Address every reviewer comment systematically
+- No reviewer concern should be ignored or inadequately addressed
+- If disagreeing with reviewer, provide reasoned explanation
+
+**Specificity**: Provide concrete details rather than general statements
+- ❌ "Fixed the issue"
+- ✅ "Added error handling for null input values in function X (line 47)"
+
+**Verification**: Include ways for reviewer to confirm fixes
+- Specific commands to run
+- Expected outputs
+- Links to changed content
+
+**Professional Tone**: Maintain respectful, collaborative language
+- Acknowledge reviewer insights
+- Take responsibility for issues
+- Express gratitude for thorough review
+
+### Follow-up Protocol
+
+**Post-Response Actions**:
+1. **Systematic Testing**: Verify all fixes work as described
+2. **Integration Check**: Ensure fixes don't introduce new issues
+3. **Documentation Update**: Update relevant documentation if needed
+4. **Monitor for Re-review**: Track reviewer response to your resolution
+
+**Re-review Management**:
+- Respond promptly to follow-up questions
+- Provide additional clarification if requested
+- Maintain patience for iterative review cycles
+
+### Benefits
+
+**Professional Reputation**: Systematic responses demonstrate competence and reliability
+**Faster Approval**: Thorough responses reduce review cycles
+**Learning Opportunity**: Engaging deeply with feedback improves future work
+**Relationship Building**: Professional responses build positive reviewer relationships
+**Quality Improvement**: Systematic approach catches issues you might miss
+
+### Common Mistakes to Avoid
+
+❌ **Addressing automated suggestions instead of human feedback**
+❌ **Providing vague or incomplete responses**
+❌ **Ignoring or dismissing reviewer concerns**
+❌ **Making changes without explaining the resolution**
+❌ **Failing to verify that fixes actually work**
+
+Apply this systematic approach to any collaborative writing project where professional review response is critical for acceptance and credibility.
+---

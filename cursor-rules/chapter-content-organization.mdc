@@ -1,0 +1,43 @@
+---
+alwaysApply: false
+description: Guidelines for organizing chapter content, ensuring logical structure,
+  cross-referencing, and dependency tracking between chapters
+globs:
+- writing/sections/**
+---
+
+# Chapter Content Organization
+
+## Chapter 1: Lattice Theory Fundamentals
+**[writing/sections/1_chapter/](mdc:writing/sections/1_chapter/)** - 32 files covering:
+
+### Core Theory (100-119)
+- **[101_bilinearquadratic_modules_and_lattices.md](mdc:writing/sections/1_chapter/101_bilinearquadratic_modules_and_lattices.md)** - Foundational definitions
+- **[109_elementary_lattices.md](mdc:writing/sections/1_chapter/109_elementary_lattices.md)** - Elementary and 2-elementary lattices
+- **[110_reflections_and_transvections.md](mdc:writing/sections/1_chapter/110_reflections_and_transvections.md)** - Orthogonal group actions
+
+### Advanced Topics (120-132)
+- **[125_isometries_and_orthogonal_groups.md](mdc:writing/sections/1_chapter/125_isometries_and_orthogonal_groups.md)** - Group structure and generators
+- **[130_hyperbolic_geometry.md](mdc:writing/sections/1_chapter/130_hyperbolic_geometry.md)** - Hyperbolic lattices and geometry
+- **[131_cusp_diagrams.md](mdc:writing/sections/1_chapter/131_cusp_diagrams.md)** - Baily-Borel compactifications
+
+## Chapter 2: Compactifications & Moduli Spaces
+**[writing/sections/2_chapter/](mdc:writing/sections/2_chapter/)** - 14 files covering:
+
+### Geometric Structures (200-210)
+- **[201_k3_surfaces.md](mdc:writing/sections/2_chapter/201_k3_surfaces.md)** - K3 surface theory
+- **[209_examples.md](mdc:writing/sections/2_chapter/209_examples.md)** - Concrete moduli space examples
+- **[210_ksba_compactifications.md](mdc:writing/sections/2_chapter/210_ksba_compactifications.md)** - KSBA stable pairs
+
+### Algebraic Surfaces (211-213)
+- **[211_ade_surfaces.md](mdc:writing/sections/2_chapter/211_ade_surfaces.md)** - ADE surface classifications with explicit equations
+
+## Mathematical Dependencies
+- Chapter 1 provides lattice-theoretic foundations
+- Chapter 2 applies these to geometric moduli problems
+- Cross-references use `\cref{}` and `\autoref{}`
+- All results cite appropriate sources in **[dev/tex/Dissertation.bib](mdc:dev/tex/Dissertation.bib)**
+
+## File Naming Convention
+`[order]_[descriptive_name].md` where order determines document sequence
+---
