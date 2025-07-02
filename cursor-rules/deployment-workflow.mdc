@@ -1,0 +1,36 @@
+---
+alwaysApply: false
+description: Simple build and deployment workflows for hobby projects, basic logging
+globs:
+- '**/Makefile'
+- '**/*.sh'
+- '**/build.py'
+- '**/deploy.py'
+---
+
+# Workflow for Hobby Projects
+
+## Simple Build Process
+- Keep build steps minimal and obvious
+- Use make or simple shell scripts
+- Don't build complex build systems for hobby projects
+- **CRASH if build steps fail**
+
+## Basic Logging
+- Log what's happening during build/deploy
+- Use simple print statements for build progress
+- Don't build elaborate logging systems
+- **Make it obvious when something goes wrong**
+
+## Manual Deployment
+- Keep deployment simple and manual for hobby projects
+- Don't automate deployment until you need to
+- Use simple scripts that you can run manually
+- **Let the user handle infrastructure manually**
+
+## Maintenance
+- Keep maintenance commands simple
+- Provide basic cleanup scripts if needed
+- Don't build complex maintenance systems
+- **Focus on getting things working, not maintaining forever**
+---

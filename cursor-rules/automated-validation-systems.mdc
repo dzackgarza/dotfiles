@@ -1,0 +1,226 @@
+---
+alwaysApply: false
+description: Defines the automated validation and quality assurance systems for the
+  project, including citation, style, and build validation, with integration into
+  CI/CD and pre-commit hooks
+globs:
+- dev/scripts/**
+- dev/scripts/reports/**
+- '**/validate*.sh'
+---
+
+# Automated Validation and Quality Control Systems
+
+## Systematic Quality Assurance for Writing Projects
+
+For substantial writing projects, implement **automated validation systems** to catch errors early, maintain consistency, and ensure professional quality standards.
+
+### Core Validation Layers
+
+**1. Syntax and Formatting Validation**
+- Markup syntax checking (Markdown, LaTeX, HTML)
+- Citation format verification
+- Cross-reference integrity (no broken internal links)
+- Consistent formatting (headings, lists, tables)
+
+**2. Content Integrity Validation**
+- Terminology consistency checking
+- Custom notation compliance
+- Required section presence verification
+- Word count and length requirements
+
+**3. Build and Compilation Validation**
+- Document builds without errors
+- All figures and tables render correctly
+- Bibliography processes successfully
+- Output formats meet requirements
+
+**4. Style and Convention Validation**
+- Style guide compliance checking
+- Consistent voice and tone
+- Academic/professional writing standards
+- Domain-specific requirements
+
+### Implementation Strategies
+
+**Pre-commit Hooks** (Git-based projects):
+```bash
+# .pre-commit-config.yaml example
+repos:
+  - repo: local
+    hooks:
+      - id: markdown-lint
+        name: Markdown Linting
+        entry: markdownlint
+        language: node
+        files: \.md$
+
+      - id: citation-check
+        name: Citation Verification
+        entry: python scripts/validate_citations.py
+        language: python
+        files: \.md$
+
+      - id: build-test
+        name: Document Build Test
+        entry: make build-test
+        language: system
+        pass_filenames: false
+```
+
+**Continuous Integration Pipeline**:
+```yaml
+# GitHub Actions example
+name: Document Validation
+on: [push, pull_request]
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup validation environment
+        run: ./setup-validation.sh
+      - name: Run syntax validation
+        run: ./validate-syntax.sh
+      - name: Run content validation
+        run: ./validate-content.sh
+      - name: Test document build
+        run: ./test-build.sh
+      - name: Generate validation report
+        run: ./generate-report.sh
+```
+
+**Local Validation Scripts**:
+```bash
+#!/bin/bash
+# validate-document.sh - Local validation suite
+
+echo "🔍 Running document validation..."
+
+# Syntax validation
+echo "  ✓ Checking markdown syntax..."
+markdownlint content/
+
+# Citation validation
+echo "  ✓ Verifying citations..."
+python scripts/check_citations.py
+
+# Cross-reference validation
+echo "  ✓ Checking internal links..."
+python scripts/check_references.py
+
+# Build test
+echo "  ✓ Testing document build..."
+make build-test
+
+# Style validation
+echo "  ✓ Checking style compliance..."
+python scripts/check_style.py
+
+echo "✅ Validation complete!"
+```
+
+### Validation Categories
+
+**Critical Errors** (Block submission/publication):
+- Syntax errors that prevent compilation
+- Broken citations or references
+- Missing required sections
+- Build failures
+
+**Style Violations** (Require fixes but don't block):
+- Inconsistent formatting
+- Style guide violations
+- Terminology inconsistencies
+- Minor convention issues
+
+**Warnings** (Informational):
+- Long paragraphs or sentences
+- Passive voice usage
+- Readability scores
+- Suggested improvements
+
+### Quality Metrics and Reporting
+
+**Automated Quality Dashboard**:
+```markdown
+# Document Quality Report
+
+## Summary
+- ✅ **Build Status**: All documents compile successfully
+- ⚠️  **Style Violations**: 3 minor issues found
+- 📊 **Coverage**: 95% of sections have proper headings
+- 🎯 **Progress**: 45,000 words (90% of target)
+
+## Issues Requiring Attention
+1. **Citation Format**: 2 instances of non-standard citation format
+2. **Cross-references**: 1 broken internal link in Chapter 3
+3. **Terminology**: 3 instances of non-standard notation
+
+## Validation History
+- Last successful validation: 2024-01-15 14:30
+- Recent improvements: +15% style compliance
+- Trend: Quality metrics improving consistently
+```
+
+**Historical Tracking**:
+- Track quality metrics over time
+- Identify improvement trends
+- Set quality gates for milestones
+- Generate progress reports for stakeholders
+
+### Integration with Development Workflow
+
+**Branch Protection Rules**:
+```yaml
+# Require validation to pass before merge
+branch_protection_rules:
+  required_status_checks:
+    - "Document Validation"
+    - "Build Test"
+    - "Style Check"
+  enforce_admins: true
+```
+
+**Automated Feedback**:
+```yaml
+# Provide specific feedback on validation failures
+validation_feedback:
+  citation_errors:
+    message: "Citation format violations found. See style guide for correct format."
+    fix_command: "Run ./fix-citations.sh to auto-correct common issues"
+
+  build_failures:
+    message: "Document build failed. Check compilation logs for details."
+    fix_command: "Run ./debug-build.sh for detailed error analysis"
+```
+
+### Benefits
+
+**Early Error Detection**: Catch issues before they reach reviewers
+**Consistency Enforcement**: Automatically maintain style and format standards
+**Quality Assurance**: Ensure professional presentation standards
+**Time Savings**: Reduce manual review time for mechanical issues
+**Confidence Building**: Know that submissions meet technical requirements
+**Learning Support**: Help contributors learn project standards
+
+### Implementation Best Practices
+
+**Start Simple**: Begin with basic syntax and build validation
+**Incremental Addition**: Add more sophisticated checks over time
+**Clear Error Messages**: Provide actionable feedback for failures
+**Fast Feedback**: Validation should complete in reasonable time
+**Documentation**: Clearly document validation requirements and fixes
+**Escape Hatches**: Provide ways to override validation when necessary
+
+### Common Validation Tools
+
+**Markdown**: markdownlint, remark-lint, textlint
+**LaTeX**: chktex, lacheck, rubber
+**Citations**: bibtools, biber validation, pandoc-citeproc
+**Style**: proselint, write-good, alex
+**Build**: make, pandoc, custom scripts
+**General**: custom Python/bash scripts for project-specific checks
+
+Apply automated validation to any writing project where consistency, quality, and professional presentation are critical requirements.
+---

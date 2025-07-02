@@ -1,0 +1,48 @@
+---
+alwaysApply: false
+description: Simple search and content retrieval for hobby projects, basic indexing
+globs:
+- '**/*search*.py'
+- '**/*index*.py'
+- '**/*retrieval*.py'
+- '**/*query*.py'
+---
+
+# Search and Retrieval for Hobby Projects
+
+## Simple Search First
+- Build basic search that works for your use case
+- Don't over-engineer search algorithms for hobby projects
+- Use simple string matching, basic indexing, or existing tools
+- **Get search working before optimizing relevance**
+
+## Minimal Indexing
+- Create simple indexes only when you need them
+- Don't build complex indexing systems for small datasets
+- Use file-based or in-memory storage for hobby project scale
+- **CRASH if indexing fails rather than building fallbacks**
+
+## Basic Content Processing
+- Process content in the most direct way that works
+- Don't build elaborate content pipelines
+- Focus on handling your specific data format correctly
+- **Keep content processing simple and obvious**
+
+## No Complex Retrieval
+- Start with basic retrieval that meets your needs
+- Don't implement advanced ranking or relevance algorithms initially
+- Use simple sorting and filtering approaches
+- Add complexity only when basic search isn't sufficient
+
+## Quick Results Display
+- Display search results in a simple, functional format
+- Don't build elaborate result rendering systems
+- Show the information you need to make decisions
+- **Focus on getting useful results quickly**
+
+## Performance - Only When Needed
+- Don't optimize search performance until it's actually slow
+- Use simple caching if searches feel sluggish
+- Profile search only if users complain about speed
+- **Premature search optimization wastes time on hobby projects**
+---

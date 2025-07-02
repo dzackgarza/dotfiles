@@ -1,0 +1,110 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# DZG Semantic Macro Compliance
+
+## CRITICAL: Use Project Macros, NOT Raw LaTeX
+
+### ❌ FORBIDDEN Raw LaTeX Commands
+**NEVER use these in mathematical writing:**
+
+```latex
+❌ \mathbb{Z} → ✅ \ZZ
+❌ \mathbb{Q} → ✅ \QQ
+❌ \mathbb{R} → ✅ \RR
+❌ \mathbb{C} → ✅ \CC
+❌ \mathbb{N} → ✅ \NN
+❌ \mathbb{P} → ✅ \PP
+
+❌ \mathcal{L} → ✅ \mcl
+❌ \mathcal{M} → ✅ \mcm
+❌ \mathcal{F} → ✅ \mcf
+❌ \mathcal{O} → ✅ \OO
+
+❌ \overline{M} → ✅ \cpt{M} (general compactifications)
+❌ \overline{M}^{KSBA} → ✅ \ksbacpt{M} (KSBA compactifications)
+```
+
+### ✅ Required DZG Macros
+
+#### Number Systems
+- Integers: `\ZZ` (not `\mathbb{Z}`)
+- Rationals: `\QQ` (not `\mathbb{Q}`)
+- Reals: `\RR` (not `\mathbb{R}`)
+- Complex: `\CC` (not `\mathbb{C}`)
+- Natural numbers: `\NN` (not `\mathbb{N}`)
+- Projective space: `\PP^n` (not `\mathbb{P}^n`)
+
+#### Common Mathematical Objects
+- Line bundles: `\mcl_Z` (not `\mathcal{L}_Z`)
+- Polarizations: `\mcm` (not `\mathcal{M}`)
+- Families/Collections: `\mcf` (not `\mathcal{F}`)
+- Structure sheaves: `\OO_X` (not `\mathcal{O}_X`)
+
+#### Specific Project Macros
+- Baily-Borel compactifications: `\bbcpt{F_\En}`
+- Enriques moduli space: `F_\En`
+
+### Audit Checklist
+Before submitting any mathematical content:
+
+- [ ] Search for `\mathbb{` - replace with appropriate `\ZZ`, `\QQ`, etc.
+- [ ] Search for `\mathcal{` - replace with `\mcl`, `\mcm`, `\OO`, etc.
+- [ ] Search for `\overline{` - replace with semantic compactification macros
+- [ ] Check [MATHEMATICAL_STYLE.md](mdc:MATHEMATICAL_STYLE.md) for project-specific macros
+- [ ] Verify semantic meaning matches macro choice
+
+### Additional Style Requirements
+
+#### 🚨 CRITICAL: Proof Block Enforcement
+**NEVER include proofs outside proper `:::{.proof}` blocks**
+
+❌ **WRONG**:
+```markdown
+:::{.proposition}
+Result holds.
+
+**Proof**: Here's the argument...
+:::
+```
+
+✅ **CORRECT**:
+```markdown
+:::{.proposition}
+Result holds.
+:::
+
+:::{.proof}
+Here's the argument...
+:::
+```
+
+#### Group Theory Notation
+- **Cyclic groups**: Use `C_n` (not `\ZZ_n`)
+- **Exception**: Ring quotients `\ZZ/n\ZZ` are correct for rings
+
+#### Operator Parentheses (MANDATORY)
+**All operators MUST include parentheses:**
+- `\Pic(X)` not `\Pic X`
+- `\disc(L)` not `\disc L`
+- `\Aut(G)` not `\Aut G`
+- `\End(V)` not `\End V`
+- `\Hom(A,B)` not `\Hom A,B`
+
+#### Tensor Products
+- Use `\tensor` (not `\otimes`)
+- Use `\Tensor` (not `\bigotimes`)
+
+#### Fenced Div Syntax Validation
+✅ **CORRECT syntax**: `:::{.envname title="Title" #id}`
+- **SPACE separation** (NOT commas) between attributes
+- Attributes within curly braces: `{.class attribute="value" #id}`
+
+### Why This Matters
+1. **Consistency** - Project-wide notation standards
+2. **Semantic clarity** - Macros convey mathematical meaning
+3. **Maintainability** - Global changes via macro redefinition
+4. **Professional standards** - Shows attention to detail
+5. **Structural integrity** - Proper proof blocks enable consistent formatting

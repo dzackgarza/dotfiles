@@ -1,0 +1,37 @@
+(echo "=== Kernel Version ==="; uname -r; \
+echo -e "\n=== Distro Info ==="; cat /etc/os-release; \
+echo -e "\n=== BIOS Version ==="; sudo dmidecode -s bios-version; \
+echo -e "\n=== I2C Devices ==="; i2cdetect -l; \
+echo -e "\n=== Loaded I2C and HID Modules ==="; lsmod | grep -E 'i2c|hid'; \
+echo -e "\n=== dmesg I2C and HID Errors ==="; dmesg | grep -iE 'i2c|hid|error|fail|warn'; \
+echo -e "\n=== libinput Devices (Touchpad-related) ==="; libinput list-devices | grep -i -A10 touchpad; \
+echo -e "\n=== ACPI Device Info ==="; lspci -nnk | grep -i acpi -A3; \
+echo -e "\n=== USB Devices ==="; lsusb; \
+echo -e "\n=== Power Management for i2c_hid module ==="; modinfo i2c_hid | grep -i param; \
+echo -e "\n=== Current Kernel Cmdline ==="; cat /proc/cmdline) | tee ~/touchpad_diagnostics_$(date +%F_%T).log
+
+(echo "=== Kernel Version ==="; uname -r; \
+echo -e "\n=== Distro Info ==="; cat /etc/os-release; \
+echo -e "\n=== BIOS Version ==="; sudo dmidecode -s bios-version; \
+echo -e "\n=== PCI I2C Controllers ==="; lspci -nnk | grep -i i2c -A4; \
+echo -e "\n=== Loaded I2C and HID Modules ==="; lsmod | grep -E 'i2c|hid'; \
+echo -e "\n=== dmesg I2C and HID Logs ==="; dmesg | grep -iE 'i2c|hid|error|fail|warn'; \
+echo -e "\n=== Kernel Cmdline ==="; cat /proc/cmdline; \
+echo -e "\n=== Input Devices Touchpad ==="; cat /proc/bus/input/devices | grep -A5 -i touchpad; \
+echo -e "\n=== Blacklist modprobe configs ==="; grep -r "blacklist" /etc/modprobe.d/; \
+echo -e "\n=== USB Devices ==="; lsusb) | wl-copy
+
+echo -e "\n## CPU"; lscpu | grep -E 'Model name|Socket|Thread|Core|CPU\(s\)|Flags' && echo -e "\n## Memory"; free -h | grep Mem && echo -e "\n## GPU"; lspci | grep -iE 'vga|3d' && echo -e "\n## OS"; uname -a && echo -e "\n## Python"; python3 --version && echo -e "\n## Disk"; df -h / && echo -e "\n## AVX/AVX2 Support"; lscpu | grep -o 'avx[^ ]*' | sort -u
+
+{ 
+  echo "## 🧠 CPU Info"; lscpu | grep -E 'Model name|CPU\(s\)|Core\(s\)|Thread\(s\)' | sed 's/^/  /';
+  echo -e "\n## 🧩 Vector Extensions"; lscpu | grep -oE 'avx[0-9]*[^ ]*' | sort -u | sed 's/^/  /';
+  echo -e "\n## 🧮 Memory"; grep MemTotal /proc/meminfo | awk '{printf("  Total: %.2f GiB\n", $2/1024/1024)}';
+  echo -e "\n## 🖼️ GPU (PCI Devices)"; lspci | grep -iE 'vga|3d' | sed 's/^/  /';
+  echo -e "\n## 🎨 GPU Details (intel/nvidia)"; \
+    (glxinfo | grep -E 'Device:|Video memory' 2>/dev/null || echo "  glxinfo not available"); \
+    (intel_gpu_top -l 2>/dev/null | grep -m1 'GPU model' || echo "  intel_gpu_top not available"); \
+    (nvidia-smi --query-gpu=name,memory.total,driver_version --format=csv,noheader 2>/dev/null || echo "  nvidia-smi not available");
+  echo -e "\n## 🐍 PyTorch Info"; python3 -c 'import torch; print(f"  torch: {torch.__version__}\n  cuda: {torch.cuda.is_available()}"); print(f\"  mps: {hasattr(torch.backends, 'mps') and torch.backends.mps.is_available()}\")' 2>/dev/null || echo "  PyTorch not found";
+} | wl-copy
+

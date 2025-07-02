@@ -1,0 +1,57 @@
+---
+alwaysApply: false
+description: Describes the multi-guide style architecture for complex writing projects,
+  with specialized guides for formatting, content, and quality assurance
+globs:
+- writing/**
+- dev/scripts/**
+- '**/STYLE*.md'
+---
+
+# Writing Project Style Guide Architecture
+
+## Multi-Guide System for Complex Writing Projects
+
+For substantial writing projects (academic papers, technical documentation, books), use a **specialized style guide architecture** rather than a single monolithic style document.
+
+### Recommended Structure
+
+**1. Main Style Index** - [STYLE.md](mdc:STYLE.md)
+- Entry point for all style guidelines
+- Quick reference for different use cases (writing vs review vs collaboration)
+- Cross-references to specialized guides
+
+**2. Technical Formatting Guide** - Focus on markup, syntax, formatting rules
+- Markdown/LaTeX syntax standards
+- Cross-reference formatting and citation styles
+- Version control formatting practices (clean diffs)
+- Build system integration
+
+**3. Content-Specific Style Guide** - Domain-specific conventions
+- Notation systems (mathematical, scientific, technical)
+- Terminology standards and preferred vocabulary
+- Content organization principles
+- Proof/argument structure guidelines
+
+**4. Verification/Quality Guide** - Computational verification and quality assurance
+- Fact-checking procedures
+- Automated validation patterns
+- Citation verification
+- Content integrity workflows
+
+### Benefits of Specialized Guides
+
+✅ **Targeted Audience**: Writers vs reviewers vs technical collaborators can focus on relevant sections
+✅ **Maintainability**: Easier to update domain-specific vs technical formatting rules separately
+✅ **Onboarding**: New contributors can focus on relevant guide for their role
+✅ **Scalability**: Can add new specialized guides without restructuring existing ones
+
+### Implementation Principles
+
+- **Cross-reference actively** between guides to avoid duplication
+- **Maintain single source of truth** for each type of guideline
+- **Version together** but allow independent updates to specialized sections
+- **Test compliance** systematically across all guide types
+
+Use this architecture for any writing project with multiple contributors, technical requirements, or complex notation systems.
+---

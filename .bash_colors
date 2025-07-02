@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 #
 # Constants and functions for terminal colors.
 # Author: Max Tsepkov <max@yogi.pw>
@@ -44,7 +44,7 @@ function fn_exists
     type "$1" | grep -q 'function'
 }
 
-# iterate through command arguments, o allow for iterative color application
+# iterate through command arguments, to allow for iterative color application
 function clr_layer
 {
     # default echo setting
@@ -53,29 +53,32 @@ function clr_layer
     CLR_SWITCHES=""
     ARGS=("$@")
 
-    # iterate over arguments in reverse
-    for ((i=$#; i>=0; i--)); do
-        ARG=${ARGS[$i]}
-        # echo $ARG
-        # set CLR_VAR as last argtype
-        firstletter=${ARG:0:1}
+    # iterate over arguments in reverse (fix: use $#-1 since arrays are 0-indexed)
+    for ((i=$#-1; i>=0; i--)); do
+        # Check if array index is valid
+        if [ $i -ge 0 ] && [ $i -lt $# ]; then
+            ARG=${ARGS[$i]}
+            # echo $ARG
+            # set CLR_VAR as last argtype
+            firstletter=${ARG:0:1}
 
-        # check if argument is a switch
-        if [ "$firstletter" = "-" ] ; then
-            # if -n is passed, set switch for echo in clr_escape
-            if [[ $ARG == *"n"* ]]; then
-                CLR_ECHOSWITCHES="-en"
-                CLR_SWITCHES=$ARG
-            fi
-        else
-            # last arg is the incoming string
-            if [ -z "$CLR_STACK" ]; then
-                CLR_STACK=$ARG
+            # check if argument is a switch
+            if [ "$firstletter" = "-" ] ; then
+                # if -n is passed, set switch for echo in clr_escape
+                if [[ $ARG == *"n"* ]]; then
+                    CLR_ECHOSWITCHES="-en"
+                    CLR_SWITCHES=$ARG
+                fi
             else
-                # if the argument is function, apply it
-                if [ -n "$ARG" ] && fn_exists $ARG; then
-                    #continue to pass switches through recursion
-                    CLR_STACK=$($ARG "$CLR_STACK" $CLR_SWITCHES)
+                # last arg is the incoming string
+                if [ -z "$CLR_STACK" ]; then
+                    CLR_STACK=$ARG
+                else
+                    # if the argument is function, apply it
+                    if [ -n "$ARG" ] && fn_exists $ARG; then
+                        #continue to pass switches through recursion
+                        CLR_STACK=$($ARG "$CLR_STACK" $CLR_SWITCHES)
+                    fi
                 fi
             fi
         fi
