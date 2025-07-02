@@ -52,11 +52,11 @@ def image_to_text():
     # print(result)
 
     # Return the text output
-    return result['text']
+    return result
 
 def main():
     text_results = image_to_text()
-    subprocess.run(["notify-send", "Mathpix", "Done processing. Result: " + text_results])
+    # subprocess.run(["notify-send", "Mathpix", "Done processing. Result: " + text_results])
     print(text_results)
     sys.exit(1)
 

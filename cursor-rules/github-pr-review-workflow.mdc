@@ -1,0 +1,178 @@
+---
+alwaysApply: false
+description: Professional workflow for handling GitHub PR reviews, including use of
+  the GitHub CLI, comment backlinking, and systematic reviewer response
+globs:
+- .github/**
+- dev/scripts/**
+- '**/PR*.md'
+---
+
+# GitHub PR Review Workflow
+
+## Essential GitHub CLI Commands for PR Reviews
+
+### Reading PR Comments
+- **Find PRs for branch**: `gh pr list --head BRANCH_NAME`
+- **Read main review**: `gh pr view PR_NUMBER`
+- **Get inline comments**: `gh api repos/OWNER/REPO/pulls/PR_NUMBER/comments --jq '.[] | {path: .path, line: .line, body: .body}'`
+- **Get comment IDs for backlinking**: `gh api repos/OWNER/REPO/pulls/PR_NUMBER/comments --jq '.[] | {id: .id, line: .line, body: .body[:50]}'`
+
+**CRITICAL**: Always use `gh` tool instead of `fetch_pull_request` tool. The fetch_pull_request tool only shows diffs, not actual reviewer feedback.
+
+### Getting Exact Comment Links for Backlinking
+**CRITICAL**: Always backlink to the exact comment being addressed for maximum professionalism.
+
+**Comment Link Format**: `https://github.com/OWNER/REPO/pull/PR_NUMBER#issuecomment-COMMENT_ID`
+
+**How to get comment links**:
+1. **From `gh pr view`**: Comment URLs are shown in the output
+2. **From API**: Use comment ID from the API call above
+3. **From browser**: Right-click on comment timestamp and copy link
+
+**Example**:
+```bash
+# Get comment ID for line 16 issue
+gh api repos/dzackgarza/diss/pulls/12/comments --jq '.[] | select(.line==16) | {id: .id, line: .line}'
+# Result: {"id": "3011026363", "line": 16}
+# Link: https://github.com/dzackgarza/diss/pull/12#issuecomment-3011026363
+```
+
+### Distinguishing Real vs Low-Confidence Comments
+- **Ignore**: "Comments suppressed due to low confidence" - these are automated suggestions
+- **Focus on**: Inline comments with specific line numbers and reviewer feedback
+- **Look for**: Comments that mention specific technical issues, security concerns, or code quality
+
+## Reviewer Response Protocol
+
+### 1. Systematic Issue Resolution
+1. **Read all comments** using GitHub CLI commands above
+2. **List each issue** with line numbers and specific concerns
+3. **Address systematically** - don't jump around randomly
+4. **Test each fix** individually before committing
+5. **Group related fixes** into logical commits
+
+### 2. Commit Message Structure
+```
+Fix reviewer comments: [brief summary]
+
+- [Specific issue 1]: [what was fixed and how]
+- [Specific issue 2]: [what was fixed and how]
+- [Technical details]: Include error types fixed (AttributeError, NameError, etc.)
+
+Addresses all X reviewer comments on the PR.
+```
+
+### 3. Response Template
+```markdown
+Thank you for the thorough review! I've addressed all your comments:
+
+## 📋 **Issues Resolved**
+
+### 1. **Re: [specific issue mentioned]** ([Line X Comment](https://github.com/OWNER/REPO/pull/PR_NUMBER#issuecomment-COMMENT_ID))
+- ✅ **Fixed in commit [hash]**: [explanation of fix]
+- 🧪 **Verification**: [how to test/verify the fix]
+- 📝 **Details**: [any additional context]
+
+### 2. **Re: [next issue]** ([Line Y Comment](https://github.com/OWNER/REPO/pull/PR_NUMBER#issuecomment-COMMENT_ID))
+[Same format with specific comment backlink...]
+
+## ✅ **All Changes Tested**
+- [Testing evidence]
+- [Verification steps taken]
+- No regressions introduced
+
+The PR is ready for re-review. Please let me know if anything needs further clarification!
+```
+
+**Backlinking Examples**:
+- `([Line 16 Comment](https://github.com/dzackgarza/diss/pull/12#issuecomment-3011026363))` - Links directly to reviewer's comment
+- `([Security Issue Comment](https://github.com/owner/repo/pull/12#issuecomment-123456))` - Descriptive link text
+- `([API Comment](https://github.com/owner/repo/pull/12#issuecomment-789012))` - Short but clear reference
+
+### 4. Posting Response
+- **Draft first**: Create response in temp file for review
+- **Post response**: `gh pr comment PR_NUMBER --body-file response.md`
+- **Verify posted**: `gh pr view PR_NUMBER --comments`
+- **Clean up**: Remove temp response file
+
+## Common Reviewer Comment Patterns
+
+### Missing Imports
+- **Pattern**: "Add import X" or "NameError: name 'X' is not defined"
+- **Fix**: Add exact import specified by reviewer
+- **Test**: `python -c "from module import Class; print('Import works')"`
+- **Insight**: Reviewer likely tested the code and found this issue
+
+### Missing Test Cases
+- **Pattern**: "Consider adding test for X scenario"
+- **Fix**: Create comprehensive test covering the specific edge case
+- **Test**: Run new test to ensure it exercises the mentioned scenario
+- **Insight**: Shows understanding of reviewer's concern and improves robustness
+
+### Security Issues
+- **Pattern**: "Avoid hardcoding API keys", "Load from environment variable"
+- **Fix**: Use `os.getenv()` with proper error handling
+- **Test**: Verify environment variable loading works
+- **Insight**: Security best practices are non-negotiable
+
+### Code Duplication
+- **Pattern**: "Factor out common logic", "Extract helper method"
+- **Fix**: Create helper method to eliminate duplication
+- **Test**: Ensure refactored code maintains same functionality
+- **Insight**: Code quality and maintainability improvements
+
+## Testing Strategy for Reviewer Fixes
+
+1. **Immediate Verification**: Test each fix as you make it
+2. **New Test Creation**: Add tests for suggested scenarios
+3. **Regression Testing**: Run existing test suite
+4. **Integration Testing**: Test multi-component interactions
+5. **Edge Case Validation**: Look for related issues reviewer might have spotted
+6. **Pre-commit Validation**: Always run hooks before committing
+
+## Communication Best Practices
+
+- **Response Time**: Address comments promptly to show respect
+- **Professional Tone**: Use checkmarks (✅), clear formatting, specific references
+- **Quality Focus**: Understand underlying concerns, not just surface issues
+- **Learning Mindset**: Treat feedback as improvement opportunities
+- **Traceability**: Link each fix to specific reviewer comment
+- **Verification**: Provide concrete evidence fixes work
+
+## Example Success Pattern
+
+**PR #12 Example**:
+1. Used `gh pr view 12` and `gh api repos/dzackgarza/diss/pulls/12/comments`
+2. Retrieved exact comment IDs for backlinking to specific reviewer feedback
+3. Fixed real issues: API key security (line 16) + code duplication (line 324)
+4. Committed as "Fix actual reviewer comments: API key security and code duplication"
+5. Posted response with commit references, verification steps, AND direct comment backlinks
+6. Result: Professional response with clickable links to exact reviewer comments
+
+**Response Format Used**:
+- "Re: API key security issue ([Line 16 Comment](https://github.com/dzackgarza/diss/pull/12#issuecomment-3011026363))"
+- "Re: Code duplication ([Line 324 Comment](https://github.com/dzackgarza/diss/pull/12#issuecomment-3011026364))"
+
+**Key Learning**: Always distinguish between actual reviewer feedback and automated/low-confidence suggestions, and provide exact backlinks for maximum professionalism.
+
+## ✅ Proven Success Record
+
+This workflow has been **successfully tested and proven** with real PR reviews:
+
+**PR #12 Success Story**:
+- **Challenge**: Initially addressed wrong issues (low-confidence comments)
+- **Correction**: Used proper GitHub CLI workflow to find real reviewer feedback
+- **Implementation**: Fixed actual security and code quality issues
+- **Response**: Posted professional response with exact comment backlinks
+- **Outcome**: ✅ **Successfully merged** after demonstrating systematic, professional approach
+
+**Key Success Factors Confirmed**:
+1. **GitHub CLI over fetch_pull_request**: Essential for getting complete reviewer context
+2. **Exact Comment Backlinking**: Dramatically improves reviewer experience and trust
+3. **Systematic Issue Resolution**: Address each comment methodically with evidence
+4. **Professional Communication**: Structured responses with verification steps
+5. **Learning from Mistakes**: Correcting course when initial approach was wrong
+
+This workflow is now **battle-tested** and ready for future PR reviews.
+---

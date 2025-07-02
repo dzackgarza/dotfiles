@@ -1,0 +1,74 @@
+---
+alwaysApply: false
+description: Defines the mathematical notation standards for the project, enforcing
+  the use of custom macros and semantic notation throughout
+globs:
+- '**/*.tex'
+- '**/*.md'
+---
+
+# Mathematical Notation Standards
+
+## Critical Rule: USE DZG MACROS, NOT STANDARD LATEX
+
+**NEVER use standard LaTeX mathematical commands** when DZG macros exist. Using standard LaTeX breaks semantic consistency and violates dissertation style requirements.
+
+## Mandatory Replacements
+
+### ❌ FORBIDDEN Standard LaTeX → ✅ REQUIRED DZG Macros
+
+#### Most Critical Violations
+- `\frac{a}{b}` → `{a \over b}` (fraction syntax)
+- `\mid` → `\st` (set comprehension "such that")
+- `\mathbb{Z}`, `\mathbb{R}` → `\ZZ`, `\RR` (bold not blackboard)
+- `\langle g,h \rangle` → `\gens{g,h}` (generating sets)
+- `\hookrightarrow` → `\embeds` (semantic embedding)
+- `\twoheadrightarrow` → `\onto` (semantic surjection)
+- `\epsilon` → `\eps` (preferred epsilon)
+- `\partial` → `\del` (proper spacing)
+
+#### Common Math Objects
+- `\begin{pmatrix}` → `\matenv{...}` (matrix environments)
+- `\otimes` → `\tensor` (tensor products)
+- `\cup`, `\cap` → `\union`, `\intersect` (set operations)
+- `\setminus` → `\sm` (set minus)
+- `\coloneqq` → `\da` (defined as)
+
+#### Automatic Overrides
+The package automatically transforms:
+- `\hat{f}` → `\widehat{f}` (wide hats)
+- `\bar{X}` → `\overline{X}` (overlines)
+- `\vector{v}` → `\mathbf{v}` (bold vectors)
+
+## Before Writing Any Math
+
+1. **Check [DZG-Macros.sty](mdc:dev/tex/templates/DZG-Macros.sty)** for existing macros
+2. **Use the replacement tables** in [MATHEMATICAL_STYLE.md](mdc:MATHEMATICAL_STYLE.md)
+3. **Search existing content** for proper usage patterns
+4. **Never assume standard LaTeX is acceptable**
+
+## Examples of Correct Usage
+
+```latex
+✅ Correct DZG Style:
+- Let p \in \ZZ be prime
+- \{x \in S \st P(x)\}
+- f: X \embeds Y
+- {x+1 \over y-2}
+- \gens{g, h}
+
+❌ Wrong Standard LaTeX:
+- Let p \in \mathbb{Z} be prime
+- \{x \in S \mid P(x)\}
+- f: X \hookrightarrow Y
+- \frac{x+1}{y-2}
+- \langle g, h \rangle
+```
+
+## Key Files
+- [DZG-Macros.sty](mdc:dev/tex/templates/DZG-Macros.sty) - Complete macro definitions
+- [MATHEMATICAL_STYLE.md](mdc:MATHEMATICAL_STYLE.md) - Full replacement guide
+- [MARKDOWN_STYLE.md](mdc:MARKDOWN_STYLE.md) - Quick reference
+
+**These are mandatory style requirements for semantic consistency across the entire dissertation.**
+---

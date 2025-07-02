@@ -1,0 +1,88 @@
+---
+description: "Mandatory policy for editing Cursor project rules - always use sed or bash YAML/Markdown tools, never programmatic file editors"
+globs: [".cursor/rules/**"]
+alwaysApply: false
+---
+
+# Cursor Rules Editing Policy
+
+## Critical Rule: Use Command-Line YAML/Markdown Tools Only
+
+When editing files in `.cursor/rules/`, you **MUST** use `sed`, `yq`, Python with PyYAML, or other YAML/Markdown editing tools directly in bash. **DO NOT** use programmatic file editing APIs or editors that do not operate via shell commands.
+
+## Required Tools and Methods
+
+### ✅ APPROVED Methods:
+- **sed**: For simple text replacements in YAML headers
+- **yq**: For proper YAML manipulation (syntax varies by version)
+- **Python + PyYAML**: For complex YAML frontmatter updates
+- **awk**: For structured text processing
+- **Direct file editing**: Via command-line editors when appropriate
+
+### ❌ FORBIDDEN Methods:
+- Programmatic file editing APIs that bypass shell commands
+- Any editing method that could corrupt YAML frontmatter
+- Tools that don't understand Markdown + YAML structure
+
+## Example: Proper YAML Header Update
+
+```bash
+# Using Python + PyYAML for safe YAML editing
+python3 -c "
+import yaml
+import os
+
+# Read file
+with open('.cursor/rules/example.mdc', 'r') as f:
+    content = f.read()
+
+# Extract body (skip existing frontmatter)
+if content.startswith('---'):
+    parts = content.split('---', 2)
+    body = '---'.join(parts[2:]) if len(parts) >= 3 else content
+else:
+    body = content
+
+# Create new frontmatter
+frontmatter = {
+    'description': 'Clear description of rule purpose',
+    'globs': ['relevant/**/*.ext'],
+    'alwaysApply': False
+}
+
+# Write back
+with open('.cursor/rules/example.mdc', 'w') as f:
+    f.write('---\n')
+    yaml.dump(frontmatter, f, default_flow_style=False)
+    f.write('---')
+    f.write(body)
+"
+```
+
+## Required YAML Header Structure
+
+Every `.cursor/rules/*.mdc` file MUST have all three fields:
+
+```yaml
+---
+description: "Clear, actionable description of what this rule enforces"
+globs: ["array", "of", "file", "patterns"] # or [] for empty
+alwaysApply: true  # or false
+---
+```
+
+## Why This Policy Exists
+
+- **Compatibility**: Ensures compatibility with Cursor's rule system
+- **Format Integrity**: Prevents YAML frontmatter corruption
+- **Reliability**: Command-line tools provide predictable, repeatable results
+- **Debugging**: Shell commands are easier to troubleshoot than programmatic APIs
+
+## Enforcement
+
+This policy is enforced through:
+- [Memory storage](mdc:.cursor/rules/README.md) for all contributors
+- Documented in [.cursor/rules/README.md](mdc:.cursor/rules/README.md)
+- Required knowledge for anyone modifying Cursor rules
+
+**Violation of this policy can corrupt rule files and break the entire Cursor rules system.**

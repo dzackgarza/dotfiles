@@ -568,21 +568,6 @@ endfunction
 
 " }}}
 
-" {{{ Inkscape and Xournal handling
-function CreateInkscape()
-  let s:fig_dir = getcwd() . "/figures"
-  silent exec '!mkdir -p "' . s:fig_dir . '"'
-  let s:outfile= system('inkscape-figures.sh -d"' . s:fig_dir. '"')
-  if v:shell_error == 1
-    echo "Error: \n" . s:outfile
-  else
-    echo s:outfile
-    exe "normal! a" . s:outfile . "\<Esc>"
-  endif
-endfunction
-
-
-" }}} 
 
 function! SyntaxItem()
   return synIDattr(synID(line("."),col("."),1),"name")
@@ -621,4 +606,6 @@ autocmd BufNewFile,BufRead *.g set filetype=gap
 autocmd BufNewFile,BufRead *.g setlocal commentstring=#\ %s
 autocmd BufNewFile,BufRead *.g setlocal comments=:#
 
+
+au BufRead,BufNewFile *.mdc set filetype=markdown
 
