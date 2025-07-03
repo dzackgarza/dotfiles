@@ -5,6 +5,9 @@ if has('conceal')
   syn match texMathSymbol '\\tilde' contained conceal cchar=~
   syn match texMathSymbol '\\hat' contained conceal cchar=^
   syn match texMathSymbol '\\bar' contained conceal cchar=¯
+  syn match texMathSymbol '\\overline' contained conceal cchar=‾
+  syn match texMathSymbol '\\widehat' contained conceal cchar=̂
+  syn match texMathSymbol '\\widetilde' contained conceal cchar=~
   syn match texMathSymbol '\\homotopic' contained conceal cchar=~
   syn match texMathSymbol '\\sim' contained conceal cchar=~
   syn match texMathSymbol '\\union' contained conceal cchar=∪
@@ -43,7 +46,9 @@ if has('conceal')
   syn match texMathSymbol '\\pi' contained conceal cchar=π
   syn match texMathSymbol '\\xi' contained conceal cchar=ξ
   syn match texMathSymbol '\\chi' contained conceal cchar=𝜒
-  syn match texMathSymbol '\\eps' contained conceal cchar=ε
+  syn match texMathSymbol '\\eps\>' contained conceal cchar=ε
+  syn match texMathSymbol '\\epsilon' contained conceal cchar=ε
+  syn match texMathSymbol '\\varepsilon' contained conceal cchar=ε
   syn match texMathSymbol '\\Sigma' contained conceal cchar=𝚺
   syn match texMathSymbol '\\prod' contained conceal cchar=𝚷
   syn match texMathSymbol '\\sum' contained conceal cchar=𝚺
@@ -76,10 +81,10 @@ if has('conceal')
   syn match texMathSymbol '\\indic' contained conceal cchar=𝟙
   syn match texMathSymbol '\\id' contained conceal cchar=𝟙
   syn match texMathSymbol '\\abs' contained conceal cchar=|
-  syn match texMathSymbol '\\theset' contained conceal cchar=  
-  syn match texMathSymbol '\\qty' contained conceal cchar=  
-  syn match texMathSymbol '\\langle\>\s*' contained conceal cchar=⟨
-  syn match texMathSymbol '\s*\\rangle\>' contained conceal cchar=⟩
+  " FIXED: Removed problematic \theset and \qty rules that hide text without replacement
+  " FIXED: Simplified angle bracket rules to avoid spacing issues
+  syn match texMathSymbol '\\langle' contained conceal cchar=⟨
+  syn match texMathSymbol '\\rangle' contained conceal cchar=⟩
   syn match texMathSymbol '\\\\' contained conceal cchar=⏎
 
     " \mathbb characters
@@ -287,11 +292,14 @@ if has('conceal')
   syn match texMathSymbol '\\#' contained conceal cchar=#
   "syn match texMathSymbol '\\,' contained conceal cchar=
   "syn match texMathSymbol '\\ ' contained conceal cchar=
-  syn match texMathSymbol '\\quad' contained conceal cchar= 
+    syn match texMathSymbol '\\quad' contained conceal
   syn match texMathSymbol '\\sqrt' contained conceal cchar=√
   syn match texMathSymbol '\\not' contained conceal cchar=¬
-  syn match texMathSymbol '\\quad' contained conceal cchar=¬
-  syn match texMathSymbol '\\over' contained conceal cchar=\
+  " REMOVED duplicate \\quad rule with wrong character
+  " REMOVED problematic \\over rule - conflicts with fraction syntax {a \\over b}
+  " Better fraction handling - use regions instead of simple matches for complex commands
+  syn region texMathFrac start='\\frac{' end='}' contained transparent contains=texMathSymbol
+  syn region texMathOver start='{[^}]*\\over' end='}' contained transparent contains=texMathSymbol
   "syn match texMathSymbol '\\suchthat' contained conceal cchar=϶
   syn match texMathSymbol '\\suchthat\>' contained conceal cchar=|
   syn match texMathSymbol '\\divides' contained conceal cchar=|
