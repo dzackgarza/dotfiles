@@ -1,0 +1,611 @@
+#!/usr/bin/env python3
+"""
+Gemini-CLI style REPL chat interface with Prompt Toolkit and dotenv support
+Of course.
+
+### **Gemini-CLI Research Assistant: Feature Roadmap**
+
+#### **Core Experience & Foundation**
+*   **Rich Terminal Rendering:** Implement support for rendering Markdown, tables, syntax-highlighted code, and LaTeX directly in the terminal.
+*   **Advanced Input:** Add a multi-line input mode for long prompts and context-aware autocompletion for commands and arguments.
+*   **Streaming Responses:** Display LLM responses token-by-token for improved responsiveness.
+*   **Persistent SQLite History:** Save command history to a local database for persistence and full-text search across sessions.
+*   **Full Session Management:** Implement commands to save, load, list, and fork chat sessions, preserving history, settings, and context.
+
+#### **Integration Layer**
+*   **Deep Jupyter Integration:**
+    *   Connect to a running Jupyter kernel for sandboxed code execution.
+    *   Send code blocks from the LLM or user to the kernel for evaluation.
+    *   Maintain a persistent variable state within the kernel for the session's duration.
+    *   Capture and display rich outputs like Matplotlib plots directly in the terminal or as saved files.
+*   **Mathematical Computation Protocol (MCP) Server Compatibility:**
+    *   Integrate a local **SymPy** engine for fast, accurate symbolic mathematics (`\sympy`).
+    *   Add support for connecting to a **SageMath** server for advanced mathematical domains (`\sage`).
+    *   Integrate with the **Wolfram|Alpha API** for natural language computation and curated data (`\wa`).
+
+#### **Intelligence and Research Workflow**
+*   **Natural Language Command Layer:**
+    *   Use a preliminary LLM call to screen user input for "intent" to run a built-in command.
+    *   Automatically dispatch to the correct function (e.g., changing models, exporting chat) based on the user's natural language request, instead of requiring explicit `\` commands.
+*   **Automated Prompt Optimization:**
+    *   Implement an optional pre-processing step that uses an LLM to refine and enhance the user's prompt.
+    *   This "meta-prompt" will be tailored to the specific model in use to improve the quality and rigor of mathematical responses.
+*   **PDF Corpus Management (RAG):**
+    *   Add commands to ingest a corpus of PDF research papers into a local vector database.
+    *   Automatically retrieve and inject relevant text chunks from the corpus into the context for every prompt.
+    *   Allow explicit searching and querying of the loaded research papers.
+
+#### **Advanced Extensibility & Self-Modification**
+*   **LLM-Driven Self-Extensibility:**
+    *   Create a `\def_cmd` command that takes a natural language description and uses an LLM to generate the Python code for a new command.
+*   **Sandboxed Execution & Iteration:**
+    *   Execute newly generated command code in a secure, sandboxed environment to prevent system instability.
+    *   If the code fails, automatically feed the error message back to the LLM to get a corrected version, iterating until the command runs successfully.
+*   **Hot-Reloading and Plugin Management:**
+    *   Dynamically load custom commands from a user-managed plugin directory without restarting the REPL.
+    *   Implement a command lifecycle to promote stable, user-verified commands for more trusted execution (`\promote_cmd`).
+
+"""
+
+import asyncio
+import json
+import os
+import random
+import time
+from datetime import datetime
+from typing import List, Dict, Any, Optional
+from dataclasses import dataclass
+from enum import Enum
+from pathlib import Path
+
+import aiohttp
+from prompt_toolkit import PromptSession
+from prompt_toolkit.application import Application
+from prompt_toolkit.key_binding import KeyBindings
+from prompt_toolkit.layout.containers import HSplit, Window
+from prompt_toolkit.layout.controls import BufferControl, FormattedTextControl
+from prompt_toolkit.layout.layout import Layout
+from prompt_toolkit.buffer import Buffer
+from prompt_toolkit.formatted_text import FormattedText, HTML
+from prompt_toolkit.shortcuts import print_formatted_text
+from prompt_toolkit.styles import Style
+from prompt_toolkit.completion import WordCompleter
+from prompt_toolkit.history import InMemoryHistory
+from rich.console import Console
+from rich.markdown import Markdown
+from rich.syntax import Syntax
+import re
+
+# Import dotenv for loading environment variables
+try:
+    from dotenv import load_dotenv
+    DOTENV_AVAILABLE = True
+except ImportError:
+    DOTENV_AVAILABLE = False
+
+class MessageType(Enum):
+    USER = "user"
+    ASSISTANT = "assistant"
+    SYSTEM = "system"
+    COMMAND = "command"
+
+@dataclass
+class Message:
+    type: MessageType
+    content: str
+    timestamp: datetime
+    metadata: Optional[Dict[str, Any]] = None
+
+class ChatREPL:
+    def __init__(self):
+        self.messages: List[Message] = []
+        self.session_active = True
+        self.current_model = "gemini-2.0-flash"  # High rate limits: 15 RPM, 1M TPM
+        self.temperature = 0.7
+        self.max_tokens = 1024
+        
+        # Load environment variables from ~/.env file
+        self.load_env_file()
+        
+        self.api_key = os.getenv('GEMINI_API_KEY')
+        
+        if not self.api_key:
+            raise ValueError("GEMINI_API_KEY environment variable is required")
+        
+        self.base_url = "https://generativelanguage.googleapis.com/v1beta/models"
+        
+        # Available models with their rate limits (Free tier)
+        self.available_models = {
+            "gemini-2.0-flash": {"rpm": 15, "tpm": 1000000, "rpd": 1500},
+            "gemini-1.5-flash": {"rpm": 15, "tpm": 1000000, "rpd": 1500},
+            "gemini-1.5-flash-8b": {"rpm": 15, "tpm": 1000000, "rpd": 1500},
+            "gemini-1.5-pro": {"rpm": 2, "tpm": 32000, "rpd": 50},
+            "gemini-2.0-flash-experimental": {"rpm": 10, "tpm": 1000000, "rpd": 1500},
+        }
+        
+        # Command completions
+        self.command_completer = WordCompleter([
+            '\\help', '\\clear', '\\history', '\\model', '\\models', '\\temperature', 
+            '\\tokens', '\\reset', '\\export', '\\quit', '\\exit', '\\limits', '\\env'
+        ])
+        
+        self.setup_style()
+        self.setup_session()
+        self.add_welcome_message()
+        self.console = Console()
+    
+    def load_env_file(self):
+        """Load environment variables from ~/.env file"""
+        home_dir = Path.home()
+        env_file = home_dir / ".env"
+        
+        if DOTENV_AVAILABLE:
+            if env_file.exists():
+                load_dotenv(env_file)
+                print_formatted_text(
+                    FormattedText([('class:success', f'✓ Loaded environment variables from {env_file}')]),
+                    style=Style.from_dict({'success': '#00aa00'})
+                )
+            else:
+                print_formatted_text(
+                    FormattedText([('class:system', f'ℹ️ No .env file found at {env_file}')]),
+                    style=Style.from_dict({'system': '#888888'})
+                )
+                
+                # Create a sample .env file
+                try:
+                    with open(env_file, 'w') as f:
+                        f.write("# Gemini API Configuration\n")
+                        f.write("# Get your API key from: https://ai.google.dev/\n")
+                        f.write("GEMINI_API_KEY=your_api_key_here\n")
+                        f.write("\n# Optional: Other API keys\n")
+                        f.write("# OPENAI_API_KEY=your_openai_key_here\n")
+                        f.write("# ANTHROPIC_API_KEY=your_anthropic_key_here\n")
+                    
+                    print_formatted_text(
+                        FormattedText([('class:success', f'✓ Created sample .env file at {env_file}')]),
+                        style=Style.from_dict({'success': '#00aa00'})
+                    )
+                    print_formatted_text(
+                        FormattedText([('class:system', 'Please edit the .env file and add your API key.')]),
+                        style=Style.from_dict({'system': '#888888'})
+                    )
+                except Exception as e:
+                    print_formatted_text(
+                        FormattedText([('class:error', f'❌ Could not create .env file: {e}')]),
+                        style=Style.from_dict({'error': '#cc0000 bold'})
+                    )
+        else:
+            print_formatted_text(
+                FormattedText([('class:system', '⚠️ python-dotenv not installed. Using system environment variables only.')]),
+                style=Style.from_dict({'system': '#888888'})
+            )
+            print_formatted_text(
+                FormattedText([('class:system', 'Install with: pip install python-dotenv')]),
+                style=Style.from_dict({'system': '#888888'})
+            )
+    
+    def setup_style(self):
+        """Configure the styling for the interface"""
+        self.style = Style.from_dict({
+            'user': '#00aa00 bold',
+            'assistant': '#0066cc',
+            'system': '#888888 italic',
+            'command': '#cc6600 bold',
+            'timestamp': '#666666',
+            'prompt': '#00aa00 bold',
+            'error': '#cc0000 bold',
+            'success': '#00aa00',
+        })
+    
+    def setup_session(self):
+        """Initialize the prompt session"""
+        self.history = InMemoryHistory()
+        self.session = PromptSession(
+            history=self.history,
+            completer=self.command_completer,
+            complete_while_typing=True,
+            style=self.style
+        )
+    
+    def add_welcome_message(self):
+        """Add welcome message to start the session"""
+        dotenv_status = "✓ Available" if DOTENV_AVAILABLE else "✗ Not installed"
+        env_file_path = Path.home() / ".env"
+        env_file_status = "✓ Found" if env_file_path.exists() else "✗ Not found"
+        
+        welcome_msg = f"""Welcome to Gemini-CLI REPL Chat!
+
+Available commands:
+  \\help     - Show this help message
+  \\clear    - Clear chat history
+  \\history  - Show message history
+  \\model    - Show/set current model
+  \\models   - List available models and rate limits
+  \\temperature - Show/set temperature (0.0-1.0)
+  \\tokens   - Show/set max tokens
+  \\limits   - Show current model rate limits
+  \\env      - Show environment configuration
+  \\reset    - Reset all settings to defaults
+  \\export   - Export chat history
+  \\quit, \\exit - Exit the application
+
+Current model: {self.current_model}
+API Key: {'✓ Set' if self.api_key else '✗ Missing'}
+python-dotenv: {dotenv_status}
+~/.env file: {env_file_status}
+
+Type your message and press Enter to chat!
+"""
+        self.add_message(MessageType.SYSTEM, welcome_msg)
+    
+    def add_message(self, msg_type: MessageType, content: str, metadata: Optional[Dict] = None):
+        """Add a message to the chat history"""
+        message = Message(
+            type=msg_type,
+            content=content,
+            timestamp=datetime.now(),
+            metadata=metadata or {}
+        )
+        self.messages.append(message)
+    
+    def format_message(self, message: Message) -> FormattedText:
+        """Format a message for display"""
+        timestamp = message.timestamp.strftime("%H:%M:%S")
+        
+        if message.type == MessageType.USER:
+            return FormattedText([
+                ('class:timestamp', f'[{timestamp}] '),
+                ('class:user', 'You: '),
+                ('', message.content)
+            ])
+        elif message.type == MessageType.ASSISTANT:
+            return FormattedText([
+                ('class:timestamp', f'[{timestamp}] '),
+                ('class:assistant', 'Assistant: '),
+                ('', message.content)
+            ])
+        elif message.type == MessageType.COMMAND:
+            return FormattedText([
+                ('class:timestamp', f'[{timestamp}] '),
+                ('class:command', 'Command: '),
+                ('', message.content)
+            ])
+        else:  # SYSTEM
+            return FormattedText([
+                ('class:timestamp', f'[{timestamp}] '),
+                ('class:system', message.content)
+            ])
+    
+    def render_markdown_with_code(self, text: str):
+        """Render markdown with syntax-highlighted code blocks using rich."""
+        code_block_pattern = re.compile(r'```(\w+)?\n([\s\S]*?)```', re.MULTILINE)
+        last_end = 0
+        for match in code_block_pattern.finditer(text):
+            # Print markdown before the code block
+            if match.start() > last_end:
+                md_chunk = text[last_end:match.start()]
+                if md_chunk.strip():
+                    self.console.print(Markdown(md_chunk))
+            lang = match.group(1) or "python"
+            code = match.group(2)
+            self.console.print(Syntax(code, lang, theme="monokai", line_numbers=False))
+            last_end = match.end()
+        # Print any remaining markdown after the last code block
+        if last_end < len(text):
+            md_chunk = text[last_end:]
+            if md_chunk.strip():
+                self.console.print(Markdown(md_chunk))
+
+    def display_messages(self):
+        """Display all messages in the chat, with markdown/code formatting for assistant."""
+        print("\n" + "="*60)
+        for message in self.messages[-20:]:  # Show last 20 messages
+            if message.type == MessageType.ASSISTANT:
+                timestamp = message.timestamp.strftime("%H:%M:%S")
+                self.console.print(f"[bold blue][{timestamp}] Assistant:[/bold blue]")
+                self.render_markdown_with_code(message.content)
+            else:
+                print_formatted_text(self.format_message(message), style=self.style)
+        print("="*60 + "\n")
+    
+    async def call_gemini_api(self, query: str) -> str:
+        """Make a real API call to Gemini"""
+        url = f"{self.base_url}/{self.current_model}:generateContent"
+        
+        headers = {
+            "Content-Type": "application/json",
+        }
+        
+        # Build conversation context from recent messages
+        conversation_context = []
+        
+        # Add recent user/assistant messages for context (last 10 exchanges)
+        recent_messages = [msg for msg in self.messages[-20:] 
+                          if msg.type in [MessageType.USER, MessageType.ASSISTANT]]
+        
+        for msg in recent_messages:
+            role = "user" if msg.type == MessageType.USER else "model"
+            conversation_context.append({
+                "role": role,
+                "parts": [{"text": msg.content}]
+            })
+        
+        # Add the current query
+        conversation_context.append({
+            "role": "user",
+            "parts": [{"text": query}]
+        })
+        
+        payload = {
+            "contents": conversation_context,
+            "generationConfig": {
+                "temperature": self.temperature,
+                "maxOutputTokens": self.max_tokens,
+                "topP": 0.95,
+                "topK": 40
+            }
+        }
+        
+        params = {
+            "key": self.api_key
+        }
+        
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.post(url, json=payload, headers=headers, params=params) as response:
+                    if response.status == 200:
+                        data = await response.json()
+                        
+                        # Extract the response text
+                        if "candidates" in data and len(data["candidates"]) > 0:
+                            candidate = data["candidates"][0]
+                            if "content" in candidate and "parts" in candidate["content"]:
+                                return candidate["content"]["parts"][0]["text"]
+                        
+                        return "Sorry, I couldn't generate a response."
+                    
+                    elif response.status == 429:
+                        return "⚠️ Rate limit exceeded. Please wait a moment before trying again."
+                    
+                    elif response.status == 400:
+                        error_text = await response.text()
+                        return f"⚠️ API Error: {error_text}"
+                    
+                    else:
+                        return f"⚠️ API Error: HTTP {response.status}"
+                        
+        except aiohttp.ClientError as e:
+            return f"⚠️ Network error: {str(e)}"
+        except Exception as e:
+            return f"⚠️ Unexpected error: {str(e)}"
+    
+    async def handle_command(self, command: str) -> bool:
+        """Handle backslash commands. Returns True if app should continue."""
+        command = command.strip()
+        
+        if command in ['\\quit', '\\exit']:
+            self.add_message(MessageType.SYSTEM, "Goodbye!")
+            return False
+        
+        elif command == '\\help':
+            help_text = f"""Available commands:
+  \\help     - Show this help message
+  \\clear    - Clear chat history
+  \\history  - Show message history
+  \\model    - Show/set current model
+  \\models   - List available models and rate limits
+  \\temperature - Show/set temperature (0.0-1.0)
+  \\tokens   - Show/set max tokens
+  \\limits   - Show current model rate limits
+  \\env      - Show environment configuration
+  \\reset    - Reset all settings to defaults
+  \\export   - Export chat history
+  \\quit, \\exit - Exit the application
+
+Current model: {self.current_model}
+API Key: {'✓ Set' if self.api_key else '✗ Missing'}"""
+            self.add_message(MessageType.SYSTEM, help_text)
+        
+        elif command == '\\env':
+            dotenv_status = "✓ Available" if DOTENV_AVAILABLE else "✗ Not installed"
+            env_file_path = Path.home() / ".env"
+            env_file_status = "✓ Found" if env_file_path.exists() else "✗ Not found"
+            
+            env_vars = []
+            for key in ['GEMINI_API_KEY', 'OPENAI_API_KEY', 'ANTHROPIC_API_KEY']:
+                value = os.getenv(key)
+                if value:
+                    # Show only first 8 and last 4 characters for security
+                    masked_value = f"{value[:8]}...{value[-4:]}" if len(value) > 12 else "***"
+                    env_vars.append(f"  {key}: {masked_value}")
+                else:
+                    env_vars.append(f"  {key}: Not set")
+            
+            env_text = f"""Environment Configuration:
+python-dotenv: {dotenv_status}
+~/.env file: {env_file_status} ({env_file_path})
+
+Environment Variables:
+{chr(10).join(env_vars)}
+
+To set up your API key:
+1. Edit ~/.env file
+2. Add: GEMINI_API_KEY=your_api_key_here
+3. Restart the application"""
+            
+            self.add_message(MessageType.SYSTEM, env_text)
+        
+        elif command == '\\models':
+            models_text = "Available models and rate limits (Free tier):\n"
+            for model, limits in self.available_models.items():
+                current = " (current)" if model == self.current_model else ""
+                models_text += f"  {model}{current}\n"
+                models_text += f"    RPM: {limits['rpm']}, TPM: {limits['tpm']:,}, RPD: {limits['rpd']}\n"
+            self.add_message(MessageType.SYSTEM, models_text)
+        
+        elif command == '\\limits':
+            if self.current_model in self.available_models:
+                limits = self.available_models[self.current_model]
+                limits_text = f"Rate limits for {self.current_model}:\n"
+                limits_text += f"  Requests per minute: {limits['rpm']}\n"
+                limits_text += f"  Tokens per minute: {limits['tpm']:,}\n"
+                limits_text += f"  Requests per day: {limits['rpd']}"
+                self.add_message(MessageType.SYSTEM, limits_text)
+            else:
+                self.add_message(MessageType.SYSTEM, f"No limit info available for {self.current_model}")
+        
+        elif command == '\\clear':
+            self.messages.clear()
+            self.add_message(MessageType.SYSTEM, "Chat history cleared.")
+        
+        elif command == '\\history':
+            count = len(self.messages)
+            self.add_message(MessageType.SYSTEM, f"Chat history: {count} messages")
+        
+        elif command == '\\model':
+            self.add_message(MessageType.SYSTEM, f"Current model: {self.current_model}")
+        
+        elif command.startswith('\\model '):
+            new_model = command[7:].strip()
+            self.current_model = new_model
+            self.add_message(MessageType.SYSTEM, f"Model changed to: {self.current_model}")
+        
+        elif command == '\\temperature':
+            self.add_message(MessageType.SYSTEM, f"Current temperature: {self.temperature}")
+        
+        elif command.startswith('\\temperature '):
+            try:
+                temp = float(command[13:].strip())
+                if 0.0 <= temp <= 1.0:
+                    self.temperature = temp
+                    self.add_message(MessageType.SYSTEM, f"Temperature set to: {self.temperature}")
+                else:
+                    self.add_message(MessageType.SYSTEM, "Temperature must be between 0.0 and 1.0")
+            except ValueError:
+                self.add_message(MessageType.SYSTEM, "Invalid temperature value")
+        
+        elif command == '\\tokens':
+            self.add_message(MessageType.SYSTEM, f"Max tokens: {self.max_tokens}")
+        
+        elif command.startswith('\\tokens '):
+            try:
+                tokens = int(command[8:].strip())
+                if tokens > 0:
+                    self.max_tokens = tokens
+                    self.add_message(MessageType.SYSTEM, f"Max tokens set to: {self.max_tokens}")
+                else:
+                    self.add_message(MessageType.SYSTEM, "Max tokens must be positive")
+            except ValueError:
+                self.add_message(MessageType.SYSTEM, "Invalid token value")
+        
+        elif command == '\\reset':
+            self.current_model = "gemini-1.5-pro"
+            self.temperature = 0.7
+            self.max_tokens = 1024
+            self.add_message(MessageType.SYSTEM, "Settings reset to defaults")
+        
+        elif command == '\\export':
+            filename = f"chat_export_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
+            try:
+                with open(filename, 'w', encoding='utf-8') as f:
+                    f.write("# Gemini-CLI Chat Export\n")
+                    f.write(f"# Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+                    f.write(f"# Model: {self.current_model}\n")
+                    f.write(f"# Temperature: {self.temperature}\n")
+                    f.write(f"# Max Tokens: {self.max_tokens}\n\n")
+                    
+                    for message in self.messages:
+                        timestamp = message.timestamp.strftime('%Y-%m-%d %H:%M:%S')
+                        f.write(f"[{timestamp}] {message.type.value.upper()}: {message.content}\n\n")
+                
+                self.add_message(MessageType.SYSTEM, f"✓ Chat exported to: {filename}")
+            except Exception as e:
+                self.add_message(MessageType.SYSTEM, f"❌ Export failed: {e}")
+        
+        else:
+            self.add_message(MessageType.SYSTEM, f"Unknown command: {command}")
+        
+        return True
+    
+    async def run(self):
+        """Main REPL loop"""
+        print_formatted_text(
+            HTML('<style fg="ansigreen" bg="">🤖 Gemini-CLI REPL Chat Started</style>'),
+            style=self.style
+        )
+        
+        while self.session_active:
+            try:
+                # Display recent messages
+                self.display_messages()
+                
+                # Get user input
+                user_input = await self.session.prompt_async(
+                    FormattedText([('class:prompt', '> ')]),
+                    style=self.style
+                )
+                
+                if not user_input.strip():
+                    continue
+                
+                # Handle commands
+                if user_input.startswith('\\'):
+                    self.add_message(MessageType.COMMAND, user_input)
+                    should_continue = await self.handle_command(user_input)
+                    if not should_continue:
+                        break
+                    continue
+                
+                # Handle regular chat
+                self.add_message(MessageType.USER, user_input)
+                
+                # Show "thinking" indicator
+                print_formatted_text(
+                    FormattedText([('class:system', '🤔 Thinking...')]),
+                    style=self.style
+                )
+                
+                # Get real Gemini API response
+                response = await self.call_gemini_api(user_input)
+                self.add_message(MessageType.ASSISTANT, response)
+                
+            except KeyboardInterrupt:
+                print_formatted_text(
+                    FormattedText([('class:system', '\nUse \\quit or \\exit to exit gracefully.')]),
+                    style=self.style
+                )
+                continue
+            except EOFError:
+                break
+        
+        print_formatted_text(
+            HTML('<style fg="ansigreen">👋 Thanks for using Gemini-CLI REPL Chat!</style>'),
+            style=self.style
+        )
+
+async def main():
+    """Entry point for the application"""
+    try:
+        chat = ChatREPL()
+        await chat.run()
+    except ValueError as e:
+        print_formatted_text(
+            FormattedText([('class:error', f'❌ Error: {e}')]),
+            style=Style.from_dict({'error': '#cc0000 bold'})
+        )
+        print_formatted_text(
+            FormattedText([('class:system', 'Please set the GEMINI_API_KEY in your ~/.env file.')]),
+            style=Style.from_dict({'system': '#888888'})
+        )
+        print_formatted_text(
+            FormattedText([('class:system', 'Get your API key from: https://ai.google.dev/')]),
+            style=Style.from_dict({'system': '#888888'})
+        )
+        print_formatted_text(
+            FormattedText([('class:system', 'Install python-dotenv with: pip install python-dotenv')]),
+            style=Style.from_dict({'system': '#888888'})
+        )
+
+if __name__ == "__main__":
+    asyncio.run(main())

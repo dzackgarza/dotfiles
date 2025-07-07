@@ -55,7 +55,7 @@ set dictionary=~/dotfiles/dictionaries/corpus.add
 set spellfile=~/dotfiles/dictionaries/corpus.add
 
 " Use your comprehensive base dictionary for spell suggestions
-set spelllang=en_us
+set spelllang=en
 set spell
 set spellsuggest=best,9
 
@@ -373,19 +373,20 @@ set scrolloff=8 " Keep 8 lines visible above/below cursor
 
 " Concealing for cleaner text - FIXED for better editing experience
 set conceallevel=2
-set concealcursor=    " CRITICAL: conceals disappear when cursor is on the line (enables proper editing)
+set concealcursor=""    " CRITICAL: Use empty string. conceals disappear when cursor is on the line (enables proper editing)
 hi clear Conceal
 hi Normal guibg=NONE ctermbg=NONE
 
 " Additional conceal settings for math files
-autocmd FileType tex,markdown,pandoc setlocal concealcursor=
-autocmd FileType tex,markdown,pandoc setlocal conceallevel=2
+autocmd FileType tex,markdown,pandoc setlocal concealcursor=""
 
-" Folding
+" Folding - Clean separation between global and markdown-specific
 set foldmethod=marker
 set foldcolumn=3
 set foldlevel=2
-let g:markdown_folding = 1
+
+" Markdown gets its own folding method - fenced divs only
+let g:markdown_folding = 0  " Disable default markdown folding
 
 " Statusline
 set statusline=%F " Show file path
@@ -418,8 +419,9 @@ nnoremap <silent> <Leader>f :Ag <C-R><C-W><CR> " Search for word under cursor
 nnoremap <Leader>w :w<CR>               " Write
 nnoremap <Leader>o o<Esc>k              " Insert new line below
 nnoremap <Leader>O O<Esc>j              " Insert new line above
+nnoremap <leader>ci gcip                " Comment out inner paragraph
 " nnoremap <Leader>c :let &cole=(&cole == 2) ? 0 : 2<CR> " Toggle conceal
-nnoremap <Leader>ll :let @+=expand("%:p")<CR> " Copy file path
+nnoremap <Leader>ll :call expand("%:p")<CR> " Copy file path
 nnoremap <leader>? :call ShowCustomCommands()<CR>  " Show all custom commands/shortcuts
 nnoremap <leader>help :call ShowCustomCommands()<CR> " Show help popup
 nnoremap <leader>fc :FixConceal<CR>     " Fix conceal rules
@@ -427,6 +429,9 @@ nnoremap <leader>dc :DebugConceal<CR>   " Debug conceal issues
 nnoremap <leader>cc :let &cole=(&cole == 2) ? 0 : 2<CR> " Toggle conceal level
 nnoremap <leader>vc :ValidateConceal<CR> " Validate conceal rules for conflicts
 nnoremap <leader>tc :TestConcealFixes<CR> " Test conceal fixes with sample math
+nnoremap <leader>tf :TestFolding<CR>    " Test fenced div folding
+nnoremap <leader>tF :DemoFoldText<CR>   " Demo beautiful fold text
+nnoremap <leader>td :DebugFoldText<CR>  " Debug fold text parsing
 
 " Navigation
 nnoremap <silent> [[ ?^\:\:\:{<CR> " Jump to previous pandoc divider
@@ -445,9 +450,37 @@ nnoremap <silent> <Leader>ga /\$\$<cr>Nxxwvnk$"+dknxxi\[<esc>"+p<esc>o.\]<esc>
 " Workflow Mappings
 nmap <silent> <leader>qp :call PasteQuiverDiagram()<CR>
 
+" Commentary mappings for commenting code
+nnoremap <leader>ci gcip
+vnoremap <leader>ci :Commentary<cr>
+
 " }}}
 
 " --- Custom Functions {{{
+
+function! FencedDivFold(lnum)
+  let line = getline(a:lnum)
+
+  " Only fold fenced divs - nothing else
+  if line =~ '^:::{.*'
+    return '>1'
+  elseif line =~ '^:::$'
+    return '<1'
+  endif
+
+  " Everything else maintains current fold level
+  return '='
+endfunction
+
+" Fix screen rendering issues from conceal/fold interactions
+function! FixScreenRendering()
+  redraw!
+  syntax sync fromstart
+  echo "Screen redrawn."
+endfunction
+
+command! FixRedraw call FixScreenRendering()
+nnoremap <leader>redraw :FixRedraw<CR>
 
 " Jump between closed folds
 function! NextClosedFold(dir)
@@ -484,8 +517,8 @@ function! s:pandocSyntax()
   syntax match DZGTitleConc /title=\"[^\"]*\"/ contained conceal
   syntax match DZGTitleConc /title='[^']*'/ contained conceal
 
-  " Enhanced fenced div regions that preserve math zones
-  syn region DZGFencedDiv start='^:::{' end='^:::$' transparent fold contains=DZGFenceDivAttrBlock,DZGMetaBlock,DZGFenceConc,pandocLaTeXMathBlock,pandocLaTeXInlineMath,@texMathZoneGroup
+  " Enhanced fenced div regions that preserve math zones - NO FOLD ATTRIBUTE
+  syn region DZGFencedDiv start='^:::{' end='^:::$' transparent contains=DZGFenceDivAttrBlock,DZGMetaBlock,DZGFenceConc,pandocLaTeXMathBlock,pandocLaTeXInlineMath,@texMathZoneGroup
   syn region DZGFenceDivAttrBlock start='^:::{' end='^$\|^```\|}$\|^[^ .#]' keepend contains=DZGFenceConc,DZGFenceDivClassPrefix,DZGClassName,DZGTitleAttr,DZGTitlePrefix,DZGTitleValue,DZGIdDefPrefix,DZGIdDefValue,DZGIdThmPrefix,DZGIdThmValue,DZGIdRemPrefix,DZGIdRemValue,DZGClassAttr,DZGFenceDivAttrClose
   syn region DZGMetaBlock start='^```meta' end='^```$' keepend contains=@DZGYamlAll,DZGMetaDelimiter
 
@@ -558,8 +591,7 @@ function! s:pandocSyntax()
 
   " Attribute tag matches for highlighting and conceal
   syntax match DZGTitleAttr /title=/ contained
-  syntax match DZGTitlePrefix /title=/ contained conceal
-  syntax match DZGTitleValue /"[^"]*"/ contained
+  syntax match DZGTitlePrefix /title=/ contained conceal cchar=🏷️
 
   syntax match DZGIdDefPrefix /#def:/ contained conceal cchar=🏷️
   syntax match DZGIdDefValue /#def:\zs[a-zA-Z0-9_:-]\+/ contained
@@ -593,7 +625,6 @@ endfunction
   "return ref
 "endfunction
 "inoremap <C-r> <C-r>=ZoteroCite()<CR>
-"inoremap <expr> <c-x><c-m> fzf#vim#complete("find_all_latex_labels.sh")
 
 
 " Legacy math conversion
@@ -654,6 +685,7 @@ function! ShowCustomCommands()
       if mapping !~ '^\s*$' " Skip empty lines
         call add(commands, printf("%-12s │ %s │ Line %d", "MAPPING", mapping, line_num))
       endif
+
     endif
 
     " Extract function definitions
@@ -778,6 +810,21 @@ au FileType voomtree syntax match someCustomes /\$\\done\$/ conceal cchar=✨
 " When opening a markdown file, open the VOoM outliner
 autocmd VimEnter *.md Voom pandoc
 
+" NEW: Unified Markdown Folding
+augroup CleanMarkdownFolding
+  autocmd!
+  " Set folding method for markdown files
+  autocmd FileType markdown,pandoc,markdown.pandoc setlocal foldmethod=expr
+  autocmd FileType markdown,pandoc,markdown.pandoc setlocal foldexpr=FencedDivFold(v:lnum)
+  autocmd FileType markdown,pandoc,markdown.pandoc setlocal foldtext=FencedDivFoldText()
+augroup END
+
+" --- HTML Comment Folding for Markdown ---
+" THIS IS NOW HANDLED BY UnifiedMarkdownFolding and can be removed
+" function! HtmlCommentFoldExpr(lnum) ...
+" augroup markdown_html_comment_folding ...
+" ... existing code ...
+
 " }}}
 
 " --- Abbreviations {{{
@@ -858,7 +905,7 @@ function! LoadTexConcealRules()
     runtime! after/syntax/tex.vim
     " Enable concealing for math symbols
     setlocal conceallevel=2
-    setlocal concealcursor=    " FIXED: conceals disappear when cursor is on line
+    setlocal concealcursor=""    " FIXED: Use empty string. conceals disappear when cursor is on line
   endif
 endfunction
 
@@ -875,7 +922,7 @@ function! FixConcealRules()
   if &filetype == 'tex' || &filetype == 'markdown' || &filetype == 'pandoc'
     runtime! syntax/tex.vim
     runtime! after/syntax/tex.vim
-    setlocal concealcursor=
+    setlocal concealcursor=""
     setlocal conceallevel=2
     echo "Conceal rules reloaded and settings fixed"
   else
@@ -952,7 +999,7 @@ function! TestConcealFixes()
 
   " Apply our conceal settings
   setlocal conceallevel=2
-  setlocal concealcursor=
+  setlocal concealcursor=""
 
   " Load conceal rules
   call LoadTexConcealRules()
@@ -969,5 +1016,341 @@ function! TestConcealFixes()
   echo "   • Press <leader>cc to toggle concealing completely"
   echo ""
   echo "📍 Place cursor on line 3 and test!"
+endfunction
+
+" Custom fold text disabled - using default for simplicity
+" function! MarkdownFoldText()
+"   let line = getline(v:foldstart)
+"   if line =~ '^#\+'
+"     let level = strlen(matchstr(line, '^#\+'))
+"     let prefix = repeat('§', level) . ' '
+"     let header = substitute(line, '^#\+\s*', '', '')
+"     let text = prefix . header . ' '
+"     let width = &columns - 2
+"     let pad = width - strwidth(text)
+"     let left = repeat('=', float2nr(pad/2))
+"     let right = repeat('=', pad - float2nr(pad/2))
+"     return left . text . right
+"   else
+"     return foldtext()
+"   endif
+" endfunction
+
+" augroup markdown_fold_hrule
+"   autocmd!
+"   autocmd FileType markdown setlocal foldtext=MarkdownFoldText()
+" augroup END
+
+function! FoldAllFencedDivs()
+  let lnum = 1
+  while lnum <= line('$')
+    if foldlevel(lnum) > 0 && foldclosed(lnum) < 0
+      execute lnum . "normal! zc"
+      let lnum = foldclosedend(lnum) + 1
+    else
+      let lnum += 1
+    endif
+  endwhile
+endfunction
+
+command! FoldFencedDivs call FoldAllFencedDivs()
+
+nnoremap <leader>fd :FoldFencedDivs<CR>
+
+function! FoldOnlyFencedDivs()
+  let lnum = 1
+  while lnum <= line('$')
+    if foldlevel(lnum) > 0 && foldclosed(lnum) < 0
+      let syn = synIDattr(synID(lnum, 1, 1), 'name')
+      if syn ==# 'DZGFencedDiv'
+        execute lnum . "normal! zc"
+        let lnum = foldclosedend(lnum) + 1
+        continue
+      endif
+    endif
+    let lnum += 1
+  endwhile
+endfunction
+
+command! FoldFencedDivsOnly call FoldOnlyFencedDivs()
+
+nnoremap <leader>fv :FoldFencedDivsOnly<CR>
+
+function! DiagnoseFencedDivs()
+  echo "=== FENCED DIV DIAGNOSTICS ==="
+  echo "Current buffer: " . bufname('%')
+  echo "Filetype: " . &filetype
+  echo "Fold method: " . &foldmethod
+  echo "Fold expr: " . &foldexpr
+
+  " Search for all fenced div starts
+  let fenced_starts = []
+  let lnum = 1
+  while lnum <= line('$')
+    let line_text = getline(lnum)
+    if line_text =~ '^:::{' || line_text =~ '^:::'
+      call add(fenced_starts, lnum)
+    endif
+    let lnum += 1
+  endwhile
+
+  echo "\n== Found " . len(fenced_starts) . " potential fenced divs =="
+
+  " Analyze each fenced div
+  for start_line in fenced_starts
+    echo "\n--- Fenced Div at line " . start_line . " ---"
+    echo "Line content: " . getline(start_line)
+
+    " Check fold properties
+    echo "Fold level: " . foldlevel(start_line)
+    echo "Is fold start: " . (foldlevel(start_line) > foldlevel(start_line - 1) ? "YES" : "NO")
+    echo "Is closed: " . (foldclosed(start_line) > -1 ? "YES" : "NO")
+
+    " Check syntax groups
+    let all_groups = []
+    let found_fenced_div_group = 0
+    for col in range(1, len(getline(start_line)))
+      let syn_id = synID(start_line, col, 1)
+      let syn_name = synIDattr(syn_id, 'name')
+      if syn_name != '' && index(all_groups, syn_name) == -1
+        call add(all_groups, syn_name)
+        if syn_name =~ 'DZGFencedDiv' || syn_name =~ 'Fenced'
+          let found_fenced_div_group = 1
+        endif
+      endif
+    endfor
+
+    echo "Syntax groups: " . join(all_groups, ', ')
+    echo "Found fenced div syntax group: " . (found_fenced_div_group ? "YES" : "NO")
+
+    " Try to find fold end
+    let fold_end = foldclosedend(start_line)
+    if fold_end > 0
+      echo "Fold ends at line: " . fold_end
+      echo "Fold size: " . (fold_end - start_line + 1) . " lines"
+    else
+      " Try to find matching end marker
+      let end_line = start_line
+      while end_line <= line('$')
+        let end_text = getline(end_line)
+        if end_line > start_line && (end_text =~ '^:::$' || end_text =~ '^}$')
+          echo "Found potential end marker at line: " . end_line
+          echo "End content: " . end_text
+          break
+        endif
+        let end_line += 1
+      endwhile
+      if end_line > line('$')
+        echo "WARNING: No end marker found!"
+      endif
+    endif
+  endfor
+
+  echo "\n== Syntax Definitions Relevant to Fenced Divs =="
+  redir => syntax_output
+  silent syntax list DZGFencedDiv
+  silent syntax list pandocDiv
+  silent syntax list pandocFencedDiv
+  silent syntax list markdownFenced
+  redir END
+  echo syntax_output
+
+  echo "\n=== DIAGNOSIS COMPLETE ==="
+endfunction
+
+command! DiagnoseFencedDivs call DiagnoseFencedDivs()
+
+command! TestFolding call TestFencedDivFolding()
+command! DemoFoldText call DemoFencedDivFoldText()
+command! DebugFoldText call DebugFoldTextParsing()
+
+function! TestFencedDivFolding()
+  echo "=== FENCED DIV FOLDING TEST ==="
+  echo "Filetype: " . &filetype
+  echo "Fold method: " . &foldmethod
+  echo "Fold expr: " . &foldexpr
+  echo "Fold level: " . &foldlevel
+  echo ""
+
+  if &foldmethod != 'expr' || &foldexpr != 'FencedDivFold(v:lnum)'
+    echo "❌ PROBLEM: Folding not set up correctly for this buffer"
+    echo "   Expected: foldmethod=expr, foldexpr=FencedDivFold(v:lnum)"
+    echo "   Run :set ft=markdown to fix"
+    return
+  endif
+
+  " Count fenced divs
+  let fenced_count = 0
+  for lnum in range(1, line('$'))
+    if getline(lnum) =~ '^:::{.*'
+      let fenced_count += 1
+    endif
+  endfor
+
+  echo "✅ Folding configured correctly"
+  echo "📁 Found " . fenced_count . " fenced div(s) in buffer"
+  echo ""
+  echo "Commands to try:"
+  echo "  zM - Close all folds"
+  echo "  zR - Open all folds"
+  echo "  za - Toggle fold under cursor"
+  echo "  :FoldFencedDivs - Close all fenced div folds"
+endfunction
+
+function! FencedDivFoldText()
+  let line = getline(v:foldstart)
+
+  " For fenced divs, extract the title and make it beautiful
+  if line =~ '^:::{.*'
+    " Fix class extraction - handle :::{.classname format correctly
+    let class_name = 'div'
+    let class_match = matchstr(line, ':::{\..\zs[a-zA-Z][a-zA-Z0-9]*\ze')
+    if !empty(class_match)
+      let class_name = class_match
+    endif
+
+    " Simple title extraction - works across multiple lines
+    let title = ''
+    let search_line = v:foldstart
+    while search_line <= v:foldend && search_line <= line('$')
+      let current_line = getline(search_line)
+      if current_line =~ 'title='
+        let title_match = matchstr(current_line, 'title="\zs[^"]*\ze"')
+        if empty(title_match)
+          let title_match = matchstr(current_line, "title='\zs[^']*\ze'")
+        endif
+        if !empty(title_match)
+          let title = ': ' . title_match
+          break
+        endif
+      endif
+      let search_line += 1
+    endwhile
+
+    " Get emoji based on class
+    let emoji = '📋'
+    if class_name ==# 'definition'
+      let emoji = '📝'
+    elseif class_name ==# 'theorem' || class_name ==# 'proposition' || class_name ==# 'lemma'
+      let emoji = '🔷'
+    elseif class_name ==# 'proof'
+      let emoji = '✅'
+    elseif class_name ==# 'remark'
+      let emoji = '💡'
+    elseif class_name ==# 'example'
+      let emoji = '📚'
+    endif
+
+    " Build the display text
+    let fold_size = v:foldend - v:foldstart + 1
+    let text = emoji . ' ' . class_name . title . ' (' . fold_size . ' lines)'
+
+    " Simple padding
+    let available = &columns - strwidth(text) - 4
+    if available > 0
+      let padding = repeat('─', available)
+      return '──' . text . ' ' . padding
+    else
+      return text
+    endif
+  else
+    " Use default for non-fenced-div folds
+    return foldtext()
+  endif
+endfunction
+
+function! DemoFencedDivFoldText()
+  echo "=== BEAUTIFUL FENCED DIV FOLD TEXT DEMO ==="
+
+  " Create a demo buffer
+  tabnew
+  setlocal filetype=markdown
+  call setline(1, [
+    \ '# Demo of Beautiful Fold Text',
+    \ '',
+    \ ':::{.definition',
+    \ '    title="Lattice Structure"',
+    \ '    #def:lattice}',
+    \ '```meta',
+    \ 'corpus-references:',
+    \ '    - source.md#L123',
+    \ '```',
+    \ '',
+    \ 'A **lattice** is a pair $(L, \beta)$ where...',
+    \ ':::',
+    \ '',
+    \ ':::{.theorem',
+    \ '    title="Main Classification Theorem"',
+    \ '    #thm:main}',
+    \ '',
+    \ 'Every surface has a unique...',
+    \ ':::',
+    \ '',
+    \ ':::{.proof}',
+    \ '',
+    \ 'The proof follows by...',
+    \ ':::',
+    \ '',
+    \ ':::{.remark',
+    \ '    title="Historical Note"}',
+    \ '',
+    \ 'This result was first...',
+    \ ':::'
+    \ ])
+
+  " Apply our settings
+  setlocal foldmethod=expr
+  setlocal foldexpr=FencedDivFold(v:lnum)
+  setlocal foldtext=FencedDivFoldText()
+
+  " Close all folds to show the beautiful text
+  normal! zM
+
+  echo "✨ Demo buffer created with beautiful fold text!"
+  echo "📁 All folds are closed - see the beautiful display"
+  echo "🎨 Different emojis for: definition📝, theorem🔷, proof✅, remark💡"
+  echo ""
+  echo "Try: za (toggle), zR (open all), zM (close all)"
+endfunction
+
+function! DebugFoldTextParsing()
+  echo "=== FOLD TEXT PARSING DEBUG ==="
+  let line = getline('.')
+  echo "Current line: " . line
+
+  if line =~ '^:::{.*'
+    echo "✅ Matches fenced div pattern"
+
+    " Test class extraction
+    let class_name = 'div'
+    if line =~ ':::{\..\w'
+      let class_name = substitute(line, '^:::{\..\([a-zA-Z][a-zA-Z0-9]*\).*', '\1', '')
+      echo "Class extracted: '" . class_name . "'"
+    else
+      echo "❌ No class pattern match"
+    endif
+
+    " Test title extraction
+    let title = ''
+    if line =~ 'title='
+      echo "✅ Found title attribute"
+      let title_match = matchstr(line, 'title="\zs[^"]*\ze"')
+      if empty(title_match)
+        let title_match = matchstr(line, "title='\zs[^']*\ze'")
+      endif
+      if !empty(title_match)
+        let title = ': ' . title_match
+        echo "Title extracted: '" . title . "'"
+      else
+        echo "❌ Could not extract title value"
+      endif
+    else
+      echo "No title attribute found"
+    endif
+
+    echo "Final result would be: 📋 " . class_name . title . " (X lines)"
+  else
+    echo "❌ Does not match fenced div pattern"
+  endif
 endfunction
 
