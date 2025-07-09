@@ -1,0 +1,6 @@
+run:
+	python src/llm_repl_v0.py
+
+test:
+	python tests/test_llm_repl.py
+

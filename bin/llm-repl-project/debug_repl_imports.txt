@@ -1,0 +1,2 @@
+[711495:0708/061248.123463:ERROR:object_proxy.cc(576)] Failed to call method: org.freedesktop.DBus.Properties.Get: object_path= /org/freedesktop/portal/desktop: org.freedesktop.DBus.Error.InvalidArgs: No such interface “org.freedesktop.portal.FileChooser”
+[711495:0708/061248.123546:ERROR:select_file_dialog_linux_portal.cc(308)] Failed to read portal version property
