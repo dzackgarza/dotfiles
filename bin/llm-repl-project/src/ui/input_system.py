@@ -254,10 +254,20 @@ class SimpleMultilineInput:
             history=InMemoryHistory(),
             complete_style='column',
             mouse_support=False,  # Disable to allow normal text selection
-            erase_when_done=True,  # This should clear the input after completion
+            erase_when_done=False,  # Don't erase - we'll handle cleanup manually
         )
         
         try:
+            # Check if we're in a non-interactive environment
+            import sys
+            if not sys.stdin.isatty():
+                # Read from stdin directly in non-interactive mode
+                line = sys.stdin.readline()
+                if line:
+                    return line.strip()
+                else:
+                    return None
+            
             result = await session.prompt_async()
             
             # Clear the input lines after getting the result

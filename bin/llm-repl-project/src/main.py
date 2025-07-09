@@ -436,10 +436,9 @@ class LLMREPLv3:
             
             # Move from staging to timeline (scrivener's job)
             self._remove_from_staging(cognition_id)
+            # Clear the staging area display
+            self._clear_staging_render()
             await self._scrivener_write_to_timeline(cognition_id)
-            
-            # Update in place to show completed state
-            await self._update_plugin_in_place(cognition_plugin)
             
             # 3. Assistant Response Plugin
             assistant_id = await self.plugin_manager.create_plugin("assistant_response", {
@@ -474,10 +473,9 @@ class LLMREPLv3:
             
             # Move from staging to timeline (scrivener's job)
             self._remove_from_staging(assistant_id)
+            # Clear the staging area display
+            self._clear_staging_render()
             await self._scrivener_write_to_timeline(assistant_id)
-            
-            # Update in place to show completed state
-            await self._update_plugin_in_place(assistant_plugin)
             
         except Exception as e:
             # Create error panel
@@ -501,6 +499,9 @@ class LLMREPLv3:
             while self.running:
                 # Get user input using the new input system
                 try:
+                    # Ensure prompt is visible
+                    self.console.print()  # Add a blank line for spacing
+                    
                     # Get user input (the prompt display will be handled cleanly by the input system)
                     user_input = await self.input_system.get_input("> ")
                     
