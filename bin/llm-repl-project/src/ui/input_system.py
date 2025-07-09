@@ -268,16 +268,20 @@ class SimpleMultilineInput:
                 else:
                     return None
             
+            # Force flush before showing prompt
+            sys.stdout.flush()
+            
             result = await session.prompt_async()
             
             # Clear the input lines after getting the result
             # This prevents the raw input from appearing above the plugin box
-            if result and result.strip():
-                import sys
-                lines_to_clear = result.count('\n') + 1
-                for _ in range(lines_to_clear):
-                    sys.stdout.write('\033[1A\033[2K')  # Move up and clear line
-                sys.stdout.flush()
+            # NOTE: Disabled for now as it may interfere with prompt display
+            # if result and result.strip():
+            #     import sys
+            #     lines_to_clear = result.count('\n') + 1
+            #     for _ in range(lines_to_clear):
+            #         sys.stdout.write('\033[1A\033[2K')  # Move up and clear line
+            #     sys.stdout.flush()
             
             return result.strip() if result else None
         except (KeyboardInterrupt, EOFError):

@@ -499,9 +499,6 @@ class LLMREPLv3:
             while self.running:
                 # Get user input using the new input system
                 try:
-                    # Ensure prompt is visible
-                    self.console.print()  # Add a blank line for spacing
-                    
                     # Get user input (the prompt display will be handled cleanly by the input system)
                     user_input = await self.input_system.get_input("> ")
                     
