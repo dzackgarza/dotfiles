@@ -8,27 +8,56 @@ set -euo pipefail
 INPUT_FILE="${1:-$HOME/.zsh_history}"
 OUTPUT_FILE="${2:-$HOME/.zsh_history_clean}"
 
-awk '
-  /^: / {
-    if (block) {
-      if (block_lines == 1) print block;
-      block = $0; block_lines = 1;
-    } else {
-      block = $0; block_lines = 1;
-    }
-    next;
-  }
-  /^[ \t]+\\/ {
-    block = block "\n" $0;
-    block_lines++;
-    next;
-  }
-  {
-    block = block "\n" $0;
-    block_lines++;
-  }
-  END {
-    if (block_lines == 1) print block;
-  }
-' "$INPUT_FILE" > "$OUTPUT_FILE"
+
+# Optimized: Use awk record separator to process blocks, print only single-line commands, remove duplicates, and filter out complex/rarely used commands
+# 1. Remove multiline commands (keep only single-line)
+# 2. Remove leading/trailing whitespace
+# 3. Deduplicate commands (keep most recent)
+# 4. Optionally, filter out commands matching rare/complex patterns (customizable)
+
+
+# Use Python with fuzzy string matching to deduplicate similar commands in a mathematically sophisticated way
+# Requirements: pip install rapidfuzz
+
+# 1. Extract single-line commands from zsh history (as before)
+awk -v RS='^: ' 'NR==1{next} NF && gsub("\n", "\n") == 0 {gsub(/^ +| +$/, ""); print ": "$0}' "$INPUT_FILE" \
+  | awk -F';' '{cmd=$NF; gsub(/^ +| +$/, "", cmd); print cmd "\t" $0}' \
+  | awk 'length($1) > 0 && length($1) < 300' > "$OUTPUT_FILE.tmp1"
+
+# 2. Use Python to deduplicate similar commands using Levenshtein/fuzzy matching
+python3 - "$OUTPUT_FILE.tmp1" "$OUTPUT_FILE.tmp2" <<'EOF'
+import sys
+from rapidfuzz import fuzz
+
+input_file, output_file = sys.argv[1:3]
+SIMILARITY_THRESHOLD = 90  # 0-100, higher is stricter
+
+commands = []
+full_entries = []
+with open(input_file) as f:
+    for line in f:
+        if '\t' in line:
+            cmd, entry = line.rstrip('\n').split('\t', 1)
+            commands.append(cmd)
+            full_entries.append(entry)
+
+kept = []
+kept_entries = []
+for i, cmd in enumerate(commands):
+    is_similar = False
+    for prev in kept:
+        if fuzz.ratio(cmd, prev) >= SIMILARITY_THRESHOLD:
+            is_similar = True
+            break
+    if not is_similar:
+        kept.append(cmd)
+        kept_entries.append(full_entries[i])
+with open(output_file, 'w') as f:
+    for entry in kept_entries:
+        f.write(entry + '\n')
+EOF
+
+# 3. Optionally, filter out commands matching rare/complex patterns (edit as needed)
+grep -Ev '\\||for |while |<<' "$OUTPUT_FILE.tmp2" > "$OUTPUT_FILE"
+rm "$OUTPUT_FILE.tmp1" "$OUTPUT_FILE.tmp2"
 

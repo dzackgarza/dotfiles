@@ -16,7 +16,7 @@ import argparse
 import sys
 import time
 from pathlib import Path
-from typing import Optional, List
+from typing import Optional, List, Any
 
 # Add current directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent))
@@ -80,7 +80,7 @@ class StructurallyCorrectREPL:
         self.input_system = SimpleMultilineInput()
         
         # Initialize scrivener for timeline management
-        timeline_display = RichTimelineDisplay(self.console)
+        timeline_display = RichTimelineDisplay(raw_console)
         self.scrivener = Scrivener(timeline_display)
         
         # Session state
@@ -168,7 +168,7 @@ class StructurallyCorrectREPL:
         
         return startup_proof
     
-    async def _create_startup_plugins(self) -> List[Panel]:
+    async def _create_startup_plugins(self) -> List[Any]:
         """
         Create startup plugins and format them for display.
         
@@ -223,13 +223,15 @@ class StructurallyCorrectREPL:
             }
         ]
         
+        processing_start = time.time()
         await system_check_plugin.process(check_data, {})
         
-        # Format system check for display
+        # Add system check to timeline through secure system
         context = RenderContext(display_mode="inscribed")
         render_data = await system_check_plugin.render(context)
-        system_check_content = self._format_system_check_display(render_data)
-        startup_content.append(system_check_content)
+        timeline_plugin = create_timeline_eligible_plugin(system_check_plugin, processing_start)
+        self.app.add_plugin_to_timeline(timeline_plugin)
+        startup_content.append(timeline_plugin)
         
         # 2. Welcome Plugin (includes startup completion semantically)
         welcome_id = await self.plugin_manager.create_plugin("welcome", {
@@ -243,12 +245,14 @@ class StructurallyCorrectREPL:
         })
         
         welcome_plugin = self.plugin_manager.active_plugins[welcome_id]
+        processing_start = time.time()
         await welcome_plugin.process({}, {})
         
         # Format welcome for display
         render_data = await welcome_plugin.render(context)
-        welcome_content = self._format_welcome_display(render_data)
-        startup_content.append(welcome_content)
+        timeline_plugin = create_timeline_eligible_plugin(welcome_plugin, processing_start)
+        self.app.add_plugin_to_timeline(timeline_plugin)
+        startup_content.append(timeline_plugin)
         
         return startup_content
     
@@ -345,6 +349,7 @@ class StructurallyCorrectREPL:
             })
             
             user_input_plugin = self.plugin_manager.active_plugins[user_input_id]
+            processing_start = time.time()
             await user_input_plugin.process(user_input, {})
             
             # Convert to timeline block
@@ -438,7 +443,7 @@ class StructurallyCorrectREPL:
             pass
         
         # Show prompt (guaranteed to appear after startup)
-        self.console.display_prompt("\n> ")
+        self.app.display_prompt("\n> ")
         
         try:
             while self.running:
