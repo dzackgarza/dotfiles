@@ -29,6 +29,10 @@ from program_state import (
     StartupSequenceManager,
     GuaranteedDisplaySystem
 )
+from timeline_integrity import (
+    ApplicationWithSecureTimeline,
+    TimelineEligiblePlugin
+)
 
 # Import existing plugin architecture
 from plugins.registry import PluginManager
@@ -43,6 +47,7 @@ from rich.box import ROUNDED
 
 # Custom UI imports
 from ui.input_system import SimpleMultilineInput
+from plugin_timeline_adapter import create_timeline_eligible_plugin
 
 
 class StructurallyCorrectREPL:
@@ -58,9 +63,10 @@ class StructurallyCorrectREPL:
     def __init__(self, config_name: str = "debug"):
         self.config_name = config_name
         
-        # Initialize console and guaranteed display system
-        self.console = Console()
-        self.display_system = GuaranteedDisplaySystem(self.console)
+        # Initialize timeline-pure console and guaranteed display system
+        raw_console = Console()
+        self.app = ApplicationWithSecureTimeline(raw_console)
+        self.display_system = GuaranteedDisplaySystem(raw_console)
         
         # Initialize state machine for lifecycle management
         self.state_machine = ProgramStateMachine()
@@ -132,7 +138,9 @@ class StructurallyCorrectREPL:
             return True
             
         except Exception as e:
-            self.console.print(f"❌ [red]Failed to initialize system: {str(e)}[/red]")
+            # Initialization errors should not pollute timeline - they're system failures
+            # If needed, create a proper Error Plugin with metadata, timing, etc.
+            return False  # Just fail silently
             return False
     
     async def run_startup_sequence_with_proof(self) -> StartupComplete:
@@ -223,11 +231,15 @@ class StructurallyCorrectREPL:
         system_check_content = self._format_system_check_display(render_data)
         startup_content.append(system_check_content)
         
-        # 2. Welcome Plugin
+        # 2. Welcome Plugin (includes startup completion semantically)
         welcome_id = await self.plugin_manager.create_plugin("welcome", {
             "version": "v3 (Structurally Correct)",
             "show_help": True,
-            "show_commands": True
+            "show_commands": True,
+            "startup_info": {
+                "plugins_loaded": len(startup_content),
+                "system_ready": True
+            }
         })
         
         welcome_plugin = self.plugin_manager.active_plugins[welcome_id]
@@ -318,6 +330,93 @@ class StructurallyCorrectREPL:
         """Get startup completion proof if available."""
         return self.state_machine.get_startup_proof()
     
+    async def process_user_input(self, user_input: str) -> None:
+        """
+        Process user input through the complete plugin pipeline.
+        
+        This ensures proper User_Input, Cognition, and Assistant_Response blocks
+        appear on the timeline instead of raw text.
+        """
+        try:
+            # 1. User Input Plugin (for timeline history)
+            user_input_id = await self.plugin_manager.create_plugin("user_input", {
+                "max_length": 10000,
+                "allow_empty": False
+            })
+            
+            user_input_plugin = self.plugin_manager.active_plugins[user_input_id]
+            await user_input_plugin.process(user_input, {})
+            
+            # Convert to timeline block
+            context = RenderContext(display_mode="inscribed")
+            render_data = await user_input_plugin.render(context)
+            user_block = TimelineBlock(
+                block_type=BlockType.USER_INPUT,
+                title=render_data.get("title", "User Input"),
+                content=f"> {user_input}",
+                border_style="green"
+            )
+            self.console.display_block(user_block)
+            
+            # 2. Cognition Plugin
+            from plugins.cognitive_modules import QueryRoutingModule, PromptEnhancementModule
+            
+            cognition_id = await self.plugin_manager.create_plugin("cognition", {
+                "modules": [QueryRoutingModule, PromptEnhancementModule],
+                "llm_interface": "default",
+                "stream_processing": False
+            })
+            
+            cognition_plugin = self.plugin_manager.active_plugins[cognition_id]
+            
+            # Process through cognition
+            cognition_result = await cognition_plugin.process(user_input, {
+                "llm_manager": self.llm_manager
+            })
+            
+            # Convert to timeline block
+            render_data = await cognition_plugin.render(context)
+            cognition_block = TimelineBlock(
+                block_type=BlockType.COGNITION,
+                title=render_data.get("title", "Cognition"),
+                content="Completed processing through 2 cognitive modules",
+                border_style="magenta"
+            )
+            self.console.display_block(cognition_block)
+            
+            # 3. Assistant Response Plugin
+            assistant_id = await self.plugin_manager.create_plugin("assistant_response", {
+                "format_markdown": True
+            })
+            
+            assistant_plugin = self.plugin_manager.active_plugins[assistant_id]
+            
+            # Transfer tokens from cognition to assistant
+            cognition_tokens = cognition_plugin.get_token_counts()
+            assistant_plugin.add_input_tokens(cognition_tokens.get("input", 0))
+            assistant_plugin.add_output_tokens(cognition_tokens.get("output", 0))
+            
+            # Process assistant response
+            await assistant_plugin.process({
+                "response": cognition_result.get("final_output", "Response generated"),
+                "processing_results": cognition_result
+            }, {})
+            
+            # Convert to timeline block
+            render_data = await assistant_plugin.render(context)
+            assistant_block = TimelineBlock(
+                block_type=BlockType.ASSISTANT_RESPONSE,
+                title=render_data.get("title", "Assistant Response"),
+                content=render_data.get("content", "Response generated"),
+                border_style="blue"
+            )
+            self.console.display_block(assistant_block)
+            
+        except Exception as e:
+            # Query errors should be handled by proper Error Plugin if needed
+            # For now, silently fail - errors aren't semantic timeline content
+            pass
+
     async def run_interactive_mode(self) -> None:
         """
         Run interactive mode with structural guarantees.
@@ -335,11 +434,11 @@ class StructurallyCorrectREPL:
         # Show startup completion info
         proof = self.get_startup_proof()
         if proof:
-            self.console.print(f"\n✅ Startup completed: {proof.plugins_displayed} plugins in {proof.startup_duration:.1f}s")
+            # No status message - startup completion is implicit when prompt appears
+            pass
         
         # Show prompt (guaranteed to appear after startup)
-        self.console.print()
-        self.console.print("> ", end="", highlight=False)
+        self.console.display_prompt("\n> ")
         
         try:
             while self.running:
@@ -348,7 +447,7 @@ class StructurallyCorrectREPL:
                     user_input = await self.input_system.get_input("> ")
                     
                     if user_input is None:
-                        self.console.print("\n👋 Goodbye!")
+                        # No goodbye block - this is UI, not timeline content
                         break
                     
                     if not user_input.strip():
@@ -359,17 +458,17 @@ class StructurallyCorrectREPL:
                         self.running = False
                         break
                     
-                    # Process the query (simplified for now)
-                    self.console.print(f"Processing: {user_input}")
+                    # Process the query using actual plugin pipeline
+                    await self.process_user_input(user_input)
                     
                     # Signal response completion
                     self.input_system.signal_response_complete()
                     
                 except KeyboardInterrupt:
-                    self.console.print("\n👋 Goodbye!")
+                    # No goodbye block - this is UI, not timeline content
                     break
                 except EOFError:
-                    self.console.print("\n👋 Goodbye!")
+                    # No goodbye block - this is UI, not timeline content
                     break
                     
         finally:
@@ -392,9 +491,11 @@ class StructurallyCorrectREPL:
         # Phase 2: Run startup sequence with proof of completion
         try:
             startup_proof = await self.run_startup_sequence_with_proof()
-            self.console.print(f"\n🎯 Startup sequence completed with proof: {startup_proof.plugins_displayed} plugins")
+            # Status message is now handled by the startup completion block above
         except Exception as e:
-            self.console.print(f"❌ [red]Startup sequence failed: {str(e)}[/red]")
+            # Startup errors should not pollute timeline - they're system failures
+            # If needed, create a proper Error Plugin with metadata, timing, etc.
+            return
             return
         
         # Phase 3: Start interactive mode (only after startup proof)

@@ -249,7 +249,7 @@ class GuaranteedDisplaySystem:
         Render content and provide proof of completion.
         
         This implementation ensures content is flushed to terminal
-        before returning proof token.
+        before returning proof token. Uses timeline-pure display.
         """
         import time
         
@@ -259,7 +259,9 @@ class GuaranteedDisplaySystem:
         render_start = time.time()
         
         # Render content to terminal (handle both strings and Rich objects)
-        if hasattr(content, '__rich_console__'):
+        # Note: During startup, we use direct console access since we're not
+        # polluting the timeline - we're creating the initial timeline
+        if hasattr(content, '__rich_console__') or hasattr(content, 'to_panel'):
             # Rich object - render directly
             self.console.print(content)
         else:
