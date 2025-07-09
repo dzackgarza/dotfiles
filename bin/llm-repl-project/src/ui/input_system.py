@@ -206,80 +206,30 @@ class PersistentInputSystem:
 # Simpler alternative using prompt_toolkit directly
 class SimpleMultilineInput:
     """
-    Simplified multiline input using prompt_toolkit with better UX.
-    
-    Key bindings:
-    - Enter: Submit input
-    - Ctrl+J: Add new line 
-    - Ctrl+C: Cancel/quit
-    - Ctrl+D: EOF/quit
+    Simplified input system for interactive TTY mode only.
+    Non-interactive mode is handled by run_simulated_user_session.
     """
     
     def __init__(self):
-        self.kb = KeyBindings()
-        self._setup_bindings()
+        # Always assume interactive mode now
+        self.is_interactive = True
     
-    def _setup_bindings(self):
-        """Setup key bindings for multiline input."""
-        
-        @self.kb.add('enter')
-        def submit_input(event):
-            """Submit on Enter."""
-            # Regular Enter: always submit (even if empty)
-            buffer = event.app.current_buffer
-            buffer.validate_and_handle()
-            
-        @self.kb.add('c-j')  # Alternative: Ctrl+J for new line
-        def explicit_newline(event):
-            """Explicit new line on Ctrl+J."""
-            event.app.current_buffer.insert_text('\n')
+    def signal_response_complete(self):
+        """Signal that a response has been completed (compatibility method)."""
+        pass  # No-op for interactive mode
     
     async def get_input(self, message: str = "> ") -> Optional[str]:
-        """Get multiline input from user."""
-        from prompt_toolkit import PromptSession
-        from prompt_toolkit.history import InMemoryHistory
-        from prompt_toolkit.styles import Style
-        
-        style = Style.from_dict({
-            'prompt': '#00aa00 bold',
-            'input': '#ffffff',
-        })
-        
-        session = PromptSession(
-            message=message,
-            multiline=False,  # Changed to False for simpler single-line input
-            # key_bindings=self.kb,  # Disabled custom bindings for now
-            style=style,
-            history=InMemoryHistory(),
-            mouse_support=False,  # Disable to allow normal text selection
-        )
+        """Get input from user in interactive TTY mode WITHOUT printing to timeline."""
+        import sys
         
         try:
-            # Check if we're in a non-interactive environment
-            import sys
-            if not sys.stdin.isatty():
-                # Read from stdin directly in non-interactive mode
-                line = sys.stdin.readline()
-                if line:
-                    return line.strip()
-                else:
-                    return None
+            # Interactive TTY mode: use simple input() WITHOUT printing prompt
+            # The prompt should be handled by the scrivener/plugin system, not here
+            try:
+                result = input()  # No prompt printed - scrivener handles all display
+                return result.strip() if result else None
+            except EOFError:
+                return None
             
-            # Force flush before showing prompt
-            sys.stdout.flush()
-            
-            result = await session.prompt_async()
-            
-            # Clear the input lines after getting the result
-            # This prevents the raw input from appearing above the plugin box
-            # NOTE: Disabled for now as it may interfere with prompt display
-            # if result and result.strip():
-            #     import sys
-            #     lines_to_clear = result.count('\n') + 1
-            #     for _ in range(lines_to_clear):
-            #         sys.stdout.write('\033[1A\033[2K')  # Move up and clear line
-            #     sys.stdout.flush()
-            
-            return result.strip() if result else None
         except (KeyboardInterrupt, EOFError):
             return None

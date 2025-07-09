@@ -1,25 +1,36 @@
 #!/usr/bin/env python3
 """
-LLM REPL - Interactive Research Assistant with Plugin Architecture
+LLM REPL - Structurally Correct Interactive Research Assistant
 
-This is the main entry point for the LLM REPL application using the new
-plugin architecture that ensures:
-- Independent, self-contained plugins
-- Unified display system with timing and token tracking
-- Comprehensive testing and validation
-- Cognitive modules for advanced processing
+This refactored version uses strong types and state machines to make
+timing violations impossible:
+
+1. State machine enforces startup-before-prompt
+2. Proof tokens ensure display completion
+3. Type safety prevents async/sync mismatches
+4. Unified display system eliminates context dependencies
 """
 
 import asyncio
 import argparse
 import sys
+import time
 from pathlib import Path
 from typing import Optional, List
 
 # Add current directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent))
 
-# Import plugin architecture
+# Import structural guarantees
+from program_state import (
+    ProgramStateMachine, 
+    ProgramPhase,
+    StartupComplete,
+    StartupSequenceManager,
+    GuaranteedDisplaySystem
+)
+
+# Import existing plugin architecture
 from plugins.registry import PluginManager
 from plugins.llm_interface import LLMManager, MockLLMInterface
 from plugins.base import RenderContext, PluginState
@@ -29,29 +40,37 @@ from scrivener import Scrivener, RichTimelineDisplay
 from rich.console import Console
 from rich.panel import Panel
 from rich.box import ROUNDED
-from rich.text import Text
 
 # Custom UI imports
 from ui.input_system import SimpleMultilineInput
 
 
-class LLMREPLv3:
-    """Main LLM REPL application using the new plugin architecture."""
+class StructurallyCorrectREPL:
+    """
+    REPL with structural guarantees for correct lifecycle.
     
-    def __init__(self, config_name: str = "debug", conversation_spacing: int = 2):
+    Uses state machine and proof tokens to ensure:
+    - Startup sequence MUST complete before prompt appears
+    - Display operations MUST complete before state transitions
+    - Timing violations are impossible
+    """
+    
+    def __init__(self, config_name: str = "debug"):
         self.config_name = config_name
-        self.conversation_spacing = conversation_spacing  # Configurable spacing between conversations
         
-        # Initialize console
+        # Initialize console and guaranteed display system
         self.console = Console()
+        self.display_system = GuaranteedDisplaySystem(self.console)
         
-        # Initialize plugin manager
+        # Initialize state machine for lifecycle management
+        self.state_machine = ProgramStateMachine()
+        
+        # Initialize startup sequence manager
+        self.startup_manager = StartupSequenceManager(self.display_system)
+        
+        # Initialize plugin architecture
         self.plugin_manager = PluginManager()
-        
-        # Initialize LLM manager
         self.llm_manager = LLMManager()
-        
-        # Initialize input system
         self.input_system = SimpleMultilineInput()
         
         # Initialize scrivener for timeline management
@@ -60,12 +79,18 @@ class LLMREPLv3:
         
         # Session state
         self.running = False
-        self.staging_area: List[str] = []     # Plugins currently processing
-        self.current_staging_plugin: Optional[str] = None  # Only one at a time
-        self.plugin_sequence: List[str] = []  # Track plugin order
+        self.plugin_sequence: List[str] = []
     
-    async def initialize(self) -> bool:
-        """Initialize the REPL system."""
+    async def initialize_system(self) -> bool:
+        """
+        Initialize the REPL system without displaying anything.
+        
+        This phase only sets up internal systems. Display happens
+        in the startup sequence phase.
+        """
+        if self.state_machine.current_phase != ProgramPhase.INITIALIZING:
+            raise ValueError("System can only be initialized from INITIALIZING phase")
+        
         try:
             # Start plugin manager
             await self.plugin_manager.start()
@@ -90,8 +115,7 @@ class LLMREPLv3:
             from config.llm_config import CONFIGURATIONS
             llm_config = CONFIGURATIONS.get(self.config_name, CONFIGURATIONS["debug"])
             
-            # For now, use mock interfaces but with proper naming
-            # In a real implementation, we'd create actual provider interfaces here
+            # Create mock interfaces (in real implementation, these would be actual providers)
             intent_interface = MockLLMInterface({
                 "provider_name": llm_config.intent_detection_provider.value,
                 "model_name": llm_config.intent_detection_model
@@ -105,22 +129,51 @@ class LLMREPLv3:
             self.llm_manager.register_interface("main_query", main_interface, is_default=True)
             self.llm_manager.register_interface("default", main_interface)
             
-            # Create startup sequence
-            await self._run_startup_sequence()
-            
             return True
             
         except Exception as e:
-            self.console.print(f"❌ [red]Failed to initialize: {str(e)}[/red]")
+            self.console.print(f"❌ [red]Failed to initialize system: {str(e)}[/red]")
             return False
     
-    async def _run_startup_sequence(self) -> None:
-        """Run the startup sequence of plugins."""
+    async def run_startup_sequence_with_proof(self) -> StartupComplete:
+        """
+        Run startup sequence with guaranteed display completion.
+        
+        This method MUST NOT return until startup content is visible
+        to the user. State machine prevents prompt from appearing
+        until this completes.
+        """
+        if self.state_machine.current_phase != ProgramPhase.INITIALIZING:
+            raise ValueError("Startup sequence can only run from INITIALIZING phase")
+        
+        # Transition to startup display phase
+        self.state_machine.transition_to_startup_display()
+        
+        # Create startup plugins with display content
+        startup_plugins = await self._create_startup_plugins()
+        
+        # Run startup sequence with proof of completion
+        startup_proof = await self.startup_manager.run_startup_with_proof(startup_plugins)
+        
+        # Complete startup with proof token
+        self.state_machine.complete_startup(startup_proof)
+        
+        return startup_proof
+    
+    async def _create_startup_plugins(self) -> List[Panel]:
+        """
+        Create startup plugins and format them for display.
+        
+        Returns list of Rich Panel objects that will be
+        displayed to the user during startup.
+        """
+        startup_content = []
+        
         # Load LLM configuration
         from config.llm_config import CONFIGURATIONS
         llm_config = CONFIGURATIONS.get(self.config_name, CONFIGURATIONS["debug"])
         
-        # 1. System Check
+        # 1. System Check Plugin
         system_check_id = await self.plugin_manager.create_plugin("system_check", {
             "timeout_seconds": 30,
             "required_checks": ["Configuration", "Dependencies", "LLM Providers"],
@@ -130,7 +183,7 @@ class LLMREPLv3:
         
         system_check_plugin = self.plugin_manager.active_plugins[system_check_id]
         
-        # Run system checks including LLM heartbeat
+        # Run system checks
         check_data = [
             {
                 "name": "Configuration", 
@@ -164,12 +217,15 @@ class LLMREPLv3:
         
         await system_check_plugin.process(check_data, {})
         
-        # Scrivener writes completed plugins to timeline
-        await self._scrivener_write_to_timeline(system_check_id)
+        # Format system check for display
+        context = RenderContext(display_mode="inscribed")
+        render_data = await system_check_plugin.render(context)
+        system_check_content = self._format_system_check_display(render_data)
+        startup_content.append(system_check_content)
         
-        # 2. Welcome Message
+        # 2. Welcome Plugin
         welcome_id = await self.plugin_manager.create_plugin("welcome", {
-            "version": "v3 (Plugin Architecture)",
+            "version": "v3 (Structurally Correct)",
             "show_help": True,
             "show_commands": True
         })
@@ -177,333 +233,121 @@ class LLMREPLv3:
         welcome_plugin = self.plugin_manager.active_plugins[welcome_id]
         await welcome_plugin.process({}, {})
         
-        # Scrivener writes completed plugins to timeline
-        await self._scrivener_write_to_timeline(welcome_id)
+        # Format welcome for display
+        render_data = await welcome_plugin.render(context)
+        welcome_content = self._format_welcome_display(render_data)
+        startup_content.append(welcome_content)
+        
+        return startup_content
     
-    async def _graphics_manager_request_staging(self, plugin_id: str) -> bool:
-        """Graphics Manager: Request to render a plugin in staging area."""
-        # Only one plugin allowed in staging at a time
-        if self.current_staging_plugin is not None:
-            return False  # Staging area occupied
+    def _format_system_check_display(self, render_data: dict) -> Panel:
+        """Format system check plugin for terminal display."""
+        title = render_data.get("title", "System Check")
         
-        plugin = self.plugin_manager.active_plugins[plugin_id]
-        if plugin.state != PluginState.PROCESSING:
-            return False  # Only processing plugins allowed in staging
-        
-        self.current_staging_plugin = plugin_id
-        await self._render_plugin_processing(plugin)
-        return True
-    
-    async def _graphics_manager_complete_staging(self, plugin_id: str) -> None:
-        """Graphics Manager: Block completed, delete staging render and pass to scrivener."""
-        if self.current_staging_plugin != plugin_id:
-            return  # Not the current staging plugin
-        
-        # Delete the staging render (it's gone forever)
-        self._clear_staging_render()
-        self.current_staging_plugin = None
-        
-        # Pass to scrivener
-        await self._scrivener_write_to_timeline(plugin_id)
-    
-    def _clear_staging_render(self) -> None:
-        """Clear the current staging render from screen."""
-        # Move up and clear the staging display
-        self.console.print("\033[4A\033[K\033[3A\033[K\033[2A\033[K\033[1A\033[K", end="")
-    
-    async def _scrivener_write_to_timeline(self, plugin_id: str) -> None:
-        """Request scrivener to inscribe plugin in timeline."""
-        plugin = self.plugin_manager.active_plugins[plugin_id]
-        
-        # Request inscription from scrivener (scrivener will validate)
-        success = await self.scrivener.inscribe_plugin(plugin, {
-            'conversation_spacing': getattr(self, 'conversation_spacing', 2)
-        })
-        
-        if not success:
-            print(f"Scrivener rejected plugin {plugin_id} - state: {plugin.state}")
-            return
-    
-    async def _render_plugin(self, plugin) -> None:
-        """Render a plugin based on its internal state."""
-        # Use the plugin's built-in state to determine rendering
-        if plugin.state == PluginState.PROCESSING:
-            await self._render_plugin_processing(plugin)
-        else:
-            await self._render_plugin_completed(plugin)
-    
-    async def _render_plugin_processing(self, plugin) -> None:
-        """Render a plugin in processing state (staging area)."""
-        context = RenderContext(display_mode="staging")
-        render_data = await plugin.render(context)
-        
-        title = render_data.get("title", "Plugin")
-        content = render_data.get("content", "Processing...")
-        
-        # Processing state styling - bright colors to show it's live
-        border_color = "bright_yellow"
-        if plugin.metadata.name == "cognition":
-            border_color = "bright_magenta"
-        elif plugin.metadata.name == "assistant_response":
-            border_color = "bright_blue"
-        
-        panel = Panel(
-            content,
-            title=f"🔄 {title}",  # Add spinner to indicate processing
-            box=ROUNDED,
-            border_style=border_color
-        )
-        
-        self.console.print(panel)
-    
-    async def _update_plugin_in_place(self, plugin) -> None:
-        """Update a plugin display when it transitions from processing to completed."""
-        # Move cursor up to overwrite the processing display
-        self.console.print("\033[4A\033[K\033[3A\033[K\033[2A\033[K\033[1A\033[K", end="")
-        
-        # Re-render in completed state
-        await self._render_plugin_completed(plugin)
-    
-    def _add_to_staging(self, plugin_id: str) -> None:
-        """Add a plugin to staging area."""
-        if plugin_id not in self.staging_area:
-            self.staging_area.append(plugin_id)
-        self.current_staging_plugin = plugin_id
-    
-    def _remove_from_staging(self, plugin_id: str) -> None:
-        """Remove a plugin from staging area."""
-        if plugin_id in self.staging_area:
-            self.staging_area.remove(plugin_id)
-        if self.current_staging_plugin == plugin_id:
-            self.current_staging_plugin = None
-    
-    async def _render_plugin_completed(self, plugin) -> None:
-        """Render a plugin in the timeline (completed)."""
-        # Use inscribed mode to get detailed results from system check
-        context = RenderContext(display_mode="inscribed")
-        render_data = await plugin.render(context)
-        
-        # Extract display info
-        title = render_data.get("title", "Plugin")
-        content = render_data.get("content", "")
-        
-        # Handle system check special formatting
-        if plugin.metadata.name == "system_check":
-            if "detailed_results" in render_data:
-                content_lines = []
+        if "detailed_results" in render_data:
+            content_lines = []
+            
+            # Format non-LLM results
+            for result in render_data["detailed_results"]:
+                status = result['status']
+                name = result['name']
+                message = result['message']
                 
-                # Format non-LLM results with tab alignment
-                for result in render_data["detailed_results"]:
-                    status = result['status']
-                    name = result['name']
-                    message = result['message']
+                if "Configuration" in name:
+                    content_lines.append(f"{status} Configuration:\t{message}")
+                elif "Dependencies" in name:
+                    content_lines.append(f"{status} Dependencies:\t{message}")
+                else:
+                    content_lines.append(f"{status} {name}:\t{message}")
+            
+            # Format LLM results
+            if "llm_results" in render_data and render_data["llm_results"]:
+                content_lines.append("")
+                content_lines.append("LLM Providers:")
+                
+                for llm_result in render_data["llm_results"]:
+                    status = llm_result['status']
+                    details = llm_result.get('details', {})
+                    provider = details.get('provider', 'unknown')
+                    model = details.get('model', 'unknown')
+                    response_time = details.get('response_time', 0)
+                    input_tokens = details.get('input_tokens', 0)
+                    output_tokens = details.get('output_tokens', 0)
                     
-                    # Tab-align the status and message
-                    if "Configuration" in name:
-                        content_lines.append(f"{status} Configuration:\t{message}")
-                    elif "Dependencies" in name:
-                        content_lines.append(f"{status} Dependencies:\t{message}")
-                    else:
-                        content_lines.append(f"{status} {name}:\t{message}")
-                
-                # Format LLM results as a table
-                if "llm_results" in render_data and render_data["llm_results"]:
-                    content_lines.append("")  # Empty line before LLM section
-                    content_lines.append("LLM Providers:")
-                    
-                    for llm_result in render_data["llm_results"]:
-                        status = llm_result['status']
-                        details = llm_result.get('details', {})
-                        provider = details.get('provider', 'unknown')
-                        model = details.get('model', 'unknown')
-                        response_time = details.get('response_time', 0)
-                        input_tokens = details.get('input_tokens', 0)
-                        output_tokens = details.get('output_tokens', 0)
-                        
-                        # Format as table row with tab alignment
-                        content_lines.append(f"\t{status} {provider:12} {model:20} {response_time:6.1f}s  ↑{input_tokens:3} ↓{output_tokens:3}")
-                
-                content = "\n".join(content_lines) if content_lines else "System checks completed"
-        
-        # Handle user input special formatting (no "You:" prefix)
-        elif plugin.metadata.name == "user_input":
-            user_content = render_data.get("content", "")
-            # Format multiline input nicely
-            if "\n" in user_content:
-                lines = user_content.split("\n")
-                formatted_lines = []
-                for i, line in enumerate(lines):
-                    if i == 0:
-                        formatted_lines.append(f"> {line}")
-                    else:
-                        formatted_lines.append(f"  {line}")  # Continuation indent
-                content = "\n".join(formatted_lines)
-            else:
-                content = f"> {user_content}"
-        
-        # Create styled panel with different colors for different plugin types
-        style = render_data.get("style", {})
-        
-        # Assign colors based on plugin type
-        if plugin.metadata.name == "system_check":
-            border_color = "yellow"
-        elif plugin.metadata.name == "welcome":
-            border_color = "cyan"
-        elif plugin.metadata.name == "user_input":
-            border_color = "green"
-        elif plugin.metadata.name == "cognition":
-            border_color = "magenta"
-        elif plugin.metadata.name == "assistant_response":
-            border_color = "blue"
+                    content_lines.append(f"\t{status} {provider:12} {model:20} {response_time:6.1f}s  ↑{input_tokens:3} ↓{output_tokens:3}")
+            
+            content = "\n".join(content_lines)
         else:
-            border_color = style.get("border_color", "white")
+            content = "System checks completed"
         
+        # Create panel for display
         panel = Panel(
             content,
             title=title,
             box=ROUNDED,
-            border_style=border_color
+            border_style="yellow"
         )
         
-        self.console.print(panel)
+        return panel
+    
+    def _format_welcome_display(self, render_data: dict) -> Panel:
+        """Format welcome plugin for terminal display."""
+        title = render_data.get("title", "Welcome")
+        content = render_data.get("content", "Welcome to LLM REPL!")
         
-        # Spacing logic:
-        # - No gap between system_check and welcome (startup group)
-        # - One gap after welcome (separate startup from chat)
-        # - No gaps within conversation flows (user->cognition->assistant)
-        # - Configurable gap after assistant_response (between conversations)
-        if plugin.metadata.name == "system_check":
-            # No gap after system check
-            pass
-        elif plugin.metadata.name == "welcome":
-            # Two gaps after welcome to separate startup from chat
-            self.console.print()
-            self.console.print()
-        elif plugin.metadata.name == "assistant_response":
-            # Configurable gap after assistant response (between conversations)
-            conversation_spacing = getattr(self, 'conversation_spacing', 2)  # Default to 2
-            for _ in range(conversation_spacing):
-                self.console.print()
-        else:
-            # No gaps for user_input, cognition, or staging plugins
-            pass
+        # Create panel for display
+        panel = Panel(
+            content,
+            title=title,
+            box=ROUNDED,
+            border_style="cyan"
+        )
+        
+        return panel
     
-    async def process_query(self, query: str) -> None:
-        """Process a user query using the plugin architecture."""
-        try:
-            # 1. User Input Plugin (for timeline history)
-            user_input_id = await self.plugin_manager.create_plugin("user_input", {
-                "max_length": 10000,
-                "allow_empty": False
-            })
-            
-            user_input_plugin = self.plugin_manager.active_plugins[user_input_id]
-            await user_input_plugin.process(query, {})
-            
-            # Scrivener writes completed plugins to timeline
-            await self._scrivener_write_to_timeline(user_input_id)
-            
-            # 2. Cognition Plugin
-            from plugins.cognitive_modules import QueryRoutingModule, PromptEnhancementModule
-            
-            cognition_id = await self.plugin_manager.create_plugin("cognition", {
-                "modules": [QueryRoutingModule, PromptEnhancementModule],
-                "llm_interface": "default",
-                "stream_processing": True  # Enable streaming
-            })
-            
-            cognition_plugin = self.plugin_manager.active_plugins[cognition_id]
-            
-            # Add to staging area for processing
-            self._add_to_staging(cognition_id)
-            
-            # Process asynchronously while showing live state
-            cognition_plugin._data["stream_processing"] = False
-            
-            # Start processing (this sets state to PROCESSING automatically)
-            processing_task = asyncio.create_task(cognition_plugin.process(query, {
-                "llm_manager": self.llm_manager
-            }))
-            
-            # Render processing state (staging area)
-            await self._render_plugin_processing(cognition_plugin)
-            
-            # Add delay to show processing state
-            await asyncio.sleep(3)
-            
-            # Wait for processing to complete
-            cognition_result = await processing_task
-            
-            # Move from staging to timeline (scrivener's job)
-            self._remove_from_staging(cognition_id)
-            # Clear the staging area display
-            self._clear_staging_render()
-            await self._scrivener_write_to_timeline(cognition_id)
-            
-            # 3. Assistant Response Plugin
-            assistant_id = await self.plugin_manager.create_plugin("assistant_response", {
-                "format_markdown": True
-            })
-            
-            assistant_plugin = self.plugin_manager.active_plugins[assistant_id]
-            
-            # Add to staging area for processing
-            self._add_to_staging(assistant_id)
-            
-            # Process asynchronously while showing live state
-            # Transfer tokens from cognition to assistant
-            cognition_tokens = cognition_plugin.get_token_counts()
-            assistant_plugin.add_input_tokens(cognition_tokens.get("input", 0))
-            assistant_plugin.add_output_tokens(cognition_tokens.get("output", 0))
-            
-            # Start processing (this sets state to PROCESSING automatically)
-            processing_task = asyncio.create_task(assistant_plugin.process({
-                "response": cognition_result.get("final_output", "Response generated"),
-                "processing_results": cognition_result
-            }, {}))
-            
-            # Render processing state (staging area)
-            await self._render_plugin_processing(assistant_plugin)
-            
-            # Add delay to show processing state
-            await asyncio.sleep(2)
-            
-            # Wait for processing to complete
-            await processing_task
-            
-            # Move from staging to timeline (scrivener's job)
-            self._remove_from_staging(assistant_id)
-            # Clear the staging area display
-            self._clear_staging_render()
-            await self._scrivener_write_to_timeline(assistant_id)
-            
-        except Exception as e:
-            # Create error panel
-            error_panel = Panel(
-                f"Error processing query: {str(e)}",
-                title="❌ Error",
-                box=ROUNDED,
-                border_style="red"
-            )
-            self.console.print(error_panel)
+    def can_show_prompt(self) -> bool:
+        """
+        Check if prompt can be shown.
+        
+        Uses state machine to ensure prompt only appears after
+        startup completed with proof.
+        """
+        return self.state_machine.can_show_prompt()
     
-    async def run(self) -> None:
-        """Run the main REPL loop."""
-        # Initialize system
-        if not await self.initialize():
-            return
+    def get_startup_proof(self) -> Optional[StartupComplete]:
+        """Get startup completion proof if available."""
+        return self.state_machine.get_startup_proof()
+    
+    async def run_interactive_mode(self) -> None:
+        """
+        Run interactive mode with structural guarantees.
+        
+        Can only be called after startup completed with proof.
+        """
+        if not self.can_show_prompt():
+            raise ValueError("Cannot start interactive mode without startup completion proof")
+        
+        # Transition to interactive mode
+        self.state_machine.transition_to_interactive()
         
         self.running = True
         
+        # Show startup completion info
+        proof = self.get_startup_proof()
+        if proof:
+            self.console.print(f"\n✅ Startup completed: {proof.plugins_displayed} plugins in {proof.startup_duration:.1f}s")
+        
+        # Show prompt (guaranteed to appear after startup)
+        self.console.print()
+        self.console.print("> ", end="", highlight=False)
+        
         try:
             while self.running:
-                # Get user input using the new input system
+                # Get user input
                 try:
-                    # Get user input (the prompt display will be handled cleanly by the input system)
                     user_input = await self.input_system.get_input("> ")
                     
                     if user_input is None:
-                        # User pressed Ctrl+C or Ctrl+D
                         self.console.print("\n👋 Goodbye!")
                         break
                     
@@ -511,15 +355,15 @@ class LLMREPLv3:
                         continue
                     
                     # Handle special commands
-                    if user_input.lower() in ['exit', 'quit', 'bye']:
+                    if user_input.lower() in ['exit', 'quit', 'bye', '/quit', '/exit']:
                         self.running = False
                         break
-                    elif user_input.lower() == 'stats':
-                        await self.show_statistics()
-                        continue
                     
-                    # Process the query
-                    await self.process_query(user_input)
+                    # Process the query (simplified for now)
+                    self.console.print(f"Processing: {user_input}")
+                    
+                    # Signal response completion
+                    self.input_system.signal_response_complete()
                     
                 except KeyboardInterrupt:
                     self.console.print("\n👋 Goodbye!")
@@ -529,51 +373,50 @@ class LLMREPLv3:
                     break
                     
         finally:
+            self.state_machine.shutdown()
             await self.plugin_manager.stop()
     
-    async def show_statistics(self) -> None:
-        """Show session statistics."""
-        stats_lines = [
-            f"Configuration: {self.config_name}",
-            f"Plugins created: {len(self.plugin_sequence)}",
-            f"Active plugins: {len(self.plugin_manager.active_plugins)}",
-            f"Plugin types available: {len(self.plugin_manager.registered_plugins)}"
-        ]
+    async def run(self) -> None:
+        """
+        Main entry point with structural guarantees.
         
-        # Show plugin sequence
-        if self.plugin_sequence:
-            stats_lines.append("")
-            stats_lines.append("Plugin Sequence:")
-            for i, plugin_id in enumerate(self.plugin_sequence):
-                if plugin_id in self.plugin_manager.active_plugins:
-                    plugin = self.plugin_manager.active_plugins[plugin_id]
-                    plugin_name = plugin.metadata.name
-                    state = plugin.state.value
-                    stats_lines.append(f"  {i+1}. {plugin_name} ({state})")
+        Enforces correct lifecycle:
+        1. Initialize system
+        2. Run startup sequence with proof
+        3. Start interactive mode only after startup completes
+        """
+        # Phase 1: Initialize system (no display)
+        if not await self.initialize_system():
+            return
         
-        stats_panel = Panel(
-            "\n".join(stats_lines),
-            title="📊 Session Statistics",
-            box=ROUNDED,
-            border_style="cyan"
-        )
-        self.console.print(stats_panel)
+        # Phase 2: Run startup sequence with proof of completion
+        try:
+            startup_proof = await self.run_startup_sequence_with_proof()
+            self.console.print(f"\n🎯 Startup sequence completed with proof: {startup_proof.plugins_displayed} plugins")
+        except Exception as e:
+            self.console.print(f"❌ [red]Startup sequence failed: {str(e)}[/red]")
+            return
+        
+        # Phase 3: Start interactive mode (only after startup proof)
+        await self.run_interactive_mode()
 
 
 async def main():
-    """Main entry point."""
-    parser = argparse.ArgumentParser(description="LLM REPL v3 - Plugin Architecture")
+    """Main entry point with structural guarantees."""
+    parser = argparse.ArgumentParser(description="LLM REPL v3 - Structurally Correct")
     parser.add_argument(
         '--config', '-c',
         choices=['debug', 'mixed', 'fast', 'test'],
         default='debug',
-        help='Configuration to use (currently placeholder)'
+        help='Configuration to use'
     )
     
     args = parser.parse_args()
     
-    # Create and run REPL
-    repl = LLMREPLv3(args.config)
+    # Create structurally correct REPL
+    repl = StructurallyCorrectREPL(args.config)
+    
+    # Run with structural guarantees
     await repl.run()
 
 

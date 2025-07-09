@@ -1,6 +1,6 @@
 # LLM REPL - Interactive Research Assistant
 
-# Default: Run with plugin architecture (debug mode)
+# Default: Run with plugin architecture (debug mode) - ONLY interactive mode
 run:
 	python src/main.py --config debug
 
@@ -30,9 +30,9 @@ show-configs:
 # Help
 help:
 	@echo "LLM REPL - Available commands:"
-	@echo "  just run         - Run with Ollama (debug mode)"
-	@echo "  just run-mixed   - Run mixed mode (Ollama+Groq)"
-	@echo "  just run-fast    - Run fast mode (Groq only)"
+	@echo "  just run         - Run interactive mode (Ollama debug)"
+	@echo "  just run-mixed   - Run interactive mode (Ollama+Groq)"
+	@echo "  just run-fast    - Run interactive mode (Groq only)"
 	@echo "  just test        - Run all tests"
 	@echo "  just install     - Install dependencies"
 	@echo "  just help        - Show this help"

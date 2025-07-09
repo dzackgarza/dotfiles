@@ -30,7 +30,7 @@ class TestUserExperience(unittest.TestCase):
         try:
             # Start the REPL process
             process = subprocess.Popen(
-                ['python', 'src/llm_repl_v2.py'],
+                ['python', 'src/main.py', '--config', 'debug'],
                 stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
@@ -44,8 +44,9 @@ class TestUserExperience(unittest.TestCase):
             # Check that it didn't crash
             self.assertEqual(process.returncode, 0, f"REPL crashed on startup. stderr: {stderr}")
             
-            # Check that welcome message appeared
-            self.assertIn("Research Assistant", stdout, "Welcome message not displayed")
+            # Check that welcome message appeared - v3 uses different text
+            self.assertIn("Welcome to LLM REPL v3", stdout, "Welcome message not displayed")
+            self.assertIn("Plugin Architecture", stdout, "Plugin architecture not mentioned")
             
         except subprocess.TimeoutExpired:
             process.kill()
@@ -57,7 +58,7 @@ class TestUserExperience(unittest.TestCase):
         """Test that /help command works without errors."""
         try:
             process = subprocess.Popen(
-                ['python', 'src/llm_repl_v2.py'],
+                ['python', 'src/main.py', '--config', 'debug'],
                 stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
@@ -84,7 +85,7 @@ class TestUserExperience(unittest.TestCase):
         """Test that query processing either works or shows appropriate error."""
         try:
             process = subprocess.Popen(
-                ['python', 'src/llm_repl_v2.py'],
+                ['python', 'src/main.py', '--config', 'debug'],
                 stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
@@ -119,7 +120,7 @@ class TestUserExperience(unittest.TestCase):
         """Test that /stats command works without errors."""
         try:
             process = subprocess.Popen(
-                ['python', 'src/llm_repl_v2.py'],
+                ['python', 'src/main.py', '--config', 'debug'],
                 stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
@@ -149,7 +150,7 @@ class TestUserExperience(unittest.TestCase):
         """Test that /clear command works without errors."""
         try:
             process = subprocess.Popen(
-                ['python', 'src/llm_repl_v2.py'],
+                ['python', 'src/main.py', '--config', 'debug'],
                 stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
@@ -176,7 +177,7 @@ class TestUserExperience(unittest.TestCase):
         """Test that invalid commands are handled gracefully."""
         try:
             process = subprocess.Popen(
-                ['python', 'src/llm_repl_v2.py'],
+                ['python', 'src/main.py', '--config', 'debug'],
                 stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
@@ -203,7 +204,7 @@ class TestUserExperience(unittest.TestCase):
         """Test that empty input is handled gracefully."""
         try:
             process = subprocess.Popen(
-                ['python', 'src/llm_repl_v2.py'],
+                ['python', 'src/main.py', '--config', 'debug'],
                 stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
@@ -227,7 +228,7 @@ class TestUserExperience(unittest.TestCase):
         """Test that Ctrl+C is handled gracefully."""
         try:
             process = subprocess.Popen(
-                ['python', 'src/llm_repl_v2.py'],
+                ['python', 'src/main.py', '--config', 'debug'],
                 stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,

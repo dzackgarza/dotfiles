@@ -360,12 +360,11 @@ class TestQueryProcessing(IntegrationTestCase):
         
         self.assertTrue(result['success'], f"Process failed: {result['stderr']}")
         
-        # Check for query processing flow
-        self.assertIn('You: Hello there', result['stdout'])
-        self.assertIn('Internal Processing', result['stdout'])
-        self.assertIn('Intent Detection', result['stdout'])
-        self.assertIn('Main Query', result['stdout'])
-        self.assertIn('Research Assistant', result['stdout'])
+        # Check for query processing flow - v3 uses User_Input plugin
+        self.assertIn('Hello there', result['stdout'])
+        self.assertIn('User_Input', result['stdout'])
+        self.assertIn('Cognition', result['stdout'])
+        self.assertIn('Assistant_Response', result['stdout'])
         
     def test_query_timing_display(self):
         """Test that query timing is displayed."""
