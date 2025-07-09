@@ -2,49 +2,6 @@
 """
 Gemini-CLI style REPL chat interface with Prompt Toolkit and dotenv support
 Of course.
-
-### **Gemini-CLI Research Assistant: Feature Roadmap**
-
-#### **Core Experience & Foundation**
-*   **Rich Terminal Rendering:** Implement support for rendering Markdown, tables, syntax-highlighted code, and LaTeX directly in the terminal.
-*   **Advanced Input:** Add a multi-line input mode for long prompts and context-aware autocompletion for commands and arguments.
-*   **Streaming Responses:** Display LLM responses token-by-token for improved responsiveness.
-*   **Persistent SQLite History:** Save command history to a local database for persistence and full-text search across sessions.
-*   **Full Session Management:** Implement commands to save, load, list, and fork chat sessions, preserving history, settings, and context.
-
-#### **Integration Layer**
-*   **Deep Jupyter Integration:**
-    *   Connect to a running Jupyter kernel for sandboxed code execution.
-    *   Send code blocks from the LLM or user to the kernel for evaluation.
-    *   Maintain a persistent variable state within the kernel for the session's duration.
-    *   Capture and display rich outputs like Matplotlib plots directly in the terminal or as saved files.
-*   **Mathematical Computation Protocol (MCP) Server Compatibility:**
-    *   Integrate a local **SymPy** engine for fast, accurate symbolic mathematics (`\sympy`).
-    *   Add support for connecting to a **SageMath** server for advanced mathematical domains (`\sage`).
-    *   Integrate with the **Wolfram|Alpha API** for natural language computation and curated data (`\wa`).
-
-#### **Intelligence and Research Workflow**
-*   **Natural Language Command Layer:**
-    *   Use a preliminary LLM call to screen user input for "intent" to run a built-in command.
-    *   Automatically dispatch to the correct function (e.g., changing models, exporting chat) based on the user's natural language request, instead of requiring explicit `\` commands.
-*   **Automated Prompt Optimization:**
-    *   Implement an optional pre-processing step that uses an LLM to refine and enhance the user's prompt.
-    *   This "meta-prompt" will be tailored to the specific model in use to improve the quality and rigor of mathematical responses.
-*   **PDF Corpus Management (RAG):**
-    *   Add commands to ingest a corpus of PDF research papers into a local vector database.
-    *   Automatically retrieve and inject relevant text chunks from the corpus into the context for every prompt.
-    *   Allow explicit searching and querying of the loaded research papers.
-
-#### **Advanced Extensibility & Self-Modification**
-*   **LLM-Driven Self-Extensibility:**
-    *   Create a `\def_cmd` command that takes a natural language description and uses an LLM to generate the Python code for a new command.
-*   **Sandboxed Execution & Iteration:**
-    *   Execute newly generated command code in a secure, sandboxed environment to prevent system instability.
-    *   If the code fails, automatically feed the error message back to the LLM to get a corrected version, iterating until the command runs successfully.
-*   **Hot-Reloading and Plugin Management:**
-    *   Dynamically load custom commands from a user-managed plugin directory without restarting the REPL.
-    *   Implement a command lifecycle to promote stable, user-verified commands for more trusted execution (`\promote_cmd`).
-
 """
 
 import asyncio
