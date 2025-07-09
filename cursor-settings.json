@@ -47,5 +47,5 @@
     "pieces.telemetry": false,
     "cursor.composer.shouldQueueWhenGenerating": false,
     "git.autofetch": true,
-    "workbench.colorTheme": "Default Light+"
+    "workbench.colorTheme": "Monokai Dimmed"
 }
