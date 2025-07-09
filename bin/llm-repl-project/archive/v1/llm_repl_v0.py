@@ -364,80 +364,46 @@ class TokenRateEstimator:
         return self.rates[model_key]
 
 class RollingTokenCounter:
-    """Earthbound-style rolling token counter with realistic timing."""
+    """Enhanced token counter that ONLY shows actual API response data."""
     
     def __init__(self, model_name: str = "default"):
         self.model_name = model_name
-        self.rate_estimator = TokenRateEstimator()
-        self.rates = self.rate_estimator.get_rates(model_name)
         
-        # Current state
-        self.current_sent = 0
-        self.current_received = 0
-        self.target_sent = 0
-        self.target_received = 0
+        # Import enhanced animation system
+        import sys
+        from pathlib import Path
+        sys.path.insert(0, str(Path(__file__).parent))
+        from enhanced_animation import RealtimeTokenTracker
         
-        # Animation state
+        self.tracker = RealtimeTokenTracker()
+        self.tracker.animator.set_animation_style("smooth_ramp")
+        
+        # Legacy compatibility
         self.start_time = None
         self.is_complete = False
-        self.animation_speed = 0.05
         
-    def start_animation(self, input_tokens: int, expected_output_tokens: int = 50):
-        """Start the rolling animation with estimated timing."""
+    def start_animation(self, input_tokens: int = 0, expected_output_tokens: int = 0):
+        """Start the animation - but don't show estimates, wait for actual data."""
         self.start_time = time.time()
-        self.target_sent = input_tokens
-        self.target_received = expected_output_tokens
+        self.tracker.start_request()
         self.is_complete = False
         
-        # Estimate when we should reach targets
-        self.estimated_duration = self.rate_estimator.estimate_duration(
-            self.model_name, input_tokens, expected_output_tokens
-        )
-        
     def get_current_values(self) -> tuple[int, int]:
-        """Get current token counts with rolling animation."""
-        if not self.start_time:
-            return 0, 0
-            
-        elapsed = time.time() - self.start_time
+        """Get current token counts - ONLY actual values, never estimates."""
+        return self.tracker.get_display_values()
         
-        if self.is_complete:
-            return self.target_sent, self.target_received
-            
-        # Calculate expected progress based on time
-        progress = min(1.0, elapsed / self.estimated_duration)
-        
-        # Exponential easing for smooth animation
-        eased_progress = 1 - (1 - progress) ** 2
-        
-        # Calculate animated values
-        animated_sent = int(eased_progress * self.target_sent)
-        
-        # Output tokens start appearing after input processing + latency
-        output_delay = self.rates['latency_seconds'] + (self.target_sent / self.rates['input_tokens_per_second'])
-        output_progress = max(0, (elapsed - output_delay) / max(0.1, self.estimated_duration - output_delay))
-        output_progress = min(1.0, output_progress)
-        
-        # Exponential easing for output tokens
-        eased_output_progress = 1 - (1 - output_progress) ** 2
-        animated_received = int(eased_output_progress * self.target_received)
-        
-        return animated_sent, animated_received
+    def update_with_actual_tokens(self, input_tokens: int, output_tokens: int):
+        """Update with ACTUAL token counts from API response."""
+        self.tracker.update_with_api_response(input_tokens, output_tokens)
         
     def set_final_values(self, sent: int, received: int):
-        """Set final values when request completes (for catch-up animation)."""
-        self.target_sent = sent
-        self.target_received = received
+        """Set final values when request completes."""
+        self.tracker.complete_request(sent, received)
         self.is_complete = True
         
     def should_catch_up(self) -> bool:
-        """Check if we need to catch up to actual values."""
-        if not self.start_time:
-            return False
-            
-        elapsed = time.time() - self.start_time
-        # If request completes much faster than estimated, catch up
-        return self.is_complete and elapsed < (self.estimated_duration * 0.7)
+        """Check if animation is complete."""
+        return self.tracker.animator.is_complete()
 
 class ProcessingBlock:
     """
@@ -965,9 +931,9 @@ class ChatREPL:
         estimated_duration = self.token_estimator.estimate_duration("tinyllama", estimated_input_tokens, estimated_output_tokens)
         
         if progress:
-            # Start rolling animation with ground truth tokens and estimated duration  
-            progress.rolling_counter.start_animation(estimated_input_tokens, estimated_output_tokens)
-            self.session_logger.log_system_message(f"[TIMING] Starting animation: {estimated_input_tokens} tokens over ~{estimated_duration:.1f}s")
+            # Start animation - will wait for actual token data, no estimates shown
+            progress.rolling_counter.start_animation()
+            self.session_logger.log_system_message(f"[TIMING] Starting animation - waiting for actual token data")
         
         # Make the actual request
         url = "http://localhost:11434/api/generate"
@@ -996,20 +962,21 @@ class ChatREPL:
                     api_output_tokens = data.get("eval_count", len(response_text.split()))
                     
                     if progress:
-                        # Handle early/late completion with exponential catch-up
+                        # Update with ACTUAL token counts from API response
+                        progress.rolling_counter.update_with_actual_tokens(api_input_tokens, api_output_tokens)
                         progress.rolling_counter.set_final_values(api_input_tokens, api_output_tokens)
                         progress.final_tokens_set = True
-                        self.session_logger.log_system_message(f"[TIMING] Request completed in {actual_duration:.1f}s (estimated {estimated_duration:.1f}s)")
-                        self.session_logger.log_system_message(f"[TIMING] Ground truth tokens: ↑{api_input_tokens} ↓{api_output_tokens}")
+                        self.session_logger.log_system_message(f"[TIMING] Request completed in {actual_duration:.1f}s")
+                        self.session_logger.log_system_message(f"[TIMING] ACTUAL tokens: ↑{api_input_tokens} ↓{api_output_tokens} (no estimates used)")
                     
                     return response_text, api_input_tokens, api_output_tokens
                     
         except Exception as e:
             self.session_logger.log_system_message(f"[ERROR] LLM request failed: {e}")
             if progress:
-                progress.rolling_counter.set_final_values(estimated_input_tokens, 0)
+                progress.rolling_counter.set_final_values(0, 0)  # No tokens processed on error
                 progress.final_tokens_set = True
-            return f"Error: {e}", estimated_input_tokens, 0
+            return f"Error: {e}", 0, 0
     
     def load_env_file(self):
         """Load environment variables from ~/.env file, unless NO_DOTENV=1 is set (for test isolation)"""

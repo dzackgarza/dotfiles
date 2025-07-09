@@ -1,6 +1,39 @@
-run:
-	python src/llm_repl_v0.py
+# LLM REPL - Interactive Research Assistant
 
+# Default: Run with plugin architecture (debug mode)
+run:
+	python src/main.py --config debug
+
+# Mixed mode: Ollama for intent detection, Groq for chat
+run-mixed:
+	python src/main.py --config mixed
+
+# Fast mode: Groq for everything
+run-fast:
+	python src/main.py --config fast
+
+# Run comprehensive test suite (includes block ordering, timing, integration)
 test:
-	python tests/test_llm_repl.py
+	python -m pytest tests/ -v
+
+# Install dependencies
+install:
+	pip install -r requirements.txt
+
+# Show available configurations
+show-configs:
+	@echo "Available LLM configurations:"
+	@echo "  debug: Ollama for everything (default)"
+	@echo "  mixed: Ollama for intent, Groq for chat"
+	@echo "  fast: Groq for everything"
+
+# Help
+help:
+	@echo "LLM REPL - Available commands:"
+	@echo "  just run         - Run with Ollama (debug mode)"
+	@echo "  just run-mixed   - Run mixed mode (Ollama+Groq)"
+	@echo "  just run-fast    - Run fast mode (Groq only)"
+	@echo "  just test        - Run all tests"
+	@echo "  just install     - Install dependencies"
+	@echo "  just help        - Show this help"
 
