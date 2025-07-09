@@ -225,10 +225,9 @@ class SimpleMultilineInput:
         @self.kb.add('enter')
         def submit_input(event):
             """Submit on Enter."""
-            # Regular Enter: submit if buffer is not empty
+            # Regular Enter: always submit (even if empty)
             buffer = event.app.current_buffer
-            if buffer.text.strip():
-                buffer.validate_and_handle()
+            buffer.validate_and_handle()
             
         @self.kb.add('c-j')  # Alternative: Ctrl+J for new line
         def explicit_newline(event):
@@ -248,13 +247,11 @@ class SimpleMultilineInput:
         
         session = PromptSession(
             message=message,
-            multiline=True,
-            key_bindings=self.kb,
+            multiline=False,  # Changed to False for simpler single-line input
+            # key_bindings=self.kb,  # Disabled custom bindings for now
             style=style,
             history=InMemoryHistory(),
-            complete_style='column',
             mouse_support=False,  # Disable to allow normal text selection
-            erase_when_done=False,  # Don't erase - we'll handle cleanup manually
         )
         
         try:
