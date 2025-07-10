@@ -1,0 +1,192 @@
+/* Dracula theme for V3-minimal - Unix rice aesthetic */
+
+/* Global app styling */
+App {
+    background: #282a36;
+    color: #f8f8f2;
+}
+
+/* Main layout containers */
+#main-container {
+    background: #282a36;
+    border: none;
+}
+
+#timeline-container {
+    background: #282a36;
+    border: solid #6272a4;
+    border-title-color: #bd93f9;
+    border-title-style: bold;
+}
+
+#input-container {
+    background: #44475a;
+    border: solid #6272a4;
+    height: auto;
+    min-height: 3;
+    max-height: 8;
+}
+
+/* Timeline styling */
+TimelineView {
+    background: #282a36;
+    scrollbar-background: #44475a;
+    scrollbar-color: #6272a4;
+    scrollbar-color-hover: #bd93f9;
+    scrollbar-color-active: #ff79c6;
+}
+
+/* Sacred Timeline blocks - Enhanced block structure */
+.timeline-block {
+    background: #282a36;
+    margin: 0 0 1 0;
+    padding: 0;
+    border: none;
+}
+
+.timeline-block-user {
+    background: #282a36;
+    color: #50fa7b;
+}
+
+.timeline-block-system {
+    background: #282a36;
+    color: #f1fa8c;
+}
+
+.timeline-block-assistant {
+    background: #282a36;
+    color: #8be9fd;
+}
+
+.timeline-block-cognition {
+    background: #282a36;
+    color: #bd93f9;
+}
+
+/* Block components */
+.block-header {
+    color: #f8f8f2;
+    text-style: bold;
+    margin: 0;
+    padding: 0;
+}
+
+.block-content {
+    color: #f8f8f2;
+    margin: 0;
+    padding: 0;
+}
+
+.block-separator {
+    height: 1;
+    background: transparent;
+    margin: 0;
+    padding: 0;
+}
+
+/* Timeline headers */
+.timeline-header {
+    color: #6272a4;
+    text-style: bold;
+    margin: 0 0 0 0;
+}
+
+.timeline-content {
+    color: #f8f8f2;
+    margin: 0 0 0 1;
+    padding: 0;
+}
+
+/* Input widget styling */
+PromptInput {
+    background: #282a36;
+    color: #f8f8f2;
+    border: solid #6272a4;
+    border-title-color: #ff79c6;
+    border-subtitle-color: #6272a4;
+    padding: 1;
+    height: auto;
+    min-height: 3;
+    max-height: 6;
+}
+
+PromptInput:focus {
+    border: solid #bd93f9;
+    border-title-color: #bd93f9;
+}
+
+PromptInput.multiline {
+    height: auto;
+}
+
+PromptInput.-submit-blocked {
+    border: solid #f85149;
+    border-title-color: #f85149;
+}
+
+/* Scrollbars */
+ScrollBar {
+    background: #21262d;
+    color: #484f58;
+}
+
+ScrollBar:hover {
+    color: #6e7681;
+}
+
+ScrollBar.-active {
+    color: #7c3aed;
+}
+
+/* Status and notifications */
+.notification {
+    background: #21262d;
+    color: #c9d1d9;
+    border: solid #f85149;
+    dock: top;
+}
+
+.notification.-information {
+    border: solid #58a6ff;
+}
+
+.notification.-warning {
+    border: solid #f1e05a;
+}
+
+.notification.-error {
+    border: solid #f85149;
+}
+
+/* Minimalist focus indicators */
+*:focus {
+    text-style: none;
+    border-title-style: bold;
+}
+
+/* Syntax highlighting in timeline */
+.timeline-content .token.comment {
+    color: #8b949e;
+}
+
+.timeline-content .token.string {
+    color: #7ee787;
+}
+
+.timeline-content .token.number {
+    color: #79c0ff;
+}
+
+.timeline-content .token.keyword {
+    color: #ff7b72;
+}
+
+.timeline-content .token.function {
+    color: #d2a8ff;
+}
+
+/* Position Toast notifications in top-right */
+ToastRack {
+    align: right top;
+}
