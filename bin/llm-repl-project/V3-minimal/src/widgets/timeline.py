@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from textual.widgets import Static
-from textual.containers import VerticalScroll
+from textual.containers import VerticalScroll, Vertical
 from textual.reactive import reactive
 from textual.message import Message
 from rich.text import Text
@@ -11,7 +11,7 @@ from rich.panel import Panel
 from rich.align import Align
 from typing import Optional
 
-from ..config import RoleConfig, TimelineConfig, UIConfig
+from ..config import RoleConfig, UIConfig
 
 
 @dataclass
@@ -28,7 +28,7 @@ class TimelineBlock:
     tokens_output: Optional[int] = None  # Number of output tokens
 
 
-class TurnBlockWidget(VerticalScroll):
+class TurnBlockWidget(Vertical):
     """A widget representing a single turn in the Sacred Timeline."""
 
     DEFAULT_CSS = """
@@ -36,6 +36,8 @@ class TurnBlockWidget(VerticalScroll):
         border: round $accent;
         margin-bottom: 1;
         padding: 0 1;
+        height: auto;
+        min-height: 0;
     }
     """
 
@@ -60,14 +62,15 @@ class TurnBlockWidget(VerticalScroll):
             yield TimelineBlockWidget(block)
 
     def _get_header_text(self) -> Text:
+        """Constructs uniform turn header in format: |----TURN #X-------|"""
         header = Text()
-        timestamp_str = self.timestamp.strftime(TimelineConfig.TIMESTAMP_FORMAT)
-        header.append(f"[{timestamp_str}] ", style="dim")
-        header.append(
-            f"{RoleConfig.ROLE_INDICATORS['turn']} ", style="bright_white bold"
-        )
+
+        # Create uniform turn header: |----TURN #X-------|
+        header.append("|----", style="dim")
         header.append("TURN ", style="bright_white bold")
         header.append(f"#{self.turn_id}", style="bright_white bold")
+        header.append("-------|", style="dim")
+
         return header
 
 
@@ -87,27 +90,34 @@ class TimelineView(VerticalScroll):
         self.auto_scroll = True  # Always scroll to bottom
 
     def watch_blocks(self, blocks: list[TimelineBlock]) -> None:
-        """Update display when blocks change"""
-        # This method will be refactored to manage TurnBlockWidgets
-        # For now, it will clear and re-mount all blocks as before
-        self.query("TimelineBlockWidget").remove()
-        self.query("TurnBlockWidget").remove()
+        """Update display when blocks change - using progressive mounting like Elia"""
+        # Check how many blocks we currently have rendered
+        current_widgets = self.query("TimelineBlockWidget, TurnBlockWidget")
+        current_count = len(current_widgets)
 
-        # Re-render all blocks, grouping them into turns
-        current_turn_blocks: list[TimelineBlock] = []
-        for block in blocks:
-            if block.role == "user":
-                if current_turn_blocks:
-                    self._mount_turn(current_turn_blocks)
-                current_turn_blocks = [block]
-            else:
-                current_turn_blocks.append(block)
-        if current_turn_blocks:
-            self._mount_turn(current_turn_blocks)
+        # Only process new blocks that haven't been rendered yet
+        if len(blocks) <= current_count:
+            return  # No new blocks to add
 
-        # Always scroll to bottom (newest content)
-        if self.auto_scroll:
-            self.scroll_end(animate=False)
+        # Progressive mounting: only add new blocks
+        new_blocks = blocks[current_count:]
+
+        for block in new_blocks:
+            # Mount each new block individually (Elia pattern)
+            block_widget = TimelineBlockWidget(block)
+            self.mount(block_widget)
+
+        # Smart auto-scroll - only if user is near bottom (Elia pattern)
+        if self._should_auto_scroll():
+            self.scroll_end(animate=False, force=True)
+
+    def _should_auto_scroll(self) -> bool:
+        """Check if we should auto-scroll (user near bottom) - Elia pattern"""
+        try:
+            return self.scroll_y >= self.max_scroll_y - 3
+        except (AttributeError, ValueError):
+            # If scroll properties not available yet, default to auto-scroll
+            return True
 
     def _mount_turn(self, blocks_in_turn: list[TimelineBlock]):
         self._turn_counter += 1
@@ -121,10 +131,20 @@ class TimelineView(VerticalScroll):
         self.mount(turn_widget)
 
     def add_block(self, block: TimelineBlock) -> None:
-        """Add a new block to the timeline"""
+        """Add a new block to the timeline using progressive mounting"""
+        # Progressive mounting: mount the new block directly (Elia pattern)
+        block_widget = TimelineBlockWidget(block)
+        self.mount(block_widget)
+
+        # Update blocks list for compatibility
         new_blocks = self.blocks.copy()
         new_blocks.append(block)
         self.blocks = new_blocks
+
+        # Smart auto-scroll - only if user is near bottom
+        if self._should_auto_scroll():
+            self.scroll_end(animate=False, force=True)
+
         self.post_message(self.BlockAdded(block))
 
     def clear_timeline(self) -> None:
@@ -164,19 +184,12 @@ class TimelineBlockWidget(Static):
         )
 
     def _get_header_text(self) -> Text:
-        """Constructs the uniform header text for the block."""
+        """Constructs the uniform header text for the block in format: |----TYPE (X s, Y up/Z down)-------|"""
         header = Text()
-        indicator = self._get_role_indicator()
         role_name = self.block.role.upper()
         role_color = self._get_role_color()
-        timestamp_str = self.block.timestamp.strftime(TimelineConfig.TIMESTAMP_FORMAT)
 
-        # Base header: [TIMESTAMP] ICON ROLE_NAME
-        header.append(f"[{timestamp_str}] ", style="dim")
-        header.append(f"{indicator} ", style=role_color)
-        header.append(role_name, style=f"bold {role_color}")
-
-        # Add time and token info if available
+        # Build metrics for the uniform format
         metrics = []
         if self.block.time_taken is not None:
             metrics.append(f"{self.block.time_taken:.1f}s")
@@ -185,8 +198,14 @@ class TimelineBlockWidget(Static):
         if self.block.tokens_output is not None:
             metrics.append(f"{self.block.tokens_output}↓")
 
+        # Create uniform header: |----TYPE (metrics)-------|
+        header.append("|----", style="dim")
+        header.append(role_name, style=f"bold {role_color}")
+
         if metrics:
-            header.append(f" ({' | '.join(metrics)})", style="dim")
+            header.append(f" ({', '.join(metrics)})", style="dim")
+
+        header.append("-------|", style="dim")
 
         return header
 
