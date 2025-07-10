@@ -1,0 +1,389 @@
+: 1751492644:0;rehash 
+: 1751493535:0;find_project_labels.sh 
+: 1751493583:0;find_project_labels.sh | grep "enriques-transc"
+: 1751493789:0;echo "enriques-transc" | find_project_labels.sh
+: 1751494122:0;vim ~/dotfiles/bin/find_project_labels.py
+: 1751494128:0;chmod +x ~/dotfiles/bin/*
+: 1751494409:0;find_project_labels.sh | wc -l
+: 1751494701:0;head -20 dev/tex/packages/DZG-Macros.sty 
+: 1751494885:0;find_project_labels.sh | head -20
+: 1751495381:0;cat ~/.cache/project-labels.txt | grep hyperbolic
+: 1751497644:0;curl -s "http://127.0.0.1:23119/better-bibtex1"
+: 1751500211:0;pkill zotero
+: 1751501031:0;./aegs-extraction/end_to_end_test.sh./aegs-extraction/end_to_end_test.sh
+: 1751501032:0;./aegs-extraction/end_to_end_test.sh
+: 1751504611:0;rm ~/Zotero.bib
+: 1751504620:0;rm ~/Zotero.json
+: 1751504785:0;cursor ~/gitclones/diss --disable-extensions
+: 1751504888:0;cat ~/zotero.bib
+: 1751504909:0;dev/tex/Dissertation.bib 
+: 1751504922:0;rm Dissertation.bib
+: 1751505014:0;ln /home/dzack/zotero.bib /home/dzack/gitclones/diss/dev/tex/Dissertation.bib
+: 1751510393:0;mkdir -p ~/.config/qutebrowser/userscripts
+: 1751510407:0;vim ~/.config/qutebrowser/userscripts/focus-main-input
+: 1751511019:0;vim ~/.config/swayfx/config
+: 1751511068:0;swaymsg reload
+: 1751511219:0;cursor-fast ~/diss
+: 1751511232:0;which cursor-fast 
+: 1751511259:0;cursor
+: 1751511339:0;tail -20 ~/.zshrc
+: 1751511543:0;tail -20 ~/.zshrc | wl-copy
+: 1751511557:0;clip ~/.zshrc
+: 1751511615:0;type cursor
+: 1751511621:0;s
+: 1751512303:0;qq
+: 1751512311:0;alias q="just qtest"
+: 1751512380:0;pkill systemd-coredump
+: 1751512386:0;sudo pkill systemd-coredump -f
+: 1751512412:0;pkill cursurhtop
+: 1751515871:0;paru -S evtest
+: 1751515874:0;sudo evtest
+: 1751515918:0;vim ~/.config/qutebrowser/config.py
+: 1751516338:0;cursor ~/diss
+: 1751517355:0;npm run build
+: 1751518162:0;paru -S yarn
+: 1751518425:0;sudo vim /etc/systemd/coredump.conf.d/disable.conf
+: 1751518491:0;yarn install
+: 1751518500:0;npm install
+: 1751518694:0;cat ~/.config/coc/extensions/node_modules/coc-languagetool/package.json | grep build
+: 1751518858:0;paru -S languagetool
+: 1751519531:0;mkdir dictionaries
+: 1751519543:0;mv ~/Downloads/hunspell/en_US* .
+: 1751519607:0;mv en_US* ./dictionaries
+: 1751521010:0;vim ~/.config/nvim/spell/en.utf-8.spl
+: 1751521024:0;locate en.utf-8.add
+: 1751521033:0;locate "*.add"
+: 1751521099:0;mkdir addfiles
+: 1751521108:0;mv mathdict.utf-8.add addfiles
+: 1751521136:0;cat ./addfiles/* > corpus.add
+: 1751521143:0;cat ./addfiles/* > sort -u
+: 1751521148:0;rm sort
+: 1751521159:0;cat ./addfiles/* | sort -u > corpus.add
+: 1751521202:0;mv addfiles/mathdict.utf-8.add .
+: 1751521205:0;rm addfiles
+: 1751521237:0;cat ./en.utf-8.spl | grep compactifications
+: 1751521400:0;rm mathdict.utf-8.add
+: 1751521410:0;rm en_US.aff
+: 1751521415:0;rm en_US.dic
+: 1751521497:0;nvim
+: 1751521593:0;unzip -d hunspell ./hunspell-en_US-2020.12.07.zip
+: 1751521605:0;grep -i '^constructible' ./en_US.dic
+: 1751521620:0;vim en_US.dic
+: 1751522043:0;nvim ~/dotfiles/init.vim
+: 1751523749:0;cursor ~/gitclones/diss
+: 1751525167:0;cat offenders.md
+: 1751525275:0;qltest
+: 1751525300:0;just qltest 
+: 1751526353:0;just qltest | vim --
+: 1751531399:0;just blame
+: 1751536228:0;just testql
+: 1751536232:0;just
+: 1751540400:0;sudo rmmod hid_multitouch; sleep 2; sudo modprobe hid_multitouch
+: 1751540477:0;vim dev/tex/filters/ 
+: 1751543289:0;r writing/sections-refactor/1_part
+: 1751555390:0;vim dev/tex/packages/DZG-Macros.sty 
+: 1751555929:0;pdflatex tmp.tex
+: 1751555948:0;just qltest > tmp.tex
+: 1751555957:0;vim tmp.tex
+: 1751555969:0;xelatex ./tmp.tex
+: 1751556020:0;q
+: 1751556137:0;just diss
+: 1751959225:0;ag "TestTest"
+: 1751960692:0;echo "hello"
+: 1751961423:0;zzsh
+: 1751961687:0;bash
+: 1751962484:0;python3 src/llm_repl_v0.py --help || true
+: 1751962622:0;python3 -m unittest discover -v | tee test_output.log
+: 1751963105:0;a
+: 1751963108:0;alacritty
+: 1751963114:0;kitty
+: 1751963264:0;chsh
+: 1751963517:0;paru -S xdg-desktop-portal-gtk
+: 1751964183:0;pip install rapidfuzz
+: 1751964188:0;python -m venv .venv && source .venv/bin/activate && pip install rapidfuzz pytest
+: 1751964328:0;pacman -S python-rapidfuzz --noconfirm
+: 1751964334:0;pip install --break-system-packages rapidfuzz
+: 1751964781:0;notify-send 'llm-repl-project: Test harness unrecoverable failure. 11 tests failed after fuzzy scoring refactor. See pytest_output.log for details.'
+: 1751964894:0;pytest -v | tee pytest_output.log
+: 1751966343:0;pytest -v -k test_repl_startup_and_exit | tee debug_startup_exit.log
+: 1751966361:0;python3 src/llm_repl_v0.py > debug_repl_stdout.txt 2>&1
+: 1751966424:0;vim ~/.zshenv
+: 1751967419:0;echo $TERM; tty; whoami; python3 -c 'import sys; print(sys.stdin.isatty())'
+: 1751967651:0;rofi
+: 1751967657:0;which wofi
+: 1751967660:0;paru -S wofi
+: 1751967668:0;wofi
+: 1751967920:0;paru -S zenity
+: 1751968104:0;paru -S yad
+: 1751968420:0;paru -S bemenu
+: 1751968760:0;mkdir bemenu-themes
+: 1751969561:0;claude mcp
+: 1751969597:0;cat hello_test.py
+: 1751969600:0;which python3; python3 --version
+: 1751969609:0;file /home/dzack/dotfiles/bin/llm-repl-project/.venv/bin/cursor-bin.AppImage
+: 1751969613:0;file /opt/cursor-bin/cursor-bin.AppImage
+: 1751969623:0;rm .venv/bin/python3 && ln -s /usr/bin/python3 .venv/bin/python3
+: 1751969626:0;python3 hello_test.py
+: 1751970135:0;x
+: 1751970605:0;claude mcp list
+: 1751970885:0;python3 src/llm_repl_v0.py
+: 1752006018:0;ecit
+: 1752006121:0;zs
+: 1752006940:0;claude
+: 1752006942:0;which claude
+: 1752006950:0;echo $PATH
+: 1752006961:0;~/.claude/local/claude .
+: 1752008063:0;~/dotfiles/bin/llm-query.sh
+: 1752009387:0;/home/dzack/dotfiles/bin/llm-query.sh catppuccin
+: 1752009985:0;npx
+: 1752012139:0;cldar
+: 1752013026:0;~/.claude/local/claude --debug
+: 1752013149:0;zsg
+: 1752014127:0;vim .claude/settings.local.json
+: 1752014151:0;vim ~/diss/200-dev/projects/mcp-servers/.claude/settings.local.json
+: 1752014774:0;paru -S direnv
+: 1752014798:0;which direnv
+: 1752014803:0;type _direnv_hook
+: 1752014808:0;cat ./.envrc
+: 1752015535:0;print -l ${chpwd_functions}
+: 1752016227:0;claude code
+: 1752016402:0;echo $TEST_VAR
+: 1752017024:0;exec zsh
+: 1752018321:0;fzf
+: 1752019061:0;a doc
+: 1752019063:0;z doc
+: 1752019102:0;z dow
+: 1752021695:0;pwdopd
+: 1752021696:0;popd
+: 1752023352:0;cp ~/.env ./.env
+: 1752023356:0;source .env
+: 1752024851:0;windsurf .
+: 1752025706:0;zsh
+: 1752026034:0;which pdm
+: 1752026044:0;vim ~/.zshrc
+: 1752028301:0;gemini
+: 1752028542:0;pdm
+: 1752029393:0;just run-animation
+: 1752029447:0;just run-v2
+: 1752030523:0;vim ~/dotfiles/prompts
+: 1752031806:0;source /tmp/fast_nav_enhanced.zsh
+: 1752033676:0;vim ~/.config/prompts.md
+: 1752035305:0;locate "asdsad"
+: 1752039628:0;vim justfile
+: 1752039637:0;just run-legacy
+: 1752039837:0;chmod +x ./Warp-x86_64.AppImage
+: 1752039840:0;./Warp-x86_64.AppImage
+: 1752039984:0;find /home/dzack/gitclones/diss -type d -name "*mcp*" 2>/dev/null
+: 1752040186:0;find /home/dzack/gitclones/diss/200-dev/projects/mcp-servers/servers/simple-sagemath -name "*.py" -path "*/tests/*" | head -10
+: 1752041938:0;paru -Ss llmvm
+: 1752041999:0;htop
+: 1752042254:0;pip install llmvm-cli --break
+: 1752042508:0;git clone https://github.com/9600dev/llmvm
+: 1752042848:0;pdm install llmvm-cli
+: 1752042933:0;pdm install -e .
+: 1752042960:0;pdm add -e .
+: 1752043025:0;tree
+: 1752043028:0;tree | wl-copy
+: 1752043175:0;clip
+: 1752043575:0;cat mcp_config.json
+: 1752043624:0;cat ~/diss/200-dev/projects/mcp-servers/servers/simple-sagemath/mcp_config.json| wl-copy
+: 1752044074:0;llmvm-cli
+: 1752044087:0;poetry run llmvm
+: 1752044148:0;~/dotfiles/bin/clip ./pyproject.toml
+: 1752044201:0;poetry run llmvm-cli
+: 1752044223:0;tree llmvm
+: 1752046596:0;rm /home/dzack/gitclones/diss/200-dev/projects/mcp-servers/servers/simple-sagemath/test_timeout.py
+: 1752047002:0;poetry run llmvm.client
+: 1752047006:0;poetry run
+: 1752047011:0;poetry run client
+: 1752047048:0;mkdir llmvm-venv
+: 1752047149:0;poetry add llmvm-cli
+: 1752047273:0;cat pyproject.toml
+: 1752047465:0;rm /tmp/* -rf
+: 1752047470:0;sudo rm /tmp/* -rf
+: 1752047489:0;rm -rf ~: 1752047497:0;rm -rf ~/.cache
+: 1752047499:0;paru -Rns gpt4all zoom
+: 1752047501:0;paru -Rns zoom
+: 1752050725:0;r
+: 1752050945:0;just run-fast
+: 1752057367:0;zsh -c 'source ~/.zshrc && echo "Zsh config loaded successfully"'
+: 1752057367:0;chmod +x ~/test_keybind.zsh && zsh ~/test_keybind.zsh
+: 1752057367:0;zsh -c 'source ~/.zshrc && echo "Zsh config reloaded. Try pressing Ctrl+G or type 'dg' to test directory navigation."'
+: 1752057367:0;chmod +x ~/.local/bin/dirnav && zsh -c 'source ~/.zshrc && echo "Configuration reloaded. Try Ctrl+G now."'
+: 1752057367:0;zsh -c 'source ~/.zshrc && echo "Configuration reloaded. Please try Ctrl+G now."'
+: 1752057367:0;chmod +x ~/.local/bin/dirnav
+: 1752057367:0;zsh -c 'source ~/.zshrc && echo "Configuration reloaded. Please test Ctrl+G and 'dirnav --interactive'"'
+: 1752057367:0;wc -l ~/.local/bin/dirnav
+: 1752057367:0;chmod +x ~/.local/bin/dirnav && zsh -c 'source ~/.zshrc && echo "Configuration reloaded. Please test Ctrl+G and dirnav --interactive"'
+: 1752057367:0;rm -f ~/.zsh_history.lock
+: 1752057367:0;rm -f ~/.zsh_history.lock && touch ~/.zsh_history && chmod 600 ~/.zsh_history
+: 1752057367:0;rm -f ~/.zsh_history.lock ~/.zcompdump*
+: 1752057367:0;source ~/.dotfiles/py-dirnav/venv/bin/activate && dirnav --interactive
+: 1752057367:0;cat ~/.zshenv
+: 1752057367:0;cat /etc/zsh/zprofile
+: 1752057367:0;mkdir -p ~/dotfiles/zsh/functions
+: 1752057367:0;chmod +x ~/dotfiles/zsh/functions/test-fzf-z-jump.zsh && cd ~/dotfiles/zsh/functions && ./test-fzf-z-jump.zsh
+: 1752057367:0;cp ~/.zshrc ~/.zshrc.backup-$(date +%Y%m%d%H%M%S)
+: 1752057367:0;zsh -c 'source ~/dotfiles/zsh/functions/fzf-z-jump.zsh && echo "Script loaded successfully"'
+: 1752057367:0;zsh -c 'source ~/.zshrc && bindkey | grep _fzf_z_widget'
+: 1752057367:0;zsh -i -c 'source ~/dotfiles/zsh/functions/fzf-z-jump.zsh && bindkey | grep _fzf_z_widget'
+: 1752057367:0;head -n 5 /home/dzack/fzf_input.txt
+: 1752057367:0;chmod +x ~/dotfiles/zsh/functions/test-fzf-deep-navigation.zsh && ~/dotfiles/zsh/functions/test-fzf-deep-navigation.zsh
+: 1752057367:0;~/dotfiles/zsh/functions/test-fzf-deep-static.zsh
+: 1752057367:0;chmod +x ~/dotfiles/zsh/functions/test-fzf-filtering.sh && ~/dotfiles/zsh/functions/test-fzf-filtering.sh
+: 1752057367:0;~/dotfiles/zsh/functions/test-fzf-filtering.sh
+: 1752057367:0;find ~/dotfiles -name ".zshrc" -o -name "zshrc"
+: 1752057367:0;find ~/dotfiles -type f -name "*.zsh" -o -name "zsh*" | sort
+: 1752057367:0;find ~/dotfiles -name "zshrc*" -o -name "*.zsh" | sort
+: 1752057367:0;mkdir -p ~/.config/zsh
+: 1752057367:0;chmod +x /tmp/test_fzf_nav.sh && /tmp/test_fzf_nav.sh
+: 1752057367:0;mkdir -p /tmp/test_nav/diss/200-dev/projects/mcp-servers/servers/jupyter-mcp && touch /tmp/test_nav/diss/file1.txt && mkdir -p /tmp/test_nav/diss/200-dev/docs && touch /tmp/test_nav/diss/200-dev/notes.md
+: 1752057367:0;chmod +x /tmp/test_nav.sh && zsh /tmp/test_nav.sh
+: 1752057367:0;chmod +x /tmp/test_enhanced_nav.sh && zsh /tmp/test_enhanced_nav.sh
+: 1752057367:0;source ~/dotfiles/zsh/functions/fzf-z-jump.zsh && echo "Navigation functions loaded successfully"
+: 1752057367:0;chmod +x /tmp/verify_nav.sh && zsh /tmp/verify_nav.sh
+: 1752057367:0;zsh /tmp/verify_nav.sh
+: 1752057367:0;chmod +x /tmp/verify_scoring.sh && zsh /tmp/verify_scoring.sh
+: 1752057367:0;zsh /tmp/verify_scoring.sh
+: 1752057367:0;chmod +x /tmp/test_scoring.sh && zsh /tmp/test_scoring.sh
+: 1752057367:0;mkdir -p ~/.config/zsh/functions
+: 1752057367:0;source ~/.zshrc
+: 1752057367:0;zsh -c 'source ~/.zshrc'
+: 1752057367:0;grep -r "_fzf_cd_subdir" ~/dotfiles/ ~/.config/ ~/.zshrc ~/.zsh/ 2>/dev/null
+: 1752057367:0;sed -i '/_fzf_cd_subdir()/,/^}/d' ~/.zshrc
+: 1752057367:0;grep -A 5 "_fzf_cd_subdir" ~/.zshrc
+: 1752057367:0;cp ~/dotfiles/zsh/functions/fzf-z-jump.zsh ~/.config/zsh/functions/
+: 1752057367:0;type _fzf_cd_subdir
+: 1752057367:0;which _fzf_cd_subdir
+: 1752057367:0;declare -f _fzf_cd_subdir
+: 1752057367:0;source ~/dotfiles/zsh/functions/fzf-z-jump.zsh
+: 1752057367:0;cat > /tmp/update_fzf.sh << 'EOF'
+: 1752057367:0;#!/bin/zsh
+: 1752057367:0;# Unset any existing functions
+: 1752057367:0;unfunction _fzf_cd_subdir 2>/dev/null || true
+: 1752057367:0;# Define the enhanced function
+: 1752057367:0;# Print success message
+: 1752057367:0;# Make the function available in the current shell
+: 1752057367:0;export -f _fzf_cd_subdir
+: 1752057367:0;# Make it executable
+: 1752057367:0;chmod +x /tmp/update_fzf.sh
+: 1752057367:0;# Run it in zsh to update the function
+: 1752057367:0;zsh /tmp/update_fzf.sh
+: 1752057367:0;cat > ~/.zshrc_local << 'EOF'
+: 1752057367:0;# Enhanced fzf-cd-subdir function
+: 1752057367:0;_fzf_cd_subdir() {
+: 1752057367:0;  local query="${LBUFFER}${RBUFFER}"
+: 1752057367:0;  local selected
+: 1752057367:0;  # If we have a query, use it to filter
+: 1752057367:0;  if [[ -n "$query" ]]; then
+: 1752057367:0;        local score=0
+: 1752057367:0;        local dirname="${${dir##*/}:l}"
+: 1752057367:0;        local lc_query="${query:l}"
+: 1752057367:0;        # 1. Exact match of directory name (highest priority)
+: 1752057367:0;        if [[ "$dirname" == "$lc_query" ]]; then
+: 1752057367:0;          score=1000
+: 1752057367:0;        # 2. Query is a prefix of directory name (very high priority)
+: 1752057367:0;          # The closer the match is to the full name, the higher the score
+: 1752057367:0;          local remaining=${dirname:${#lc_query}}
+: 1752057367:0;          score=$((800 + (${#lc_query} * 10) - ${#remaining}))
+: 1752057367:0;        # 3. Directory name is a prefix of query (high priority)
+: 1752057367:0;        elif [[ "$lc_query" == "$dirname"* ]]; then
+: 1752057367:0;          score=$((600 + ${#dirname}))
+: 1752057367:0;        # 4. Match at directory boundary
+: 1752057367:0;        elif [[ "${dir:l}" == *"/$lc_query"* ]]; then
+: 1752057367:0;          score=400
+: 1752057367:0;        # 5. Match anywhere in path
+: 1752057367:0;          # Check if all characters of query appear in order in the path
+: 1752057367:0;          local i=0
+: 1752057367:0;          local j=0
+: 1752057367:0;          local matched_chars=0
+: 1752057367:0;          local path_lc="${dir:l}"
+: 1752057367:0;          while [[ $i -lt ${#lc_query} && $j -lt ${#path_lc} ]]; do
+: 1752057367:0;            if [[ "${lc_query[$i+1]}" == "${path_lc[$j+1]}" ]]; then
+: 1752057367:0;              ((i++))
+: 1752057367:0;              ((matched_chars++))
+: 1752057367:0;            ((j++))
+: 1752057367:0;          done
+: 1752057367:0;          if [[ $i -eq ${#lc_query} ]]; then
+: 1752057367:0;            score=$((200 + (matched_chars * 10)))
+: 1752057367:0;        # Penalize longer paths (prefer shorter, more specific paths)
+: 1752057367:0;        local depth=$(tr -dc '/' <<< "$dir" | wc -c)
+: 1752057367:0;        score=$((score - (depth * 2)))
+: 1752057367:0;        # Print score and path for sorting (higher scores first)
+: 1752057367:0;  else
+: 1752057367:0;    # No query, just use fzf
+: 1752057367:0;    selected=$(command find ~ -type d -not -path '*/.*' 2>/dev/null | fzf --preview='ls -F {}')
+: 1752057367:0;  if [[ -n "$selected" ]]; then
+: 1752057367:0;    zle reset-prompt
+: 1752057367:0;  fi
+: 1752057367:0;}
+: 1752057367:0;# Register the widget
+: 1752057367:0;zle -N _fzf_cd_subdir
+: 1752057367:0;# Bind to Ctrl+T
+: 1752057367:0;bindkey '^T' _fzf_cd_subdir
+: 1752057367:0;echo "â¼¥ Enhanced fzf-cd-subdir function loaded. Try Ctrl+T and type 'diss'"
+: 1752057367:0;EOF
+: 1752057367:0;zsh -c 'source ~/.zshrc_local'
+: 1752057367:0;zsh -c 'source /tmp/fast_nav.zsh && type _fast_nav'
+: 1752057367:0;zsh -c 'source /tmp/fast_nav_enhanced.zsh && type _enhanced_dir_nav'
+: 1752057367:0;source /tmp/fast_nav_enhanced.zsh && _fzf_nav_debug
+: 1752057367:0;cat /tmp/fzf_nav_debug.log
+: 1752057367:0;zsh -c 'source /tmp/simple_fzf_nav.zsh && _simple_fzf_nav'
+: 1752057367:0;zsh /tmp/test_scoring.sh
+: 1752057367:0;chmod +x /tmp/test_integration.sh && zsh /tmp/test_integration.sh
+: 1752057367:0;chmod +x /tmp/test_scoring_standalone.sh && zsh /tmp/test_scoring_standalone.sh
+: 1752057367:0;chmod +x /tmp/test_relative_scoring.sh && zsh /tmp/test_relative_scoring.sh
+: 1752057367:0;zsh /tmp/test_relative_scoring.sh
+: 1752057367:0;chmod +x /tmp/run_test.sh && /tmp/run_test.sh
+: 1752057367:0;mkdir -p ~/.dotfiles/py-dirnav/{src/dirnav,tests,shell}
+: 1752057367:0;curl -sSL https://pdm.fming.dev/install-pdm.py | python3 -
+: 1752057367:0;export PATH="$HOME/.local/bin:$PATH" && cd ~/.dotfiles/py-dirnav && pdm install -d
+: 1752057367:0;chmod +x ~/.dotfiles/py-dirnav/shell/dirnav.zsh
+: 1752057367:0;chmod +x ~/.dotfiles/py-dirnav/test_navigation.sh && ~/.dotfiles/py-dirnav/test_navigation.sh
+: 1752057367:0;~/.dotfiles/py-dirnav/test_navigation.sh
+: 1752057367:0;chmod +x ~/.dotfiles/py-dirnav/test_direct.py && cd ~/.dotfiles/py-dirnav && python3 test_direct.py
+: 1752057367:0;chmod +x ~/.dotfiles/py-dirnav/install.sh
+: 1752057367:0;chmod +x ~/.dotfiles/py-dirnav/analyze.py && cd ~/.dotfiles/py-dirnav && python -m pytest tests/test_static_analysis.py -v
+: 1752057367:0;cat $(which dirnav)
+: 1752057367:0;cat /home/dzack/.dotfiles/py-dirnav/venv/bin/dirnav
+: 1752057367:0;cat /home/dzack/.dotfiles/py-dirnav/src/dirnav/__main__.py
+: 1752057367:0;chmod +x test_interactive.py && ./test_interactive.py
+: 1752057367:0;chmod +x ~/.local/bin/dirnav && source ~/.zshrc && dirnav --help
+: 1752057367:0;rm -f ~/.local/bin/dirnav
+: 1752057367:0;chmod +x ~/.local/bin/dirnav && ~/.local/bin/dirnav --help
+: 1752057367:0;~/.local/bin/dirnav --interactive
+: 1752047611:1;rm .venv -rf
+: 1752047634:160;git add .; git commit -am "Save"; git push -u origin main;
+: 1752048547:5;vim pyproject.toml
+: 1752048558:1;poetry install
+: 1752048675:0;mkdir -p ~/.config/llmvm/
+: 1752049714:0;source ~/.env & ./docker.sh
+: 1752049762:0;echo $GEMINI_API_KEY
+: 1752049821:0;./docker.sh
+: 1752049832:0;./docker.sh -r
+: 1752049882:27;vim docker.sh
+: 1752049947:0;docker --version
+: 1752059018:0;LLMVM_ENDPOINT="http://localhost:8011" pdm run python -m llmvm.client
+: 1752060951:0;dirnav
+: 1752061456:0;vim ~/.config/llmvm/config.yaml
+: 1752062711:0;pgrep -f "llmvm"
+: 1752091231:0;GEMINI_API_KEY=AIzaSyA0qlTY_V40rv6cV9Pcjy5NfbPyyKvI6NY python -m llmvm.client.cli
+: 1752093038:0;code .
+: 1752093415:0;npm install -g @qodo/command
+: 1752094039:0;echo 'Terminal capability test'
+: 1752094035:0;dirnav doc
+: 1752094210:0;dirnav --interactive
+: 1752048326:46596;claude --dangerously-skip-permissions
+: 1752094924:0;fg
+: 1752096207:0;pip show rapidfuzz || pip install rapidfuzz
+: 1752096214:0;bash /home/dzack/dotfiles/bin/clean_history /home/dzack/dotfiles/bin/test_zsh_history /home/dzack/dotfiles/bin/test_zsh_history_clean
+: 1752096218:0;mkdir research-code
+: 1752096229:0;mv ~/dotfiles/bin/aut* .
+: 1752096240:0;command
+: 1752096244:0;which command
+: 1752096272:0;npx @qodo/command
+: 1752096370:0;cp ~/.zsh_history /home/dzack/dotfiles/bin/zsh_history_testcopy
+: 1752096475:0;qodo login
+: 1752096496:0;vim ~/.env
+: 1752096585:0;qodo chat
+: 1752096621:0;just run

@@ -351,7 +351,7 @@ cp ~/dotfiles/dictionaries/en.utf-8.spl ~/.config/nvim/spell/
 : 1752042523:0;rehash
 : 1752042531:0;pdm install
 : 1752042539:0;cd /home/dzack/gitclones/diss/200-dev/projects/mcp-servers/servers/simple-sagemath && python demo_heuristic_execution.py
-: 1752042561:0;cd /home/dzack/gitclones/diss/200-dev/projects/mcp-servers/servers/simple-sagemath && python -m py_compile src/main.py && echo "âƒ¼ï¿½ï¿½ Syntax check passed"
+: 1752042561:0;cd /home/dzack/gitclones/diss/200-dev/projects/mcp-servers/servers/simple-sagemath && python -m py_compile src/main.py && echo "âƒ¼ƒ¥ Syntax check passed"
 : 1752042594:0;cd /home/dzack/gitclones/diss/200-dev/projects/mcp-servers/servers/simple-sagemath && python test_cpu_limited.py
 : 1752042848:0;pdm install llmvm-cli
 : 1752042853:0;cd /home/dzack/gitclones/diss/200-dev/projects/mcp-servers/servers/simple-sagemath && python -m pytest tests/test_core.py -v -k "test_execution"
@@ -399,8 +399,8 @@ Why was that sent to "long computations"?\
 import sys\
 sys.path.insert(0, 'src')\
 from main import run_with_timeout, execute_sagemath_code\
-print('âƒ¼ï¿½ï¿½ Successfully imported run_with_timeout and execute_sagemath_code')\
-print('âƒ¼ï¿½ï¿½ Main source file updated correctly')\
+print('âƒ¼ƒ¥ Successfully imported run_with_timeout and execute_sagemath_code')\
+print('âƒ¼ƒ¥ Main source file updated correctly')\
 "
 : 1752046082:0;cd /home/dzack/gitclones/diss/200-dev/projects/mcp-servers/servers/simple-sagemath && python3 demo_heuristic_execution.py
 : 1752046087:0;cd /home/dzack/gitclones/diss/200-dev/projects/mcp-servers/servers/simple-sagemath && python3 test_is_heavy.py
@@ -410,8 +410,8 @@ print('âƒ¼ï¿½ï¿½ Main source file updated correctly')\
 import sys\
 sys.path.insert(0, 'src')\
 import main\
-print('âƒ¼ï¿½ï¿½ Main module imported successfully')\
-print('âƒ¼ï¿½ï¿½ All functions and classes defined correctly')\
+print('âƒ¼ƒ¥ Main module imported successfully')\
+print('âƒ¼ƒ¥ All functions and classes defined correctly')\
 "
 : 1752046263:0;cd /home/dzack/gitclones/diss/200-dev/projects/mcp-servers/servers/simple-sagemath && python -m py_compile src/config.py
 : 1752046268:0;cd /home/dzack/gitclones/diss/200-dev/projects/mcp-servers/servers/simple-sagemath/src && python -c "from config import PRIMARY_EXECUTION_TIMEOUT, IDLE_TIMEOUT; print(f'PRIMARY_EXECUTION_TIMEOUT: {PRIMARY_EXECUTION_TIMEOUT}, IDLE_TIMEOUT: {IDLE_TIMEOUT}')"
@@ -623,7 +623,7 @@ poetry add llmvm-cli
 : 1752057367:0;zle -N _fzf_cd_subdir
 : 1752057367:0;# Bind to Ctrl+T
 : 1752057367:0;bindkey '^T' _fzf_cd_subdir
-: 1752057367:0;echo "âƒ¼ï¿½ï¿½ Enhanced fzf-cd-subdir function loaded. Try Ctrl+T and type 'diss'"
+: 1752057367:0;echo "âƒ¼ƒ¥ Enhanced fzf-cd-subdir function loaded. Try Ctrl+T and type 'diss'"
 : 1752057367:0;EOF
 : 1752057367:0;zsh -c 'source ~/.zshrc_local'
 : 1752057367:0;chmod +x /tmp/test_enhanced_fzf.sh && zsh /tmp/test_enhanced_fzf.sh
