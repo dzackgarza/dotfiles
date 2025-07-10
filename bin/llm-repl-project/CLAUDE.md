@@ -1,155 +1,158 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with this LLM REPL project.
 
 ## Project Overview
 
-This is an LLM REPL (Read-Eval-Print Loop) project - an interactive terminal-based research assistant that provides an AI-powered interface for various research tasks. The project supports multiple LLM providers (Ollama, Groq, Google Gemini) with intent-based routing to specialized agents.
+LLM REPL - An interactive terminal-based research assistant with plugin-based architecture. Provides transparent AI-powered interface for research tasks with multi-LLM support (Ollama, Groq, Google Gemini).
 
-## Key Commands
+## Core Philosophy
 
-### Running the Application
+**The Sacred Timeline**: Append-only, immutable log of all operations. Every action is a block in the timeline.
+
+**Sacred Turn Structure**: `[User] → [Cognition] → [Assistant]` - This rhythm is non-negotiable.
+
+**Radical Transparency**: Users see the multi-step cognition pipeline in real-time with animations, timers, and token counts.
+
+## Development Rules
+
+### Coding Conventions
+- **Always use virtual environments** (venv, pdm, poetry)
+- **Fail fast and hard** - Use assertions liberally, no try-catch hiding
+- **Echo tests only** - Test real user experience, no test modes
+- **Functional style** - map/reduce/filter, no nested if-chains
+- **Strong typing** - Pydantic types everywhere
+- **Module limit** - Refactor at 500 lines
+- **Run `just lint` before commits** - MyPy + Flake8 must pass
+
+### Architecture Principles
+- **Plugins are autonomous** - Each is self-contained
+- **No bug fixing** - Redesign to make bugs impossible
+- **Test canonical path** - Same code path as production
+- **Crash on errors** - This is development, not production
+- **Git discipline** - Atomic commits, revert if stuck
+
+## Commands
+
+### Run Application
 ```bash
-# Run with Ollama (debug mode)
-just run
-
-# Run with mixed mode (Ollama for intent, Groq for queries)
-just run-mixed
-
-# Run with Groq for everything (fastest)
-just run-fast
-
-# Run directly with specific config
-python src/main.py --config debug
-
-# Show available configurations
-python src/main.py --show-configs
-
-# Install dependencies
-just install
+just run          # Ollama/debug mode
+just run-mixed    # Ollama intent + Groq queries  
+just run-fast     # Groq everything
+just install      # Install dependencies
 ```
 
 ### Testing
 ```bash
-# Run full test suite
-just test
-
-# Run block ordering tests (critical for regression detection)
-pytest tests/test_block_ordering.py -v
-
-# Run specific test files
-pytest tests/test_integration.py
-pytest tests/test_timing_and_race_conditions.py
-pytest tests/quick_regression_tests.py
-
-# Tests automatically clean history.db and __pycache__ before running
+just test         # Full test suite
+just lint         # Type checking
+pytest tests/test_block_ordering.py -v  # Critical regression test
 ```
 
-## Architecture
-
-### Plugin-Based Block System (V3)
-
-The project is built around a **plugin-based block system** where every piece of content displayed to the user is represented as an independent, self-contained plugin. This ensures:
-
-1. **Independent plugins**: Each block is a completely autonomous plugin
-2. **Plugin registry**: Dynamic discovery and instantiation of plugins
-3. **Workflow composition**: Plugins can be composed into complex processing pipelines
-4. **Extensibility**: New block types can be added without modifying core code
-5. **Testable in isolation**: Each plugin can be developed and tested independently
-
-#### Core Plugin Types
-- **UserInputPlugin**: Handles user input capture and validation
-- **SystemCheckPlugin**: Performs system validation checks
-- **WelcomePlugin**: Displays welcome messages and system info
-- **ProcessingPlugin**: Manages query processing pipeline
-- **AssistantResponsePlugin**: Generates and formats assistant responses
-
-#### Expected Block Order
-For a basic query "Hello", the system MUST produce this exact sequence:
-```
-[SystemCheck] [Welcome] [User: Hello] [Internal Processing: [Intent Detection]->[Main Query]] [Assistant]
-```
-
-### Plugin-Based Architecture Structure
+## Project Structure
 
 ```
 src/
-├── main.py             # Main application entry point
-├── plugins/            # Plugin system
-│   ├── base.py         # Plugin interfaces and contracts
-│   ├── registry.py     # Plugin manager and workflow system
-│   └── blocks/         # Core block plugins
-│       ├── user_input.py          # User input plugin
-│       ├── system_check.py        # System check plugin
-│       ├── welcome.py             # Welcome message plugin
-│       ├── processing.py          # Query processing plugin
-│       └── assistant_response.py  # Assistant response plugin
-├── providers/          # LLM provider integrations
-│   ├── base.py         # Provider interface
-│   ├── ollama.py       # Ollama provider
-│   ├── groq.py         # Groq provider
-│   └── manager.py      # LLM manager
-├── processing/         # Query processing utilities
-│   ├── intent.py       # Intent detection
-│   └── router.py       # Query routing
-├── config/             # Configuration
-│   └── llm_config.py   # LLM configurations
-└── scrivener_v2.py     # Plugin-aware block record keeper
+├── main.py               # Entry point
+├── plugins/              # Plugin system
+│   ├── base.py          # Interfaces
+│   ├── registry.py      # Plugin manager
+│   └── blocks/          # Core plugins
+├── config/              # LLM configurations
+└── timeline_integrity.py # Timeline guarantees
 
-archive/
-├── v1/                 # Original implementations
-└── legacy/             # Migration utilities and old code
+.ai/                     # Wrinkl documentation
+├── project.md          # Vision & goals
+├── architecture.md     # Technical design
+├── patterns.md         # Code patterns & philosophy
+├── context-rules.md    # AI agent guidelines
+└── ledgers/           # Feature tracking
 ```
 
-### Critical Architecture Rules
+## Plugin System
 
-1. **Plugins are independent**: Each plugin is completely self-contained and autonomous.
-2. **Plugin registry manages discovery**: All plugins are registered and discoverable via the registry.
-3. **Workflow composition**: Complex processing is achieved by composing plugins into workflows.
-4. **Plugin manager orchestrates**: The plugin manager handles lifecycles and inter-plugin communication.
-5. **Extensibility without core changes**: New plugins can be added without modifying existing code.
+### Core Plugins
+- `SystemCheckPlugin` - LLM heartbeat validation
+- `UserInputPlugin` - Input capture
+- `CognitionPlugin` - Transparent processing pipeline
+- `AssistantResponsePlugin` - Response formatting
 
-### Plugin Lifecycle
-
-```
-INACTIVE → ACTIVE → PROCESSING → COMPLETED
-```
-
-- **INACTIVE**: Plugin is registered but not active
-- **ACTIVE**: Plugin is active and ready to process
-- **PROCESSING**: Plugin is currently executing
-- **COMPLETED**: Plugin has finished processing
-
-## Development Notes
-
-### Plugin Development
-- **Each plugin is independent**: Can be developed, tested, and deployed separately
-- **Plugin interface compliance**: All plugins must implement the `PluginInterface`
-- **Self-contained**: Plugins manage their own state, rendering, and lifecycle
-- **Event-driven communication**: Plugins communicate via events through the plugin manager
-
-### Creating New Plugins
+### Plugin Rules
 1. Extend `BlockPlugin` base class
-2. Implement required abstract methods (`metadata`, `_on_initialize`, `_on_activate`, etc.)
-3. Register plugin with the plugin manager
-4. Test plugin in isolation before integration
+2. Implement all abstract methods
+3. Self-contained state management
+4. Event-driven communication only
+5. Test in isolation first
 
-### Plugin Testing
-- **Test plugins independently**: Each plugin can be tested without other components
-- **Use mock dependencies**: Plugins should work with mocked external services
-- **Test all lifecycle states**: Ensure proper state transitions
-- **Verify rendering**: Test both live and inscribed render modes
+### Expected Block Sequence
+```
+[SystemCheck] → [Welcome] → [User: query] → [Cognition: pipeline] → [Assistant]
+```
 
-### Common Pitfalls
-- **Don't tightly couple plugins**: Each plugin should be autonomous
-- **Always handle errors gracefully**: Plugin failures shouldn't crash the system
-- **Register plugin classes, not instances**: The registry manages instances
-- **Use plugin manager for lifecycle**: Don't manually manage plugin states
+## Active Features
 
-### Configuration System
-- **debug**: Uses Ollama/tinyllama (local testing)
-- **mixed**: Ollama for intent, Groq for main queries
-- **fast**: Groq for everything (cloud-based)
-- **test**: Groq-based for CI/testing
+### Research Assistant Routing (In Progress)
+- 3-layer intent detection: Rules → LLM → Default
+- Routes: COMPUTE → Math, SEARCH → Literature, CODE → Code, CHAT → TinyLlama
+- Display: `Assistant [Methodology: X, Intent: Y] → Agent (Mode)`
 
-Configurations are in `src/config/llm_config.py`
+### Next Priority Features
+- File context inclusion (@-commands)
+- Slash commands system (/help, /quit, etc.)
+- Shell integration with security
+- Memory persistence across sessions
+
+## Configuration Modes
+
+- **debug**: Ollama/tinyllama (local)
+- **mixed**: Ollama intent + Groq queries
+- **fast**: Groq only (cloud)
+- **test**: CI testing config
+
+## Testing Philosophy
+
+- **Echo tests** simulate full user interaction
+- **No mocks** for core functionality
+- **Proof-based** - Assert existence or crash
+- **Regression guards** - Test before declaring done
+
+## Git Workflow
+
+- Feature branches from master
+- Atomic commits with extensive messages
+- Run tests and linting before commits
+- Revert to last working if stuck
+
+## Future Roadmap
+
+1. **v3.1**: Tool execution foundation (Q1 2025)
+2. **v3.2**: Continuation Passing Style - LLM ↔ Tool loops (Q2 2025)
+3. **v3.3**: Multi-agent collaboration (Q3 2025)
+4. **v4.0**: Production ready with enterprise features (Q4 2025)
+
+## Model Performance Guidelines
+
+We have API keys for 8 major providers. Use task-specific routing:
+
+**Available APIs:**
+- Gemini (60 RPM): `gemini-2.5-pro`, `gemini-2.5-flash`
+- Groq (30-60 RPM): `llama-3.3-70b-versatile`, `deepseek-r1-distill`
+- OpenRouter (10-30 RPM): `claude-4-opus`, `gpt-4.5-preview`
+- DeepSeek (10-20 RPM): `deepseek-reasoner`, `deepseek-chat`
+
+**Local Ollama Models:**
+- Speed: `mistral:7b-instruct-q4_K_M`
+- Tool Use: `llama3.1:8b-instruct-q4_K_M`
+- Reasoning: `grok:1.5-7b-q4_K_M`
+
+See `.ai/available-api-models.md` and `.ai/ollama-setup.md` for complete setup.
+
+## Quick Reference
+
+- Timeline is append-only and sacred
+- Plugins must be autonomous
+- Test the real user path only
+- Fail fast, crash on errors
+- Keep modules under 500 lines
+- Route tasks to optimal models
+- Document everything in git

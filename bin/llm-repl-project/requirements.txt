@@ -1,12 +1,40 @@
-# Core dependencies for LLM REPL V3
-aiohttp>=3.8.0
-numpy>=1.20.0
+# LLM REPL - Unified Requirements
+# Core dependencies for the plugin-based LLM REPL system
+
+# Core dependencies
+aiohttp>=3.8.0          # Async HTTP for LLM API calls
+httpx>=0.24.0           # Alternative HTTP client with better features
+numpy>=1.20.0           # Numerical operations (if needed for embeddings/vectors)
 
 # UI and interaction dependencies
-prompt-toolkit>=3.0.0
-rich>=12.0.0
-google-generativeai>=0.3.0
-python-dotenv>=0.19.0
+prompt-toolkit>=3.0.0   # Terminal UI library for REPL
+rich>=12.0.0            # Rich text formatting in terminal
+textual>=0.45.0         # Modern TUI framework (optional, for advanced UI)
 
-# External user simulation testing
-pexpect>=4.8.0
+# LLM Provider integrations
+google-generativeai>=0.3.0  # Google Gemini API support
+
+# Configuration and environment
+python-dotenv>=0.19.0   # Environment variable management
+pydantic>=2.0.0         # Data validation and settings management
+pydantic-settings>=2.0.0  # Settings management with Pydantic v2
+typing-extensions>=4.0.0  # Backport of typing features
+
+# Testing dependencies
+pytest>=7.0.0           # Testing framework
+pytest-asyncio>=0.21.0  # Async test support
+pexpect>=4.8.0          # External process testing (for echo tests)
+
+# Development tools (optional but recommended)
+mypy>=1.0.0             # Static type checking
+flake8>=6.0.0           # Code correctness checking (E9, F63, F7, F82 only)
+black>=23.0.0           # Code formatting (optional)
+ruff>=0.1.0             # Fast Python linter (alternative to flake8)
+
+# Documentation (optional)
+sphinx>=5.0.0           # Documentation generation
+sphinx-rtd-theme>=1.0.0 # ReadTheDocs theme for Sphinx
+
+# Note: This project follows a "fail fast" philosophy
+# All dependencies should be installed in a virtual environment (venv, pdm, poetry)
+# The project assumes all dependencies are present and will crash if missing

@@ -23,6 +23,9 @@ Before making any changes, review the following documents to understand the proj
     -   `_active.md`: Dashboard of active features
     -   `_template.md`: Template for new feature ledgers
     -   `roadmap.md`: Future development phases and vision
+-   **`provider-benchmarks.md`**: Comprehensive performance data for model selection and task optimization
+-   **`available-api-models.md`**: Current models available through our API keys
+-   **`ollama-setup.md`**: Local model download and configuration guide
 -   **`wrinkl-rules.md`**: Specific guidelines for the wrinkl context management system
 
 Your contributions should always align with the principles laid out in these documents. The focus is on building a robust, extensible, and eventually, self-improving system.

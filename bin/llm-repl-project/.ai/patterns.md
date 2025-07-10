@@ -37,6 +37,8 @@ The system is designed to seamlessly integrate and orchestrate multiple Large La
 
 -   **Provider/Model Abstraction**: A clear abstraction layer for different LLM providers and models ensures that plugins can request capabilities without being tied to specific implementations.
 -   **Dynamic Routing**: The Intelligent Router (a key Cognition Submodule) dynamically selects the most appropriate LLM or tool based on the task, user intent, and available resources (local, remote, specialized).
+-   **Task-Specific Optimization**: Different cognitive tasks are routed to models that excel at those specific operations (see `provider-benchmarks.md` for detailed performance data).
+-   **Multi-Tier Strategy**: Local models for speed/privacy, free-tier endpoints for general use, paid endpoints for complex reasoning.
 
 ### State Management Patterns
 

@@ -1,0 +1,8 @@
+- What is the quadratic formula?
+    - $x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}$
+    - Used to solve $ax^2 + bx + c = 0$
+- Who was the first president of the United States?
+    - George Washington
+- What is the capital of France?
+    - Paris
+    - (It's not Lyon or Marseille.)

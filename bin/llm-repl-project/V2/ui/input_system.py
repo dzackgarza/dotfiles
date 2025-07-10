@@ -1,0 +1,277 @@
+"""
+Advanced input system with persistent bottom input box and multiline support.
+"""
+
+import asyncio
+from typing import Optional, Callable, List
+from rich.console import Console
+from rich.panel import Panel
+from rich.text import Text
+from rich.box import ROUNDED
+from prompt_toolkit import Application
+from prompt_toolkit.application import get_app
+from prompt_toolkit.buffer import Buffer
+from prompt_toolkit.key_binding import KeyBindings
+from prompt_toolkit.layout.containers import HSplit, Window
+from prompt_toolkit.layout.controls import BufferControl
+from prompt_toolkit.layout.layout import Layout
+from prompt_toolkit.widgets import TextArea
+from prompt_toolkit.formatted_text import HTML
+
+
+class MultilineInputBox:
+    """
+    A persistent input box that supports multiline input with Shift+Enter.
+    """
+    
+    def __init__(self, console: Console, on_submit: Callable[[str], None] = None):
+        self.console = console
+        self.on_submit = on_submit or (lambda x: None)
+        self.current_input = ""
+        self.input_lines: List[str] = [""]
+        self.cursor_line = 0
+        self.cursor_col = 0
+        self.is_active = True
+        
+        # Create key bindings
+        self.kb = KeyBindings()
+        self._setup_key_bindings()
+        
+        # Create text area
+        self.text_area = TextArea(
+            text="",
+            multiline=True,
+            wrap_lines=True,
+            prompt=HTML('<ansigreen>></ansigreen> '),
+            complete_style="column",
+            scrollbar=True,
+            height=1,  # Start with single line, will expand
+        )
+        
+        # Bind submit handler
+        @self.kb.add('enter')
+        def submit_input(event):
+            """Submit input on Enter (unless Shift+Enter for new line)."""
+            if event.key_sequence[0].key == 'enter' and not event.key_sequence[0].shift:
+                self._submit_current_input()
+            else:
+                # Let the text area handle it (new line)
+                event.app.current_buffer.insert_text('\n')
+        
+        @self.kb.add('s-enter')  # Shift+Enter
+        def new_line(event):
+            """Add new line on Shift+Enter."""
+            event.app.current_buffer.insert_text('\n')
+            self._update_height()
+        
+        # Update text area key bindings
+        self.text_area.control.key_bindings = self.kb
+    
+    def _setup_key_bindings(self):
+        """Setup key bindings for the input system."""
+        
+        @self.kb.add('c-c')  # Ctrl+C
+        def quit_app(event):
+            """Quit the application."""
+            event.app.exit()
+        
+        @self.kb.add('c-d')  # Ctrl+D
+        def eof(event):
+            """Handle EOF."""
+            event.app.exit()
+    
+    def _submit_current_input(self):
+        """Submit the current input."""
+        content = self.text_area.text.strip()
+        if content:
+            self.on_submit(content)
+            self.text_area.text = ""
+            self._update_height()
+    
+    def _update_height(self):
+        """Update the height of the text area based on content."""
+        lines = self.text_area.text.count('\n') + 1
+        # Cap at reasonable height
+        height = min(max(1, lines), 10)
+        self.text_area.height = height
+    
+    def get_input_panel(self) -> Panel:
+        """Get the Rich panel representation of the input box."""
+        if not self.text_area.text:
+            content = Text("> ", style="green")
+        else:
+            lines = self.text_area.text.split('\n')
+            content = Text()
+            for i, line in enumerate(lines):
+                if i == 0:
+                    content.append("> ", style="green")
+                else:
+                    content.append("  ", style="green")  # Continuation indent
+                content.append(line + "\n")
+        
+        return Panel(
+            content,
+            title="Input",
+            box=ROUNDED,
+            border_style="green",
+            height=min(len(self.text_area.text.split('\n')) + 2, 12)  # +2 for borders
+        )
+    
+    async def run_async(self) -> Optional[str]:
+        """Run the input system asynchronously and return the submitted text."""
+        submitted_text = None
+        
+        def on_submit(text: str):
+            nonlocal submitted_text
+            submitted_text = text
+            app.exit()
+        
+        self.on_submit = on_submit
+        
+        # Create the application layout
+        layout = Layout(
+            HSplit([
+                Window(height=1),  # Spacer
+                Window(
+                    content=BufferControl(buffer=self.text_area.buffer),
+                    height=lambda: max(1, self.text_area.text.count('\n') + 1),
+                ),
+            ])
+        )
+        
+        # Create application
+        app = Application(
+            layout=layout,
+            key_bindings=self.kb,
+            mouse_support=False,  # Disable to allow normal text selection
+            full_screen=False,
+        )
+        
+        # Run the application
+        await app.run_async()
+        
+        return submitted_text
+
+
+class PersistentInputSystem:
+    """
+    Input system with a persistent bottom input area that doesn't pollute the timeline.
+    """
+    
+    def __init__(self, console: Console):
+        self.console = console
+        self.input_history: List[str] = []
+        self.history_index = -1
+    
+    async def get_user_input(self, prompt: str = "> ") -> Optional[str]:
+        """
+        Get user input using the persistent input system.
+        Returns None if user wants to quit.
+        """
+        try:
+            # Create and run the input box
+            input_box = MultilineInputBox(self.console)
+            result = await input_box.run_async()
+            
+            if result:
+                # Add to history
+                self.input_history.append(result)
+                self.history_index = len(self.input_history)
+                
+            return result
+            
+        except (KeyboardInterrupt, EOFError):
+            return None
+    
+    def create_simple_prompt(self) -> str:
+        """Create a simple powerline-style prompt."""
+        return "> "
+    
+    def get_input_display_text(self, text: str) -> Text:
+        """Format input text for display without the 'You:' prefix."""
+        # For multiline input, show it nicely formatted
+        lines = text.strip().split('\n')
+        if len(lines) == 1:
+            return Text(f"> {lines[0]}", style="green")
+        else:
+            result = Text()
+            for i, line in enumerate(lines):
+                if i == 0:
+                    result.append(f"> {line}\n", style="green")
+                else:
+                    result.append(f"  {line}\n", style="green")  # Continuation
+            return result
+
+
+# Simpler alternative using prompt_toolkit directly
+class SimpleMultilineInput:
+    """
+    Simplified input system for interactive TTY mode only.
+    Non-interactive mode is handled by run_simulated_user_session.
+    """
+    
+    def __init__(self):
+        # Always assume interactive mode now
+        self.is_interactive = True
+    
+    def signal_response_complete(self):
+        """Signal that a response has been completed (compatibility method)."""
+        pass  # No-op for interactive mode
+    
+    async def get_input(self, message: str = "> ") -> Optional[str]:
+        """Get input from user WITHOUT any console output (prevents timeline pollution)."""
+        import sys
+        import os
+        
+        try:
+            # ARCHITECTURAL GUARANTEE: No output to console during input
+            # This prevents bypass of secure timeline system
+            
+            if sys.stdin.isatty():
+                # Interactive TTY mode: use silent input with no echo
+                try:
+                    # Disable echo to prevent console pollution
+                    if hasattr(sys.stdin, 'fileno'):
+                        import termios
+                        import tty
+                        fd = sys.stdin.fileno()
+                        old_settings = termios.tcgetattr(fd)
+                        try:
+                            tty.setcbreak(fd)  # No echo mode
+                            line = ""
+                            while True:
+                                char = sys.stdin.read(1)
+                                if char == '\n' or char == '\r':
+                                    break
+                                elif char == '\x03':  # Ctrl+C
+                                    raise KeyboardInterrupt
+                                elif char == '\x04':  # Ctrl+D
+                                    raise EOFError
+                                elif char == '\x7f':  # Backspace
+                                    if line:
+                                        line = line[:-1]
+                                else:
+                                    line += char
+                            return line.strip() if line else None
+                        finally:
+                            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+                    else:
+                        # Fallback for systems without termios
+                        result = sys.stdin.readline()
+                        return result.strip() if result else None
+                except (EOFError, ImportError):
+                    # Fallback to readline if termios not available
+                    result = sys.stdin.readline()
+                    return result.strip() if result else None
+            else:
+                # Non-interactive mode (like pexpect tests): use readline
+                try:
+                    result = sys.stdin.readline()
+                    if not result:  # EOF
+                        return None
+                    return result.strip() if result else None
+                except:
+                    return None
+            
+        except (KeyboardInterrupt, EOFError):
+            return None

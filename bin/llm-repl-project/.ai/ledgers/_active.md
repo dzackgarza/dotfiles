@@ -8,13 +8,16 @@ This file tracks all active features and their current status. Use this as a das
 
 *Features currently being worked on*
 
-<!-- Add features that are actively being developed -->
+- [Research Assistant Routing System](/home/dzack/dotfiles/bin/llm-repl-project/.ai/ledgers/research-assistant-routing.md) - Hybrid routing system for query classification
 
 ## 🔴 Up Next (Priority Order)
 
 *Features ready to start, ordered by priority*
 
-<!-- New features will be added here automatically -->
+- [File Context Inclusion (@-commands)](/home/dzack/dotfiles/bin/llm-repl-project/.ai/ledgers/file-context-inclusion.md) - Include file/directory contents in prompts
+- [Slash Commands System](/home/dzack/dotfiles/bin/llm-repl-project/.ai/ledgers/slash-commands.md) - Meta-level CLI control commands  
+- [Shell Integration](/home/dzack/dotfiles/bin/llm-repl-project/.ai/ledgers/shell-integration.md) - Execute shell commands with security
+- [Memory and Context Persistence](/home/dzack/dotfiles/bin/llm-repl-project/.ai/ledgers/memory-persistence.md) - Cross-session memory system
 
 ## 🟡 Blocked
 
@@ -32,10 +35,17 @@ This file tracks all active features and their current status. Use this as a das
 
 *Features planned for future development*
 
-- [Roadmap: Tool Execution Foundation (v3.1)](/home/dzack/dotfiles/bin/llm-repl-project/.ai/ledgers/roadmap.md) - Q1 2025
-- [Roadmap: Continuation Passing Style (v3.2)](/home/dzack/dotfiles/bin/llm-repl-project/.ai/ledgers/roadmap.md) - Q2 2025
-- [Roadmap: Advanced Reasoning (v3.3)](/home/dzack/dotfiles/bin/llm-repl-project/.ai/ledgers/roadmap.md) - Q3 2025
-- [Roadmap: Production Ready (v4.0)](/home/dzack/dotfiles/bin/llm-repl-project/.ai/ledgers/roadmap.md) - Q4 2025
+**Core Extensions:**
+- [Model Task Optimization](/home/dzack/dotfiles/bin/llm-repl-project/.ai/ledgers/model-task-optimization.md) - Differential model routing for optimal performance
+- [MCP Integration](/home/dzack/dotfiles/bin/llm-repl-project/.ai/ledgers/mcp-integration.md) - Model Context Protocol server support
+- [Multimodal Support](/home/dzack/dotfiles/bin/llm-repl-project/.ai/ledgers/multimodal-support.md) - Images, PDFs, rich media input
+- [Web Search and Fetch Tools](/home/dzack/dotfiles/bin/llm-repl-project/.ai/ledgers/web-tools.md) - Real-time web information
+
+**Roadmap Phases:**
+- [Tool Execution Foundation (v3.1)](/home/dzack/dotfiles/bin/llm-repl-project/.ai/ledgers/roadmap.md) - Q1 2025
+- [Continuation Passing Style (v3.2)](/home/dzack/dotfiles/bin/llm-repl-project/.ai/ledgers/roadmap.md) - Q2 2025
+- [Advanced Reasoning (v3.3)](/home/dzack/dotfiles/bin/llm-repl-project/.ai/ledgers/roadmap.md) - Q3 2025
+- [Production Ready (v4.0)](/home/dzack/dotfiles/bin/llm-repl-project/.ai/ledgers/roadmap.md) - Q4 2025
 
 ---
 

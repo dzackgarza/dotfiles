@@ -1,20 +1,62 @@
 # LLM REPL - Interactive Research Assistant
 
-# Default: Run with plugin architecture (debug mode) - ONLY interactive mode
-run:
-	python src/main.py --config debug
+# === V3 (Current) Commands ===
 
-# Mixed mode: Ollama for intent detection, Groq for chat
-run-mixed:
-	python src/main.py --config mixed
+# Default: Run V3 with terminal-native interface (with linting)
+run: lint-v3
+	cd V3 && source venv/bin/activate && python main.py --config debug
 
-# Fast mode: Groq for everything
-run-fast:
-	python src/main.py --config fast
+# Run V3 without linting (for development)
+run-dev:
+	cd V3 && source venv/bin/activate && python main.py --config debug
 
-# Run comprehensive test suite (includes block ordering, timing, integration)
+# === V2 (Legacy) Commands ===
+
+# V2: Run original broken V2 system
+run-2:
+	python V2/main.py --config debug
+
+# V2.5: Run V2-5-tkinter-rewrite (desktop GUI)
+run-2-5:
+	python V2-5-tkinter-rewrite/main.py --config debug
+
+# V3: Mixed mode - Ollama for intent detection, Groq for chat  
+run-mixed: lint-v3
+	cd V3 && source venv/bin/activate && python main.py --config mixed
+
+# V3: Fast mode - Groq for everything
+run-fast: lint-v3
+	cd V3 && source venv/bin/activate && python main.py --config fast
+
+# === Testing Commands ===
+
+# Run comprehensive test suite for V3
 test:
+	cd V3 && source venv/bin/activate && python -m pytest tests/ -v
+
+# Run V2 legacy tests
+test-2:
 	python -m pytest tests/ -v
+
+# Run type checking and correctness checks for V3
+lint:
+	@echo "Running type checking for V3..."
+	cd V3 && source venv/bin/activate && mypy --explicit-package-bases . --exclude venv --ignore-missing-imports
+	@echo "Running correctness checks with flake8..."
+	cd V3 && source venv/bin/activate && flake8 . --exclude=venv --select=E9,F63,F7,F82 --max-line-length=120
+
+# Quick lint for development (ignores type warnings)
+lint-v3:
+	@echo "Running quick lint for V3..."
+	cd V3 && source venv/bin/activate && flake8 . --exclude=venv --select=E9,F63,F7,F82 --max-line-length=120
+
+# Run type checking for V2 legacy
+lint-2:
+	@echo "Running type checking with mypy..."
+	python -m mypy V2/ --ignore-missing-imports --strict-optional
+	@echo "Running correctness checks with flake8..."
+	python -m flake8 V2/ --select=E9,F63,F7,F82 --max-line-length=120
+
 
 # Install dependencies
 install:
@@ -30,10 +72,21 @@ show-configs:
 # Help
 help:
 	@echo "LLM REPL - Available commands:"
-	@echo "  just run         - Run interactive mode (Ollama debug)"
-	@echo "  just run-mixed   - Run interactive mode (Ollama+Groq)"
-	@echo "  just run-fast    - Run interactive mode (Groq only)"
-	@echo "  just test        - Run all tests"
+	@echo ""
+	@echo "V3 (Current - Terminal Native):"
+	@echo "  just run         - Run V3 interactive mode (Ollama debug)"
+	@echo "  just run-mixed   - Run V3 interactive mode (Ollama+Groq)"
+	@echo "  just run-fast    - Run V3 interactive mode (Groq only)"
+	@echo "  just test        - Run V3 test suite"
+	@echo "  just lint        - Run V3 type checking"
+	@echo ""
+	@echo "V2 (Legacy):"
+	@echo "  just run-2       - Run V2 original (broken)"
+	@echo "  just run-2-5     - Run V2-tkinter-rewrite (desktop GUI)"
+	@echo "  just test-2      - Run V2 test suite"
+	@echo "  just lint-2      - Run V2 type checking"
+	@echo ""
+	@echo "General:"
 	@echo "  just install     - Install dependencies"
 	@echo "  just help        - Show this help"
 

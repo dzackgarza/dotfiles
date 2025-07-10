@@ -1,25 +1,20 @@
-# LLM REPL V3 - Modern Interface Requirements
+# LLM REPL V3 - Terminal Interface Dependencies
 
-# Core dependencies (built-in Python modules)
-# tkinter - GUI framework (built-in)
-# asyncio - Async processing (built-in)
-# threading - Background processing (built-in)
-# dataclasses - Data structures (built-in Python 3.7+)
-# typing - Type hints (built-in Python 3.5+)
+# Core TUI framework
+textual>=0.50.0
 
-# Testing dependencies
+# Rich text rendering (included with textual but specified for clarity)
+rich>=13.0.0
+
+# Testing framework
 pytest>=7.0.0
 pytest-asyncio>=0.21.0
 
-# Development dependencies (optional)
-black>=23.0.0
-mypy>=1.0.0
-flake8>=6.0.0
-
-# Documentation (optional)
-sphinx>=5.0.0
-sphinx-rtd-theme>=1.0.0
-
-# Note: V3 is designed to work with minimal dependencies
-# The core application only requires Python 3.7+ with built-in modules
-# Additional dependencies are only needed for development and testing
+# Standard library modules (no need to install)
+# asyncio
+# pathlib  
+# argparse
+# time
+# enum
+# typing
+# dataclasses
