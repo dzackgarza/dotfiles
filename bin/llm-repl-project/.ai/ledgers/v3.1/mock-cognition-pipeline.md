@@ -61,6 +61,12 @@ The Sacred Timeline's transparency requires showing AI cognition as nested sub-b
 6. **Phase 6: Integration**
    - Integrate ledger into the main system
 
+5. **Phase 5: UX Polish**
+   - Final polish and user experience improvements
+
+6. **Phase 6: Integration**
+   - Integrate ledger into the main system
+
 ## Mock Cognition Architecture
 
 ### Core Plugin Structure

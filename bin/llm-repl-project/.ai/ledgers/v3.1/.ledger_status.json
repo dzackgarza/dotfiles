@@ -1,9 +1,14 @@
 {
-  "current_ledger": "live-inscribed-block-system",
-  "completed_ledgers": [],
+  "current_ledger": null,
+  "completed_ledgers": [
+    {
+      "name": "live-inscribed-block-system",
+      "completed_at": "2025-07-10T20:46:38.951326"
+    }
+  ],
   "ledger_states": {
     "live-inscribed-block-system": {
-      "status": "in_progress",
+      "status": "completed",
       "started_at": "2025-07-10T16:37:18.928276",
       "phases": [
         {
@@ -43,8 +48,9 @@
           ]
         }
       ],
-      "current_phase": 4
+      "current_phase": 4,
+      "completed_at": "2025-07-10T20:46:38.951331"
     }
   },
-  "last_updated": "2025-07-10T16:56:57.567213"
+  "last_updated": "2025-07-10T20:46:38.951333"
 }
