@@ -135,7 +135,8 @@ class LedgerTracker:
                 {"name": "Implementation", "description": "Core development work", "tasks": []},
                 {"name": "Testing", "description": "Testing and validation", "tasks": []},
                 {"name": "UX Polish", "description": "Final polish and user experience improvements", "tasks": []},
-                {"name": "Integration", "description": "Integrate ledger into the main system", "tasks": []}
+                {"name": "Integration", "description": "Integrate ledger into the main system", "tasks": []},
+                {"name": "System Integration", "description": "Integrate ledger into the main system", "tasks": []}
             ]
         
         return phases
