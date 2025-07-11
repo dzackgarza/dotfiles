@@ -28,118 +28,33 @@ Create a sophisticated AI development tool that can:
 - Cognitive modules for basic processing
 - Comprehensive testing framework
 
-## Phase 1: Tool Execution Foundation (v3.1)
-
-**Target: Q1 2025**
-
-### Core Components
-
-1. **Tool Registry System**
-   - Plugin-based tool discovery
-   - Tool capability declaration
-   - Security sandboxing for tool execution
-   - Tool result serialization/deserialization
-
-2. **Execution Engine**
-   - Safe code execution environment
-   - Result capture and formatting
-   - Error handling and recovery
-   - Timeout management
-
-3. **Helper Block Parser**
-   - Extract `<helpers>...</helpers>` blocks from LLM responses
-   - Validate and sanitize code before execution
-   - Support multiple languages (Python, bash, etc.)
-   - Syntax highlighting and error reporting
-
-### Implementation Structure
-```
-src/
-├── tools/
-│   ├── base.py              # Tool interface and registry
-│   ├── python_executor.py   # Python code execution
-│   ├── bash_executor.py     # Bash command execution
-│   ├── file_tools.py        # File system operations
-│   └── web_tools.py         # Web requests and scraping
-├── execution/
-│   ├── engine.py            # Main execution engine
-│   ├── parser.py            # Helper block parser
-│   ├── sandbox.py           # Security sandboxing
-│   └── result_formatter.py  # Result display formatting
-└── plugins/blocks/
-    └── tool_execution.py    # Tool execution plugin
-```
-
-## Phase 2: Continuation Passing Style (v3.2)
-
-**Target: Q2 2025**
-
-### CPS Architecture
-
-The core innovation: **LLM ↔ Tool Continuous Conversation Loop**
-
-```
-User Query → LLM → Tool Execution → Result → LLM → Tool Execution → ... → Final Response
-```
-
-### Key Features
-
-1. **Conversation Loop Manager**
-   - Manages the continuous LLM-tool interaction cycle
-   - Maintains conversation context across iterations
-   - Handles loop termination conditions
-   - Prevents infinite loops with safety mechanisms
-
-2. **Enhanced LLM Interface**
-   - Streaming support for real-time feedback
-   - Context window management
-   - Tool result integration into conversation
-   - Multi-turn reasoning capabilities
-
-3. **Tool Result Integration**
-   - Seamless integration of tool outputs into LLM context
-   - Structured result formatting for LLM consumption
-   - Error propagation and handling
-   - Result visualization in timeline
-
-### Example CPS Flow
-
-1. User: "Analyze the performance of my Python script"
-2. LLM: "I'll analyze your script. Let me first see what files are available."
-   - Executes file listing tool
-3. Tool Result: "Available Python files: main.py, utils.py, tests.py"
-4. LLM: "I found several files. Let me examine the main.py file first."
-   - Executes file reading tool
-5. Tool Result: [File content displayed]
-6. LLM: "I can see potential performance issues. Let me run a profiler..."
-   - Executes profiling tool
-7. Tool Result: [Profiling results]
-8. LLM: "Based on the analysis, here are the performance bottlenecks and recommendations..."
-
-## Phase 3: Advanced Reasoning (v3.3)
+## Phase 1: MVP (v3.1)
 
 **Target: Q3 2025**
 
-### Multi-Agent Collaboration
-- **Specialist Agents**: Different LLMs for different tasks
-- **Agent Coordination**: Handoff between agents
-- **Collaborative Reasoning**: Multiple agents working together
+### Core Components
 
-### Enhanced Cognitive Modules
-- **Planning Module**: Break down complex tasks
-- **Memory Module**: Persistent context across sessions
-- **Reflection Module**: Self-evaluation and improvement
-- **Learning Module**: Adapt based on user feedback
+Features for v3.1 are detailed in the ledgers located in `/.ai/ledgers/v3.1/`.
 
-### Advanced Tool Integration
-- **Custom Tool Development**: User-defined tools
-- **Tool Composition**: Chaining tools together
-- **Tool Learning**: LLM learns to use new tools
-- **Tool Optimization**: Performance improvements
+## Phase 2: Continuation Passing Style (v3.2)
+
+**Target: Q4 2025**
+
+### Key Features
+
+Features for v3.2 are detailed in the ledgers located in `/.ai/ledgers/v3.2/`.
+
+## Phase 3: Advanced Reasoning (v3.3)
+
+**Target: Q1 2026**
+
+### Key Features
+
+Features for v3.3 are detailed in the ledgers located in `/.ai/ledgers/v3.3/`.
 
 ## Phase 4: Production Ready (v4.0)
 
-**Target: Q4 2025**
+**Target: Q2 2026**
 
 ### Enterprise Features
 - **Multi-User Support**: Shared sessions and collaboration

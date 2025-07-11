@@ -1,0 +1,85 @@
+# Elia Configuration for LLM REPL V3
+# Local Ollama models configuration
+
+# Set tinyllama as default model
+default_model = "tinyllama"
+
+# System prompt that aligns with our Sacred Timeline philosophy
+system_prompt = "You are Elia, a helpful assistant participating in a transparent cognitive pipeline. All your responses are part of an immutable timeline."
+
+# Visual theme
+theme = "galaxy"
+
+# Local Ollama model configurations
+
+[[models]]
+name = "ollama/tinyllama"
+id = "tinyllama"
+display_name = "TinyLlama"
+provider = "Ollama"
+description = "Lightweight 1.1B parameter model for development and testing"
+api_base = "http://localhost:11434"
+temperature = 0.7
+
+[[models]]
+name = "ollama/phi3:mini"
+id = "phi3-mini"
+display_name = "Phi-3 Mini"
+provider = "Ollama"
+description = "Compact 3.8B parameter model with strong performance"
+api_base = "http://localhost:11434"
+temperature = 0.7
+
+[[models]]
+name = "ollama/phi3.5:3.8b-mini-instruct-q4_K_M"
+id = "phi3.5-mini"
+display_name = "Phi-3.5 Mini"
+provider = "Ollama"
+description = "Enhanced 3.8B parameter model with improved instruction following"
+api_base = "http://localhost:11434"
+temperature = 0.7
+
+[[models]]
+name = "ollama/mistral:7b-instruct-q4_K_M"
+id = "mistral-7b"
+display_name = "Mistral 7B Instruct"
+provider = "Ollama"
+description = "High-quality 7B parameter instruction-tuned model"
+api_base = "http://localhost:11434"
+temperature = 0.7
+
+[[models]]
+name = "ollama/mistral:instruct"
+id = "mistral-instruct"
+display_name = "Mistral Instruct"
+provider = "Ollama"
+description = "Mistral instruction-tuned model"
+api_base = "http://localhost:11434"
+temperature = 0.7
+
+[[models]]
+name = "ollama/llama3.1:8b-instruct-q4_K_M"
+id = "llama3.1-8b"
+display_name = "Llama 3.1 8B"
+provider = "Ollama"
+description = "Advanced 8B parameter model with strong reasoning capabilities"
+api_base = "http://localhost:11434"
+temperature = 0.7
+
+[[models]]
+name = "ollama/codellama:7b-instruct-q4_K_M"
+id = "codellama-7b"
+display_name = "CodeLlama 7B"
+provider = "Ollama"
+description = "Specialized 7B parameter model for code generation and assistance"
+api_base = "http://localhost:11434"
+temperature = 0.7
+
+[[models]]
+name = "ollama/qwen2.5:7b"
+id = "qwen2.5-7b"
+display_name = "Qwen 2.5 7B"
+provider = "Ollama"
+description = "Multilingual 7B parameter model with strong performance"
+api_base = "http://localhost:11434"
+temperature = 0.7

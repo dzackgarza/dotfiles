@@ -34,27 +34,3 @@ Each submodule in this pipeline is its own unit with a strict transparency contr
 -   **Finalized Artifact**: Inscribes its final, clean output into the Cognition block's record.
 
 The UI must render this sequence live, showing each submodule appear, run (with animations), and finalize before the next begins.
-
-## Core Components
-
--   **Plugin Engine**: Orchestrates the `User -> Cognition -> Assistant` turn structure. It is responsible for loading plugins and their dependencies.
-
--   **Plugin Validator**: A critical gateway component. Before a plugin can be loaded, the validator rejects any plugin that could:
-    -   Introduce graphical artifacts or violate the UI's clean, terminal-like aesthetic.
-    -   Violate the timeline's integrity (e.g., attempting to modify a past block).
-    -   Fail to meet the full transparency contract (missing timers, token counters, etc.).
-
--   **Shared Utilities**: A library of common tools available to all plugins, ensuring consistency. This includes renderers for LaTeX and Markdown, for example.
-
--   **UI Renderer**: A swappable component responsible for rendering the timeline blocks. It subscribes to events from the Plugin Engine and displays new or updated blocks. It must support a terminal-like aesthetic and be capable of rendering rich content including:
-    -   Markdown (with syntax-highlighted code blocks)
-    -   LaTeX-compatible mathematics
-    -   Rich Jupyter notebook cells (inputs, outputs, plots)
-    -   Interactive elements for deep linking to the filesystem (e.g., `xdg-open` for files, browser for URLs) and future support for MIME-type specific visual representations.
-    -   Dynamic animations for live states.
-
--   **Input Processor**: A component responsible for handling user input, including multiline text and intelligently processing copy-pasted data. It will provide visual cues for attached clipboard content and ensure principled inscription of this data onto the Sacred Timeline.
-
--   **Intelligent Router**: A specialized plugin (likely a core Cognition Submodule) responsible for analyzing user intent and dynamically routing tasks to the most appropriate plugins, LLMs (local, remote, specialized), or external tools (bash, web search, MCP servers). This component is key to abstracting away complex commands and providing a natural language interface to the entire system.
-
--   **The Sacred Timeline (Database)**: The implementation of the Sacred Timeline. A persistent, append-only log that stores the final, inscribed state of every block from every turn.

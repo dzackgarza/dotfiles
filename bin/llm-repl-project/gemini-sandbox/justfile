@@ -1,0 +1,10 @@
+default: test
+
+run:
+  ./gemini --task "Implement a Python function to generate the nth Fibonacci number in main.py"
+
+test:
+	@echo "Running Fibonacci test..."
+		@python main.py | grep -q "The 10th Fibonacci number is: 55"
+	@echo "Fibonacci test passed."
+

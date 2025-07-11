@@ -107,3 +107,37 @@ class TestPromptInput:
             # Optionally, assert that a CursorEscapingBottom message was posted
             # This requires a more sophisticated message capture mechanism if app.listen() is not working
             # For now, we rely on the cursor location assertion.
+
+    async def test_ctrl_c_allows_app_quit(self):
+        """Test that Ctrl+C in the text input allows the app to quit."""
+        async with LLMReplApp().run_test() as app:
+            prompt_input = app.app.query_one(PromptInput)
+
+            # Focus the input widget
+            prompt_input.focus()
+            await app.pause(0.1)
+
+            # Simulate Ctrl+C key event
+            from textual import events
+
+            # Create a Ctrl+C key event
+            ctrl_c_event = events.Key(key="ctrl+c", character="")
+
+            # Track if the event was prevented
+            prevented = False
+            original_prevent_default = ctrl_c_event.prevent_default
+
+            def track_prevent():
+                nonlocal prevented
+                prevented = True
+                original_prevent_default()
+
+            ctrl_c_event.prevent_default = track_prevent
+
+            # Send the event to the widget
+            await prompt_input._on_key(ctrl_c_event)
+
+            # Assert that the event was NOT prevented (should bubble up to app)
+            assert not prevented, "Ctrl+C should not be prevented in text input"
+
+            # The event should be allowed to bubble up for app-level quit handling

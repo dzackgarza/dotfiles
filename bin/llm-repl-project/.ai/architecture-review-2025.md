@@ -47,52 +47,8 @@ V2 exemplifies "architecture astronauting" - building sophisticated systems befo
 - **Comprehensive testing**: 311 lines of tests (16% of codebase)
 - **Developer-friendly**: Clear code structure, good documentation
 
-#### Current Limitations
-- **Mock LLM integration**: Not connected to real providers (by design)
-- **No persistence**: Timeline not saved between sessions
-- **Tkinter constraints**: Limited by toolkit capabilities
-- **Single-user**: No real-time collaboration features
-
 #### Assessment
 V3 is **not "ugly"** as originally characterized - it's actually a well-architected, modern application that demonstrates excellent software engineering practices.
-
-### UI Framework Research
-
-#### Terminal UI (TUI) Options
-
-**Textual Framework**
-- **Pros**: Modern, web-inspired development patterns, built on Rich
-- **Cons**: Still maturing, async complexity, missing basic features (menus, dialogs)
-- **Verdict**: Promising but not yet production-ready for complex apps
-
-**Rich Library**
-- **Pros**: Excellent for enhanced terminal output
-- **Cons**: Limited interactivity, not a full TUI framework
-- **Verdict**: Great for output formatting, insufficient for full application
-
-#### GUI Framework Options
-
-**Tkinter (Current V3 Choice)**
-- **Pros**: Built-in, zero dependencies, stable, cross-platform
-- **Cons**: Somewhat outdated aesthetics, limited multimedia support
-- **Performance**: Adequate for text-based applications
-- **Verdict**: Optimal for our use case - reliable and lightweight
-
-**PySide6/PyQt6**
-- **Pros**: Professional appearance, comprehensive features, excellent performance
-- **Cons**: Large dependencies, licensing considerations, complexity overhead
-- **Verdict**: Overkill for our terminal-focused application
-
-## Framework Decision Matrix
-
-| Criterion | Tkinter (V3) | Textual | PySide6 | Rich |
-|-----------|-------------|---------|---------|------|
-| **Stability** | ✅ Excellent | ⚠️ Developing | ✅ Excellent | ✅ Excellent |
-| **Dependencies** | ✅ None | ❌ Heavy | ❌ Very Heavy | ✅ Light |
-| **Terminal Focus** | ⚠️ GUI-based | ✅ Perfect | ❌ Desktop-focused | ✅ Good |
-| **Development Speed** | ✅ Fast | ⚠️ Learning curve | ❌ Complex | ✅ Fast |
-| **Maintainability** | ✅ Simple | ⚠️ Async complexity | ❌ Framework overhead | ✅ Simple |
-| **Vision Alignment** | ✅ Good | ✅ Perfect | ❌ Mismatched | ⚠️ Limited |
 
 ## Complexity vs Maintainability Analysis
 
@@ -124,40 +80,6 @@ V3 demonstrates our development philosophy in action:
 3. **Maintainable Codebase**: Simple enough to debug and extend reliably
 4. **Framework Appropriateness**: Tkinter matches our needs without overengineering
 
-### Development Path Forward
-
-#### Phase 1: LLM Integration (Immediate Priority)
-```python
-# Replace mock responses with real API calls
-# Implement the 8 provider routing system documented in .ai/
-# Add token counting and cost tracking
-# Enable model-specific task routing
-```
-
-#### Phase 2: Core Feature Completion (Next 2-4 weeks)
-```python
-# Add timeline persistence (JSON/SQLite)
-# Implement file context inclusion (@-commands)
-# Add slash commands (/help, /quit, etc.)
-# Enable shell integration with security
-```
-
-#### Phase 3: Enhanced User Experience (Following month)
-```python
-# Improve syntax highlighting in timeline
-# Add search and filtering capabilities
-# Implement memory/context persistence
-# Add export formats (HTML, Markdown)
-```
-
-#### Phase 4: Advanced Features (Future)
-```python
-# Plugin system for extensibility
-# Real-time collaboration
-# Web interface option
-# Mobile/responsive considerations
-```
-
 ### Framework Evolution Strategy
 
 **Current State:** Tkinter-based V3 provides solid foundation  
@@ -169,20 +91,6 @@ V3 demonstrates our development philosophy in action:
 **V2 Legacy Risk:** Resist urge to port V2's complexity to V3  
 **Feature Creep Risk:** Maintain focus on core REPL functionality  
 **Framework Lock-in Risk:** Keep UI and business logic cleanly separated  
-
-## Implementation Guidelines
-
-### Code Quality Standards
-- **Maintain sub-500 line modules** for debuggability
-- **Comprehensive testing** for all new features  
-- **Echo tests** for user experience validation
-- **API key rotation** for cost management across 8 providers
-
-### Architecture Principles
-- **Fail fast design** - expose problems immediately
-- **Proof-based validation** - working code demonstrates correctness  
-- **Component isolation** - UI changes don't affect business logic
-- **Progressive enhancement** - add complexity only when needed
 
 ## Conclusion
 

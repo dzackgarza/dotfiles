@@ -8,6 +8,16 @@ import json
 
 
 @dataclass
+class SubBlock:
+    """A sub-block within a main timeline block"""
+
+    id: str = field(default_factory=lambda: str(uuid4()))
+    type: str = ""  # "step", "detail", "info", "progress", "result", "note"
+    content: str = ""
+    timestamp: datetime = field(default_factory=datetime.now)
+
+
+@dataclass
 class Block:
     """A single immutable block in the Sacred Timeline"""
 
@@ -19,6 +29,9 @@ class Block:
     time_taken: float | None = None  # Time taken for this block in seconds
     tokens_input: int | None = None  # Number of input tokens
     tokens_output: int | None = None  # Number of output tokens
+    sub_blocks: list[SubBlock] = field(
+        default_factory=list
+    )  # Sub-blocks for cognition pipelines
 
     def to_dict(self) -> dict:
         """Serialize block for storage"""
@@ -31,11 +44,31 @@ class Block:
             "time_taken": self.time_taken,
             "tokens_input": self.tokens_input,
             "tokens_output": self.tokens_output,
+            "sub_blocks": [
+                {
+                    "id": sb.id,
+                    "type": sb.type,
+                    "content": sb.content,
+                    "timestamp": sb.timestamp.isoformat(),
+                }
+                for sb in self.sub_blocks
+            ],
         }
 
     @classmethod
     def from_dict(cls, data: dict) -> "Block":
         """Deserialize block from storage"""
+        sub_blocks = []
+        for sb_data in data.get("sub_blocks", []):
+            sub_blocks.append(
+                SubBlock(
+                    id=sb_data["id"],
+                    type=sb_data["type"],
+                    content=sb_data["content"],
+                    timestamp=datetime.fromisoformat(sb_data["timestamp"]),
+                )
+            )
+
         return cls(
             id=data["id"],
             timestamp=datetime.fromisoformat(data["timestamp"]),
@@ -45,6 +78,7 @@ class Block:
             time_taken=data.get("time_taken"),
             tokens_input=data.get("tokens_input"),
             tokens_output=data.get("tokens_output"),
+            sub_blocks=sub_blocks,
         )
 
 
@@ -79,6 +113,7 @@ class SacredTimeline:
         time_taken: float | None = None,
         tokens_input: int | None = None,
         tokens_output: int | None = None,
+        sub_blocks: list[SubBlock] | None = None,
     ) -> Block:
         """Add a new block to the timeline"""
         block = Block(
@@ -88,6 +123,7 @@ class SacredTimeline:
             time_taken=time_taken,
             tokens_input=tokens_input,
             tokens_output=tokens_output,
+            sub_blocks=sub_blocks or [],
         )
 
         # Append-only: blocks can only be added

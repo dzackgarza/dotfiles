@@ -1,0 +1,27 @@
+# Minimal swayfx test config (Corrected)
+
+# Output configuration (replace with your monitor name if needed)
+output * { 
+  bg /usr/share/backgrounds/default.png fill
+}
+
+# Enable blur effect
+blur enable
+# Set blur passes for intensity (higher = more blur)
+blur_passes 3
+# Set blur radius (higher = larger blur area)
+blur_radius 5
+# Enable XRay blur (blurs content behind the window)
+blur_xray enable
+
+# Dim unfocused windows (global setting)
+# Value between 0.0 (no dim) and 1.0 (fully dimmed/black)
+default_dim_inactive 0.2
+
+# Set a default terminal (replace with your preferred terminal)
+exec kitty
+
+# Keybindings (example: Mod+Enter to open terminal, Mod+Shift+c to reload config)
+set $mod Mod4
+bindsym $mod+Return exec kitty
+bindsym $mod+Shift+c reload

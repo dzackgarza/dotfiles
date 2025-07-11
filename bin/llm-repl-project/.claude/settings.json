@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "source /home/dzack/dotfiles/bin/llm-repl-project/.venv/bin/activate && just test || exit 2"
+          }
+        ]
+      }
+    ]
+  }
+}

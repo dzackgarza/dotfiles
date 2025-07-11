@@ -7,11 +7,19 @@ from textual.message import Message
 from rich.text import Text
 from rich.console import Console
 from rich.syntax import Syntax
-from rich.panel import Panel
-from rich.align import Align
 from typing import Optional
 
-from ..config import RoleConfig, UIConfig
+from ..config import RoleConfig, UIConfig, ThemeConfig
+
+
+@dataclass
+class SubBlock:
+    """A sub-block within a main timeline block"""
+
+    id: str
+    type: str  # "step", "detail", "info", "progress", "result", "note"
+    content: str
+    timestamp: datetime = field(default_factory=datetime.now)
 
 
 @dataclass
@@ -20,12 +28,15 @@ class TimelineBlock:
 
     id: str
     timestamp: datetime
-    role: str  # "user", "system", "assistant", "cognition", "turn"
+    role: str  # "user", "system", "assistant", "cognition", "turn", "tool", "error", "processing"
     content: str
     metadata: dict = field(default_factory=dict)
     time_taken: Optional[float] = None  # Time taken for this block in seconds
     tokens_input: Optional[int] = None  # Number of input tokens
     tokens_output: Optional[int] = None  # Number of output tokens
+    sub_blocks: list[SubBlock] = field(
+        default_factory=list
+    )  # Sub-blocks for cognition pipelines
 
 
 class TurnBlockWidget(Vertical):
@@ -62,14 +73,15 @@ class TurnBlockWidget(Vertical):
             yield TimelineBlockWidget(block)
 
     def _get_header_text(self) -> Text:
-        """Constructs uniform turn header in format: |----TURN #X-------|"""
+        """Constructs dim hrule between conversation turns"""
         header = Text()
 
-        # Create uniform turn header: |----TURN #X-------|
-        header.append("|----", style="dim")
-        header.append("TURN ", style="bright_white bold")
-        header.append(f"#{self.turn_id}", style="bright_white bold")
-        header.append("-------|", style="dim")
+        # Create a dim hrule: -----------------Turn N--------------
+        left_line = "-" * 17
+        right_line = "-" * 14
+        turn_text = f"Turn {self.turn_id}"
+
+        header.append(f"{left_line}{turn_text}{right_line}", style="dim")
 
         return header
 
@@ -147,6 +159,19 @@ class TimelineView(VerticalScroll):
 
         self.post_message(self.BlockAdded(block))
 
+    def add_live_block_widget(self, live_widget) -> None:
+        """Add a live block widget to the timeline
+
+        Args:
+            live_widget: LiveBlockWidget instance to add
+        """
+        # Mount the live widget directly
+        self.mount(live_widget)
+
+        # Smart auto-scroll - only if user is near bottom
+        if self._should_auto_scroll():
+            self.scroll_end(animate=False, force=True)
+
     def clear_timeline(self) -> None:
         """Clear all blocks"""
         self.blocks = []
@@ -155,8 +180,31 @@ class TimelineView(VerticalScroll):
         self._turn_counter = 0
 
 
-class TimelineBlockWidget(Static):
+class TimelineBlockWidget(Vertical):
     """Individual block widget with Sacred Timeline block aesthetic"""
+
+    DEFAULT_CSS = """
+    TimelineBlockWidget {
+        border: round $primary;
+        margin-bottom: 1;
+        padding: 0 1;
+        height: auto;
+        min-height: 0;
+    }
+
+    TimelineBlockWidget.timeline-block-cognition {
+        border: round $secondary;
+    }
+
+    .sub-block {
+        border: round $accent;
+        width: 90%;
+        margin: 1 2;
+        padding: 0 1;
+        height: auto;
+        min-height: 0;
+    }
+    """
 
     def __init__(self, block: TimelineBlock, *args, **kwargs):
         self.block = block
@@ -165,31 +213,29 @@ class TimelineBlockWidget(Static):
         self.add_class(f"timeline-block-{block.role}")
 
     def compose(self):
-        """Create the Sacred Timeline block structure"""
+        """Create the Sacred Timeline block structure with sub-blocks"""
+        # Header for the main block
         header_text = self._get_header_text()
-        border_color = self._get_border_color()
+        yield Static(header_text, classes="block-header")
 
-        # Content area with proper formatting and syntax highlighting
-        content_renderable = self._render_content_with_syntax()
+        # Main content if any
+        if self.block.content:
+            content = self._render_content_with_syntax()
+            yield Static(content, classes="block-content")
 
-        yield Static(
-            Panel(
-                Align.left(content_renderable),
-                title=header_text,
-                border_style=border_color,
-                title_align="left",
-                expand=True,
-                padding=(0, 1),
-            )
-        )
+        # Sub-blocks as separate child widgets
+        if self.block.sub_blocks:
+            for sub_block in self.block.sub_blocks:
+                yield SubBlockWidget(sub_block)
 
     def _get_header_text(self) -> Text:
-        """Constructs the uniform header text for the block in format: |----TYPE (X s, Y up/Z down)-------|"""
+        """Constructs elegant header text without capitals"""
         header = Text()
-        role_name = self.block.role.upper()
+        role_title = self._get_role_title()
         role_color = self._get_role_color()
+        role_indicator = self._get_role_indicator()
 
-        # Build metrics for the uniform format
+        # Build metrics for elegant display
         metrics = []
         if self.block.time_taken is not None:
             metrics.append(f"{self.block.time_taken:.1f}s")
@@ -198,62 +244,164 @@ class TimelineBlockWidget(Static):
         if self.block.tokens_output is not None:
             metrics.append(f"{self.block.tokens_output}↓")
 
-        # Create uniform header: |----TYPE (metrics)-------|
-        header.append("|----", style="dim")
-        header.append(role_name, style=f"bold {role_color}")
+        # Elegant format: icon role title (metrics)
+        header.append(f"{role_indicator} ", style=f"bold {role_color}")
+        header.append(role_title, style=f"{role_color}")
 
         if metrics:
-            header.append(f" ({', '.join(metrics)})", style="dim")
-
-        header.append("-------|", style="dim")
+            header.append(f" • {' | '.join(metrics)}", style="dim")
 
         return header
 
     def _get_role_indicator(self) -> str:
-        """Returns the ASCII indicator for the block's role."""
+        """Returns the elegant indicator for the block's role."""
         return RoleConfig.ROLE_INDICATORS.get(self.block.role, "•")
 
-    def _render_content_with_syntax(self) -> Text:
-        """Render content with syntax highlighting for code blocks."""
-        content = self.block.content
-        if "```" not in content:
-            return Text(content)
+    def _get_role_title(self) -> str:
+        """Returns the elegant title for the block's role (no capitals)."""
+        return RoleConfig.ROLE_TITLES.get(self.block.role, self.block.role)
 
-        # Simple code block parsing
-        parts = content.split("```")
+    def _render_content_with_syntax(self) -> Text:
+        """Render content with syntax highlighting and sub-blocks."""
         result = Text()
 
-        for i, part in enumerate(parts):
-            if i % 2 == 0:  # Regular text
-                result.append(part)
-            else:  # Code block
-                lines = part.split("\n")
-                language = lines[0].strip() if lines else ""
-                code = "\n".join(lines[1:]) if len(lines) > 1 else ""
+        # Render main content
+        content = self.block.content
+        if "```" not in content:
+            result.append(content)
+        else:
+            # Simple code block parsing
+            parts = content.split("```")
+            for i, part in enumerate(parts):
+                if i % 2 == 0:  # Regular text
+                    result.append(part)
+                else:  # Code block
+                    lines = part.split("\n")
+                    language = lines[0].strip() if lines else ""
+                    code = "\n".join(lines[1:]) if len(lines) > 1 else ""
 
-                if language and code:
-                    try:
-                        syntax = Syntax(
-                            code,
-                            language,
-                            theme=UIConfig.DEFAULT_SYNTAX_THEME,
-                            background_color=UIConfig.DEFAULT_BACKGROUND_COLOR,
-                        )
-                        console = Console()
-                        with console.capture() as capture:
-                            console.print(syntax)
-                        result.append(capture.get())
-                    except Exception:
-                        result.append(f"```{language}\n{code}\n```", style="dim")
-                else:
-                    result.append(f"```{part}```", style="dim")
+                    if language and code:
+                        try:
+                            syntax = Syntax(
+                                code,
+                                language,
+                                theme=UIConfig.DEFAULT_SYNTAX_THEME,
+                                background_color=UIConfig.DEFAULT_BACKGROUND_COLOR,
+                            )
+                            console = Console()
+                            with console.capture() as capture:
+                                console.print(syntax)
+                            result.append(capture.get())
+                        except Exception:
+                            result.append(f"```{language}\n{code}\n```", style="dim")
+                    else:
+                        result.append(f"```{part}```", style="dim")
 
+        # Sub-blocks are rendered as separate widgets in compose()
         return result
 
+    def _get_sub_block_icon(self, sub_type: str) -> str:
+        """Get icon for sub-block type."""
+        icons = {
+            "step": "→",
+            "detail": "◦",
+            "info": "i",
+            "progress": "⋯",
+            "result": "✓",
+            "note": "※",
+        }
+        return icons.get(sub_type, "◦")
+
     def _get_role_color(self) -> str:
-        """Sacred Timeline role colors"""
-        return RoleConfig.ROLE_COLORS.get(self.block.role, "white")
+        """Sacred Timeline role colors - theme-aware"""
+        # Get current theme from app
+        current_theme_name = getattr(
+            self.app, "_current_theme", ThemeConfig.DEFAULT_THEME
+        )
+        theme_config = ThemeConfig.AVAILABLE_THEMES.get(current_theme_name, {})
+
+        # Map roles to theme color properties
+        role_to_theme_property = {
+            "user": "success",  # User input = positive/success
+            "system": "warning",  # System = warning/attention
+            "assistant": "primary",  # Assistant = primary theme color
+            "cognition": "secondary",  # Cognition = secondary color
+            "turn": "primary",  # Turn markers = primary color
+            "tool": "accent",  # Tools = accent color
+            "error": "error",  # Errors = error color
+            "processing": "warning",  # Processing = warning color
+        }
+
+        theme_property = role_to_theme_property.get(self.block.role, "primary")
+        return str(theme_config.get(theme_property, "#ffffff"))
 
     def _get_border_color(self) -> str:
-        """Sacred Timeline border colors - subtle but distinct per role"""
-        return RoleConfig.BORDER_COLORS.get(self.block.role, "white")
+        """Sacred Timeline border colors - theme-aware"""
+        # Get current theme from app
+        current_theme_name = getattr(
+            self.app, "_current_theme", ThemeConfig.DEFAULT_THEME
+        )
+        theme_config = ThemeConfig.AVAILABLE_THEMES.get(current_theme_name, {})
+
+        # Map roles to theme color properties for borders
+        role_to_theme_property = {
+            "user": "success",
+            "system": "warning",
+            "assistant": "primary",
+            "cognition": "secondary",
+            "turn": "secondary",  # Use secondary for subtle turn borders
+            "tool": "accent",
+            "error": "error",
+            "processing": "warning",
+        }
+
+        theme_property = role_to_theme_property.get(self.block.role, "primary")
+        return str(theme_config.get(theme_property, "#888888"))
+
+
+class SubBlockWidget(Vertical):
+    """Individual sub-block widget for cognition steps"""
+
+    def __init__(self, sub_block: SubBlock, *args, **kwargs):
+        self.sub_block = sub_block
+        super().__init__(*args, **kwargs)
+        self.add_class("sub-block")
+        self.add_class(f"sub-block-{sub_block.type}")
+
+    def compose(self):
+        """Create the sub-block structure"""
+        # Header with step name and timing
+        header_text = self._get_sub_block_header()
+        yield Static(header_text, classes="sub-block-header")
+
+        # Content with model and status info
+        content_text = self._get_sub_block_content()
+        yield Static(content_text, classes="sub-block-content")
+
+    def _get_sub_block_header(self) -> Text:
+        """Create header for sub-block"""
+        header = Text()
+
+        # Get step name
+        step_name = self.sub_block.type.replace("_", " ").title()
+        header.append(f"{step_name}", style="bold")
+
+        # Add timing info (simulated for now)
+        header.append(" (0.2s | 10↑ / 3↓)", style="dim")
+
+        return header
+
+    def _get_sub_block_content(self) -> Text:
+        """Create content for sub-block"""
+        content = Text()
+
+        # Model info
+        content.append("Model: ", style="dim")
+        content.append("`tinyllama-v2`", style="bold")
+        content.append("\n")
+
+        # Status
+        content.append("Status: ", style="dim")
+        content.append("✅ Complete", style="green")
+
+        return content

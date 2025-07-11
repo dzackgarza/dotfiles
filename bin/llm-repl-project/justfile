@@ -2,12 +2,60 @@
 
 # === V3 (Current) Commands ===
 
-# Default: Run V3 with terminal-native interface (with linting)
-run: lint-v3
+# Default: Run V3-minimal (bottom-up Sacred Timeline) - auto-launches Kitty if needed
+run: test validate-markup
+	@if [ "$TERM" != "xterm-kitty" ]; then \
+		echo "🐱 LLM REPL requires Kitty terminal for proper Shift+Enter support"; \
+		echo "📦 Launching Kitty with optimized configuration..."; \
+		if command -v kitty >/dev/null 2>&1; then \
+			kitty --config V3-minimal/kitty-llm-repl.conf --title "LLM REPL V3-minimal" --directory "$(pwd)/V3-minimal" pdm run python -m src.main; \
+		else \
+			echo "❌ Kitty not found. Please install: sudo pacman -S kitty (Arch) or sudo apt install kitty (Ubuntu)"; \
+			echo "🔄 Falling back to current terminal (Shift+Enter may not work properly)"; \
+			cd V3-minimal && export PATH="/home/dzack/.local/bin:/usr/bin:$$PATH" && pdm run python -m src.main; \
+		fi; \
+	else \
+		echo "✅ Running in Kitty terminal"; \
+		cd V3-minimal && export PATH="/home/dzack/.local/bin:/usr/bin:$$PATH" && pdm run python -m src.main; \
+	fi
+
+# Quick run without tests (for development)
+run-dev:
+	@if [ "$TERM" != "xterm-kitty" ]; then \
+		echo "🐱 LLM REPL requires Kitty terminal for proper Shift+Enter support"; \
+		echo "📦 Launching Kitty with optimized configuration..."; \
+		if command -v kitty >/dev/null 2>&1; then \
+			kitty --config V3-minimal/kitty-llm-repl.conf --title "LLM REPL V3-minimal" --directory "$(pwd)/V3-minimal" pdm run python -m src.main; \
+		else \
+			echo "❌ Kitty not found. Please install: sudo pacman -S kitty (Arch) or sudo apt install kitty (Ubuntu)"; \
+			echo "🔄 Falling back to current terminal (Shift+Enter may not work properly)"; \
+			cd V3-minimal && export PATH="/home/dzack/.local/bin:/usr/bin:$$PATH" && pdm run python -m src.main; \
+		fi; \
+	else \
+		echo "✅ Running in Kitty terminal"; \
+		cd V3-minimal && export PATH="/home/dzack/.local/bin:/usr/bin:$$PATH" && pdm run python -m src.main; \
+	fi
+
+run-background:
+	@echo "Starting V3-minimal in background..."
+	nohup sh -c "cd V3-minimal && export PATH=\"/home/dzack/.local/bin:/usr/bin:$PATH\" && pdm run python -m src.main" > /dev/null 2>&1 &
+	@echo "V3-minimal started in background. Check logs for output or use 'just kill-app' to stop."
+
+kill-app:
+	@echo "Attempting to kill V3-minimal background process..."
+	pkill -f "python -m src.main" || echo "No V3-minimal process found."
+	@echo "V3-minimal background process killed (if found)."
+
+# Run V3-Elia (Elia-based implementation)
+run-elia:
+	cd V3 && uv run elia
+
+# Run V3 foundation (our custom implementation) 
+run-v3: lint-v3
 	cd V3 && source venv/bin/activate && python main.py --config debug
 
-# Run V3 without linting (for development)
-run-dev:
+# Run V3 legacy without linting (for development)
+run-v3-dev:
 	cd V3 && source venv/bin/activate && python main.py --config debug
 
 # === V2 (Legacy) Commands ===
@@ -16,9 +64,9 @@ run-dev:
 run-2:
 	python V2/main.py --config debug
 
-# V2.5: Run V2-5-tkinter-rewrite (desktop GUI)
+# V2.5: Run V2-5-0-tkinter-rewrite (desktop GUI)
 run-2-5:
-	python V2-5-tkinter-rewrite/main.py --config debug
+	python V2-5-0-tkinter-rewrite/main.py --config debug
 
 # V3: Mixed mode - Ollama for intent detection, Groq for chat  
 run-mixed: lint-v3
@@ -30,16 +78,52 @@ run-fast: lint-v3
 
 # === Testing Commands ===
 
-# Run comprehensive test suite for V3
-test:
+# Run comprehensive test suite (linters + tests) for V3-minimal
+test: validate-markup
+	@bash scripts/dim_echo.sh "🧪 Running comprehensive test suite for V3-minimal..."
+	cd V3-minimal && export PATH="/home/dzack/.local/bin:/usr/bin:$$PATH" && \
+	bash ../scripts/dim_echo.sh "🎨 Auto-formatting code..." && \
+	pdm run black src/ tests/ && \
+	pdm run ruff check --fix src/ tests/ && \
+	bash ../scripts/dim_echo.sh "📋 Running Ruff linter..." && \
+	pdm run ruff check src/ tests/ && \
+	bash ../scripts/dim_echo.sh "🎨 Running Black formatter check..." && \
+	pdm run black --check --diff src/ tests/ && \
+	bash ../scripts/dim_echo.sh "🔍 Running MyPy type checker..." && \
+	pdm run mypy src/ && \
+	bash ../scripts/dim_echo.sh "🧪 Running pytest..." && \
+	pdm run pytest tests/ -v --tb=short && \
+	bash ../scripts/dim_echo.sh "✅ All tests passed!"
+
+# Quick lint-only check for V3-minimal
+lint:
+	@bash scripts/dim_echo.sh "🔧 Running linters for V3-minimal..."
+	cd V3-minimal && export PATH="/home/dzack/.local/bin:/usr/bin:$$PATH" && \
+	bash ../scripts/dim_echo.sh "🎨 Auto-formatting code..." && \
+	pdm run black src/ tests/ && \
+	pdm run ruff check --fix src/ tests/ && \
+	bash ../scripts/dim_echo.sh "📋 Running linters..." && \
+	pdm run ruff check src/ tests/ && \
+	pdm run black --check src/ tests/ && \
+	pdm run mypy src/ && \
+
+# Fix formatting automatically 
+format:
+	@bash scripts/dim_echo.sh "🎨 Auto-formatting V3-minimal code..."
+	cd V3-minimal && export PATH="/home/dzack/.local/bin:/usr/bin:$$PATH" && \
+	pdm run black src/ tests/ && \
+	pdm run ruff check --fix src/ tests/
+
+# Run comprehensive test suite for V3 (legacy)
+test-v3:
 	cd V3 && source venv/bin/activate && python -m pytest tests/ -v
 
 # Run V2 legacy tests
 test-2:
 	python -m pytest tests/ -v
 
-# Run type checking and correctness checks for V3
-lint:
+# Run type checking and correctness checks for V3 (legacy)
+lint-v3-legacy:
 	@echo "Running type checking for V3..."
 	cd V3 && source venv/bin/activate && mypy --explicit-package-bases . --exclude venv --ignore-missing-imports
 	@echo "Running correctness checks with flake8..."
@@ -69,16 +153,61 @@ show-configs:
 	@echo "  mixed: Ollama for intent, Groq for chat"
 	@echo "  fast: Groq for everything"
 
+# Validate markup syntax in the codebase
+validate-markup:
+	@bash scripts/dim_echo.sh "🔍 Validating Rich markup syntax..."
+	cd V3-minimal && export PATH="/home/dzack/.local/bin:/usr/bin:$$PATH" && pdm run python -m src.markup_validator src/
+
+# === V3.1 Ledger Development Commands ===
+
+# Start working on a V3.1 ledger (creates TodoWrite tasks for phases)
+start-ledger LEDGER_NAME:
+	@bash scripts/dim_echo.sh "📋 Starting ledger: {{LEDGER_NAME}}"
+	@python scripts/ledger_tracker.py start {{LEDGER_NAME}}
+
+# Move to next phase of current ledger
+next-phase LEDGER_NAME:
+	@bash scripts/dim_echo.sh "➡️ Moving to next phase: {{LEDGER_NAME}}"
+	@python scripts/ledger_tracker.py next {{LEDGER_NAME}}
+
+# Test current ledger implementation
+test-ledger LEDGER_NAME:
+	@bash scripts/dim_echo.sh "🧪 Testing ledger: {{LEDGER_NAME}}"
+	@python scripts/ledger_tracker.py test {{LEDGER_NAME}}
+
+# Complete and archive a ledger
+complete-ledger LEDGER_NAME:
+	@bash scripts/dim_echo.sh "✅ Completing ledger: {{LEDGER_NAME}}"
+	@python scripts/ledger_tracker.py complete {{LEDGER_NAME}}
+	@git add .ai/ledgers/v3.1/
+	@git commit -m "Complete ledger: {{LEDGER_NAME}} 🤖 Generated with Claude Code"
+
+# Show ledger development status dashboard
+ledger-status:
+	@python scripts/ledger_tracker.py status
+
 # Help
 help:
 	@echo "LLM REPL - Available commands:"
 	@echo ""
-	@echo "V3 (Current - Terminal Native):"
-	@echo "  just run         - Run V3 interactive mode (Ollama debug)"
+	@echo "V3-minimal (Current - Kitty Terminal Optimized):"
+	@echo "  just run         - Run V3-minimal with tests (auto-launches Kitty)"
+	@echo "  just run-dev     - Run V3-minimal without tests (auto-launches Kitty)"
+	@echo "  just test        - Run V3-minimal test suite"
+	@echo "  just lint        - Run V3-minimal type checking"
+	@echo "  just validate-markup - Validate Rich markup syntax"
+	@echo ""
+	@echo "V3.1 Ledger Development:"
+	@echo "  just start-ledger <name>    - Start working on a ledger"
+	@echo "  just test-ledger <name>     - Test ledger implementation"
+	@echo "  just complete-ledger <name> - Complete and archive ledger"
+	@echo "  just ledger-status          - Show development dashboard"
+	@echo ""
+	@echo "V3 (Legacy Terminal Implementation):"
+	@echo "  just run-v3      - Run V3 interactive mode (Ollama debug)"
+	@echo "  just run-v3-dev  - Run V3 without linting"
 	@echo "  just run-mixed   - Run V3 interactive mode (Ollama+Groq)"
 	@echo "  just run-fast    - Run V3 interactive mode (Groq only)"
-	@echo "  just test        - Run V3 test suite"
-	@echo "  just lint        - Run V3 type checking"
 	@echo ""
 	@echo "V2 (Legacy):"
 	@echo "  just run-2       - Run V2 original (broken)"

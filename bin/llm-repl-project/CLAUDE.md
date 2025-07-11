@@ -49,6 +49,14 @@ just lint         # Type checking
 pytest tests/test_block_ordering.py -v  # Critical regression test
 ```
 
+### Ledger Development Process
+```bash
+just start-ledger <ledger-name>    # Start working on a V3.1 ledger
+just test-ledger <ledger-name>     # Test current ledger implementation
+just complete-ledger <ledger-name> # Complete and archive ledger
+python scripts/ledger_tracker.py status  # Show development status
+```
+
 ## Project Structure
 
 ```
@@ -147,12 +155,56 @@ We have API keys for 8 major providers. Use task-specific routing:
 
 See `.ai/available-api-models.md` and `.ai/ollama-setup.md` for complete setup.
 
+## V3.1 Ledger Development Workflow
+
+**Automated Ledger Tracking**: Use the ledger tracker system to manage V3.1 development:
+
+### Starting a Ledger
+1. **Choose Priority**: Follow V3.1 README priority order
+2. **Start Tracking**: `just start-ledger <name>` creates TodoWrite tasks for each phase
+3. **Implementation**: Work through phases systematically (Planning → Implementation → Testing → Documentation)
+
+### Development Process
+- **Phase-based Development**: Each ledger has 4 phases with specific deliverables
+- **Continuous Testing**: Run `just test-ledger <name>` after each phase
+- **TodoWrite Integration**: Track progress with automatic task creation/completion
+- **Git Integration**: Atomic commits per phase with meaningful messages
+
+### Completion and Archival
+- **Testing Validation**: All tests must pass before completion
+- **User Testing**: Validate UI concepts with mock scenarios
+- **Automatic Archival**: `just complete-ledger <name>` moves to archive with timestamp
+- **Next Suggestion**: System suggests next priority ledger automatically
+
+### Key Commands
+```bash
+# Ledger lifecycle management
+just start-ledger live-inscribed-block-system     # Start highest priority
+python scripts/ledger_tracker.py next <name>      # Move to next phase  
+just test-ledger <name>                           # Run ledger-specific tests
+just complete-ledger <name>                       # Archive and suggest next
+
+# Status tracking
+python scripts/ledger_tracker.py status          # Development dashboard
+cat .ai/ledgers/v3.1/.ledger_status.json        # Raw status data
+```
+
+### V3.1 Priority Order
+1. `live-inscribed-block-system` - Core Sacred Timeline concept
+2. `mock-cognition-pipeline` - Nested plugin architecture  
+3. `rich-content-display-engine` - Visual proof concept works
+4. `timeline-ui-widget` - Core timeline implementation
+5. `mock-data-framework` - Sophisticated testing scenarios
+
+**Goal**: Prove Sacred Timeline UI paradigm with compelling mock demonstrations before building real infrastructure.
+
 ## Quick Reference
 
 - Timeline is append-only and sacred
-- Plugins must be autonomous
+- Plugins must be autonomous  
 - Test the real user path only
 - Fail fast, crash on errors
 - Keep modules under 500 lines
 - Route tasks to optimal models
 - Document everything in git
+- **V3.1 Focus**: Prove UI concepts with mocked data first
