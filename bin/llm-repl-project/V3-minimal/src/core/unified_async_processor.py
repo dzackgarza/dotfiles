@@ -10,6 +10,7 @@ from typing import TYPE_CHECKING, TypedDict, Optional
 
 from .unified_timeline import UnifiedTimelineManager
 from .live_blocks import LiveBlock
+from ..cognition import CognitionManager, CognitionEvent, CognitionResult
 
 if TYPE_CHECKING:
     from .response_generator import ResponseGenerator
@@ -41,6 +42,13 @@ class UnifiedAsyncInputProcessor:
         self.timeline_manager = UnifiedTimelineManager()
         self.app = app
 
+        # Initialize cognition manager
+        self.cognition_manager = CognitionManager()
+
+        # Wire callbacks for staging area and timeline
+        self.cognition_manager.set_staging_callback(self._handle_cognition_event)
+        self.cognition_manager.set_timeline_callback(self._handle_cognition_result)
+
     def get_timeline(self):
         """Get the unified timeline for UI integration"""
         return self.timeline_manager.timeline
@@ -55,19 +63,45 @@ class UnifiedAsyncInputProcessor:
         if not user_input:
             return
 
-        # Add user message as inscribed block immediately
-        user_block = self.timeline_manager.timeline.add_live_block("user", user_input)
-        await self.timeline_manager.timeline.inscribe_block(user_block.id)
+        # Add user message directly to UI (skip timeline for now)
+        # Timeline is for internal state tracking, UI uses direct widget mounting
 
-        # Start cognition processing with live updates
-        await self._add_cognition_block_async(user_input)
+        # Show live workspace for cognition
+        if self.app:
+            workspace = self.app.query_one("#staging-container")
+            if hasattr(workspace, "show_workspace"):
+                workspace.show_workspace()
 
-        # Generate assistant response
+        # Process through cognition module (it will emit events)
+        await self.cognition_manager.process_query(user_input)
+
+        # Hide live workspace after cognition
+        if self.app:
+            workspace = self.app.query_one("#staging-container")
+
+            # Clear cognition content
+            for widget in list(workspace.children):
+                widget.remove()
+
+            # Restore idle animation
+            from ..widgets.idle_animation import IdleAnimation
+
+            idle_animation = IdleAnimation()
+            await workspace.mount(idle_animation)
+
+            if hasattr(workspace, "hide_workspace"):
+                workspace.hide_workspace()
+
+        # Generate assistant response and add to UI
         response = self.response_generator.generate_response(user_input)
-        assistant_block = self.timeline_manager.timeline.add_live_block(
-            "assistant", response
-        )
-        await self.timeline_manager.timeline.inscribe_block(assistant_block.id)
+
+        # Add assistant response to chat container
+        if self.app:
+            from ..widgets.chatbox import Chatbox
+
+            assistant_chatbox = Chatbox(response, role="assistant")
+            chat_container = self.app.query_one("#chat-container")
+            await chat_container.mount(assistant_chatbox)
 
     async def _add_cognition_block_async(self, user_input: str) -> None:
         """Add cognition block with unified timeline ownership
@@ -148,3 +182,66 @@ class UnifiedAsyncInputProcessor:
         # Execute module and wait for completion
         await module.run()
         await completion_event.wait()
+
+    async def _handle_cognition_event(self, event: CognitionEvent) -> None:
+        """Handle cognition events for staging area updates"""
+        if not self.app:
+            return
+
+        # Get the staging container
+        workspace = self.app.query_one("#staging-container")
+
+        if event.type == "start":
+            # Clear staging area (remove idle animation or previous content)
+            for widget in list(workspace.children):
+                widget.remove()
+
+            # Add initial content
+            if event.content:
+                from textual.widgets import Static
+
+                widget = Static(event.content, classes="cognition-event")
+                await workspace.mount(widget)
+
+        elif event.type == "update":
+            # Update staging area content
+            from textual.widgets import Static
+
+            # Clear and replace with updated content
+            for widget in list(workspace.children):
+                widget.remove()
+            widget = Static(event.content, classes="cognition-event")
+            await workspace.mount(widget)
+
+        elif event.type == "complete":
+            # Final update
+            from textual.widgets import Static
+
+            for widget in list(workspace.children):
+                widget.remove()
+            widget = Static(event.content, classes="cognition-event complete")
+            await workspace.mount(widget)
+
+    async def _handle_cognition_result(self, result: CognitionResult) -> None:
+        """Handle cognition result for timeline inscription"""
+        if not self.app:
+            return
+
+        # Add cognition block to chat container
+        from ..widgets.chatbox import Chatbox
+
+        # Format cognition content
+        content = f"**{result.content}**\n"
+        if result.sub_blocks:
+            content += "\n**Sub-modules:**\n"
+            for sub in result.sub_blocks:
+                content += f"• {sub['module_name']}: {sub['content']}\n"
+
+        if result.metadata:
+            content += (
+                f"\n_Processing time: {result.metadata.get('processing_time', 0):.2f}s_"
+            )
+
+        cognition_chatbox = Chatbox(content, role="cognition")
+        chat_container = self.app.query_one("#chat-container")
+        await chat_container.mount(cognition_chatbox)

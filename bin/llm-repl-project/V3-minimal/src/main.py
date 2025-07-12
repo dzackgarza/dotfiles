@@ -48,6 +48,8 @@ class LLMReplApp(App[None]):
     BINDINGS = [
         # Disable Ctrl+Q quit binding by overriding with do-nothing action
         Binding("ctrl+q", "do_nothing", show=False, priority=True),
+        # Cognition module switching
+        Binding("ctrl+m", "switch_cognition_module", "Switch Cognition Module"),
         # Note: Enter and Shift+Enter are handled directly in PromptInput widget
         # Note: Ctrl+C is handled in PromptInput for copy/quit functionality
         # Note: Ctrl+P uses Textual's built-in theme picker with our custom themes
@@ -113,14 +115,15 @@ class LLMReplApp(App[None]):
 
     def compose(self) -> ComposeResult:
         """Sacred Architecture: Copy V3's exact chat pattern + add staging area"""
+        from .widgets.live_workspace import LiveWorkspaceWidget
+
         with Vertical(id="main-container"):
             # Sacred Timeline - V3's exact chat-container pattern
             with VerticalScroll(id="chat-container") as chat_scroll:
                 chat_scroll.can_focus = False
 
-            # Live Workspace - Second VerticalScroll for staging area
-            with VerticalScroll(id="staging-container") as staging_scroll:
-                staging_scroll.can_focus = False
+            # Live Workspace - Using LiveWorkspaceWidget for staging area
+            yield LiveWorkspaceWidget(id="staging-container")
 
             # Input area - V3's exact pattern
             yield PromptInput(id="prompt-input")
@@ -175,9 +178,11 @@ class LLMReplApp(App[None]):
         return self.query_one("#chat-container", VerticalScroll)
 
     @property
-    def staging_container(self) -> VerticalScroll:
+    def staging_container(self):
         """Staging area container for live cognition"""
-        return self.query_one("#staging-container", VerticalScroll)
+        from .widgets.live_workspace import LiveWorkspaceWidget
+
+        return self.query_one("#staging-container", LiveWorkspaceWidget)
 
     def on_prompt_input_prompt_submitted(
         self, event: PromptInput.PromptSubmitted
@@ -205,14 +210,8 @@ class LLMReplApp(App[None]):
                 self.chat_container.refresh()
                 self.chat_container.scroll_end(animate=False, force=True)
 
-                # Generate response
-                response = await self.response_generator.generate_response_async(
-                    event.text
-                )
-
-                # Add assistant response using V3's pattern
-                assistant_chatbox = Chatbox(response, role="assistant")
-                self.chat_container.mount(assistant_chatbox)
+                # Process through unified async processor (includes cognition)
+                await self.unified_async_processor.process_user_input_async(event.text)
 
                 # V3's smart scrolling - only scroll if already near bottom
                 scroll_y = self.chat_container.scroll_y
@@ -231,8 +230,78 @@ class LLMReplApp(App[None]):
         """Action that does nothing - used to disable Ctrl+Q"""
         pass
 
+    async def action_switch_cognition_module(self) -> None:
+        """Switch between available cognition modules"""
+        from .widgets.chatbox import Chatbox
+
+        # Get available modules
+        modules = self.unified_async_processor.cognition_manager.get_available_modules()
+        current = (
+            self.unified_async_processor.cognition_manager.get_current_module_name()
+        )
+
+        # Create simple menu
+        menu_text = "**Available Cognition Modules:**\n\n"
+        for i, (name, desc) in enumerate(modules.items(), 1):
+            marker = "→" if name == current else " "
+            menu_text += f"{marker} {i}. **{name}**: {desc}\n"
+        menu_text += "\nPress 1-9 to select, or ESC to cancel"
+
+        # Show menu in chat
+        menu_box = Chatbox(menu_text, role="system")
+        await self.chat_container.mount(menu_box)
+        self.chat_container.scroll_end(animate=False)
+
+        # Wait for selection
+        def on_key(event: events.Key) -> None:
+            if event.key == "escape":
+                menu_box.remove()
+                return
+
+            if event.key.isdigit():
+                idx = int(event.key) - 1
+                module_names = list(modules.keys())
+                if 0 <= idx < len(module_names):
+                    selected = module_names[idx]
+                    if self.unified_async_processor.cognition_manager.set_module(
+                        selected
+                    ):
+                        result_text = f"✅ Switched to: **{selected}**"
+                    else:
+                        result_text = f"❌ Failed to switch to: {selected}"
+
+                    menu_box.remove()
+                    result_box = Chatbox(result_text, role="system")
+                    self.chat_container.mount(result_box)
+
+        # Store original handler and flag
+        self._menu_active = True
+        self._menu_handler = on_key
+        self._menu_box = menu_box
+
+        # Restore after 10 seconds
+        def restore():
+            self._menu_active = False
+            self._menu_handler = None
+            try:
+                menu_box.remove()
+            except Exception:
+                pass
+
+        self.set_timer(10, restore)
+
     def on_key(self, event: events.Key) -> None:
         """Global key handler - redirect all typing to prompt input"""
+        # Check for menu mode
+        if (
+            hasattr(self, "_menu_active")
+            and self._menu_active
+            and hasattr(self, "_menu_handler")
+        ):
+            if self._menu_handler is not None:
+                self._menu_handler(event)
+                return
+
         # Handle Ctrl+C globally for quit
         if event.key == "ctrl+c":
             self.exit()

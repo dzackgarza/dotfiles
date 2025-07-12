@@ -30,21 +30,7 @@ class LiveWorkspaceWidget(VerticalScroll):
         self.add_class("live-workspace")
 
     def on_mount(self) -> None:
-        """Setup mockup content after widget is mounted"""
-        from textual.widgets import Static
-
-        # Add mockup staging content
-        mockup_content = [
-            "🎯 Route Query → Determining intent and routing...",
-            "🛠️ Tool Selection → Selecting appropriate tools...",
-            "📝 Response Generation → Generating response...",
-            "🤖 Assistant Response → [This space ready for real responses]",
-        ]
-
-        for content in mockup_content:
-            mock_widget = Static(content, classes="sub-module")
-            self.mount(mock_widget)
-
+        """Setup after widget is mounted"""
         # Track mounted sub-module widgets
         self.sub_module_widgets: Dict[str, SubModuleWidget] = {}
 
