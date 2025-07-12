@@ -9,6 +9,15 @@
             "command": "if echo \"$CLAUDE_FILE_PATHS\" | grep -q '\\.py$'; then source /home/dzack/dotfiles/bin/llm-repl-project/.venv/bin/activate && ruff check --fix $CLAUDE_FILE_PATHS && black $CLAUDE_FILE_PATHS; fi"
           }
         ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CLAUDE_FILE_PATHS\" | grep -E '\\.t?css$'; then if command -v prettier >/dev/null 2>&1; then prettier --write $CLAUDE_FILE_PATHS; fi && if command -v stylelint >/dev/null 2>&1; then stylelint --fix $CLAUDE_FILE_PATHS 2>/dev/null || true; fi; fi"
+          }
+        ]
       }
     ],
     "Stop": [

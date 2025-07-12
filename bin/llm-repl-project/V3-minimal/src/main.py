@@ -157,15 +157,11 @@ class LLMReplApp(App[None]):
         welcome_chatbox = Chatbox(AppConfig.WELCOME_MESSAGE, role="system")
         self.chat_container.mount(welcome_chatbox)
 
-        # Add staging area mockup
-        staging_items = [
-            "🎯 Route Query → Determining intent...",
-            "🛠️ Tool Selection → Selecting tools...",
-            "📝 Response Generation → Generating...",
-        ]
-        for item in staging_items:
-            staging_chatbox = Chatbox(item, role="system")
-            self.staging_container.mount(staging_chatbox)
+        # Add idle animation to staging area
+        from .widgets.idle_animation import IdleAnimation
+
+        idle_animation = IdleAnimation()
+        self.staging_container.mount(idle_animation)
 
         # Set focus to input area
         self.prompt_input.focus()
