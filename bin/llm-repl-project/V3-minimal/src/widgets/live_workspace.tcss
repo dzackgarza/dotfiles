@@ -17,6 +17,16 @@
     overflow-y: auto;  /* Force scrollbar if content exceeds */
 }
 
+/* Turn header styling */
+.turn-header {
+    height: auto;
+    width: 1fr;
+    padding: 1;
+    background: $primary 20%;
+    border-bottom: solid $primary;
+    color: $text;
+}
+
 /* Cognition event styling */
 .cognition-event {
     height: auto;

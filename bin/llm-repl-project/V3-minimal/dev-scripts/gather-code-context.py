@@ -48,7 +48,8 @@ class CodeContextGatherer:
             "recent_changes": self._get_recent_changes() if self.is_git_repo else None,
             "code_patterns": self._analyze_code_patterns(),
             "project_context": self._get_project_context(),
-            "quality_indicators": self._analyze_quality_indicators()
+            "quality_indicators": self._analyze_quality_indicators(),
+            "advanced_analysis": self._get_advanced_analysis()
         }
         return context
 
@@ -485,6 +486,32 @@ class CodeContextGatherer:
                 
         return hints
 
+    def _get_advanced_analysis(self) -> Dict:
+        """Get advanced AST-based analysis"""
+        try:
+            script_dir = Path(__file__).parent
+            advanced_script = script_dir / "advanced-code-context.py"
+            
+            if not advanced_script.exists():
+                return {"error": "Advanced analysis script not found"}
+            
+            result = subprocess.run(
+                [sys.executable, str(advanced_script), str(self.file_path), "--json"],
+                capture_output=True,
+                text=True,
+                timeout=30
+            )
+            
+            if result.returncode == 0:
+                return json.loads(result.stdout)
+            else:
+                return {"error": f"Advanced analysis failed: {result.stderr}"}
+                
+        except subprocess.TimeoutExpired:
+            return {"error": "Advanced analysis timed out"}
+        except Exception as e:
+            return {"error": f"Advanced analysis error: {str(e)}"}
+
     def format_context_summary(self) -> str:
         """Format context as human-readable summary"""
         context = self.gather_all_context()
@@ -523,6 +550,44 @@ class CodeContextGatherer:
 - Security concerns: {len(context['quality_indicators'].get('security_concerns', []))}
 - Performance hints: {len(context['quality_indicators'].get('performance_hints', []))}
 """
+        
+        # Advanced analysis
+        advanced = context.get('advanced_analysis', {})
+        if advanced and not advanced.get('error'):
+            summary += f"""
+🔬 Advanced Analysis:"""
+            
+            complexity = advanced.get('complexity_metrics', {})
+            if complexity:
+                total_complexity = complexity.get('total_complexity', 0)
+                avg_complexity = complexity.get('average_complexity', 0)
+                complex_funcs = complexity.get('complex_functions', [])
+                summary += f"""
+- Total complexity: {total_complexity} (avg: {avg_complexity:.1f})"""
+                if complex_funcs:
+                    summary += f"""
+- Complex functions: {', '.join(complex_funcs)}"""
+            
+            call_graph = advanced.get('function_call_graph', {})
+            if call_graph:
+                recursive = call_graph.get('recursive_functions', [])
+                max_depth = call_graph.get('max_call_depth', 0)
+                summary += f"""
+- Call depth: {max_depth}"""
+                if recursive:
+                    summary += f"""
+- Recursive functions: {', '.join(recursive)}"""
+            
+            patterns = advanced.get('pattern_detection', {})
+            if patterns:
+                design_patterns = patterns.get('design_patterns', [])
+                anti_patterns = patterns.get('anti_patterns', [])
+                if design_patterns:
+                    summary += f"""
+- Design patterns: {', '.join(design_patterns)}"""
+                if anti_patterns:
+                    summary += f"""
+- Anti-patterns: {', '.join(anti_patterns)}"""
         
         if context.get('recent_changes'):
             summary += f"""

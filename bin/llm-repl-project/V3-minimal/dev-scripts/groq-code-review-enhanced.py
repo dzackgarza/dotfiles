@@ -228,6 +228,85 @@ class EnhancedGroqCodeReviewer:
             for rel in related[:5]:
                 formatted += f"- {rel['type']}: `{Path(rel['path']).name}`\n"
         
+        # Advanced analysis
+        advanced = context.get('advanced_analysis', {})
+        if advanced and not advanced.get('error'):
+            formatted += f"""
+## Advanced Code Analysis
+"""
+            
+            # Complexity metrics
+            complexity = advanced.get('complexity_metrics', {})
+            if complexity:
+                total_complexity = complexity.get('total_complexity', 0)
+                avg_complexity = complexity.get('average_complexity', 0)
+                complex_funcs = complexity.get('complex_functions', [])
+                long_funcs = complexity.get('long_functions', [])
+                many_params = complexity.get('many_parameters', [])
+                
+                formatted += f"- **Total Cyclomatic Complexity**: {total_complexity} (average: {avg_complexity:.1f})\n"
+                if complex_funcs:
+                    formatted += f"- **Complex Functions** (>10): {', '.join(complex_funcs)}\n"
+                if long_funcs:
+                    formatted += f"- **Long Functions** (>50 lines): {', '.join(long_funcs)}\n"
+                if many_params:
+                    formatted += f"- **Functions with Many Parameters** (>5): {', '.join(many_params)}\n"
+            
+            # Call graph analysis
+            call_graph = advanced.get('function_call_graph', {})
+            if call_graph:
+                recursive = call_graph.get('recursive_functions', [])
+                max_depth = call_graph.get('max_call_depth', 0)
+                cycles = call_graph.get('call_cycles', [])
+                
+                formatted += f"- **Maximum Call Depth**: {max_depth}\n"
+                if recursive:
+                    formatted += f"- **Recursive Functions**: {', '.join(recursive)}\n"
+                if cycles:
+                    formatted += f"- **Call Cycles Detected**: {len(cycles)} cycles found\n"
+            
+            # Pattern detection
+            patterns = advanced.get('pattern_detection', {})
+            if patterns:
+                design_patterns = patterns.get('design_patterns', [])
+                anti_patterns = patterns.get('anti_patterns', [])
+                code_smells = patterns.get('code_smells', [])
+                
+                if design_patterns:
+                    formatted += f"- **Design Patterns Detected**: {', '.join(design_patterns)}\n"
+                if anti_patterns:
+                    formatted += f"- **⚠️ Anti-Patterns**: {', '.join(anti_patterns)}\n"
+                if code_smells:
+                    formatted += f"- **🔍 Code Smells**: {', '.join(code_smells)}\n"
+            
+            # Error handling analysis
+            error_handling = advanced.get('error_handling', {})
+            if error_handling:
+                bare_except = error_handling.get('bare_except', [])
+                exception_types = error_handling.get('exception_types', [])
+                resource_mgmt = error_handling.get('resource_management', [])
+                
+                if bare_except:
+                    formatted += f"- **⚠️ Bare Except Blocks**: Found in {', '.join(bare_except)}\n"
+                if exception_types:
+                    formatted += f"- **Exception Types Used**: {', '.join(list(exception_types)[:5])}\n"
+                if resource_mgmt:
+                    formatted += f"- **Resource Management**: Context managers used in {', '.join(resource_mgmt)}\n"
+            
+            # Variable analysis
+            var_analysis = advanced.get('variable_analysis', {})
+            if var_analysis:
+                unused_vars = var_analysis.get('unused_variables', [])
+                shadowing = var_analysis.get('variable_shadowing', [])
+                mutable_defaults = var_analysis.get('mutable_defaults', [])
+                
+                if unused_vars:
+                    formatted += f"- **⚠️ Unused Variables**: {', '.join(unused_vars[:5])}\n"
+                if shadowing:
+                    formatted += f"- **Variable Shadowing**: {', '.join(shadowing[:3])}\n"
+                if mutable_defaults:
+                    formatted += f"- **⚠️ Mutable Default Arguments**: {', '.join(mutable_defaults)}\n"
+        
         # The actual code
         formatted += f"""
 ## Code to Review

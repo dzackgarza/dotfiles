@@ -205,14 +205,7 @@ class LLMReplApp(App[None]):
                 # Check if user is following (at bottom) before adding content
                 was_at_bottom = self._is_at_bottom()
 
-                # Add user message using V3's pattern
-                user_chatbox = Chatbox(event.text, role="user")
-                await self.chat_container.mount(user_chatbox)
-
-                # Smart follow: only scroll if user was already at bottom
-                if was_at_bottom:
-                    self.chat_container.refresh()
-                    self.chat_container.scroll_end(animate=False)
+                # DO NOT add user message yet - atomic turn inscription only
 
                 # Process through unified async processor (includes cognition)
                 await self.unified_async_processor.process_user_input_async(event.text)
