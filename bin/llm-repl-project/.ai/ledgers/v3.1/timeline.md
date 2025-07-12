@@ -1,29 +1,40 @@
-# Feature: Timeline
+# Sacred Timeline Implementation
 
-This document describes the timeline feature, which is a central component of the application. The timeline provides a chronological view of the conversation and the AI's cognitive processes, and is designed to be a rich and interactive component.
+**Branch:** feat/sacred-timeline
+**Summary:** Implement the Sacred Timeline as the top area of the Sacred GUI architecture, containing completed conversation turns separated by hrules. This is the immutable historical record following the append-only Sacred Timeline principles.
+**Status:** Planning
+**Created:** 2025-07-10
+**Updated:** 2025-07-12
 
-## Goals
+## Context
 
-The primary goals of the timeline feature are to:
+### Problem Statement
+The Sacred Timeline must be implemented as the top area of the Sacred GUI layout, containing only completed conversation turns in the format: User → Cognition → Assistant blocks, separated by hrules. This timeline represents the immutable historical record and must follow the Sacred Timeline principles of append-only integrity.
 
-- Provide a clear and intuitive representation of the conversation history.
-- Expose the AI's cognitive processes to the user, providing transparency and insight into how the AI is thinking.
-- Support rich and interactive content, including LaTeX, dynamic token use animations, and timers.
-- Allow for the dynamic transitioning of blocks between different states, such as "live" and "inscribed".
-- Ensure the integrity and immutability of the timeline as the single source of truth.
-- **Integrate seamlessly with context management to prevent LLM context window overflow.**
+### Success Criteria
+- [ ] Sacred Timeline as top VerticalScroll in Sacred GUI layout
+- [ ] Displays completed turns: User → Cognition → Assistant with hrule separators
+- [ ] Append-only integrity maintained (no editing/deletion of inscribed content)
+- [ ] Simple block widgets only (no nested containers)
+- [ ] Context management integration for LLM token limits
 
-## Requirements
+### User-Visible Behaviors
+When this ledger is complete, the user will see:
 
-The timeline feature must meet the following requirements:
+1. **Sacred Timeline as top scroll area showing conversation history**
+2. **Each completed turn shows User → Cognition → Assistant blocks**
+3. **Horizontal rules visually separate conversation turns**
+4. **No live/dynamic content - only static historical records**
+5. **Smooth scrolling through conversation history**
 
-- It must be able to display a chronological list of messages and cognitive blocks.
-- It must support the rendering of rich content, including LaTeX, Markdown, and code snippets.
-- It must be able to display dynamic content, such as timers and token use animations.
-- It must support the transitioning of blocks between different states, such as "live" and "inscribed".
-- It must be implemented in a modular and extensible way, so that it can be easily customized and extended.
-- It must enforce the append-only nature of the timeline and validate the structure of all added blocks.
-- **It must provide efficient mechanisms for context retrieval and pruning to support LLM interactions within token limits.**
+## Technical Approach
+
+### Architecture Changes
+1. **SacredTimelineWidget**: Top VerticalScroll containing completed turns
+2. **TurnBlockWidget**: Simple widgets for User/Cognition/Assistant blocks
+3. **TurnSeparatorWidget**: hrule widgets between conversation turns
+4. **TimelineHistoryManager**: Manages append-only operations
+5. **ContextPruningManager**: Handles context window management
 
 ### Implementation Plan
 1. **Phase 1: Planning** - Review and plan implementation

@@ -68,6 +68,19 @@ class ResponseGenerator:
         # Fallback to default template response
         return self.default_template.format(user_input=user_input)
 
+    async def generate_response_async(self, user_input: str) -> str:
+        """Async version of generate_response for direct query→response flow
+
+        Args:
+            user_input: The user's input text
+
+        Returns:
+            Generated response string
+        """
+        # For now, just call the sync version
+        # Future: This will integrate with async LLM APIs
+        return self.generate_response(user_input)
+
     def _handle_theme_command(self, theme_name: str) -> str:
         """Handle theme switching command
 

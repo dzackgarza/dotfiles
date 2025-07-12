@@ -1,263 +1,171 @@
-# CLAUDE.md
+# CLAUDE.md - Agent Entry Point
 
-This file provides guidance to Claude Code (claude.ai/code) when working with this LLM REPL project.
+This file provides guidance to Claude Code agents when working with this LLM REPL project.
 
-IMPORTANT RULES:
+## 🚨 CRITICAL OPERATING RULES
 
-1. Do not run raw python commands. Alias all python and pytest commands in your shell to be prefaced with `pdm` commands so you don't accidentally use them.
+1. **Never run GUI apps** - This breaks Claude Code's interface. Test backend logic statically only.
+2. **Use `pdm` for Python** - Always prefix python/pytest commands with `pdm` to use project's virtual environment.
+3. **Build from working code** - Copy patterns from V3, Gemini CLI, or Claude Code. NEVER reinvent solutions.
 
-2. Do not run ANY GUI/interactive apps! This ruins the 'claude code' GUI in an unrecoverable way. You *must* test all backend logic statically. When visual changes are ready for verification, you must notify the user, explain how to run the app, and ask them to confirm the changes work as expected.
+## 🎯 PROJECT MISSION
 
-## Project Overview
+**LLM REPL** - Interactive terminal research assistant with transparent AI cognition pipeline.
 
-LLM REPL - An interactive terminal-based research assistant with plugin-based architecture. Provides transparent AI-powered interface for research tasks with multi-LLM support (Ollama, Groq, Google Gemini).
+**Sacred GUI Architecture** - Three-area layout: Sacred Timeline + Live Workspace + Input
 
-## Core Philosophy
+**Core Philosophy** - Every operation is a block in an immutable, append-only timeline.
 
-**The Sacred Timeline**: Append-only, immutable log of all operations. Every action is a block in the timeline.
+## 🏆 GOLDEN RULE: BUILD FROM WORKING CODE
 
-**Sacred Turn Structure**: `[User] → [Cognition] → [Assistant]` - This rhythm is non-negotiable.
+> **CRITICAL**: Always study existing working implementations BEFORE writing new code. Copy proven patterns, adapt for our needs.
 
-**Radical Transparency**: Users see the multi-step cognition pipeline in real-time with animations, timers, and token counts.
+**Primary References:**
+- **V3 Chat Implementation** - `V3/elia_chat/widgets/chat.py` (proven VerticalScroll + render() pattern)
+- **Claude Code Package** - `reference/inspiration/anthropic-ai-claude-code/` (production TUI patterns)
+- **Gemini CLI** - `reference/inspiration/gemini-cli/` (LLM interface patterns)
 
-## SACRED GUI ARCHITECTURE (IMMUTABLE)
+**When to use .ai documentation:**
+- **Architecture decisions** → `.ai/docs/ARCHITECTURE-GUIDE.md`
+- **Implementation help** → `.ai/docs/IMPLEMENTATION-GUIDE.md`
+- **Testing strategies** → `.ai/docs/TESTING-GUIDE.md`
+- **UI/UX design** → `.ai/docs/DESIGN-GUIDE.md`
+- **Feature tracking** → `.ai/ledgers/v3.1/`
 
-**THIS IS THE CANONICAL GUI LAYOUT - DO NOT DEVIATE FROM THIS DESIGN:**
+## 🏛️ SACRED GUI ARCHITECTURE (IMMUTABLE)
+
+**Three-Area Layout (2-way ↔ 3-way split):**
 
 ```
 ┌─────────────────────────┐
-│ VerticalScroll (SACRED) │ ← Sacred Timeline
-│ ├── System Block       │
-│ ├─────────────────────  │ ← hrule
-│ ├── User Block         │ ← Turn 1 
+│ Sacred Timeline (Top)   │ ← VerticalScroll: conversation history
+│ ├── User Block         │   (V3's chat_container pattern)
 │ ├── Cognition Block    │
 │ ├── Assistant Block    │
-│ ├─────────────────────  │ ← hrule
-│ ├── User Block         │ ← Turn 2
-│ ├── Cognition Block    │
-│ ├── Assistant Block    │
-│ ├─────────────────────  │ ← hrule  
-│ ├── User Block         │ ← Turn 3 (current)
-│ └── [scrolls...]       │
+│ ├─────────────────────  │ ← hrule separators
+│ └── [scrolling...]     │
 ├─────────────────────────┤
-│ VerticalScroll (LIVE)   │ ← Live Cognition Workspace  
-│ ├── Route Query        │ ← sub-module 1
-│ ├── Call Tool          │ ← sub-module 2
-│ ├── Format Output      │ ← sub-module 3
-│ ├── ...                │ ← sub-modules 4 through N
-│ ├── Sub-module N       │ ← final cognition sub-module
-│ └── Assistant Response │ ← always last (streaming)
+│ Live Workspace (Mid)   │ ← VerticalScroll: streaming cognition
+│ ├── Route Query        │   (shows during processing, hides when idle)
+│ ├── Research Step      │
+│ ├── Generate Response  │
+│ └── [streaming...]     │
 ├─────────────────────────┤
-│ PromptInput             │
+│ Input (Bottom)         │ ← PromptInput
 └─────────────────────────┘
 ```
 
-**IMMUTABLE ARCHITECTURE RULES:**
-1. **Sacred Timeline (Top)**: VerticalScroll with simple blocks + hrules between turns
-2. **Live Workspace (Middle)**: VerticalScroll with streaming sub-modules + final assistant response  
-3. **Input (Bottom)**: PromptInput for user queries
-4. **No nested containers**: Each scroll area contains only simple widgets - NO Vertical-in-Vertical
-5. **Turn completion**: Live workspace contents → Sacred Timeline as blocks, workspace clears
-6. **Visual separation**: hrules mark turn boundaries in Sacred Timeline  
-7. **Unlimited scaling**: Live workspace can handle N sub-modules via scrolling
-8. **Assistant response**: Always final sub-module in live workspace
-9. **Workspace visibility**: Live workspace DISAPPEARS/COLLAPSES between turns (2-way split when idle)
+**WHY THIS WORKS:**
+- ✅ Uses V3's proven VerticalScroll pattern (no nested containers)
+- ✅ Clean separation: history vs live processing vs input
+- ✅ Scales to unlimited content via scrolling
+- ✅ Simple state: 2-way (idle) ↔ 3-way (processing)
 
-**WHY THIS ARCHITECTURE:**
-- Solves ALL layout conflicts between blocks
-- Provides clean separation of concerns
-- **Sacred Timeline uses V3's PROVEN working GUI architecture** (simple VerticalScroll + Chatbox pattern)
-- Live workspace handles complex cognition without interfering with history
-- Both scroll areas use V3's identical, proven scroll architecture
-- **V3 works perfectly** - we copy its exact pattern for both scroll areas
+## 📁 .AI DOCUMENTATION STRUCTURE
 
-## Development Rules
+```
+.ai/
+├── docs/                          # Core guidance documents
+│   ├── ARCHITECTURE-GUIDE.md      # Design decisions & Sacred GUI rules
+│   ├── IMPLEMENTATION-GUIDE.md    # Development patterns & V3 usage
+│   ├── TESTING-GUIDE.md          # Testing strategies & validation
+│   ├── DESIGN-GUIDE.md           # UI/UX patterns & CSS guidelines
+│   └── REFERENCE-GUIDE.md        # Working examples & inspiration
+├── ledgers/                       # Feature tracking
+│   └── v3.1/                     # Current development phase
+└── context/                       # Agent behavior guides
+    ├── ai-agent-guidelines.md     # How agents should work
+    └── wrinkl-framework.md        # Ledger system usage
+```
 
-### Coding Conventions
-- **Always use virtual environments** (venv, pdm, poetry)
-- **Fail fast and hard** - Use assertions liberally, no try-catch hiding
-- **Echo tests only** - Test real user experience, no test modes
-- **Functional style** - map/reduce/filter, no nested if-chains
-- **Strong typing** - Pydantic types everywhere
-- **Module limit** - Refactor at 500 lines
-- **Run `just lint` before commits** - MyPy + Flake8 must pass
+## ⚡ QUICK START FOR AGENTS
 
-### Architecture Principles
-- **Plugins are autonomous** - Each is self-contained
-- **No bug fixing** - Redesign to make bugs impossible
-- **Test canonical path** - Same code path as production
-- **Crash on errors** - This is development, not production
-- **Git discipline** - Atomic commits, revert if stuck
-
-## Commands
-
-### Run Application
+### 1. Understanding the Project
 ```bash
-just run          # Ollama/debug mode
-just run-mixed    # Ollama intent + Groq queries  
-just run-fast     # Groq everything
-just install      # Install dependencies
+# Read the architecture first
+→ .ai/docs/ARCHITECTURE-GUIDE.md
+
+# Study V3's working patterns
+→ V3/elia_chat/widgets/chat.py
 ```
 
-### Testing
+### 2. Implementing Features
 ```bash
-just test         # Full test suite
-just lint         # Type checking
-pytest tests/test_block_ordering.py -v  # Critical regression test
+# Copy V3 patterns
+→ .ai/docs/IMPLEMENTATION-GUIDE.md
+
+# Check current features
+→ .ai/ledgers/v3.1/
 ```
 
+### 3. Testing & Validation
+```bash
+# Test statically only
+→ .ai/docs/TESTING-GUIDE.md
 
-
-## Project Structure
-
-```
-src/
-├── main.py               # Entry point
-├── plugins/              # Plugin system
-│   ├── base.py          # Interfaces
-│   ├── registry.py      # Plugin manager
-│   └── blocks/          # Core plugins
-├── config/              # LLM configurations
-└── timeline_integrity.py # Timeline guarantees
-
-.ai/                     # Wrinkl documentation
-├── project.md          # Vision & goals
-├── architecture.md     # Technical design
-├── patterns.md         # Code patterns & philosophy
-├── context-rules.md    # AI agent guidelines
-└── ledgers/           # Feature tracking
+# Run tests
+just test
 ```
 
-## Plugin System
+### 4. UI/Design Work
+```bash
+# Follow V3 CSS patterns
+→ .ai/docs/DESIGN-GUIDE.md
 
-### Core Plugins
-- `SystemCheckPlugin` - LLM heartbeat validation
-- `UserInputPlugin` - Input capture
-- `CognitionPlugin` - Transparent processing pipeline
-- `AssistantResponsePlugin` - Response formatting
-
-### Plugin Rules
-1. Extend `BlockPlugin` base class
-2. Implement all abstract methods
-3. Self-contained state management
-4. Event-driven communication only
-5. Test in isolation first
-
-### Expected Block Sequence
-```
-[SystemCheck] → [Welcome] → [User: query] → [Cognition: pipeline] → [Assistant]
+# Reference working examples
+→ .ai/docs/REFERENCE-GUIDE.md
 ```
 
-## Active Features
+## 🛠️ ESSENTIAL COMMANDS
 
-### Research Assistant Routing (In Progress)
-- 3-layer intent detection: Rules → LLM → Default
-- Routes: COMPUTE → Math, SEARCH → Literature, CODE → Code, CHAT → TinyLlama
-- Display: `Assistant [Methodology: X, Intent: Y] → Agent (Mode)`
+```bash
+# Development
+just run-fast        # Start app (Groq models)
+just test           # Run test suite
+just lint           # Type checking
 
-### Next Priority Features
-- File context inclusion (@-commands)
-- Slash commands system (/help, /quit, etc.)
-- Shell integration with security
-- Memory persistence across sessions
+# Ledger workflow
+just ledger-status  # Check current work
+just start-ledger <name>
+just ledger-request-review <name>
+```
 
-## Configuration Modes
+## 🎯 CURRENT FOCUS: V3.1
 
-- **debug**: Ollama/tinyllama (local)
-- **mixed**: Ollama intent + Groq queries
-- **fast**: Groq only (cloud)
-- **test**: CI testing config
+**Priority**: Implement Sacred GUI Architecture using V3's proven patterns
 
-## Testing Philosophy
+**Active Work**: Check `.ai/ledgers/v3.1/` for specific features
 
-- **Echo tests** simulate full user interaction
-- **No mocks** for core functionality
-- **Proof-based** - Assert existence or crash
-- **Regression guards** - Test before declaring done
+**Key Principle**: Build from working V3 code, adapt for Sacred Architecture
 
-## Git Workflow
+## 🚫 COMMON MISTAKES TO AVOID
 
-- Feature branches from master
-- Atomic commits with extensive messages
-- Run tests and linting before commits
-- Revert to last working if stuck
+- ❌ Running GUI apps (breaks Claude Code)
+- ❌ Writing widgets from scratch (copy V3 patterns)
+- ❌ Nested containers in VerticalScroll (causes layout conflicts)
+- ❌ Skipping .ai documentation (leads to architectural mistakes)
+- ❌ Self-approving work (human review required)
 
-## Future Roadmap
+## 🔗 WHEN YOU NEED MORE DETAIL
 
-1. **v3.1**: Tool execution foundation (Q1 2025)
-2. **v3.2**: Continuation Passing Style - LLM ↔ Tool loops (Q2 2025)
-3. **v3.3**: Multi-agent collaboration (Q3 2025)
-4. **v4.0**: Production ready with enterprise features (Q4 2025)
+**For deep architecture understanding:**
+→ `.ai/docs/ARCHITECTURE-GUIDE.md` - Sacred GUI principles, V3 patterns, layout rules
 
-## Model Performance Guidelines
+**For implementation help:**
+→ `.ai/docs/IMPLEMENTATION-GUIDE.md` - Code patterns, V3 examples, development workflow
 
-We have API keys for 8 major providers. Use task-specific routing:
+**For testing guidance:**
+→ `.ai/docs/TESTING-GUIDE.md` - Test strategies, harnesses, validation approaches
 
-**Available APIs:**
-- Gemini (60 RPM): `gemini-2.5-pro`, `gemini-2.5-flash`
-- Groq (30-60 RPM): `llama-3.3-70b-versatile`, `deepseek-r1-distill`
-- OpenRouter (10-30 RPM): `claude-4-opus`, `gpt-4.5-preview`
-- DeepSeek (10-20 RPM): `deepseek-reasoner`, `deepseek-chat`
+**For UI/design questions:**
+→ `.ai/docs/DESIGN-GUIDE.md` - CSS patterns, styling guidelines, responsive design
 
-**Local Ollama Models:**
-- Speed: `mistral:7b-instruct-q4_K_M`
-- Tool Use: `llama3.1:8b-instruct-q4_K_M`
-- Reasoning: `grok:1.5-7b-q4_K_M`
+**For working examples:**
+→ `.ai/docs/REFERENCE-GUIDE.md` - V3 code, Claude Code patterns, proven solutions
 
-See `.ai/available-api-models.md` and `.ai/ollama-setup.md` for complete setup.
+**For feature work:**
+→ `.ai/ledgers/v3.1/` - Current development tasks, user stories, validation criteria
 
-## V3.1 Ledger Development Workflow & Accountability
+---
 
-This project uses a strict, human-in-the-loop process for feature development to ensure quality and prevent false completions.
-
-### Guiding Principles
-- **Backend Logic ≠ User Experience**: Passing tests does not mean a feature is complete.
-- **Observable Means User-Visible**: The user must be able to see and interact with the changes in the running application.
-- **No Agent Self-Approval**: An agent cannot approve its own work. All visual and UX changes require human sign-off.
-
-### Step 1: Starting a Ledger
-1.  **Check Status**: Run `just ledger-status` to see the current state and suggested next ledger.
-2.  **Read the Ledger**: Before starting, you MUST read the entire ledger file (e.g., `.ai/ledgers/v3.1/mock-cognition-pipeline.md`).
-3.  **Identify Behaviors**: Identify 3-5 specific, user-visible behaviors described in the ledger. If none are clear, you must ask for clarification before proceeding.
-4.  **Start Tracking**: Run `just start-ledger <ledger-name>`.
-
-### Step 2: Implementation & Static Testing
--   **Implement the feature** following the project's coding conventions.
--   **Write tests** for all new backend logic.
--   **Statically test your changes** using `just test` or `just test-ledger <ledger-name>`.
--   **CRITICAL**: Do NOT run any GUI applications. This will break the environment. All testing you perform must be static.
-
-### Step 3: Requesting Human Review
-When all backend logic is complete and you believe the user-visible behaviors are ready for inspection:
-1.  **Do NOT mark the ledger as complete.**
-2.  **Request a review**: Run `just ledger-request-review <ledger-name>`.
-3.  **Notify the User**: Clearly state that the feature is ready for visual confirmation. List the specific behaviors the user should look for and provide the exact command to run the application (e.g., `just run-fast`).
-
-### Step 4: Human Verification
-The user will then:
-1.  Run the application to test the promised behaviors.
-2.  Approve or reject the review using the `just` commands.
-    -   `just ledger-approve-review <ledger-name>`
-    -   `just ledger-reject-review <ledger-name> "feedback on what is broken"`
-
-### Step 5: Completion
--   Only a human can complete a ledger by approving a review.
--   The `just complete-ledger` command is deprecated for agent use and is protected by `sudo` as a final safeguard. You must not attempt to use it.
-
-### Example User-Visible Behaviors
-❌ **Bad**: "Cognition pipeline works"
-✅ **Good**: "User sees streaming text appear character by character in cognition blocks"
-
-❌ **Bad**: "Timeline displays properly"
-✅ **Good**: "User sees token counts increment in real-time during AI processing"
-
-## Quick Reference
-
-- Timeline is append-only and sacred
-- Plugins must be autonomous  
-- Test the real user path only
-- Fail fast, crash on errors
-- Keep modules under 500 lines
-- Route tasks to optimal models
-- Document everything in git
-- **V3.1 Focus**: Prove UI concepts with mocked data first
+**Remember**: This file is your starting point. Use it to navigate to the right detailed documentation for your specific task. Always study working implementations before coding.

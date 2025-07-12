@@ -4,15 +4,13 @@ from pathlib import Path
 from textual import events
 from textual.app import App, ComposeResult
 from textual.binding import Binding
-from textual.containers import Horizontal, Vertical
+from textual.containers import Vertical, VerticalScroll
 from textual.theme import Theme
 
 from .config import AppConfig, ThemeConfig
 from .core import ResponseGenerator
 from .core.unified_async_processor import UnifiedAsyncInputProcessor
-from .ui import TimelineViewController
 from .widgets.prompt_input import PromptInput
-from .widgets.unified_timeline_widget import UnifiedTimelineWidget
 from .theme_picker import InteractiveThemeProvider
 from .core.animation_clock import AnimationClock
 
@@ -43,10 +41,8 @@ class LLMReplApp(App[None]):
             self.response_generator, app=self
         )
 
-        # UI components
-        self.unified_timeline_widget: UnifiedTimelineWidget | None = None
+        # UI components - V3 pattern
         self.prompt_input: PromptInput | None = None
-        self.timeline_controller: TimelineViewController | None = None
 
     BINDINGS = [
         # Disable Ctrl+Q quit binding by overriding with do-nothing action
@@ -115,15 +111,18 @@ class LLMReplApp(App[None]):
             return False
 
     def compose(self) -> ComposeResult:
-        """Create the application layout with unified timeline"""
+        """Sacred Architecture: Copy V3's exact chat pattern + add staging area"""
         with Vertical(id="main-container"):
-            # Timeline widget (handles scrolling internally like V3)
-            unified_timeline = self.unified_async_processor.get_timeline()
-            yield UnifiedTimelineWidget(unified_timeline, id="timeline-container")
+            # Sacred Timeline - V3's exact chat-container pattern
+            with VerticalScroll(id="chat-container") as chat_scroll:
+                chat_scroll.can_focus = False
 
-            # Input area
-            with Horizontal(id="input-container"):
-                yield PromptInput(id="prompt-input")
+            # Live Workspace - Second VerticalScroll for staging area
+            with VerticalScroll(id="staging-container") as staging_scroll:
+                staging_scroll.can_focus = False
+
+            # Input area - V3's exact pattern
+            yield PromptInput(id="prompt-input")
 
     # Disable mouse capture to restore terminal text selection
     def on_mouse_down(self, event) -> None:
@@ -149,58 +148,74 @@ class LLMReplApp(App[None]):
         # Set the saved theme
         self.theme = self._current_theme
 
-        # Initialize UI components
-        self.unified_timeline_widget = self.query_one(
-            "#timeline-container", UnifiedTimelineWidget
-        )
+        # Initialize UI components - V3's exact pattern
         self.prompt_input = self.query_one("#prompt-input", PromptInput)
 
-        # Add welcome message to unified timeline
-        welcome_block = self.unified_async_processor.get_timeline().add_live_block(
-            role="system",
-            content=AppConfig.WELCOME_MESSAGE,
-        )
+        # Add welcome message using V3's pattern
+        from .widgets.chatbox import Chatbox
 
-        # Immediately inscribe welcome message using Textual's worker system
-        async def inscribe_welcome():
-            await self.unified_async_processor.get_timeline().inscribe_block(
-                welcome_block.id
-            )
+        welcome_chatbox = Chatbox(AppConfig.WELCOME_MESSAGE, role="system")
+        self.chat_container.mount(welcome_chatbox)
 
-        self.run_worker(inscribe_welcome(), name="inscribe_welcome")
+        # Add staging area mockup
+        staging_items = [
+            "🎯 Route Query → Determining intent...",
+            "🛠️ Tool Selection → Selecting tools...",
+            "📝 Response Generation → Generating...",
+        ]
+        for item in staging_items:
+            staging_chatbox = Chatbox(item, role="system")
+            self.staging_container.mount(staging_chatbox)
 
         # Set focus to input area
         self.prompt_input.focus()
 
+    @property
+    def chat_container(self) -> VerticalScroll:
+        """V3's exact chat container property"""
+        return self.query_one("#chat-container", VerticalScroll)
+
+    @property
+    def staging_container(self) -> VerticalScroll:
+        """Staging area container for live cognition"""
+        return self.query_one("#staging-container", VerticalScroll)
+
     def on_prompt_input_prompt_submitted(
         self, event: PromptInput.PromptSubmitted
     ) -> None:
-        """Handle user input submission - delegate to async input processor"""
+        """Handle user input submission - V3's exact pattern"""
 
-        # Run unified async processing with error handling
         async def safe_process():
             try:
-                await self.unified_async_processor.process_user_input_async(event.text)
-            except Exception as e:
-                # Force visible error - add to unified timeline
-                error_block = self.unified_async_processor.get_timeline().add_live_block(
-                    role="system",
-                    content=f"❌ **Unified Timeline Error**: {str(e)}\n\nFalling back to basic response...",
-                )
-                await self.unified_async_processor.get_timeline().inscribe_block(
-                    error_block.id
+                from .widgets.chatbox import Chatbox
+
+                # Add user message using V3's pattern
+                user_chatbox = Chatbox(event.text, role="user")
+                await self.chat_container.mount(user_chatbox)
+
+                # V3's scroll to latest message
+                self.chat_container.refresh()
+                self.chat_container.scroll_end(animate=False, force=True)
+
+                # Generate response
+                response = await self.response_generator.generate_response_async(
+                    event.text
                 )
 
-                # Fallback to basic response
-                response = self.response_generator.generate_response(event.text)
-                fallback_block = (
-                    self.unified_async_processor.get_timeline().add_live_block(
-                        role="assistant", content=response
-                    )
-                )
-                await self.unified_async_processor.get_timeline().inscribe_block(
-                    fallback_block.id
-                )
+                # Add assistant response using V3's pattern
+                assistant_chatbox = Chatbox(response, role="assistant")
+                self.chat_container.mount(assistant_chatbox)
+
+                # V3's smart scrolling - only scroll if already near bottom
+                scroll_y = self.chat_container.scroll_y
+                max_scroll_y = self.chat_container.max_scroll_y
+                if scroll_y in range(max_scroll_y - 3, max_scroll_y + 1):
+                    self.chat_container.scroll_end(animate=False)
+
+            except Exception as e:
+                # Simple error handling
+                error_chatbox = Chatbox(f"❌ Error: {str(e)}", role="system")
+                self.chat_container.mount(error_chatbox)
 
         self.run_worker(safe_process(), name="process_input")
 

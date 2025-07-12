@@ -44,47 +44,46 @@ When this ledger is complete, the user will see:
 5. **ThreeAreaLayout**: Main container organizing Sacred Timeline + Live Workspace + Input
 
 ### Implementation Plan
-1. **Phase 1: Live Block Foundation**
-   - Create LiveBlock class with mutable state and update methods
-   - Implement LiveBlockManager for transient block management
-   - Add basic live → inscribed transition mechanism
+1. **Phase 1: Three-Area Layout Foundation**
+   - Create ThreeAreaLayout main container with Vertical layout
+   - Implement SacredTimelineWidget as VerticalScroll
+   - Implement LiveWorkspaceWidget as VerticalScroll
+   - Add PromptInput at bottom
 
-2. **Phase 2: Visual Representation**
-   - Design Textual widgets for live vs inscribed blocks
-   - Implement real-time animations (spinners, progress bars, counters)
-   - Add transition animations between states
+2. **Phase 2: Sacred Timeline Implementation**
+   - Design simple block widgets for User/Cognition/Assistant
+   - Implement TurnSeparator (hrule) widgets
+   - Add turn-based organization and display
 
-3. **Phase 3: Mock Data Integration**
-   - Create realistic mock scenarios (coding, debugging, research)
-   - Add configurable timing and token data
-   - Implement various live block types and behaviors
+3. **Phase 3: Live Workspace Behavior**
+   - Implement show/hide workspace logic
+   - Add streaming sub-module display
+   - Create content transfer mechanism to Sacred Timeline
 
-4. **Phase 4: UX Polish**
-   - Refine animations and transitions
-   - Add user controls for live block interaction
-   - Optimize performance with multiple live blocks
+4. **Phase 4: Turn Completion Logic**
+   - Implement Sacred Turn Structure: User → Cognition → Assistant
+   - Add workspace clearing and content transfer
+   - Ensure Assistant response is always final sub-module
 
-5. **Phase 5: Integration**
-   - Integrate ledger into the main system
+5. **Phase 5: UX Polish and Integration**
+   - Refine workspace visibility animations
+   - Optimize scroll behavior for both areas
+   - Validate no nested container violations
 
-5. **Phase 5: Integration**
-   - Integrate ledger into the main system
+## Sacred GUI Architecture Implementation
 
-## Live Block Architecture
-
-### Core Block States
+### Core Layout Components
 ```python
-from dataclasses import dataclass, field
-from datetime import datetime
-from typing import Any, Dict, Optional, List, Callable
+from textual.containers import Vertical, VerticalScroll
+from textual.widgets import Rule, Static
+from textual.widget import Widget
+from typing import List, Optional
 from enum import Enum
-import uuid
-import asyncio
 
-class BlockState(Enum):
-    LIVE = "live"           # Currently updating, mutable
-    TRANSITIONING = "transitioning"  # Moving to inscribed state
-    INSCRIBED = "inscribed"  # Permanently added to timeline
+class WorkspaceState(Enum):
+    HIDDEN = "hidden"       # Collapsed/invisible (2-way split)
+    VISIBLE = "visible"     # Showing active cognition
+    TRANSFERRING = "transferring"  # Moving content to Sacred Timeline
 
 @dataclass
 class LiveBlockData:

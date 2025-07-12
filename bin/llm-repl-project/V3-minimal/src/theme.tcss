@@ -1,13 +1,38 @@
-/* V3-minimal: Minimal layout styling for proper sizing */
+/* V3-minimal: V3's exact chat styling */
 
 /* Main container should fill the screen */
 #main-container {
     height: 100vh;
 }
 
-/* Timeline takes most of the space */
-#timeline-container {
+/* Chat container - V3's exact pattern */
+#chat-container {
     height: 1fr;
+}
+
+/* Staging container - for live cognition */
+#staging-container {
+    height: auto;
+    max-height: 40vh;
+}
+
+/* V3's exact Chatbox CSS */
+Chatbox {
+    height: auto;
+    width: auto;
+    min-width: 12;
+    max-width: 1fr;
+    margin: 0 1;
+    padding: 0 2;
+}
+
+.assistant-message {
+    width: 1fr;
+    border: round $accent 60%;
+}
+
+.human-message {
+    border: round $primary;
 }
 
 /* Sub-block styling - slightly indented and smaller than main blocks */

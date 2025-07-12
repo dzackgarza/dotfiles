@@ -1,0 +1,44 @@
+/* Simple Block Widget - V3's Chatbox Pattern */
+
+.simple-block {
+    height: auto;  /* Content-based like V3's Chatbox */
+    width: auto;
+    min-width: 12;
+    max-width: 1fr;
+    margin: 0 1;  /* Match V3's margin: 0 1 */
+    padding: 0 2;  /* Match V3's padding: 0 2 */
+}
+
+/* Role-specific styling like V3 */
+.block-user {
+    border: solid green;
+}
+
+.block-assistant {
+    border: solid blue;
+}
+
+.block-cognition {
+    border: solid purple;
+}
+
+.block-system {
+    border: solid cyan;
+}
+
+.block-tool {
+    border: solid orange;
+}
+
+.block-error {
+    border: solid red;
+}
+
+/* State-based styling for live blocks */
+.block-live {
+    opacity: 1.0;
+}
+
+.block-inscribed {
+    opacity: 0.9;
+}

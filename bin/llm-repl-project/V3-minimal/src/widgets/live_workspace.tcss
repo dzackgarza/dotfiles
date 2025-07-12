@@ -1,0 +1,56 @@
+/* Live Workspace Widget - V3's chat_container Pattern */
+
+.live-workspace {
+    height: auto;  /* Dynamic sizing */
+    max-height: 50vh;  /* Don't dominate screen */
+    padding: 1;
+    background: $surface;
+    border: solid $primary;
+}
+
+.live-workspace.hidden {
+    display: none;  /* 2-way split when hidden */
+}
+
+/* Sub-module styling */
+.sub-module {
+    height: auto;  /* Content-based like V3's Chatbox */
+    width: auto;
+    min-width: 12;
+    max-width: 1fr;
+    margin: 0 0 1 0;  /* Tighter spacing than main blocks */
+    padding: 0;  /* Panel handles padding */
+}
+
+/* Sub-module role styling */
+.sub-module-route_query {
+    border: solid cyan;
+}
+
+.sub-module-call_tool {
+    border: solid orange;
+}
+
+.sub-module-format_output {
+    border: solid yellow;
+}
+
+.sub-module-assistant {
+    border: solid blue;
+}
+
+/* Sub-module state styling */
+.sub-module.state-live {
+    opacity: 1.0;
+    border: solid $primary;
+}
+
+.sub-module.state-transitioning {
+    opacity: 0.8;
+    border: dashed $primary;
+}
+
+.sub-module.state-completed {
+    opacity: 0.7;
+    border: solid $primary;
+}

@@ -1,81 +1,74 @@
-# Mock Cognition Pipeline
+# Live Workspace Cognition Pipeline
 
-**Branch:** feat/mock-cognition-pipeline
-**Summary:** Prove nested plugin architecture with fake cognition steps that demonstrate data aggregation from sub-modules to parent blocks, validating the plugin extensibility concept with mocked implementations.
+**Branch:** feat/live-workspace-cognition
+**Summary:** Implement streaming cognition sub-modules in the Live Workspace area that demonstrate the Sacred Turn Structure with realistic multi-step processing. Each cognition step appears as a separate widget in the Live Workspace, with the Assistant response always as the final sub-module.
 **Status:** Planning
 **Created:** 2025-07-10
-**Updated:** 2025-07-10
+**Updated:** 2025-07-12
 
 ## Context
 
 ### Problem Statement
-The Sacred Timeline's transparency requires showing AI cognition as nested sub-blocks within parent cognition blocks. We need to prove this nested plugin architecture works before implementing real LLM integration. The mock cognition pipeline must demonstrate convincing multi-step processing with realistic timing, token aggregation, and data flow from sub-modules to parent.
+The Live Workspace must demonstrate the Sacred Turn Structure through streaming cognition sub-modules. Users need to see Route Query → Call Tool → Format Output → Assistant Response flowing in real-time within the middle scroll area. This validates the Sacred GUI architecture's separation of active processing (Live Workspace) from completed history (Sacred Timeline).
 
 ### Success Criteria
-- [ ] Mock CognitionPlugin with 3 realistic sub-modules (Route → Tool → Format)
-- [ ] Sub-blocks properly nested within parent cognition block (90% width)
-- [ ] Data aggregation flows from sub-modules to parent block
-- [ ] Realistic timing and token count simulation
-- [ ] Plugin extensibility demonstrated with multiple mock implementations
+- [ ] Live Workspace displays cognition sub-modules as individual widgets
+- [ ] Sub-modules stream in sequence: Route Query → Call Tool → Format Output
+- [ ] Assistant Response always appears as final sub-module
+- [ ] Workspace clears and transfers content to Sacred Timeline on completion
+- [ ] No nested containers - each sub-module is a simple widget
 
 ### Acceptance Criteria
-- [ ] Cognition block contains 3+ animated sub-blocks with distinct functions
-- [ ] Parent block aggregates tokens, timing, and metadata from all sub-blocks
-- [ ] Sub-blocks update independently with realistic delays and streaming
-- [ ] Plugin system supports easy addition of new cognition types
-- [ ] Mock scenarios cover different complexity levels and use cases
+- [ ] Live Workspace contains only simple sub-module widgets (no nesting)
+- [ ] Sub-modules appear sequentially with realistic streaming delays
+- [ ] Assistant Response is always the final widget in Live Workspace
+- [ ] Turn completion moves all workspace content to Sacred Timeline
+- [ ] Workspace collapses/hides when no active cognition
 
 ## User-Visible Behaviors
 
 When this ledger is complete, the user will see:
 
-- **Mock CognitionPlugin with 3+ realistic sub-modules (e.g., Route → Tool → Format) is displayed.**
-- **Sub-blocks are properly nested within the parent cognition block.**
-- **Parent block aggregates tokens, timing, and metadata from all sub-blocks.**
-- **Sub-blocks update independently with realistic delays and streaming.**
-- **UI integration shows compelling real-time cognition transparency.**
+1. **Live Workspace appears in middle area when cognition starts**
+2. **Sub-modules stream sequentially: Route Query → Call Tool → Format Output**
+3. **Assistant Response appears as final widget with streaming text**
+4. **Live Workspace content transfers to Sacred Timeline when turn completes**
+5. **Workspace disappears/collapses, returning to 2-way split layout**
 
 ## Technical Approach
 
 ### Architecture Changes
-1. **MockCognitionPlugin**: Simulates multi-step AI reasoning with sub-modules
-2. **CognitionSubModule**: Individual processing steps with distinct behaviors
-3. **PluginDataAggregator**: Collects data from sub-modules to parent block
-4. **CognitionScenarioGenerator**: Creates realistic mock scenarios
-5. **NestedBlockRenderer**: Textual UI components for nested display
+1. **LiveWorkspaceCognition**: Manages sequential sub-module display in Live Workspace
+2. **CognitionSubModuleWidget**: Individual simple widgets for each processing step
+3. **WorkspaceTransferManager**: Handles content transfer to Sacred Timeline
+4. **CognitionSequencer**: Controls sub-module streaming timing and order
+5. **AssistantResponseWidget**: Final sub-module that always appears last
 
 ### Implementation Plan
-1. **Phase 1: Core Plugin Structure**
-   - Create MockCognitionPlugin base class with sub-module support
-   - Implement CognitionSubModule interface for individual steps
-   - Add plugin lifecycle management for nested execution
+1. **Phase 1: Live Workspace Foundation**
+   - Create LiveWorkspaceWidget as VerticalScroll
+   - Implement CognitionSubModuleWidget as simple widgets
+   - Add workspace show/hide logic
 
-2. **Phase 2: Data Flow and Aggregation**
-   - Implement data aggregation from sub-modules to parent
-   - Add token counting and timing accumulation
-   - Create metadata merging and progress tracking
+2. **Phase 2: Sequential Sub-Module Display**
+   - Implement CognitionSequencer for ordered appearance
+   - Add realistic streaming delays between sub-modules
+   - Create Route Query → Call Tool → Format Output sequence
 
-3. **Phase 3: Realistic Simulation**
-   - Add various cognition scenarios (code analysis, research, debugging)
-   - Implement realistic timing delays and streaming behavior
-   - Create token generation patterns matching real LLM usage
+3. **Phase 3: Assistant Response Integration**
+   - Implement AssistantResponseWidget as final sub-module
+   - Add streaming text effect for assistant responses
+   - Ensure Assistant Response always appears last
 
-4. **Phase 4: UI Integration**
-   - Integrate with existing TimelineBlockWidget for nested display
-   - Add visual indicators for sub-module states and progress
-   - Implement smooth animations and transitions
+4. **Phase 4: Workspace Transfer Logic**
+   - Implement WorkspaceTransferManager
+   - Add content transfer from Live Workspace to Sacred Timeline
+   - Create workspace clearing after turn completion
 
-5. **Phase 5: UX Polish**
-   - Final polish and user experience improvements
-
-6. **Phase 6: Integration**
-   - Integrate ledger into the main system
-
-5. **Phase 5: UX Polish**
-   - Final polish and user experience improvements
-
-6. **Phase 6: Integration**
-   - Integrate ledger into the main system
+5. **Phase 5: Sacred GUI Compliance**
+   - Validate no nested containers in workspace
+   - Ensure workspace collapse/hide behavior
+   - Test three-area layout integration
 
 ## Mock Cognition Architecture
 

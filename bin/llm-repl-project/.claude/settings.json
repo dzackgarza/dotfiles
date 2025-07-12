@@ -1,5 +1,16 @@
 {
   "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CLAUDE_FILE_PATHS\" | grep -q '\\.py$'; then source /home/dzack/dotfiles/bin/llm-repl-project/.venv/bin/activate && ruff check --fix $CLAUDE_FILE_PATHS && black $CLAUDE_FILE_PATHS; fi"
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "matcher": "",

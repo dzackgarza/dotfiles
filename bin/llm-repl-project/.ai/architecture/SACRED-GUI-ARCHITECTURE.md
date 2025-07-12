@@ -97,43 +97,57 @@ This document enshrines the canonical GUI architecture for the LLM REPL V3-minim
 
 ## WHY THIS ARCHITECTURE WORKS
 
-### Based on V3's PROVEN Success
+### Based on V3's PROVEN Success + Industry Best Practices
 - **V3 GUI works perfectly** - we know this from actual usage
 - Sacred Timeline copies V3's exact `VerticalScroll + Chatbox` pattern
 - Live workspace uses V3's identical scroll architecture
 - **No reinventing** - we use what we KNOW works
+- **Industry Standards**: Follows proven Textual chat app patterns for streaming, dynamic content
 
-### Solves Layout Conflicts
+### Solves Layout Conflicts + Implements Error Surfacing
 - Each scroll area has simple, flat widget hierarchy (like V3)
 - No nested containers fighting for height allocation
 - Clean separation prevents interference between areas
 - **V3 never had these problems** - we follow its proven pattern
+- **Fail-Fast Validation**: Boundaries assert expected types and catch errors immediately
+- **Error Boundaries**: UI sections catch/display errors without app crashes
 
-### Unlimited Scalability
+### Unlimited Scalability + Dynamic Content Management
 - Sacred Timeline: Unlimited conversation history
 - Live workspace: Unlimited sub-modules per turn
 - Both scale via natural scrolling
+- **Reactive Attributes**: Automatic UI updates when content changes
+- **Smart Auto-Scroll**: Only scroll when user is at bottom
+- **Thread-Safe Updates**: Use `call_from_thread()` for worker thread UI updates
 
 ## IMPLEMENTATION REQUIREMENTS
 
-### File Structure
+### File Structure (Following Industry Standards)
 ```
 src/main.py                    # Implements 3-way split layout
-src/widgets/sacred_timeline.py # Top section implementation
-src/widgets/live_workspace.py  # Middle section implementation  
-src/widgets/prompt_input.py    # Bottom section implementation
+src/widgets/sacred_timeline.py # Top section implementation (V3 chat pattern)
+src/widgets/live_workspace.py  # Middle section implementation (V3 scroll pattern)
+src/widgets/prompt_input.py    # Bottom section implementation (input validation)
+src/widgets/simple_block.py    # V3's Chatbox pattern for content blocks
 ```
 
-### CSS Requirements
-- Each scroll area: `height: auto` widgets only
+### CSS Requirements (Textual Best Practices)
+- Each scroll area: `height: auto` widgets only (content-driven sizing)
 - No flex height distribution between sibling widgets
+- Valid Textual CSS: `border: solid blue` not `border-color: blue`
 - hrules: Simple separator widgets, no container properties
 
-### Event Flow
+### Event Flow (Error-Safe Implementation)
 1. **Idle**: 2-way layout (Sacred Timeline + PromptInput)
-2. **User input**: Sacred Timeline + Live workspace activation (3-way layout)
-3. **Sub-module events**: Live workspace updates
-4. **Turn completion**: Sacred Timeline + Live workspace collapse to 2-way layout
+2. **User input**: Validated input → Sacred Timeline + Live workspace activation (3-way layout)  
+3. **Sub-module events**: Thread-safe Live workspace updates with error boundaries
+4. **Turn completion**: Validated transfer → Sacred Timeline + Live workspace collapse to 2-way layout
+
+### Validation & Error Handling Requirements
+- **Input Validation**: All widget boundaries validate inputs and raise errors immediately
+- **State Auditing**: Integrity checks after key events (block creation, streaming, turn completion)
+- **Error Boundaries**: Wrap major UI sections to prevent app crashes
+- **Thread Safety**: Use `call_from_thread()` for all worker thread UI updates
 
 ## FORBIDDEN PATTERNS
 
