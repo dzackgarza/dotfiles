@@ -4,6 +4,7 @@ import asyncio
 import random
 
 from .base import SubModule
+from ..config import Config
 
 
 class FormatOutputModule(SubModule):
@@ -22,8 +23,9 @@ class FormatOutputModule(SubModule):
 
     async def execute(self) -> None:
         """Execute output formatting."""
-        # Simulate processing time
-        processing_time = random.uniform(0.8, 1.5)
+        # Use configured processing time with slight variation
+        base_time = Config.SUBMODULE_PROCESSING_DURATION
+        processing_time = random.uniform(base_time * 0.8, base_time * 1.2)
         tokens_in = random.randint(400, 600)
         tokens_out = random.randint(200, 300)
 

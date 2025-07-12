@@ -170,8 +170,6 @@ class UnifiedAsyncInputProcessor:
             cognition_widget = CognitionWidget(
                 content=content,
                 is_live=False,
-                sub_blocks=sub_blocks,
-                metadata=metadata,
             )
 
             print("DEBUG: Creating unified cognition widget for timeline")

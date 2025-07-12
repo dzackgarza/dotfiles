@@ -1,0 +1,5 @@
+Last hook: block-premature-completion
+Time: 2025-07-12 16:20:31
+Tool: Stop
+Decision: soft_block
+Message: Gentle completion check

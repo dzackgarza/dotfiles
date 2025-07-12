@@ -2,11 +2,29 @@
   "hooks": {
     "PostToolUse": [
       {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/force-screenshot-review-after-tests.py"
+          }
+        ]
+      },
+      {
         "matcher": "Edit|Write|MultiEdit",
         "hooks": [
           {
             "type": "command",
             "command": "for file in $CLAUDE_FILE_PATHS; do if [[ $file == *.py ]]; then source /home/dzack/dotfiles/bin/llm-repl-project/.venv/bin/activate && ruff check --fix \"$file\" && black \"$file\"; fi; done"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/random-perspective-check.py"
           }
         ]
       },
@@ -94,6 +112,78 @@
     ],
     "PreToolUse": [
       {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/acceptance-test-hook.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|MultiEdit|Edit|TodoWrite|Bash",
+        "hooks": [
+          {
+            "type": "command", 
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/ai-memories-reminder.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|MultiEdit|Edit|TodoWrite|Bash",
+        "hooks": [
+          {
+            "type": "command", 
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/memento-reminder-system.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|MultiEdit|Edit|Bash",
+        "hooks": [
+          {
+            "type": "command", 
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/constant-reality-check.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit|Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/socratic-gui-analysis.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|MultiEdit|TodoWrite",
+        "hooks": [
+          {
+            "type": "command", 
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/dont-trust-yourself-reminder.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|MultiEdit|Edit|TodoWrite",
+        "hooks": [
+          {
+            "type": "command", 
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/force-verification-workflow.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|MultiEdit|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/test-file-check.py"
+          }
+        ]
+      },
+      {
         "matcher": "Bash",
         "hooks": [
           {
@@ -107,12 +197,38 @@
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '.tool_input.command' | grep -qE 'python.*-m.*src\\.main|pdm run.*src\\.main|poetry run.*src\\.main|just run|just run-mixed|just run-fast' && echo '{\"decision\": \"block\", \"reason\": \"GUI applications cannot be run in Claude Code environment. This would crash the interface. Please notify the user to run the app manually.\"}' || echo '{\"decision\": \"approve\"}'"
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/gui-app-blocker.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/gui-reminder.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Grep|Glob|Task|Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/search-pattern-check.py"
           }
         ]
       }
     ],
     "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/block-premature-completion.py"
+          }
+        ]
+      },
       {
         "hooks": [
           {

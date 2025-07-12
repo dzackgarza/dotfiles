@@ -4,6 +4,7 @@ import asyncio
 import random
 
 from .base import SubModule
+from ..config import Config
 
 
 class RouteQueryModule(SubModule):
@@ -22,8 +23,9 @@ class RouteQueryModule(SubModule):
 
     async def execute(self) -> None:
         """Execute route query analysis."""
-        # Simulate processing time
-        processing_time = random.uniform(0.3, 0.8)
+        # Use configured processing time with slight variation
+        base_time = Config.SUBMODULE_PROCESSING_DURATION
+        processing_time = random.uniform(base_time * 0.8, base_time * 1.2)
         tokens_in = random.randint(5, 15)
         tokens_out = random.randint(1, 5)
 

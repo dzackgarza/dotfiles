@@ -236,8 +236,10 @@ class LLMReplApp(App[None]):
                     self.chat_container.scroll_end(animate=False)
 
             except Exception as e:
-                # Simple error handling
-                error_chatbox = Chatbox(f"❌ Error: {str(e)}", role="system")
+                # Enhanced error handling with full traceback
+                import traceback
+                error_msg = f"❌ Error: {str(e)}\n\n{traceback.format_exc()}"
+                error_chatbox = Chatbox(error_msg, role="system")
                 self.chat_container.mount(error_chatbox)
 
         self.run_worker(safe_process(), name="process_input")

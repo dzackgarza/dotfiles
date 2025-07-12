@@ -8,10 +8,16 @@ import asyncio
 import time
 from typing import Optional, Dict, Any
 from .base import CognitionModule, CognitionResult, CognitionEvent
+from ..core.config import Config
 
 
 class MockCognitionModule(CognitionModule):
-    """Mock cognition module with simulated 2s computation"""
+    """Mock cognition module with simulated computation"""
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Use global configuration for processing duration
+        self.processing_duration = Config.COGNITION_PROCESSING_DURATION
 
     async def process(
         self, query: str, context: Optional[Dict[str, Any]] = None
@@ -50,8 +56,9 @@ class MockCognitionModule(CognitionModule):
                 )
             )
 
-            # Wait 400ms between stages (2s / 5 stages)
-            await asyncio.sleep(0.4)
+            # Wait between stages based on total processing duration
+            stage_delay = self.processing_duration / len(stages)
+            await asyncio.sleep(stage_delay)
 
         # Calculate actual processing time
         processing_time = time.time() - start_time

@@ -4,6 +4,7 @@ import asyncio
 import random
 
 from .base import SubModule
+from ..config import Config
 
 
 class CallToolModule(SubModule):
@@ -22,8 +23,10 @@ class CallToolModule(SubModule):
 
     async def execute(self) -> None:
         """Execute tool call."""
-        # Simulate longer processing time for tool calls
-        processing_time = random.uniform(1.5, 3.0)
+        # Use configured processing time with slight variation
+        # Tool calls take a bit longer than other modules
+        base_time = Config.SUBMODULE_PROCESSING_DURATION * 1.5
+        processing_time = random.uniform(base_time * 0.8, base_time * 1.2)
         tokens_in = random.randint(10, 20)
         tokens_out = random.randint(1000, 1500)
 

@@ -76,24 +76,76 @@ run-mixed: lint-v3
 run-fast: lint-v3
 	cd V3 && source venv/bin/activate && python main.py --config fast
 
+# === Test-First Development Commands (MANDATORY) ===
+
+# Create a new failing acceptance test for a feature
+create-test FEATURE_NAME:
+	@bash scripts/dim_echo.sh "🧪 Creating acceptance test for: {{FEATURE_NAME}}"
+	@mkdir -p V3-minimal/tests
+	@echo 'import pytest' > V3-minimal/tests/test_{{FEATURE_NAME}}.py
+	@echo 'from textual.testing import AppTest' >> V3-minimal/tests/test_{{FEATURE_NAME}}.py
+	@echo 'from src.main import LLMReplApp' >> V3-minimal/tests/test_{{FEATURE_NAME}}.py
+	@echo '' >> V3-minimal/tests/test_{{FEATURE_NAME}}.py
+	@echo '@pytest.mark.asyncio' >> V3-minimal/tests/test_{{FEATURE_NAME}}.py
+	@echo 'async def test_{{FEATURE_NAME}}_user_interaction():' >> V3-minimal/tests/test_{{FEATURE_NAME}}.py
+	@echo '    """User interacts with {{FEATURE_NAME}} feature."""' >> V3-minimal/tests/test_{{FEATURE_NAME}}.py
+	@echo '    async with LLMReplApp().run_test() as pilot:' >> V3-minimal/tests/test_{{FEATURE_NAME}}.py
+	@echo '        # TODO: Define the user interaction you want to work' >> V3-minimal/tests/test_{{FEATURE_NAME}}.py
+	@echo '        # This test should FAIL until you implement the feature' >> V3-minimal/tests/test_{{FEATURE_NAME}}.py
+	@echo '        ' >> V3-minimal/tests/test_{{FEATURE_NAME}}.py
+	@echo '        # Example: User types something and expects a result' >> V3-minimal/tests/test_{{FEATURE_NAME}}.py
+	@echo '        await pilot.press("h", "i")' >> V3-minimal/tests/test_{{FEATURE_NAME}}.py
+	@echo '        await pilot.press("enter")' >> V3-minimal/tests/test_{{FEATURE_NAME}}.py
+	@echo '        ' >> V3-minimal/tests/test_{{FEATURE_NAME}}.py
+	@echo '        # TODO: Replace with actual assertion about user-visible behavior' >> V3-minimal/tests/test_{{FEATURE_NAME}}.py
+	@echo '        assert False, "Test not implemented - define desired behavior for {{FEATURE_NAME}}"' >> V3-minimal/tests/test_{{FEATURE_NAME}}.py
+	@echo "✅ Created test file: tests/test_{{FEATURE_NAME}}.py"
+	@echo "📝 Now edit the test to define the desired behavior"
+	@echo "🏃 Then run: just verify-failing test_{{FEATURE_NAME}}"
+
+# Verify that a test is properly failing
+verify-failing TEST_NAME:
+	@bash scripts/dim_echo.sh "🔍 Verifying test is failing: {{TEST_NAME}}"
+	@cd V3-minimal && export PATH="/home/dzack/.local/bin:/usr/bin:$$PATH" && \
+	if pdm run pytest tests/{{TEST_NAME}}.py -xvs; then \
+		echo "❌ ERROR: Test is PASSING! It should be failing."; \
+		echo "📝 Edit the test to expect behavior that doesn't exist yet"; \
+		exit 1; \
+	else \
+		echo "✅ Good! Test is properly failing."; \
+		echo "🚧 Now you can implement the feature to make it pass"; \
+	fi
+
+# Run only acceptance tests (no linting, just user behavior)
+test-acceptance:
+	@bash scripts/dim_echo.sh "🧪 Running acceptance tests only..."
+	cd V3-minimal && export PATH="/home/dzack/.local/bin:/usr/bin:$$PATH" && \
+	pdm run pytest tests/ -v --tb=short -k "not test_unit and not test_integration"
+
+# Check which source files lack tests
+check-coverage:
+	@bash scripts/dim_echo.sh "📊 Checking test coverage..."
+	@bash scripts/check-test-coverage.sh
+
 # === Testing Commands ===
 
 # Run comprehensive test suite (linters + tests) for V3-minimal  
 test: validate-markup validate-css
-	@bash scripts/dim_echo.sh "🧪 Running comprehensive test suite for V3-minimal..." 2>/dev/null || echo "🧪 Running comprehensive test suite for V3-minimal..."
-	cd V3-minimal && export PATH="/home/dzack/.local/bin:/usr/bin:$$PATH" && \
-	(bash ../scripts/dim_echo.sh "🎨 Auto-formatting code..." 2>/dev/null || echo "🎨 Auto-formatting code...") && \
+	@bash scripts/run-with-checks.sh bash -c " \
+	bash scripts/dim_echo.sh '🧪 Running comprehensive test suite for V3-minimal...' 2>/dev/null || echo '🧪 Running comprehensive test suite for V3-minimal...'; \
+	cd V3-minimal && export PATH='/home/dzack/.local/bin:/usr/bin:$PATH' && \
+	(bash ../scripts/dim_echo.sh '🎨 Auto-formatting code...' 2>/dev/null || echo '🎨 Auto-formatting code...') && \
 	pdm run black src/ tests/ && \
 	pdm run ruff check --fix src/ tests/ && \
-	(bash ../scripts/dim_echo.sh "📋 Running Ruff linter..." 2>/dev/null || echo "📋 Running Ruff linter...") && \
+	(bash ../scripts/dim_echo.sh '📋 Running Ruff linter...' 2>/dev/null || echo '📋 Running Ruff linter...') && \
 	pdm run ruff check src/ tests/ && \
-	(bash ../scripts/dim_echo.sh "🎨 Running Black formatter check..." 2>/dev/null || echo "🎨 Running Black formatter check...") && \
+	(bash ../scripts/dim_echo.sh '🎨 Running Black formatter check...' 2>/dev/null || echo '🎨 Running Black formatter check...') && \
 	pdm run black --check --diff src/ tests/ && \
-	(bash ../scripts/dim_echo.sh "🔍 Running MyPy type checker..." 2>/dev/null || echo "🔍 Running MyPy type checker...") && \
+	(bash ../scripts/dim_echo.sh '🔍 Running MyPy type checker...' 2>/dev/null || echo '🔍 Running MyPy type checker...') && \
 	pdm run mypy src/ && \
-	(bash ../scripts/dim_echo.sh "🧪 Running pytest..." 2>/dev/null || echo "🧪 Running pytest...") && \
+	(bash ../scripts/dim_echo.sh '🧪 Running pytest...' 2>/dev/null || echo '🧪 Running pytest...') && \
 	pdm run pytest tests/ -v --tb=short && \
-	(bash ../scripts/dim_echo.sh "✅ All tests passed!" 2>/dev/null || echo "✅ All tests passed!")
+	(bash ../scripts/dim_echo.sh '✅ All tests passed!' 2>/dev/null || echo '✅ All tests passed!')"
 
 # Quick lint-only check for V3-minimal
 lint:
@@ -216,6 +268,12 @@ ledger-status:
 # Help
 help:
 	@echo "LLM REPL - Available commands:"
+	@echo ""
+	@echo "Test-First Development (MANDATORY):"
+	@echo "  just create-test <feature>  - Create failing acceptance test"
+	@echo "  just verify-failing <test>  - Verify test fails properly"
+	@echo "  just test-acceptance        - Run acceptance tests only"
+	@echo "  just check-coverage         - Check which files lack tests"
 	@echo ""
 	@echo "V3-minimal (Current - Kitty Terminal Optimized):"
 	@echo "  just run         - Run V3-minimal with tests (auto-launches Kitty)"

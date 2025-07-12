@@ -44,23 +44,47 @@ class LedgerTracker:
             json.dump(self.status, f, indent=2)
     
     def start_ledger(self, ledger_name: str):
-        """Start working on a ledger."""
+        """Start working on a ledger with test-first development."""
         ledger_path = self.ledger_dir / f"{ledger_name}.md"
         
         if not ledger_path.exists():
             print(f"❌ Ledger not found: {ledger_path}")
             return False
         
-        # Parse ledger to extract phases
+        # Parse ledger to extract phases and features
         phases = self.extract_phases_from_ledger(ledger_path)
+        features = self.extract_features_from_ledger(ledger_path)
         
-        # Create TodoWrite tasks for each phase
+        # Create TodoWrite tasks with test-first approach
         todos = []
+        
+        # First, add test creation tasks for all features
+        print(f"\n🧪 Creating test-first tasks for {len(features)} features...")
+        for j, feature in enumerate(features, 1):
+            test_task = {
+                "content": f"{ledger_name}: Write failing test for '{feature['name']}'",
+                "status": "pending",
+                "priority": "high",
+                "id": f"{ledger_name}_test_{j}"
+            }
+            todos.append(test_task)
+            
+            # Implementation task is blocked until test exists
+            impl_task = {
+                "content": f"{ledger_name}: Implement '{feature['name']}' to pass test",
+                "status": "pending",
+                "priority": "high",
+                "id": f"{ledger_name}_impl_{j}",
+                "depends_on": f"{ledger_name}_test_{j}"
+            }
+            todos.append(impl_task)
+        
+        # Then add phase-based coordination tasks
         for i, phase in enumerate(phases, 1):
             todos.append({
                 "content": f"{ledger_name}: {phase['name']} - {phase['description']}",
                 "status": "pending",
-                "priority": "high" if i <= 2 else "medium",
+                "priority": "medium",
                 "id": f"{ledger_name}_phase_{i}"
             })
         
@@ -76,9 +100,10 @@ class LedgerTracker:
         self.save_status()
         
         # Output todos for Claude Code to pick up
-        print(f"✅ Started ledger: {ledger_name}")
-        print(f"📋 Created {len(todos)} phase tasks")
-        print(f"🎯 Current phase: {phases[0]['name']}")
+        print(f"\n✅ Started ledger: {ledger_name}")
+        print(f"📋 Created {len(todos)} tasks ({len(features)*2} test+impl, {len(phases)} phases)")
+        print(f"🧪 Test-First Development: Write tests before implementation!")
+        print(f"🎯 First task: Write failing tests for features")
         
         # Write todos to a file that can be imported
         todos_file = self.project_root / f".todos_{ledger_name}.json"
@@ -131,15 +156,49 @@ class LedgerTracker:
         # Fallback phases if none found
         if not phases:
             phases = [
-                {"name": "Planning", "description": "Review and plan implementation", "tasks": []},
-                {"name": "Implementation", "description": "Core development work", "tasks": []},
-                {"name": "Testing", "description": "Testing and validation", "tasks": []},
-                {"name": "UX Polish", "description": "Final polish and user experience improvements", "tasks": []},
-                {"name": "Integration", "description": "Integrate ledger into the main system", "tasks": []},
-                {"name": "System Integration", "description": "Integrate ledger into the main system", "tasks": []}
+                {"name": "Test Planning", "description": "Write failing acceptance tests", "tasks": []},
+                {"name": "Implementation", "description": "Make tests pass", "tasks": []},
+                {"name": "Testing", "description": "Verify all tests green", "tasks": []},
+                {"name": "UX Polish", "description": "Final polish with test coverage", "tasks": []},
+                {"name": "Integration", "description": "Integrate with passing tests", "tasks": []}
             ]
         
         return phases
+    
+    def extract_features_from_ledger(self, ledger_path: Path) -> List[Dict[str, str]]:
+        """Extract testable features from ledger markdown."""
+        with open(ledger_path) as f:
+            content = f.read()
+        
+        features = []
+        
+        # Look for user-visible behaviors or features
+        for line in content.split('\n'):
+            # Match patterns like "- User can...", "- Display...", "- Show..."
+            if re.match(r'^\s*[-*]\s+(User|Users|Display|Show|Enable|Allow|Support)', line, re.IGNORECASE):
+                feature_text = line.strip().lstrip('-*').strip()
+                features.append({
+                    "name": feature_text[:50],  # Truncate for readability
+                    "description": feature_text
+                })
+            # Also match numbered items describing features
+            elif re.match(r'^\s*\d+\.\s+(User|Users|Display|Show|Enable|Allow|Support)', line, re.IGNORECASE):
+                feature_text = re.sub(r'^\s*\d+\.\s*', '', line).strip()
+                features.append({
+                    "name": feature_text[:50],
+                    "description": feature_text
+                })
+        
+        # If no specific features found, create generic ones based on ledger name
+        if not features:
+            base_name = ledger_path.stem.replace('-', ' ').title()
+            features = [
+                {"name": f"{base_name} basic functionality", "description": f"Core {base_name} features work"},
+                {"name": f"{base_name} user interaction", "description": f"Users can interact with {base_name}"},
+                {"name": f"{base_name} error handling", "description": f"{base_name} handles errors gracefully"}
+            ]
+        
+        return features[:10]  # Limit to avoid too many tasks
     
     def next_phase(self, ledger_name: str):
         """Move to next phase of current ledger."""
@@ -172,6 +231,15 @@ class LedgerTracker:
             return False
         
         print(f"🧪 Testing ledger: {ledger_name}")
+        print(f"📋 Checking test-first compliance...")
+        
+        # First verify all source files have tests
+        missing_tests = self.check_test_coverage(ledger_name)
+        if missing_tests:
+            print(f"\n⚠️  Warning: {len(missing_tests)} source files lack tests:")
+            for file in missing_tests:
+                print(f"  ❌ {file}")
+            print(f"\n💡 Create tests with: just create-test <feature>")
         
         # Run relevant tests based on ledger type
         test_commands = {
@@ -195,6 +263,27 @@ class LedgerTracker:
                 return self.next_phase(ledger_name)
         
         return True
+    
+    def check_test_coverage(self, ledger_name: str) -> List[str]:
+        """Check which source files lack tests."""
+        src_dir = self.project_root / "V3-minimal" / "src"
+        test_dir = self.project_root / "V3-minimal" / "tests"
+        
+        missing_tests = []
+        
+        # Check all Python files in src/
+        for src_file in src_dir.rglob("*.py"):
+            if src_file.name == "__init__.py":
+                continue
+                
+            # Derive expected test file
+            test_name = f"test_{src_file.stem}.py"
+            test_file = test_dir / test_name
+            
+            if not test_file.exists():
+                missing_tests.append(str(src_file.relative_to(src_dir)))
+        
+        return missing_tests
     
     def complete_ledger(self, ledger_name: str):
         """Complete a ledger and archive it."""

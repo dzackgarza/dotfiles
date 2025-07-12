@@ -47,3 +47,7 @@ class CognitionWidget(Static):
         if is_live is not None:
             self.is_live = is_live
         self._update_display()
+
+    def set_live_content(self, content):
+        """Set live content for the cognition widget."""
+        self.update_content(content, is_live=True)

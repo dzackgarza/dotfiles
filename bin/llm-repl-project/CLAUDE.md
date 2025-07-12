@@ -4,9 +4,24 @@ This file provides guidance to Claude Code agents when working with this LLM REP
 
 ## 🚨 CRITICAL OPERATING RULES
 
-1. **Never run GUI apps** - This breaks Claude Code's interface. Test backend logic statically only.
-2. **Use `pdm` for Python** - Always prefix python/pytest commands with `pdm` to use project's virtual environment.
-3. **Build from working code** - Copy patterns from V3, Gemini CLI, or Claude Code. NEVER reinvent solutions.
+1. **Test-First Development MANDATORY** - No code without failing test first.
+   - 🚫 **BLOCKED**: Editing src/*.py without corresponding failing test
+   - ✅ **REQUIRED**: Write failing acceptance test → Implement → Pass test
+   - 📋 **ENFORCEMENT**: Automated hooks prevent code-first development
+2. **Never run GUI apps** - This breaks Claude Code's interface. Test backend logic statically only.
+   - ⚠️ **VIOLATION WARNING**: Agent ran `pdm run python -m src.main` causing GUI output
+   - 🚫 **NEVER USE**: timeout commands with GUI apps, python -m src.main, or any TUI execution
+   - ✅ **INSTEAD**: Use static testing, unit tests, or code analysis only
+3. **Use `pdm` for Python** - Always prefix python/pytest commands with `pdm` to use project's virtual environment.
+4. **Build from working code** - Copy patterns from V3, Gemini CLI, or Claude Code. NEVER reinvent solutions.
+5. **Check debug screenshots constantly** - Debug screenshots are saved in `V3-minimal/debug_screenshots/` directory.
+   - 📸 **ALWAYS CHECK**: Look for latest screenshots to verify visual state
+   - 🔍 **VISUAL VALIDATION**: Compare before/after screenshots when making UI changes
+   - ⚠️ **REALITY CHECK**: Screenshots show actual GUI behavior, not assumptions
+6. **READ CURRENT_GUI_STATE.md FIRST** - This file shows what's ACTUALLY broken vs what we claim is "fixed"
+   - ❌ **FORBIDDEN**: Claiming anything is fixed without NEW screenshot proof
+   - 📋 **REQUIRED**: Update CURRENT_GUI_STATE.md with latest screenshot analysis
+   - 🚨 **REALITY CHECK**: Most "fixes" change nothing in the actual GUI
 
 ## 🎯 PROJECT MISSION
 
@@ -29,6 +44,7 @@ This file provides guidance to Claude Code agents when working with this LLM REP
 - **Architecture decisions** → `.ai/docs/ARCHITECTURE-GUIDE.md`
 - **Implementation help** → `.ai/docs/IMPLEMENTATION-GUIDE.md`
 - **Testing strategies** → `.ai/docs/TESTING-GUIDE.md`
+- **Test-First Development** → `.ai/docs/MANDATORY-ACCEPTANCE-TESTING-STRATEGY.md`
 - **UI/UX design** → `.ai/docs/DESIGN-GUIDE.md`
 - **Feature tracking** → `.ai/ledgers/v3.1/`
 
@@ -82,6 +98,9 @@ This file provides guidance to Claude Code agents when working with this LLM REP
 
 ### 1. Understanding the Project
 ```bash
+# FIRST: Block GUI commands to prevent crashes
+source scripts/block-gui-commands.sh
+
 # Read the architecture first
 → .ai/docs/ARCHITECTURE-GUIDE.md
 
@@ -119,16 +138,46 @@ just test
 ## 🛠️ ESSENTIAL COMMANDS
 
 ```bash
-# Development
-just run-fast        # Start app (Groq models)
-just test           # Run test suite
+# FIRST: Prevent GUI crashes
+source scripts/block-gui-commands.sh  # Block GUI apps from running
+
+# Test-First Development (MANDATORY)
+just create-test <feature>      # Create failing acceptance test
+just verify-failing <test>      # Verify test fails properly
+just test-acceptance            # Run acceptance tests only
+just check-coverage             # Verify test coverage
+
+# Development (NO GUI EXECUTION)
+just test           # Run ONLY user interaction tests
 just lint           # Type checking
+pilot               # Helper for creating pilot tests
+# NOTE: just run/run-fast/run-dev are BLOCKED to prevent crashes
 
 # Ledger workflow
 just ledger-status  # Check current work
 just start-ledger <name>
 just ledger-request-review <name>
 ```
+
+## 🚨 SACRED TESTING RULES
+
+**DEATH TO TEST THEATER**: Only test end-to-end user interactions.
+
+**FORBIDDEN**:
+- ❌ Unit tests of internal methods
+- ❌ Mock objects and fake data  
+- ❌ Component isolation tests
+- ❌ CSS class validation
+- ❌ Internal state verification
+
+**REQUIRED**:
+- ✅ User types message → gets response
+- ✅ Conversation history works
+- ✅ App doesn't crash on basic usage
+- ✅ Multi-turn conversations
+- ✅ Error handling user can see
+
+**THE RULE**: If a user wouldn't notice when it breaks, don't test it.
 
 ## 🎯 CURRENT FOCUS: V3.1
 
@@ -140,11 +189,13 @@ just ledger-request-review <name>
 
 ## 🚫 COMMON MISTAKES TO AVOID
 
+- ❌ Writing code before tests (BLOCKED by hooks)
 - ❌ Running GUI apps (breaks Claude Code)
 - ❌ Writing widgets from scratch (copy V3 patterns)
 - ❌ Nested containers in VerticalScroll (causes layout conflicts)
 - ❌ Skipping .ai documentation (leads to architectural mistakes)
 - ❌ Self-approving work (human review required)
+- ❌ Tests with mocks/fakes (only real user interactions)
 
 ## 🔗 WHEN YOU NEED MORE DETAIL
 

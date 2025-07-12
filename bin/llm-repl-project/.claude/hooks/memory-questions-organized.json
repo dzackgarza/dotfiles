@@ -1,0 +1,85 @@
+{
+  "categories": {
+    "testing_methodology": {
+      "weight": 0.3,
+      "context": ["stop_hook", "test_failure"],
+      "questions": [
+        "What if this isn't actually broken - what if it's working as designed?",
+        "Could this be normal behavior that you're misinterpreting as failure?",
+        "What if your test methodology is sound but your interpretation is wrong?",
+        "Are you sure you understand what 'working correctly' looks like for this component?",
+        "Could you be looking at normal scrollable container behavior?",
+        "Are you testing what users can see, or internal implementation details they'll never notice?",
+        "Would a user notice if the thing you're testing broke, or would they not even know it exists?",
+        "Are you testing that scroll_end() calls scroll_to(), or that the page actually scrolls when users expect it to?"
+      ]
+    },
+    "research_first": {
+      "weight": 0.25,
+      "context": ["edit_operations", "new_implementation"],
+      "questions": [
+        "Have you searched Google for someone who's already solved this exact problem?",
+        "Did you check GitHub for existing implementations before writing your own?",
+        "Have you looked for official documentation instead of guessing how this works?",
+        "Are you trusting your training data over current, verified documentation?",
+        "Have you searched for existing libraries that already do what you're trying to build?",
+        "Are you reinventing the wheel instead of finding existing solutions?"
+      ]
+    },
+    "v3_reference": {
+      "weight": 0.2,
+      "context": ["widget_development", "architecture_decisions"],
+      "questions": [
+        "Have you looked at how V3 solved this exact problem?",
+        "Did V3 have this issue, and if not, what did they do differently?",
+        "Are you reinventing something that V3 already implemented perfectly?",
+        "Did you check V3/elia_chat/widgets/chat.py for the proven approach?",
+        "Are you following V3's VerticalScroll patterns or creating your own broken version?",
+        "Have you copied the exact V3 pattern that's known to work?"
+      ]
+    },
+    "intellectual_humility": {
+      "weight": 0.15,
+      "context": ["overconfidence_detected", "assumption_making"],
+      "questions": [
+        "Is it possible that your testing methodology is flawed?",
+        "Have you tried reading the docs?",
+        "Are you sure that's actually the correct way to do that?",
+        "Can you back that decision up with evidence?",
+        "What if you're wrong about how this works?",
+        "Have you considered that your approach might be fundamentally broken?"
+      ]
+    },
+    "project_alignment": {
+      "weight": 0.1,
+      "context": ["feature_creep", "architecture_violations"],
+      "questions": [
+        "Have you read the ARCHITECTURE-GUIDE.md to understand Sacred GUI Architecture?",
+        "Did you check DESIGN-GUIDE.md for the three-area layout requirements?",
+        "Are you introducing features that aren't in the project scope?",
+        "Have you checked if keyboard scrolling belongs in a terminal research assistant?",
+        "Are you introducing GUI features that don't align with the transparent AI cognition pipeline?"
+      ]
+    },
+    "just_run_evidence": {
+      "weight": 0.4,
+      "context": ["completion_attempts", "claiming_fixes"],
+      "questions": [
+        "Do you have SOLID evidence that your fix/feature will work when a user runs 'just run'?",
+        "Can you prove this will work for an average user running 'just run'? No other evidence counts if that fails.",
+        "Will this actually work when someone runs 'just run'? You need concrete proof, not assumptions.",
+        "The only question that matters: does this work for 'just run'? Do you have solid evidence?"
+      ]
+    }
+  },
+  "context_triggers": {
+    "stop_hook": ["testing_methodology", "just_run_evidence"],
+    "edit_operations": ["research_first", "v3_reference"],
+    "test_failure": ["testing_methodology", "intellectual_humility"],
+    "overconfidence_detected": ["intellectual_humility", "research_first"],
+    "feature_creep": ["project_alignment", "v3_reference"],
+    "widget_development": ["v3_reference", "research_first"],
+    "completion_attempts": ["just_run_evidence", "testing_methodology"],
+    "claiming_fixes": ["just_run_evidence", "testing_methodology"]
+  }
+}
