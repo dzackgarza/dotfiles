@@ -41,7 +41,11 @@ class EnhancedGroqCodeReviewer:
         # Initialize tokenizer for token counting
         try:
             self.tokenizer = tiktoken.encoding_for_model("gpt-3.5-turbo")  # Close approximation for most models
-        except:
+        except (KeyError, ValueError) as e:
+            print(f"Warning: Could not load model-specific tokenizer ({e}), using fallback")
+            self.tokenizer = tiktoken.get_encoding("cl100k_base")  # Fallback
+        except Exception as e:
+            print(f"Error: Failed to initialize tokenizer ({e}), token counting may be inaccurate")
             self.tokenizer = tiktoken.get_encoding("cl100k_base")  # Fallback
         
     def get_available_models(self) -> List[Dict]:
@@ -77,7 +81,12 @@ class EnhancedGroqCodeReviewer:
         """Count tokens in text using tiktoken"""
         try:
             return len(self.tokenizer.encode(text))
-        except:
+        except (UnicodeDecodeError, UnicodeEncodeError) as e:
+            print(f"Warning: Text encoding issue during token counting ({e}), using fallback")
+            # Fallback: rough estimate of 4 chars per token
+            return len(text) // 4
+        except Exception as e:
+            print(f"Error: Tokenizer failed ({e}), using fallback estimate")
             # Fallback: rough estimate of 4 chars per token
             return len(text) // 4
     
@@ -320,6 +329,293 @@ class EnhancedGroqCodeReviewer:
                     formatted += f"- **Variable Shadowing**: {', '.join(shadowing[:3])}\n"
                 if mutable_defaults:
                     formatted += f"- **⚠️ Mutable Default Arguments**: {', '.join(mutable_defaults)}\n"
+        
+        # Test Coverage Analysis
+        test_coverage = context.get('test_coverage', {})
+        if test_coverage:
+            formatted += f"""
+## Test Coverage Analysis
+"""
+            if test_coverage.get('is_test_file'):
+                formatted += f"- **Test File**: Yes ({test_coverage.get('test_functions', 0)} test functions)\n"
+                formatted += f"- **Assertions**: {test_coverage.get('assertion_count', 0)} assertions\n"
+                formatted += f"- **Async Tests**: {test_coverage.get('async_tests', 0)}\n"
+                formatted += f"- **Fixtures Used**: {test_coverage.get('fixtures_used', 0)}\n"
+                formatted += f"- **Parametrized Tests**: {test_coverage.get('parametrized_tests', 0)}\n"
+                if test_coverage.get('mock_usage'):
+                    formatted += "- **Mocking**: Used\n"
+            else:
+                has_test = test_coverage.get('has_test_file', False)
+                formatted += f"- **Has Test File**: {'Yes' if has_test else 'No'}\n"
+        
+        # Enhanced Performance Analysis
+        perf_hints = context.get('performance_hints', [])
+        if perf_hints:
+            formatted += f"""
+## Performance Analysis
+"""
+            for hint in perf_hints[:5]:  # Limit to top 5
+                formatted += f"- ⚠️ {hint}\n"
+        
+        # Security Analysis
+        security = context.get('security_analysis', {})
+        if security:
+            formatted += f"""
+## Security Analysis
+"""
+            if security.get('high_risk'):
+                formatted += "**🚨 High Risk Issues:**\n"
+                for issue in security['high_risk']:
+                    formatted += f"- {issue}\n"
+            
+            if security.get('medium_risk'):
+                formatted += "**⚠️ Medium Risk Issues:**\n"
+                for issue in security['medium_risk']:
+                    formatted += f"- {issue}\n"
+            
+            if security.get('good_practices'):
+                formatted += "**✅ Security Good Practices:**\n"
+                for practice in security['good_practices']:
+                    formatted += f"- {practice}\n"
+        
+        # Refactoring Opportunities
+        refactoring = context.get('refactoring_opportunities', {})
+        if refactoring:
+            formatted += f"""
+## Refactoring Opportunities
+"""
+            if refactoring.get('duplicate_code'):
+                formatted += f"- **Duplicate Code**: {len(refactoring['duplicate_code'])} instances found\n"
+            
+            if refactoring.get('magic_numbers'):
+                numbers = refactoring['magic_numbers'][:5]  # Limit display
+                formatted += f"- **Magic Numbers**: {', '.join(numbers)}\n"
+            
+            if refactoring.get('complex_conditions'):
+                formatted += f"- **Complex Conditions**: {len(refactoring['complex_conditions'])} found\n"
+            
+            if refactoring.get('naming_improvements'):
+                names = refactoring['naming_improvements'][:3]
+                formatted += f"- **Poor Variable Names**: {', '.join(names)}\n"
+        
+        # Error Handling Analysis
+        error_patterns = context.get('error_patterns', {})
+        if error_patterns and not error_patterns.get('error'):
+            formatted += f"""
+## Error Handling Analysis
+"""
+            exc_handling = error_patterns.get('exception_handling', {})
+            if exc_handling:
+                formatted += f"- **Try Blocks**: {exc_handling.get('try_blocks', 0)}\n"
+                if exc_handling.get('bare_except', 0) > 0:
+                    formatted += f"- **⚠️ Bare Except Blocks**: {exc_handling['bare_except']}\n"
+                if exc_handling.get('specific_exceptions'):
+                    exceptions = list(set(exc_handling['specific_exceptions']))[:5]
+                    formatted += f"- **Exception Types**: {', '.join(exceptions)}\n"
+            
+            defensive = error_patterns.get('defensive_programming', {})
+            if defensive:
+                formatted += f"- **Assertions**: {defensive.get('assertions', 0)}\n"
+                formatted += f"- **Type Checks**: {defensive.get('type_checks', 0)}\n"
+        
+        # Dependency Health
+        dep_health = context.get('dependency_health', {})
+        if dep_health and not dep_health.get('error'):
+            formatted += f"""
+## Dependency Health
+"""
+            import_analysis = dep_health.get('import_analysis', {})
+            if import_analysis:
+                formatted += f"- **Total Imports**: {import_analysis.get('total_imports', 0)}\n"
+                formatted += f"- **Unique Modules**: {import_analysis.get('unique_modules', 0)}\n"
+            
+            if dep_health.get('deprecated_usage'):
+                formatted += "**⚠️ Deprecated Usage:**\n"
+                for dep in dep_health['deprecated_usage']:
+                    formatted += f"- {dep}\n"
+        
+        # Python-Specific Deep Analysis  
+        python_analysis = context.get('python_specific')
+        if python_analysis and not python_analysis.get('error'):
+            formatted += f"""
+## Python-Specific Analysis
+"""
+            
+            # Type Hints Analysis
+            type_hints = python_analysis.get('type_hints_analysis', {})
+            if type_hints.get('coverage_stats'):
+                stats = type_hints['coverage_stats']
+                formatted += f"### Type Hints Coverage\n"
+                formatted += f"- **Function Returns**: {stats.get('function_return_coverage', 0):.1f}% ({stats.get('annotated_functions', 0)}/{stats.get('total_functions', 0)})\n"
+                formatted += f"- **Parameters**: {stats.get('parameter_coverage', 0):.1f}% ({stats.get('annotated_parameters', 0)}/{stats.get('total_parameters', 0)})\n"
+                
+                if type_hints.get('generic_usage'):
+                    formatted += f"- **Generic Types Used**: {len(type_hints['generic_usage'])} instances\n"
+            
+            # Call Hierarchy
+            call_hierarchy = python_analysis.get('call_hierarchy', {})
+            if call_hierarchy:
+                if call_hierarchy.get('recursive_calls'):
+                    formatted += f"### Call Hierarchy\n"
+                    formatted += f"- **Recursive Functions**: {', '.join(call_hierarchy['recursive_calls'])}\n"
+                
+                if call_hierarchy.get('external_calls'):
+                    external_count = len(call_hierarchy['external_calls'])
+                    formatted += f"- **External Function Calls**: {external_count} different functions\n"
+            
+            # Class Hierarchy
+            class_hierarchy = python_analysis.get('class_hierarchy', {})
+            if class_hierarchy:
+                formatted += f"### Class Structure\n"
+                for class_name, class_info in class_hierarchy.items():
+                    if class_info.get('bases'):
+                        formatted += f"- **{class_name}** inherits from: {', '.join(class_info['bases'])}\n"
+                    
+                    method_count = len(class_info.get('methods', []))
+                    property_count = len(class_info.get('properties', []))
+                    if method_count > 0 or property_count > 0:
+                        formatted += f"  - Methods: {method_count}, Properties: {property_count}\n"
+            
+            # Exception Patterns
+            exceptions = python_analysis.get('exception_patterns', {})
+            if exceptions:
+                formatted += f"### Exception Handling\n"
+                try_count = len(exceptions.get('try_blocks', []))
+                if try_count > 0:
+                    formatted += f"- **Try Blocks**: {try_count}\n"
+                
+                if exceptions.get('bare_except_locations'):
+                    locations = exceptions['bare_except_locations']
+                    formatted += f"- **⚠️ Bare Except Blocks**: Lines {', '.join(map(str, locations))}\n"
+                
+                if exceptions.get('exception_types'):
+                    exc_types = exceptions['exception_types']
+                    # Handle both Counter and dict objects
+                    if hasattr(exc_types, 'most_common'):
+                        common_exceptions = list(exc_types.most_common(3))
+                    else:
+                        common_exceptions = list(exc_types.items())[:3]
+                    formatted += f"- **Common Exception Types**: {', '.join([f'{exc}({count})' for exc, count in common_exceptions])}\n"
+            
+            # Complexity Hotspots
+            hotspots = python_analysis.get('complexity_hotspots', [])
+            if hotspots:
+                formatted += f"### Complexity Hotspots\n"
+                for hotspot in hotspots[:3]:  # Top 3
+                    formatted += f"- **{hotspot['function']}()**: Complexity {hotspot['complexity']} (line {hotspot['line']})\n"
+            
+            # Decorator Usage
+            decorators = python_analysis.get('decorator_usage', {})
+            if decorators:
+                builtin_count = len(decorators.get('builtin_decorators', []))
+                custom_count = len(decorators.get('custom_decorators', []))
+                if builtin_count > 0 or custom_count > 0:
+                    formatted += f"### Decorator Usage\n"
+                    formatted += f"- **Built-in Decorators**: {builtin_count}\n"
+                    formatted += f"- **Custom Decorators**: {custom_count}\n"
+            
+            # Docstring Analysis
+            docstrings = python_analysis.get('docstring_analysis', {})
+            if docstrings:
+                styles = docstrings.get('docstring_styles', {})
+                if styles:
+                    formatted += f"### Documentation Style\n"
+                    # Handle both Counter and dict objects
+                    style_items = styles.most_common() if hasattr(styles, 'most_common') else styles.items()
+                    for style, count in style_items:
+                        formatted += f"- **{style} Style**: {count} docstrings\n"
+                
+                missing = docstrings.get('missing_docstrings', [])
+                if missing:
+                    formatted += f"- **Missing Docstrings**: {len(missing)} items\n"
+        
+        # Multi-Tool Analysis Integration
+        multi_tool = context.get('multi_tool_analysis')
+        if multi_tool and not multi_tool.get('error'):
+            formatted += f"""
+## Professional Tool Analysis
+"""
+            
+            # Summary
+            summary = multi_tool.get('summary', {})
+            if summary:
+                successful = summary.get('successful_tools', 0)
+                total = summary.get('total_tools', 0)
+                execution_time = summary.get('execution_time', 0)
+                formatted += f"### Analysis Coverage\n"
+                formatted += f"- **Tools Successfully Run**: {successful}/{total}\n"
+                formatted += f"- **Total Analysis Time**: {execution_time:.2f}s\n"
+            
+            # Tool Results
+            tools = multi_tool.get('tools', {})
+            
+            # Static Analysis Results
+            static_tools = tools.get('static_analysis', {})
+            if static_tools:
+                formatted += f"### Static Analysis\n"
+                pylint_data = static_tools.get('pylint', {})
+                if pylint_data.get('success') and pylint_data.get('data'):
+                    issues = pylint_data['data'].get('issues', [])
+                    if issues:
+                        error_count = len([i for i in issues if i.get('type') == 'error'])
+                        warning_count = len([i for i in issues if i.get('type') == 'warning'])
+                        formatted += f"- **Pylint Issues**: {len(issues)} total ({error_count} errors, {warning_count} warnings)\n"
+                        
+                        # Show top issues
+                        for issue in issues[:3]:
+                            formatted += f"  - Line {issue.get('line')}: {issue.get('message')} ({issue.get('symbol')})\n"
+            
+            # Security Analysis Results
+            security_tools = tools.get('security', {})
+            if security_tools:
+                formatted += f"### Security Analysis\n"
+                bandit_data = security_tools.get('bandit', {})
+                if bandit_data.get('success') and bandit_data.get('data'):
+                    bandit_results = bandit_data['data']
+                    if bandit_results.get('results'):
+                        issues = bandit_results['results']
+                        formatted += f"- **Security Issues Found**: {len(issues)}\n"
+                        for issue in issues[:3]:  # Top 3
+                            formatted += f"  - {issue.get('issue_text', 'Security issue')} (Line {issue.get('line_number')})\n"
+                    else:
+                        formatted += f"- **Security Scan**: No issues found ✅\n"
+            
+            # Complexity Metrics
+            metrics_tools = tools.get('metrics', {})
+            if metrics_tools:
+                radon_data = metrics_tools.get('radon', {})
+                if radon_data.get('success') and radon_data.get('data'):
+                    radon_results = radon_data['data']
+                    if radon_results.get('complexity'):
+                        formatted += f"### Complexity Metrics (Radon)\n"
+                        for radon_file_path, file_data in radon_results['complexity'].items():
+                            for item in file_data[:3]:  # Top 3 most complex
+                                complexity = item.get('complexity', 0)
+                                if complexity > 5:  # Only show notable complexity
+                                    formatted += f"- **{item.get('name', 'Function')}**: Complexity {complexity} (Line {item.get('lineno')})\n"
+            
+            # Dependencies
+            deps_tools = tools.get('dependencies', {})
+            if deps_tools:
+                pipdeptree_data = deps_tools.get('pipdeptree', {})
+                if pipdeptree_data.get('success') and pipdeptree_data.get('data'):
+                    deps = pipdeptree_data['data'].get('dependencies', [])
+                    formatted += f"### Dependency Analysis\n"
+                    formatted += f"- **Total Dependencies**: {len(deps)}\n"
+                    
+                    # Show main dependencies
+                    for dep in deps[:5]:  # Top 5
+                        if isinstance(dep, dict):
+                            package_name = dep.get('package_name', 'Unknown')
+                            installed_version = dep.get('installed_version', 'Unknown')
+                            formatted += f"  - {package_name} ({installed_version})\n"
+            
+            # Recommendations from tool analysis
+            recommendations = multi_tool.get('recommendations', [])
+            if recommendations:
+                formatted += f"### Tool Recommendations\n"
+                for rec in recommendations[:5]:  # Top 5
+                    formatted += f"- {rec}\n"
         
         # The actual code
         formatted += f"""

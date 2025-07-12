@@ -1,0 +1,11 @@
+#\!/usr/bin/env python3
+print("Let me stop you there for a second.")
+print()
+print("Before we wrap up, let me ask:")
+print("- Did you actually look at a screenshot to see if your changes worked?")
+print("- What does the latest screenshot show - does it match what you expected?")
+print("- Are you saying something is 'fixed' without checking what it looks like?")
+print()
+print("Continue with a screenshot so we can see if this actually changed anything.")
+print()
+print("If you need to test behavior, create a small test file rather than running the full GUI.")

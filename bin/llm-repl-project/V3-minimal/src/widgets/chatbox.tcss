@@ -18,10 +18,6 @@ Chatbox {
     border: round $primary;
 }
 
-.cognition-message {
-    border: thick $secondary;
-    background: $surface 10%;
-}
 
 .system-message {
     border: round $warning 50%;

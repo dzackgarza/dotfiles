@@ -13,7 +13,7 @@
 
 /* Fixed height during cognition processing */
 .live-workspace.processing {
-    height: 12 !important;  /* Jump to fixed height instantly */
+    height: 8 !important;  /* Reduced from 12 - more reasonable height */
     overflow-y: auto;  /* Force scrollbar if content exceeds */
 }
 
@@ -27,17 +27,6 @@
     color: $text;
 }
 
-/* Cognition event styling */
-.cognition-event {
-    height: auto;
-    width: 1fr;
-    padding: 1;
-    color: $text;
-}
-
-.cognition-event.complete {
-    color: $success;
-}
 
 /* Sub-module styling */
 .sub-module {

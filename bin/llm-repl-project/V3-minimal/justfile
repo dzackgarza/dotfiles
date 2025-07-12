@@ -11,6 +11,19 @@ test:
 test-core:
 	pdm run pytest tests/test_core_functionality.py -v
 
+# Run automated screenshot validation tests
+test-screenshots:
+	@echo "🚨 Running automated screenshot validation tests..."
+	@echo "This will take screenshots during testing and REQUIRE manual review."
+	pdm run pytest tests/test_automated_screenshot_validation.py -v -s
+	@echo ""
+	@echo "⚠️  IMPORTANT: Review test screenshots in debug_screenshots/"
+	@echo "Update CURRENT_GUI_STATE.md with your findings before claiming anything is fixed!"
+
+# Run only the screenshot review enforcement test
+test-review-required:
+	pdm run pytest tests/test_automated_screenshot_validation.py::test_screenshots_force_review -v
+
 # Quick lint for development
 lint:
 	pdm run black src/ tests/
@@ -28,10 +41,18 @@ install:
 # Help
 help:
 	@echo "V3-minimal justfile commands:"
-	@echo "  just test       - Run full test suite (delegates to parent)"
-	@echo "  just test-core  - Run core functionality tests only"
-	@echo "  just lint       - Run linters and formatters"
-	@echo "  just run        - Run the application"
-	@echo "  just install    - Install dependencies"
+	@echo "  just test              - Run full test suite (delegates to parent)"
+	@echo "  just test-core         - Run core functionality tests only"
+	@echo "  just test-screenshots  - Run automated screenshot validation (REQUIRES manual review)"
+	@echo "  just test-review-required - Check if screenshot review is complete"
+	@echo "  just lint              - Run linters and formatters"
+	@echo "  just run               - Run the application"
+	@echo "  just install           - Install dependencies"
+	@echo ""
+	@echo "🔍 SCREENSHOT VALIDATION WORKFLOW:"
+	@echo "  1. Run 'just test-screenshots' to pilot app and take screenshots"
+	@echo "  2. Review screenshots in debug_screenshots/"
+	@echo "  3. Update CURRENT_GUI_STATE.md with findings"
+	@echo "  4. Run 'just test-review-required' to verify review complete"
 	@echo ""
 	@echo "For full commands, run from project root: cd .. && just help"

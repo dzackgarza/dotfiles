@@ -6,3 +6,8 @@
     padding: 0;
     margin: 0;
 }
+
+/* Hide separator when workspace is hidden */
+.live-workspace.hidden .staging-separator {
+    display: none;
+}

@@ -48,6 +48,17 @@ class UnifiedAsyncInputProcessor:
         # Wire callbacks for staging area and timeline
         self.cognition_manager.set_staging_callback(self._handle_cognition_event)
         self.cognition_manager.set_timeline_callback(self._handle_cognition_result)
+        
+        # Processing control
+        self._processing_paused = False
+        
+    def pause_processing(self):
+        """Pause all processing to prevent interference"""
+        self._processing_paused = True
+        
+    def resume_processing(self):
+        """Resume processing"""
+        self._processing_paused = False
 
     def get_timeline(self):
         """Get the unified timeline for UI integration"""
@@ -58,6 +69,13 @@ class UnifiedAsyncInputProcessor:
 
         Entire turn (user + cognition + assistant) is inscribed at once.
         """
+        print(f"DEBUG: process_user_input_async called with: {user_input}")
+        
+        # Check if processing is paused (e.g., for reality capture)
+        if self._processing_paused:
+            print("DEBUG: Processing paused, skipping")
+            return
+            
         user_input = user_input.strip()
         if not user_input:
             return
@@ -68,8 +86,11 @@ class UnifiedAsyncInputProcessor:
         # Show live workspace for cognition
         if self.app:
             workspace = self.app.query_one("#staging-container")
+            print(f"DEBUG: Found workspace, has show_workspace: {hasattr(workspace, 'show_workspace')}")
             if hasattr(workspace, "show_workspace"):
+                print("DEBUG: Calling show_workspace()")
                 workspace.show_workspace()
+                print(f"DEBUG: After show_workspace, classes: {workspace.classes}")
 
         # Store components for atomic inscription
         self.current_turn_data = {
@@ -86,6 +107,7 @@ class UnifiedAsyncInputProcessor:
         # Generate assistant response
         response = self.response_generator.generate_response(user_input)
         self.current_turn_data["assistant_response"] = response
+        print(f"DEBUG: Generated assistant response: {response[:50]}...")
 
         # Hide live workspace after cognition
         if self.app:
@@ -104,7 +126,9 @@ class UnifiedAsyncInputProcessor:
                 workspace.hide_workspace()
 
         # NOW inscribe the complete turn atomically
+        print("DEBUG: About to inscribe complete turn")
         await self._inscribe_complete_turn()
+        print("DEBUG: Finished inscribing complete turn")
 
     async def _inscribe_complete_turn(self) -> None:
         """Inscribe complete turn (user + cognition + assistant) to timeline"""
@@ -113,35 +137,71 @@ class UnifiedAsyncInputProcessor:
 
         data = self.current_turn_data
         from ..widgets.chatbox import Chatbox
+        from ..widgets.turn_separator import TurnSeparator
 
         # Get app state for smart follow
         was_at_bottom = self.app._is_at_bottom()
         chat_container = self.app.query_one("#chat-container")
 
-        # Add user message
+        # FIRST: Add user message (Turn 2 starts with user input)
         user_chatbox = Chatbox(str(data["user_input"]), role="user")
         await chat_container.mount(user_chatbox)
 
-        # Add cognition result
+        # Add cognition result using unified widget
         cognition_result = data["cognition_result"]
-        if cognition_result and hasattr(cognition_result, "content"):
-            content = f"**{cognition_result.content}**\n"
-            if hasattr(cognition_result, "sub_blocks") and cognition_result.sub_blocks:
-                content += "\n**Sub-modules:**\n"
-                for sub in cognition_result.sub_blocks:
-                    content += f"• {sub['module_name']}: {sub['content']}\n"
+        if cognition_result:
+            from ..widgets.cognition_widget import CognitionWidget
 
-            if hasattr(cognition_result, "metadata") and cognition_result.metadata:
-                content += f"\n_Processing time: {cognition_result.metadata.get('processing_time', 0):.2f}s_"
+            # Create unified cognition widget in final state
+            if hasattr(cognition_result, "content"):
+                content = cognition_result.content or "Cognition Processing Complete"
+                sub_blocks = getattr(cognition_result, "sub_blocks", [])
+                metadata = getattr(cognition_result, "metadata", {})
+            else:
+                # Handle case where cognition_result is a simple type
+                content = (
+                    str(cognition_result)
+                    if cognition_result
+                    else "Cognition Processing Complete"
+                )
+                sub_blocks = []
+                metadata = {}
 
-            cognition_chatbox = Chatbox(content, role="cognition")
-            await chat_container.mount(cognition_chatbox)
+            cognition_widget = CognitionWidget(
+                content=content,
+                is_live=False,
+                sub_blocks=sub_blocks,
+                metadata=metadata,
+            )
+
+            print("DEBUG: Creating unified cognition widget for timeline")
+            print(f"DEBUG: Cognition content: {content[:50]}...")
+            print(
+                f"DEBUG: Cognition widget border_title: {cognition_widget.border_title}"
+            )
+            print(
+                f"DEBUG: Cognition widget CSS classes: {list(cognition_widget.classes)}"
+            )
+            
+            await chat_container.mount(cognition_widget)
+            print("DEBUG: Mounted unified cognition widget")
 
         # Add assistant response
         assistant_response = data["assistant_response"]
+        print(f"DEBUG: Assistant response in inscription: {assistant_response}")
         if assistant_response:
             assistant_chatbox = Chatbox(str(assistant_response), role="assistant")
             await chat_container.mount(assistant_chatbox)
+            print(f"DEBUG: Mounted assistant chatbox")
+
+        # LAST: Add turn separator AFTER the complete turn
+        # This separator marks the END of Turn N, not the beginning of Turn N+1
+        turn_number = data.get("turn_number", 1)
+        print(f"DEBUG: Turn number for separator: {turn_number}")
+        if turn_number > 0:  # Add separator after every turn
+            separator = TurnSeparator(turn_number)
+            await chat_container.mount(separator)
+            print(f"DEBUG: Mounted turn separator for turn {turn_number}")
 
         # Smart follow: only scroll if user was at bottom
         if was_at_bottom:
@@ -229,6 +289,8 @@ class UnifiedAsyncInputProcessor:
 
     async def _handle_cognition_event(self, event: CognitionEvent) -> None:
         """Handle cognition events for staging area updates"""
+        if self._processing_paused:
+            return
         if not self.app:
             return
 
@@ -258,49 +320,66 @@ class UnifiedAsyncInputProcessor:
                 header_widget = Static(header_content, classes="turn-header")
                 await workspace.mount(header_widget)
 
-            # Add initial cognition content
+            # Add initial cognition content using unified widget
             if event.content:
-                from textual.widgets import Static
+                from ..widgets.cognition_widget import CognitionWidget
 
-                widget = Static(event.content, classes="cognition-event")
+                widget = CognitionWidget(content=event.content, is_live=True)
                 await workspace.mount(widget)
 
         elif event.type == "update":
-            # Update staging area content while preserving header
-            from textual.widgets import Static
-
-            # Remove old cognition content but keep header and staging separator
-            for widget in list(workspace.children):
-                if not widget.has_class("turn-header") and not widget.has_class(
-                    "staging-separator"
-                ):
-                    widget.remove()
-
-            # Add updated cognition content
-            widget = Static(event.content, classes="cognition-event")
-            await workspace.mount(widget)
-
+            # Add each cognition event as a separate sub-module widget
+            from ..widgets.sub_module import SubModuleWidget
+            from ..core.live_blocks import LiveBlock
+            
+            # Create a live block for this sub-module
+            sub_module_data = LiveBlock(
+                role=event.metadata.get("module", "cognition"),
+                initial_content=event.content
+            )
+            
+            # Add metadata
+            sub_module_data.data.metadata = event.metadata
+            
+            # Create and mount sub-module widget
+            sub_widget = SubModuleWidget(sub_module=sub_module_data)
+            await workspace.mount(sub_widget)
+            
             # Auto-scroll to bottom to follow updates
             workspace.scroll_end(animate=False)
 
         elif event.type == "complete":
             # Final update while preserving header
-            from textual.widgets import Static
+            from ..widgets.cognition_widget import CognitionWidget
 
-            # Remove old cognition content but keep header and staging separator
-            for widget in list(workspace.children):
-                if not widget.has_class("turn-header") and not widget.has_class(
-                    "staging-separator"
-                ):
-                    widget.remove()
+            # Find existing cognition widget and update it, or create new one
+            cognition_widget = None
+            for widget in workspace.children:
+                if isinstance(widget, CognitionWidget):
+                    cognition_widget = widget
+                    break
 
-            widget = Static(event.content, classes="cognition-event complete")
-            await workspace.mount(widget)
+            if cognition_widget:
+                # Update existing widget to complete state
+                cognition_widget.set_live_content(event.content)
+            else:
+                # Remove old content but keep header and staging separator
+                for widget in list(workspace.children):
+                    if not widget.has_class("turn-header") and not widget.has_class(
+                        "staging-separator"
+                    ):
+                        widget.remove()
+
+                # Create new cognition widget in live state
+                widget = CognitionWidget(content=event.content, is_live=True)
+                await workspace.mount(widget)
 
             # Final auto-scroll
             workspace.scroll_end(animate=False)
 
     async def _handle_cognition_result(self, result: CognitionResult) -> None:
         """Handle cognition result - just store for atomic inscription"""
+        if self._processing_paused:
+            return
         # No longer add to timeline immediately - part of atomic turn
         pass

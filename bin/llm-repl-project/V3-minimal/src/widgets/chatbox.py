@@ -6,10 +6,15 @@ Directly copied from V3's proven Chatbox pattern for perfect sizing
 from rich.console import RenderableType
 from rich.markdown import Markdown
 from textual.widget import Widget
+from pathlib import Path
 
 
 class Chatbox(Widget, can_focus=True):
     """Direct copy of V3's Chatbox widget pattern"""
+
+    # Load CSS from external file
+    _css_file = Path(__file__).parent / "chatbox.tcss"
+    DEFAULT_CSS = _css_file.read_text() if _css_file.exists() else ""
 
     def __init__(self, message_content: str, role: str = "user", **kwargs):
         super().__init__(**kwargs)
@@ -33,8 +38,6 @@ class Chatbox(Widget, can_focus=True):
             self.add_class("assistant-message")
         elif role == "system":
             self.add_class("system-message")
-        elif role == "cognition":
-            self.add_class("cognition-message")
 
     def render(self) -> RenderableType:
         """V3's exact render pattern - role shown in border title"""

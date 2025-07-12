@@ -1,1 +1,1 @@
-# Tests for V3-minimal
+"""End-to-end user interaction tests"""

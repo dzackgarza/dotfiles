@@ -13,6 +13,8 @@ from .core.unified_async_processor import UnifiedAsyncInputProcessor
 from .widgets.prompt_input import PromptInput
 from .theme_picker import InteractiveThemeProvider
 from .core.animation_clock import AnimationClock
+from .debug import DebugCommandProvider
+from .reality_commands import RealityCommandProvider
 
 
 class LLMReplApp(App[None]):
@@ -22,10 +24,13 @@ class LLMReplApp(App[None]):
     SUB_TITLE = AppConfig.SUB_TITLE
     CSS_PATH = Path(__file__).parent / "theme.tcss"
 
-    # Custom command providers for enhanced theme picker
+    # Custom command providers for enhanced theme picker and debug tools
     # This replaces the default theme provider with our live-switching version
+    # and adds debug commands that show by default with filtering
     COMMANDS = {
         InteractiveThemeProvider,
+        DebugCommandProvider,
+        RealityCommandProvider,
     }
 
     def __init__(self):
@@ -33,6 +38,10 @@ class LLMReplApp(App[None]):
 
         # Set current theme using Textual's theme system
         self._current_theme = self._load_saved_theme()
+
+        # Create debug screenshots directory
+        self.debug_dir = Path("./debug_screenshots")
+        self.debug_dir.mkdir(exist_ok=True)
 
         # Core components with unified architecture
         self.response_generator = ResponseGenerator(app=self)
@@ -45,6 +54,21 @@ class LLMReplApp(App[None]):
         self.prompt_input: PromptInput | None = None
         self.turn_count = 0  # Track conversation turns
 
+    def create_debug_screenshot(self, context: str = "debug") -> str:
+        """Create timestamped screenshot for debugging"""
+        from datetime import datetime
+
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"debug_{context}_{timestamp}.svg"
+
+        try:
+            self.save_screenshot(filename, path=str(self.debug_dir))
+            self.log(f"Debug screenshot saved: {self.debug_dir / filename}")
+            return filename
+        except Exception as e:
+            self.log(f"Failed to save screenshot: {e}")
+            return ""
+
     BINDINGS = [
         # Disable Ctrl+Q quit binding by overriding with do-nothing action
         Binding("ctrl+q", "do_nothing", show=False, priority=True),
@@ -52,7 +76,7 @@ class LLMReplApp(App[None]):
         Binding("ctrl+m", "switch_cognition_module", "Switch Cognition Module"),
         # Note: Enter and Shift+Enter are handled directly in PromptInput widget
         # Note: Ctrl+C is handled in PromptInput for copy/quit functionality
-        # Note: Ctrl+P uses Textual's built-in theme picker with our custom themes
+        # Note: Ctrl+P uses Textual's built-in command palette
     ]
 
     def _load_saved_theme(self) -> str:
@@ -116,11 +140,11 @@ class LLMReplApp(App[None]):
     def compose(self) -> ComposeResult:
         """Sacred Architecture: Copy V3's exact chat pattern + add staging area"""
         from .widgets.live_workspace import LiveWorkspaceWidget
+        from .widgets.sacred_timeline import SacredTimelineWidget
 
         with Vertical(id="main-container"):
-            # Sacred Timeline - V3's exact chat-container pattern
-            with VerticalScroll(id="chat-container") as chat_scroll:
-                chat_scroll.can_focus = False
+            # Sacred Timeline - Using SacredTimelineWidget with smart scrolling
+            yield SacredTimelineWidget(id="chat-container")
 
             # Live Workspace - Using LiveWorkspaceWidget for staging area
             yield LiveWorkspaceWidget(id="staging-container")
@@ -173,9 +197,10 @@ class LLMReplApp(App[None]):
         self.prompt_input.focus()
 
     @property
-    def chat_container(self) -> VerticalScroll:
+    def chat_container(self) -> "SacredTimelineWidget":
         """V3's exact chat container property"""
-        return self.query_one("#chat-container", VerticalScroll)
+        from .widgets.sacred_timeline import SacredTimelineWidget
+        return self.query_one("#chat-container", SacredTimelineWidget)
 
     @property
     def staging_container(self):
@@ -188,6 +213,7 @@ class LLMReplApp(App[None]):
         self, event: PromptInput.PromptSubmitted
     ) -> None:
         """Handle user input submission - V3's exact pattern"""
+        print(f"DEBUG: on_prompt_input_prompt_submitted called with: {event.text}")
 
         async def safe_process():
             try:
@@ -197,15 +223,10 @@ class LLMReplApp(App[None]):
                 # Increment turn count
                 self.turn_count += 1
 
-                # Add turn separator if this isn't the first turn
-                if self.turn_count > 1:
-                    separator = TurnSeparator(self.turn_count)
-                    await self.chat_container.mount(separator)
-
                 # Check if user is following (at bottom) before adding content
                 was_at_bottom = self._is_at_bottom()
 
-                # DO NOT add user message yet - atomic turn inscription only
+                # DO NOT add turn separator or user message yet - atomic turn inscription only
 
                 # Process through unified async processor (includes cognition)
                 await self.unified_async_processor.process_user_input_async(event.text)
@@ -227,9 +248,41 @@ class LLMReplApp(App[None]):
         max_scroll_y = self.chat_container.max_scroll_y
         return scroll_y >= max_scroll_y - threshold
 
+    def action_debug_command(self, command: str) -> None:
+        """Handle debug commands from command palette"""
+        from .debug import action_debug_command
+        action_debug_command(self, command)
+
+    def _get_widget_tree(self, widget=None, indent=0) -> str:
+        """Get widget hierarchy as string"""
+        from .debug import _get_widget_tree
+        return _get_widget_tree(self, widget, indent)
+
+    def action_reality_command(self, command: str) -> None:
+        """Handle reality check commands from command palette"""
+        from .reality_commands import action_reality_command
+        action_reality_command(self, command)
+
     def action_do_nothing(self) -> None:
         """Action that does nothing - used to disable Ctrl+Q"""
         pass
+    
+    
+    def _show_debug_info(self) -> None:
+        """Show debug information"""
+        from .widgets.chatbox import Chatbox
+        
+        debug_info = f"""**Debug Information**
+
+App Version: {AppConfig.VERSION}
+Theme: {self._current_theme}
+Turn Count: {self.turn_count}
+Cognition Module: {self.unified_async_processor.cognition_manager.get_current_module_name()}
+Debug Screenshots: {len(list(self.debug_dir.glob('*.svg')))} saved"""
+        
+        debug_box = Chatbox(debug_info, role="system")
+        self.chat_container.mount(debug_box)
+        self.chat_container.scroll_end(animate=False)
 
     async def action_switch_cognition_module(self) -> None:
         """Switch between available cognition modules"""
@@ -293,7 +346,7 @@ class LLMReplApp(App[None]):
 
     def on_key(self, event: events.Key) -> None:
         """Global key handler - redirect all typing to prompt input"""
-        # Check for menu mode
+        # Check for cognition menu mode
         if (
             hasattr(self, "_menu_active")
             and self._menu_active

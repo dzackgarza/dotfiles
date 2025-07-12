@@ -18,6 +18,9 @@ dependencies = [
     "ollama>=0.3.0",
     "pyyaml>=6.0.2",
     "watchdog>=6.0.0",
+    "tiktoken>=0.9.0",
+    "textual-image>=0.8.3",
+    "cairosvg>=2.8.2",
 ]
 
 [project.optional-dependencies]
@@ -27,6 +30,13 @@ dev = [
     "ruff>=0.1.0",
     "black>=23.0.0",
     "types-PyYAML>=6.0.12.20250516",
+    "pylint>=3.3.7",
+    "radon>=6.0.1",
+    "safety>=3.6.0",
+    "bandit>=1.8.6",
+    "vulture>=2.14",
+    "pipdeptree>=2.27.0",
+    "pip-licenses>=5.0.0",
 ]
 
 [project.scripts]
