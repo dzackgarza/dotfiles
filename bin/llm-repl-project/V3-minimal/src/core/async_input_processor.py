@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, TypedDict, Optional
 import random
 
 from ..sacred_timeline import SubBlock
-from .live_blocks import LiveBlockManager
+from .live_blocks import LiveBlockManager, LiveBlock
 
 if TYPE_CHECKING:
     from ..sacred_timeline import SacredTimeline
@@ -53,12 +53,12 @@ class AsyncInputProcessor:
         self.timeline.add_block(role="assistant", content=response)
 
     async def _add_cognition_block_async(self, user_input: str) -> None:
-        """Add cognition block with real async updates"""
+        """Add cognition block with real async updates and sequential sub-module execution"""
 
-        # Create live block with empty content to animate from start
+        # Create live block with initial content
         live_block = self.live_block_manager.create_live_block(
             role="cognition",
-            initial_content="",
+            initial_content="🧠 **Cognition Pipeline**\nInitializing multi-step reasoning process...",
         )
 
         # Notify observers about the new live block
@@ -74,137 +74,41 @@ class AsyncInputProcessor:
 
         live_block.add_update_callback(notify_update)
 
-        # Define sub-modules
-        sub_modules_data: list[SubModuleData] = [
-            {
-                "name": "Route query",
-                "icon": "🧠",
-                "model": "tinyllama-v2",
-                "time": random.uniform(0.3, 0.8),
-                "tokens_in": random.randint(5, 15),
-                "tokens_out": random.randint(1, 5),
-            },
-            {
-                "name": "Call tool",
-                "icon": "🛠️",
-                "model": "brave_web_search",
-                "time": random.uniform(1.5, 3.0),
-                "tokens_in": random.randint(10, 20),
-                "tokens_out": random.randint(1000, 1500),
-            },
-            {
-                "name": "Format output",
-                "icon": "🤖",
-                "model": "mistral-7b-instruct",
-                "time": random.uniform(0.8, 1.5),
-                "tokens_in": random.randint(400, 600),
-                "tokens_out": random.randint(200, 300),
-            },
-        ]
-
-        total_time = 0.0
-        total_tokens_in = 0
-        total_tokens_out = 0
-
+        # Import sub-modules
+        from .sub_modules import RouteQueryModule, CallToolModule, FormatOutputModule
+        from .live_blocks import CognitionProgress
+        
         # Set up cognition progress tracking
-        live_block.set_cognition_steps(len(sub_modules_data))
-
+        live_block.set_cognition_steps(3)  # We have 3 sub-modules
+        
         # Record start time for accurate timing
         import time
-
         cognition_start_time = time.time()
 
-        # Process each sub-module with real delays
-        for i, sub_module in enumerate(sub_modules_data):
-            # Notify that step is starting
-            live_block.notify_step_started()
-
-            # Create sub-block with rich initial content
-            task_descriptions = {
-                "Route query": "Analyzing user intent and determining appropriate response strategy",
-                "Call tool": "Executing web search to gather relevant information",
-                "Format output": "Structuring response with clear formatting and citations",
-            }
-
-            initial_content = (
-                f"{sub_module['icon']} **{sub_module['name']}**\n"
-                f"└─ {task_descriptions.get(sub_module['name'], 'Processing...')}\n\n"
-                f"**Provider**: {sub_module['model'].split('_')[0].title() if '_' in sub_module['model'] else 'Local'}\n"
-                f"**Model**: `{sub_module['model']}`\n"
-                f"**Status**: 🔄 Initializing...\n\n"
-                f"⏱️ 0.0s | [░░░░░░░░░░░░░░░░░░░░] 0% | 🔢 0↑/0↓"
-            )
-            sub_live_block = self.live_block_manager.create_live_block(
-                role=sub_module["name"].lower().replace(" ", "_"),
-                initial_content=initial_content,
-            )
-
-            # Give sub-block its own progress tracking
-            from .live_blocks import CognitionProgress
-
-            sub_live_block.cognition_progress = CognitionProgress()
-
-            # Store model name for display
-            sub_live_block._model_name = sub_module["model"]
-
-            # Create custom progress callback that updates just the progress line
-            # Use closure to capture current sub_live_block reference
-            def make_sub_progress_callback(block, base_content):
-                def sub_progress_callback(progress):
-                    if block.cognition_progress:
-                        # Keep the rich metadata, just update the progress line
-                        lines = block.data.content.split("\n")
-                        # Find and replace the progress line (last line with timer)
-                        for i in range(len(lines) - 1, -1, -1):
-                            if "⏱️" in lines[i]:
-                                progress_line = (
-                                    block.cognition_progress.get_status_line()
-                                )
-                                lines[i] = progress_line
-                                break
-                        block.data.content = "\n".join(lines)
-                        block._notify_update()
-
-                return sub_progress_callback
-
-            # Use progress callback for timer updates to avoid scroll triggering
-            sub_live_block.cognition_progress.add_update_callback(
-                make_sub_progress_callback(sub_live_block, initial_content)
-            )
-            sub_live_block.cognition_progress.set_total_steps(
-                1
-            )  # Each sub-block is one step
-
-            # Add sub-block - this is a content change, so it uses content callback
-            live_block.add_sub_block(sub_live_block)
-
-            # Start sub-block processing
-            sub_live_block.notify_step_started()
-
-            # Simulate processing with real delay
-            await asyncio.sleep(sub_module["time"])
-
-            # Complete sub-block with timing and token data
-            sub_live_block.notify_step_completed(
-                tokens_in=sub_module["tokens_in"], tokens_out=sub_module["tokens_out"]
-            )
-
-            # Stop sub-block timer
-            if sub_live_block.cognition_progress:
-                sub_live_block.cognition_progress.stop_timer()
-
-            # Update totals
-            total_time += sub_module["time"]
-            total_tokens_in += sub_module["tokens_in"]
-            total_tokens_out += sub_module["tokens_out"]
-
-            # Notify step completion with token counts
-            live_block.notify_step_completed(
-                tokens_in=sub_module["tokens_in"], tokens_out=sub_module["tokens_out"]
-            )
-
-            # Small delay between steps
-            await asyncio.sleep(0.1)
+        # Sequential sub-module execution
+        # Step 1: Route Query
+        await self._execute_sub_module(
+            live_block, 
+            RouteQueryModule,
+            "route_query",
+            "Route Query"
+        )
+        
+        # Step 2: Call Tool
+        await self._execute_sub_module(
+            live_block,
+            CallToolModule, 
+            "call_tool",
+            "Call Tool"
+        )
+        
+        # Step 3: Format Output
+        await self._execute_sub_module(
+            live_block,
+            FormatOutputModule,
+            "format_output", 
+            "Format Output"
+        )
 
         # Set final timing data using actual wall clock time
         actual_wall_time = time.time() - cognition_start_time
@@ -231,7 +135,7 @@ class AsyncInputProcessor:
                     "_has_live_widget": True,  # Flag to prevent duplicate widget
                 },
                 time_taken=inscribed_block.metadata.get(
-                    "wall_time_seconds", total_time
+                    "wall_time_seconds", actual_wall_time
                 ),
                 tokens_input=inscribed_block.metadata.get("tokens_input", 0),
                 tokens_output=inscribed_block.metadata.get("tokens_output", 0),
@@ -243,3 +147,43 @@ class AsyncInputProcessor:
                     for sb in inscribed_block.metadata.get("sub_blocks", [])
                 ],
             )
+
+    async def _execute_sub_module(
+        self, 
+        parent_block: "LiveBlock", 
+        module_class: type,
+        role: str,
+        title: str
+    ) -> None:
+        """Execute a sub-module sequentially."""
+        # Create sub-block for this module
+        sub_block = self.live_block_manager.create_live_block(
+            role=role,
+            initial_content=""  # Module will provide initial content
+        )
+        
+        # Add to parent's sub-blocks
+        parent_block.add_sub_block(sub_block)
+        
+        # Create and configure the module
+        module = module_class(sub_block)
+        
+        # Set initial content from module
+        sub_block.update_content(module.get_initial_content())
+        
+        # Create completion event
+        completion_event = asyncio.Event()
+        
+        async def on_completion():
+            completion_event.set()
+            
+        module.set_completion_callback(on_completion)
+        
+        # Notify observers about new sub-block
+        for observer in self.timeline._observers:
+            if hasattr(observer, "on_live_block_update"):
+                observer.on_live_block_update(sub_block)
+        
+        # Execute the module and wait for completion
+        await module.execute()
+        await completion_event.wait()

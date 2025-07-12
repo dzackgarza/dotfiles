@@ -233,5 +233,5 @@ class TestLiveStreamingBehaviors:
         assert block2.id in manager.live_blocks
 
         # Blocks should have callbacks registered
-        assert len(block1.update_callbacks) > 0
-        assert len(block2.update_callbacks) > 0
+        assert len(block1.content_update_callbacks) > 0
+        assert len(block2.content_update_callbacks) > 0
