@@ -2,6 +2,12 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with this LLM REPL project.
 
+IMPORTANT RULES:
+
+1. Do not run raw python commands. Alias all python and pytest commands in your shell to be prefaced with `pdm` commands so you don't accidentally use them.
+
+2. Do not run ANY GUI/interactive apps! This ruins the 'claude code' GUI in an unrecoverable way. You *must* test all backend logic statically. When visual changes are ready for verification, you must notify the user, explain how to run the app, and ask them to confirm the changes work as expected.
+
 ## Project Overview
 
 LLM REPL - An interactive terminal-based research assistant with plugin-based architecture. Provides transparent AI-powered interface for research tasks with multi-LLM support (Ollama, Groq, Google Gemini).
@@ -49,13 +55,7 @@ just lint         # Type checking
 pytest tests/test_block_ordering.py -v  # Critical regression test
 ```
 
-### Ledger Development Process
-```bash
-just start-ledger <ledger-name>    # Start working on a V3.1 ledger
-just test-ledger <ledger-name>     # Test current ledger implementation
-just complete-ledger <ledger-name> # Complete and archive ledger
-python scripts/ledger_tracker.py status  # Show development status
-```
+
 
 ## Project Structure
 
@@ -155,48 +155,50 @@ We have API keys for 8 major providers. Use task-specific routing:
 
 See `.ai/available-api-models.md` and `.ai/ollama-setup.md` for complete setup.
 
-## V3.1 Ledger Development Workflow
+## V3.1 Ledger Development Workflow & Accountability
 
-**Automated Ledger Tracking**: Use the ledger tracker system to manage V3.1 development:
+This project uses a strict, human-in-the-loop process for feature development to ensure quality and prevent false completions.
 
-### Starting a Ledger
-1. **Choose Priority**: Follow V3.1 README priority order
-2. **Start Tracking**: `just start-ledger <name>` creates TodoWrite tasks for each phase
-3. **Implementation**: Work through phases systematically (Planning → Implementation → Testing → Documentation)
+### Guiding Principles
+- **Backend Logic ≠ User Experience**: Passing tests does not mean a feature is complete.
+- **Observable Means User-Visible**: The user must be able to see and interact with the changes in the running application.
+- **No Agent Self-Approval**: An agent cannot approve its own work. All visual and UX changes require human sign-off.
 
-### Development Process
-- **Phase-based Development**: Each ledger has 4 phases with specific deliverables
-- **Continuous Testing**: Run `just test-ledger <name>` after each phase
-- **TodoWrite Integration**: Track progress with automatic task creation/completion
-- **Git Integration**: Atomic commits per phase with meaningful messages
+### Step 1: Starting a Ledger
+1.  **Check Status**: Run `just ledger-status` to see the current state and suggested next ledger.
+2.  **Read the Ledger**: Before starting, you MUST read the entire ledger file (e.g., `.ai/ledgers/v3.1/mock-cognition-pipeline.md`).
+3.  **Identify Behaviors**: Identify 3-5 specific, user-visible behaviors described in the ledger. If none are clear, you must ask for clarification before proceeding.
+4.  **Start Tracking**: Run `just start-ledger <ledger-name>`.
 
-### Completion and Archival
-- **Testing Validation**: All tests must pass before completion
-- **User Testing**: Validate UI concepts with mock scenarios
-- **Automatic Archival**: `just complete-ledger <name>` moves to archive with timestamp
-- **Next Suggestion**: System suggests next priority ledger automatically
+### Step 2: Implementation & Static Testing
+-   **Implement the feature** following the project's coding conventions.
+-   **Write tests** for all new backend logic.
+-   **Statically test your changes** using `just test` or `just test-ledger <ledger-name>`.
+-   **CRITICAL**: Do NOT run any GUI applications. This will break the environment. All testing you perform must be static.
 
-### Key Commands
-```bash
-# Ledger lifecycle management
-just start-ledger live-inscribed-block-system     # Start highest priority
-python scripts/ledger_tracker.py next <name>      # Move to next phase  
-just test-ledger <name>                           # Run ledger-specific tests
-just complete-ledger <name>                       # Archive and suggest next
+### Step 3: Requesting Human Review
+When all backend logic is complete and you believe the user-visible behaviors are ready for inspection:
+1.  **Do NOT mark the ledger as complete.**
+2.  **Request a review**: Run `just ledger-request-review <ledger-name>`.
+3.  **Notify the User**: Clearly state that the feature is ready for visual confirmation. List the specific behaviors the user should look for and provide the exact command to run the application (e.g., `just run-fast`).
 
-# Status tracking
-python scripts/ledger_tracker.py status          # Development dashboard
-cat .ai/ledgers/v3.1/.ledger_status.json        # Raw status data
-```
+### Step 4: Human Verification
+The user will then:
+1.  Run the application to test the promised behaviors.
+2.  Approve or reject the review using the `just` commands.
+    -   `just ledger-approve-review <ledger-name>`
+    -   `just ledger-reject-review <ledger-name> "feedback on what is broken"`
 
-### V3.1 Priority Order
-1. `live-inscribed-block-system` - Core Sacred Timeline concept
-2. `mock-cognition-pipeline` - Nested plugin architecture  
-3. `rich-content-display-engine` - Visual proof concept works
-4. `timeline-ui-widget` - Core timeline implementation
-5. `mock-data-framework` - Sophisticated testing scenarios
+### Step 5: Completion
+-   Only a human can complete a ledger by approving a review.
+-   The `just complete-ledger` command is deprecated for agent use and is protected by `sudo` as a final safeguard. You must not attempt to use it.
 
-**Goal**: Prove Sacred Timeline UI paradigm with compelling mock demonstrations before building real infrastructure.
+### Example User-Visible Behaviors
+❌ **Bad**: "Cognition pipeline works"
+✅ **Good**: "User sees streaming text appear character by character in cognition blocks"
+
+❌ **Bad**: "Timeline displays properly"
+✅ **Good**: "User sees token counts increment in real-time during AI processing"
 
 ## Quick Reference
 

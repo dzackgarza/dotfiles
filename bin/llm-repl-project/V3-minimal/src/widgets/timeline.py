@@ -8,6 +8,7 @@ from rich.text import Text
 from rich.console import Console
 from rich.syntax import Syntax
 from typing import Optional
+from pathlib import Path
 
 from ..config import RoleConfig, UIConfig, ThemeConfig
 
@@ -42,15 +43,9 @@ class TimelineBlock:
 class TurnBlockWidget(Vertical):
     """A widget representing a single turn in the Sacred Timeline."""
 
-    DEFAULT_CSS = """
-    TurnBlockWidget {
-        border: round $accent;
-        margin-bottom: 1;
-        padding: 0 1;
-        height: auto;
-        min-height: 0;
-    }
-    """
+    # Load CSS from external file
+    _css_file = Path(__file__).parent / "timeline.tcss"
+    DEFAULT_CSS = _css_file.read_text() if _css_file.exists() else ""
 
     def __init__(
         self,
@@ -101,6 +96,31 @@ class TimelineView(VerticalScroll):
         super().__init__(*args, **kwargs)
         self.auto_scroll = True  # Always scroll to bottom
 
+        # Smart auto-scroll state tracking
+        self.user_is_following = True  # Track if user is following latest content
+        self.auto_scroll_threshold = 100  # Pixels from bottom to consider "following"
+        import time
+
+        self.last_user_scroll_time = time.time()
+
+    def on_scroll(self, event) -> None:
+        """Handle scroll events to detect user intent for smart auto-scroll"""
+        import time
+
+        # Calculate distance from bottom
+        max_scroll = self.max_scroll_y
+        current_scroll = self.scroll_y
+        distance_from_bottom = max_scroll - current_scroll
+
+        # Update following state based on scroll position
+        if distance_from_bottom <= self.auto_scroll_threshold:
+            # User is near bottom - they're following along
+            self.user_is_following = True
+        else:
+            # User scrolled up to review - they're not following
+            self.user_is_following = False
+            self.last_user_scroll_time = time.time()
+
     def watch_blocks(self, blocks: list[TimelineBlock]) -> None:
         """Update display when blocks change - using progressive mounting like Elia"""
         # Check how many blocks we currently have rendered
@@ -119,17 +139,24 @@ class TimelineView(VerticalScroll):
             block_widget = TimelineBlockWidget(block)
             self.mount(block_widget)
 
-        # Smart auto-scroll - only if user is near bottom (Elia pattern)
+        # Smart auto-scroll to bottom
         if self._should_auto_scroll():
-            self.scroll_end(animate=False, force=True)
+            self.call_after_refresh(self.scroll_end, animate=False, force=False)
 
     def _should_auto_scroll(self) -> bool:
-        """Check if we should auto-scroll (user near bottom) - Elia pattern"""
-        try:
-            return self.scroll_y >= self.max_scroll_y - 3
-        except (AttributeError, ValueError):
-            # If scroll properties not available yet, default to auto-scroll
-            return True
+        """Smart auto-scroll: only if user is following latest content"""
+        import time
+
+        # Don't auto-scroll if user is not following
+        if not self.user_is_following:
+            return False
+
+        # Don't auto-scroll if user recently manually scrolled (grace period)
+        current_time = time.time()
+        if current_time - self.last_user_scroll_time < 1.0:  # 1 second grace period
+            return False
+
+        return True
 
     def _mount_turn(self, blocks_in_turn: list[TimelineBlock]):
         self._turn_counter += 1
@@ -153,9 +180,9 @@ class TimelineView(VerticalScroll):
         new_blocks.append(block)
         self.blocks = new_blocks
 
-        # Smart auto-scroll - only if user is near bottom
+        # Smart auto-scroll to bottom
         if self._should_auto_scroll():
-            self.scroll_end(animate=False, force=True)
+            self.call_after_refresh(self.scroll_end, animate=False, force=False)
 
         self.post_message(self.BlockAdded(block))
 
@@ -168,9 +195,9 @@ class TimelineView(VerticalScroll):
         # Mount the live widget directly
         self.mount(live_widget)
 
-        # Smart auto-scroll - only if user is near bottom
+        # Smart auto-scroll to bottom
         if self._should_auto_scroll():
-            self.scroll_end(animate=False, force=True)
+            self.call_after_refresh(self.scroll_end, animate=False, force=False)
 
     def clear_timeline(self) -> None:
         """Clear all blocks"""
@@ -183,28 +210,9 @@ class TimelineView(VerticalScroll):
 class TimelineBlockWidget(Vertical):
     """Individual block widget with Sacred Timeline block aesthetic"""
 
-    DEFAULT_CSS = """
-    TimelineBlockWidget {
-        border: round $primary;
-        margin-bottom: 1;
-        padding: 0 1;
-        height: auto;
-        min-height: 0;
-    }
-
-    TimelineBlockWidget.timeline-block-cognition {
-        border: round $secondary;
-    }
-
-    .sub-block {
-        border: round $accent;
-        width: 90%;
-        margin: 1 2;
-        padding: 0 1;
-        height: auto;
-        min-height: 0;
-    }
-    """
+    # Load CSS from external file
+    _css_file = Path(__file__).parent / "timeline.tcss"
+    DEFAULT_CSS = _css_file.read_text() if _css_file.exists() else ""
 
     def __init__(self, block: TimelineBlock, *args, **kwargs):
         self.block = block
@@ -361,6 +369,10 @@ class TimelineBlockWidget(Vertical):
 
 class SubBlockWidget(Vertical):
     """Individual sub-block widget for cognition steps"""
+
+    # Load CSS from external file
+    _css_file = Path(__file__).parent / "timeline.tcss"
+    DEFAULT_CSS = _css_file.read_text() if _css_file.exists() else ""
 
     def __init__(self, sub_block: SubBlock, *args, **kwargs):
         self.sub_block = sub_block

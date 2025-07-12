@@ -15,6 +15,7 @@ from .widgets.prompt_input import PromptInput
 from .widgets.timeline import TimelineView
 from .sacred_timeline import timeline
 from .theme_picker import InteractiveThemeProvider
+from .core.animation_clock import AnimationClock
 
 
 class LLMReplApp(App[None]):
@@ -126,8 +127,24 @@ class LLMReplApp(App[None]):
             with Horizontal(id="input-container"):
                 yield PromptInput(id="prompt-input")
 
+    # Disable mouse capture to restore terminal text selection
+    def on_mouse_down(self, event) -> None:
+        """Override to disable mouse capture - allows terminal text selection"""
+        pass
+
+    def on_mouse_up(self, event) -> None:
+        """Override to disable mouse capture - allows terminal text selection"""
+        pass
+
+    def on_mouse_move(self, event) -> None:
+        """Override to disable mouse capture - allows terminal text selection"""
+        pass
+
     def on_mount(self) -> None:
         """Initialize the application and wire components"""
+        # Set production mode for smooth 60fps animations
+        AnimationClock.set_production_mode()
+
         # Register all custom themes first
         self._register_all_themes()
 
@@ -155,11 +172,22 @@ class LLMReplApp(App[None]):
         self, event: PromptInput.PromptSubmitted
     ) -> None:
         """Handle user input submission - delegate to async input processor"""
-        # Run async processing in the background
-        self.run_worker(
-            self.async_input_processor.process_user_input_async(event.text),
-            name="process_input"
-        )
+
+        # Run async processing in the background with error handling
+        async def safe_process():
+            try:
+                await self.async_input_processor.process_user_input_async(event.text)
+            except Exception as e:
+                # Force visible error - add to timeline so user can see it
+                timeline.add_block(
+                    role="system",
+                    content=f"❌ **Live Block System Error**: {str(e)}\n\nFalling back to basic response...",
+                )
+                # Fallback to basic response
+                response = self.response_generator.generate_response(event.text)
+                timeline.add_block(role="assistant", content=response)
+
+        self.run_worker(safe_process(), name="process_input")
 
     def action_do_nothing(self) -> None:
         """Action that does nothing - used to disable Ctrl+Q"""
@@ -244,6 +272,15 @@ class LLMReplApp(App[None]):
 
 def main():
     """Entry point for the application"""
+    # SAFETY: Prevent accidental GUI runs in Claude Code environment
+    import os
+
+    if os.environ.get("CLAUDE_CODE_SESSION"):
+        print("❌ ERROR: Cannot run GUI app in Claude Code environment!")
+        print("This would corrupt the Claude Code interface.")
+        print("Please run manually: `pdm run python -m src.main`")
+        return
+
     app = LLMReplApp()
     app.run()
 

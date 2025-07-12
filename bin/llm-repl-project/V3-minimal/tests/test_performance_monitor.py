@@ -413,7 +413,8 @@ class TestOptimizedLiveBlockManager:
         # Cleanup should have been triggered
         assert manager._last_cleanup > time.time() - 1.0
 
-    def test_automatic_cleanup(self):
+    @pytest.mark.asyncio
+    async def test_automatic_cleanup(self):
         """Test automatic cleanup of old blocks."""
         manager = OptimizedLiveBlockManager()
 
@@ -429,7 +430,7 @@ class TestOptimizedLiveBlockManager:
         initial_live_count = len(manager.get_live_blocks())
 
         # Trigger cleanup
-        manager._perform_cleanup()
+        await manager._perform_cleanup()
 
         # Block should have been auto-inscribed (removed from live blocks)
         assert len(manager.get_live_blocks()) == initial_live_count - 1

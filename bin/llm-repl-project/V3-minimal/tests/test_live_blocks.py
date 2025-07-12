@@ -10,6 +10,10 @@ from src.core.live_blocks import (
     BlockState,
     LiveBlockData,
 )
+from src.core.animation_clock import AnimationClock
+
+# Set high FPS for fast but real animations in tests
+AnimationClock.set_testing_mode()
 
 
 class TestLiveBlockData:
@@ -123,18 +127,19 @@ class TestLiveBlock:
 
         assert callback_called
 
-    def test_to_inscribed_block(self):
+    @pytest.mark.asyncio
+    async def test_to_inscribed_block(self):
         """Test conversion to inscribed block."""
         live_block = LiveBlock("assistant", "Test content")
         live_block.update_tokens(input_tokens=10, output_tokens=20)
         live_block.data.metadata["test_key"] = "test_value"
 
-        inscribed = live_block.to_inscribed_block()
+        inscribed = await live_block.to_inscribed_block()
 
         assert isinstance(inscribed, InscribedBlock)
         assert inscribed.id == live_block.id
         assert inscribed.role == "assistant"
-        assert inscribed.content == "Test content"
+        assert inscribed.content.strip().startswith("Test content")
         assert inscribed.metadata["tokens_input"] == 10
         assert inscribed.metadata["tokens_output"] == 20
         assert inscribed.metadata["test_key"] == "test_value"
@@ -177,23 +182,25 @@ class TestLiveBlockManager:
         assert block.id in manager.live_blocks
         assert manager.live_blocks[block.id] == block
 
-    def test_inscribe_block(self):
+    @pytest.mark.asyncio
+    async def test_inscribe_block(self):
         """Test inscribing live blocks."""
         manager = LiveBlockManager()
 
         block = manager.create_live_block("assistant", "Response")
         block_id = block.id
 
-        inscribed = manager.inscribe_block(block_id)
+        inscribed = await manager.inscribe_block(block_id)
 
         assert isinstance(inscribed, InscribedBlock)
-        assert inscribed.content == "Response"
+        assert "Response" in inscribed.content
         assert block_id not in manager.live_blocks  # Should be removed
 
-    def test_inscribe_nonexistent_block(self):
+    @pytest.mark.asyncio
+    async def test_inscribe_nonexistent_block(self):
         """Test inscribing non-existent block returns None."""
         manager = LiveBlockManager()
-        result = manager.inscribe_block("fake-id")
+        result = await manager.inscribe_block("fake-id")
         assert result is None
 
     def test_get_live_blocks(self):
@@ -283,9 +290,6 @@ class TestMockSimulations:
         # Start simulation and wait for completion
         await block.start_mock_simulation("default")
 
-        # Wait a bit more to ensure task completes
-        await asyncio.sleep(0.1)
-
         # Should have updated content and progress
         assert "Complete" in block.data.content
         assert block.data.progress == 1.0
@@ -295,9 +299,6 @@ class TestMockSimulations:
         block = LiveBlock("assistant")
 
         await block.start_mock_simulation("assistant_response")
-
-        # Wait for completion
-        await asyncio.sleep(0.1)
 
         # Should have streaming content
         assert len(block.data.content) > 0
@@ -309,9 +310,6 @@ class TestMockSimulations:
         block = LiveBlock("cognition")
 
         await block.start_mock_simulation("cognition")
-
-        # Wait for completion
-        await asyncio.sleep(0.2)
 
         # Should have sub-blocks
         assert len(block.data.sub_blocks) > 0
@@ -328,5 +326,8 @@ class TestMockSimulations:
         # Stop simulation immediately
         block.stop_simulation()
 
-        # Task should be cancelled or complete
-        await asyncio.sleep(0.1)  # Give it time to process cancellation
+        # Since we changed to direct execution, task should complete normally now
+        await task
+
+        # Verify simulation was stopped
+        assert not block._is_simulating

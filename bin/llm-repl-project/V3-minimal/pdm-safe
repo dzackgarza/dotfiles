@@ -1,0 +1,19 @@
+#!/bin/bash
+# Claude Code Safe PDM wrapper
+# Prevents GUI app launches that corrupt the interface
+
+if [[ "$*" == *"run python -m src.main"* ]]; then
+    echo "❌ ERROR: Cannot run GUI app in Claude Code environment!"
+    echo "This would corrupt the Claude Code interface."
+    echo "Run this command manually in a separate terminal."
+    exit 1
+elif [[ "$*" == *"run python src/main.py"* ]]; then
+    echo "❌ ERROR: Cannot run GUI app in Claude Code environment!"
+    exit 1
+elif [[ "$*" == *"run python"* ]] && [[ "$*" == *"demo"* ]]; then
+    echo "❌ ERROR: Cannot run demo apps in Claude Code environment!"
+    exit 1
+else
+    # Safe to run - pass through to real pdm
+    exec /home/dzack/.local/bin/pdm "$@"
+fi

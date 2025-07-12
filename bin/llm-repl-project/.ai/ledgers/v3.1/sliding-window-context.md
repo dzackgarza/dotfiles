@@ -25,6 +25,16 @@ The Cursor agent problem includes **infinite context accumulation** where every 
 - [ ] Context window adapts based on conversation complexity
 - [ ] LLM performance is maintained with bounded context
 
+## User-Visible Behaviors
+
+When this ledger is complete, the user will see:
+
+- **Active context window remains bounded (e.g., never exceeds 8K tokens).**
+- **Relevant historical context is automatically retrieved and displayed (transparently).**
+- **Processing overhead scales with window size, not total history.**
+- **Context quality remains high for LLM processing.**
+- **Context window adapts based on conversation complexity.**
+
 ## Technical Approach
 
 ### Architecture Changes

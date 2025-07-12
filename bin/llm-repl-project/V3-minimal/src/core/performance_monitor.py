@@ -356,8 +356,8 @@ class OptimizedLiveBlockManager(LiveBlockManager):
         self.performance_monitor.end_timing(start_time, "block_creation")
         self.performance_monitor.counters["blocks_created"] += 1
 
-        # Periodic cleanup
-        self._maybe_perform_cleanup()
+        # Periodic cleanup disabled for now - needs async refactor
+        # self._maybe_perform_cleanup()
 
         return block
 
@@ -373,14 +373,14 @@ class OptimizedLiveBlockManager(LiveBlockManager):
 
         return result
 
-    def _maybe_perform_cleanup(self) -> None:
+    async def _maybe_perform_cleanup(self) -> None:
         """Perform cleanup if needed."""
         current_time = time.time()
         if current_time - self._last_cleanup > self._cleanup_interval:
-            self._perform_cleanup()
+            await self._perform_cleanup()
             self._last_cleanup = current_time
 
-    def _perform_cleanup(self) -> None:
+    async def _perform_cleanup(self) -> None:
         """Perform performance cleanup."""
         # Auto-inscribe blocks that have been live for too long
         current_time = time.time()
@@ -392,7 +392,7 @@ class OptimizedLiveBlockManager(LiveBlockManager):
                 old_blocks.append(block.id)
 
         for block_id in old_blocks:
-            self.inscribe_block(block_id)
+            await self.inscribe_block(block_id)
 
         if old_blocks:
             self.performance_monitor.counters["optimizations_applied"] += 1

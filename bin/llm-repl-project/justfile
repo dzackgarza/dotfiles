@@ -3,7 +3,7 @@
 # === V3 (Current) Commands ===
 
 # Default: Run V3-minimal (bottom-up Sacred Timeline) - auto-launches Kitty if needed
-run: test validate-markup
+run: test
 	@if [ "$TERM" != "xterm-kitty" ]; then \
 		echo "🐱 LLM REPL requires Kitty terminal for proper Shift+Enter support"; \
 		echo "📦 Launching Kitty with optimized configuration..."; \
@@ -79,7 +79,7 @@ run-fast: lint-v3
 # === Testing Commands ===
 
 # Run comprehensive test suite (linters + tests) for V3-minimal
-test: validate-markup
+test: validate-markup validate-css
 	@bash scripts/dim_echo.sh "🧪 Running comprehensive test suite for V3-minimal..."
 	cd V3-minimal && export PATH="/home/dzack/.local/bin:/usr/bin:$$PATH" && \
 	bash ../scripts/dim_echo.sh "🎨 Auto-formatting code..." && \
@@ -158,33 +158,60 @@ validate-markup:
 	@bash scripts/dim_echo.sh "🔍 Validating Rich markup syntax..."
 	cd V3-minimal && export PATH="/home/dzack/.local/bin:/usr/bin:$$PATH" && pdm run python -m src.markup_validator src/
 
+# Validate CSS syntax with stylelint (if available)
+validate-css:
+	@bash scripts/dim_echo.sh "🎨 Validating CSS syntax..."
+	@if command -v stylelint >/dev/null 2>&1; then \
+		echo "Running stylelint on .tcss files..."; \
+		find V3-minimal/src -name "*.tcss" -exec stylelint {} \; || echo "CSS linting found issues"; \
+	else \
+		echo "stylelint not found - skipping CSS validation (install with: npm install -g stylelint)"; \
+		echo "Basic syntax check - ensuring .tcss files exist:"; \
+		find V3-minimal/src -name "*.tcss" -exec echo "✓ Found: {}" \;; \
+	fi
+
 # === V3.1 Ledger Development Commands ===
 
 # Start working on a V3.1 ledger (creates TodoWrite tasks for phases)
 start-ledger LEDGER_NAME:
 	@bash scripts/dim_echo.sh "📋 Starting ledger: {{LEDGER_NAME}}"
-	@python scripts/ledger_tracker.py start {{LEDGER_NAME}}
+	@pdm run python scripts/ledger_tracker.py start {{LEDGER_NAME}}
 
 # Move to next phase of current ledger
 next-phase LEDGER_NAME:
 	@bash scripts/dim_echo.sh "➡️ Moving to next phase: {{LEDGER_NAME}}"
-	@python scripts/ledger_tracker.py next {{LEDGER_NAME}}
+	@pdm run python scripts/ledger_tracker.py next {{LEDGER_NAME}}
 
 # Test current ledger implementation
 test-ledger LEDGER_NAME:
 	@bash scripts/dim_echo.sh "🧪 Testing ledger: {{LEDGER_NAME}}"
-	@python scripts/ledger_tracker.py test {{LEDGER_NAME}}
+	@pdm run python scripts/ledger_tracker.py test {{LEDGER_NAME}}
 
-# Complete and archive a ledger
+# Request human review for a ledger
+ledger-request-review LEDGER_NAME:
+	@bash scripts/dim_echo.sh "🔍 Requesting human review for: {{LEDGER_NAME}}"
+	@pdm run python scripts/ledger_tracker.py request-review {{LEDGER_NAME}}
+
+# Approve a ledger review (HUMAN ONLY)
+ledger-approve-review LEDGER_NAME:
+	@bash scripts/dim_echo.sh "✅ Approving review for: {{LEDGER_NAME}}"
+	@pdm run python scripts/ledger_tracker.py approve-review {{LEDGER_NAME}}
+
+# Reject a ledger review (HUMAN ONLY)
+ledger-reject-review LEDGER_NAME FEEDBACK:
+	@bash scripts/dim_echo.sh "❌ Rejecting review for: {{LEDGER_NAME}}"
+	@pdm run python scripts/ledger_tracker.py reject-review {{LEDGER_NAME}} "{{FEEDBACK}}"
+
+# Complete and archive a ledger (requires sudo)
 complete-ledger LEDGER_NAME:
 	@bash scripts/dim_echo.sh "✅ Completing ledger: {{LEDGER_NAME}}"
-	@python scripts/ledger_tracker.py complete {{LEDGER_NAME}}
+	@sudo pdm run python scripts/ledger_tracker.py complete {{LEDGER_NAME}}
 	@git add .ai/ledgers/v3.1/
 	@git commit -m "Complete ledger: {{LEDGER_NAME}} 🤖 Generated with Claude Code"
 
 # Show ledger development status dashboard
 ledger-status:
-	@python scripts/ledger_tracker.py status
+	@pdm run python scripts/ledger_tracker.py status
 
 # Help
 help:

@@ -1,0 +1,114 @@
+/* Live Block Widget Styles */
+
+LiveBlockWidget {
+    border: round $primary;
+    margin-bottom: 1;
+    padding: 1;
+    height: auto;
+    min-height: 0;
+    width: 100%;
+}
+
+LiveBlockWidget > * {
+    height: auto;
+    min-height: 0;
+    width: 100%;
+}
+
+.live-block {
+    border: round $success;
+    background: $success 10%;
+    /* Pulsing animation for live blocks */
+}
+
+.transitioning-block {
+    border: round $warning;
+    background: $warning 20%;
+    /* Transition animation */
+}
+
+.inscribed-block {
+    border: round $primary;
+    background: $surface;
+    /* Solid, permanent appearance */
+}
+
+.block-header {
+    text-style: bold;
+    color: $text;
+    margin-bottom: 1;
+}
+
+.block-content {
+    color: $text;
+    margin-bottom: 1;
+}
+
+.block-metadata {
+    color: $text-muted;
+    text-style: dim;
+}
+
+.sub-blocks-container {
+    height: auto;
+    min-height: 0;
+    width: 100%;
+}
+
+/* LiveBlockManagerWidget styles */
+LiveBlockManagerWidget {
+    height: auto;
+    min-height: 0;
+    width: 100%;
+}
+
+.manager-header {
+    text-style: bold;
+    color: $accent;
+    margin-bottom: 1;
+    padding: 1;
+    border-bottom: solid $accent;
+}
+
+.no-blocks {
+    color: $text-muted;
+    text-style: dim;
+    text-align: center;
+    padding: 2;
+}
+
+/* BlockTransitionWidget styles */
+BlockTransitionWidget {
+    height: 3;
+    width: 100%;
+    text-align: center;
+    padding: 1;
+    border: dashed $accent;
+    margin: 1 0;
+}
+
+.transition-active {
+    border: solid $warning;
+    background: $warning 10%;
+}
+
+/* LiveBlockDemoWidget styles */
+LiveBlockDemoWidget {
+    height: auto;
+    width: 100%;
+    padding: 1;
+}
+
+.demo-header {
+    text-style: bold;
+    color: $primary;
+    text-align: center;
+    margin-bottom: 2;
+}
+
+.demo-controls {
+    text-align: center;
+    margin: 1 0;
+    padding: 1;
+    border: round $accent;
+}

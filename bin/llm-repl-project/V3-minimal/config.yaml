@@ -1,0 +1,37 @@
+# LLM REPL V3 Configuration
+# Users can customize their experience by editing these values
+
+# Animation Settings
+animation:
+  # Typewriter animation speeds (characters per second)
+  # Speed guide:
+  #   - 50-100: Very slow, good for careful reading
+  #   - 200-500: Moderate speed, balanced experience  
+  #   - 1000-2000: Fast, snappy updates
+  #   - 3000-5000: Ultra-fast, power user speeds
+  #   - 8000+: Near-instant, no animation delay
+  
+  typewriter_speeds:
+    initial: 200        # chars/sec - Initial pipeline messages
+    progress: 200       # chars/sec - Progress updates during pipeline  
+    completion: 200     # chars/sec - Sub-block completion messages
+    summary: 200        # chars/sec - Final summary messages
+  
+  # Quick presets (uncomment to use instead of custom speeds above)
+  # preset: "slow"     # 100-200 chars/sec
+  # preset: "medium"   # 500-1000 chars/sec  
+  # preset: "fast"     # 1500-2500 chars/sec
+  # preset: "ultra"    # 3000-5000 chars/sec
+  # preset: "instant"  # 8000+ chars/sec
+
+# UI Settings  
+ui:
+  theme: "dracula"           # Theme: dracula, tokyo_night, etc.
+  auto_scroll: true          # Auto-scroll timeline to bottom
+  max_content_preview: 50    # Characters shown in content preview
+
+# Performance Settings
+performance:
+  animation_fps: 60          # Frame rate for smooth animations
+  enable_batching: true      # Enable batching for ultra-high speeds
+  batch_threshold: 2000      # Speed threshold for batching mode (chars/sec)

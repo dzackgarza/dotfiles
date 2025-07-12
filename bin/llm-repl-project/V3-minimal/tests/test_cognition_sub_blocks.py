@@ -4,6 +4,10 @@ import pytest
 from src.sacred_timeline import timeline, SubBlock
 from src.core.input_processor import InputProcessor
 from src.core.response_generator import ResponseGenerator
+from src.core.animation_clock import AnimationClock
+
+# Set high FPS for fast but real animations in tests
+AnimationClock.set_testing_mode()
 
 
 @pytest.fixture(autouse=True)
@@ -15,7 +19,8 @@ def clear_timeline_fixture():
 class TestCognitionSubBlocks:
     """Test the 3 sub-block cognition pipeline"""
 
-    def test_cognition_block_has_three_sub_blocks(self):
+    @pytest.mark.asyncio
+    async def test_cognition_block_has_three_sub_blocks(self):
         """Test that cognition blocks are created with 3 sub-blocks"""
         # Setup
         response_generator = ResponseGenerator()
@@ -23,7 +28,7 @@ class TestCognitionSubBlocks:
 
         # Process user input
         user_input = "test cognition pipeline"
-        input_processor.process_user_input(user_input)
+        await input_processor.process_user_input(user_input)
 
         # Get blocks from timeline
         blocks = timeline.get_blocks()
@@ -49,13 +54,14 @@ class TestCognitionSubBlocks:
             assert sub_block.content != ""
             assert sub_block.id != ""
 
-    def test_cognition_sub_block_content(self):
+    @pytest.mark.asyncio
+    async def test_cognition_sub_block_content(self):
         """Test that sub-blocks contain the expected cognition steps"""
         response_generator = ResponseGenerator()
         input_processor = InputProcessor(timeline, response_generator)
 
         # Process user input
-        input_processor.process_user_input("test")
+        await input_processor.process_user_input("test")
 
         # Get cognition block
         blocks = timeline.get_blocks()
@@ -79,13 +85,14 @@ class TestCognitionSubBlocks:
             actual_types == expected_types
         ), f"Expected types {expected_types}, found {actual_types}"
 
-    def test_cognition_block_metadata(self):
+    @pytest.mark.asyncio
+    async def test_cognition_block_metadata(self):
         """Test that cognition blocks have proper timing and token metadata"""
         response_generator = ResponseGenerator()
         input_processor = InputProcessor(timeline, response_generator)
 
         # Process user input
-        input_processor.process_user_input("test metadata")
+        await input_processor.process_user_input("test metadata")
 
         # Get cognition block
         blocks = timeline.get_blocks()
@@ -101,13 +108,14 @@ class TestCognitionSubBlocks:
         assert cognition_block.tokens_output is not None
         assert cognition_block.tokens_output > 0
 
-    def test_cognition_block_main_content(self):
+    @pytest.mark.asyncio
+    async def test_cognition_block_main_content(self):
         """Test that the main cognition block has proper summary content"""
         response_generator = ResponseGenerator()
         input_processor = InputProcessor(timeline, response_generator)
 
         # Process user input
-        input_processor.process_user_input("test summary")
+        await input_processor.process_user_input("test summary")
 
         # Get cognition block
         blocks = timeline.get_blocks()

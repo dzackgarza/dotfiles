@@ -48,6 +48,11 @@ class TimelineViewController:
         Args:
             block: The timeline block that was added
         """
+        # Check if this block already has a live widget (to prevent duplicates)
+        if block.metadata.get("_has_live_widget", False):
+            # Skip creating a new widget - the live widget will handle the display
+            return
+
         ui_block = self._convert_to_ui_block(block)
         self.timeline_view.add_block(ui_block)
 
@@ -78,10 +83,11 @@ class TimelineViewController:
 
         # Check if block is being inscribed
         if live_block.state.value == "inscribed":
-            # Remove the live widget when inscribed
+            # Transform the live widget to inscribed state (don't remove)
             if block_id in self.live_block_widgets:
-                widget = self.live_block_widgets.pop(block_id)
-                widget.remove()
+                # The widget will visually update itself based on state
+                # Don't remove it - let it persist in the timeline
+                pass
 
     def _convert_to_ui_block(self, timeline_block: Block) -> UITimelineBlock:
         """Convert a Sacred Timeline block to a UI timeline block

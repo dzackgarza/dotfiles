@@ -25,6 +25,16 @@ The Sacred Timeline's transparency requires showing AI cognition as nested sub-b
 - [ ] Plugin system supports easy addition of new cognition types
 - [ ] Mock scenarios cover different complexity levels and use cases
 
+## User-Visible Behaviors
+
+When this ledger is complete, the user will see:
+
+- **Mock CognitionPlugin with 3+ realistic sub-modules (e.g., Route → Tool → Format) is displayed.**
+- **Sub-blocks are properly nested within the parent cognition block.**
+- **Parent block aggregates tokens, timing, and metadata from all sub-blocks.**
+- **Sub-blocks update independently with realistic delays and streaming.**
+- **UI integration shows compelling real-time cognition transparency.**
+
 ## Technical Approach
 
 ### Architecture Changes

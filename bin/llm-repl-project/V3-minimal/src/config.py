@@ -1,6 +1,8 @@
 """Configuration constants for V3-minimal LLM REPL"""
 
-from typing import Dict
+from typing import Dict, Optional
+import yaml
+from pathlib import Path
 
 
 class UIConfig:
@@ -19,6 +21,99 @@ class UIConfig:
     # Timeline styling
     TIMELINE_MARGIN_BOTTOM = 1
     TIMELINE_PADDING = (0, 1)
+
+
+class ConfigLoader:
+    """Loads configuration from YAML files"""
+
+    @staticmethod
+    def find_config_file() -> Optional[Path]:
+        """Find config file in order of preference"""
+        search_paths = [
+            Path.cwd() / "config.yaml",  # Current directory
+            Path.home() / ".config" / "llm-repl" / "config.yaml",  # User config
+            Path(__file__).parent.parent / "config.yaml",  # Project default
+        ]
+
+        for path in search_paths:
+            if path.exists():
+                return path
+        return None
+
+    @staticmethod
+    def load_config() -> dict:
+        """Load configuration from YAML file"""
+        config_file = ConfigLoader.find_config_file()
+        if not config_file:
+            return {}
+
+        try:
+            with open(config_file, "r") as f:
+                return yaml.safe_load(f) or {}
+        except Exception as e:
+            print(f"Warning: Could not load config from {config_file}: {e}")
+            return {}
+
+
+class AnimationConfig:
+    """Animation and typewriter speed configuration"""
+
+    # Load from YAML config
+    _config = ConfigLoader.load_config()
+    _animation_config = _config.get("animation", {})
+
+    # Default fallback presets
+    _DEFAULT_PRESETS = {
+        "slow": {"initial": 100, "progress": 150, "completion": 200, "summary": 120},
+        "medium": {"initial": 500, "progress": 800, "completion": 1000, "summary": 600},
+        "fast": {
+            "initial": 1500,
+            "progress": 2000,
+            "completion": 2500,
+            "summary": 1800,
+        },
+        "ultra": {
+            "initial": 3000,
+            "progress": 4000,
+            "completion": 5000,
+            "summary": 3500,
+        },
+        "instant": {
+            "initial": 8000,
+            "progress": 8000,
+            "completion": 8000,
+            "summary": 8000,
+        },
+    }
+
+    @classmethod
+    def get_current_speeds(cls) -> dict:
+        """Get current speed settings from YAML config or fallback preset"""
+
+        # Check if using a preset
+        if "preset" in cls._animation_config:
+            preset_name = cls._animation_config["preset"]
+            if preset_name in cls._DEFAULT_PRESETS:
+                return cls._DEFAULT_PRESETS[preset_name]
+
+        # Check if using custom speeds
+        if "typewriter_speeds" in cls._animation_config:
+            speeds = cls._animation_config["typewriter_speeds"]
+            return {
+                "initial": speeds.get("initial", 1500),
+                "progress": speeds.get("progress", 2000),
+                "completion": speeds.get("completion", 2500),
+                "summary": speeds.get("summary", 1800),
+            }
+
+        # Fallback to fast preset
+        return cls._DEFAULT_PRESETS["fast"]
+
+    @classmethod
+    def reload_config(cls):
+        """Reload configuration from file"""
+        cls._config = ConfigLoader.load_config()
+        cls._animation_config = cls._config.get("animation", {})
 
 
 class RoleConfig:

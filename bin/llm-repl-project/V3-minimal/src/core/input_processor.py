@@ -43,7 +43,7 @@ class InputProcessor:
         self.response_generator = response_generator
         self.live_block_manager = LiveBlockManager()
 
-    def process_user_input(self, user_input: str) -> None:
+    async def process_user_input(self, user_input: str) -> None:
         """Process user input through the Sacred Turn Structure
 
         Args:
@@ -63,13 +63,13 @@ class InputProcessor:
         self.timeline.add_block(role="user", content=user_input)
 
         # Step 2: Generate cognition processing block
-        self._add_cognition_block(user_input)
+        await self._add_cognition_block(user_input)
 
         # Step 3: Generate assistant response
         response = self.response_generator.generate_response(user_input)
         self.timeline.add_block(role="assistant", content=response)
 
-    def _add_cognition_block(self, user_input: str) -> None:
+    async def _add_cognition_block(self, user_input: str) -> None:
         """Add cognition processing block with 3 sub-blocks to timeline
 
         Creates the transparent cognition pipeline with 3 sub-modules:
@@ -189,7 +189,7 @@ class InputProcessor:
         live_block.data.wall_time_seconds = total_time
 
         # Inscribe the live block to the timeline
-        inscribed_block = self.live_block_manager.inscribe_block(live_block.id)
+        inscribed_block = await self.live_block_manager.inscribe_block(live_block.id)
 
         # Add the inscribed block to the timeline
         if inscribed_block:

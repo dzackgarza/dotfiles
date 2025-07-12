@@ -241,6 +241,102 @@ class LedgerTracker:
         self.suggest_next_ledger()
         return True
     
+    def request_review(self, ledger_name: str):
+        """Request human review for ledger completion."""
+        if ledger_name not in self.status["ledger_states"]:
+            print(f"❌ Ledger not started: {ledger_name}")
+            return False
+        
+        # Mark as pending review
+        self.status["ledger_states"][ledger_name]["status"] = "pending_review"
+        self.status["ledger_states"][ledger_name]["review_requested_at"] = datetime.now().isoformat()
+        
+        # Extract promised behaviors from ledger
+        ledger_file = self.ledger_dir / f"{ledger_name}.md"
+        behaviors = self.extract_user_behaviors(ledger_file)
+        
+        self.status["ledger_states"][ledger_name]["promised_behaviors"] = behaviors
+        self.save_status()
+        
+        print(f"📋 Review requested for: {ledger_name}")
+        print(f"🎯 Promised user-visible behaviors:")
+        for i, behavior in enumerate(behaviors, 1):
+            print(f"  {i}. {behavior}")
+        
+        print(f"\n🔍 Human reviewer must verify these behaviors work in the UI")
+        print(f"✅ To approve: python scripts/ledger_tracker.py approve-review {ledger_name}")
+        print(f"❌ To reject: python scripts/ledger_tracker.py reject-review {ledger_name} 'feedback'")
+        return True
+    
+    def approve_review(self, ledger_name: str):
+        """Approve ledger completion after human verification."""
+        if ledger_name not in self.status["ledger_states"]:
+            print(f"❌ Ledger not found: {ledger_name}")
+            return False
+        
+        state = self.status["ledger_states"][ledger_name]
+        if state.get("status") != "pending_review":
+            print(f"❌ Ledger not pending review: {ledger_name}")
+            return False
+        
+        print(f"✅ Human approved: {ledger_name}")
+        return self.complete_ledger(ledger_name)
+    
+    def reject_review(self, ledger_name: str, feedback: str):
+        """Reject ledger completion with feedback."""
+        if ledger_name not in self.status["ledger_states"]:
+            print(f"❌ Ledger not found: {ledger_name}")
+            return False
+        
+        state = self.status["ledger_states"][ledger_name]
+        state["status"] = "needs_rework"
+        state["rejection_feedback"] = feedback
+        state["rejected_at"] = datetime.now().isoformat()
+        
+        self.save_status()
+        
+        print(f"❌ Ledger rejected: {ledger_name}")
+        print(f"📝 Feedback: {feedback}")
+        print(f"🔄 Status changed to: needs_rework")
+        return True
+    
+    def extract_user_behaviors(self, ledger_file: Path) -> List[str]:
+        """Extract user-visible behaviors from ledger markdown."""
+        if not ledger_file.exists():
+            return []
+        
+        with open(ledger_file) as f:
+            content = f.read()
+        
+        behaviors = []
+        in_behaviors_section = False
+        
+        for line in content.split('\n'):
+            if "user-visible behaviors" in line.lower() or "observable behaviors" in line.lower():
+                in_behaviors_section = True
+                continue
+            
+            if in_behaviors_section:
+                if line.startswith('##') and 'behavior' not in line.lower():
+                    break  # End of behaviors section
+                
+                # Extract numbered or bulleted behaviors
+                if re.match(r'\d+\.\s+', line.strip()) or line.strip().startswith('- '):
+                    behavior = re.sub(r'^\d+\.\s*|\-\s*', '', line.strip())
+                    if behavior:
+                        behaviors.append(behavior)
+        
+        # Fallback: extract from any section mentioning "user sees" or "user can"
+        if not behaviors:
+            for line in content.split('\n'):
+                if ('user sees' in line.lower() or 'user can' in line.lower() or 
+                    'users see' in line.lower() or 'displays' in line.lower()):
+                    clean_line = line.strip('- ').strip()
+                    if clean_line and len(clean_line) > 20:  # Reasonable behavior description
+                        behaviors.append(clean_line)
+        
+        return behaviors[:10]  # Limit to most important behaviors
+
     def suggest_next_ledger(self):
         """Suggest the next ledger to work on."""
         v3_1_priority = [
@@ -297,8 +393,8 @@ class LedgerTracker:
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: python ledger_tracker.py <command> [ledger_name]")
-        print("Commands: start, next, test, complete, status")
+        print("Usage: python ledger_tracker.py <command> [ledger_name] [feedback]")
+        print("Commands: start, next, test, complete, status, request-review, approve-review, reject-review")
         return
     
     tracker = LedgerTracker()
@@ -311,7 +407,17 @@ def main():
     elif command == "test" and len(sys.argv) > 2:
         tracker.test_ledger(sys.argv[2])
     elif command == "complete" and len(sys.argv) > 2:
+        if os.geteuid() != 0:
+            print("❌ Error: The 'complete' command requires sudo privileges for human sign-off.")
+            print("Run as: sudo python scripts/ledger_tracker.py complete <ledger-name>")
+            return
         tracker.complete_ledger(sys.argv[2])
+    elif command == "request-review" and len(sys.argv) > 2:
+        tracker.request_review(sys.argv[2])
+    elif command == "approve-review" and len(sys.argv) > 2:
+        tracker.approve_review(sys.argv[2])
+    elif command == "reject-review" and len(sys.argv) > 3:
+        tracker.reject_review(sys.argv[2], sys.argv[3])
     elif command == "status":
         tracker.status_report()
     else:

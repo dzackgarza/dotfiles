@@ -60,6 +60,22 @@
 -   **Improved Scalability:** Allows for handling arbitrarily long conversation histories without performance degradation.
 -   **Robust Recovery:** Ensures that all conversational context is preserved and recoverable across sessions and system interruptions.
 
+## 1. Core Philosophy
+
+-   **Zero User-Space Persistence:** User-space memory is treated as ephemeral for chat history; all significant conversational data is immediately persisted externally.
+-   **Performance & Scalability:** Optimize for fast access to recent context while ensuring long-term durability and the ability to handle extensive histories.
+-   **Resilience:** Protect against data loss due to application crashes or system restarts by ensuring data is always externalized.
+
+## User-Visible Behaviors
+
+When this ledger is complete, the user will see:
+
+- **Chat history and conversational context are not persistently stored in user-space memory.**
+- **Application's memory footprint remains low during long sessions.**
+- **All conversational context is preserved and recoverable across sessions.**
+- **Recent conversational history is quickly accessible from a fast-access caching layer.**
+- **Long-term history is durably stored in a separate database.**
+
 ### Implementation Plan
 1. **Phase 1: Planning** - Review and plan implementation
 2. **Phase 2: Implementation** - Core development work

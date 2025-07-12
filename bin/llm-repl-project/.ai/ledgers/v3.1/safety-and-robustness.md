@@ -79,6 +79,16 @@ class ErrorReporterPlugin(BasePlugin):
 # from src.plugins.manager import plugin_manager
 # plugin_manager.register_plugin(ErrorReporterPlugin)
 ```
+## User-Visible Behaviors
+
+When this ledger is complete, the user will see:
+
+- **Filesystem checkpointing allows restoring files to a previous state.**
+- **`/restore` command lists and reverts file changes.**
+- **API calls to LLMs retry with exponential backoff on transient errors.**
+- **System automatically switches to a fallback model on persistent LLM errors.**
+- **Significant errors are explicitly recorded on the Sacred Timeline as error blocks.**
+
 ### Implementation Plan
 1. **Phase 1: Planning** - Review and plan implementation
 2. **Phase 2: Implementation** - Core development work

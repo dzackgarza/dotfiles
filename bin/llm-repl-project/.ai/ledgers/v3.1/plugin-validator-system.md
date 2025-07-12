@@ -25,6 +25,16 @@ V3-minimal has **NO PLUGIN VALIDATOR** - the critical architectural gateway that
 - [ ] Invalid plugins are rejected with clear error messages
 - [ ] Timeline integrity is maintained across all operations
 
+## User-Visible Behaviors
+
+When this ledger is complete, the user will see:
+
+- **Only validated plugins can inscribe blocks to the Sacred Timeline.**
+- **All timeline content has mandatory transparency metadata (timers, tokens, state).**
+- **Invalid plugins are rejected with clear error messages.**
+- **System fails fast when plugin validation fails.**
+- **Timeline corruption is architecturally impossible.**
+
 ## Technical Approach
 
 ### Architecture Changes

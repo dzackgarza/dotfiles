@@ -241,6 +241,16 @@ class SacredTimeline:
 
 *This ledger tracks the transformation of V3-minimal's ephemeral timeline into a true persistent Sacred Timeline database.*
 
+## User-Visible Behaviors
+
+When this ledger is complete, the user will see:
+
+- **Timeline persists across application restarts (user can close and reopen app with full timeline intact).**
+- **Complete conversation history is preserved on disk.**
+- **Fast startup with full timeline restoration.**
+- **Timeline data survives system crashes/power failures.**
+- **Historical context is available for LLM processing.**
+
 ### Implementation Plan
 1. **Phase 1: Planning** - Review and plan implementation
 2. **Phase 2: Implementation** - Core development work

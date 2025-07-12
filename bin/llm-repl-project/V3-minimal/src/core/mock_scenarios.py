@@ -5,11 +5,128 @@ Creates realistic mock scenarios for testing and demonstrating
 the live block system with various conversation types and complexities.
 """
 
-import asyncio
 import random
 from typing import List, Dict, Any, Optional
 
-from .live_blocks import LiveBlock, LiveBlockManager
+from .live_blocks import LiveBlock, LiveBlockManager, AnimationRates
+
+
+class CognitionStep:
+    """Represents a step in the cognition process."""
+
+    def __init__(
+        self,
+        name: str,
+        icon: str = "🧪",
+        model: str = "default",
+        description: str = "",
+        estimated_tokens: int = 100,
+    ):
+        self.name = name
+        self.icon = icon
+        self.model = model
+        self.description = description
+        self.estimated_tokens = estimated_tokens
+
+
+class CognitionScenarioGenerator:
+    """Generates realistic mock scenarios for different conversation types."""
+
+    def __init__(self):
+        self.scenario_catalog = self._build_scenario_catalog()
+
+    def _build_scenario_catalog(self) -> Dict[str, Dict[str, Any]]:
+        """Build catalog of available scenarios."""
+        return {
+            "coding_session": {
+                "description": "Complete coding session with multiple steps",
+                "complexity": "high",
+                "duration": "medium",
+                "blocks": ["user", "cognition", "assistant", "tool", "assistant"],
+            },
+            "debugging_session": {
+                "description": "Debugging workflow with error analysis",
+                "complexity": "high",
+                "duration": "long",
+                "blocks": ["user", "cognition", "tool", "cognition", "assistant"],
+            },
+            "research_query": {
+                "description": "Research and information gathering",
+                "complexity": "medium",
+                "duration": "medium",
+                "blocks": ["user", "cognition", "tool", "assistant"],
+            },
+            "quick_question": {
+                "description": "Simple question and answer",
+                "complexity": "low",
+                "duration": "short",
+                "blocks": ["user", "cognition", "assistant"],
+            },
+        }
+
+    def create_debugging_scenario(self) -> "EnhancedMockCognitionPlugin":
+        """Create a debugging scenario plugin."""
+        return EnhancedMockCognitionPlugin("debugging_session")
+
+    def create_coding_scenario(self) -> "EnhancedMockCognitionPlugin":
+        """Create a coding scenario plugin."""
+        return EnhancedMockCognitionPlugin("coding_session")
+
+
+# Alias for compatibility
+MockCognitionPlugin = "EnhancedMockCognitionPlugin"
+
+
+class CognitionSubModule:
+    """Sub-module for cognition steps."""
+
+    def __init__(self, name: str, state: str = "pending"):
+        self.name = name
+        self.state = state
+        self.progress = 0.0
+        self.result = MockResult()
+
+
+class MockResult:
+    """Mock result object."""
+
+    def __init__(self):
+        self.content = ""
+        self.confidence_score = 0.8
+
+
+class EnhancedMockCognitionPlugin:
+    """Mock cognition plugin for testing."""
+
+    def __init__(self, scenario_type: str):
+        self.scenario_type = scenario_type
+        self.state = "pending"
+        self.sub_modules: List[CognitionSubModule] = []
+        self.total_tokens = 500
+        self.total_steps = 5
+
+    def get_current_status(self) -> Dict[str, Any]:
+        """Get current plugin status."""
+        return {
+            "state": self.state,
+            "scenario_type": self.scenario_type,
+            "progress": 0.0,
+            "step": "initialization",
+        }
+
+    def add_update_callback(self, callback) -> None:
+        """Add callback for updates."""
+        pass
+
+    async def execute_cognition_pipeline(self, query: str = "") -> Dict[str, Any]:
+        """Execute the cognition pipeline."""
+        await AnimationRates.sleep(0.1)  # Simulate processing
+        return {
+            "result": f"Processed: {query}",
+            "confidence": 0.95,
+            "processing_time": 0.1,
+            "model": "mock-model",
+        }
 
 
 class MockScenarioGenerator:
@@ -118,7 +235,7 @@ class MockScenarioGenerator:
         user_block = self.live_manager.create_live_block("user", user_query)
         blocks.append(user_block)
 
-        await asyncio.sleep(0.2)
+        await AnimationRates.sleep(0.2)
 
         # Cognition with detailed sub-modules
         cognition_block = self.live_manager.create_live_block(
@@ -139,7 +256,7 @@ class MockScenarioGenerator:
         await route_sub.start_mock_simulation("default")
         cognition_block.add_sub_block(route_sub)
 
-        await asyncio.sleep(0.3)
+        await AnimationRates.sleep(0.3)
 
         # Architecture planning sub-module
         arch_sub = LiveBlock(
@@ -155,7 +272,7 @@ class MockScenarioGenerator:
         await arch_sub.start_mock_simulation("default")
         cognition_block.add_sub_block(arch_sub)
 
-        await asyncio.sleep(0.4)
+        await AnimationRates.sleep(0.4)
 
         # Code generation sub-module
         code_sub = LiveBlock(
@@ -177,7 +294,7 @@ class MockScenarioGenerator:
         cognition_block.update_tokens(input_tokens=25, output_tokens=8)
         blocks.append(cognition_block)
 
-        await asyncio.sleep(0.5)
+        await AnimationRates.sleep(0.5)
 
         # Assistant response with code
         assistant_block = self.live_manager.create_live_block(
@@ -197,13 +314,13 @@ class MockScenarioGenerator:
             assistant_block.append_content(chunk)
             assistant_block.update_progress((i + 1) / len(code_responses))
             assistant_block.update_tokens(output_tokens=int(len(chunk.split()) * 1.3))
-            await asyncio.sleep(0.4 + random.uniform(0.1, 0.3))
+            await AnimationRates.sleep(0.4 + random.uniform(0.1, 0.3))
 
         blocks.append(assistant_block)
 
         # Optional tool execution for testing
         if params.get("include_testing", True):
-            await asyncio.sleep(0.3)
+            await AnimationRates.sleep(0.3)
 
             tool_block = self.live_manager.create_live_block(
                 "tool", "🧪 Running code tests..."
@@ -219,7 +336,7 @@ class MockScenarioGenerator:
             for i, stage in enumerate(test_stages):
                 tool_block.update_content(f"🧪 {stage}")
                 tool_block.update_progress((i + 1) / len(test_stages))
-                await asyncio.sleep(0.6)
+                await AnimationRates.sleep(0.6)
 
             tool_block.update_tokens(output_tokens=15)
             blocks.append(tool_block)
@@ -244,7 +361,7 @@ class MockScenarioGenerator:
         user_block = self.live_manager.create_live_block("user", user_error)
         blocks.append(user_block)
 
-        await asyncio.sleep(0.2)
+        await AnimationRates.sleep(0.2)
 
         # Error analysis cognition
         analysis_block = self.live_manager.create_live_block(
@@ -264,7 +381,7 @@ class MockScenarioGenerator:
         await parse_sub.start_mock_simulation("default")
         analysis_block.add_sub_block(parse_sub)
 
-        await asyncio.sleep(0.4)
+        await AnimationRates.sleep(0.4)
 
         # Root cause analysis sub-module
         cause_sub = LiveBlock(
@@ -287,7 +404,7 @@ class MockScenarioGenerator:
         analysis_block.update_tokens(input_tokens=30, output_tokens=12)
         blocks.append(analysis_block)
 
-        await asyncio.sleep(0.3)
+        await AnimationRates.sleep(0.3)
 
         # Code inspection tool
         inspection_block = self.live_manager.create_live_block(
@@ -304,12 +421,12 @@ class MockScenarioGenerator:
         for i, stage in enumerate(inspection_stages):
             inspection_block.update_content(f"🔎 {stage}")
             inspection_block.update_progress((i + 1) / len(inspection_stages))
-            await asyncio.sleep(0.5)
+            await AnimationRates.sleep(0.5)
 
         inspection_block.update_tokens(output_tokens=20)
         blocks.append(inspection_block)
 
-        await asyncio.sleep(0.2)
+        await AnimationRates.sleep(0.2)
 
         # Solution cognition
         solution_block = self.live_manager.create_live_block(
@@ -333,7 +450,7 @@ class MockScenarioGenerator:
         solution_block.update_tokens(input_tokens=15, output_tokens=5)
         blocks.append(solution_block)
 
-        await asyncio.sleep(0.3)
+        await AnimationRates.sleep(0.3)
 
         # Assistant solution
         assistant_block = self.live_manager.create_live_block(
@@ -352,7 +469,7 @@ class MockScenarioGenerator:
             assistant_block.append_content(part)
             assistant_block.update_progress((i + 1) / len(solution_parts))
             assistant_block.update_tokens(output_tokens=int(len(part.split()) * 1.2))
-            await asyncio.sleep(0.4 + random.uniform(0.1, 0.2))
+            await AnimationRates.sleep(0.4 + random.uniform(0.1, 0.2))
 
         blocks.append(assistant_block)
 
@@ -373,7 +490,7 @@ class MockScenarioGenerator:
         user_block = self.live_manager.create_live_block("user", query)
         blocks.append(user_block)
 
-        await asyncio.sleep(0.2)
+        await AnimationRates.sleep(0.2)
 
         # Research cognition
         research_block = self.live_manager.create_live_block(
@@ -394,7 +511,7 @@ class MockScenarioGenerator:
         await understand_sub.start_mock_simulation("default")
         research_block.add_sub_block(understand_sub)
 
-        await asyncio.sleep(0.3)
+        await AnimationRates.sleep(0.3)
 
         # Knowledge retrieval sub-module
         retrieval_sub = LiveBlock(
@@ -416,7 +533,7 @@ class MockScenarioGenerator:
         research_block.update_tokens(input_tokens=20, output_tokens=8)
         blocks.append(research_block)
 
-        await asyncio.sleep(0.4)
+        await AnimationRates.sleep(0.4)
 
         # Knowledge synthesis tool (optional)
         if params.get("include_synthesis", True):
@@ -434,12 +551,12 @@ class MockScenarioGenerator:
             for i, stage in enumerate(synthesis_stages):
                 synthesis_block.update_content(f"📊 {stage}")
                 synthesis_block.update_progress((i + 1) / len(synthesis_stages))
-                await asyncio.sleep(0.5)
+                await AnimationRates.sleep(0.5)
 
             synthesis_block.update_tokens(output_tokens=25)
             blocks.append(synthesis_block)
 
-            await asyncio.sleep(0.3)
+            await AnimationRates.sleep(0.3)
 
         # Assistant research response
         assistant_block = self.live_manager.create_live_block(
@@ -458,7 +575,7 @@ class MockScenarioGenerator:
             assistant_block.append_content(part)
             assistant_block.update_progress((i + 1) / len(research_parts))
             assistant_block.update_tokens(output_tokens=int(len(part.split()) * 1.4))
-            await asyncio.sleep(0.5 + random.uniform(0.1, 0.3))
+            await AnimationRates.sleep(0.5 + random.uniform(0.1, 0.3))
 
         blocks.append(assistant_block)
 
@@ -479,7 +596,7 @@ class MockScenarioGenerator:
         user_block = self.live_manager.create_live_block("user", query)
         blocks.append(user_block)
 
-        await asyncio.sleep(0.1)
+        await AnimationRates.sleep(0.1)
 
         # Quick cognition
         cognition_block = self.live_manager.create_live_block(
@@ -501,7 +618,7 @@ class MockScenarioGenerator:
         cognition_block.update_tokens(input_tokens=10, output_tokens=3)
         blocks.append(cognition_block)
 
-        await asyncio.sleep(0.2)
+        await AnimationRates.sleep(0.2)
 
         # Quick assistant response
         assistant_block = self.live_manager.create_live_block(
@@ -541,7 +658,7 @@ class MockScenarioGenerator:
         user_block = self.live_manager.create_live_block("user", query)
         blocks.append(user_block)
 
-        await asyncio.sleep(0.3)
+        await AnimationRates.sleep(0.3)
 
         # Initial analysis cognition
         initial_analysis = self.live_manager.create_live_block(
@@ -583,7 +700,7 @@ class MockScenarioGenerator:
         initial_analysis.update_tokens(input_tokens=35, output_tokens=15)
         blocks.append(initial_analysis)
 
-        await asyncio.sleep(0.4)
+        await AnimationRates.sleep(0.4)
 
         # First analysis tool
         tool1_block = self.live_manager.create_live_block(
@@ -601,12 +718,12 @@ class MockScenarioGenerator:
         for i, stage in enumerate(tool1_stages):
             tool1_block.update_content(f"📈 {stage}")
             tool1_block.update_progress((i + 1) / len(tool1_stages))
-            await asyncio.sleep(0.6)
+            await AnimationRates.sleep(0.6)
 
         tool1_block.update_tokens(output_tokens=35)
         blocks.append(tool1_block)
 
-        await asyncio.sleep(0.3)
+        await AnimationRates.sleep(0.3)
 
         # Second analysis cognition
         second_analysis = self.live_manager.create_live_block(
@@ -648,7 +765,7 @@ class MockScenarioGenerator:
         second_analysis.update_tokens(input_tokens=28, output_tokens=18)
         blocks.append(second_analysis)
 
-        await asyncio.sleep(0.4)
+        await AnimationRates.sleep(0.4)
 
         # Second analysis tool
         tool2_block = self.live_manager.create_live_block(
@@ -666,12 +783,12 @@ class MockScenarioGenerator:
         for i, stage in enumerate(tool2_stages):
             tool2_block.update_content(f"🛠️ {stage}")
             tool2_block.update_progress((i + 1) / len(tool2_stages))
-            await asyncio.sleep(0.7)
+            await AnimationRates.sleep(0.7)
 
         tool2_block.update_tokens(output_tokens=42)
         blocks.append(tool2_block)
 
-        await asyncio.sleep(0.3)
+        await AnimationRates.sleep(0.3)
 
         # Final synthesis cognition
         synthesis = self.live_manager.create_live_block(
@@ -697,7 +814,7 @@ class MockScenarioGenerator:
         synthesis.update_tokens(input_tokens=45, output_tokens=25)
         blocks.append(synthesis)
 
-        await asyncio.sleep(0.5)
+        await AnimationRates.sleep(0.5)
 
         # Comprehensive assistant response
         assistant_block = self.live_manager.create_live_block(
@@ -718,7 +835,7 @@ class MockScenarioGenerator:
             assistant_block.append_content(section)
             assistant_block.update_progress((i + 1) / len(report_sections))
             assistant_block.update_tokens(output_tokens=int(len(section.split()) * 1.5))
-            await asyncio.sleep(0.6 + random.uniform(0.2, 0.4))
+            await AnimationRates.sleep(0.6 + random.uniform(0.2, 0.4))
 
         blocks.append(assistant_block)
 

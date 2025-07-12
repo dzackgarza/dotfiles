@@ -1,14 +1,9 @@
 {
-  "current_ledger": null,
-  "completed_ledgers": [
-    {
-      "name": "live-inscribed-block-system",
-      "completed_at": "2025-07-10T20:46:38.951326"
-    }
-  ],
+  "current_ledger": "live-inscribed-block-system",
+  "completed_ledgers": [],
   "ledger_states": {
     "live-inscribed-block-system": {
-      "status": "completed",
+      "status": "pending_review",
       "started_at": "2025-07-10T16:37:18.928276",
       "phases": [
         {
@@ -49,8 +44,13 @@
         }
       ],
       "current_phase": 4,
-      "completed_at": "2025-07-10T20:46:38.951331"
+      "rejection_feedback": "Reverted from completed status due to lack of human sign-off.",
+      "rejected_at": "2025-07-11T14:00:00.000000",
+      "review_requested_at": "2025-07-11T15:51:11.367733",
+      "promised_behaviors": [
+        "[ ] User can see \"live\" blocks updating in real-time with mock data"
+      ]
     }
   },
-  "last_updated": "2025-07-10T20:46:38.951333"
+  "last_updated": "2025-07-11T15:51:11.368219"
 }

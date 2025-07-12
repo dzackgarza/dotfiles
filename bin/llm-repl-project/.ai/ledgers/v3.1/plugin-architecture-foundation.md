@@ -25,6 +25,16 @@ V3-minimal violates the fundamental Sacred Timeline principle that "the UI refle
 - [ ] Plugin contracts enforce transparency requirements
 - [ ] Plugin failure handling prevents system crashes
 
+## User-Visible Behaviors
+
+When this ledger is complete, the user will see:
+
+- **All timeline operations flow through validated plugin instances.**
+- **New plugins can be added without modifying the core system.**
+- **Each plugin is testable in complete isolation.**
+- **Plugin contracts enforce transparency requirements.**
+- **Plugin failure handling prevents system crashes.**
+
 ## Technical Approach
 
 ### Architecture Changes
