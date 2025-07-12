@@ -1,0 +1,8 @@
+/* Turn Separator Widget Styling */
+
+.turn-separator {
+    height: 1;
+    width: 100%;
+    margin: 1 0;
+    color: $text-muted;
+}

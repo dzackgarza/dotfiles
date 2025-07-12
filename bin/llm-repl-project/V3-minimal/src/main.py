@@ -43,6 +43,7 @@ class LLMReplApp(App[None]):
 
         # UI components - V3 pattern
         self.prompt_input: PromptInput | None = None
+        self.turn_count = 0  # Track conversation turns
 
     BINDINGS = [
         # Disable Ctrl+Q quit binding by overriding with do-nothing action
@@ -153,7 +154,10 @@ class LLMReplApp(App[None]):
 
         # Add welcome message using V3's pattern
         from .widgets.chatbox import Chatbox
+        from .widgets.turn_separator import TurnSeparator
 
+        # Mark welcome as Turn 1
+        self.turn_count = 1
         welcome_chatbox = Chatbox(AppConfig.WELCOME_MESSAGE, role="system")
         self.chat_container.mount(welcome_chatbox)
 
@@ -184,6 +188,15 @@ class LLMReplApp(App[None]):
         async def safe_process():
             try:
                 from .widgets.chatbox import Chatbox
+                from .widgets.turn_separator import TurnSeparator
+                
+                # Increment turn count
+                self.turn_count += 1
+                
+                # Add turn separator if this isn't the first turn
+                if self.turn_count > 1:
+                    separator = TurnSeparator(self.turn_count)
+                    await self.chat_container.mount(separator)
 
                 # Add user message using V3's pattern
                 user_chatbox = Chatbox(event.text, role="user")
