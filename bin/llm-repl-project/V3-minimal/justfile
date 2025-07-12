@@ -1,0 +1,37 @@
+# V3-minimal justfile - delegates to parent project justfile
+
+# Import all commands from parent justfile but adjust paths
+# This allows hooks to work from the V3-minimal directory
+
+# Core test command (what hooks expect)
+test:
+	cd .. && just test
+
+# Quick test for development
+test-core:
+	pdm run pytest tests/test_core_functionality.py -v
+
+# Quick lint for development
+lint:
+	pdm run black src/ tests/
+	pdm run ruff check --fix src/ tests/
+	pdm run mypy src/
+
+# Run the app
+run:
+	pdm run python -m src.main
+
+# Install dependencies
+install:
+	pdm install
+
+# Help
+help:
+	@echo "V3-minimal justfile commands:"
+	@echo "  just test       - Run full test suite (delegates to parent)"
+	@echo "  just test-core  - Run core functionality tests only"
+	@echo "  just lint       - Run linters and formatters"
+	@echo "  just run        - Run the application"
+	@echo "  just install    - Install dependencies"
+	@echo ""
+	@echo "For full commands, run from project root: cd .. && just help"

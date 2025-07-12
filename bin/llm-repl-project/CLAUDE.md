@@ -20,6 +20,57 @@ LLM REPL - An interactive terminal-based research assistant with plugin-based ar
 
 **Radical Transparency**: Users see the multi-step cognition pipeline in real-time with animations, timers, and token counts.
 
+## SACRED GUI ARCHITECTURE (IMMUTABLE)
+
+**THIS IS THE CANONICAL GUI LAYOUT - DO NOT DEVIATE FROM THIS DESIGN:**
+
+```
+┌─────────────────────────┐
+│ VerticalScroll (SACRED) │ ← Sacred Timeline
+│ ├── System Block       │
+│ ├─────────────────────  │ ← hrule
+│ ├── User Block         │ ← Turn 1 
+│ ├── Cognition Block    │
+│ ├── Assistant Block    │
+│ ├─────────────────────  │ ← hrule
+│ ├── User Block         │ ← Turn 2
+│ ├── Cognition Block    │
+│ ├── Assistant Block    │
+│ ├─────────────────────  │ ← hrule  
+│ ├── User Block         │ ← Turn 3 (current)
+│ └── [scrolls...]       │
+├─────────────────────────┤
+│ VerticalScroll (LIVE)   │ ← Live Cognition Workspace  
+│ ├── Route Query        │ ← sub-module 1
+│ ├── Call Tool          │ ← sub-module 2
+│ ├── Format Output      │ ← sub-module 3
+│ ├── ...                │ ← sub-modules 4 through N
+│ ├── Sub-module N       │ ← final cognition sub-module
+│ └── Assistant Response │ ← always last (streaming)
+├─────────────────────────┤
+│ PromptInput             │
+└─────────────────────────┘
+```
+
+**IMMUTABLE ARCHITECTURE RULES:**
+1. **Sacred Timeline (Top)**: VerticalScroll with simple blocks + hrules between turns
+2. **Live Workspace (Middle)**: VerticalScroll with streaming sub-modules + final assistant response  
+3. **Input (Bottom)**: PromptInput for user queries
+4. **No nested containers**: Each scroll area contains only simple widgets - NO Vertical-in-Vertical
+5. **Turn completion**: Live workspace contents → Sacred Timeline as blocks, workspace clears
+6. **Visual separation**: hrules mark turn boundaries in Sacred Timeline  
+7. **Unlimited scaling**: Live workspace can handle N sub-modules via scrolling
+8. **Assistant response**: Always final sub-module in live workspace
+9. **Workspace visibility**: Live workspace DISAPPEARS/COLLAPSES between turns (2-way split when idle)
+
+**WHY THIS ARCHITECTURE:**
+- Solves ALL layout conflicts between blocks
+- Provides clean separation of concerns
+- **Sacred Timeline uses V3's PROVEN working GUI architecture** (simple VerticalScroll + Chatbox pattern)
+- Live workspace handles complex cognition without interfering with history
+- Both scroll areas use V3's identical, proven scroll architecture
+- **V3 works perfectly** - we copy its exact pattern for both scroll areas
+
 ## Development Rules
 
 ### Coding Conventions

@@ -9,7 +9,6 @@ import pytest
 import asyncio
 from unittest.mock import MagicMock
 
-from src.demos.simple_ux_polish_demo import SimpleUXPolishDemo
 from src.demos.cognition_ux_polish_demo import CognitionUXPolishDemo
 from src.widgets.cognition_pipeline_widget import (
     CognitionStepWidget,
@@ -28,12 +27,6 @@ AnimationClock.set_testing_mode()
 
 class TestCognitionUXPolishDemo:
     """Test the UX polish demonstration features."""
-
-    def test_demo_initialization(self):
-        """Test UX demo initializes correctly."""
-        demo = SimpleUXPolishDemo()
-        assert demo.console is not None
-        assert demo.scenario_generator is not None
 
     @pytest.mark.asyncio
     async def test_progressive_enhancement_demo(self):

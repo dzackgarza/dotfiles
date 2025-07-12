@@ -1,37 +1,101 @@
-# LLM REPL V3 Configuration
-# Users can customize their experience by editing these values
+# V3-minimal Configuration
+# 
+# This YAML file controls all tunable aspects of the LLM REPL application.
+# Changes take effect immediately during development (hot-reload enabled).
 
-# Animation Settings
+app:
+  title: "LLM REPL V3-minimal"
+  subtitle: "Sacred Timeline • Elegant Typography"
+  default_theme: "nord"
+  welcome_message: |
+    🔮 **Welcome to LLM REPL V3-minimal**
+    
+    Sacred Timeline • Live Blocks • Elegant Typography
+    *Ask anything to begin your research session...*
+
 animation:
-  # Typewriter animation speeds (characters per second)
-  # Speed guide:
-  #   - 50-100: Very slow, good for careful reading
-  #   - 200-500: Moderate speed, balanced experience  
-  #   - 1000-2000: Fast, snappy updates
-  #   - 3000-5000: Ultra-fast, power user speeds
-  #   - 8000+: Near-instant, no animation delay
-  
-  typewriter_speeds:
-    initial: 200        # chars/sec - Initial pipeline messages
-    progress: 200       # chars/sec - Progress updates during pipeline  
-    completion: 200     # chars/sec - Sub-block completion messages
-    summary: 200        # chars/sec - Final summary messages
-  
-  # Quick presets (uncomment to use instead of custom speeds above)
-  # preset: "slow"     # 100-200 chars/sec
-  # preset: "medium"   # 500-1000 chars/sec  
-  # preset: "fast"     # 1500-2500 chars/sec
-  # preset: "ultra"    # 3000-5000 chars/sec
-  # preset: "instant"  # 8000+ chars/sec
+  fps:
+    production: 60      # Smooth animations in production
+    development: 120    # Higher FPS for development
+    testing: 1000       # Fast animations for tests
+    
+  typewriter_speeds:    # Characters per second
+    initial: 200        # Starting content animation (preserved from existing)
+    progress: 200       # Progress updates (preserved from existing)
+    completion: 200     # Completion messages (preserved from existing)  
+    summary: 200        # Summary content (preserved from existing)
+    default: 1800       # Fallback speed
+    
+  transitions:          # Duration in seconds
+    live_to_inscribed: 0.3    # Live -> inscribed transition
+    progress_bar: 0.2         # Progress bar animations  
+    token_counter: 0.5        # Token count animations
+    fade_in: 0.2              # Fade in transitions
+    fade_out: 0.15            # Fade out transitions
 
-# UI Settings  
+themes:
+  nord:
+    primary: "#88c0d0"     # Frost blue
+    secondary: "#b48ead"   # Aurora purple  
+    accent: "#81a1c1"      # Frost light blue
+    warning: "#ebcb8b"     # Aurora yellow
+    error: "#bf616a"       # Aurora red
+    success: "#a3be8c"     # Aurora green
+    dark: true
+    
+  gruvbox:
+    primary: "#83a598"     # Aqua
+    secondary: "#d3869b"   # Purple
+    accent: "#fabd2f"      # Yellow
+    warning: "#fe8019"     # Orange  
+    error: "#fb4934"       # Red
+    success: "#b8bb26"     # Green
+    dark: true
+    
+  tokyo_night:
+    primary: "#7aa2f7"     # Blue
+    secondary: "#bb9af7"   # Purple
+    accent: "#7dcfff"      # Cyan
+    warning: "#e0af68"     # Yellow
+    error: "#f7768e"       # Red
+    success: "#9ece6a"     # Green
+    dark: true
+
 ui:
-  theme: "dracula"           # Theme: dracula, tokyo_night, etc.
-  auto_scroll: true          # Auto-scroll timeline to bottom
-  max_content_preview: 50    # Characters shown in content preview
+  timeline:
+    margin_bottom: 1
+    padding: [0, 1]
+    max_content_preview: 50    # Preserved from existing config
+    
+  widgets:
+    live_block:
+      border_radius: "round"
+      padding: 1
+      min_height: 0
+      
+    timeline_block:
+      margin_bottom: 1
+      padding: [0, 1]
 
-# Performance Settings
-performance:
-  animation_fps: 60          # Frame rate for smooth animations
-  enable_batching: true      # Enable batching for ultra-high speeds
-  batch_threshold: 2000      # Speed threshold for batching mode (chars/sec)
+mock_scenarios:
+  cognition:
+    route_query:
+      time_range: [0.3, 0.8]        # Seconds for route analysis
+      tokens_in_range: [5, 15]       # Input tokens
+      tokens_out_range: [1, 5]       # Output tokens
+      
+    call_tool:
+      time_range: [1.5, 3.0]        # Seconds for tool execution
+      tokens_in_range: [10, 20]      # Input tokens
+      tokens_out_range: [1000, 1500] # Output tokens
+      
+    format_output:
+      time_range: [0.8, 1.5]        # Seconds for formatting
+      tokens_in_range: [400, 600]    # Input tokens  
+      tokens_out_range: [200, 300]   # Output tokens
+
+dev:
+  hot_reload: true          # Enable hot-reload in development
+  validation: "strict"      # Configuration validation level
+  auto_save_theme: true     # Auto-save theme changes
+  debug_mode: false         # Enable debug output

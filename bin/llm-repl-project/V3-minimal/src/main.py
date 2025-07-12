@@ -8,12 +8,11 @@ from textual.containers import Horizontal, Vertical
 from textual.theme import Theme
 
 from .config import AppConfig, ThemeConfig
-from .core import InputProcessor, ResponseGenerator
-from .core.async_input_processor import AsyncInputProcessor
+from .core import ResponseGenerator
+from .core.unified_async_processor import UnifiedAsyncInputProcessor
 from .ui import TimelineViewController
 from .widgets.prompt_input import PromptInput
-from .widgets.timeline import TimelineView
-from .sacred_timeline import timeline
+from .widgets.unified_timeline_widget import UnifiedTimelineWidget
 from .theme_picker import InteractiveThemeProvider
 from .core.animation_clock import AnimationClock
 
@@ -37,17 +36,15 @@ class LLMReplApp(App[None]):
         # Set current theme using Textual's theme system
         self._current_theme = self._load_saved_theme()
 
-        # Core components following architectural patterns
+        # Core components with unified architecture
         self.response_generator = ResponseGenerator(app=self)
-        # Use async processor for real live updates
-        self.async_input_processor = AsyncInputProcessor(
-            timeline, self.response_generator, app=self
+        # Use unified async processor (eliminates dual-system conflicts)
+        self.unified_async_processor = UnifiedAsyncInputProcessor(
+            self.response_generator, app=self
         )
-        # Keep sync processor for backwards compatibility
-        self.input_processor = InputProcessor(timeline, self.response_generator)
 
         # UI components
-        self.timeline_view: TimelineView | None = None
+        self.unified_timeline_widget: UnifiedTimelineWidget | None = None
         self.prompt_input: PromptInput | None = None
         self.timeline_controller: TimelineViewController | None = None
 
@@ -118,10 +115,11 @@ class LLMReplApp(App[None]):
             return False
 
     def compose(self) -> ComposeResult:
-        """Create the application layout - terminal-like, no header/footer"""
+        """Create the application layout with unified timeline"""
         with Vertical(id="main-container"):
-            # Timeline view (scrolls bottom-up)
-            yield TimelineView(id="timeline-container")
+            # Timeline widget (handles scrolling internally like V3)
+            unified_timeline = self.unified_async_processor.get_timeline()
+            yield UnifiedTimelineWidget(unified_timeline, id="timeline-container")
 
             # Input area
             with Horizontal(id="input-container"):
@@ -152,18 +150,24 @@ class LLMReplApp(App[None]):
         self.theme = self._current_theme
 
         # Initialize UI components
-        self.timeline_view = self.query_one("#timeline-container", TimelineView)
+        self.unified_timeline_widget = self.query_one(
+            "#timeline-container", UnifiedTimelineWidget
+        )
         self.prompt_input = self.query_one("#prompt-input", PromptInput)
 
-        # Create and wire timeline controller
-        self.timeline_controller = TimelineViewController(self.timeline_view)
-        timeline.add_observer(self.timeline_controller)
-
-        # Add welcome message to timeline
-        timeline.add_block(
+        # Add welcome message to unified timeline
+        welcome_block = self.unified_async_processor.get_timeline().add_live_block(
             role="system",
             content=AppConfig.WELCOME_MESSAGE,
         )
+
+        # Immediately inscribe welcome message using Textual's worker system
+        async def inscribe_welcome():
+            await self.unified_async_processor.get_timeline().inscribe_block(
+                welcome_block.id
+            )
+
+        self.run_worker(inscribe_welcome(), name="inscribe_welcome")
 
         # Set focus to input area
         self.prompt_input.focus()
@@ -173,19 +177,30 @@ class LLMReplApp(App[None]):
     ) -> None:
         """Handle user input submission - delegate to async input processor"""
 
-        # Run async processing in the background with error handling
+        # Run unified async processing with error handling
         async def safe_process():
             try:
-                await self.async_input_processor.process_user_input_async(event.text)
+                await self.unified_async_processor.process_user_input_async(event.text)
             except Exception as e:
-                # Force visible error - add to timeline so user can see it
-                timeline.add_block(
+                # Force visible error - add to unified timeline
+                error_block = self.unified_async_processor.get_timeline().add_live_block(
                     role="system",
-                    content=f"❌ **Live Block System Error**: {str(e)}\n\nFalling back to basic response...",
+                    content=f"❌ **Unified Timeline Error**: {str(e)}\n\nFalling back to basic response...",
                 )
+                await self.unified_async_processor.get_timeline().inscribe_block(
+                    error_block.id
+                )
+
                 # Fallback to basic response
                 response = self.response_generator.generate_response(event.text)
-                timeline.add_block(role="assistant", content=response)
+                fallback_block = (
+                    self.unified_async_processor.get_timeline().add_live_block(
+                        role="assistant", content=response
+                    )
+                )
+                await self.unified_async_processor.get_timeline().inscribe_block(
+                    fallback_block.id
+                )
 
         self.run_worker(safe_process(), name="process_input")
 

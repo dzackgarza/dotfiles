@@ -78,22 +78,22 @@ run-fast: lint-v3
 
 # === Testing Commands ===
 
-# Run comprehensive test suite (linters + tests) for V3-minimal
+# Run comprehensive test suite (linters + tests) for V3-minimal  
 test: validate-markup validate-css
-	@bash scripts/dim_echo.sh "🧪 Running comprehensive test suite for V3-minimal..."
+	@bash scripts/dim_echo.sh "🧪 Running comprehensive test suite for V3-minimal..." 2>/dev/null || echo "🧪 Running comprehensive test suite for V3-minimal..."
 	cd V3-minimal && export PATH="/home/dzack/.local/bin:/usr/bin:$$PATH" && \
-	bash ../scripts/dim_echo.sh "🎨 Auto-formatting code..." && \
+	(bash ../scripts/dim_echo.sh "🎨 Auto-formatting code..." 2>/dev/null || echo "🎨 Auto-formatting code...") && \
 	pdm run black src/ tests/ && \
 	pdm run ruff check --fix src/ tests/ && \
-	bash ../scripts/dim_echo.sh "📋 Running Ruff linter..." && \
+	(bash ../scripts/dim_echo.sh "📋 Running Ruff linter..." 2>/dev/null || echo "📋 Running Ruff linter...") && \
 	pdm run ruff check src/ tests/ && \
-	bash ../scripts/dim_echo.sh "🎨 Running Black formatter check..." && \
+	(bash ../scripts/dim_echo.sh "🎨 Running Black formatter check..." 2>/dev/null || echo "🎨 Running Black formatter check...") && \
 	pdm run black --check --diff src/ tests/ && \
-	bash ../scripts/dim_echo.sh "🔍 Running MyPy type checker..." && \
+	(bash ../scripts/dim_echo.sh "🔍 Running MyPy type checker..." 2>/dev/null || echo "🔍 Running MyPy type checker...") && \
 	pdm run mypy src/ && \
-	bash ../scripts/dim_echo.sh "🧪 Running pytest..." && \
+	(bash ../scripts/dim_echo.sh "🧪 Running pytest..." 2>/dev/null || echo "🧪 Running pytest...") && \
 	pdm run pytest tests/ -v --tb=short && \
-	bash ../scripts/dim_echo.sh "✅ All tests passed!"
+	(bash ../scripts/dim_echo.sh "✅ All tests passed!" 2>/dev/null || echo "✅ All tests passed!")
 
 # Quick lint-only check for V3-minimal
 lint:
@@ -155,12 +155,12 @@ show-configs:
 
 # Validate markup syntax in the codebase
 validate-markup:
-	@bash scripts/dim_echo.sh "🔍 Validating Rich markup syntax..."
+	@(bash scripts/dim_echo.sh "🔍 Validating Rich markup syntax..." 2>/dev/null || echo "🔍 Validating Rich markup syntax...")
 	cd V3-minimal && export PATH="/home/dzack/.local/bin:/usr/bin:$$PATH" && pdm run python -m src.markup_validator src/
 
 # Validate CSS syntax with stylelint (if available)
 validate-css:
-	@bash scripts/dim_echo.sh "🎨 Validating CSS syntax..."
+	@(bash scripts/dim_echo.sh "🎨 Validating CSS syntax..." 2>/dev/null || echo "🎨 Validating CSS syntax...")
 	@if command -v stylelint >/dev/null 2>&1; then \
 		echo "Running stylelint on .tcss files..."; \
 		find V3-minimal/src -name "*.tcss" -exec stylelint {} \; || echo "CSS linting found issues"; \

@@ -1,5 +1,12 @@
 """Demo applications for showcasing Sacred Timeline features."""
 
-from .live_block_demo import LiveBlockDemoApp, main
+from .cognition_ux_polish_demo import CognitionUXPolishDemo
+from .live_streaming_demo import LiveStreamingDemoApp, main
+from .static_behavior_proof import generate_behavior_evidence
 
-__all__ = ["LiveBlockDemoApp", "main"]
+__all__ = [
+    "CognitionUXPolishDemo",
+    "LiveStreamingDemoApp",
+    "main",
+    "generate_behavior_evidence",
+]

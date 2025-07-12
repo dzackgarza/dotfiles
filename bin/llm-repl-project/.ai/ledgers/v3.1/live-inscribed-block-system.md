@@ -1,38 +1,47 @@
-# Live vs Inscribed Block System
+# Sacred GUI Architecture Implementation
 
-**Branch:** feat/live-inscribed-blocks
-**Summary:** Implement the core Sacred Timeline concept of "live" vs "inscribed" block states with seamless transitions, using mocked data to prove the UI paradigm works.
+**Branch:** feat/sacred-gui-architecture
+**Summary:** Implement the canonical Sacred GUI layout with three distinct areas: Sacred Timeline (top), Live Workspace (middle), and Input (bottom). This replaces the single-timeline approach with the immutable dual-scroll architecture defined in CLAUDE.md.
 **Status:** Planning
 **Created:** 2025-07-10
-**Updated:** 2025-07-10
+**Updated:** 2025-07-12
 
 ## Context
 
 ### Problem Statement
-The Sacred Timeline's core innovation is **radical transparency** through live blocks that show AI processing in real-time, then transition to permanent inscribed state. This concept needs proof-of-concept validation before building complex infrastructure. We must demonstrate that live → inscribed transitions create compelling UX with mocked data.
+The current single-timeline architecture conflicts with the Sacred GUI design. We need to implement the canonical three-area layout: Sacred Timeline for completed turns, Live Workspace for active cognition processing, and PromptInput at bottom. This architecture solves all layout conflicts and provides clean separation between history and active processing.
 
 ### Success Criteria
-- [ ] Live blocks animate convincingly with mock timers, tokens, and streaming text
-- [ ] Seamless visual transition from live → inscribed state
-- [ ] LiveBlockManager handles transient blocks without timeline pollution
-- [ ] User understands the transparency concept intuitively
-- [ ] Performance is acceptable with many simultaneous live blocks
+- [ ] Three-area Sacred GUI layout implemented correctly
+- [ ] Sacred Timeline displays completed turns with hrule separators
+- [ ] Live Workspace shows/hides based on cognition state
+- [ ] Turn completion moves Live Workspace → Sacred Timeline
+- [ ] No nested container violations (simple widgets only)
+
+### User-Visible Behaviors
+When this ledger is complete, the user will see:
+
+1. **Three distinct areas: Sacred Timeline (top), Live Workspace (middle), Input (bottom)**
+2. **Sacred Timeline shows completed conversation turns separated by horizontal rules**
+3. **Live Workspace appears during cognition with streaming sub-modules**
+4. **Live Workspace disappears/collapses when idle (2-way split layout)**
+5. **Turn completion transfers Live Workspace content to Sacred Timeline as permanent blocks**
 
 ### Acceptance Criteria
-- [ ] User can see "live" blocks updating in real-time with mock data
-- [ ] Live blocks clearly distinguish from static inscribed blocks
-- [ ] Transition animation feels natural and informative
-- [ ] Timeline maintains append-only integrity during live operations
-- [ ] Mock scenarios cover various conversation types and complexities
+- [ ] Sacred Timeline contains only completed User → Cognition → Assistant turns
+- [ ] Live Workspace dynamically shows/hides based on processing state
+- [ ] Each scroll area contains simple widgets with no nested containers
+- [ ] hrules visually separate turns in Sacred Timeline
+- [ ] Assistant response always appears as final sub-module in Live Workspace
 
 ## Technical Approach
 
 ### Architecture Changes
-1. **LiveBlock**: Mutable blocks in transient state with real-time updates
-2. **InscribedBlock**: Immutable blocks permanently added to Sacred Timeline
-3. **LiveBlockManager**: Manages live blocks before timeline inscription
-4. **TransitionAnimator**: Handles live → inscribed visual transitions
-5. **MockDataGenerator**: Sophisticated fake data for realistic testing
+1. **SacredTimelineWidget**: VerticalScroll containing completed conversation turns
+2. **LiveWorkspaceWidget**: VerticalScroll containing active cognition sub-modules
+3. **WorkspaceManager**: Controls Live Workspace visibility and content transfer
+4. **TurnSeparator**: hrule widgets that separate conversation turns
+5. **ThreeAreaLayout**: Main container organizing Sacred Timeline + Live Workspace + Input
 
 ### Implementation Plan
 1. **Phase 1: Live Block Foundation**

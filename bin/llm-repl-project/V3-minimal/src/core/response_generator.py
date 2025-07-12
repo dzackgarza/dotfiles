@@ -7,7 +7,11 @@ for future LLM integration following the plugin-based architecture.
 from typing import Dict, Optional, TYPE_CHECKING
 import re
 
-from ..config import AppConfig, ThemeConfig
+try:
+    from ..config import AppConfig, ThemeConfig
+except ImportError:
+    # Fallback for standalone usage
+    from src.config import AppConfig, ThemeConfig
 
 if TYPE_CHECKING:
     from ..main import LLMReplApp

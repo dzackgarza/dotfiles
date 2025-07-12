@@ -12,14 +12,48 @@ from typing import Optional, Callable
 class AnimationClock:
     """Global animation timing controller with configurable FPS."""
 
-    # Default settings for different environments
-    PRODUCTION_FPS = 60  # Smooth animations for users
-    DEVELOPMENT_FPS = 120  # Faster feedback for developers
-    TESTING_FPS = 1000  # Super fast for tests (but still real animations)
+    # Fallback values if configuration isn't available
+    _DEFAULT_PRODUCTION_FPS = 60
+    _DEFAULT_DEVELOPMENT_FPS = 120
+    _DEFAULT_TESTING_FPS = 1000
 
-    _fps: int = PRODUCTION_FPS
-    _frame_duration: float = 1.0 / PRODUCTION_FPS
+    _fps: int = _DEFAULT_PRODUCTION_FPS
+    _frame_duration: float = 1.0 / _DEFAULT_PRODUCTION_FPS
     _last_frame_time: Optional[float] = None
+    _config_loaded: bool = False
+
+    # Config-loaded FPS values (set by _load_config_if_needed)
+    _production_fps: int = _DEFAULT_PRODUCTION_FPS
+    _development_fps: int = _DEFAULT_DEVELOPMENT_FPS
+    _testing_fps: int = _DEFAULT_TESTING_FPS
+
+    @classmethod
+    def _load_config_if_needed(cls) -> None:
+        """Load configuration if not already loaded"""
+        if cls._config_loaded:
+            return
+
+        try:
+            # Try different import paths for flexibility
+            try:
+                from ..config.enhanced_config import get_config_loader
+            except ImportError:
+                from src.config.enhanced_config import get_config_loader
+
+            loader = get_config_loader()
+            config = loader.config
+
+            # Use configuration values
+            cls._production_fps = config.animation.fps.production
+            cls._development_fps = config.animation.fps.development
+            cls._testing_fps = config.animation.fps.testing
+            cls._config_loaded = True
+        except (ImportError, Exception):
+            # Configuration not available, use defaults
+            cls._production_fps = cls._DEFAULT_PRODUCTION_FPS
+            cls._development_fps = cls._DEFAULT_DEVELOPMENT_FPS
+            cls._testing_fps = cls._DEFAULT_TESTING_FPS
+            cls._config_loaded = True
 
     @classmethod
     def set_fps(cls, fps: int) -> None:
@@ -93,26 +127,31 @@ class AnimationClock:
     @classmethod
     def set_production_mode(cls) -> None:
         """Set production FPS for smooth user experience."""
-        cls.set_fps(cls.PRODUCTION_FPS)
+        cls._load_config_if_needed()
+        cls.set_fps(cls._production_fps)
 
     @classmethod
     def set_development_mode(cls) -> None:
         """Set development FPS for faster feedback."""
-        cls.set_fps(cls.DEVELOPMENT_FPS)
+        cls._load_config_if_needed()
+        cls.set_fps(cls._development_fps)
 
     @classmethod
     def set_testing_mode(cls) -> None:
         """Set testing FPS for fast tests that still validate real behavior."""
-        cls.set_fps(cls.TESTING_FPS)
+        cls._load_config_if_needed()
+        cls.set_fps(cls._testing_fps)
 
     @classmethod
     def get_mode_info(cls) -> dict:
         """Get information about current animation mode."""
-        if cls._fps == cls.PRODUCTION_FPS:
+        cls._load_config_if_needed()
+
+        if cls._fps == cls._production_fps:
             mode = "production"
-        elif cls._fps == cls.DEVELOPMENT_FPS:
+        elif cls._fps == cls._development_fps:
             mode = "development"
-        elif cls._fps == cls.TESTING_FPS:
+        elif cls._fps == cls._testing_fps:
             mode = "testing"
         else:
             mode = "custom"

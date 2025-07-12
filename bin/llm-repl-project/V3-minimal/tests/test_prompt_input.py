@@ -1,7 +1,7 @@
 import pytest
 from src.main import LLMReplApp
 from src.widgets.prompt_input import PromptInput
-from src.widgets.timeline import TimelineView
+from src.widgets.unified_timeline_widget import UnifiedTimelineWidget
 from src.sacred_timeline import timeline
 
 
@@ -17,7 +17,7 @@ class TestPromptInput:
     async def test_enter_sends_message(self):
         """Test that pressing Enter sends the message to the timeline."""
         async with LLMReplApp().run_test() as app:
-            timeline_view = app.app.query_one(TimelineView)
+            timeline_view = app.app.query_one(UnifiedTimelineWidget)
             prompt_input = app.app.query_one(PromptInput)
 
             test_message = "Hello, Textual!"
@@ -28,13 +28,22 @@ class TestPromptInput:
             await app.pause(1.0)  # Increased pause duration for async processing
 
             # Assert that the user message is in the timeline
-            # We expect 4 blocks: system, user, cognition, assistant
-            assert len(timeline_view.blocks) >= 2  # At minimum, system and user
-            user_block = timeline_view.blocks[
-                1
-            ]  # User block is now the second block after system message
-            assert user_block.role == "user"
-            assert user_block.content == test_message
+            # We expect blocks: system, user, cognition, assistant
+            blocks = timeline_view.unified_timeline.get_all_blocks()
+            assert len(blocks) >= 2  # At minimum, system and user
+
+            # Find user block (should be inscribed)
+            user_blocks = [b for b in blocks if b.role == "user"]
+            assert len(user_blocks) >= 1
+            user_block = user_blocks[0]
+
+            # Check content - access differently for inscribed vs live blocks
+            if hasattr(user_block, "content"):
+                # For inscribed blocks, content is the final content
+                assert test_message in user_block.content
+            else:
+                # For live blocks, content might have extra inscription messages
+                assert test_message in user_block.data.content
 
             # Assert that the input field is cleared
             assert prompt_input.text == ""
@@ -56,8 +65,10 @@ class TestPromptInput:
             assert prompt_input.text == f"{test_message_part1}\n{test_message_part2}"
 
             # Assert that no message was sent to the timeline
-            timeline_view = app.app.query_one(TimelineView)
-            assert len(timeline_view.blocks) == 1
+            timeline_view = app.app.query_one(UnifiedTimelineWidget)
+            # Check unified timeline instead of blocks property
+            blocks = timeline_view.unified_timeline.get_all_blocks()
+            assert len(blocks) == 1  # Only welcome message
 
     async def test_cursor_escaping_top(self):
         """Test that pressing Up arrow at the top of the input sends CursorEscapingTop message."""
