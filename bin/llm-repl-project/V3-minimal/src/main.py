@@ -219,6 +219,11 @@ class LLMReplApp(App[None]):
             try:
                 from .widgets.chatbox import Chatbox
                 from .widgets.turn_separator import TurnSeparator
+                
+                # Check for /inscribe command
+                if event.text.strip() == "/inscribe":
+                    await self.unified_async_processor.manual_inscribe()
+                    return
 
                 # Increment turn count
                 self.turn_count += 1
@@ -361,6 +366,13 @@ Debug Screenshots: {len(list(self.debug_dir.glob('*.svg')))} saved"""
         # Handle Ctrl+C globally for quit
         if event.key == "ctrl+c":
             self.exit()
+            return
+        
+        # Handle Ctrl+I for manual inscribe
+        if event.key == "ctrl+i":
+            async def inscribe():
+                await self.unified_async_processor.manual_inscribe()
+            self.run_worker(inscribe())
             return
 
         # Let other bindings work normally (Ctrl+Q, Ctrl+P, etc.)

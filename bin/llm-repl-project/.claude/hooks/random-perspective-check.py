@@ -48,9 +48,12 @@ def main():
     
     log_hook_execution("random-perspective-check", tool_name, "approve", f"Triggered: {message}")
     
-    # Show message to Claude via stderr
-    print(message, file=sys.stderr)
-    sys.exit(0)  # Approve but with message
+    # Use JSON format for PreToolUse hooks
+    print(json.dumps({
+        "decision": "approve",
+        "reason": message
+    }))
+    sys.exit(0)
 
 if __name__ == "__main__":
     main()

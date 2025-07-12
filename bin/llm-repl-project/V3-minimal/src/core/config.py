@@ -20,6 +20,9 @@ class Config:
     COGNITION_PROCESSING_DURATION = 5.0  # seconds
     SUBMODULE_PROCESSING_DURATION = 5.0  # seconds per sub-module
     
+    # Manual inscribe mode - user must trigger inscription
+    MANUAL_INSCRIBE_MODE = False  # Set to True to require manual inscription
+    
     @classmethod
     def set_cognition_duration(cls, duration: float):
         """Set the cognition processing duration."""

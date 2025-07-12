@@ -18,8 +18,6 @@ class InteractiveThemeProvider(Provider):
 
     async def search(self, query: str) -> Hits:
         """Search for themes and generate commands"""
-        matcher = self.matcher(query)
-
         app = self.app
 
         # Get available themes from the app
@@ -30,21 +28,39 @@ class InteractiveThemeProvider(Provider):
 
             available_themes = ThemeConfig.AVAILABLE_THEMES
 
-        for theme_name, theme_config in available_themes.items():
-            score = matcher.match(theme_name)
-            if score > 0:
+        # If query is empty, show all themes
+        if not query:
+            for theme_name, theme_config in available_themes.items():
                 # Create description with emoji for visual appeal
                 description = theme_config.get(
                     "description", f"Switch to {theme_name} theme"
                 )
 
                 yield Hit(
-                    score=score,
+                    score=1.0,
                     match_display=f"🎨 {theme_name}",
                     text=f"Switch to {theme_name} theme",
                     help=description,
                     command=self._make_switch_command(theme_name),
                 )
+        else:
+            # Filter based on query
+            matcher = self.matcher(query)
+            for theme_name, theme_config in available_themes.items():
+                score = matcher.match(theme_name)
+                if score > 0:
+                    # Create description with emoji for visual appeal
+                    description = theme_config.get(
+                        "description", f"Switch to {theme_name} theme"
+                    )
+
+                    yield Hit(
+                        score=score,
+                        match_display=f"🎨 {theme_name}",
+                        text=f"Switch to {theme_name} theme",
+                        help=description,
+                        command=self._make_switch_command(theme_name),
+                    )
 
     def _make_switch_command(self, theme_name: str):
         """Create a command function that switches to the specified theme"""

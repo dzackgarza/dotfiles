@@ -13,7 +13,7 @@
 
 /* Fixed height during cognition processing */
 .live-workspace.processing {
-    height: 8 !important;  /* Reduced from 12 - more reasonable height */
+    height: 50% !important;  /* 50% height for debugging - easier to see processing */
     overflow-y: auto;  /* Force scrollbar if content exceeds */
 }
 

@@ -8,6 +8,7 @@ Eliminates ownership conflicts by using single timeline.
 import asyncio
 from typing import TYPE_CHECKING, TypedDict, Optional
 
+from .config import Config
 from .unified_timeline import UnifiedTimelineManager
 from .live_blocks import LiveBlock
 from ..cognition import CognitionManager, CognitionEvent, CognitionResult
@@ -41,6 +42,7 @@ class UnifiedAsyncInputProcessor:
         self.response_generator = response_generator
         self.timeline_manager = UnifiedTimelineManager()
         self.app = app
+        self._pending_inscription = None  # Store data for manual inscription
 
         # Initialize cognition manager
         self.cognition_manager = CognitionManager()
@@ -63,6 +65,20 @@ class UnifiedAsyncInputProcessor:
     def get_timeline(self):
         """Get the unified timeline for UI integration"""
         return self.timeline_manager.timeline
+    
+    async def manual_inscribe(self):
+        """Manually inscribe pending turn data to timeline"""
+        if self._pending_inscription:
+            print("DEBUG: Manual inscription triggered")
+            # Temporarily restore current_turn_data
+            self.current_turn_data = self._pending_inscription
+            await self._inscribe_complete_turn()
+            self._pending_inscription = None
+            if self.app:
+                self.app.notify("Turn inscribed to timeline!", severity="information")
+        else:
+            if self.app:
+                self.app.notify("No pending inscription to process.", severity="warning")
 
     async def process_user_input_async(self, user_input: str) -> None:
         """Process user input with atomic turn inscription
@@ -125,10 +141,19 @@ class UnifiedAsyncInputProcessor:
             if hasattr(workspace, "hide_workspace"):
                 workspace.hide_workspace()
 
-        # NOW inscribe the complete turn atomically
-        print("DEBUG: About to inscribe complete turn")
-        await self._inscribe_complete_turn()
-        print("DEBUG: Finished inscribing complete turn")
+        # Check if manual inscribe mode is enabled
+        if Config.MANUAL_INSCRIBE_MODE:
+            print("DEBUG: Manual inscribe mode - waiting for user command")
+            # Store the pending inscription data
+            self._pending_inscription = self.current_turn_data.copy() if hasattr(self, 'current_turn_data') else None
+            # Show a notification to the user
+            if self.app:
+                self.app.notify("Processing complete. Type '/inscribe' or press Ctrl+I to inscribe to timeline.", severity="information")
+        else:
+            # NOW inscribe the complete turn atomically
+            print("DEBUG: About to inscribe complete turn")
+            await self._inscribe_complete_turn()
+            print("DEBUG: Finished inscribing complete turn")
 
     async def _inscribe_complete_turn(self) -> None:
         """Inscribe complete turn (user + cognition + assistant) to timeline"""

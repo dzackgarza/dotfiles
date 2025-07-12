@@ -10,15 +10,16 @@ class DebugCommandProvider(Provider):
     async def search(self, query: str) -> Hits:
         """Search for debug commands"""
         
-        def make_hit(name: str, description: str, command_name: str) -> Hit:
+        def make_hit(name: str, description: str, command_name: str, score: float = 1.0) -> Hit:
             """Create a command hit"""
             def run_command() -> None:
                 self.app.action_debug_command(command_name)
             
             return Hit(
-                score=1.0,
+                score=score,
                 match_display=name,
                 command=run_command,
+                help=description,
             )
 
         commands = [
@@ -32,11 +33,17 @@ class DebugCommandProvider(Provider):
             ("Theme Info", "Show current theme details", "theme_info"),
         ]
 
-        matcher = self.matcher(query)
-        
-        for name, description, command_name in commands:
-            if not query or matcher.match(name):
+        # If query is empty, show all commands
+        if not query:
+            for name, description, command_name in commands:
                 yield make_hit(name, description, command_name)
+        else:
+            # Filter based on query
+            matcher = self.matcher(query)
+            for name, description, command_name in commands:
+                score = matcher.match(name)
+                if score > 0:
+                    yield make_hit(name, description, command_name, score)
 
 
 def action_debug_command(self, command: str) -> None:
