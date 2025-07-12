@@ -163,11 +163,11 @@ class LLMReplApp(App[None]):
         welcome_chatbox = Chatbox(AppConfig.WELCOME_MESSAGE, role="system")
         self.chat_container.mount(welcome_chatbox)
 
-        # Add idle animation to staging area
-        from .widgets.idle_animation import IdleAnimation
+        # Add staging separator to staging area
+        from .widgets.staging_separator import StagingSeparator
 
-        idle_animation = IdleAnimation()
-        self.staging_container.mount(idle_animation)
+        self.staging_separator = StagingSeparator()
+        self.staging_container.mount(self.staging_separator)
 
         # Set focus to input area
         self.prompt_input.focus()

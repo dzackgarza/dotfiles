@@ -14,6 +14,7 @@ from typing import List, Dict, Optional
 import requests
 from dotenv import load_dotenv
 from datetime import datetime
+import tiktoken
 
 
 class EnhancedGroqCodeReviewer:
@@ -37,6 +38,11 @@ class EnhancedGroqCodeReviewer:
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json"
         }
+        # Initialize tokenizer for token counting
+        try:
+            self.tokenizer = tiktoken.encoding_for_model("gpt-3.5-turbo")  # Close approximation for most models
+        except:
+            self.tokenizer = tiktoken.get_encoding("cl100k_base")  # Fallback
         
     def get_available_models(self) -> List[Dict]:
         """Fetch list of available models from Groq API"""
@@ -66,6 +72,14 @@ class EnhancedGroqCodeReviewer:
                 return model["id"]
                 
         return available_models[0]["id"] if available_models else None
+    
+    def count_tokens(self, text: str) -> int:
+        """Count tokens in text using tiktoken"""
+        try:
+            return len(self.tokenizer.encode(text))
+        except:
+            # Fallback: rough estimate of 4 chars per token
+            return len(text) // 4
     
     def gather_context(self, file_path: Path) -> Dict:
         """Gather contextual information about the file"""
@@ -344,18 +358,39 @@ Please provide a comprehensive, context-aware code review considering:
             # Create enhanced system prompt
             system_prompt = """You are a senior software engineer conducting a thorough, context-aware code review. 
 
+CRITICAL GUIDELINES:
+1. **Respect Framework Patterns**: Don't suggest changes to well-established framework patterns unless there's a clear bug or security issue. Mixed sync/async in tests, framework-specific testing utilities, and standard conventions should be preserved.
+
+2. **Context-Specific Advice**: Avoid generic recommendations. Every suggestion must be directly relevant to the detected project type, framework, and specific code context. For example, don't suggest "add caching" unless you see clear performance bottlenecks.
+
+3. **Framework Expertise**: If the code uses specific frameworks (Textual, pytest, Django, etc.), demonstrate understanding of their conventions. Don't flag framework-standard practices as issues.
+
+4. **Testing Context Awareness**: For test files, understand testing patterns. Don't suggest making sync test methods async unless required. Recognize testing utilities vs. production anti-patterns.
+
+5. **Actionable Over Comprehensive**: Prioritize 2-3 high-impact, specific improvements over exhaustive lists of minor issues. Focus on what will meaningfully improve the code.
+
 Consider the provided contextual information about the project, codebase patterns, dependencies, and development history when making your recommendations.
 
 Focus on:
 - Architecture fit and consistency with project patterns
-- Code quality improvements specific to this codebase
+- Code quality improvements specific to this codebase  
 - Security and performance issues relevant to the detected framework/libraries
 - Maintainability improvements that align with project conventions
 - Integration concerns with detected dependencies
 - Recommendations that respect the project's apparent development practices
 
-Provide specific, actionable feedback with code examples where helpful."""
+Provide specific, actionable feedback with code examples where helpful. Avoid suggesting changes to code that already follows appropriate patterns for its context."""
 
+            # Count tokens for analysis
+            system_tokens = self.count_tokens(system_prompt)
+            user_tokens = self.count_tokens(prompt)
+            total_input_tokens = system_tokens + user_tokens
+            
+            print(f"📊 Token Analysis:")
+            print(f"   System prompt: {system_tokens:,} tokens")
+            print(f"   Context + code: {user_tokens:,} tokens")
+            print(f"   Total input: {total_input_tokens:,} tokens")
+            
             print("🤖 Generating context-aware review...")
             response = requests.post(
                 f"{self.BASE_URL}/chat/completions",
@@ -373,7 +408,18 @@ Provide specific, actionable feedback with code examples where helpful."""
             response.raise_for_status()
             
             result = response.json()
-            return result["choices"][0]["message"]["content"]
+            response_content = result["choices"][0]["message"]["content"]
+            
+            # Count output tokens
+            output_tokens = self.count_tokens(response_content)
+            print(f"   Response: {output_tokens:,} tokens")
+            print(f"   Total tokens: {total_input_tokens + output_tokens:,}")
+            
+            # Check if we're approaching context limits
+            if total_input_tokens > 20000:
+                print("⚠️  Warning: High token count - consider reducing context")
+            
+            return response_content
             
         except Exception as e:
             return f"Error during enhanced code review: {e}"

@@ -6,7 +6,7 @@ Eliminates ownership conflicts by using single timeline.
 """
 
 import asyncio
-from typing import TYPE_CHECKING, TypedDict, Optional, cast
+from typing import TYPE_CHECKING, TypedDict, Optional
 
 from .unified_timeline import UnifiedTimelineManager
 from .live_blocks import LiveBlock
@@ -14,7 +14,6 @@ from ..cognition import CognitionManager, CognitionEvent, CognitionResult
 
 if TYPE_CHECKING:
     from .response_generator import ResponseGenerator
-    from textual.app import App
     from ..main import LLMReplApp
 
 
@@ -37,7 +36,7 @@ class UnifiedAsyncInputProcessor:
     def __init__(
         self,
         response_generator: "ResponseGenerator",
-        app: Optional["App"] = None,
+        app: Optional["LLMReplApp"] = None,
     ):
         self.response_generator = response_generator
         self.timeline_manager = UnifiedTimelineManager()
@@ -92,15 +91,14 @@ class UnifiedAsyncInputProcessor:
         if self.app:
             workspace = self.app.query_one("#staging-container")
 
-            # Clear cognition content
+            # Clear cognition content (keep staging separator)
             for widget in list(workspace.children):
-                widget.remove()
+                if not widget.has_class("staging-separator"):
+                    widget.remove()
 
-            # Restore idle animation
-            from ..widgets.idle_animation import IdleAnimation
-
-            idle_animation = IdleAnimation()
-            await workspace.mount(idle_animation)
+            # Set staging separator back to idle state
+            if self.app and hasattr(self.app, "staging_separator"):
+                self.app.staging_separator.set_idle()
 
             if hasattr(workspace, "hide_workspace"):
                 workspace.hide_workspace()
@@ -121,27 +119,28 @@ class UnifiedAsyncInputProcessor:
         chat_container = self.app.query_one("#chat-container")
 
         # Add user message
-        user_chatbox = Chatbox(data["user_input"], role="user")
+        user_chatbox = Chatbox(str(data["user_input"]), role="user")
         await chat_container.mount(user_chatbox)
 
         # Add cognition result
-        if data["cognition_result"]:
-            result = data["cognition_result"]
-            content = f"**{result.content}**\n"
-            if result.sub_blocks:
+        cognition_result = data["cognition_result"]
+        if cognition_result and hasattr(cognition_result, "content"):
+            content = f"**{cognition_result.content}**\n"
+            if hasattr(cognition_result, "sub_blocks") and cognition_result.sub_blocks:
                 content += "\n**Sub-modules:**\n"
-                for sub in result.sub_blocks:
+                for sub in cognition_result.sub_blocks:
                     content += f"• {sub['module_name']}: {sub['content']}\n"
 
-            if result.metadata:
-                content += f"\n_Processing time: {result.metadata.get('processing_time', 0):.2f}s_"
+            if hasattr(cognition_result, "metadata") and cognition_result.metadata:
+                content += f"\n_Processing time: {cognition_result.metadata.get('processing_time', 0):.2f}s_"
 
             cognition_chatbox = Chatbox(content, role="cognition")
             await chat_container.mount(cognition_chatbox)
 
         # Add assistant response
-        if data["assistant_response"]:
-            assistant_chatbox = Chatbox(data["assistant_response"], role="assistant")
+        assistant_response = data["assistant_response"]
+        if assistant_response:
+            assistant_chatbox = Chatbox(str(assistant_response), role="assistant")
             await chat_container.mount(assistant_chatbox)
 
         # Smart follow: only scroll if user was at bottom
@@ -237,16 +236,25 @@ class UnifiedAsyncInputProcessor:
         workspace = self.app.query_one("#staging-container")
 
         if event.type == "start":
-            # Clear staging area (remove idle animation or previous content)
+            # Set staging separator to processing state
+            if self.app and hasattr(self.app, "staging_separator"):
+                turn_num = self.current_turn_data["turn_number"]
+                if isinstance(turn_num, int):
+                    self.app.staging_separator.set_processing(turn_num)
+
+            # Clear staging area (except staging separator)
             for widget in list(workspace.children):
-                widget.remove()
+                if not widget.has_class("staging-separator"):
+                    widget.remove()
 
             # Add turn header with user query
             if hasattr(self, "current_turn_data"):
                 from textual.widgets import Static
 
                 turn_data = self.current_turn_data
-                header_content = f"**Turn {turn_data['turn_number']}**\n\n**User:** {turn_data['user_input']}\n\n**Cognition:**"
+                header_content = (
+                    f"**User:** {turn_data['user_input']}\n\n**Cognition:**"
+                )
                 header_widget = Static(header_content, classes="turn-header")
                 await workspace.mount(header_widget)
 
@@ -261,9 +269,11 @@ class UnifiedAsyncInputProcessor:
             # Update staging area content while preserving header
             from textual.widgets import Static
 
-            # Remove old cognition content but keep header
+            # Remove old cognition content but keep header and staging separator
             for widget in list(workspace.children):
-                if not widget.has_class("turn-header"):
+                if not widget.has_class("turn-header") and not widget.has_class(
+                    "staging-separator"
+                ):
                     widget.remove()
 
             # Add updated cognition content
@@ -277,9 +287,11 @@ class UnifiedAsyncInputProcessor:
             # Final update while preserving header
             from textual.widgets import Static
 
-            # Remove old cognition content but keep header
+            # Remove old cognition content but keep header and staging separator
             for widget in list(workspace.children):
-                if not widget.has_class("turn-header"):
+                if not widget.has_class("turn-header") and not widget.has_class(
+                    "staging-separator"
+                ):
                     widget.remove()
 
             widget = Static(event.content, classes="cognition-event complete")

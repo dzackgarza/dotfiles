@@ -16,6 +16,15 @@ class Chatbox(Widget, can_focus=True):
         self.content = message_content
         self.role = role
 
+        # Set border title based on role
+        role_titles = {
+            "user": "> User",
+            "assistant": "> Assistant",
+            "cognition": "> Cognition",
+            "system": "> System",
+        }
+        self.border_title = role_titles.get(role, "> Unknown")
+
         # V3's exact CSS classes
         self.add_class("chatbox")
         if role == "user":
@@ -28,6 +37,6 @@ class Chatbox(Widget, can_focus=True):
             self.add_class("cognition-message")
 
     def render(self) -> RenderableType:
-        """V3's exact render pattern"""
-        # Simple markdown rendering like V3
+        """V3's exact render pattern - role shown in border title"""
+        # Simple markdown rendering like V3 (role prefix now in CSS border-title)
         return Markdown(self.content, code_theme="monokai")
