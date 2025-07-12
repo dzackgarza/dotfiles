@@ -19,6 +19,9 @@ class TurnSeparator(Widget):
         super().__init__(**kwargs)
         self.turn_number = turn_number
         self.add_class("turn-separator")
+        # Explicitly set the height
+        self.styles.height = 1
+        self.styles.max_height = 1
 
     def render(self) -> RenderableType:
         """Render horizontal rule with turn number"""
@@ -29,3 +32,7 @@ class TurnSeparator(Widget):
         rule = Rule(turn_label, style="dim", align="center")
 
         return rule
+
+    def get_content_height(self, container, viewport, width: int) -> int:
+        """Explicitly return height of 1 for this widget"""
+        return 1
