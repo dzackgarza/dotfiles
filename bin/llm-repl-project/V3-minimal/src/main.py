@@ -202,21 +202,23 @@ class LLMReplApp(App[None]):
                     separator = TurnSeparator(self.turn_count)
                     await self.chat_container.mount(separator)
 
+                # Check if user is following (at bottom) before adding content
+                was_at_bottom = self._is_at_bottom()
+
                 # Add user message using V3's pattern
                 user_chatbox = Chatbox(event.text, role="user")
                 await self.chat_container.mount(user_chatbox)
 
-                # V3's scroll to latest message
-                self.chat_container.refresh()
-                self.chat_container.scroll_end(animate=False, force=True)
+                # Smart follow: only scroll if user was already at bottom
+                if was_at_bottom:
+                    self.chat_container.refresh()
+                    self.chat_container.scroll_end(animate=False)
 
                 # Process through unified async processor (includes cognition)
                 await self.unified_async_processor.process_user_input_async(event.text)
 
-                # V3's smart scrolling - only scroll if already near bottom
-                scroll_y = self.chat_container.scroll_y
-                max_scroll_y = self.chat_container.max_scroll_y
-                if scroll_y in range(max_scroll_y - 3, max_scroll_y + 1):
+                # Smart follow: scroll to bottom if user was following
+                if was_at_bottom:
                     self.chat_container.scroll_end(animate=False)
 
             except Exception as e:
@@ -225,6 +227,12 @@ class LLMReplApp(App[None]):
                 self.chat_container.mount(error_chatbox)
 
         self.run_worker(safe_process(), name="process_input")
+
+    def _is_at_bottom(self, threshold: int = 3) -> bool:
+        """Check if user is following (near bottom of scroll)"""
+        scroll_y = self.chat_container.scroll_y
+        max_scroll_y = self.chat_container.max_scroll_y
+        return scroll_y >= max_scroll_y - threshold
 
     def action_do_nothing(self) -> None:
         """Action that does nothing - used to disable Ctrl+Q"""

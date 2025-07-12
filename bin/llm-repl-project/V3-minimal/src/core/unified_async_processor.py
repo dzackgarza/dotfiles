@@ -213,6 +213,9 @@ class UnifiedAsyncInputProcessor:
             widget = Static(event.content, classes="cognition-event")
             await workspace.mount(widget)
 
+            # Auto-scroll to bottom to follow updates
+            workspace.scroll_end(animate=False)
+
         elif event.type == "complete":
             # Final update
             from textual.widgets import Static
@@ -221,6 +224,9 @@ class UnifiedAsyncInputProcessor:
                 widget.remove()
             widget = Static(event.content, classes="cognition-event complete")
             await workspace.mount(widget)
+
+            # Final auto-scroll
+            workspace.scroll_end(animate=False)
 
     async def _handle_cognition_result(self, result: CognitionResult) -> None:
         """Handle cognition result for timeline inscription"""

@@ -1,8 +1,7 @@
 /* Live Workspace Widget - V3's chat_container Pattern */
 
 .live-workspace {
-    height: auto;  /* Dynamic sizing */
-    max-height: 50vh;  /* Don't dominate screen */
+    height: 3;  /* Minimized state - just shows idle animation */
     padding: 1;
     background: $surface;
     border: solid $primary;
@@ -10,6 +9,24 @@
 
 .live-workspace.hidden {
     display: none;  /* 2-way split when hidden */
+}
+
+/* Fixed height during cognition processing */
+.live-workspace.processing {
+    height: 12 !important;  /* Jump to fixed height instantly */
+    overflow-y: auto;  /* Force scrollbar if content exceeds */
+}
+
+/* Cognition event styling */
+.cognition-event {
+    height: auto;
+    width: 1fr;
+    padding: 1;
+    color: $text;
+}
+
+.cognition-event.complete {
+    color: $success;
 }
 
 /* Sub-module styling */

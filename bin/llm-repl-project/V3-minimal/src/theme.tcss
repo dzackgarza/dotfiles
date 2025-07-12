@@ -13,11 +13,15 @@
 
 /* Staging container - for live cognition */
 #staging-container {
-    height: auto;
-    min-height: 3;  /* Ensure minimum visibility */
-    max-height: 40vh;
+    height: 3;  /* Minimized state */
     border: solid $primary;  /* Make it visible */
     margin: 0 0 1 0;
+}
+
+/* Processing state overrides */
+#staging-container.processing {
+    height: 12 !important;  /* Fixed height during processing */
+    overflow-y: auto;
 }
 
 /* V3's exact Chatbox CSS */

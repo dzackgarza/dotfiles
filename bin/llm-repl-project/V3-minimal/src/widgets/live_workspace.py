@@ -37,9 +37,8 @@ class LiveWorkspaceWidget(VerticalScroll):
         # CSS classes
         self.add_class("live-workspace")
 
-        # Start hidden (2-way split)
-        self.add_class("hidden")
-        self.is_visible = False
+        # Start visible but minimized (no longer hidden)
+        self.is_visible = True
 
         # Smart auto-scroll state (like V3)
         self.user_is_following = True
@@ -86,18 +85,14 @@ class LiveWorkspaceWidget(VerticalScroll):
         self.hide_workspace()
 
     def show_workspace(self) -> None:
-        """Show workspace (2-way → 3-way split)"""
-        if not self.is_visible:
-            self.remove_class("hidden")
-            self.is_visible = True
-            self.refresh()
+        """Expand workspace to processing size"""
+        self.add_class("processing")  # Jump to fixed height
+        self.refresh()
 
     def hide_workspace(self) -> None:
-        """Hide workspace (3-way → 2-way split)"""
-        if self.is_visible:
-            self.add_class("hidden")
-            self.is_visible = False
-            self.refresh()
+        """Collapse workspace to minimized size"""
+        self.remove_class("processing")  # Jump back to minimized
+        self.refresh()
 
     def update_sub_module(self, sub_module: LiveBlock) -> None:
         """Update existing sub-module widget"""
