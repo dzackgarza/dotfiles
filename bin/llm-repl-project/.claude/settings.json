@@ -101,6 +101,15 @@
             "command": "if echo \"$CLAUDE_TOOL_INPUT\" | grep -E '^(sudo|rm -rf|:(){ :|:& };:)'; then echo '{\"decision\": \"block\", \"reason\": \"Potentially dangerous command detected. Please use caution.\"}'; fi"
           }
         ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CLAUDE_TOOL_INPUT\" | grep -E 'python.*-m.*src\.main|pdm run.*src\.main|poetry run.*src\.main|just run|just run-mixed|just run-fast'; then echo '{\"decision\": \"block\", \"reason\": \"GUI applications cannot be run in Claude Code environment. This would crash the interface. Please notify the user to run the app manually.\"}'; exit 2; fi"
+          }
+        ]
       }
     ],
     "Notification": [

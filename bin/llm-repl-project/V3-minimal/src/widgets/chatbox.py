@@ -22,6 +22,8 @@ class Chatbox(Widget, can_focus=True):
             self.add_class("human-message")
         elif role == "assistant":
             self.add_class("assistant-message")
+        elif role == "system":
+            self.add_class("system-message")
 
     def render(self) -> RenderableType:
         """V3's exact render pattern"""
