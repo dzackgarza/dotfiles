@@ -18,7 +18,7 @@ class Config:
     
     # Processing durations for debugging
     COGNITION_PROCESSING_DURATION = 5.0  # seconds
-    SUBMODULE_PROCESSING_DURATION = 1.5  # seconds per sub-module
+    SUBMODULE_PROCESSING_DURATION = 5.0  # seconds per sub-module
     
     @classmethod
     def set_cognition_duration(cls, duration: float):
