@@ -1,7 +1,7 @@
 import pytest
 from src.main import LLMReplApp
 from src.widgets.prompt_input import PromptInput
-from src.widgets.sacred_timeline import SacredTimelineWidget
+from textual.containers import VerticalScroll
 from src.sacred_timeline import timeline
 
 
@@ -17,7 +17,7 @@ class TestPromptInput:
     async def test_enter_sends_message(self):
         """Test that pressing Enter sends the message to the timeline."""
         async with LLMReplApp().run_test() as app:
-            timeline_view = app.app.query_one(SacredTimelineWidget)
+            timeline_view = app.app.query_one("#chat-container", VerticalScroll)
             prompt_input = app.app.query_one(PromptInput)
 
             test_message = "Hello, Textual!"
@@ -50,7 +50,7 @@ class TestPromptInput:
             assert prompt_input.text == f"{test_message_part1}\n{test_message_part2}"
 
             # Assert that no message was sent to the timeline
-            timeline_view = app.app.query_one(SacredTimelineWidget)
+            timeline_view = app.app.query_one("#chat-container", VerticalScroll)
             # Basic test - Sacred GUI implementation will handle detailed timeline logic
             assert timeline_view is not None
 

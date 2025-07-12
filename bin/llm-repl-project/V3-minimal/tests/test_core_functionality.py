@@ -40,13 +40,13 @@ class TestCoreAppFunctionality:
             main_container = app.app.query_one("#main-container")
             assert main_container is not None
 
-            # Check sacred timeline exists
-            sacred_timeline = app.app.query_one("#sacred-timeline")
-            assert sacred_timeline is not None
+            # Check chat container exists
+            chat_container = app.app.query_one("#chat-container")
+            assert chat_container is not None
 
-            # Check input container exists
-            input_container = app.app.query_one("#input-container")
-            assert input_container is not None
+            # Check staging container exists
+            staging_container = app.app.query_one("#staging-container")
+            assert staging_container is not None
 
     @pytest.mark.asyncio
     async def test_app_can_handle_keypress(self):
@@ -61,9 +61,9 @@ class TestCoreAppFunctionality:
     async def test_timeline_widget_exists(self):
         """Test that the timeline widget exists and is accessible."""
         async with LLMReplApp().run_test() as app:
-            timeline = app.app.query_one(SacredTimelineWidget)
+            timeline = app.app.query_one("#chat-container", VerticalScroll)
             assert timeline is not None
-            # Basic existence test - detailed functionality in Sacred GUI implementation
+            # Basic existence test - detailed functionality in V3 implementation
 
 
 class TestRegressionProtection:
@@ -82,7 +82,7 @@ class TestRegressionProtection:
         """Test that all widget dependencies are satisfied."""
         async with LLMReplApp().run_test() as app:
             # Query for all critical widgets - this will fail if dependencies are missing
-            timeline = app.app.query_one(SacredTimelineWidget)
+            timeline = app.app.query_one("#chat-container", VerticalScroll)
             prompt_input = app.app.query_one(PromptInput)
 
             # Verify they exist
@@ -93,10 +93,10 @@ class TestRegressionProtection:
     async def test_async_methods_properly_awaited(self):
         """Test that async methods are properly awaited (prevents RuntimeWarning)."""
         async with LLMReplApp().run_test() as app:
-            timeline = app.app.query_one(SacredTimelineWidget)
+            timeline = app.app.query_one("#chat-container", VerticalScroll)
 
             # This should not generate runtime warnings about unawaited coroutines
-            # Basic async test - detailed functionality in Sacred GUI implementation
+            # Basic async test - detailed functionality in V3 implementation
             import asyncio
 
             await asyncio.sleep(0.1)

@@ -33,6 +33,42 @@
         "hooks": [
           {
             "type": "command",
+            "command": "if echo \"$CLAUDE_FILE_PATHS\" | grep -q '\\.py$'; then cd /home/dzack/dotfiles/bin/llm-repl-project/V3-minimal && source ../venv/bin/activate && python -m pyflakes $CLAUDE_FILE_PATHS 2>&1 | grep -E '(undefined name|imported but unused|redefinition)' && echo \"⚠️  Pyflakes found issues in $CLAUDE_FILE_PATHS\" || true; fi"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CLAUDE_FILE_PATHS\" | grep -q '\\.py$'; then cd /home/dzack/dotfiles/bin/llm-repl-project/V3-minimal && source ../venv/bin/activate && python -m pylint --errors-only --disable=import-error $CLAUDE_FILE_PATHS 2>/dev/null | grep -E '^[EF]:' && echo \"❌ Pylint found errors in $CLAUDE_FILE_PATHS\" || true; fi"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CLAUDE_FILE_PATHS\" | grep -q '\\.py$' && command -v autopep8 >/dev/null 2>&1; then autopep8 --aggressive --aggressive --in-place $CLAUDE_FILE_PATHS 2>/dev/null || true; fi"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CLAUDE_FILE_PATHS\" | grep -q '\\.py$'; then cd /home/dzack/dotfiles/bin/llm-repl-project/V3-minimal && source ../venv/bin/activate && if command -v isort >/dev/null 2>&1; then isort --check-only $CLAUDE_FILE_PATHS >/dev/null 2>&1 || (echo \"🔧 Fixing imports in $CLAUDE_FILE_PATHS\" && isort $CLAUDE_FILE_PATHS); fi; fi"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
             "command": "if echo \"$CLAUDE_FILE_PATHS\" | grep -E '\\.(ya?ml|json)$'; then if echo \"$CLAUDE_FILE_PATHS\" | grep '\\.json$'; then python -m json.tool $CLAUDE_FILE_PATHS >/dev/null 2>&1 || echo \"❌ Invalid JSON in $CLAUDE_FILE_PATHS\"; elif echo \"$CLAUDE_FILE_PATHS\" | grep '\\.ya?ml$'; then python -c \"import yaml; yaml.safe_load(open('$CLAUDE_FILE_PATHS'))\" 2>&1 || echo \"❌ Invalid YAML in $CLAUDE_FILE_PATHS\"; fi; fi"
           }
         ]
@@ -67,6 +103,26 @@
         ]
       }
     ],
+    "Notification": [
+      {
+        "matcher": "(review requested|tests failing|long task complete|error|warning)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if command -v notify-send >/dev/null 2>&1; then notify-send -i dialog-information 'Claude Code' "$CLAUDE_NOTIFICATION_MESSAGE" || true; elif command -v osascript >/dev/null 2>&1; then osascript -e "display notification \"$CLAUDE_NOTIFICATION_MESSAGE\" with title \"Claude Code\"" || true; elif command -v powershell >/dev/null 2>&1; then powershell -Command "Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show('$CLAUDE_NOTIFICATION_MESSAGE', 'Claude Code')" || true; fi"
+          }
+        ]
+      },
+      {
+        "matcher": "(attention needed|user input required)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if command -v notify-send >/dev/null 2>&1; then notify-send -u critical -i dialog-warning 'Claude Code - Action Required' "$CLAUDE_NOTIFICATION_MESSAGE" || true; elif command -v osascript >/dev/null 2>&1; then osascript -e "display notification \"$CLAUDE_NOTIFICATION_MESSAGE\" with title \"Claude Code - Action Required\" sound name \"Glass\"" || true; fi"
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "matcher": "",
@@ -74,6 +130,42 @@
           {
             "type": "command",
             "command": "source /home/dzack/dotfiles/bin/llm-repl-project/.venv/bin/activate && just test || exit 2"
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -n \"$CLAUDE_SESSION_ID\" ]; then mkdir -p ~/.claude/sessions && echo \"Session $CLAUDE_SESSION_ID ended at $(date)\" >> ~/.claude/sessions/history.log; fi"
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -n \"$CLAUDE_SESSION_ID\" ] && [ -n \"$CLAUDE_CONVERSATION_SUMMARY\" ]; then mkdir -p ~/.claude/sessions/$CLAUDE_SESSION_ID && echo \"$CLAUDE_CONVERSATION_SUMMARY\" > ~/.claude/sessions/$CLAUDE_SESSION_ID/summary.txt; fi"
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if command -v git >/dev/null 2>&1 && git rev-parse --git-dir >/dev/null 2>&1; then echo \"\n📊 Session Metrics:\n- Modified files: $(git diff --name-only | wc -l)\n- Lines added: $(git diff --numstat | awk '{sum+=$1} END {print sum}')\n- Lines removed: $(git diff --numstat | awk '{sum+=$2} END {print sum}')\" | tee -a ~/.claude/sessions/metrics.log; fi"
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -d /home/dzack/dotfiles/bin/llm-repl-project/.claude/sessions ]; then echo \"Session artifacts saved to: $(pwd)/.claude/sessions/$(date +%Y%m%d_%H%M%S)/\" && mkdir -p .claude/sessions/$(date +%Y%m%d_%H%M%S) && cp -r ~/.claude/sessions/* .claude/sessions/$(date +%Y%m%d_%H%M%S)/ 2>/dev/null || true; fi"
           }
         ]
       }

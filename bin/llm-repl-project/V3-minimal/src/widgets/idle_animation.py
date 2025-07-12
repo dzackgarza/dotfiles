@@ -34,10 +34,10 @@ class IdleAnimation(Widget):
 
     def on_mount(self) -> None:
         """Start animation when mounted"""
-        self.animate()
+        self.run_animation()
 
     @work(exclusive=True)
-    async def animate(self) -> None:
+    async def run_animation(self) -> None:
         """Subtle animation loop using Textual's worker"""
         import asyncio
 
