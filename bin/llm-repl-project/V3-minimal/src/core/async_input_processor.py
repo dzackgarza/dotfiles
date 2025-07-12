@@ -2,7 +2,6 @@
 
 import asyncio
 from typing import TYPE_CHECKING, TypedDict, Optional
-import random
 
 from ..sacred_timeline import SubBlock
 from .live_blocks import LiveBlockManager, LiveBlock
@@ -76,38 +75,29 @@ class AsyncInputProcessor:
 
         # Import sub-modules
         from .sub_modules import RouteQueryModule, CallToolModule, FormatOutputModule
-        from .live_blocks import CognitionProgress
-        
+
         # Set up cognition progress tracking
         live_block.set_cognition_steps(3)  # We have 3 sub-modules
-        
+
         # Record start time for accurate timing
         import time
+
         cognition_start_time = time.time()
 
         # Sequential sub-module execution
         # Step 1: Route Query
         await self._execute_sub_module(
-            live_block, 
-            RouteQueryModule,
-            "route_query",
-            "Route Query"
+            live_block, RouteQueryModule, "route_query", "Route Query"
         )
-        
+
         # Step 2: Call Tool
         await self._execute_sub_module(
-            live_block,
-            CallToolModule, 
-            "call_tool",
-            "Call Tool"
+            live_block, CallToolModule, "call_tool", "Call Tool"
         )
-        
+
         # Step 3: Format Output
         await self._execute_sub_module(
-            live_block,
-            FormatOutputModule,
-            "format_output", 
-            "Format Output"
+            live_block, FormatOutputModule, "format_output", "Format Output"
         )
 
         # Set final timing data using actual wall clock time
@@ -149,41 +139,36 @@ class AsyncInputProcessor:
             )
 
     async def _execute_sub_module(
-        self, 
-        parent_block: "LiveBlock", 
-        module_class: type,
-        role: str,
-        title: str
+        self, parent_block: "LiveBlock", module_class: type, role: str, title: str
     ) -> None:
         """Execute a sub-module sequentially."""
         # Create sub-block for this module
         sub_block = self.live_block_manager.create_live_block(
-            role=role,
-            initial_content=""  # Module will provide initial content
+            role=role, initial_content=""  # Module will provide initial content
         )
-        
+
         # Add to parent's sub-blocks
         parent_block.add_sub_block(sub_block)
-        
-        # Create and configure the module
-        module = module_class(sub_block)
-        
+
+        # Create and configure the module with parent reference
+        module = module_class(sub_block, parent_block=parent_block)
+
         # Set initial content from module
         sub_block.update_content(module.get_initial_content())
-        
+
         # Create completion event
         completion_event = asyncio.Event()
-        
+
         async def on_completion():
             completion_event.set()
-            
+
         module.set_completion_callback(on_completion)
-        
+
         # Notify observers about new sub-block
         for observer in self.timeline._observers:
             if hasattr(observer, "on_live_block_update"):
                 observer.on_live_block_update(sub_block)
-        
-        # Execute the module and wait for completion
-        await module.execute()
+
+        # Execute the module with timing tracking and wait for completion
+        await module.run()
         await completion_event.wait()

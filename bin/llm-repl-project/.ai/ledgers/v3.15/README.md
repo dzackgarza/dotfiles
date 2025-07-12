@@ -17,10 +17,13 @@ graph TD
     A --> D[unused-code-removal]
     A --> E[mock-system-isolation]
     
+    G[unified-timeline-ownership] --> H[scroll-stealing-fix]
+    
     B --> F[Integration & Testing]
     C --> F
     D --> F
     E --> F
+    H --> F
 ```
 
 ## Execution Order
@@ -28,13 +31,15 @@ graph TD
 ### Phase 1: Foundation (Parallel)
 1. **yaml-configuration-foundation** - Core infrastructure for YAML-driven configuration
 2. **unused-code-removal** - Remove InputProcessor and redundant demos
+3. **unified-timeline-ownership** - Resolve architectural conflicts between LiveBlock and Timeline
 
 ### Phase 2: System Consolidation (Sequential)
-3. **animation-system-consolidation** - Eliminate AnimationRates, consolidate to AnimationClock
-4. **mock-system-isolation** - Move mock code to dedicated submodule
+4. **animation-system-consolidation** - Eliminate AnimationRates, consolidate to AnimationClock
+5. **mock-system-isolation** - Move mock code to dedicated submodule
+6. **scroll-stealing-fix** - Fix scroll behavior during live updates (depends on unified-timeline)
 
 ### Phase 3: UI Configuration (Dependent)
-5. **widget-css-to-yaml-migration** - Extract CSS values to YAML templates
+7. **widget-css-to-yaml-migration** - Extract CSS values to YAML templates
 
 ## Ledger Summaries
 
@@ -103,6 +108,32 @@ Extracts hardcoded CSS values from widget classes to YAML configuration, enablin
 - Hot-reload of visual changes
 - Consistent spacing system
 
+### [unified-timeline-ownership](./unified-timeline-ownership.md)
+**Priority**: Critical (Architectural fix)
+**Risk**: High
+**Effort**: High
+
+Resolves fundamental conflict between LiveBlock system and Timeline by establishing clear ownership model and atomic state transitions.
+
+**Key Deliverables**:
+- Single source of truth for all blocks
+- Clear ownership model with no ambiguity
+- Atomic transitions preserving relationships
+- Proper state machine for block lifecycle
+
+### [scroll-stealing-fix](./scroll-stealing-fix.md)
+**Priority**: High (UX critical)
+**Risk**: Medium
+**Effort**: Medium
+
+Fixes scroll-stealing behavior where users cannot review timeline history during live updates.
+
+**Key Deliverables**:
+- Separate progress vs content update callbacks
+- Smart auto-scroll respecting user intent
+- Smooth animations without scroll interference
+- No timing-based hacks needed
+
 ## Success Metrics
 
 ### Code Quality
@@ -132,21 +163,24 @@ Extracts hardcoded CSS values from widget classes to YAML configuration, enablin
 ### Medium Risk (Requires careful testing)
 - animation-system-consolidation (timing-sensitive changes)
 - mock-system-isolation (affects test behavior)
+- scroll-stealing-fix (UI behavior changes)
 
-### High Risk (Major visual changes possible)
+### High Risk (Major architectural changes)
 - widget-css-to-yaml-migration (CSS template system)
+- unified-timeline-ownership (core system redesign)
 
 ## Implementation Strategy
 
 ### Quick Wins (Week 1)
 1. Execute unused-code-removal for immediate complexity reduction
 2. Implement yaml-configuration-foundation infrastructure
-3. Begin animation-system-consolidation migration
+3. Begin unified-timeline-ownership design
 
 ### Core Systems (Week 2-3)
-1. Complete animation system consolidation
-2. Implement mock system isolation
-3. Begin widget CSS migration planning
+1. Implement unified-timeline-ownership
+2. Complete animation system consolidation
+3. Execute scroll-stealing-fix (after unified timeline)
+4. Implement mock system isolation
 
 ### Visual Configuration (Week 4)
 1. Execute widget-css-to-yaml-migration
