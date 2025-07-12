@@ -1,8 +1,8 @@
 """Core functionality tests - basic app health checks."""
 
 import pytest
+from textual.containers import VerticalScroll
 from src.main import LLMReplApp
-from src.widgets.sacred_timeline import SacredTimelineWidget
 from src.widgets.prompt_input import PromptInput
 
 
@@ -19,10 +19,10 @@ class TestCoreAppFunctionality:
 
     @pytest.mark.asyncio
     async def test_timeline_widget_present(self):
-        """Test that the timeline widget is present and functional."""
+        """Test that the chat container is present and functional."""
         async with LLMReplApp().run_test() as app:
-            timeline = app.app.query_one(SacredTimelineWidget)
-            assert timeline is not None
+            chat_container = app.app.query_one("#chat-container", VerticalScroll)
+            assert chat_container is not None
 
     @pytest.mark.asyncio
     async def test_prompt_input_present(self):

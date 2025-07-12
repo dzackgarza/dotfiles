@@ -13,7 +13,10 @@
 /* Staging container - for live cognition */
 #staging-container {
     height: auto;
+    min-height: 3;  /* Ensure minimum visibility */
     max-height: 40vh;
+    border: solid $primary;  /* Make it visible */
+    margin: 0 0 1 0;
 }
 
 /* V3's exact Chatbox CSS */

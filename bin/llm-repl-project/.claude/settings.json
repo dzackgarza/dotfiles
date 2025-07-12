@@ -18,6 +18,53 @@
             "command": "if echo \"$CLAUDE_FILE_PATHS\" | grep -E '\\.t?css$'; then if command -v prettier >/dev/null 2>&1; then prettier --write $CLAUDE_FILE_PATHS; fi && if command -v stylelint >/dev/null 2>&1; then stylelint --fix $CLAUDE_FILE_PATHS 2>/dev/null || true; fi; fi"
           }
         ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CLAUDE_FILE_PATHS\" | grep -q '\\.py$'; then cd /home/dzack/dotfiles/bin/llm-repl-project/V3-minimal && source ../venv/bin/activate && python -m py_compile $CLAUDE_FILE_PATHS 2>&1 || echo \"⚠️  Python syntax error in $CLAUDE_FILE_PATHS\"; fi"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CLAUDE_FILE_PATHS\" | grep -E '\\.(ya?ml|json)$'; then if echo \"$CLAUDE_FILE_PATHS\" | grep '\\.json$'; then python -m json.tool $CLAUDE_FILE_PATHS >/dev/null 2>&1 || echo \"❌ Invalid JSON in $CLAUDE_FILE_PATHS\"; elif echo \"$CLAUDE_FILE_PATHS\" | grep '\\.ya?ml$'; then python -c \"import yaml; yaml.safe_load(open('$CLAUDE_FILE_PATHS'))\" 2>&1 || echo \"❌ Invalid YAML in $CLAUDE_FILE_PATHS\"; fi; fi"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CLAUDE_FILE_PATHS\" | grep '\\.py$' && git rev-parse --git-dir >/dev/null 2>&1; then git add $CLAUDE_FILE_PATHS 2>/dev/null || true; fi"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CLAUDE_FILE_PATHS\" | grep -E '(requirements.*\\.txt|pyproject\\.toml|pdm\\.lock|package\\.json)$'; then echo \"📦 Dependencies file updated - remember to install/sync!\"; fi"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CLAUDE_TOOL_INPUT\" | grep -E '^(sudo|rm -rf|:(){ :|:& };:)'; then echo '{\"decision\": \"block\", \"reason\": \"Potentially dangerous command detected. Please use caution.\"}'; fi"
+          }
+        ]
       }
     ],
     "Stop": [
