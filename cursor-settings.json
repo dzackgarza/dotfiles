@@ -48,5 +48,6 @@
     "cursor.composer.shouldQueueWhenGenerating": false,
     "git.autofetch": true,
     "workbench.colorTheme": "Quiet Light",
-    "explorer.confirmDelete": false
+    "explorer.confirmDelete": false,
+    "window.commandCenter": true
 }
