@@ -1,6 +1,6 @@
 """Reality command provider for visual verification"""
 
-from textual.command import Command, Hit, Hits, Provider
+from textual.command import Hit, Hits, Provider
 
 
 class RealityCommandProvider(Provider):
@@ -8,12 +8,12 @@ class RealityCommandProvider(Provider):
 
     async def search(self, query: str) -> Hits:
         """Search for reality check commands"""
-        
+
         def make_hit(name: str, description: str, command_name: str, score: float = 1.0) -> Hit:
             """Create a command hit"""
             def run_command() -> None:
                 self.app.action_reality_command(command_name)
-            
+
             return Hit(
                 score=score,
                 match_display=name,
@@ -47,7 +47,7 @@ def action_reality_command(self, command: str) -> None:
     if command == "screenshot":
         filename = self.create_debug_screenshot("reality_check")
         self.notify(f"Reality screenshot saved: {filename}")
-        
+
     elif command == "visual_check":
         try:
             container = self.chat_container
@@ -56,7 +56,7 @@ def action_reality_command(self, command: str) -> None:
             self.notify(f"Visual: {children_count} items, scroll {scroll_info}")
         except Exception as e:
             self.notify(f"Visual check error: {e}")
-            
+
     elif command == "layout_check":
         try:
             main_size = self.size
@@ -64,7 +64,7 @@ def action_reality_command(self, command: str) -> None:
             self.notify(f"Layout: App {main_size}, Container {container_size}")
         except Exception as e:
             self.notify(f"Layout check error: {e}")
-            
+
     elif command == "content_audit":
         try:
             container = self.chat_container
@@ -72,12 +72,12 @@ def action_reality_command(self, command: str) -> None:
             for child in container.children:
                 widget_type = child.__class__.__name__
                 widget_types[widget_type] = widget_types.get(widget_type, 0) + 1
-            
+
             audit_text = ", ".join([f"{k}: {v}" for k, v in widget_types.items()])
             self.notify(f"Content: {audit_text}")
         except Exception as e:
             self.notify(f"Content audit error: {e}")
-            
+
     elif command == "scroll_state":
         try:
             container = self.chat_container
@@ -88,6 +88,6 @@ def action_reality_command(self, command: str) -> None:
             self.notify(f"Scroll: {current:.1f}/{maximum}, h:{height}, vh:{virtual}")
         except Exception as e:
             self.notify(f"Scroll state error: {e}")
-            
+
     else:
         self.notify(f"Unknown reality command: {command}")

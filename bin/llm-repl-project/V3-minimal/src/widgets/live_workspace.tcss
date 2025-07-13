@@ -11,9 +11,9 @@
     display: none;  /* 2-way split when hidden */
 }
 
-/* Fixed height during cognition processing */
+/* 50% height during cognition processing for debugging */
 .live-workspace.processing {
-    height: 50% !important;  /* 50% height for debugging - easier to see processing */
+    height: 50vh !important;  /* 50% viewport height for debugging - easier to see processing */
     overflow-y: auto;  /* Force scrollbar if content exceeds */
 }
 

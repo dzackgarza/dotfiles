@@ -13,7 +13,7 @@ from ..core.config import Config
 
 class MockCognitionModule(CognitionModule):
     """Mock cognition module with simulated computation"""
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Use global configuration for processing duration

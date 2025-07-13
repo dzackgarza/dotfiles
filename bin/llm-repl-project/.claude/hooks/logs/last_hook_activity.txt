@@ -1,5 +1,5 @@
-Last hook: random-perspective-check
-Time: 2025-07-12 16:28:16
-Tool: Write
-Decision: approve
-Message: Random check not triggered (1/8)
+Last hook: block-premature-completion
+Time: 2025-07-12 22:26:03
+Tool: Stop
+Decision: soft_block
+Message: Comprehensive reality check

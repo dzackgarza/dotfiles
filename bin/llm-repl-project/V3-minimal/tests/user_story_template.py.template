@@ -1,0 +1,168 @@
+#!/usr/bin/env python3
+"""
+USER STORY TEMPLATE
+
+Copy this template to create new user stories for testing Sacred GUI behavior.
+Replace TEMPLATE_NAME with your feature name throughout.
+
+Usage:
+1. Copy this file content
+2. Add to tests/user_stories.py 
+3. Replace all TEMPLATE_NAME instances
+4. Implement the 12 steps for your specific feature
+5. Add story to list_available_stories()
+"""
+
+from tests.user_stories import UserStory, UserStep
+
+
+async def get_TEMPLATE_NAME_story(pilot):
+    """
+    TEMPLATE_NAME: Brief description of what this story tests
+    
+    This story validates [describe the user behavior being tested].
+    Expected outcome: [describe what should happen when working correctly].
+    """
+    
+    return UserStory(
+        id="TEMPLATE_NAME",
+        title="TEMPLATE_NAME: Descriptive title of user behavior",
+        steps=[
+            # Step 1: Launch - App starts in initial state
+            UserStep(
+                "01_launch", 
+                "App launches and shows initial Sacred GUI layout",
+                lambda: pilot.pause(0.5)  # Let app stabilize
+            ),
+            
+            # Step 2: Focus - User directs attention to input
+            UserStep(
+                "02_focus", 
+                "User focuses on the input field",
+                lambda: pilot.click("#prompt-input")
+            ),
+            
+            # Step 3: Input - User types their message/command
+            UserStep(
+                "03_input", 
+                "User types message related to TEMPLATE_NAME feature",
+                async lambda: [
+                    [await pilot.press(char) for char in "test TEMPLATE_NAME behavior"],
+                    await pilot.pause(0.2)  # Let typing register
+                ][-1]  # Return last result
+            ),
+            
+            # Step 4: Submit - User triggers the action
+            UserStep(
+                "04_submit", 
+                "User submits the message to trigger TEMPLATE_NAME",
+                async lambda: [
+                    await pilot.press("enter"),
+                    await pilot.pause(0.5)  # Wait for processing to start
+                ][-1]
+            ),
+            
+            # Step 5: Process Start - System begins responding
+            UserStep(
+                "05_process_start", 
+                "System starts processing TEMPLATE_NAME request",
+                lambda: pilot.pause(0.3)  # Processing initialization
+            ),
+            
+            # Step 6: Active - Live workspace becomes visible
+            UserStep(
+                "06_active", 
+                "Live workspace appears with TEMPLATE_NAME processing",
+                lambda: pilot.pause(0.5)  # Workspace transition
+            ),
+            
+            # Step 7: Working - Processing indicators show activity
+            UserStep(
+                "07_working", 
+                "TEMPLATE_NAME processing indicators active",
+                lambda: pilot.pause(0.7)  # Processing activity
+            ),
+            
+            # Step 8: Streaming - Content flows into the interface
+            UserStep(
+                "08_streaming", 
+                "TEMPLATE_NAME response content streams in",
+                lambda: pilot.pause(1.0)  # Content streaming
+            ),
+            
+            # Step 9: Complete - Processing finishes successfully
+            UserStep(
+                "09_complete", 
+                "TEMPLATE_NAME processing completes",
+                lambda: pilot.pause(0.5)  # Completion transition
+            ),
+            
+            # Step 10: Collapse - Live workspace hides automatically  
+            UserStep(
+                "10_collapse", 
+                "Live workspace collapses, hiding TEMPLATE_NAME output",
+                lambda: pilot.pause(0.3)  # Workspace collapse
+            ),
+            
+            # Step 11: Updated - Timeline shows the conversation
+            UserStep(
+                "11_updated", 
+                "Sacred Timeline updated with TEMPLATE_NAME interaction",
+                lambda: pilot.pause(0.2)  # Timeline update
+            ),
+            
+            # Step 12: Ready - Input field ready for next interaction
+            UserStep(
+                "12_ready",
+                "Input field ready for next user interaction",
+                lambda: pilot.pause(0.1)  # Final state
+            )
+        ]
+    )
+
+
+# Template for adding to list_available_stories() in user_stories.py:
+"""
+def list_available_stories():
+    return [
+        "basic_interaction",
+        "error_recovery", 
+        "multi_turn_conversation",
+        "TEMPLATE_NAME",  # <- Add your new story here
+    ]
+"""
+
+# Template for integration test:
+"""
+@pytest.mark.asyncio
+async def test_TEMPLATE_NAME_story():
+    '''Test TEMPLATE_NAME behavior through visual proof'''
+    
+    async with LLMReplApp().run_test(size=(72, 48)) as pilot:
+        await pilot.pause(0.5)
+        
+        # Run the specific story
+        screenshot_count = await run_user_story("TEMPLATE_NAME", pilot)
+        
+        # Verify complete story execution
+        assert screenshot_count == 12, f"TEMPLATE_NAME story must complete all 12 steps"
+        
+        # Check temporal grid was created
+        grid_files = list(Path("debug_screenshots").glob("TEMPLATE_NAME_temporal_grid_*.png"))
+        assert len(grid_files) > 0, "TEMPLATE_NAME temporal grid should be created"
+"""
+
+# Implementation Checklist:
+"""
+□ Replace all TEMPLATE_NAME with your feature name
+□ Update step descriptions to match your feature behavior  
+□ Implement realistic user actions in each step
+□ Add appropriate pilot.pause() times for your feature
+□ Test that story completes all 12 steps
+□ Verify temporal grid shows expected behavior progression
+□ Add story to list_available_stories()
+□ Run story before implementing feature (should show incomplete behavior)
+□ Implement feature
+□ Run story after implementation (should show working behavior)
+□ Compare before/after temporal grids to verify improvement
+"""

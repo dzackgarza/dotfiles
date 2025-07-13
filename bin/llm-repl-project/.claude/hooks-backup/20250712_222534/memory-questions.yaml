@@ -1,0 +1,149 @@
+# Memory-Guided Questions for Behavioral Correction
+# Organized by category with weights and contexts
+
+testing_methodology:
+  weight: 0.3
+  contexts: [stop_hook, test_failure, claiming_fixes]
+  questions:
+    - "What if this isn't actually broken - what if it's working as designed?"
+    - "Could this be normal behavior that you're misinterpreting as failure?"
+    - "What if your test methodology is sound but your interpretation is wrong?"
+    - "Are you sure you understand what 'working correctly' looks like for this component?"
+    - "Could you be looking at normal scrollable container behavior?"
+    - "What if this is working correctly and you just need to scroll to see more?"
+    - "Are you interpreting expected limitations as system failures?"
+    - "Could this be normal display window behavior rather than a bug?"
+    - "Are you confusing 'not visible' with 'not working'?"
+    - "Could this be proper scrollable content behavior that requires user interaction?"
+    - "Are you testing what users can see, or internal implementation details they'll never notice?"
+    - "Would a user notice if the thing you're testing broke, or would they not even know it exists?"
+    - "Are you testing that scroll_end() calls scroll_to(), or that the page actually scrolls when users expect it to?"
+    - "Are you testing method names and function calls, or the actual visual behavior users experience?"
+    - "Are you testing the API or the user interface?"
+    - "Are you verifying that properties exist, or that the interface actually works?"
+    - "If this test passes but the feature is completely broken for users, what's the point?"
+
+research_first:
+  weight: 0.25
+  contexts: [edit_operations, new_implementation, feature_development]
+  questions:
+    - "Have you searched Google for someone who's already solved this exact problem?"
+    - "Did you check GitHub for existing implementations before writing your own?"
+    - "Have you looked for official documentation instead of guessing how this works?"
+    - "Are you trusting your training data over current, verified documentation?"
+    - "Have you searched for existing libraries that already do what you're trying to build?"
+    - "Did you look for Stack Overflow discussions about this specific issue?"
+    - "Have you checked if there's an official plugin or widget that solves this?"
+    - "Are you reinventing the wheel instead of finding existing solutions?"
+    - "Have you searched for real-world examples of working implementations?"
+    - "Did you look for recent tutorials or guides that show the correct approach?"
+    - "Have you checked the project's GitHub issues for similar problems?"
+    - "Are you assuming you know the best practice without researching current standards?"
+    - "Have you looked for official examples in the library's documentation?"
+    - "Did you search for 'how to [specific task]' instead of coding from memory?"
+    - "Have you checked if this problem has a well-known, established solution?"
+
+v3_reference:
+  weight: 0.2
+  contexts: [widget_development, architecture_decisions, ui_implementation]
+  questions:
+    - "Have you looked at how V3 solved this exact problem?"
+    - "Did V3 have this issue, and if not, what did they do differently?"
+    - "Are you reinventing something that V3 already implemented perfectly?"
+    - "Have you studied the V3 code for this feature before writing your own version?"
+    - "What patterns from V3's working implementation are you ignoring?"
+    - "Did you check V3/elia_chat/widgets/chat.py for the proven approach?"
+    - "Are you following V3's VerticalScroll patterns or creating your own broken version?"
+    - "Have you copied the exact V3 pattern that's known to work?"
+    - "What would V3's implementation look like for this specific problem?"
+    - "Are you building from V3's working foundation or starting from scratch?"
+    - "Did you examine how V3 handles this scenario in their codebase?"
+    - "Have you traced through V3's working code to understand the flow?"
+    - "Are you adapting V3's proven solutions or inventing untested approaches?"
+    - "What specific V3 widgets should you be studying for this task?"
+
+intellectual_humility:
+  weight: 0.15
+  contexts: [overconfidence_detected, assumption_making, debugging_loops]
+  questions:
+    - "Is it possible that your testing methodology is flawed?"
+    - "Have you tried reading the docs?"
+    - "Are you sure that's actually the correct way to do that?"
+    - "Can you back that decision up with evidence?"
+    - "What if you're wrong about how this works?"
+    - "Have you considered that your approach might be fundamentally broken?"
+    - "Are you making assumptions that you can't actually verify?"
+    - "What evidence do you have that this is the right solution?"
+    - "Could there be a simpler explanation for what's happening?"
+    - "Are you overthinking this problem?"
+    - "What if the issue is with your understanding, not the code?"
+    - "Have you questioned whether your mental model is accurate?"
+    - "Are you sure you understand what the error message is actually telling you?"
+    - "What if you're solving the wrong problem entirely?"
+    - "Have you considered that you might be missing something obvious?"
+
+project_alignment:
+  weight: 0.1
+  contexts: [feature_creep, architecture_violations, scope_drift]
+  questions:
+    - "Have you read the ARCHITECTURE-GUIDE.md to understand Sacred GUI Architecture?"
+    - "Did you check DESIGN-GUIDE.md for the three-area layout requirements?"
+    - "Have you consulted IMPLEMENTATION-GUIDE.md for V3 copy-paste patterns?"
+    - "Did you review TESTING-GUIDE.md for the test-first development rules?"
+    - "Are you following the Sacred Timeline principles from ARCHITECTURE-GUIDE.md?"
+    - "Did you check if this feature aligns with the immutable three-area layout?"
+    - "Have you verified this doesn't break the Sacred Turn Structure?"
+    - "Are you introducing features that aren't in the project scope?"
+    - "Did you read MANDATORY-ACCEPTANCE-TESTING-STRATEGY.md before writing any code?"
+    - "Have you checked if keyboard scrolling belongs in a terminal research assistant?"
+    - "Are you introducing GUI features that don't align with the transparent AI cognition pipeline?"
+    - "Did you verify this fits the LLM REPL mission from CLAUDE.md?"
+
+just_run_evidence:
+  weight: 0.4  # Highest weight - most critical
+  contexts: [completion_attempts, claiming_fixes, stop_hook]
+  questions:
+    - "Do you have SOLID evidence that your fix/feature will work when a user runs 'just run'?"
+    - "Can you prove this will work for an average user running 'just run'? No other evidence counts if that fails."
+    - "Will this actually work when someone runs 'just run'? You need concrete proof, not assumptions."
+    - "The only question that matters: does this work for 'just run'? Do you have solid evidence?"
+    - "Can you guarantee this works for a real user running 'just run'? That's the ultimate deciding factor."
+    - "Your fix means nothing if 'just run' doesn't work. Do you have proof it will?"
+    - "The only test that counts is 'just run' working for an average user. Do you have evidence?"
+    - "All your tests are meaningless if 'just run' fails. Can you prove it will work?"
+    - "Have you verified this works with 'just run' for a typical user scenario?"
+    - "Does your solution pass the ultimate test: 'just run' working flawlessly for users?"
+
+memory_continuity:
+  weight: 0.15
+  contexts: [session_management, problem_solving, debugging_loops]
+  questions:
+    - "Have you updated the CLAUDE-CONTINUE.md file with your current progress?"
+    - "Did you record your findings in CLAUDE-CONTINUE.md for the next session?"
+    - "Have you documented what you learned in CLAUDE-CONTINUE.md?"
+    - "Are you maintaining your deductive reasoning log in CLAUDE-CONTINUE.md?"
+    - "Did you re-read your previous logs in CLAUDE-CONTINUE.md before starting?"
+    - "Have you updated CLAUDE-CONTINUE.md with the current problem state?"
+    - "Are you using CLAUDE-CONTINUE.md as your external memory system?"
+    - "Did you document your hypothesis and evidence in CLAUDE-CONTINUE.md?"
+    - "Have you recorded what worked and what didn't in CLAUDE-CONTINUE.md?"
+    - "Are you keeping a running log of your deductive process?"
+
+reset_questions:
+  weight: 0.1
+  contexts: [debugging_loops, stuck_patterns, overcomplication]
+  questions:
+    - "Are you sure we're not just swatting flies?"
+    - "Are we patching when we should be rethinking the architecture?"
+    - "Let's make sure we're not running in circles."
+    - "Do we need to take a step back?"
+    - "Is this fixing the root cause or just the symptoms?"
+    - "Are we solving the right problem here?"
+    - "Should we be questioning our approach instead of just implementing?"
+    - "Is this complexity worth it, or are we overengineering?"
+    - "Are we building what the user actually needs?"
+    - "Is this the simplest thing that could possibly work?"
+    - "Are we making this harder than it needs to be?"
+    - "Should we be throwing this out and starting fresh?"
+    - "Stop writing tests and actually try running the code manually - what happens?"
+    - "Have you tried the absolute simplest possible version that could demonstrate the concept?"

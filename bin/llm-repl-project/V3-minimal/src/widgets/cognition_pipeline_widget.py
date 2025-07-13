@@ -9,8 +9,11 @@ from textual.widgets import Static
 from textual.containers import Vertical, Horizontal
 from textual.reactive import reactive
 from textual.timer import Timer
+from textual import work
 from rich.text import Text
+from rich.panel import Panel
 from typing import Optional, List
+import asyncio
 
 from src.core.mock_scenarios import EnhancedMockCognitionPlugin, CognitionSubModule
 from typing import TYPE_CHECKING
@@ -60,18 +63,45 @@ class CognitionStepWidget(Static):
     step_state = reactive("pending")
     step_progress = reactive(0.0)
     step_content = reactive("")
+    elapsed_time = reactive(0.0)
+    tokens_up = reactive(0)
+    tokens_down = reactive(0)
 
     def __init__(self, sub_module, **kwargs):
         super().__init__(**kwargs)
         self.sub_module = sub_module
         self.sub_module.add_update_callback(self._on_step_update)
         self.animation_timer: Optional[Timer] = None
+        self.start_time: Optional[float] = None
+        self.end_time: Optional[float] = None
+        self._timer_task = None
+
+        # Generate mock token counts
+        import random
+        self.tokens_up = random.randint(50, 200)
+        self.tokens_down = random.randint(100, 400)
+
         self._update_display()
 
     def _on_step_update(self, sub_module: CognitionSubModule) -> None:
         """Update display when step state changes with smooth transitions."""
+        import time
+
+        prev_state = self.step_state
         self.step_state = sub_module.state
         self.step_progress = sub_module.progress
+
+        # Start timer when transitioning to running
+        if prev_state != "running" and sub_module.state == "running":
+            self.start_time = time.time()
+            self._start_timer()
+
+        # Stop timer when transitioning to completed or failed
+        if sub_module.state in ["completed", "failed"] and self.start_time:
+            self.end_time = time.time()
+            self.elapsed_time = self.end_time - self.start_time
+            if self._timer_task:
+                self._timer_task.cancel()
 
         if sub_module.result:
             self.step_content = (
@@ -83,54 +113,73 @@ class CognitionStepWidget(Static):
         self._update_display()
         self._animate_state_change()
 
+    def _start_timer(self):
+        """Start the timer update task"""
+        @work(exclusive=True)
+        async def update_timer():
+            import time
+            while self.step_state == "running" and self.start_time:
+                self.elapsed_time = time.time() - self.start_time
+                await asyncio.sleep(0.1)
+
+        self._timer_task = update_timer()
+
     def _update_display(self) -> None:
-        """Update the visual display with enhanced styling."""
+        """Update display to match ProcessingWidget style"""
         step = self.sub_module.step
         state = self.step_state
         progress = self.step_progress
 
-        # Remove all state classes first
-        self.remove_class(
-            "step-pending", "step-running", "step-completed", "step-failed"
-        )
+        # Map states
+        state_map = {
+            "pending": "QUEUED",
+            "running": "PROCESSING",
+            "completed": "DONE",
+            "failed": "FAILED"
+        }
 
-        # Create rich display text
-        display_text = Text()
+        # State colors
+        state_colors = {
+            "pending": "dim white",
+            "running": "bright_yellow",
+            "completed": "bright_green",
+            "failed": "bright_red"
+        }
 
-        # Step header with icon and name
-        display_text.append(f"{step.icon} ", style="bold")
-        display_text.append(f"{step.name}", style="bold white")
+        # Create content matching ProcessingWidget format
+        content = Text()
 
-        # State-specific styling and content
+        # First line: STATE | Timer | Tokens
+        content.append(f"[{state_map.get(state, state.upper())}]", style=state_colors.get(state, "white"))
+        content.append(" | ", style="dim")
+        content.append(f"⏱️  {self.elapsed_time:.1f}s", style="bright_cyan")
+        content.append(" | ", style="dim")
+        content.append(f"↑ {self.tokens_up} tokens  ↓ {self.tokens_down} tokens", style="bright_magenta")
+
+        # Second line: Step info
+        content.append(f"\n{step.icon} {step.name}", style="white")
+
+        # Third line: Progress bar
         if state == "pending":
-            display_text.append(" ⏳", style="dim")
-            self.add_class("step-pending")
-        elif state == "running":
-            display_text.append(f" 🔄 ({progress:.0%})", style="yellow bold")
-            self.add_class("step-running")
-            # Add animated progress indicator
-            progress_bar = "█" * int(progress * 10) + "░" * (10 - int(progress * 10))
-            display_text.append(f"\n[{progress_bar}]", style="yellow")
-        elif state == "completed":
-            display_text.append(" ✅", style="green bold")
-            self.add_class("step-completed")
-            if self.step_content:
-                display_text.append(f"\n{self.step_content}", style="dim white")
-        elif state == "failed":
-            display_text.append(" ❌", style="red bold")
-            self.add_class("step-failed")
+            progress_bar = "━" * 30
+        else:
+            filled = int(progress * 30)
+            empty = 30 - filled
+            progress_bar = "█" * filled + "━" * empty
 
-        # Add metadata for completed or running steps
-        if state in ["running", "completed"] and self.sub_module.result:
-            metadata_text = f"\nModel: {step.model}"
-            if self.sub_module.result:
-                metadata_text += f" | Tokens: {self.sub_module.result.tokens_used}"
-                metadata_text += (
-                    f" | Confidence: {self.sub_module.result.confidence_score:.2f}"
-                )
-            display_text.append(metadata_text, style="dim cyan")
+        content.append(f"\n[{progress_bar}] {int(progress * 100)}%", style="bright_blue")
 
-        self.update(display_text)
+        # Panel with state-based border
+        self.update(Panel(
+            content,
+            title="Cognition Module",
+            border_style=state_colors.get(state, "white"),
+            padding=(1, 2)
+        ))
+
+        # Update classes for CSS styling
+        self.remove_class("step-pending", "step-running", "step-completed", "step-failed")
+        self.add_class(f"step-{state}")
 
     def _animate_state_change(self) -> None:
         """Add subtle animation when state changes."""

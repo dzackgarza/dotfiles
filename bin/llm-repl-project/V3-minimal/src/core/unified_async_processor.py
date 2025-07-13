@@ -12,6 +12,7 @@ from .config import Config
 from .unified_timeline import UnifiedTimelineManager
 from .live_blocks import LiveBlock
 from ..cognition import CognitionManager, CognitionEvent, CognitionResult
+from .processing_queue import ProcessingQueue
 
 if TYPE_CHECKING:
     from .response_generator import ResponseGenerator
@@ -50,14 +51,20 @@ class UnifiedAsyncInputProcessor:
         # Wire callbacks for staging area and timeline
         self.cognition_manager.set_staging_callback(self._handle_cognition_event)
         self.cognition_manager.set_timeline_callback(self._handle_cognition_result)
-        
+
         # Processing control
         self._processing_paused = False
-        
+
+        # Processing queue for debug mode
+        self.processing_queue = ProcessingQueue(app) if app else None
+
+        # Reference to active cognition widget for sub-module updates
+        self._active_cognition_widget = None
+
     def pause_processing(self):
         """Pause all processing to prevent interference"""
         self._processing_paused = True
-        
+
     def resume_processing(self):
         """Resume processing"""
         self._processing_paused = False
@@ -65,18 +72,56 @@ class UnifiedAsyncInputProcessor:
     def get_timeline(self):
         """Get the unified timeline for UI integration"""
         return self.timeline_manager.timeline
-    
+
     async def manual_inscribe(self):
         """Manually inscribe pending turn data to timeline"""
-        if self._pending_inscription:
-            print("DEBUG: Manual inscription triggered")
-            # Temporarily restore current_turn_data
+        print("DEBUG: manual_inscribe called")
+
+        # Use new processing queue system if enabled
+        if Config.USE_PROCESSING_QUEUE and self.processing_queue:
+            success = await self.processing_queue.inscribe_next()
+
+            if success and self._pending_inscription:
+                print("DEBUG: Manual inscription triggered - processing queue")
+                # Temporarily restore current_turn_data
+                self.current_turn_data = self._pending_inscription
+                await self._inscribe_complete_turn()
+                self._pending_inscription = None
+
+                # Check if more blocks are ready
+                ready_count = len(self.processing_queue.get_ready_blocks())
+                if ready_count > 0:
+                    self.app.notify(f"✅ Inscribed! {ready_count} more blocks ready.", severity="information")
+                else:
+                    # All done - hide workspace
+                    workspace = self.app.query_one("#staging-container")
+                    if hasattr(self.app, "staging_separator"):
+                        self.app.staging_separator.set_idle()
+                    if hasattr(workspace, "hide_workspace"):
+                        workspace.hide_workspace()
+                    self.app.notify("All blocks inscribed!", severity="success")
+            else:
+                self.app.notify("No completed blocks ready for inscription.", severity="warning")
+
+        # Legacy mode fallback
+        elif self._pending_inscription:
+            print("DEBUG: Manual inscription triggered - legacy mode")
             self.current_turn_data = self._pending_inscription
             await self._inscribe_complete_turn()
             self._pending_inscription = None
+
             if self.app:
+                workspace = self.app.query_one("#staging-container")
+                for widget in list(workspace.children):
+                    if not widget.has_class("staging-separator"):
+                        widget.remove()
+                if hasattr(self.app, "staging_separator"):
+                    self.app.staging_separator.set_idle()
+                if hasattr(workspace, "hide_workspace"):
+                    workspace.hide_workspace()
                 self.app.notify("Turn inscribed to timeline!", severity="information")
         else:
+            print("DEBUG: No pending inscription data")
             if self.app:
                 self.app.notify("No pending inscription to process.", severity="warning")
 
@@ -86,12 +131,12 @@ class UnifiedAsyncInputProcessor:
         Entire turn (user + cognition + assistant) is inscribed at once.
         """
         print(f"DEBUG: process_user_input_async called with: {user_input}")
-        
+
         # Check if processing is paused (e.g., for reality capture)
         if self._processing_paused:
             print("DEBUG: Processing paused, skipping")
             return
-            
+
         user_input = user_input.strip()
         if not user_input:
             return
@@ -108,6 +153,9 @@ class UnifiedAsyncInputProcessor:
                 workspace.show_workspace()
                 print(f"DEBUG: After show_workspace, classes: {workspace.classes}")
 
+                # In debug mode with processing queue, the queue will handle widget creation
+                # Otherwise, we'll add the widget manually in simple debug mode later
+
         # Store components for atomic inscription
         self.current_turn_data = {
             "turn_number": turn_number,
@@ -121,43 +169,97 @@ class UnifiedAsyncInputProcessor:
         self.current_turn_data["cognition_result"] = cognition_result
 
         # Generate assistant response
+        print("DEBUG: About to generate assistant response")
         response = self.response_generator.generate_response(user_input)
         self.current_turn_data["assistant_response"] = response
         print(f"DEBUG: Generated assistant response: {response[:50]}...")
+        print(f"DEBUG: About to check manual inscribe mode: {Config.MANUAL_INSCRIBE_MODE}")
 
-        # Hide live workspace after cognition
-        if self.app:
-            workspace = self.app.query_one("#staging-container")
+        # Check if debug mode is enabled
+        if Config.DEBUG_MODE:
+            # Use processing queue only if enabled
+            if Config.USE_PROCESSING_QUEUE and self.processing_queue:
+                print("DEBUG: Debug mode with processing queue")
 
-            # Clear cognition content (keep staging separator)
-            for widget in list(workspace.children):
-                if not widget.has_class("staging-separator"):
-                    widget.remove()
+                # Add the message to processing queue
+                processing_widget = await self.processing_queue.add_block(user_input)
 
-            # Set staging separator back to idle state
-            if self.app and hasattr(self.app, "staging_separator"):
-                self.app.staging_separator.set_idle()
+                # Store the pending inscription data with the widget
+                self._pending_inscription = self.current_turn_data.copy() if hasattr(self, 'current_turn_data') else None
 
-            if hasattr(workspace, "hide_workspace"):
-                workspace.hide_workspace()
+                # Update the staging separator to show debug mode active
+                if self.app and hasattr(self.app, "staging_separator"):
+                    self.app.staging_separator.set_pending_inscription()
 
-        # Check if manual inscribe mode is enabled
-        if Config.MANUAL_INSCRIBE_MODE:
-            print("DEBUG: Manual inscribe mode - waiting for user command")
-            # Store the pending inscription data
-            self._pending_inscription = self.current_turn_data.copy() if hasattr(self, 'current_turn_data') else None
-            # Show a notification to the user
-            if self.app:
-                self.app.notify("Processing complete. Type '/inscribe' or press Ctrl+I to inscribe to timeline.", severity="information")
+                # Show a notification to the user
+                if self.app:
+                    self.app.notify("🔍 Debug Mode: Processing block added. Type /inscribe when ready to commit.", severity="warning")
+            else:
+                # Simple debug mode (original implementation)
+                print("DEBUG: Simple debug mode - response stays in staging")
+                self._pending_inscription = self.current_turn_data.copy() if hasattr(self, 'current_turn_data') else None
+
+                # Keep workspace visible AND add response for inspection
+                if self.app:
+                    workspace = self.app.query_one("#staging-container")
+
+                    # Add the assistant response to staging area for inspection
+                    if response:
+                        from ..widgets.chatbox import Chatbox
+                        assistant_preview = Chatbox(str(response), role="assistant")
+                        await workspace.mount(assistant_preview)
+                        print("DEBUG: Added assistant response to staging area for inspection")
+
+                        # Add help text for debug mode
+                        from textual.widgets import Static
+                        help_text = Static(
+                            "\n💡 **Debug Mode Instructions:**\n"
+                            "• Response is paused in staging area for inspection\n"
+                            "• Type `/inscribe` and press Enter to commit to timeline\n"
+                            "• Take screenshots or examine the response before committing\n",
+                            classes="debug-help"
+                        )
+                        await workspace.mount(help_text)
+
+                    # Update the staging separator to show manual inscription is pending
+                    if hasattr(self.app, "staging_separator"):
+                        self.app.staging_separator.set_pending_inscription()
+
+                # Show a notification to the user
+                if self.app:
+                    self.app.notify("🔍 Debug Mode: Response ready for inspection. Type /inscribe to commit to timeline.", severity="warning")
         else:
+            # Normal mode: hide workspace after cognition
+            if self.app:
+                workspace = self.app.query_one("#staging-container")
+
+                # Clear cognition content (keep staging separator)
+                for widget in list(workspace.children):
+                    if not widget.has_class("staging-separator"):
+                        widget.remove()
+
+                # Set staging separator back to idle state
+                if self.app and hasattr(self.app, "staging_separator"):
+                    self.app.staging_separator.set_idle()
+
+                if hasattr(workspace, "hide_workspace"):
+                    workspace.hide_workspace()
+
             # NOW inscribe the complete turn atomically
             print("DEBUG: About to inscribe complete turn")
-            await self._inscribe_complete_turn()
-            print("DEBUG: Finished inscribing complete turn")
+            try:
+                await self._inscribe_complete_turn()
+                print("DEBUG: Finished inscribing complete turn")
+            except Exception as e:
+                print(f"DEBUG: Inscription failed with error: {e}")
+                import traceback
+                traceback.print_exc()
 
     async def _inscribe_complete_turn(self) -> None:
         """Inscribe complete turn (user + cognition + assistant) to timeline"""
+        print("DEBUG: _inscribe_complete_turn called")
         if not self.app or not hasattr(self, "current_turn_data"):
+            print("DEBUG: _inscribe_complete_turn early return - no app or current_turn_data")
             return
 
         data = self.current_turn_data
@@ -205,7 +307,7 @@ class UnifiedAsyncInputProcessor:
             print(
                 f"DEBUG: Cognition widget CSS classes: {list(cognition_widget.classes)}"
             )
-            
+
             await chat_container.mount(cognition_widget)
             print("DEBUG: Mounted unified cognition widget")
 
@@ -215,7 +317,7 @@ class UnifiedAsyncInputProcessor:
         if assistant_response:
             assistant_chatbox = Chatbox(str(assistant_response), role="assistant")
             await chat_container.mount(assistant_chatbox)
-            print(f"DEBUG: Mounted assistant chatbox")
+            print("DEBUG: Mounted assistant chatbox")
 
         # LAST: Add turn separator AFTER the complete turn
         # This separator marks the END of Turn N, not the beginning of Turn N+1
@@ -312,6 +414,7 @@ class UnifiedAsyncInputProcessor:
 
     async def _handle_cognition_event(self, event: CognitionEvent) -> None:
         """Handle cognition events for staging area updates"""
+        print(f"DEBUG: _handle_cognition_event called - type: {event.type}, module: {event.metadata.get('module', 'N/A')}")
         if self._processing_paused:
             return
         if not self.app:
@@ -343,33 +446,79 @@ class UnifiedAsyncInputProcessor:
                 header_widget = Static(header_content, classes="turn-header")
                 await workspace.mount(header_widget)
 
-            # Add initial cognition content using unified widget
+            # Add initial cognition content using enhanced widget
             if event.content:
                 from ..widgets.cognition_widget import CognitionWidget
 
-                widget = CognitionWidget(content=event.content, is_live=True)
-                await workspace.mount(widget)
+                # Store reference to the cognition widget for later updates
+                self._active_cognition_widget = CognitionWidget(content=event.content, is_live=True)
+                await workspace.mount(self._active_cognition_widget)
+
+        elif event.type == "add_submodule":
+            print("DEBUG: Handling add_submodule event")
+            # Add sub-module to the active CognitionWidget
+            if hasattr(self, '_active_cognition_widget') and self._active_cognition_widget:
+                metadata = event.metadata
+                self._active_cognition_widget.add_sub_module(
+                    name=metadata.get("name", "Unknown"),
+                    icon=metadata.get("icon", "⚙️"),
+                    state=metadata.get("state", "PROCESSING"),
+                    tokens_in=metadata.get("tokens_in", 0),
+                    tokens_out=metadata.get("tokens_out", 0),
+                    progress=metadata.get("progress", 0.0),
+                    timer=metadata.get("timer", 0.0)
+                )
+                print(f"DEBUG: Added sub-module {metadata.get('name')} to CognitionWidget")
 
         elif event.type == "update":
+            print(f"DEBUG: Handling update event for module: {event.metadata.get('module', 'N/A')}")
             # Add each cognition event as a separate sub-module widget
             from ..widgets.sub_module import SubModuleWidget
             from ..core.live_blocks import LiveBlock
-            
+
             # Create a live block for this sub-module
             sub_module_data = LiveBlock(
                 role=event.metadata.get("module", "cognition"),
                 initial_content=event.content
             )
-            
-            # Add metadata
+
+            # Add metadata and token counts
             sub_module_data.data.metadata = event.metadata
-            
+            sub_module_data.data.tokens_input = event.metadata.get("tokens_input", 0)
+            sub_module_data.data.tokens_output = event.metadata.get("tokens_output", 0)
+            sub_module_data.data.progress = event.metadata.get("progress", 0.0)
+
+            print(f"DEBUG: Creating SubModuleWidget for {event.metadata.get('module', 'N/A')}")
             # Create and mount sub-module widget
-            sub_widget = SubModuleWidget(sub_module=sub_module_data)
-            await workspace.mount(sub_widget)
-            
+            try:
+                sub_widget = SubModuleWidget(sub_module=sub_module_data)
+                print("DEBUG: SubModuleWidget created successfully")
+                await workspace.mount(sub_widget)
+                print(f"DEBUG: Mounted SubModuleWidget, now workspace has {len(list(workspace.children))} children")
+            except Exception as e:
+                print(f"DEBUG: ERROR creating/mounting SubModuleWidget: {e}")
+                import traceback
+                traceback.print_exc()
+
             # Auto-scroll to bottom to follow updates
             workspace.scroll_end(animate=False)
+
+        elif event.type == "progress":
+            print(f"DEBUG: Handling progress event for module: {event.metadata.get('module', 'N/A')}")
+            # Update existing SubModuleWidget progress
+            module_name = event.metadata.get("module", "")
+            progress = event.metadata.get("progress", 0.0)
+
+            # Find the SubModuleWidget for this module and update its progress
+            for widget in workspace.children:
+                if (hasattr(widget, 'sub_module') and
+                    widget.sub_module.role == module_name):
+                    print(f"DEBUG: Updating progress for {module_name}: {int(progress * 100)}%")
+                    widget.sub_module.data.progress = progress
+                    widget.sub_module.data.tokens_input = event.metadata.get("tokens_input", 0)
+                    widget.sub_module.data.tokens_output = event.metadata.get("tokens_output", 0)
+                    widget.refresh()  # Trigger re-render
+                    break
 
         elif event.type == "complete":
             # Final update while preserving header

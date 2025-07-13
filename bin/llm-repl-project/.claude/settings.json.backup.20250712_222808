@@ -1,0 +1,259 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/force-screenshot-review-after-tests.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "for file in $CLAUDE_FILE_PATHS; do if [[ $file == *.py ]]; then source /home/dzack/dotfiles/bin/llm-repl-project/.venv/bin/activate && ruff check --fix \"$file\" && black \"$file\"; fi; done"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/random-perspective-check.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "for file in $CLAUDE_FILE_PATHS; do if [[ $file == *.css ]] || [[ $file == *.tcss ]]; then if command -v prettier >/dev/null 2>&1; then prettier --write \"$file\"; fi && if command -v stylelint >/dev/null 2>&1; then stylelint --fix \"$file\" 2>/dev/null || true; fi; fi; done"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /home/dzack/dotfiles/bin/llm-repl-project/V3-minimal && source /home/dzack/dotfiles/bin/llm-repl-project/.venv/bin/activate && for file in $CLAUDE_FILE_PATHS; do if [[ $file == *.py ]]; then python -m py_compile \"$file\" 2>&1 || echo \"⚠️  Python syntax error in $file\"; fi; done"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /home/dzack/dotfiles/bin/llm-repl-project/V3-minimal && source /home/dzack/dotfiles/bin/llm-repl-project/.venv/bin/activate && for file in $CLAUDE_FILE_PATHS; do if [[ $file == *.py ]]; then python -m pyflakes \"$file\" 2>&1 | grep -E '(undefined name|imported but unused|redefinition)' && echo \"⚠️  Pyflakes found issues in $file\" || true; fi; done"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /home/dzack/dotfiles/bin/llm-repl-project/V3-minimal && source /home/dzack/dotfiles/bin/llm-repl-project/.venv/bin/activate && for file in $CLAUDE_FILE_PATHS; do if [[ $file == *.py ]]; then python -m pylint --errors-only --disable=import-error \"$file\" 2>/dev/null | grep -E '^[EF]:' && echo \"❌ Pylint found errors in $file\" || true; fi; done"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "for file in $CLAUDE_FILE_PATHS; do if [[ $file == *.py ]] && command -v autopep8 >/dev/null 2>&1; then autopep8 --aggressive --aggressive --in-place \"$file\" 2>/dev/null || true; fi; done"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /home/dzack/dotfiles/bin/llm-repl-project/V3-minimal && source /home/dzack/dotfiles/bin/llm-repl-project/.venv/bin/activate && for file in $CLAUDE_FILE_PATHS; do if [[ $file == *.py ]] && command -v isort >/dev/null 2>&1; then isort --check-only \"$file\" >/dev/null 2>&1 || (echo \"🔧 Fixing imports in $file\" && isort \"$file\"); fi; done"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "for file in $CLAUDE_FILE_PATHS; do if [[ $file == *.json ]]; then python -m json.tool \"$file\" >/dev/null 2>&1 || echo \"❌ Invalid JSON in $file\"; elif [[ $file == *.yml ]] || [[ $file == *.yaml ]]; then python -c \"import yaml; yaml.safe_load(open('$file'))\" 2>&1 || echo \"❌ Invalid YAML in $file\"; fi; done"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if git rev-parse --git-dir >/dev/null 2>&1; then for file in $CLAUDE_FILE_PATHS; do if [[ $file == *.py ]]; then git add \"$file\" 2>/dev/null || true; fi; done; fi"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "for file in $CLAUDE_FILE_PATHS; do if [[ $file =~ (requirements.*\\.txt|pyproject\\.toml|pdm\\.lock|package\\.json)$ ]]; then echo \"📦 Dependencies file updated - remember to install/sync!\"; fi; done"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/acceptance-test-hook.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|MultiEdit|Edit|TodoWrite|Bash",
+        "hooks": [
+          {
+            "type": "command", 
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/ai-memories-reminder.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|MultiEdit|Edit|TodoWrite|Bash",
+        "hooks": [
+          {
+            "type": "command", 
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/memento-reminder-system.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|MultiEdit|Edit|Bash",
+        "hooks": [
+          {
+            "type": "command", 
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/constant-reality-check.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit|Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/socratic-gui-analysis.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|MultiEdit|TodoWrite",
+        "hooks": [
+          {
+            "type": "command", 
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/dont-trust-yourself-reminder.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|MultiEdit|Edit|TodoWrite",
+        "hooks": [
+          {
+            "type": "command", 
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/force-verification-workflow.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|MultiEdit|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/test-file-check.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.command' | grep -qE '^(sudo|rm -rf|:(){ :|:& };:)' && echo '{\"decision\": \"block\", \"reason\": \"Potentially dangerous command detected. Please use caution.\"}' || echo '{\"decision\": \"approve\"}'"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/gui-app-blocker.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/gui-reminder.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Grep|Glob|Task|Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/search-pattern-check.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Read|Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/test-hook-visibility.py"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/block-premature-completion.py"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "source /home/dzack/dotfiles/bin/llm-repl-project/.venv/bin/activate && just test || echo '{\"continue\": false, \"stopReason\": \"Tests failed - please fix before continuing\"}'"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"⚠️  Session ending. Consider writing progress to CLAUDE-CONTINUE.md for next session.\""
+          }
+        ]
+      }
+    ]
+  }
+}

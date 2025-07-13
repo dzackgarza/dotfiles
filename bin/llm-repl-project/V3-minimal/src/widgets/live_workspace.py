@@ -89,6 +89,7 @@ class LiveWorkspaceWidget(VerticalScroll):
         """Show workspace (2-way → 3-way split)"""
         self.remove_class("hidden")  # Make visible
         self.add_class("processing")  # Set to processing height
+        self.border_title = "Processing"  # Simple processing label
         self.is_visible = True
         self.refresh()
         # Ensure we start at the top, not scrolled to bottom
@@ -98,6 +99,7 @@ class LiveWorkspaceWidget(VerticalScroll):
         """Hide workspace (3-way → 2-way split)"""
         self.add_class("hidden")  # Hide completely
         self.remove_class("processing")  # Remove processing state
+        self.border_title = None  # Clear processing label
         self.is_visible = False
         self.refresh()
 

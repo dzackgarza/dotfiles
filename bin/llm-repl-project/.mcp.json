@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "taskmaster-ai": {
+      "command": "npx",
+      "args": ["-y", "--package=task-master-ai", "task-master-ai"],
+      "env": {
+        "GOOGLE_API_KEY": "AIzaSyA0qlTY_V40rv6cV9Pcjy5NfbPyyKvI6NY",
+        "MISTRAL_API_KEY": "iecd7k1Ht0kiXvASuvzIlNEnCyb2mxUr",
+        "OPENROUTER_API_KEY": "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",
+        "DEEPSEEK_API_KEY": "sk-32288f3c56b04b83a5be1470892c03b1"
+      }
+    }
+  }
+}

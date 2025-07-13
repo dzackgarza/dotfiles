@@ -9,12 +9,12 @@ class DebugCommandProvider(Provider):
 
     async def search(self, query: str) -> Hits:
         """Search for debug commands"""
-        
+
         def make_hit(name: str, description: str, command_name: str, score: float = 1.0) -> Hit:
             """Create a command hit"""
             def run_command() -> None:
                 self.app.action_debug_command(command_name)
-            
+
             return Hit(
                 score=score,
                 match_display=name,
@@ -51,7 +51,7 @@ def action_debug_command(self, command: str) -> None:
     if command == "screenshot":
         filename = self.create_debug_screenshot("manual")
         self.notify(f"Screenshot saved: {filename}")
-        
+
     elif command == "clear_timeline":
         try:
             container = self.chat_container
@@ -59,12 +59,12 @@ def action_debug_command(self, command: str) -> None:
             self.notify("Timeline cleared")
         except Exception as e:
             self.notify(f"Error clearing timeline: {e}")
-            
+
     elif command == "widget_tree":
         tree = self._get_widget_tree()
         self.log(f"Widget tree:\n{tree}")
         self.notify("Widget tree logged (check console)")
-        
+
     elif command == "toggle_debug":
         # Toggle debug logging
         import logging
@@ -75,13 +75,13 @@ def action_debug_command(self, command: str) -> None:
         else:
             logger.setLevel(logging.DEBUG)
             self.notify("Debug logging enabled")
-            
+
     elif command == "export_logs":
         self.notify("Log export not implemented yet")
-        
+
     elif command == "reset_layout":
         self.notify("Layout reset not implemented yet")
-        
+
     elif command == "memory_stats":
         try:
             import psutil
@@ -91,10 +91,10 @@ def action_debug_command(self, command: str) -> None:
             self.notify(f"Memory usage: {memory_mb:.1f} MB")
         except ImportError:
             self.notify("psutil not available")
-            
+
     elif command == "theme_info":
         self.notify(f"Current theme: {self._current_theme}")
-        
+
     else:
         self.notify(f"Unknown debug command: {command}")
 
@@ -102,10 +102,10 @@ def _get_widget_tree(self, widget=None, indent=0) -> str:
     """Get widget hierarchy as string - to be added to LLMReplApp"""
     if widget is None:
         widget = self
-        
+
     result = "  " * indent + f"{widget.__class__.__name__} (id={widget.id})\n"
-    
+
     for child in widget.children:
         result += self._get_widget_tree(child, indent + 1)
-        
+
     return result

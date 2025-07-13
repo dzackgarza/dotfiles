@@ -16,7 +16,7 @@ class TestSacredArchitecture:
     @pytest.mark.asyncio
     async def test_starts_in_2way_split(self):
         """Test: App starts in 2-way split (timeline + input)"""
-        async with LLMReplApp().run_test() as pilot:
+        async with LLMReplApp().run_test(size=(120, 40)) as pilot:
             # Should have timeline visible
             timeline = pilot.app.query_one("#chat-container")
             assert timeline is not None
@@ -38,7 +38,7 @@ class TestSacredArchitecture:
     @pytest.mark.asyncio
     async def test_transitions_to_3way_split_during_processing(self):
         """Test: Transitions to 3-way split when processing user input"""
-        async with LLMReplApp().run_test() as pilot:
+        async with LLMReplApp().run_test(size=(120, 40)) as pilot:
             # Send message to trigger processing
             await pilot.press("h", "e", "l", "l", "o")
             await pilot.press("enter")
@@ -59,7 +59,7 @@ class TestSacredArchitecture:
     @pytest.mark.asyncio
     async def test_returns_to_2way_split_after_completion(self):
         """Test: Returns to 2-way split after processing completes"""
-        async with LLMReplApp().run_test() as pilot:
+        async with LLMReplApp().run_test(size=(120, 40)) as pilot:
             # Send message
             await pilot.press("h", "i")
             await pilot.press("enter")
@@ -84,7 +84,7 @@ class TestSacredArchitecture:
     @pytest.mark.asyncio
     async def test_timeline_preserves_conversation_history(self):
         """Test: Sacred timeline preserves all conversation turns"""
-        async with LLMReplApp().run_test() as pilot:
+        async with LLMReplApp().run_test(size=(120, 40)) as pilot:
             # Send multiple messages
             messages = ["hello", "how are you", "goodbye"]
 
@@ -106,7 +106,7 @@ class TestSacredArchitecture:
     @pytest.mark.asyncio
     async def test_workspace_shows_cognition_steps(self):
         """Test: Live workspace shows cognition pipeline during processing"""
-        async with LLMReplApp().run_test() as pilot:
+        async with LLMReplApp().run_test(size=(120, 40)) as pilot:
             # Send complex query that will show cognition steps
             query = "explain quantum computing"
             for char in query:

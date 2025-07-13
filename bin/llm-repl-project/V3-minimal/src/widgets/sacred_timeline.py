@@ -33,7 +33,7 @@ class SacredTimelineWidget(VerticalScroll):
 
         # CSS classes
         self.add_class("sacred-timeline")
-        
+
         # Enable mouse wheel scrolling (like V3)
         self.can_focus = False
 

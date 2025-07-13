@@ -7,24 +7,40 @@ connections, and actionable insights. Designed specifically for the
 structured markdown files in ~/llm-memories/.
 """
 
+import argparse
+import json
 import os
 import sys
-import json
 import time
 import uuid
-import argparse
-from pathlib import Path
-from typing import List, Dict, Optional, Any, Union
 from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 # Import required packages
 try:
-    import groq
     from groq import Groq
-    from pydantic import BaseModel, Field, field_validator, model_validator, ConfigDict
+except ImportError:
+    print("Error: The 'groq' package is required. Please install it with: pip install groq")
+    sys.exit(1)
+
+try:
+    from pydantic import (
+        BaseModel,
+        ConfigDict,
+        Field,
+        ValidationError,
+        field_validator,
+        model_validator,
+    )
+except ImportError:
+    print("Error: The 'pydantic' package is required. Please install it with: pip install pydantic")
+    sys.exit(1)
+
+try:
     from dotenv import load_dotenv
-except ImportError as e:
-    print(f"Error: {e}. Please install required packages with: pip install groq pydantic python-dotenv")
+except ImportError:
+    print("Error: The 'python-dotenv' package is required. Please install it with: pip install python-dotenv")
     sys.exit(1)
 
 # Load environment variables
@@ -216,14 +232,25 @@ class MemoryExpander:
     
     def expand_memory(self, memory_content: str) -> MemoryExpansion:
         """Expand a single memory with deeper insights and connections."""
+        # Skip processing if content is empty or just contains placeholders
+        if not memory_content.strip() or "<details><summary>View original memory</summary>" in memory_content:
+            # Return a minimal valid MemoryExpansion object
+            return MemoryExpansion(
+                original_text=memory_content,
+                expanded_insights="No meaningful content to expand",
+                key_lessons=[],
+                action_items=[],
+                related_patterns=[],
+                anti_patterns=[],
+                cross_references=[],
+                confidence_level="low"
+            )
+            
         try:
             # Create context from other memories
             context = self._get_memory_context(memory_content)
             
-            # IN-DEPTH MEMORY EXPANSION TASK\n\n            ## ORIGINAL MEMORY CONTENT:\n            {memory_content}\n\n            ## CONTEXT FROM RELATED MEMORIES:\n            {context}\n\n            ## YOUR TASK:\n            Expand this memory into a comprehensive technical reference document. For EACH point in the original content:\n\n            1. **Deep Analysis** (100-150 words per major point):\n               - Technical background and context\n               - Psychological and cognitive factors\n               - System architecture implications\n               - Real-world examples and case studies\n\n            2. **Practical Implementation** (5-7 specific steps):\n               ```bash\n               # Example command structure\n               # Step 1: Verify current state\n               $ command_to_check_state\n               \n               # Step 2: Make atomic change\n               $ command_to_make_change\n               ```\n\n            3. **Pattern Recognition** (3-5 patterns per section):\n               - Name and description of pattern\n               - When to use/not use\n               - Relation to known design patterns\n               - Visual diagram if helpful (describe in text)\n\n            4. **Common Pitfalls** (with solutions):\n               ```\n               // Anti-pattern example\n               function doThingsBadly() {{\n                   // Don't do this\n                   if (condition) {{\n                       return true;\n                   }}\n               }}\n               \n               // Better approach\n               function doThingsWell() {{\n                   // Do this instead\n                   return condition;\n               }}\n               ```\n\n            5. **Verification Steps** (specific, testable actions):\n               1. How to verify the solution works\n               2. Expected outputs/behaviors\n               3. Metrics for success\n               4. Common failure modes\n\n            ## REQUIRED SECTIONS:\n            - Detailed technical analysis of each point\n            - Multiple concrete examples (code/CLI)\n            - Cross-references to related concepts\n            - Actionable checklists and procedures\n            - Troubleshooting guide\n\n            ## WORD COUNT TARGET: 700-1000 words\n\n            Remember: This should be a standalone technical reference that's immediately useful for engineers.\n            Include specific commands, code snippets, and detailed explanations.\n            """
-            
-            # Get the expanded content
-            # First, get the system prompt
+            # Get the system prompt
             system_prompt = self.get_system_prompt()
             
             # Create the expansion prompt with proper formatting and explicit JSON structure
@@ -273,7 +300,7 @@ class MemoryExpander:
             
             try:
                 response = self.client.chat.completions.create(
-                    model=MODEL_NAME,
+                    model=DEFAULT_MODEL,  # Use the global constant
                     messages=[
                         {"role": "system", "content": system_prompt},
                         {"role": "user", "content": expansion_prompt}
@@ -364,54 +391,50 @@ class MemoryExpander:
                                 item if isinstance(item, dict) else {}
                                 for item in response_data[list_field]
                             ]
-                    
-                    # Add original text and ensure it's a string
-                    response_data['original_text'] = str(memory_content)
-                    
-                    # Validate confidence level
-                    if response_data['confidence_level'] not in ['high', 'medium', 'low']:
-                        response_data['confidence_level'] = 'medium'
-                    
-                    return MemoryExpansion(**response_data)
-                    
-                except (json.JSONDecodeError, TypeError) as e:
-                    print(f"Error parsing JSON response: {e}")
-                    print(f"Response content: {message_content}")
-                    # Fall back to a basic response with the raw content
-                    return MemoryExpansion(
-                        original_text=str(memory_content),
-                        expanded_insights=f"Error parsing response: {e}\n\nRaw response:\n{message_content}",
-                        key_lessons=[],
-                        action_items=[],
-                        related_patterns=[],
-                        anti_patterns=[],
-                        cross_references=[],
-                        confidence_level="low"
-                    )
-                    
-            except Exception as e:
-                print(f"Error during API call: {e}", file=sys.stderr)
-                # Return a basic error response
                 return MemoryExpansion(
-                    original_text=str(memory_content),
-                    expanded_insights=f"Error expanding memory: {str(e)}\n\nPlease check the error message and try again.",
+                    original_text=memory_content,
+                    expanded_insights=response_data['expanded_insights'],
+                    key_lessons=response_data['key_lessons'],
+                    action_items=response_data['action_items'],
+                    related_patterns=response_data['related_patterns'],
+                    anti_patterns=response_data['anti_patterns'],
+                    cross_references=response_data['cross_references'],
+                    confidence_level=response_data['confidence_level']
+                )
+                
+            except (json.JSONDecodeError, TypeError) as e:
+                print(f"Error parsing JSON response: {e}")
+                print(f"Response content: {message_content[:500]}...")  # Print first 500 chars of response
+                
+                # Return a minimal valid response with the error
+                return MemoryExpansion(
+                    original_text=memory_content,
+                    expanded_insights=f"Error parsing response: {str(e)}\n\nRaw response (truncated):\n{message_content[:500]}...",
                     key_lessons=[],
-                    action_items=[{
-                        "action": "Check the error message and try again",
-                        "rationale": "The memory expansion failed and needs to be retried"
-                    }],
+                    action_items=[],
                     related_patterns=[],
                     anti_patterns=[],
                     cross_references=[],
                     confidence_level="low"
-                )
-            
-        except Exception as e:
-            print(f"Error during memory expansion: {e}", file=sys.stderr)
-            # Fallback to a basic expansion if the structured approach fails
             return MemoryExpansion(
                 original_text=memory_content,
-                expanded_insights=f"[Error in expansion: {str(e)}]",
+                expanded_insights=response_data['expanded_insights'],
+                key_lessons=response_data['key_lessons'],
+                action_items=response_data['action_items'],
+                related_patterns=response_data['related_patterns'],
+                anti_patterns=response_data['anti_patterns'],
+                cross_references=response_data['cross_references'],
+                confidence_level=response_data['confidence_level']
+            )
+            
+        except (json.JSONDecodeError, TypeError) as e:
+            print(f"Error parsing JSON response: {e}")
+            print(f"Response content: {message_content[:500]}...")  # Print first 500 chars of response
+            
+            # Return a minimal valid response with the error
+            return MemoryExpansion(
+                original_text=memory_content,
+                expanded_insights=f"Error parsing response: {str(e)}\n\nRaw response (truncated):\n{message_content[:500]}...",
                 key_lessons=[],
                 action_items=[],
                 related_patterns=[],
@@ -419,6 +442,45 @@ class MemoryExpander:
                 cross_references=[],
                 confidence_level="low"
             )
+            
+        
+    except Exception as e:
+        print(f"Error during memory expansion: {e}", file=sys.stderr)
+        import traceback
+        traceback.print_exc()  # Print full traceback for debugging
+        
+        # Create a helpful error message
+        error_msg = f"""## Error Expanding Memory
+
+An error occurred while expanding this memory:
+
+```
+{str(e)}
+```
+
+### Recommended Actions:
+1. Check if the memory contains valid content
+2. Verify your API key and internet connection
+3. Try again with the `--force` flag to regenerate
+4. If the issue persists, check the error logs for more details
+"""
+        
+        return MemoryExpansion(
+            original_text=memory_content,
+            expanded_insights=error_msg,
+            key_lessons=[],
+            action_items=[{
+                "action": "Check error details and try again",
+                "rationale": "The memory expansion failed and needs attention"
+            }],
+            related_patterns=[],
+            anti_patterns=[{
+                "mistake": "Skipping error checking",
+                "better_approach": "Always validate input and handle errors gracefully"
+            }],
+            cross_references=[],
+            confidence_level="low"
+        )
 
 class MemoryExpansion(BaseModel):
     """Model for the expanded memory output with flexible field handling."""
@@ -673,32 +735,48 @@ def process_memory(input_path: Path, output_path: Path, api_key: str, force: boo
             with open(input_path, 'r', encoding='utf-8') as f:
                 content = f.read()
                 
-            # Skip if file is empty
-            if not content.strip():
-                print(f"Skipping {input_path} - file is empty")
+            # Skip if file is empty or contains only placeholders
+            if not content.strip() or "<details><summary>View original memory</summary>" in content:
+                print(f"Skipping {input_path} - file contains no meaningful content")
+                # If this is an expanded file, clean it up
+                if input_path != output_path and output_path.exists():
+                    output_path.unlink()
+                return False
+                
+            # Check if content is meaningful (not just placeholders)
+            if not content.strip() or content.strip() == "## 🔍 Original Memory" or "<details><summary>View original memory</summary>" in content:
+                print(f"Skipping {input_path} - no meaningful content to expand")
                 return False
                 
             # Create a memory expander
-            expander = MemoryExpander(api_key)
-            
-            # Expand the memory
-            expansion = expander.expand_memory(content)
-            
-            # Format the output
-            formatted = format_memory_expansion(expansion)
-            
-            # Ensure output directory exists
-            output_path.parent.mkdir(parents=True, exist_ok=True)
-            
-            # Save with backup if in-place
-            if str(input_path) == str(output_path):
-                expander.save_expanded_memory(output_path, formatted)
-            else:
-                with open(output_path, 'w', encoding='utf-8') as f:
-                    f.write(formatted)
-                    
-            print(f"Expanded memory saved to: {output_path}")
-            return True
+            try:
+                expander = MemoryExpander(api_key)
+                
+                # Expand the memory
+                expansion = expander.expand_memory(content)
+                
+                # Format the output
+                formatted = format_memory_expansion(expansion)
+                
+                # Ensure output directory exists
+                output_path.parent.mkdir(parents=True, exist_ok=True)
+                
+                # Save with backup if in-place
+                if str(input_path) == str(output_path):
+                    expander.save_expanded_memory(output_path, formatted)
+                else:
+                    with open(output_path, 'w', encoding='utf-8') as f:
+                        f.write(formatted)
+                        
+                print(f"Expanded memory saved to: {output_path}")
+                return True
+                
+            except Exception as e:
+                print(f"Error expanding memory {input_path}: {e}")
+                # Clean up any partial output
+                if output_path.exists():
+                    output_path.unlink()
+                raise
             
         except Exception as e:
             if attempt >= max_attempts:
@@ -712,6 +790,345 @@ def process_memory(input_path: Path, output_path: Path, api_key: str, force: boo
     
     return False
 
+def extract_themes(content: str, file_name: str, client: Any) -> Dict[str, Any]:
+    """Extract themes and key content from a document."""
+    system_prompt = """You are an expert analyst. Extract key themes, concepts, and their relationships from the following document. 
+    Focus on identifying core ideas, technical details, and how they connect to form a comprehensive understanding."""
+    
+    user_prompt = f"""# THEME EXTRACTION TASK
+
+## DOCUMENT: {file_name}
+
+## INSTRUCTIONS:
+1. Read the document carefully
+2. Identify 3-5 main themes
+3. For each theme, extract:
+   - Key concepts and definitions
+   - Important examples or code snippets
+   - Relationships to other themes
+   - Specific insights or patterns
+4. Format as a JSON object with this structure:
+{{
+  "themes": [
+    {{
+      "name": "Theme name",
+      "description": "Brief description",
+      "key_concepts": ["concept1", "concept2"],
+      "examples": ["quote or example", "another example"],
+      "relationships": ["related to X in doc Y", "builds on concept Z"],
+      "source_sections": ["relevant section text"]
+    }}
+  ]
+}}
+
+## DOCUMENT CONTENT:
+{content}
+
+## YOUR ANALYSIS:"""
+    
+    try:
+        response = client.chat.completions.create(
+            model="llama3-70b-8192",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ],
+            temperature=0.1,
+            max_tokens=4000,
+            response_format={"type": "json_object"},
+            stream=False,
+        )
+        return json.loads(response.choices[0].message.content)
+    except Exception as e:
+        print(f"Error extracting themes from {file_name}: {e}", file=sys.stderr)
+        return {"themes": []}
+
+def build_knowledge_graph(themes_list: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """Combine themes from multiple documents into a knowledge graph."""
+    # Group similar themes across documents
+    theme_groups = {}
+    
+    for doc_themes in themes_list:
+        for theme in doc_themes.get("themes", []):
+            theme_name = theme["name"].lower()
+            if theme_name not in theme_groups:
+                theme_groups[theme_name] = {
+                    "name": theme["name"],
+                    "descriptions": set(),
+                    "key_concepts": set(),
+                    "examples": [],
+                    "relationships": [],
+                    "sources": []
+                }
+            
+            # Add unique content
+            theme_groups[theme_name]["descriptions"].add(theme.get("description", ""))
+            theme_groups[theme_name]["key_concepts"].update(theme.get("key_concepts", []))
+            theme_groups[theme_name]["examples"].extend(theme.get("examples", []))
+            theme_groups[theme_name]["relationships"].extend(theme.get("relationships", []))
+            theme_groups[theme_name]["sources"].extend(theme.get("source_sections", []))
+    
+    # Convert sets to lists for JSON serialization
+    for theme in theme_groups.values():
+        theme["descriptions"] = list(theme["descriptions"])
+        theme["key_concepts"] = list(theme["key_concepts"])
+    
+    return {"themes": list(theme_groups.values())}
+
+def generate_comprehensive_document(knowledge_graph: Dict[str, Any], client: Any) -> str:
+    """Generate a comprehensive document from the knowledge graph."""
+    system_prompt = """You are a senior technical writer. Create a comprehensive document that synthesizes information 
+    from multiple sources. Focus on maintaining accuracy, depth, and clarity while organizing content thematically."""
+    
+    user_prompt = """# COMPREHENSIVE DOCUMENT CREATION TASK
+
+## INSTRUCTIONS:
+1. Review the following knowledge graph of themes and concepts
+2. Create a well-structured document that:
+   - Preserves all important details and examples
+   - Shows relationships between concepts
+   - Maintains technical accuracy
+   - Uses clear, concise language
+   - Includes specific examples and quotes
+
+## KNOWLEDGE GRAPH:
+{knowledge_graph}
+
+## DOCUMENT STRUCTURE:
+# Comprehensive Analysis
+
+## Table of Contents
+[Generate a detailed TOC]
+
+## Executive Summary
+[1-2 paragraph overview of key findings]
+
+## Thematic Sections
+[For each major theme, include:
+- Clear definition and explanation
+- Key concepts and their relationships
+- Specific examples and quotes
+- Connections to other themes]
+
+## Cross-Cutting Insights
+[Patterns and relationships across themes]
+
+## Technical Reference
+[Important technical details, code examples, etc.]
+
+## Appendices
+[Additional reference material]
+
+## OUTPUT:"""
+    
+    try:
+        response = client.chat.completions.create(
+            model="llama3-70b-8192",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ],
+            temperature=0.1,
+            max_tokens=8000,
+            stream=False,
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        print(f"Error generating document: {e}", file=sys.stderr)
+        return "# Error generating comprehensive document\n\n" + str(e)
+
+def save_analysis(file_name: str, content: str, output_dir: Path) -> Path:
+    """Save analysis to a file and return the path."""
+    output_dir.mkdir(parents=True, exist_ok=True)
+    output_path = output_dir / f"{file_name}.analysis.md"
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write(content)
+    return output_path
+
+def combine_analyses_batch(analysis_paths: List[Path], client: Any, batch_size: int = 3) -> str:
+    """Combine analyses in batches to handle large document sets."""
+    combined = []
+    
+    # Process in batches
+    for i in range(0, len(analysis_paths), batch_size):
+        batch = analysis_paths[i:i + batch_size]
+        batch_content = []
+        
+        # Read batch content
+        for path in batch:
+            with open(path, 'r', encoding='utf-8') as f:
+                batch_content.append(f"# {path.stem}\n\n{f.read()}")
+        
+        if not batch_content:
+            continue
+            
+        # If it's the last batch and we have previous content, include a summary
+        if i + batch_size >= len(analysis_paths) and combined:
+            batch_content.insert(0, "# Summary of Previous Sections\n\n" + "\n\n".join(combined[-3:]))
+        
+        system_prompt = """You are a senior technical writer. Combine the following document analyses into 
+        a coherent section. Focus on maintaining all important details while creating a smooth narrative."""
+        
+        user_prompt = f"""# DOCUMENT COMBINATION TASK
+
+## INSTRUCTIONS:
+1. Combine the following document analyses into a coherent section
+2. Maintain all important details and technical information
+3. Create smooth transitions between documents
+4. Use clear section headers and markdown formatting
+5. Preserve code examples and technical details
+
+## DOCUMENTS TO COMBINE:
+{"\n\n---\n\n".join(batch_content)}
+
+## OUTPUT:
+[Your combined analysis here]"""
+        
+        try:
+            response = client.chat.completions.create(
+                model="llama3-70b-8192",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt}
+                ],
+                temperature=0.1,
+                max_tokens=8000,
+                top_p=0.9,
+                frequency_penalty=0.1,
+                presence_penalty=0.1,
+                stream=False,
+            )
+            combined_section = response.choices[0].message.content
+            combined.append(combined_section)
+            
+            # Add delay between API calls
+            time.sleep(2)
+            
+        except Exception as e:
+            print(f"Error combining batch {i//batch_size + 1}: {e}", file=sys.stderr)
+            # Fallback to simple concatenation
+            combined.append("\n\n".join(batch_content))
+    
+    # Final combination of all batches
+    final_content = "\n\n---\n\n".join(combined)
+    
+    # Create final comprehensive document
+    system_prompt = """You are a senior technical editor. Create a comprehensive, well-structured 
+    document from the following sections. Ensure the document has a logical flow, consistent formatting,
+    and includes all important details."""
+    
+    user_prompt = f"""# FINAL DOCUMENT ASSEMBLY TASK
+
+## INSTRUCTIONS:
+1. Combine the following sections into a single, well-structured document
+2. Create a detailed table of contents
+3. Add an executive summary
+4. Organize content thematically
+5. Ensure smooth transitions between sections
+6. The final document should be comprehensive and detailed (400-500 lines)
+
+## SECTIONS:
+{final_content}
+
+## OUTPUT FORMAT:
+# Comprehensive Analysis
+
+## Table of Contents
+[Detailed TOC with section numbers]
+
+## Executive Summary
+[1-2 paragraph overview]
+
+## [Thematic Sections]
+[Organized content with subsections]
+
+## Key Insights and Recommendations
+[Actionable insights and next steps]"""
+    
+    try:
+        response = client.chat.completions.create(
+            model="llama3-70b-8192",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ],
+            temperature=0.1,
+            max_tokens=8000,
+            top_p=0.9,
+            frequency_penalty=0.2,
+            presence_penalty=0.1,
+            stream=False,
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        print(f"Error creating final document: {e}", file=sys.stderr)
+        return "# Comprehensive Analysis\n\n" + final_content
+
+def summarize_memories(input_paths: List[Path], output_path: Path, api_key: str, force: bool = False) -> bool:
+    """Create a comprehensive synthesis of multiple memory files.
+    
+    Args:
+        input_paths: List of input files to analyze
+        output_path: Path to save the comprehensive document
+        api_key: Groq API key
+        force: Whether to overwrite existing output file
+        
+    Returns:
+        bool: True if synthesis was successful, False otherwise
+    """
+    if not force and output_path.exists():
+        print(f"Skipping - output file {output_path} already exists (use --force to overwrite)")
+        return False
+    
+    print(f"Analyzing {len(input_paths)} documents for thematic synthesis...")
+    
+    # Initialize the Groq client
+    client = Groq(api_key=api_key)
+    
+    # Phase 1: Extract themes from each document
+    all_themes = []
+    for i, input_path in enumerate(input_paths, 1):
+        try:
+            print(f"Analyzing document {i}/{len(input_paths)}: {input_path.name}")
+            with open(input_path, 'r', encoding='utf-8') as f:
+                content = f.read().strip()
+                if content:
+                    themes = extract_themes(content, input_path.name, client)
+                    all_themes.append(themes)
+                    # Add a small delay between API calls
+                    time.sleep(1)
+        except Exception as e:
+            print(f"Error processing {input_path}: {e}", file=sys.stderr)
+    
+    if not all_themes:
+        print("No content to analyze")
+        return False
+    
+    # Phase 2: Build a knowledge graph from all themes
+    print("\nBuilding knowledge graph from themes...")
+    knowledge_graph = build_knowledge_graph(all_themes)
+    
+    # Save intermediate knowledge graph for debugging
+    kg_path = output_path.with_suffix('.knowledge_graph.json')
+    with open(kg_path, 'w', encoding='utf-8') as f:
+        json.dump(knowledge_graph, f, indent=2)
+    
+    # Phase 3: Generate comprehensive document
+    print("Generating comprehensive document...")
+    final_document = generate_comprehensive_document(knowledge_graph, client)
+    
+    # Save the final document
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write(f"# Comprehensive Analysis\n\n")
+        f.write(f"*Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}*\n\n")
+        f.write(f"## Analysis of {len(input_paths)} Memory Documents\n\n")
+        f.write(final_document)
+    
+    print(f"\nComprehensive analysis saved to: {output_path}")
+    print(f"Knowledge graph saved to: {kg_path}")
+    return True
+
 def main():
     """Main entry point for the memory expander."""
     parser = argparse.ArgumentParser(description="Expand LLM memory documents with deeper analysis.")
@@ -720,6 +1137,7 @@ def main():
     parser.add_argument("-f", "--force", action="store_true", help="Overwrite existing files")
     parser.add_argument("-r", "--recursive", action="store_true", help="Process directories recursively")
     parser.add_argument("-i", "--in-place", action="store_true", help="Modify files in place")
+    parser.add_argument("--summarize", action="store_true", help="Generate a summary of all input files")
     parser.add_argument("--debug", action="store_true", help="Enable debug output")
     
     args = parser.parse_args()
@@ -747,9 +1165,31 @@ def main():
             print("No matching files found.")
             return 1
             
+        # Remove duplicate paths while preserving order
+        seen = set()
+        input_paths = [p for p in input_paths if not (p in seen or seen.add(p))]
+        
         print(f"Found {len(input_paths)} file(s) to process...\n")
         
-        # Process each file
+        # Handle summarization mode
+        if args.summarize:
+            # Determine output path for summary
+            if args.output:
+                output_path = Path(args.output).expanduser().resolve()
+                if output_path.is_dir():
+                    output_path = output_path / "memory_summary.md"
+            else:
+                output_path = Path.cwd() / "memory_summary.md"
+            
+            print(f"Generating summary of {len(input_paths)} files...")
+            if summarize_memories(input_paths, output_path, api_key, args.force):
+                print(f"\nSummary generated successfully: {output_path}")
+                return 0
+            else:
+                print("\nFailed to generate summary.", file=sys.stderr)
+                return 1
+        
+        # Normal processing mode
         success_count = 0
         for i, input_path in enumerate(input_paths, 1):
             try:

@@ -67,11 +67,22 @@ class PromptInput(TextArea):
                 self.app.exit()
                 return
 
-        # Handle Enter - submit message
+        # Handle Ctrl+I - manual inscription
+        if event.key == "ctrl+i":
+            event.prevent_default()
+            event.stop()
+            await self.action_manual_inscribe()
+            return
+
+        # Handle Enter - submit message or inscribe command
         if event.key == "enter":
             event.prevent_default()
             event.stop()
-            self.action_submit_prompt()
+            # Check for /inscribe command
+            if self.text.strip() == "/inscribe":
+                await self.action_manual_inscribe()
+            else:
+                self.action_submit_prompt()
             return
 
         # Handle Shift+Enter - insert newline (works in Kitty terminal)
@@ -105,7 +116,7 @@ class PromptInput(TextArea):
         # PowerLine-style prompt with useful info
         now = datetime.now()
         time_str = now.strftime(TimelineConfig.BORDER_TITLE_FORMAT)
-        self.border_title = f"❯ Sacred Timeline • {time_str} • V3-minimal"
+        self.border_title = f"❯ Query Input • {time_str} • V3-minimal"
 
     @on(TextArea.Changed)
     async def prompt_changed(self, event: TextArea.Changed) -> None:
@@ -132,6 +143,19 @@ class PromptInput(TextArea):
         else:
             self.app.bell()
             self.notify("Please wait for response to complete.")
+
+    async def action_manual_inscribe(self) -> None:
+        """Manually trigger inscription of pending turn data"""
+        try:
+            # Get the unified processor from the app
+            if hasattr(self.app, 'unified_async_processor'):
+                await self.app.unified_async_processor.manual_inscribe()
+                if self.text.strip() == "/inscribe":
+                    self.clear()  # Clear the /inscribe command
+            else:
+                self.notify("No processor available for inscription.", severity="error")
+        except Exception as e:
+            self.notify(f"Inscription failed: {e}", severity="error")
 
     def action_insert_newline(self) -> None:
         """Insert newline on Shift+Enter"""

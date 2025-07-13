@@ -1,0 +1,739 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Initialize Project with PDM",
+        "description": "Initialize the project with PDM, setting up the virtual environment and basic project structure.",
+        "details": "1. Create a new directory for the project.\n2. Run `pdm init` to initialize the project.\n3. Configure `pyproject.toml` with project metadata (name, version, description, authors, license).\n4. Specify Python version.\n5. Add `textual`, `pytest`, `rich`, `pydantic`, and `httpx` as initial dependencies using `pdm add`.\n6. Create a `.gitignore` file to exclude virtual environment and other temporary files.",
+        "testStrategy": "Verify that the virtual environment is created correctly and that the dependencies are installed. Check the `pyproject.toml` file to ensure the configuration is correct.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 2,
+        "title": "Implement Sacred GUI Layout",
+        "description": "Implement the immutable three-area Sacred GUI layout using Textual. This includes the Sacred Timeline (top), Live Workspace (middle), and Input Area (bottom).",
+        "details": "1. Create a new Textual application class.\n2. Define the three main areas: `SacredTimeline`, `LiveWorkspace`, and `InputArea`.\n3. Use `VerticalScroll` for `SacredTimeline` and `LiveWorkspace`.\n4. Use `PromptInput` for the `InputArea`.\n5. Implement the layout using Textual's layout system, ensuring the three areas are correctly positioned and sized.\n6. Enforce the 'No Nested Containers Rule'.\n<info added on 2025-07-13T03:17:24.586Z>\nTDD REQUIREMENT: This task requires user story validation showing Sacred GUI layout works correctly with three distinct areas visible. Must generate temporal grid proof before completion.\n</info added on 2025-07-13T03:17:24.586Z>",
+        "testStrategy": "Run the application and verify that the three areas are displayed correctly. Test scrolling in the `SacredTimeline` and `LiveWorkspace`. Ensure that the `InputArea` is fixed at the bottom. Verify that no nested containers are used within `VerticalScroll`.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 3,
+        "title": "Create SimpleBlockWidget with Color Coding",
+        "description": "Create a `SimpleBlockWidget` for displaying timeline entries in the Sacred Timeline. Implement role-based color coding to distinguish between user input, AI cognition, and assistant responses.",
+        "details": "1. Create a new class `SimpleBlockWidget` inheriting from Textual's `Widget`.\n2. Implement the `compose` method to render the content of the block.\n3. Add properties for setting the content and role (user, cognition, assistant).\n4. Implement color coding based on the role using Textual's styling system.\n5. Add hrule separators between timeline entries.",
+        "testStrategy": "Create instances of `SimpleBlockWidget` with different roles and content. Verify that the color coding is applied correctly. Ensure that the widgets are displayed correctly in the Sacred Timeline.",
+        "priority": "high",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 4,
+        "title": "Build PromptInput Widget",
+        "description": "Build the `PromptInput` widget with multiline support and smart validation. This widget will be used for user input in the Input Area.",
+        "details": "1. Create a new class `PromptInput` inheriting from Textual's `Input`.\n2. Enable multiline support by configuring the input widget.\n3. Implement smart validation to prevent invalid input.\n4. Add event handlers for handling user input and submitting messages.",
+        "testStrategy": "Test multiline input by entering multiple lines of text. Verify that the input is validated correctly. Ensure that the input is submitted correctly when the user presses Enter.",
+        "priority": "high",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 5,
+        "title": "Implement Basic Conversation Flow",
+        "description": "Implement the basic User -> Cognition -> Assistant conversation flow. This includes handling user input, processing it through a mock cognition pipeline, and displaying the assistant's response.",
+        "details": "1. Implement an event handler in the `PromptInput` widget to capture user input.\n2. Create a mock cognition pipeline that simulates AI processing.\n3. Implement a function to generate a mock assistant response.\n4. Add the user input, cognition output, and assistant response to the Sacred Timeline using `SimpleBlockWidget`.\n<info added on 2025-07-13T03:17:30.573Z>\nTDD REQUIREMENT: This task requires a user story showing complete conversation flow from user input to assistant response. Must demonstrate: 1) User types message, 2) Cognition processing appears, 3) Assistant response displays, 4) Timeline updates properly. Generate temporal grid proof before completion.\n</info added on 2025-07-13T03:17:30.573Z>",
+        "testStrategy": "Enter a message in the `PromptInput` widget. Verify that the user input, cognition output, and assistant response are displayed correctly in the Sacred Timeline. Ensure that the conversation flow is smooth and responsive.",
+        "priority": "high",
+        "dependencies": [
+          3,
+          4
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 6,
+        "title": "Add Persistent Timeline Storage",
+        "description": "Add persistent timeline storage and session restoration. This ensures that the conversation history is preserved across sessions.",
+        "details": "1. Choose a storage mechanism (e.g., SQLite database, JSON file).\n2. Implement functions to save the conversation history to the storage.\n3. Implement functions to load the conversation history from the storage when the application starts.\n4. Ensure that the timeline is restored correctly when the application restarts.",
+        "testStrategy": "Start the application, enter a few messages, and close the application. Restart the application and verify that the conversation history is restored correctly.",
+        "priority": "medium",
+        "dependencies": [
+          5
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 7,
+        "title": "Implement Turn Lifecycle Management",
+        "description": "Establish turn lifecycle management (idle/processing states). This includes switching between the 2-way split (Timeline + Input) and the 3-way split (Timeline + Workspace + Input).",
+        "details": "1. Implement a state management system to track the current state of the application (idle or processing).\n2. Implement functions to switch between the 2-way and 3-way splits based on the current state.\n3. Ensure that the `LiveWorkspace` is only visible during the processing state.\n4. Disable the `InputArea` during the processing state.\n<info added on 2025-07-13T03:17:36.721Z>\nTDD REQUIREMENT: This task requires a user story demonstrating turn lifecycle transitions between 2-way and 3-way split layouts. Must show: 1) Idle state (Timeline + Input), 2) Processing state (Timeline + Workspace + Input), 3) Return to idle state. Generate temporal grid proof before completion.\n</info added on 2025-07-13T03:17:36.721Z>",
+        "testStrategy": "Enter a message in the `PromptInput` widget. Verify that the application switches to the 3-way split during processing and then switches back to the 2-way split after the assistant response is displayed. Ensure that the `InputArea` is disabled during processing.",
+        "priority": "medium",
+        "dependencies": [
+          5
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 8,
+        "title": "Implement Auto-Scroll and Content-Driven Sizing",
+        "description": "Implement auto-scroll behavior and content-driven sizing for the Sacred Timeline. This ensures that the timeline always scrolls to the bottom when new messages are added and that the widgets are sized correctly based on their content.",
+        "details": "1. Implement auto-scroll behavior for the `VerticalScroll` container in the Sacred Timeline.\n2. Implement content-driven sizing for the `SimpleBlockWidget` to ensure that the widgets are sized correctly based on their content.\n3. Ensure that the timeline always scrolls to the bottom when new messages are added.",
+        "testStrategy": "Enter multiple messages in the `PromptInput` widget. Verify that the timeline always scrolls to the bottom when new messages are added. Ensure that the widgets are sized correctly based on their content.",
+        "priority": "medium",
+        "dependencies": [
+          3
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 9,
+        "title": "Create Error Boundary System",
+        "description": "Create an error boundary system for graceful failure handling. This ensures that errors in one part of the application do not crash the entire application.",
+        "details": "1. Implement error boundaries for each UI section (Timeline, Workspace, Input).\n2. Implement a mechanism to catch and log errors.\n3. Implement a mechanism to display error messages to the user.",
+        "testStrategy": "Introduce errors in different parts of the application. Verify that the errors are caught and logged correctly. Ensure that the application does not crash and that error messages are displayed to the user.",
+        "priority": "medium",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 10,
+        "title": "Build SubModuleWidget",
+        "description": "Build `SubModuleWidget` for displaying cognition steps in the Live Workspace. This widget will be used to visualize the real-time AI thinking process.",
+        "details": "1. Create a new class `SubModuleWidget` inheriting from Textual's `Widget`.\n2. Implement the `compose` method to render the content of the sub-module.\n3. Add properties for setting the content and status of the sub-module.\n4. Implement styling to display the sub-module status (e.g., running, completed, failed).",
+        "testStrategy": "Create instances of `SubModuleWidget` with different content and statuses. Verify that the widgets are displayed correctly in the Live Workspace. Ensure that the status is displayed correctly.",
+        "priority": "medium",
+        "dependencies": [
+          7
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 11,
+        "title": "Implement Sacred Timeline Core",
+        "description": "Implement the core Sacred Timeline with live vs inscribed block states, including a live block staging area, wall time tracking, token usage monitoring, and transition mechanisms.",
+        "details": "1. Create data structures for 'live' and 'inscribed' blocks. 2. Implement staging area for live blocks. 3. Track wall time and token usage per block. 4. Implement state transition logic. 5. Ensure data transparency for all operations.",
+        "testStrategy": "Verify block state transitions, time tracking, and token usage accuracy. Test data transparency.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Define Data Structures for Live and Inscribed Blocks",
+            "description": "Define the data structures for 'live' and 'inscribed' blocks, including necessary fields for content, metadata, and state information. This includes defining the schema for representing the block's data and its associated metadata.",
+            "dependencies": [],
+            "details": "Define data structures for 'live' and 'inscribed' blocks, including content, metadata, and state information.\n<info added on 2025-07-13T03:32:30.068Z>\nCOMPLETED: Enhanced data structures for live and inscribed blocks successfully implemented and tested.\n\nIMPLEMENTED:\n✅ BlockMetadata - Standardized metadata structure with 15+ fields including timing, tokens, processing steps, user annotations, relationships\n✅ BlockRole enum - Standardized roles (user, assistant, cognition, tool, system, sub_module, error, debug)  \n✅ ProcessingStage enum - Complete lifecycle stages (created → processing → completed → inscribed)\n✅ CognitionStep - Individual step tracking with timing, tokens, progress, results\n✅ EnhancedCognitionProgress - Advanced progress tracking with step management, aggregated metrics\n✅ BlockDataValidator - Comprehensive validation for both live and inscribed block data integrity\n✅ BlockValidationResult - Structured validation results with errors/warnings\n\nVALIDATED THROUGH USER STORY:\n- Block creation with proper structure validation\n- Metadata serialization/deserialization \n- Cognition step lifecycle management\n- Progress tracking with token aggregation\n- Data validation with type safety and business rules\n- Error handling and warning systems\n\nFILES CREATED:\n- src/core/block_metadata.py - Enhanced data structures\n- test_basic_data_structures.py - Complete validation test suite\n\nINTEGRATION READY: These structures extend the existing LiveBlock/InscribedBlock system and are ready for integration with UnifiedTimeline.\n</info added on 2025-07-13T03:32:30.068Z>",
+            "status": "done",
+            "testStrategy": "Verify that the data structures correctly represent the required information for both live and inscribed blocks. Create unit tests to validate the structure and data types of the blocks."
+          },
+          {
+            "id": 2,
+            "title": "Implement Live Block Staging Area",
+            "description": "Implement a staging area to hold 'live' blocks before they are inscribed. This includes mechanisms for adding, retrieving, and managing blocks in the staging area. The staging area should support operations like adding new blocks, retrieving blocks for processing, and removing blocks after inscription.",
+            "dependencies": [],
+            "details": "Implement staging area for live blocks, including adding, retrieving, and managing blocks.",
+            "status": "pending",
+            "testStrategy": "Verify that the staging area correctly manages live blocks. Create user stories to demonstrate the addition, retrieval, and removal of blocks from the staging area. Test concurrency and error handling."
+          },
+          {
+            "id": 3,
+            "title": "Implement Wall Time and Token Usage Tracking",
+            "description": "Implement mechanisms to track wall time and token usage for each block. This includes recording the time spent processing each block and the number of tokens consumed. Implement APIs to query the wall time and token usage for a given block.",
+            "dependencies": [],
+            "details": "Track wall time and token usage per block, including recording time spent and tokens consumed.",
+            "status": "pending",
+            "testStrategy": "Verify that wall time and token usage are accurately tracked for each block. Create unit tests to validate the tracking mechanisms. Test with different block sizes and processing complexities."
+          },
+          {
+            "id": 4,
+            "title": "Implement Block State Transition Logic",
+            "description": "Implement the logic for transitioning blocks between 'live' and 'inscribed' states. This includes defining the conditions for state transitions and implementing the necessary code to update the block's state. The state transition logic should handle error conditions and ensure data consistency.",
+            "dependencies": [],
+            "details": "Implement state transition logic between 'live' and 'inscribed' states, including conditions and error handling.",
+            "status": "pending",
+            "testStrategy": "Verify that blocks transition correctly between states. Create user stories to demonstrate the state transitions. Test with different scenarios, including error conditions and edge cases."
+          },
+          {
+            "id": 5,
+            "title": "Implement Data Transparency for Block Operations",
+            "description": "Ensure data transparency for all operations related to blocks, including creation, modification, and state transitions. This includes logging all relevant events and providing mechanisms for auditing block operations. Implement a system to track changes to blocks and provide an audit trail of all operations.",
+            "dependencies": [],
+            "details": "Ensure data transparency for all block operations, including logging and auditing.",
+            "status": "pending",
+            "testStrategy": "Verify that all block operations are transparent and auditable. Create user stories to demonstrate the transparency of block operations. Test the audit logging and reporting mechanisms."
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "title": "Implement Context Management",
+        "description": "Implement dynamic context pruning with recency and relevance filtering, real-time token counting, intelligent context formatting, and automated summarization.",
+        "details": "1. Implement recency and relevance scoring algorithms. 2. Implement token counting for input and output. 3. Develop context formatting logic. 4. Integrate summarization of older conversation turns.",
+        "testStrategy": "Verify context pruning effectiveness, token count accuracy, and summarization quality. Test with various conversation lengths.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 13,
+        "title": "Implement Streaming Live Output",
+        "description": "Enable real-time transparency through live data streaming for all block types, wall time, token usage, and intermediate response display, and smooth animation of blocks transitioning from live to inscribed.",
+        "details": "1. Implement live data streaming for blocks. 2. Display wall time, token usage, and intermediate responses. 3. Animate block transitions. 4. Integrate with Sacred Timeline for updates.",
+        "testStrategy": "Verify live data streaming, display accuracy, and animation smoothness. Test integration with the Sacred Timeline.",
+        "priority": "high",
+        "dependencies": [
+          11
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 14,
+        "title": "Implement Event-Driven Communication",
+        "description": "Establish decoupled plugin-UI communication via an async event system for live updates, Timeline manager integration, responsive UI updates, and plugin isolation.",
+        "details": "1. Implement async event system. 2. Integrate with Timeline manager. 3. Ensure responsive UI updates. 4. Enforce plugin isolation.",
+        "testStrategy": "Verify event system functionality, UI responsiveness, and plugin isolation. Test with multiple plugins.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 15,
+        "title": "Implement Plugin System Foundation",
+        "description": "Create an extensible plugin architecture with support for plugin nesting, data aggregation, external validation, and MCP server integration.",
+        "details": "1. Implement plugin architecture. 2. Support plugin nesting. 3. Implement data aggregation. 4. Implement external validation. 5. Integrate with MCP server.",
+        "testStrategy": "Verify plugin loading, nesting, data aggregation, and MCP integration. Test with various plugins.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 16,
+        "title": "Implement Intelligent Router System",
+        "description": "Implement core cognition routing through user intent analysis, multiple LLM provider support, plugin extensibility, and dynamic routing based on context and capabilities.",
+        "details": "1. Implement user intent analysis. 2. Support multiple LLM providers. 3. Enable plugin extensibility. 4. Implement dynamic routing logic.",
+        "testStrategy": "Verify intent analysis accuracy, LLM provider switching, and dynamic routing effectiveness. Test with various user inputs.",
+        "priority": "medium",
+        "dependencies": [
+          15
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 17,
+        "title": "Implement Rich Content Display Engine",
+        "description": "Support diverse content types including Markdown rendering, LaTeX mathematics display, syntax-highlighted code blocks, and interactive deep linking.",
+        "details": "1. Integrate Markdown rendering library. 2. Integrate LaTeX display library (MathJax/KaTeX). 3. Implement syntax highlighting for code blocks. 4. Implement interactive deep linking.",
+        "testStrategy": "Verify Markdown rendering, LaTeX display, syntax highlighting, and deep linking functionality. Test with various content types.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 18,
+        "title": "Implement Testing Framework",
+        "description": "Implement comprehensive testing for block transition validation, context pruning verification, dynamic element rendering, and plugin integration.",
+        "details": "1. Implement unit tests for block transitions. 2. Implement integration tests for context pruning. 3. Implement UI tests for dynamic rendering. 4. Implement end-to-end tests for plugin integration.",
+        "testStrategy": "Run all unit, integration, and end-to-end tests. Verify code coverage.",
+        "priority": "high",
+        "dependencies": [
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 19,
+        "title": "Implement LLM Routing and Cognitive Plugins",
+        "description": "Implement LLM-based routing decision making, cognitive plugin orchestration, multi-step reasoning process visualization, and Cognition block display integration.",
+        "details": "1. Implement LLM routing logic. 2. Implement plugin orchestration. 3. Visualize reasoning process. 4. Integrate with Cognition block display.",
+        "testStrategy": "Verify LLM routing accuracy, plugin orchestration, reasoning visualization, and Cognition block display. Test with various scenarios.",
+        "priority": "medium",
+        "dependencies": [
+          16,
+          17
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 20,
+        "title": "Implement Intelligent Context Pruning",
+        "description": "Implement relevance scoring algorithms, automatic context window management, user-configurable pruning preferences, and performance optimization.",
+        "details": "1. Implement relevance scoring. 2. Implement context window management. 3. Implement user preferences. 4. Optimize performance.",
+        "testStrategy": "Verify relevance scoring, context window management, user preferences, and performance. Test with large conversations.",
+        "priority": "medium",
+        "dependencies": [
+          12
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 21,
+        "title": "Implement Turn Summarization System",
+        "description": "Implement automated summarization of older turns, context-preserving compression techniques, integration with context pruning, and maintain conversation coherence.",
+        "details": "1. Implement summarization algorithm. 2. Implement compression techniques. 3. Integrate with context pruning. 4. Ensure conversation coherence.",
+        "testStrategy": "Verify summarization quality, compression effectiveness, integration with pruning, and conversation coherence. Test with long conversations.",
+        "priority": "medium",
+        "dependencies": [
+          12
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 22,
+        "title": "Implement Sacred Timeline Persistence",
+        "description": "Implement full timeline preservation, session restoration, subset selection, and cross-session conversation threading.",
+        "details": "1. Implement timeline persistence. 2. Implement session restoration. 3. Implement subset selection. 4. Implement conversation threading.",
+        "testStrategy": "Verify timeline persistence, session restoration, subset selection, and conversation threading. Test with multiple sessions.",
+        "priority": "medium",
+        "dependencies": [
+          11
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 23,
+        "title": "Implement Graceful Rate Limit Handling",
+        "description": "Implement automatic rate limit detection, provider failover, request queuing, and user notification of service limitations.",
+        "details": "1. Implement rate limit detection. 2. Implement provider failover. 3. Implement request queuing. 4. Implement user notification.",
+        "testStrategy": "Verify rate limit handling, provider failover, request queuing, and user notification. Test with different LLM providers.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 24,
+        "title": "Implement Long-Running Work Ledger",
+        "description": "Implement cross-session task persistence, long-running operation progress tracking, timeline integration, and recovery mechanisms.",
+        "details": "1. Implement task persistence. 2. Implement progress tracking. 3. Integrate with timeline. 4. Implement recovery mechanisms.",
+        "testStrategy": "Verify task persistence, progress tracking, timeline integration, and recovery mechanisms. Test with long-running operations.",
+        "priority": "medium",
+        "dependencies": [
+          11
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 25,
+        "title": "Implement Manual Context Re-injection",
+        "description": "Implement selective conversation history re-injection, manual context prioritization, summary and full-detail toggle options, and a user-driven context management interface.",
+        "details": "1. Implement history re-injection. 2. Implement context prioritization. 3. Implement toggle options. 4. Implement user interface.",
+        "testStrategy": "Verify history re-injection, context prioritization, toggle options, and user interface. Test with various conversation histories.",
+        "priority": "medium",
+        "dependencies": [
+          12,
+          21
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 26,
+        "title": "Implement YAML Configuration Foundation",
+        "description": "Implement the Enhanced ConfigLoader with validation and schema definition, hot-reload capability, default configuration generation, and management.",
+        "details": "1.  Implement ConfigLoader class with YAML parsing.\n2.  Integrate a validation library (e.g., Cerberus, Pydantic) to enforce the YAML schema.\n3.  Implement a file watcher to detect changes in the YAML configuration files and trigger a reload.\n4.  Implement a mechanism to generate default configuration files based on the defined schema.\n5.  Implement error handling for invalid configuration values with clear error messages.\n6.  Use a library like PyYAML for YAML parsing.",
+        "testStrategy": "1.  Unit tests for ConfigLoader to ensure proper loading and validation of YAML files.\n2.  Integration tests to verify hot-reload functionality.\n3.  Test cases for different configuration scenarios, including invalid configurations.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 27,
+        "title": "Remove Unused Code and Dependencies",
+        "description": "Remove the unused InputProcessor, consolidate demo files, clean up dead imports, and reduce codebase size.",
+        "details": "1.  Delete the InputProcessor class and all its references.\n2.  Consolidate the 7 demo files into 3 canonical examples.\n3.  Use a code analysis tool (e.g., pylint, flake8) to identify and remove dead imports and unused dependencies.\n4.  Refactor code to eliminate conflicting code paths and redundant implementations.\n5.  Measure codebase size before and after cleanup to ensure a 15-20% reduction.",
+        "testStrategy": "1.  Manual testing to ensure that the removal of InputProcessor does not break any existing functionality.\n2.  Verify that the consolidated demo files cover all the necessary use cases.\n3.  Code review to ensure that all dead imports and unused dependencies have been removed.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 28,
+        "title": "Unify Timeline Ownership and Block Management",
+        "description": "Establish a single source of truth for block management, clear ownership model, atomic state transitions, and proper state machine for the block lifecycle.",
+        "details": "1.  Identify the existing LiveBlock/Timeline conflicts.\n2.  Design a clear ownership model for block management.\n3.  Implement atomic state transitions to preserve block relationships.\n4.  Implement a state machine for the complete block lifecycle.\n5.  Use locks or other synchronization mechanisms to prevent race conditions and ownership conflicts.",
+        "testStrategy": "1.  Unit tests to verify the state machine transitions.\n2.  Integration tests to ensure that block relationships are preserved during state transitions.\n3.  Concurrency tests to verify that race conditions are eliminated.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 29,
+        "title": "Consolidate Animation System",
+        "description": "Remove AnimationRates compatibility wrapper, migrate timing logic to AnimationClock, and enable YAML-configurable animation speeds.",
+        "details": "1.  Remove the AnimationRates compatibility wrapper.\n2.  Migrate all timing logic to the unified AnimationClock system.\n3.  Implement YAML configuration for animation speeds.\n4.  Implement environment-based FPS settings (development vs production).\n5.  Ensure consistent animation timing across all widgets.",
+        "testStrategy": "1.  Unit tests to verify the AnimationClock functionality.\n2.  Integration tests to ensure that animation speeds are configurable via YAML.\n3.  Performance tests to ensure consistent animation timing across all widgets.",
+        "priority": "medium",
+        "dependencies": [
+          26,
+          27,
+          28
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 30,
+        "title": "Isolate Mock System",
+        "description": "Clean production LiveBlock class, create a dedicated mock API in `src/mocks/`, and enable YAML-configurable mock scenarios.",
+        "details": "1.  Clean the production LiveBlock class by removing mock methods.\n2.  Create a dedicated mock API in `src/mocks/` submodule.\n3.  Implement YAML configuration for mock scenarios and behaviors.\n4.  Ensure clear separation between testing and production code paths.\n5.  Isolate mock dependencies and imports.",
+        "testStrategy": "1.  Unit tests for the mock API.\n2.  Integration tests to ensure that mock scenarios are configurable via YAML.\n3.  Verify that there is a clear separation between testing and production code paths.",
+        "priority": "medium",
+        "dependencies": [
+          26,
+          27,
+          28
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 31,
+        "title": "Fix Scroll Stealing Issues",
+        "description": "Separate progress callbacks from content update callbacks, implement smart auto-scroll, and eliminate timing-based hacks.",
+        "details": "1.  Separate progress callbacks from content update callbacks.\n2.  Implement smart auto-scroll that respects user navigation intent.\n3.  Ensure smooth animations without scroll position interference.\n4.  Eliminate timing-based hacks and workarounds.\n5.  Preserve user's timeline review capability during live updates.",
+        "testStrategy": "1.  Manual testing to ensure that auto-scroll respects user navigation intent.\n2.  Integration tests to verify that scroll position is not interfered with during live updates.\n3.  Verify that user's timeline review capability is preserved during live updates.",
+        "priority": "medium",
+        "dependencies": [
+          26,
+          27,
+          28
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 32,
+        "title": "Migrate Widget CSS to YAML",
+        "description": "Implement a CSS template system with YAML value injection, enabling visual configuration without code changes.",
+        "details": "1.  Implement a CSS template system with YAML value injection.\n2.  Make all widget dimensions and spacing configurable via YAML.\n3.  Implement hot-reload of visual changes for immediate feedback.\n4.  Ensure consistent spacing and sizing system across widgets.\n5.  Enable theme customization through configuration files.",
+        "testStrategy": "1.  Manual testing to ensure that visual changes are reflected immediately via hot-reload.\n2.  Integration tests to verify that widget dimensions and spacing are configurable via YAML.\n3.  Verify that theme customization is possible through configuration files.",
+        "priority": "medium",
+        "dependencies": [
+          26,
+          29
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 33,
+        "title": "Holistic Code Complexity Review",
+        "description": "Perform a comprehensive analysis of the current codebase to identify areas of over-engineering, unnecessary abstractions, and architectural drift.",
+        "details": "1. Utilize code analysis tools to measure cyclomatic complexity, coupling, and depth of inheritance.\n2. Manually review code to identify over-engineered components and unnecessary abstractions.\n3. Map module dependencies and coupling points to visualize the current architecture.\n4. Compare the current architecture against the V3 simplicity baseline to identify areas of drift.\n5. Document complexity hotspots and architectural drift areas in a report.",
+        "testStrategy": "Verify the accuracy of the complexity analysis by cross-referencing the identified hotspots with manual code reviews. Ensure the documented areas of drift align with the project's architectural goals.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 34,
+        "title": "Module Boundary Analysis",
+        "description": "Conduct a high-level architectural review to evaluate the current module organization and separation of concerns, and create a restructuring plan.",
+        "details": "1. Evaluate the current module organization and separation of concerns.\n2. Identify modules that should be split or consolidated based on their functionality.\n3. Design a proper subdirectory structure that reflects functional boundaries.\n4. Map an ideal dependency graph with minimal coupling between modules.\n5. Create a migration plan for module restructuring, outlining the steps required to move modules to the new structure.",
+        "testStrategy": "Validate the restructuring plan by simulating the module migration and verifying that all dependencies are correctly resolved. Ensure the new directory structure aligns with the project's functional boundaries.",
+        "priority": "high",
+        "dependencies": [
+          33
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 35,
+        "title": "Technical Debt Assessment",
+        "description": "Systematically identify and prioritize technical debt within the codebase, including monkey-patches, code duplication, and testing gaps.",
+        "details": "1. Catalog monkey-patches, workarounds, and temporary solutions.\n2. Identify code duplication and inconsistent patterns.\n3. Document unused or deprecated code paths.\n4. Assess test coverage gaps and testing complexity.\n5. Prioritize debt by impact on maintainability and development velocity, creating a prioritized list of technical debt items.",
+        "testStrategy": "Verify the completeness of the technical debt assessment by cross-referencing the identified items with code reviews and developer feedback. Ensure the prioritization aligns with the project's maintainability and development velocity goals.",
+        "priority": "high",
+        "dependencies": [
+          33
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 36,
+        "title": "Core Timeline Simplification",
+        "description": "Simplify the core Sacred Timeline implementation by eliminating unnecessary abstractions, consolidating block state management, and removing intermediate layers.",
+        "details": "1. Analyze the current Sacred Timeline implementation to identify unnecessary abstractions.\n2. Consolidate overlapping block state management logic.\n3. Simplify the live vs inscribed block lifecycle.\n4. Remove intermediate layers that don't add clear value.\n5. Ensure the core concept remains clean and understandable by refactoring the code to reduce complexity.",
+        "testStrategy": "Test the simplified Sacred Timeline implementation by creating unit tests that cover the core functionality. Verify that the simplified implementation maintains the same behavior as the original implementation.",
+        "priority": "medium",
+        "dependencies": [
+          35
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 37,
+        "title": "Plugin System Rationalization",
+        "description": "Streamline the plugin architecture by simplifying plugin registration and discovery mechanisms, and reducing the plugin API surface area.",
+        "details": "1. Simplify plugin registration and discovery mechanisms.\n2. Eliminate over-engineered plugin validation layers.\n3. Consolidate plugin communication patterns.\n4. Reduce plugin API surface area to essential functionality.\n5. Ensure clear separation between core plugins and extensions by refactoring the plugin architecture.",
+        "testStrategy": "Test the streamlined plugin architecture by creating integration tests that verify the plugin registration and discovery mechanisms. Ensure that the reduced plugin API surface area still provides the necessary functionality.",
+        "priority": "medium",
+        "dependencies": [
+          35
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 38,
+        "title": "Configuration System Cleanup",
+        "description": "Simplify configuration management by consolidating multiple configuration approaches into one clear system and reducing configuration file complexity.",
+        "details": "1. Consolidate multiple configuration approaches into one clear system.\n2. Eliminate configuration complexity that doesn't serve users.\n3. Simplify hot-reload and validation mechanisms.\n4. Reduce configuration file complexity and nesting.\n5. Ensure clear defaults that work out of the box by refactoring the configuration management system.",
+        "testStrategy": "Test the simplified configuration management system by creating unit tests that verify the configuration loading and validation mechanisms. Ensure that the simplified configuration system provides the necessary flexibility and functionality.",
+        "priority": "medium",
+        "dependencies": [
+          35
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 39,
+        "title": "Directory Structure Reorganization",
+        "description": "Implement a logical module organization by creating clear subdirectories for major functional areas and establishing clear import patterns.",
+        "details": "1. Create clear subdirectories for major functional areas (e.g., core timeline logic, UI rendering, plugin system).\n2. Separate core timeline logic from UI rendering concerns.\n3. Isolate plugin system from core application logic.\n4. Organize utilities and shared code appropriately.\n5. Establish clear import patterns and module boundaries by moving files and updating import statements.",
+        "testStrategy": "Verify the new directory structure by manually inspecting the file organization and import statements. Ensure that the module boundaries are clear and that the import patterns are consistent.",
+        "priority": "medium",
+        "dependencies": [
+          34,
+          36,
+          37,
+          38
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 40,
+        "title": "Interface Simplification",
+        "description": "Design minimal, clear interfaces between modules by defining essential APIs for each major component and simplifying event communication patterns.",
+        "details": "1. Define essential APIs for each major component (e.g., timeline, UI, plugin system).\n2. Eliminate unnecessary method overloads and options.\n3. Create clear contracts between timeline, UI, and plugin systems.\n4. Simplify event communication patterns.\n5. Reduce the number of ways to accomplish the same task by refactoring the module interfaces.",
+        "testStrategy": "Test the simplified interfaces by creating integration tests that verify the communication between modules. Ensure that the essential APIs are sufficient for the required functionality and that the event communication patterns are clear.",
+        "priority": "medium",
+        "dependencies": [
+          36,
+          37,
+          39
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 41,
+        "title": "Dependency Graph Optimization",
+        "description": "Optimize module dependencies for clarity by eliminating circular dependencies, reducing the number of dependencies each module requires, and isolating external dependencies.",
+        "details": "1. Eliminate circular dependencies completely.\n2. Reduce the number of dependencies each module requires.\n3. Create clear dependency hierarchy with minimal coupling.\n4. Isolate external dependencies to specific modules.\n5. Enable independent testing and development of modules by refactoring the module dependencies.",
+        "testStrategy": "Verify the optimized module dependencies by analyzing the dependency graph and ensuring that there are no circular dependencies. Ensure that the number of dependencies each module requires is minimized and that external dependencies are isolated.",
+        "priority": "medium",
+        "dependencies": [
+          39,
+          40
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 42,
+        "title": "Simplified Testing Strategy",
+        "description": "Streamline the testing approach by eliminating complex test setup, focusing on essential behavior testing, and simplifying test data.",
+        "details": "1. Eliminate complex test setup and mocking requirements.\n2. Focus on essential behavior testing over implementation details.\n3. Simplify test data and scenarios.\n4. Reduce test execution time and complexity.\n5. Ensure clear separation between unit, integration, and system tests by refactoring the testing framework.",
+        "testStrategy": "Evaluate the streamlined testing approach by measuring the test execution time and complexity. Ensure that the essential behavior is covered by the tests and that the test setup is simplified.",
+        "priority": "low",
+        "dependencies": [
+          36,
+          37,
+          38,
+          41
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 43,
+        "title": "Documentation and Guidelines",
+        "description": "Establish clear development guidelines by documenting architectural principles, creating guidelines for adding new functionality, and establishing code review criteria focused on simplicity.",
+        "details": "1. Document architectural principles and design decisions.\n2. Create clear guidelines for adding new functionality.\n3. Establish code review criteria focused on simplicity.\n4. Document module responsibilities and boundaries.\n5. Create examples of preferred patterns and anti-patterns by writing documentation and creating code examples.",
+        "testStrategy": "Verify the completeness and clarity of the development guidelines by reviewing the documentation and code examples. Ensure that the guidelines are easy to understand and follow.",
+        "priority": "low",
+        "dependencies": [
+          34,
+          39,
+          40,
+          41
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 44,
+        "title": "Continuous Complexity Monitoring",
+        "description": "Implement ongoing complexity management by establishing metrics and thresholds for acceptable complexity, creating automated checks for architectural violations, and integrating with the development workflow.",
+        "details": "1. Establish metrics and thresholds for acceptable complexity (e.g., cyclomatic complexity, coupling).\n2. Create automated checks for architectural violations (e.g., circular dependencies).\n3. Regular review cycles for new code additions.\n4. Clear escalation path when complexity increases.\n5. Integration with development workflow to prevent complexity drift by implementing automated checks and creating a review process.",
+        "testStrategy": "Monitor the complexity metrics and architectural violations over time to ensure that the complexity management system is effective. Ensure that the automated checks are accurate and that the review process is followed.",
+        "priority": "low",
+        "dependencies": [
+          42,
+          43
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 45,
+        "title": "Environment Setup and Core Integration",
+        "description": "Set up the development environment and integrate the existing Sacred GUI user story framework with Task Master.",
+        "details": "1.  Install necessary dependencies (e.g., Python libraries for image processing, testing frameworks).\n2.  Configure the development environment to work with the existing Task Master project.\n3.  Set up access to the Sacred GUI user story framework.\n4.  Create a dedicated branch for TDD integration.\n<info added on 2025-07-13T03:37:22.326Z>\nCOMPLETED: TDD integration environment successfully set up and tested.\n\nIMPLEMENTED:\n✅ TaskStoryManager - Bridge between Task Master tasks and Sacred GUI user stories\n✅ TDD Commands - Complete CLI for generate-story, test-story, validate-task, complete-with-story\n✅ Shell Integration - Scripts for Task Master CLI integration\n✅ Dependencies Verified - All required packages (PIL, cairosvg, pytest) working\n✅ File System - .taskmaster/stories/ directory structure created\n✅ User Story Framework Integration - Connected existing 12-step temporal grid system\n\nVALIDATED:\n✅ Generated user story for Task 45 with Sacred GUI acceptance criteria\n✅ Created temporal grid proof (4x3 grid showing 12-step validation)\n✅ Validation system confirms task ready for completion with visual proof\n✅ All TDD commands working correctly with JSON output\n\nFILES CREATED:\n- src/tdd_integration/task_story_bridge.py - Core integration bridge\n- src/tdd_integration/tdd_commands.py - CLI command implementations  \n- .taskmaster/scripts/tdd-commands.sh - Shell wrapper for Task Master integration\n- .taskmaster/stories/task_stories.json - Story data storage\n- TDD_INTEGRATION_README.md - Complete documentation\n\nREADY FOR: Task 46 (extend Task Master structure with user story metadata) and Tasks 47-52 (complete TDD command suite implementation)\n</info added on 2025-07-13T03:37:22.326Z>",
+        "testStrategy": "Verify that the development environment is correctly set up and that the Task Master project can be run successfully. Confirm access to the Sacred GUI user story framework.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 46,
+        "title": "Extend Task Structure with User Story Metadata",
+        "description": "Extend the Task Master task structure to include user story metadata as specified in the PRD.",
+        "details": "1.  Modify the Task data structure to include the `userStory` field with `storyId`, `title`, `description`, `acceptanceCriteria`, and `temporalGridPath`.\n2.  Update the Task Master database schema to accommodate the new fields.\n3.  Ensure that the existing task management functionality is not affected by the changes.",
+        "testStrategy": "Create new tasks with user story metadata and verify that the data is stored correctly in the database. Retrieve the tasks and ensure that the user story metadata is displayed correctly.",
+        "priority": "high",
+        "dependencies": [
+          45
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 47,
+        "title": "Implement 'generate-story' Command",
+        "description": "Implement the `task-master generate-story` command to generate user story templates for tasks.",
+        "details": "1.  Create a new command `generate-story` in the Task Master CLI.\n2.  Implement the command logic to generate a user story template based on the task ID and prompt.\n3.  The template should include fields for story ID, title, description, acceptance criteria, and temporal grid path.\n4.  Store the generated template in a predefined location (e.g., `tests/user_stories.py`).",
+        "testStrategy": "Run the `task-master generate-story` command with different task IDs and prompts. Verify that the generated user story templates are created correctly and contain the expected fields.",
+        "priority": "medium",
+        "dependencies": [
+          46
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 48,
+        "title": "Implement 'test-story' Command",
+        "description": "Implement the `task-master test-story` command to run user stories for specific tasks and generate temporal grids.",
+        "details": "1.  Create a new command `test-story` in the Task Master CLI.\n2.  Implement the command logic to run the user story associated with the specified task ID.\n3.  Integrate with the existing Sacred GUI user story framework to execute the user story and generate a temporal grid.\n4.  Store the generated temporal grid in the specified location (e.g., `debug_screenshots/task_X_grid.png`).",
+        "testStrategy": "Run the `task-master test-story` command with different task IDs. Verify that the user stories are executed correctly and that the temporal grids are generated and stored in the specified locations.",
+        "priority": "medium",
+        "dependencies": [
+          46,
+          47
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 49,
+        "title": "Implement 'update-story' Command",
+        "description": "Implement the `task-master update-story` command to update tasks with story results and temporal grid paths.",
+        "details": "1.  Create a new command `update-story` in the Task Master CLI.\n2.  Implement the command logic to update the task with the story results and the path to the temporal grid.\n3.  Update the `userStory` field in the Task data structure with the new information.\n4.  Store the updated task data in the database.",
+        "testStrategy": "Run the `task-master update-story` command with different task IDs and grid paths. Verify that the tasks are updated correctly with the story results and temporal grid paths.",
+        "priority": "medium",
+        "dependencies": [
+          48
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 50,
+        "title": "Implement 'validate-task' Command",
+        "description": "Implement the `task-master validate-task` command to validate task completion with story proof.",
+        "details": "1.  Create a new command `validate-task` in the Task Master CLI.\n2.  Implement the command logic to validate task completion based on the user story and temporal grid.\n3.  Check if the task has an associated user story and if the temporal grid shows a complete successful flow.\n4.  Verify that the visual quality and performance of the story are acceptable.",
+        "testStrategy": "Run the `task-master validate-task` command with different task IDs. Verify that the task completion is validated correctly based on the user story and temporal grid.",
+        "priority": "medium",
+        "dependencies": [
+          49
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 51,
+        "title": "Enhance 'set-status' Command with Story Validation",
+        "description": "Modify the `task-master set-status` command to prevent marking tasks as 'done' without story proof.",
+        "details": "1.  Modify the `set-status` command in the Task Master CLI.\n2.  Add a check to verify if the task requires user story validation before setting the status to 'done'.\n3.  If the task requires validation, display an error message and prevent the status change.",
+        "testStrategy": "Run the `task-master set-status` command with different task IDs and statuses. Verify that the status cannot be set to 'done' without story proof for tasks that require validation.",
+        "priority": "high",
+        "dependencies": [
+          50
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 52,
+        "title": "Implement 'complete-with-story' Command",
+        "description": "Implement the `task-master complete-with-story` command to mark tasks as complete with story proof.",
+        "details": "1.  Create a new command `complete-with-story` in the Task Master CLI.\n2.  Implement the command logic to mark the task as complete with the specified story ID.\n3.  Update the task status to 'done' and store the story ID in the task metadata.",
+        "testStrategy": "Run the `task-master complete-with-story` command with different task IDs and story IDs. Verify that the tasks are marked as complete and that the story IDs are stored correctly in the task metadata.",
+        "priority": "high",
+        "dependencies": [
+          51
+        ],
+        "status": "pending",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-07-13T02:33:23.087Z",
+      "updated": "2025-07-13T03:51:37.079Z",
+      "description": "Tasks for master context"
+    }
+  }
+}

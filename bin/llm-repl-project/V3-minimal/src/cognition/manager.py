@@ -7,6 +7,7 @@ from typing import Optional, Callable, Awaitable, Dict, Any
 from .base import CognitionModule, CognitionEvent, CognitionResult
 from .noop_module import NoOpCognitionModule
 from .mock_module import MockCognitionModule
+from .debug_module import DebugCognitionModule
 
 
 class CognitionManager:
@@ -31,12 +32,18 @@ class CognitionManager:
         """Register built-in modules"""
         noop = NoOpCognitionModule()
         mock = MockCognitionModule()
+        debug = DebugCognitionModule()
 
         self.available_modules[noop.get_name()] = noop
         self.available_modules[mock.get_name()] = mock
+        self.available_modules[debug.get_name()] = debug
 
-        # Set Mock as default for better demonstration
-        self.set_module(mock.get_name())
+        # Set Debug as default when in debug mode
+        from ..core.config import Config
+        if Config.DEBUG_MODE:
+            self.set_module(debug.get_name())
+        else:
+            self.set_module(mock.get_name())
 
     def set_staging_callback(
         self, callback: Callable[[CognitionEvent], Awaitable[None]]

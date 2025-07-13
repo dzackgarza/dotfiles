@@ -4,7 +4,7 @@ from pathlib import Path
 from textual import events
 from textual.app import App, ComposeResult
 from textual.binding import Binding
-from textual.containers import Vertical, VerticalScroll
+from textual.containers import Vertical
 from textual.theme import Theme
 
 from .config import AppConfig, ThemeConfig
@@ -218,10 +218,11 @@ class LLMReplApp(App[None]):
         async def safe_process():
             try:
                 from .widgets.chatbox import Chatbox
-                from .widgets.turn_separator import TurnSeparator
-                
+
                 # Check for /inscribe command
+                print(f"DEBUG: Checking for /inscribe command, text='{event.text.strip()}'")
                 if event.text.strip() == "/inscribe":
+                    print("DEBUG: /inscribe command detected, calling manual_inscribe")
                     await self.unified_async_processor.manual_inscribe()
                     return
 
@@ -273,12 +274,12 @@ class LLMReplApp(App[None]):
     def action_do_nothing(self) -> None:
         """Action that does nothing - used to disable Ctrl+Q"""
         pass
-    
-    
+
+
     def _show_debug_info(self) -> None:
         """Show debug information"""
         from .widgets.chatbox import Chatbox
-        
+
         debug_info = f"""**Debug Information**
 
 App Version: {AppConfig.VERSION}
@@ -286,7 +287,7 @@ Theme: {self._current_theme}
 Turn Count: {self.turn_count}
 Cognition Module: {self.unified_async_processor.cognition_manager.get_current_module_name()}
 Debug Screenshots: {len(list(self.debug_dir.glob('*.svg')))} saved"""
-        
+
         debug_box = Chatbox(debug_info, role="system")
         self.chat_container.mount(debug_box)
         self.chat_container.scroll_end(animate=False)
@@ -367,7 +368,7 @@ Debug Screenshots: {len(list(self.debug_dir.glob('*.svg')))} saved"""
         if event.key == "ctrl+c":
             self.exit()
             return
-        
+
         # Handle Ctrl+I for manual inscribe
         if event.key == "ctrl+i":
             async def inscribe():

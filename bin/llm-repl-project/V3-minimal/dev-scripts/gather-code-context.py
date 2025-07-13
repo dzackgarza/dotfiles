@@ -4,14 +4,13 @@ Code Context Gatherer - Mimics human code review workflows
 Gathers comprehensive contextual information for enhanced AI code reviews
 """
 
-import os
 import sys
 import ast
 import subprocess
 from pathlib import Path
 from datetime import datetime
 import re
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 from collections import Counter
 import json
 
@@ -24,7 +23,7 @@ class CodeContextGatherer:
         self.file_name = file_path.name
         self.directory = file_path.parent
         self.is_git_repo = self._check_git_repo()
-        
+
     def _check_git_repo(self) -> bool:
         """Check if file is in a git repository"""
         try:
@@ -86,7 +85,7 @@ class CodeContextGatherer:
         try:
             with open(self.file_path) as f:
                 tree = ast.parse(f.read())
-                
+
             structure = {
                 "classes": [],
                 "functions": [],
@@ -94,7 +93,7 @@ class CodeContextGatherer:
                 "decorators": set(),
                 "imports": []
             }
-            
+
             for node in ast.walk(tree):
                 if isinstance(node, ast.ClassDef):
                     bases = [self._get_name(base) for base in node.bases]
@@ -124,7 +123,7 @@ class CodeContextGatherer:
                     })
                 elif isinstance(node, (ast.Import, ast.ImportFrom)):
                     structure["imports"].append(self._format_import(node))
-                    
+
             structure["decorators"] = list(structure["decorators"])
             return structure
         except Exception as e:
@@ -136,14 +135,14 @@ class CodeContextGatherer:
             with open(self.file_path) as f:
                 content = f.read()
                 tree = ast.parse(content)
-                
+
             docs = {
                 "module_doc": ast.get_docstring(tree),
                 "classes": {},
                 "functions": {},
                 "inline_comments": self._extract_inline_comments(content)
             }
-            
+
             for node in ast.walk(tree):
                 if isinstance(node, ast.ClassDef):
                     doc = ast.get_docstring(node)
@@ -160,7 +159,7 @@ class CodeContextGatherer:
                             "line": node.lineno,
                             "summary": doc.split('\n')[0] if doc else None
                         }
-                        
+
             return docs
         except Exception as e:
             return {"error": f"Failed to extract docs: {str(e)}"}
@@ -170,14 +169,14 @@ class CodeContextGatherer:
         try:
             with open(self.file_path) as f:
                 tree = ast.parse(f.read())
-                
+
             deps = {
                 "stdlib": [],
                 "third_party": [],
                 "local": [],
                 "type_imports": []
             }
-            
+
             for node in ast.walk(tree):
                 if isinstance(node, ast.Import):
                     for alias in node.names:
@@ -185,7 +184,7 @@ class CodeContextGatherer:
                 elif isinstance(node, ast.ImportFrom):
                     if node.module:
                         self._categorize_import(node.module, deps, node.names)
-                        
+
             return deps
         except Exception as e:
             return {"error": f"Failed to analyze deps: {str(e)}"}
@@ -193,14 +192,14 @@ class CodeContextGatherer:
     def _find_related_files(self) -> List[Dict]:
         """Find related files in the project"""
         related = []
-        
+
         # Look for test files
         test_patterns = [
             f"test_{self.file_path.stem}.py",
             f"{self.file_path.stem}_test.py",
             f"test_{self.file_name}"
         ]
-        
+
         for pattern in test_patterns:
             # Check in tests directory
             test_file = self.directory.parent / "tests" / pattern
@@ -210,7 +209,7 @@ class CodeContextGatherer:
                     "type": "test",
                     "exists": True
                 })
-                
+
         # Look for __init__.py in same directory
         init_file = self.directory / "__init__.py"
         if init_file.exists():
@@ -219,7 +218,7 @@ class CodeContextGatherer:
                 "type": "package_init",
                 "exists": True
             })
-            
+
         # Look for related modules (same prefix)
         prefix = self.file_path.stem.split('_')[0]
         for file in self.directory.glob(f"{prefix}*.py"):
@@ -229,7 +228,7 @@ class CodeContextGatherer:
                     "type": "related_module",
                     "exists": True
                 })
-                
+
         return related
 
     def _get_recent_changes(self) -> Dict:
@@ -243,7 +242,7 @@ class CodeContextGatherer:
                 text=True,
                 check=True
             ).stdout
-            
+
             commits = []
             for line in commits_output.strip().split('\n'):
                 if line:
@@ -254,7 +253,7 @@ class CodeContextGatherer:
                         "message": parts[2],
                         "author": parts[3]
                     })
-                    
+
             # Get current diff
             diff_output = subprocess.run(
                 ["git", "diff", str(self.file_path)],
@@ -262,10 +261,10 @@ class CodeContextGatherer:
                 capture_output=True,
                 text=True
             ).stdout
-            
+
             # Get blame info for complex areas
             blame_info = self._get_blame_summary()
-            
+
             return {
                 "recent_commits": commits,
                 "has_uncommitted_changes": bool(diff_output),
@@ -279,7 +278,7 @@ class CodeContextGatherer:
         """Analyze common code patterns and potential issues"""
         with open(self.file_path) as f:
             content = f.read()
-            
+
         patterns = {
             "uses_type_hints": bool(re.search(r':\s*\w+\s*[=)]', content)),
             "has_error_handling": bool(re.search(r'\btry\s*:', content)),
@@ -295,7 +294,7 @@ class CodeContextGatherer:
                 "deep_nesting": self._estimate_max_nesting(content)
             }
         }
-        
+
         return patterns
 
     def _get_project_context(self) -> Dict:
@@ -305,7 +304,7 @@ class CodeContextGatherer:
             "project_type": None,
             "config_files": []
         }
-        
+
         # Check for common project files
         project_root = self._find_project_root()
         if project_root:
@@ -313,13 +312,13 @@ class CodeContextGatherer:
             for config_file in ["pyproject.toml", "setup.py", "requirements.txt", "pdm.lock", "poetry.lock"]:
                 if (project_root / config_file).exists():
                     context["config_files"].append(config_file)
-                    
+
             # Detect framework
             if (project_root / "manage.py").exists():
                 context["framework"] = "Django"
             elif any((project_root / f).exists() for f in ["app.py", "wsgi.py"]):
                 context["framework"] = "Flask/FastAPI"
-                
+
             # Read pyproject.toml if exists
             pyproject = project_root / "pyproject.toml"
             if pyproject.exists():
@@ -336,7 +335,7 @@ class CodeContextGatherer:
                     print(f"Warning: Could not parse {file} ({e})")
                 except Exception as e:
                     print(f"Warning: Error reading {file} ({e})")
-                    
+
         return context
 
     def _analyze_quality_indicators(self) -> Dict:
@@ -344,7 +343,7 @@ class CodeContextGatherer:
         with open(self.file_path) as f:
             lines = f.readlines()
             content = ''.join(lines)
-            
+
         quality = {
             "has_docstrings": self._check_docstring_coverage(content),
             "follows_pep8": self._check_basic_pep8(lines),
@@ -352,7 +351,7 @@ class CodeContextGatherer:
             "security_concerns": self._check_security_patterns(content),
             "performance_hints": self._check_performance_patterns(content)
         }
-        
+
         return quality
 
     # Helper methods
@@ -391,10 +390,10 @@ class CodeContextGatherer:
     def _categorize_import(self, module: str, deps: Dict, names=None):
         """Categorize import as stdlib, third-party, or local"""
         stdlib_modules = {
-            'os', 'sys', 'ast', 'json', 're', 'pathlib', 'datetime', 
+            'os', 'sys', 'ast', 'json', 're', 'pathlib', 'datetime',
             'subprocess', 'typing', 'collections', 'itertools', 'functools'
         }
-        
+
         if module.startswith('.'):
             deps["local"].append(module)
         elif module.split('.')[0] in stdlib_modules:
@@ -439,13 +438,13 @@ class CodeContextGatherer:
             tree = ast.parse(content)
             total_defs = 0
             with_docs = 0
-            
+
             for node in ast.walk(tree):
                 if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
                     total_defs += 1
                     if ast.get_docstring(node):
                         with_docs += 1
-                        
+
             return {
                 "total_definitions": total_defs,
                 "with_docstrings": with_docs,
@@ -486,11 +485,11 @@ class CodeContextGatherer:
             r'subprocess.*shell\s*=\s*True': "Uses shell=True in subprocess",
             r'\.execute\s*\(.*%': "Possible SQL injection vulnerability"
         }
-        
+
         for pattern, message in patterns.items():
             if re.search(pattern, content):
                 concerns.append(message)
-                
+
         return concerns
 
     def _check_performance_patterns(self, content: str) -> List[str]:
@@ -501,20 +500,20 @@ class CodeContextGatherer:
             r'\+\s*=.*loop': "String concatenation in loop",
             r'sleep\s*\(': "Uses sleep() - consider async alternatives"
         }
-        
+
         for pattern, message in patterns.items():
             if re.search(pattern, content, re.I):
                 hints.append(message)
-                
+
         return hints
 
     def _analyze_test_coverage(self) -> Dict:
         """Analyze test coverage and test patterns"""
         with open(self.file_path) as f:
             content = f.read()
-            
+
         is_test_file = self.file_path.name.startswith('test_') or 'test' in self.file_path.name
-        
+
         coverage = {
             "is_test_file": is_test_file,
             "test_functions": len(re.findall(r'def test_\w+', content)),
@@ -524,7 +523,7 @@ class CodeContextGatherer:
             "fixtures_used": len(re.findall(r'@pytest\.fixture', content)),
             "parametrized_tests": len(re.findall(r'@pytest\.mark\.parametrize', content))
         }
-        
+
         if not is_test_file:
             # Look for corresponding test files
             test_patterns = [
@@ -532,87 +531,87 @@ class CodeContextGatherer:
                 f"{self.file_path.stem}_test.py"
             ]
             coverage["has_test_file"] = any(
-                (self.directory.parent / "tests" / pattern).exists() 
+                (self.directory.parent / "tests" / pattern).exists()
                 for pattern in test_patterns
             )
-            
+
         return coverage
 
     def _analyze_performance_patterns(self) -> List[str]:
         """Enhanced performance pattern analysis"""
         with open(self.file_path) as f:
             content = f.read()
-            
+
         patterns = []
-        
+
         # Performance anti-patterns
         if re.search(r'for.*in.*range\(len\(', content):
             patterns.append("Using range(len()) instead of enumerate or direct iteration")
-        
+
         if re.search(r'\.append\(.*\)\s*\n.*for.*in', content, re.MULTILINE):
             patterns.append("List comprehension opportunity detected")
-            
+
         if re.search(r'global\s+\w+', content):
             patterns.append("Global variable usage may impact performance")
-            
+
         if re.search(r'time\.sleep\(', content):
             patterns.append("Blocking sleep calls - consider async alternatives")
-            
+
         if re.search(r'subprocess\.(call|run).*shell=True', content):
             patterns.append("Shell=True in subprocess - security and performance concern")
-            
+
         # Memory patterns
         if re.search(r'\.copy\(\)', content):
             patterns.append("Data copying detected - verify if necessary")
-            
+
         if re.search(r'pickle\.(dump|load)', content):
             patterns.append("Pickle usage - consider faster serialization alternatives")
-            
+
         return patterns
 
     def _analyze_security_patterns(self) -> Dict:
         """Enhanced security pattern analysis"""
         with open(self.file_path) as f:
             content = f.read()
-            
+
         security = {
             "high_risk": [],
             "medium_risk": [],
             "low_risk": [],
             "good_practices": []
         }
-        
+
         # High risk patterns
         if re.search(r'eval\s*\(', content):
             security["high_risk"].append("eval() usage - arbitrary code execution risk")
-            
+
         if re.search(r'exec\s*\(', content):
             security["high_risk"].append("exec() usage - arbitrary code execution risk")
-            
+
         if re.search(r'pickle\.loads?\s*\(', content):
             security["high_risk"].append("pickle.load() - arbitrary code execution risk")
-            
+
         # Medium risk patterns
         if re.search(r'subprocess.*shell=True', content):
             security["medium_risk"].append("shell=True in subprocess - command injection risk")
-            
+
         if re.search(r'input\s*\(.*\)', content):
             security["medium_risk"].append("input() usage - validate user input")
-            
+
         if re.search(r'open\s*\(.*[\'"]w[\'"]', content):
             security["medium_risk"].append("File writing - ensure path validation")
-            
+
         # Low risk patterns
         if re.search(r'random\.random\(\)', content):
             security["low_risk"].append("random.random() - not cryptographically secure")
-            
+
         # Good practices
         if re.search(r'with\s+open\s*\(', content):
             security["good_practices"].append("Using context managers for file operations")
-            
+
         if re.search(r'try:\s*.*except.*:', content, re.DOTALL):
             security["good_practices"].append("Exception handling implemented")
-            
+
         return security
 
     def _identify_refactoring_opportunities(self) -> Dict:
@@ -620,7 +619,7 @@ class CodeContextGatherer:
         with open(self.file_path) as f:
             content = f.read()
             lines = content.splitlines()
-            
+
         opportunities = {
             "duplicate_code": [],
             "long_functions": [],
@@ -628,7 +627,7 @@ class CodeContextGatherer:
             "magic_numbers": [],
             "naming_improvements": []
         }
-        
+
         # Find potential duplicate code blocks
         line_groups = {}
         for i, line in enumerate(lines):
@@ -638,37 +637,37 @@ class CodeContextGatherer:
                     line_groups[clean_line].append(i + 1)
                 else:
                     line_groups[clean_line] = [i + 1]
-        
+
         for line, occurrences in line_groups.items():
             if len(occurrences) > 1:
                 opportunities["duplicate_code"].append({
                     "line": line[:50] + "..." if len(line) > 50 else line,
                     "occurrences": occurrences
                 })
-        
+
         # Find magic numbers
         magic_numbers = re.findall(r'\b(?<!\.)\d{2,}\b(?!\s*[),])', content)
         if magic_numbers:
             opportunities["magic_numbers"] = list(set(magic_numbers))
-        
+
         # Find complex boolean conditions
         complex_conditions = re.findall(r'if\s+.*(?:and|or).*(?:and|or)', content)
         if complex_conditions:
             opportunities["complex_conditions"] = [cond.strip() for cond in complex_conditions[:3]]
-        
+
         # Find single-letter variable names (except common ones)
         single_letter_vars = re.findall(r'\b([a-z])\s*=', content)
         bad_names = [var for var in single_letter_vars if var not in ['i', 'j', 'k', 'x', 'y', 'z']]
         if bad_names:
             opportunities["naming_improvements"] = list(set(bad_names))
-        
+
         return opportunities
 
     def _analyze_error_patterns(self) -> Dict:
         """Analyze error handling patterns"""
         with open(self.file_path) as f:
             content = f.read()
-            
+
         try:
             tree = ast.parse(content)
         except SyntaxError as e:
@@ -677,7 +676,7 @@ class CodeContextGatherer:
         except Exception as e:
             print(f"Warning: Could not parse file ({e})")
             return {"error": f"Parse error: {e}"}
-            
+
         patterns = {
             "exception_handling": {
                 "try_blocks": 0,
@@ -697,24 +696,24 @@ class CodeContextGatherer:
                 "none_checks": len(re.findall(r'if.*is None|if.*is not None', content))
             }
         }
-        
+
         for node in ast.walk(tree):
             if isinstance(node, ast.Try):
                 patterns["exception_handling"]["try_blocks"] += 1
                 if node.finalbody:
                     patterns["exception_handling"]["finally_blocks"] += 1
-                    
+
                 for handler in node.handlers:
                     if handler.type is None:
                         patterns["exception_handling"]["bare_except"] += 1
                     else:
                         if hasattr(handler.type, 'id'):
                             patterns["exception_handling"]["specific_exceptions"].append(handler.type.id)
-                            
+
             elif isinstance(node, ast.Raise):
                 if node.exc is None:  # bare raise
                     patterns["exception_handling"]["reraise_patterns"] += 1
-        
+
         return patterns
 
     def _check_dependency_health(self) -> Dict:
@@ -725,7 +724,7 @@ class CodeContextGatherer:
             "unused_imports": [],
             "deprecated_usage": []
         }
-        
+
         try:
             with open(self.file_path) as f:
                 content = f.read()
@@ -736,7 +735,7 @@ class CodeContextGatherer:
         except Exception as e:
             print(f"Warning: Dependency health check failed ({e})")
             return {"error": f"Analysis failed: {e}"}
-        
+
         # Collect all imports
         imports = []
         for node in ast.walk(tree):
@@ -747,7 +746,7 @@ class CodeContextGatherer:
                 if node.module:
                     for alias in node.names:
                         imports.append(f"{node.module}.{alias.name}")
-        
+
         # Check for deprecated patterns
         deprecated_patterns = [
             (r'imp\s+import', "imp module is deprecated, use importlib"),
@@ -755,14 +754,14 @@ class CodeContextGatherer:
             (r'collections\.Mapping', "collections.Mapping deprecated, use collections.abc.Mapping"),
             (r'datetime\.datetime\.utcnow', "utcnow() deprecated, use datetime.now(timezone.utc)")
         ]
-        
+
         for pattern, message in deprecated_patterns:
             if re.search(pattern, content):
                 health["deprecated_usage"].append(message)
-        
+
         health["import_analysis"]["total_imports"] = len(imports)
         health["import_analysis"]["unique_modules"] = len(set(imp.split('.')[0] for imp in imports))
-        
+
         return health
 
     def _analyze_python_specific(self) -> Dict:
@@ -777,7 +776,7 @@ class CodeContextGatherer:
         except Exception as e:
             print(f"Warning: Python-specific analysis failed ({e})")
             return {"error": f"Analysis failed: {e}"}
-            
+
         analysis = {
             "import_analysis": self._detailed_import_analysis(tree),
             "call_hierarchy": self._analyze_call_hierarchy(tree),
@@ -790,7 +789,7 @@ class CodeContextGatherer:
             "method_overrides": self._find_method_overrides(tree),
             "decorator_usage": self._analyze_decorator_usage(tree)
         }
-        
+
         return analysis
 
     def _run_multi_tool_analysis(self) -> Dict:
@@ -798,19 +797,19 @@ class CodeContextGatherer:
         try:
             script_dir = Path(__file__).parent
             tool_matrix_script = script_dir / "tool-integration-matrix.py"
-            
+
             if not tool_matrix_script.exists():
                 return {"error": "Tool integration matrix not found"}
-            
+
             result = subprocess.run([
                 sys.executable, str(tool_matrix_script), str(self.file_path), "--json"
             ], capture_output=True, text=True, timeout=60)
-            
+
             if result.returncode == 0:
                 return json.loads(result.stdout)
             else:
                 return {"error": f"Tool matrix failed: {result.stderr}"}
-                
+
         except subprocess.TimeoutExpired:
             return {"error": "Multi-tool analysis timed out"}
         except Exception as e:
@@ -826,7 +825,7 @@ class CodeContextGatherer:
             "star_imports": [],
             "conditional_imports": []
         }
-        
+
         # Known standard library modules (subset)
         stdlib_modules = {
             'os', 'sys', 'ast', 'json', 're', 'pathlib', 'datetime', 'time',
@@ -835,7 +834,7 @@ class CodeContextGatherer:
             'argparse', 'configparser', 'tempfile', 'shutil', 'glob', 'math',
             'random', 'string', 'io', 'csv', 'xml', 'http', 'urllib', 'socket'
         }
-        
+
         for node in ast.walk(tree):
             if isinstance(node, ast.Import):
                 for alias in node.names:
@@ -845,14 +844,14 @@ class CodeContextGatherer:
                         "alias": alias.asname,
                         "line": node.lineno
                     }
-                    
+
                     if module_name in stdlib_modules:
                         imports["standard_library"].append(import_info)
                     elif module_name.startswith('.'):
                         imports["local"].append(import_info)
                     else:
                         imports["third_party"].append(import_info)
-                        
+
             elif isinstance(node, ast.ImportFrom):
                 if node.module:
                     module_name = node.module.split('.')[0]
@@ -870,7 +869,7 @@ class CodeContextGatherer:
                                 "line": node.lineno
                             }
                             imports["from_imports"].append(import_info)
-        
+
         return imports
 
     def _analyze_call_hierarchy(self, tree: ast.AST) -> Dict:
@@ -881,57 +880,57 @@ class CodeContextGatherer:
             "external_calls": set(),
             "recursive_calls": []
         }
-        
+
         # First pass: collect all function definitions
         defined_functions = set()
         for node in ast.walk(tree):
             if isinstance(node, ast.FunctionDef):
                 defined_functions.add(node.name)
-        
+
         # Second pass: analyze calls within each function
         for node in ast.walk(tree):
             if isinstance(node, ast.FunctionDef):
                 calls_made = set()
                 method_calls = set()
-                
+
                 for child in ast.walk(node):
                     if isinstance(child, ast.Call):
                         if hasattr(child.func, 'id'):  # Simple function call
                             func_name = child.func.id
                             calls_made.add(func_name)
-                            
+
                             # Check for recursion
                             if func_name == node.name:
                                 call_graph["recursive_calls"].append(node.name)
-                                
+
                         elif hasattr(child.func, 'attr'):  # Method call
                             method_name = child.func.attr
                             method_calls.add(method_name)
-                            
+
                             # Check if it's a call on self
-                            if (hasattr(child.func, 'value') and 
-                                hasattr(child.func.value, 'id') and 
+                            if (hasattr(child.func, 'value') and
+                                hasattr(child.func.value, 'id') and
                                 child.func.value.id == 'self'):
                                 calls_made.add(method_name)
-                
+
                 call_graph["functions"][node.name] = {
                     "calls": list(calls_made),
                     "method_calls": list(method_calls),
                     "line": node.lineno
                 }
-                
+
                 # Identify external calls (not defined in this file)
                 for call in calls_made:
                     if call not in defined_functions:
                         call_graph["external_calls"].add(call)
-        
+
         call_graph["external_calls"] = list(call_graph["external_calls"])
         return call_graph
 
     def _analyze_class_hierarchy(self, tree: ast.AST) -> Dict:
         """Analyze class inheritance and structure"""
         classes = {}
-        
+
         for node in ast.walk(tree):
             if isinstance(node, ast.ClassDef):
                 # Get base classes
@@ -941,12 +940,12 @@ class CodeContextGatherer:
                         bases.append(base.id)
                     elif hasattr(base, 'attr'):
                         bases.append(f"{base.value.id}.{base.attr}" if hasattr(base.value, 'id') else base.attr)
-                
+
                 # Get methods and properties
                 methods = []
                 properties = []
                 class_variables = []
-                
+
                 for item in node.body:
                     if isinstance(item, ast.FunctionDef):
                         method_info = {
@@ -956,20 +955,20 @@ class CodeContextGatherer:
                             "is_dunder": item.name.startswith('__') and item.name.endswith('__'),
                             "decorators": [d.id for d in item.decorator_list if hasattr(d, 'id')]
                         }
-                        
+
                         # Check for property decorator
                         if any(d == 'property' for d in method_info["decorators"]):
                             properties.append(method_info)
                         else:
                             methods.append(method_info)
-                            
+
                     elif isinstance(item, ast.AnnAssign) and hasattr(item.target, 'id'):
                         class_variables.append({
                             "name": item.target.id,
                             "type": ast.unparse(item.annotation) if item.annotation else None,
                             "line": item.lineno
                         })
-                
+
                 classes[node.name] = {
                     "line": node.lineno,
                     "bases": bases,
@@ -978,7 +977,7 @@ class CodeContextGatherer:
                     "class_variables": class_variables,
                     "decorators": [d.id for d in node.decorator_list if hasattr(d, 'id')]
                 }
-        
+
         return classes
 
     def _detailed_exception_analysis(self, tree: ast.AST) -> Dict:
@@ -991,7 +990,7 @@ class CodeContextGatherer:
             "raise_statements": [],
             "exception_chaining": []
         }
-        
+
         for node in ast.walk(tree):
             if isinstance(node, ast.Try):
                 try_info = {
@@ -1000,10 +999,10 @@ class CodeContextGatherer:
                     "has_finally": bool(node.finalbody),
                     "has_else": bool(node.orelse)
                 }
-                
+
                 for handler in node.handlers:
                     handler_info = {"line": handler.lineno}
-                    
+
                     if handler.type is None:
                         exceptions["bare_except_locations"].append(handler.lineno)
                         handler_info["type"] = "bare_except"
@@ -1014,23 +1013,23 @@ class CodeContextGatherer:
                             exc_type = [e.id for e in handler.type.elts if hasattr(e, 'id')]
                         else:
                             exc_type = ast.unparse(handler.type)
-                            
+
                         handler_info["type"] = exc_type
                         exceptions["exception_types"][str(exc_type)] += 1
-                    
+
                     if handler.name:
                         handler_info["name"] = handler.name.id if hasattr(handler.name, 'id') else str(handler.name)
-                    
+
                     try_info["handlers"].append(handler_info)
-                
+
                 exceptions["try_blocks"].append(try_info)
-                
+
                 if node.finalbody:
                     exceptions["finally_blocks"].append(node.lineno)
-                    
+
             elif isinstance(node, ast.Raise):
                 raise_info = {"line": node.lineno}
-                
+
                 if node.exc:
                     if hasattr(node.exc, 'func') and hasattr(node.exc.func, 'id'):
                         raise_info["exception"] = node.exc.func.id
@@ -1038,15 +1037,15 @@ class CodeContextGatherer:
                         raise_info["exception"] = ast.unparse(node.exc)
                 else:
                     raise_info["exception"] = "re-raise"
-                
+
                 if node.cause:  # Exception chaining (raise ... from ...)
                     exceptions["exception_chaining"].append({
                         "line": node.lineno,
                         "cause": ast.unparse(node.cause)
                     })
-                
+
                 exceptions["raise_statements"].append(raise_info)
-        
+
         return exceptions
 
     def _analyze_type_hints(self, tree: ast.AST, content: str) -> Dict:
@@ -1059,7 +1058,7 @@ class CodeContextGatherer:
             "generic_usage": [],
             "coverage_stats": {}
         }
-        
+
         # Check for typing imports
         typing_imports = set()
         for node in ast.walk(tree):
@@ -1067,17 +1066,17 @@ class CodeContextGatherer:
                 for alias in node.names:
                     typing_imports.add(alias.name)
                     type_hints["type_imports"].append(alias.name)
-        
+
         # Analyze function annotations
         total_functions = 0
         annotated_functions = 0
         total_params = 0
         annotated_params = 0
-        
+
         for node in ast.walk(tree):
             if isinstance(node, ast.FunctionDef):
                 total_functions += 1
-                
+
                 # Check return annotation
                 if node.returns:
                     annotated_functions += 1
@@ -1086,7 +1085,7 @@ class CodeContextGatherer:
                         "return_type": ast.unparse(node.returns),
                         "line": node.lineno
                     })
-                
+
                 # Check parameter annotations
                 for arg in node.args.args:
                     total_params += 1
@@ -1098,7 +1097,7 @@ class CodeContextGatherer:
                             "type": ast.unparse(arg.annotation),
                             "line": node.lineno
                         })
-                        
+
                         # Check for generic usage
                         type_str = ast.unparse(arg.annotation)
                         if any(generic in type_str for generic in ['List', 'Dict', 'Optional', 'Union', 'Tuple']):
@@ -1106,7 +1105,7 @@ class CodeContextGatherer:
                                 "location": f"{node.name}.{arg.arg}",
                                 "type": type_str
                             })
-            
+
             elif isinstance(node, ast.AnnAssign):
                 # Variable annotations
                 if hasattr(node.target, 'id'):
@@ -1115,7 +1114,7 @@ class CodeContextGatherer:
                         "type": ast.unparse(node.annotation),
                         "line": node.lineno
                     })
-        
+
         # Calculate coverage statistics
         type_hints["coverage_stats"] = {
             "function_return_coverage": (annotated_functions / total_functions * 100) if total_functions > 0 else 0,
@@ -1125,7 +1124,7 @@ class CodeContextGatherer:
             "total_parameters": total_params,
             "annotated_parameters": annotated_params
         }
-        
+
         return type_hints
 
     def _detailed_docstring_analysis(self, tree: ast.AST) -> Dict:
@@ -1137,17 +1136,17 @@ class CodeContextGatherer:
             "missing_docstrings": [],
             "docstring_styles": Counter()
         }
-        
+
         # Module docstring
-        if (tree.body and isinstance(tree.body[0], ast.Expr) and 
-            isinstance(tree.body[0].value, ast.Constant) and 
+        if (tree.body and isinstance(tree.body[0], ast.Expr) and
+            isinstance(tree.body[0].value, ast.Constant) and
             isinstance(tree.body[0].value.value, str)):
             docstrings["module_docstring"] = {
                 "content": tree.body[0].value.value.split('\n')[0],  # First line only
                 "length": len(tree.body[0].value.value),
                 "line": tree.body[0].lineno
             }
-        
+
         for node in ast.walk(tree):
             if isinstance(node, ast.ClassDef):
                 docstring = ast.get_docstring(node)
@@ -1162,7 +1161,7 @@ class CodeContextGatherer:
                     docstrings["docstring_styles"][self._detect_docstring_style(docstring)] += 1
                 else:
                     docstrings["missing_docstrings"].append(f"class {node.name}")
-                    
+
             elif isinstance(node, ast.FunctionDef):
                 docstring = ast.get_docstring(node)
                 if docstring:
@@ -1178,7 +1177,7 @@ class CodeContextGatherer:
                     # Skip private and dunder methods for missing docstring reporting
                     if not node.name.startswith('_'):
                         docstrings["missing_docstrings"].append(f"function {node.name}")
-        
+
         return docstrings
 
     def _detect_docstring_style(self, docstring: str) -> str:
@@ -1195,7 +1194,7 @@ class CodeContextGatherer:
     def _analyze_dependency_origins(self, tree: ast.AST) -> Dict:
         """Analyze where dependencies come from"""
         import importlib.util
-        
+
         dependencies = {
             "builtin_modules": [],
             "standard_library": [],
@@ -1203,7 +1202,7 @@ class CodeContextGatherer:
             "local_modules": [],
             "unresolved": []
         }
-        
+
         imports = set()
         for node in ast.walk(tree):
             if isinstance(node, ast.Import):
@@ -1211,7 +1210,7 @@ class CodeContextGatherer:
                     imports.add(alias.name.split('.')[0])
             elif isinstance(node, ast.ImportFrom) and node.module:
                 imports.add(node.module.split('.')[0])
-        
+
         for module_name in imports:
             try:
                 spec = importlib.util.find_spec(module_name)
@@ -1227,17 +1226,17 @@ class CodeContextGatherer:
                     dependencies["local_modules"].append(module_name)
             except (ImportError, ValueError, ModuleNotFoundError):
                 dependencies["unresolved"].append(module_name)
-        
+
         return dependencies
 
     def _identify_complexity_hotspots(self, tree: ast.AST) -> List[Dict]:
         """Identify complexity hotspots in the code"""
         hotspots = []
-        
+
         for node in ast.walk(tree):
             if isinstance(node, ast.FunctionDef):
                 complexity = self._calculate_cyclomatic_complexity(node)
-                
+
                 # Consider functions with complexity > 10 as hotspots
                 if complexity > 10:
                     hotspots.append({
@@ -1246,13 +1245,13 @@ class CodeContextGatherer:
                         "line": node.lineno,
                         "length": len(node.body)
                     })
-        
+
         return sorted(hotspots, key=lambda x: x["complexity"], reverse=True)
 
     def _calculate_cyclomatic_complexity(self, node: ast.FunctionDef) -> int:
         """Calculate cyclomatic complexity for a function"""
         complexity = 1  # Base complexity
-        
+
         for child in ast.walk(node):
             if isinstance(child, (ast.If, ast.While, ast.For, ast.ExceptHandler)):
                 complexity += 1
@@ -1262,38 +1261,38 @@ class CodeContextGatherer:
                 complexity += 1
                 for if_clause in child.ifs:
                     complexity += 1
-        
+
         return complexity
 
     def _find_method_overrides(self, tree: ast.AST) -> Dict:
         """Find method overrides in classes"""
         overrides = {}
-        
+
         # Common methods that are often overridden
         common_overrides = {
             '__init__', '__str__', '__repr__', '__eq__', '__hash__',
             '__len__', '__iter__', '__getitem__', '__setitem__',
             '__enter__', '__exit__', '__call__'
         }
-        
+
         for node in ast.walk(tree):
             if isinstance(node, ast.ClassDef):
                 class_methods = set()
                 override_methods = []
-                
+
                 for item in node.body:
                     if isinstance(item, ast.FunctionDef):
                         class_methods.add(item.name)
-                        
+
                         if item.name in common_overrides:
                             override_methods.append({
                                 "method": item.name,
                                 "line": item.lineno
                             })
-                
+
                 if override_methods:
                     overrides[node.name] = override_methods
-        
+
         return overrides
 
     def _analyze_decorator_usage(self, tree: ast.AST) -> Dict:
@@ -1304,12 +1303,12 @@ class CodeContextGatherer:
             "custom_decorators": [],
             "builtin_decorators": []
         }
-        
+
         builtin_decorator_names = {
             'property', 'staticmethod', 'classmethod', 'abstractmethod',
             'cached_property', 'lru_cache', 'wraps', 'dataclass'
         }
-        
+
         for node in ast.walk(tree):
             if isinstance(node, (ast.FunctionDef, ast.ClassDef)):
                 for decorator in node.decorator_list:
@@ -1319,12 +1318,12 @@ class CodeContextGatherer:
                         dec_name = decorator.attr
                     else:
                         dec_name = ast.unparse(decorator)
-                    
+
                     if isinstance(node, ast.FunctionDef):
                         decorators["function_decorators"][dec_name] += 1
                     else:
                         decorators["class_decorators"][dec_name] += 1
-                    
+
                     if dec_name in builtin_decorator_names:
                         decorators["builtin_decorators"].append({
                             "name": dec_name,
@@ -1337,7 +1336,7 @@ class CodeContextGatherer:
                             "target": node.name,
                             "line": node.lineno
                         })
-        
+
         return decorators
 
     def _get_advanced_analysis(self) -> Dict:
@@ -1345,22 +1344,22 @@ class CodeContextGatherer:
         try:
             script_dir = Path(__file__).parent
             advanced_script = script_dir / "advanced-code-context.py"
-            
+
             if not advanced_script.exists():
                 return {"error": "Advanced analysis script not found"}
-            
+
             result = subprocess.run(
                 [sys.executable, str(advanced_script), str(self.file_path), "--json"],
                 capture_output=True,
                 text=True,
                 timeout=30
             )
-            
+
             if result.returncode == 0:
                 return json.loads(result.stdout)
             else:
                 return {"error": f"Advanced analysis failed: {result.stderr}"}
-                
+
         except subprocess.TimeoutExpired:
             return {"error": "Advanced analysis timed out"}
         except Exception as e:
@@ -1369,7 +1368,7 @@ class CodeContextGatherer:
     def format_context_summary(self) -> str:
         """Format context as human-readable summary"""
         context = self.gather_all_context()
-        
+
         summary = f"""
 === Code Context Analysis: {self.file_name} ===
 
@@ -1404,13 +1403,13 @@ class CodeContextGatherer:
 - Security concerns: {len(context['quality_indicators'].get('security_concerns', []))}
 - Performance hints: {len(context['quality_indicators'].get('performance_hints', []))}
 """
-        
+
         # Advanced analysis
         advanced = context.get('advanced_analysis', {})
         if advanced and not advanced.get('error'):
-            summary += f"""
+            summary += """
 🔬 Advanced Analysis:"""
-            
+
             complexity = advanced.get('complexity_metrics', {})
             if complexity:
                 total_complexity = complexity.get('total_complexity', 0)
@@ -1421,7 +1420,7 @@ class CodeContextGatherer:
                 if complex_funcs:
                     summary += f"""
 - Complex functions: {', '.join(complex_funcs)}"""
-            
+
             call_graph = advanced.get('function_call_graph', {})
             if call_graph:
                 recursive = call_graph.get('recursive_functions', [])
@@ -1431,7 +1430,7 @@ class CodeContextGatherer:
                 if recursive:
                     summary += f"""
 - Recursive functions: {', '.join(recursive)}"""
-            
+
             patterns = advanced.get('pattern_detection', {})
             if patterns:
                 design_patterns = patterns.get('design_patterns', [])
@@ -1442,7 +1441,7 @@ class CodeContextGatherer:
                 if anti_patterns:
                     summary += f"""
 - Anti-patterns: {', '.join(anti_patterns)}"""
-        
+
         if context.get('recent_changes'):
             summary += f"""
 📝 Recent Changes:
@@ -1457,7 +1456,7 @@ class CodeContextGatherer:
 - Project type: {context['project_context'].get('project_type', 'Unknown')}
 - Config files: {', '.join(context['project_context'].get('config_files', []))}
 """
-        
+
         return summary
 
 
@@ -1465,21 +1464,21 @@ def main():
     if len(sys.argv) < 2:
         print("Usage: gather-code-context.py <file>")
         sys.exit(1)
-        
+
     file_path = Path(sys.argv[1])
     if not file_path.exists():
         print(f"Error: File not found: {file_path}")
         sys.exit(1)
-        
+
     gatherer = CodeContextGatherer(file_path)
-    
+
     # Check for JSON output flag
     if "--json" in sys.argv:
         context = gatherer.gather_all_context()
         print(json.dumps(context, indent=2, default=str))
     else:
         print(gatherer.format_context_summary())
-        
+
     # Optionally save to file
     if "--save" in sys.argv:
         context = gatherer.gather_all_context()

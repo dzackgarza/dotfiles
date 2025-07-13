@@ -62,14 +62,28 @@ class StagingSeparator(Widget):
     def set_idle(self) -> None:
         """Switch to idle state with animation"""
         self.processing = False
+        self._pending_inscription = False  # Clear pending state
+        self.refresh()
+
+    def set_pending_inscription(self) -> None:
+        """Switch to pending inscription state"""
+        self.processing = True
+        self._pending_inscription = True  # Mark as pending
+        # Keep current turn number but change the display
         self.refresh()
 
     def render(self) -> RenderableType:
         """Render separator based on state"""
         if self.processing:
-            # Processing state: -------[Turn N]-------
-            title = f"Turn {self.turn_number}"
-            return Rule(title, style="bright_blue")
+            # Check if we're in pending inscription state
+            if hasattr(self, '_pending_inscription') and self._pending_inscription:
+                # Debug mode: Show clear instructions
+                title = f"📝 Debug Mode - Response Ready | Type /inscribe to commit | Turn {self.turn_number}"
+                return Rule(title, style="bright_yellow")
+            else:
+                # Normal processing state: -------[Turn N]-------
+                title = f"Turn {self.turn_number}"
+                return Rule(title, style="bright_blue")
         else:
             # Idle state: --------◇-------- (animated)
             frame = self.IDLE_FRAMES[self.frame_index]

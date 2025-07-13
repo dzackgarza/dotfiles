@@ -14,7 +14,7 @@ class TestUserInteractions:
     @pytest.mark.asyncio
     async def test_app_starts_and_shows_welcome(self):
         """Test: User opens app and sees welcome message"""
-        async with LLMReplApp().run_test() as pilot:
+        async with LLMReplApp().run_test(size=(120, 40)) as pilot:
             # App should start without crashing
             assert pilot.app is not None
 
@@ -29,7 +29,7 @@ class TestUserInteractions:
     @pytest.mark.asyncio
     async def test_user_sends_message_gets_response(self):
         """Test: User types message, presses Enter, gets response"""
-        async with LLMReplApp().run_test() as pilot:
+        async with LLMReplApp().run_test(size=(120, 40)) as pilot:
             # Type a message
             await pilot.press("h", "e", "l", "l", "o")
 
@@ -47,7 +47,7 @@ class TestUserInteractions:
     @pytest.mark.asyncio
     async def test_conversation_history_preserved(self):
         """Test: Multiple messages create conversation history"""
-        async with LLMReplApp().run_test() as pilot:
+        async with LLMReplApp().run_test(size=(120, 40)) as pilot:
             # Send first message
             await pilot.press("h", "i")
             await pilot.press("enter")
@@ -66,7 +66,7 @@ class TestUserInteractions:
     @pytest.mark.asyncio
     async def test_cognition_workspace_shows_during_processing(self):
         """Test: Live workspace appears during AI processing"""
-        async with LLMReplApp().run_test() as pilot:
+        async with LLMReplApp().run_test(size=(120, 40)) as pilot:
             # Send message that will trigger cognition
             await pilot.press("w", "h", "a", "t", " ", "i", "s", " ", "2", "+", "2")
             await pilot.press("enter")
@@ -79,7 +79,7 @@ class TestUserInteractions:
     @pytest.mark.asyncio
     async def test_multiline_input_with_shift_enter(self):
         """Test: Shift+Enter creates new line, Enter sends"""
-        async with LLMReplApp().run_test() as pilot:
+        async with LLMReplApp().run_test(size=(120, 40)) as pilot:
             # Type first line
             await pilot.press("l", "i", "n", "e", " ", "1")
 
@@ -99,7 +99,7 @@ class TestUserInteractions:
     @pytest.mark.asyncio
     async def test_app_handles_errors_gracefully(self):
         """Test: App doesn't crash on errors"""
-        async with LLMReplApp().run_test() as pilot:
+        async with LLMReplApp().run_test(size=(120, 40)) as pilot:
             # Try to break the app with weird input
             await pilot.press("ctrl+c")  # Should not quit
             await pilot.press("escape")  # Should not break

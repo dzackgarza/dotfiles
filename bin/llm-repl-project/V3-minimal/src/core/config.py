@@ -15,20 +15,38 @@ Note: These settings are global and affect all processing in the app.
 
 class Config:
     """Global configuration for the application."""
-    
+
     # Processing durations for debugging
     COGNITION_PROCESSING_DURATION = 5.0  # seconds
     SUBMODULE_PROCESSING_DURATION = 5.0  # seconds per sub-module
-    
-    # Manual inscribe mode - user must trigger inscription
-    MANUAL_INSCRIBE_MODE = False  # Set to True to require manual inscription
-    
+
+    # Debug mode - pause responses in staging for inspection before inscription
+    DEBUG_MODE = True  # When True, use \inscribe command to commit responses
+
+    # Legacy alias for backward compatibility
+    MANUAL_INSCRIBE_MODE = DEBUG_MODE
+
+    # Use simple debug mode for now (not processing queue)
+    USE_PROCESSING_QUEUE = False
+
     @classmethod
     def set_cognition_duration(cls, duration: float):
         """Set the cognition processing duration."""
         cls.COGNITION_PROCESSING_DURATION = duration
-    
+
     @classmethod
     def set_submodule_duration(cls, duration: float):
         """Set the sub-module processing duration."""
         cls.SUBMODULE_PROCESSING_DURATION = duration
+
+    @classmethod
+    def enable_debug_mode(cls):
+        """Enable debug mode - responses pause in staging for inspection."""
+        cls.DEBUG_MODE = True
+        cls.MANUAL_INSCRIBE_MODE = True
+
+    @classmethod
+    def disable_debug_mode(cls):
+        """Disable debug mode - responses auto-inscribe as normal."""
+        cls.DEBUG_MODE = False
+        cls.MANUAL_INSCRIBE_MODE = False
