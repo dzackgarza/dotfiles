@@ -251,7 +251,7 @@ and maintains Sacred GUI architectural principles.
             start_time = time.time()
 
             # Change to project root for test execution
-            v3_minimal_dir = self.project_root / "V3-minimal"
+            v3_minimal_dir = self.project_root
             
             # Run the canonical pilot test directly using python
             result = subprocess.run([

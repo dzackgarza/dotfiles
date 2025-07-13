@@ -100,22 +100,27 @@ class LiveBlockWidget(Vertical):
         self._update_css_classes()
 
     def _update_css_classes(self) -> None:
-        """Update CSS classes based on block state."""
+        """Update CSS classes based on block state and transition status."""
         # Remove all state classes
         self.remove_class("live-block")
         self.remove_class("transitioning-block")
         self.remove_class("inscribed-block")
 
-        # Add appropriate state class
-        if self.live_block.state == BlockState.LIVE:
-            self.add_class("live-block")
-        elif self.live_block.state == BlockState.TRANSITIONING:
+        # Check if block is in active transition (from our transition manager)
+        from ..core.block_state_transitions import transition_manager
+        active_transitions = transition_manager.get_active_transitions()
+        is_in_transition = self.live_block.id in active_transitions
+
+        # Add appropriate state class, prioritizing active transitions
+        if self.live_block.state == BlockState.TRANSITIONING or is_in_transition:
             self.add_class("transitioning-block")
+        elif self.live_block.state == BlockState.LIVE:
+            self.add_class("live-block")
         else:
             self.add_class("inscribed-block")
 
     def _update_header(self) -> None:
-        """Update header display."""
+        """Update header display with transition status."""
         header_text = Text()
 
         # Add role indicator
@@ -133,6 +138,12 @@ class LiveBlockWidget(Vertical):
         if len(self.live_block.id) > 8:
             short_id = self.live_block.id[:8]
             header_text.append(f" ({short_id})", style="dim")
+
+        # Add transition status if active
+        transition_status = self._get_transition_status_message()
+        if transition_status:
+            header_text.append("\n")
+            header_text.append(transition_status, style="yellow")
 
         self.header_widget.update(header_text)
 
@@ -255,13 +266,40 @@ class LiveBlockWidget(Vertical):
         return indicators.get(self.live_block.role, "•")
 
     def _get_state_indicator(self) -> str:
-        """Get indicator for block state."""
+        """Get indicator for block state with enhanced visual feedback."""
+        # Check if block is in active transition (from our transition manager)
+        from ..core.block_state_transitions import transition_manager
+        
+        active_transitions = transition_manager.get_active_transitions()
+        is_in_transition = self.live_block.id in active_transitions
+        
         if self.live_block.state == BlockState.LIVE:
+            if is_in_transition:
+                return "⧗"  # Transitioning override
             return "●"  # Live (green)
-        elif self.live_block.state == BlockState.TRANSITIONING:
+        elif self.live_block.state == BlockState.TRANSITIONING or is_in_transition:
             return "⧗"  # Transitioning (yellow)
         else:
             return "◉"  # Inscribed (blue)
+
+    def _get_transition_status_message(self) -> str:
+        """Get current transition status message for display."""
+        from ..core.block_state_transitions import transition_manager
+        
+        active_transitions = transition_manager.get_active_transitions()
+        transition_state = active_transitions.get(self.live_block.id)
+        
+        if not transition_state:
+            return ""
+        
+        # Format transition status message
+        duration = transition_state.duration_seconds
+        attempt = transition_state.attempt_count
+        
+        if transition_state.last_error:
+            return f"⚠️ Transition error (attempt {attempt}): {str(transition_state.last_error)[:50]}..."
+        
+        return f"🔄 Transitioning to {transition_state.to_state.value} ({duration:.1f}s, attempt {attempt})"
 
 
 class LiveBlockManagerWidget(Vertical):

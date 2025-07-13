@@ -6,10 +6,10 @@ Eliminates dual-system architectural conflicts by making Timeline own everything
 """
 
 from dataclasses import dataclass
-from typing import List, Dict, Optional, Union, Protocol
+from typing import List, Dict, Optional, Union, Protocol, Any
 import asyncio
 
-from .live_blocks import LiveBlock, InscribedBlock
+from .live_blocks import LiveBlock, InscribedBlock, BlockState
 from ..widgets.timeline import TimelineBlock
 from .wall_time_tracker import (
     track_block_creation,
@@ -143,33 +143,108 @@ class UnifiedTimeline:
         """Get only inscribed blocks"""
         return [block for block in self._blocks if isinstance(block, InscribedBlock)]
 
-    async def inscribe_block(self, block_id: str) -> Optional[InscribedBlock]:
+    async def inscribe_block(self, block_id: str, force: bool = False) -> Optional[InscribedBlock]:
         """Atomically convert live block to inscribed, including all sub-blocks
 
         This is the critical method that fixes the ownership conflicts.
         It converts the complete live block tree to inscribed state atomically.
+        Now includes comprehensive validation and error handling.
+        
+        Args:
+            block_id: ID of the block to inscribe
+            force: Skip validation checks if True (use with caution)
         """
+        from .block_state_transitions import transition_manager, ValidationError, InscriptionError
+        
         async with self._inscription_lock:
             # Find the live block
             live_block = self._block_index.get(block_id)
             if not live_block or not isinstance(live_block, LiveBlock):
                 return None
 
-            # Convert to inscribed (this preserves sub-blocks in metadata)
-            inscribed_block = await live_block.to_inscribed_block()
+            try:
+                # Use the new transition manager for safe inscription
+                inscribed_block = await transition_manager.transition_to_inscribed(
+                    block=live_block,
+                    force=force,
+                    auto_recover=True
+                )
+                
+                if not inscribed_block:
+                    return None
 
-            # Atomic replacement in timeline
-            block_index = self._blocks.index(live_block)
-            self._blocks[block_index] = inscribed_block
+                # Atomic replacement in timeline
+                block_index = self._blocks.index(live_block)
+                self._blocks[block_index] = inscribed_block
 
-            # Update index
-            del self._block_index[block_id]
-            self._block_index[inscribed_block.id] = inscribed_block
+                # Update index
+                del self._block_index[block_id]
+                self._block_index[inscribed_block.id] = inscribed_block
 
-            # Notify observers
-            self._notify_observers(BlockInscribed(inscribed_block, block_id))
+                # Notify observers
+                self._notify_observers(BlockInscribed(inscribed_block, block_id))
 
-            return inscribed_block
+                return inscribed_block
+                
+            except (ValidationError, InscriptionError) as e:
+                print(f"Failed to inscribe block {block_id}: {e}")
+                # Block remains in live state
+                return None
+            except Exception as e:
+                print(f"Unexpected error inscribing block {block_id}: {e}")
+                return None
+
+    async def validate_block_for_inscription(self, block_id: str) -> Optional[Dict[str, Any]]:
+        """Validate if a block is ready for inscription.
+        
+        Returns:
+            Dictionary with validation results, or None if block not found
+        """
+        from .block_state_transitions import transition_manager
+        
+        live_block = self._block_index.get(block_id)
+        if not live_block or not isinstance(live_block, LiveBlock):
+            return None
+        
+        try:
+            validation_result = await transition_manager.validate_transition(
+                live_block, 
+                BlockState.INSCRIBED
+            )
+            
+            return {
+                'is_valid': validation_result.is_valid,
+                'failed_conditions': [c.value for c in validation_result.failed_conditions],
+                'errors': validation_result.error_messages,
+                'warnings': validation_result.warnings,
+                'block_id': block_id
+            }
+        except Exception as e:
+            return {
+                'is_valid': False,
+                'failed_conditions': [],
+                'errors': [f"Validation error: {e}"],
+                'warnings': [],
+                'block_id': block_id
+            }
+
+    def get_blocks_ready_for_inscription(self) -> List[str]:
+        """Get IDs of live blocks that appear ready for inscription.
+        
+        This is a synchronous check based on basic conditions.
+        Use validate_block_for_inscription() for comprehensive async validation.
+        """
+        ready_block_ids = []
+        
+        for block in self.get_live_blocks():
+            # Basic readiness checks
+            if (block.data.progress >= 1.0 and 
+                block.data.content.strip() and
+                not block._is_simulating and
+                block.state == BlockState.LIVE):
+                ready_block_ids.append(block.id)
+        
+        return ready_block_ids
 
     def add_sub_block(
         self, parent_id: str, role: str, content: str = ""
