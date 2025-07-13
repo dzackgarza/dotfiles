@@ -201,22 +201,17 @@ and maintains Sacred GUI architectural principles.
             }
 
         try:
-            # For now, create a placeholder temporal grid
-            # This will be enhanced when we implement the actual test runner
-
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            grid_filename = f"task_{task_id.replace('.', '_')}_temporal_grid_{timestamp}.png"
-            grid_path = self.project_root / "V3-minimal" / "debug_screenshots" / grid_filename
-
-            # Create debug_screenshots directory if it doesn't exist
-            grid_path.parent.mkdir(parents=True, exist_ok=True)
-
-            # Simulate temporal grid creation (placeholder)
-            result = self._create_placeholder_temporal_grid(grid_path, story)
+            # Run the actual canonical pilot test to validate the task
+            result = self._run_canonical_pilot_test(story)
+            
+            # Extract temporal grid path from result
+            grid_path = None
+            if result.get("temporal_grid_path"):
+                grid_path = result["temporal_grid_path"]
 
             # Update story with test results
             story.last_run = datetime.now()
-            story.temporal_grid_path = str(grid_path)
+            story.temporal_grid_path = grid_path if grid_path else None
             story.story_status = "passing" if result["success"] else "failing"
             story.test_execution_time = result.get("execution_time", 0.0)
             story.error_message = result.get("error")
@@ -229,7 +224,8 @@ and maintains Sacred GUI architectural principles.
                 "temporal_grid_path": story.temporal_grid_path,
                 "execution_time": story.test_execution_time,
                 "status": story.story_status,
-                "message": result.get("message", "Story test completed")
+                "message": result.get("message", "Canonical pilot test completed"),
+                "test_output": result.get("test_output", "")
             }
 
         except Exception as e:
@@ -244,89 +240,85 @@ and maintains Sacred GUI architectural principles.
                 "status": "error"
             }
 
-    def _create_placeholder_temporal_grid(self, grid_path: Path, story: TaskUserStory) -> Dict[str, Any]:
-        """Create a placeholder temporal grid for testing"""
+    def _run_canonical_pilot_test(self, story: TaskUserStory) -> Dict[str, Any]:
+        """Run the actual canonical pilot test for task validation"""
 
         try:
-            from PIL import Image, ImageDraw, ImageFont
+            import subprocess
             import time
-
+            
             start_time = time.time()
 
-            # Create 4x3 grid (1200x900 pixels total, 300x300 per cell)
-            grid_width, grid_height = 1200, 900
-            cell_width, cell_height = 300, 300
-
-            # Create white background
-            image = Image.new('RGB', (grid_width, grid_height), 'white')
-            draw = ImageDraw.Draw(image)
-
-            # Try to use a default font
-            try:
-                font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 16)
-                title_font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 20)
-            except:
-                font = ImageFont.load_default()
-                title_font = font
-
-            # Draw grid and step labels
-            steps = [
-                "01_launch", "02_focus", "03_input", "04_submit",
-                "05_process_start", "06_active", "07_working", "08_streaming",
-                "09_complete", "10_collapse", "11_updated", "12_ready"
-            ]
-
-            for i, step in enumerate(steps):
-                row = i // 4
-                col = i % 4
-
-                x = col * cell_width
-                y = row * cell_height
-
-                # Draw cell border
-                draw.rectangle([x, y, x + cell_width, y + cell_height], outline='black', width=2)
-
-                # Draw step label
-                text_x = x + 10
-                text_y = y + 10
-                draw.text((text_x, text_y), step, fill='black', font=font)
-
-                # Draw placeholder content
-                content_y = text_y + 30
-                draw.text((text_x, content_y), f"Task {story.task_id}", fill='blue', font=font)
-                draw.text((text_x, content_y + 25), "Sacred GUI", fill='green', font=font)
-                draw.text((text_x, content_y + 50), "Validation", fill='purple', font=font)
-
-                # Draw status indicator (green checkmark for now)
-                status_x = x + cell_width - 30
-                status_y = y + cell_height - 30
-                draw.ellipse([status_x, status_y, status_x + 20, status_y + 20], fill='green')
-                draw.text((status_x + 6, status_y + 4), "✓", fill='white', font=font)
-
-            # Add title
-            title_text = f"Task {story.task_id}: {story.task_title[:50]}..."
-            draw.text((10, grid_height - 40), title_text, fill='black', font=title_font)
-
-            # Add timestamp
-            timestamp_text = f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
-            draw.text((10, grid_height - 20), timestamp_text, fill='gray', font=font)
-
-            # Save image
-            image.save(grid_path)
+            # Change to project root for test execution
+            v3_minimal_dir = self.project_root / "V3-minimal"
+            
+            # Run the canonical pilot test specifically for task validation
+            result = subprocess.run([
+                'pdm', 'run', 'pytest', 
+                'tests/test_canonical_pilot.py::test_canonical_user_journey',
+                '-v', '--tb=short'
+            ], 
+            capture_output=True, 
+            text=True, 
+            timeout=60,  # Allow more time for actual GUI testing
+            cwd=str(v3_minimal_dir)
+            )
 
             execution_time = time.time() - start_time
 
-            return {
-                "success": True,
-                "message": f"Temporal grid created at {grid_path}",
-                "execution_time": execution_time
-            }
+            if result.returncode == 0:
+                # Test passed - look for temporal grid file
+                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                
+                # Find the most recent temporal grid file
+                debug_dir = v3_minimal_dir / "debug_screenshots"
+                if debug_dir.exists():
+                    temporal_grids = list(debug_dir.glob("*_temporal_grid_*.png"))
+                    if temporal_grids:
+                        # Use the most recent grid
+                        latest_grid = max(temporal_grids, key=lambda p: p.stat().st_mtime)
+                        
+                        # Create task-specific copy
+                        task_grid_name = f"task_{story.task_id.replace('.', '_')}_temporal_grid_{timestamp}.png"
+                        task_grid_path = debug_dir / task_grid_name
+                        
+                        # Copy the canonical grid to task-specific name
+                        import shutil
+                        shutil.copy2(latest_grid, task_grid_path)
+                        
+                        return {
+                            "success": True,
+                            "message": f"Real canonical pilot test passed - temporal grid at {task_grid_path}",
+                            "execution_time": execution_time,
+                            "temporal_grid_path": str(task_grid_path),
+                            "test_output": result.stdout[-500:]  # Last 500 chars
+                        }
 
+                return {
+                    "success": True,
+                    "message": "Canonical pilot test passed but no temporal grid found",
+                    "execution_time": execution_time,
+                    "test_output": result.stdout[-500:]
+                }
+            else:
+                return {
+                    "success": False,
+                    "error": f"Canonical pilot test failed with return code {result.returncode}",
+                    "message": f"Test execution failed: {result.stderr[-500:]}",
+                    "execution_time": execution_time
+                }
+
+        except subprocess.TimeoutExpired:
+            return {
+                "success": False,
+                "error": "Test execution timeout",
+                "message": "Canonical pilot test took too long to complete"
+            }
         except Exception as e:
             return {
                 "success": False,
                 "error": str(e),
-                "message": f"Failed to create temporal grid: {e}"
+                "message": f"Failed to run canonical pilot test: {e}"
             }
 
     def validate_task_completion(self, task_id: str) -> Dict[str, Any]:
