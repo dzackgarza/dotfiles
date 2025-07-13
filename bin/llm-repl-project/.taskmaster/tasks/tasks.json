@@ -23,7 +23,63 @@
         "priority": "high",
         "details": "1. Create a new Textual application class.\n2. Define the three main areas: `SacredTimeline`, `LiveWorkspace`, and `InputArea`.\n3. Use `VerticalScroll` for `SacredTimeline` and `LiveWorkspace`.\n4. Use `PromptInput` for the `InputArea`.\n5. Implement the layout using Textual's layout system, ensuring the three areas are correctly positioned and sized.\n6. Enforce the 'No Nested Containers Rule'.\n7. Ensure the `SacredTimeline` displays conversation history.\n8. The `LiveWorkspace` should only be visible during processing to show real-time AI work.\n9. The `InputArea` should always be available for typing.\n<info added on 2025-07-13T03:17:24.586Z>\nTDD REQUIREMENT: This task requires user story validation showing Sacred GUI layout works correctly with three distinct areas visible. Must generate temporal grid proof before completion.\n</info added on 2025-07-13T03:17:24.586Z>",
         "testStrategy": "Run the application and verify that the three areas are displayed correctly. Test scrolling in the `SacredTimeline` and `LiveWorkspace`. Ensure that the `InputArea` is fixed at the bottom. Verify that no nested containers are used within `VerticalScroll`. Verify that the `LiveWorkspace` is only visible during processing. Use `task-master validate-task` command to validate task completion with story proof.",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Define and Structure the Three Main Areas",
+            "description": "Create the `SacredTimeline`, `LiveWorkspace`, and `InputArea` classes as Textual widgets. Define their initial structure and properties, including placeholder content for each.",
+            "dependencies": [],
+            "details": "Each class should inherit from `Widget` or a suitable base class. Define initial content and styling for each area to visualize the layout.\n<info added on 2025-07-13T05:57:35.456Z>\nUSER STORY: As a developer implementing the Sacred GUI, I want to create three distinct widget classes (SacredTimeline, LiveWorkspace, InputArea) that clearly define their responsibilities and boundaries. Each widget should have clear initialization parameters, maintain its own state, and expose clean interfaces for interaction. The structure should make it immediately obvious which area handles which functionality, supporting the principle of separation of concerns.\n</info added on 2025-07-13T05:57:35.456Z>",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement Layout and Vertical Scrolling",
+            "description": "Use Textual's layout system to arrange the three areas vertically. Implement `VerticalScroll` for the `SacredTimeline` and `LiveWorkspace` to handle overflowing content.",
+            "dependencies": [
+              1
+            ],
+            "details": "Utilize `DockLayout` or other suitable layout managers. Ensure `VerticalScroll` is correctly applied to the timeline and workspace. Configure initial sizes and constraints for each area.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Enforce 'No Nested Containers Rule'",
+            "description": "Review the implementation to ensure no nested containers are used within the `VerticalScroll` widgets. Refactor the code if necessary to comply with this rule.",
+            "dependencies": [
+              2
+            ],
+            "details": "Carefully examine the widget hierarchy within `SacredTimeline` and `LiveWorkspace`. Use direct children widgets instead of nested containers within the scrolling areas.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement Input Area with PromptInput",
+            "description": "Integrate the `PromptInput` widget for the `InputArea`. Configure its properties and connect it to the application logic for handling user input.",
+            "dependencies": [
+              1
+            ],
+            "details": "Set up event handlers for the `PromptInput` to capture user input. Ensure the input area remains fixed at the bottom of the screen.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Write TDD User Story Validation",
+            "description": "Write TDD tests to validate the layout, scrolling, and input functionality based on user stories. Include visual proof generation in the tests.",
+            "dependencies": [
+              2,
+              3,
+              4
+            ],
+            "details": "Create tests to verify the correct positioning and sizing of the three areas. Test scrolling behavior in the timeline and workspace. Validate input handling in the input area. Generate screenshots or other visual artifacts to demonstrate correct rendering.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 3,
@@ -36,7 +92,62 @@
         "priority": "high",
         "details": "1. Create a new class `SimpleBlockWidget` inheriting from Textual's `Widget`.\n2. Implement the `compose` method to render the content of the block.\n3. Add properties for setting the content and role (user, cognition, assistant).\n4. Implement color coding based on the role using Textual's styling system. Use distinct colors for each role to enhance visual differentiation: User (representing 'me'), Assistant (representing 'response'), and Cognition (representing 'thinking process').\n5. Add hrule separators between timeline entries to visually separate blocks.\n6. Implement proper spacing and padding around the text within the block to improve readability.",
         "testStrategy": "Create instances of `SimpleBlockWidget` with different roles and content. Verify that the color coding is applied correctly and the colors are visually distinct. Ensure that the widgets are displayed correctly in the Sacred Timeline with appropriate spacing and separators. Test with various text lengths and content types to ensure consistent visual presentation.",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create SimpleBlockWidget Class",
+            "description": "Define the `SimpleBlockWidget` class, inheriting from Textual's `Widget` class. This will serve as the base for our custom block widget.",
+            "dependencies": [],
+            "details": "Create a new Python file (e.g., `simple_block_widget.py`) and define the class structure, including the necessary imports from Textual.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement Compose Method",
+            "description": "Implement the `compose` method within the `SimpleBlockWidget` class. This method will define how the widget's content is rendered.",
+            "dependencies": [
+              1
+            ],
+            "details": "Use Textual's `compose` method to structure the content of the block, including text and any separators or spacing elements.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Add Content and Role Properties",
+            "description": "Add properties to the `SimpleBlockWidget` class for setting the content (text) and role (user, cognition, assistant) of the block.",
+            "dependencies": [
+              1
+            ],
+            "details": "Define properties like `content` and `role` with appropriate setters and getters. The `role` property should accept a limited set of values (e.g., 'user', 'cognition', 'assistant').",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement Role-Based Color Coding",
+            "description": "Implement color coding based on the role property. Use Textual's styling system to apply different colors to the block based on its role.",
+            "dependencies": [
+              3
+            ],
+            "details": "Use Textual's styling system to define color palettes for each role (user, cognition, assistant). Apply these styles to the block's content based on the `role` property. Consider using distinct background and text colors for each role.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Implement Separators and Spacing",
+            "description": "Add separators and spacing to the `SimpleBlockWidget` to visually separate it from other elements in the timeline.",
+            "dependencies": [
+              2,
+              4
+            ],
+            "details": "Use Textual's layout and styling features to add separators (e.g., horizontal rules) and spacing around the block. Ensure that the spacing is consistent and visually appealing.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 4,
@@ -244,7 +355,50 @@
           3
         ],
         "status": "pending",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Smart Auto-Scroll for Sacred Timeline",
+            "description": "Implement smart auto-scroll behavior for the Sacred Timeline's VerticalScroll container, ensuring it scrolls to the bottom on new messages while preserving the user's ability to review past messages. Prevent scroll stealing.",
+            "dependencies": [],
+            "details": "Utilize Textual's VerticalScroll container and implement logic to detect user interaction (e.g., scrolling up) to temporarily disable auto-scroll. Re-enable auto-scroll when the user scrolls back to the bottom or a new message is added.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement Content-Driven Sizing for SimpleBlockWidget",
+            "description": "Implement content-driven sizing for the SimpleBlockWidget to ensure widgets are sized correctly based on their content, dynamically adjusting height to fit the text.",
+            "dependencies": [],
+            "details": "Calculate the required height of the SimpleBlockWidget based on the text content and set the widget's height accordingly. Consider using Textual's layout system to automatically adjust the widget's size.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement Smooth Scroll Animations",
+            "description": "Implement smooth scroll animations for the Sacred Timeline's auto-scroll behavior to provide a better user experience.",
+            "dependencies": [
+              1
+            ],
+            "details": "Use Textual's animation capabilities to create a smooth scrolling effect when auto-scrolling to the bottom of the timeline. Configure the animation duration and easing function for optimal visual appeal.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Optimize Timeline Scrolling Performance",
+            "description": "Optimize the performance of the Sacred Timeline's scrolling behavior, especially with a large number of messages, to ensure smooth and responsive scrolling.",
+            "dependencies": [
+              1,
+              2,
+              3
+            ],
+            "details": "Implement techniques such as virtual scrolling or lazy loading to improve scrolling performance. Profile the timeline's scrolling behavior to identify and address any performance bottlenecks.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 9,
@@ -257,7 +411,65 @@
           2
         ],
         "status": "pending",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Error Boundaries for UI Sections",
+            "description": "Create error boundary components for the Timeline, Workspace, and Input sections using Textual's error handling capabilities. Wrap each section with an error boundary to isolate potential errors.",
+            "dependencies": [],
+            "details": "Utilize Textual's widget system to create reusable error boundary components. Implement specific error handling logic within each boundary to manage errors gracefully.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement Error Catching and Logging",
+            "description": "Implement a centralized error catching mechanism using try-except blocks and a logging system to record error details. Integrate with Textual's event system to capture unhandled exceptions.",
+            "dependencies": [],
+            "details": "Use Python's `logging` module to record error messages, stack traces, and relevant context information. Configure the logging system to write to a file and/or console. Implement exception handling within the error boundaries to catch and log errors.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement User-Friendly Error Messages",
+            "description": "Design and implement a system for displaying user-friendly error messages within the UI. These messages should be informative but not expose sensitive technical details.",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Create a dedicated UI element (e.g., a modal dialog or a status bar message) to display error messages. Use a standardized format for error messages, including a brief description of the error and potential solutions. Ensure that the messages are localized and accessible.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement Error Recovery Strategies",
+            "description": "Implement strategies for recovering from errors, such as retrying failed operations or gracefully degrading functionality. Consider using Textual's reactive properties to manage component state after an error.",
+            "dependencies": [
+              1,
+              2,
+              3
+            ],
+            "details": "Implement retry mechanisms for network requests or other potentially failing operations. Implement fallback mechanisms to disable or replace components that have encountered errors. Use Textual's reactive properties to update the UI based on the error state.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Test Error Scenarios",
+            "description": "Create a suite of tests to simulate various error scenarios, including network failures, invalid input, and unexpected exceptions. Verify that the error boundaries, logging system, and user error messages are working correctly.",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "details": "Use `pytest` to create unit and integration tests for the error handling system. Mock external dependencies to simulate error conditions. Verify that errors are caught, logged, and displayed to the user correctly. Ensure that the application does not crash and that the UI remains responsive.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 10,
@@ -270,7 +482,62 @@
           7
         ],
         "status": "pending",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create SubModuleWidget Class",
+            "description": "Create a new class `SubModuleWidget` that inherits from Textual's `Widget` class.",
+            "dependencies": [],
+            "details": "Define the basic structure of the `SubModuleWidget` class, including the constructor and any necessary initializations.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement Compose Method",
+            "description": "Implement the `compose` method within the `SubModuleWidget` class to define the widget's content.",
+            "dependencies": [
+              1
+            ],
+            "details": "Use Textual's composition API to structure the visual elements of the sub-module within the widget.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Add Content and Status Properties",
+            "description": "Add properties to the `SubModuleWidget` class for setting and retrieving the content and status of the sub-module.",
+            "dependencies": [
+              1
+            ],
+            "details": "Include properties for content (e.g., text, images) and status (e.g., running, completed, failed).",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement Status Styling",
+            "description": "Implement styling within the `SubModuleWidget` to visually represent the sub-module's status.",
+            "dependencies": [
+              3
+            ],
+            "details": "Use Textual's styling capabilities to create visual indicators for different statuses (e.g., color changes, icons).",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Integrate with Live Workspace",
+            "description": "Integrate the SubModuleWidget with the Live Workspace to display real-time AI cognition steps.",
+            "dependencies": [
+              2,
+              4
+            ],
+            "details": "Ensure the widget can be dynamically updated with content and status changes from the AI cognition process.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 11,
@@ -649,7 +916,7 @@
         "id": 17,
         "title": "Implement Rich Content Display Engine",
         "description": "Support diverse content types including Markdown rendering, LaTeX mathematics display, syntax-highlighted code blocks, and interactive deep linking.",
-        "details": "1. Integrate Markdown rendering library. 2. Integrate LaTeX display library (MathJax/KaTeX). 3. Implement syntax highlighting for code blocks. 4. Implement interactive deep linking.",
+        "details": "1. Integrate Markdown rendering library. 2. Integrate LaTeX display library (MathJax/KaTeX). 3. Implement syntax highlighting for code blocks. 4. Implement interactive deep linking.\n<info added on 2025-07-13T05:58:01.446Z>\nUSER STORY: As a user, I want to see rich content beautifully rendered in the timeline so I can engage with diverse information types naturally. When I receive Markdown formatted text, it should render with proper headers, lists, and emphasis. Mathematical equations should display with professional LaTeX rendering. Code blocks should have syntax highlighting that makes them easy to read. Links should be interactive and clearly distinguished. The rendering should feel native to the application, not like embedded web content.\n</info added on 2025-07-13T05:58:01.446Z>",
         "testStrategy": "Verify Markdown rendering, LaTeX display, syntax highlighting, and deep linking functionality. Test with various content types.",
         "priority": "medium",
         "dependencies": [],
@@ -744,7 +1011,7 @@
         "id": 19,
         "title": "Implement LLM Routing and Cognitive Plugins",
         "description": "Implement LLM-based routing decision making, cognitive plugin orchestration, multi-step reasoning process visualization, and Cognition block display integration.",
-        "details": "1. Implement LLM routing logic. 2. Implement plugin orchestration. 3. Visualize reasoning process. 4. Integrate with Cognition block display.",
+        "details": "1. Implement LLM routing logic. 2. Implement plugin orchestration. 3. Visualize reasoning process. 4. Integrate with Cognition block display.\n<info added on 2025-07-13T05:58:18.356Z>\nUSER STORY: As a developer observing AI processing, I want to see a clear visualization of the multi-step reasoning process so I can understand how the system arrives at its conclusions. When the AI processes my request, I should see: 1) Intent analysis results showing what the AI understood, 2) Router decisions showing which path was chosen and why, 3) Plugin activations with their purposes, 4) Intermediate reasoning steps with confidence scores, 5) Final synthesis process. All of this should be displayed in real-time within the Cognition blocks in the Sacred Timeline.\n</info added on 2025-07-13T05:58:18.356Z>",
         "testStrategy": "Verify LLM routing accuracy, plugin orchestration, reasoning visualization, and Cognition block display. Test with various scenarios.",
         "priority": "medium",
         "dependencies": [
@@ -1151,7 +1418,7 @@
         "dependencies": [
           48
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": []
       },
       {
@@ -1164,7 +1431,7 @@
         "dependencies": [
           49
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": []
       },
       {
@@ -1177,7 +1444,7 @@
         "dependencies": [
           50
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": []
       },
       {
@@ -1190,13 +1457,13 @@
         "dependencies": [
           51
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": []
       }
     ],
     "metadata": {
       "created": "2025-07-13T02:33:23.087Z",
-      "updated": "2025-07-13T05:48:58.953Z",
+      "updated": "2025-07-13T06:04:21.190Z",
       "description": "Tasks for master context"
     }
   }
