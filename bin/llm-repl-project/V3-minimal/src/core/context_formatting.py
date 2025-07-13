@@ -7,12 +7,18 @@ conversation context to AI models in an optimal, structured way.
 
 import re
 from datetime import datetime, timezone
-from typing import List, Dict, Optional, Any, Union
+from typing import List, Dict, Optional, Any, Union, Tuple
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
 from enum import Enum
 
 from .context_scoring import ConversationTurn
+from .summarization import (
+    ContextSummarizationManager, 
+    ConversationSummary, 
+    SummaryConfig,
+    get_summarization_manager
+)
 
 
 class FormatStyle(Enum):
@@ -35,6 +41,11 @@ class FormatSettings:
     preserve_code_blocks: bool = True
     add_turn_numbers: bool = False
     role_prefixes: bool = True
+    
+    # Summarization settings
+    enable_summarization: bool = True
+    max_context_tokens: int = 4000
+    summarization_config: Optional[SummaryConfig] = None
 
 
 @dataclass
@@ -45,10 +56,13 @@ class FormattedContext:
     turn_count: int
     metadata: Dict[str, Any]
     truncated_turns: List[str] = None
+    summaries_used: List[ConversationSummary] = None
     
     def __post_init__(self):
         if self.truncated_turns is None:
             self.truncated_turns = []
+        if self.summaries_used is None:
+            self.summaries_used = []
 
 
 class ContextFormatter(ABC):
@@ -451,13 +465,14 @@ class ContextFormattingManager:
             FormatStyle.STRUCTURED: StructuredFormatter(),
             FormatStyle.CHAT_ML: ChatMLFormatter()
         }
+        self._summarization_manager = None
     
-    def format_context(self,
+    async def format_context(self,
                       turns: List[ConversationTurn],
                       style: Union[FormatStyle, str] = FormatStyle.CONVERSATIONAL,
                       settings: FormatSettings = None) -> FormattedContext:
         """
-        Format conversation context using specified style.
+        Format conversation context using specified style with optional summarization.
         
         Args:
             turns: Conversation turns to format
@@ -475,11 +490,32 @@ class ContextFormattingManager:
         else:
             settings.style = style
         
+        # Apply summarization if enabled
+        processed_turns = turns
+        summaries_used = []
+        
+        if settings.enable_summarization and len(turns) > 5:
+            processed_turns, summaries_used = await self._apply_summarization(turns, settings)
+        
         formatter = self.formatters.get(style)
         if not formatter:
             raise ValueError(f"Unsupported formatting style: {style}")
         
-        return formatter.format_context(turns, settings)
+        # Format the processed turns
+        result = formatter.format_context(processed_turns, settings)
+        
+        # Add summary information to result
+        if summaries_used:
+            result.summaries_used = summaries_used
+            result.metadata['summarization_applied'] = True
+            result.metadata['summaries_count'] = len(summaries_used)
+            
+            # Prepend summary information to formatted text
+            summary_text = self._format_summaries(summaries_used, style)
+            if summary_text:
+                result.formatted_text = summary_text + "\n\n" + result.formatted_text
+        
+        return result
     
     def suggest_format_style(self, turns: List[ConversationTurn]) -> FormatStyle:
         """
@@ -514,7 +550,7 @@ class ContextFormattingManager:
         else:
             return FormatStyle.CONVERSATIONAL
     
-    def optimize_for_model(self, 
+    async def optimize_for_model(self, 
                           turns: List[ConversationTurn],
                           model_name: str = "gpt-3.5-turbo") -> FormattedContext:
         """
@@ -543,7 +579,69 @@ class ContextFormattingManager:
             role_prefixes=True
         )
         
-        return self.format_context(turns, style, settings)
+        return await self.format_context(turns, style, settings)
+    
+    async def _apply_summarization(self, 
+                                 turns: List[ConversationTurn], 
+                                 settings: FormatSettings) -> Tuple[List[ConversationTurn], List[ConversationSummary]]:
+        """Apply summarization to conversation turns if needed"""
+        if self._summarization_manager is None:
+            summary_config = settings.summarization_config or SummaryConfig(
+                max_context_tokens=settings.max_context_tokens
+            )
+            self._summarization_manager = get_summarization_manager(config=summary_config)
+        
+        # Process turns for summarization
+        remaining_turns, summaries = await self._summarization_manager.process_conversation_for_summarization(
+            turns, force_summarize=False
+        )
+        
+        return remaining_turns, summaries
+    
+    def _format_summaries(self, summaries: List[ConversationSummary], style: FormatStyle) -> str:
+        """Format summaries for inclusion in context"""
+        if not summaries:
+            return ""
+        
+        if style == FormatStyle.CHAT_ML:
+            summary_parts = []
+            for summary in summaries:
+                summary_parts.append(f"<|summary|>{summary.content}<|/summary|>")
+            return "\n".join(summary_parts)
+        
+        elif style == FormatStyle.TECHNICAL:
+            summary_parts = []
+            for summary in summaries:
+                summary_parts.append(f"// SUMMARY: {summary.summary_id}")
+                summary_parts.append(f"// Compressed {summary.metadata.turns_summarized} turns "
+                                   f"({summary.metadata.compression_ratio:.1f}x compression)")
+                summary_parts.append(summary.content)
+                summary_parts.append("")
+            return "\n".join(summary_parts)
+        
+        elif style == FormatStyle.STRUCTURED:
+            summary_parts = []
+            summary_parts.append("=== CONVERSATION SUMMARIES ===")
+            for summary in summaries:
+                summary_parts.append(f"Summary ID: {summary.summary_id}")
+                summary_parts.append(f"Time Span: {summary.metadata.time_span_hours:.1f} hours")
+                summary_parts.append(f"Turns: {summary.metadata.turns_summarized}")
+                summary_parts.append(f"Content: {summary.content}")
+                summary_parts.append("---")
+            summary_parts.append("=== END SUMMARIES ===")
+            return "\n".join(summary_parts)
+        
+        else:  # CONVERSATIONAL
+            summary_parts = []
+            summary_parts.append("## Previous Conversation Summary")
+            for i, summary in enumerate(summaries, 1):
+                if len(summaries) > 1:
+                    summary_parts.append(f"### Summary {i} ({summary.metadata.time_span_hours:.1f}h ago)")
+                summary_parts.append(summary.content)
+                if summary.key_topics:
+                    summary_parts.append(f"*Key topics: {', '.join(summary.key_topics[:3])}*")
+                summary_parts.append("")
+            return "\n".join(summary_parts)
 
 
 # Global formatting manager instance

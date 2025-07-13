@@ -393,12 +393,12 @@ class UnifiedTimeline:
         
         return ready_block_ids
 
-    def get_formatted_context(self, format_style: FormatStyle = FormatStyle.CONVERSATIONAL, max_tokens: int = 4000) -> str:
+    async def get_formatted_context(self, format_style: FormatStyle = FormatStyle.CONVERSATIONAL, max_tokens: int = 4000) -> str:
         """
-        Get formatted conversation context from inscribed blocks.
+        Get formatted conversation context from inscribed blocks with optional summarization.
         
-        Uses the new context formatting system to present timeline history
-        in optimal format for AI model consumption.
+        Uses the new context formatting system with summarization support to present 
+        timeline history in optimal format for AI model consumption.
         """
         from .context_scoring import ConversationTurn
         from datetime import datetime, timezone
@@ -434,8 +434,8 @@ class UnifiedTimeline:
         else:
             selected_turns = turns
             
-        # Format the context
-        formatted_result = context_formatting_manager.format_context(
+        # Format the context with summarization support
+        formatted_result = await context_formatting_manager.format_context(
             selected_turns, 
             format_style
         )
