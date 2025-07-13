@@ -8,6 +8,7 @@ Only one block can be actively processing at a time.
 from typing import List, Optional
 import asyncio
 from ..widgets.processing_widget import ProcessingWidget, ProcessingState
+from .wall_time_tracker import time_block_stage, get_wall_time_tracker
 
 
 class ProcessingQueue:
@@ -25,9 +26,11 @@ class ProcessingQueue:
         widget = ProcessingWidget(message)
         self.queue.append(widget)
 
-        # Mount it to staging area
-        staging = self.app.query_one("#staging-container")
-        await staging.mount(widget)
+        # Time the block creation and queue operations
+        with time_block_stage(f"queue_{id(widget)}", "creation"):
+            # Mount it to staging area
+            staging = self.app.query_one("#staging-container")
+            await staging.mount(widget)
 
         # Start processing if nothing else is active
         if not self.current_processing:
@@ -49,9 +52,10 @@ class ProcessingQueue:
                 self.current_processing = None
                 return
 
-            # Process it
+            # Process it with timing
             self.current_processing = next_block
-            await next_block.start_processing()
+            with time_block_stage(f"queue_{id(next_block)}", "processing"):
+                await next_block.start_processing()
 
             # Process next one
             asyncio.create_task(self._process_next())

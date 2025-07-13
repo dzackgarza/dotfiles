@@ -19,6 +19,13 @@ from .animation_clock import (
     animate_text_typewriter,
     animate_value_smooth,
 )
+from .wall_time_tracker import (
+    get_wall_time_tracker,
+    track_block_creation,
+    time_block_stage,
+    record_block_tokens,
+    complete_block_tracking,
+)
 
 
 @dataclass
@@ -190,6 +197,9 @@ class LiveBlock:
         self.state = BlockState.LIVE
         self.created_at = datetime.now()
         self.data = LiveBlockData(content=initial_content)
+        
+        # Start wall time tracking for this block
+        self._wall_time_metrics = track_block_creation(self.id)
 
         # Event handlers for UI updates - separate progress from content
         self.content_update_callbacks: List[Callable] = []  # Meaningful content changes
@@ -302,8 +312,17 @@ class LiveBlock:
         if self.state != BlockState.LIVE:
             return
 
+        # Calculate the delta to record in wall time tracker
+        input_delta = target_input - self.data.tokens_input
+        output_delta = target_output - self.data.tokens_output
+        
         self.data.tokens_input = target_input
         self.data.tokens_output = target_output
+        
+        # Record token usage in wall time tracker if there's a change
+        if input_delta != 0 or output_delta != 0:
+            record_block_tokens(self.id, input_delta, output_delta)
+        
         self._notify_update()
 
     async def animate_tokens(
@@ -384,6 +403,10 @@ class LiveBlock:
 
         self.data.tokens_input += input_tokens
         self.data.tokens_output += output_tokens
+        
+        # Record token usage in wall time tracker
+        record_block_tokens(self.id, input_tokens, output_tokens)
+        
         self._notify_update()
 
     def update_progress(self, progress: float) -> None:
@@ -410,8 +433,11 @@ class LiveBlock:
             return
 
         self._is_simulating = True
-        # Run simulation directly instead of creating a task for better test control
-        await self._run_mock_simulation(scenario)
+        
+        # Time the simulation process
+        with time_block_stage(self.id, "processing"):
+            # Run simulation directly instead of creating a task for better test control
+            await self._run_mock_simulation(scenario)
 
     async def _run_mock_simulation(self, scenario: str) -> None:
         """Run mock simulation based on scenario."""
@@ -574,49 +600,55 @@ class LiveBlock:
         if self.state == BlockState.INSCRIBED:
             raise ValueError("Block already inscribed")
 
-        # Start transition animation
-        self.state = BlockState.TRANSITIONING
-        self._notify_update()
+        # Time the inscription process
+        with time_block_stage(self.id, "inscription"):
+            # Start transition animation
+            self.state = BlockState.TRANSITIONING
+            self._notify_update()
 
-        # Visual transition effect - pulse the progress to show finalization
-        self.set_progress(1.0)
-        await AnimationRates.sleep(0.2)
+            # Visual transition effect - pulse the progress to show finalization
+            self.set_progress(1.0)
+            await AnimationRates.sleep(0.2)
 
-        # Add transition visual cue
-        transition_message = "\n🔒 Inscribing to Sacred Timeline..."
-        self.stream_content(transition_message)
-        await AnimationRates.sleep(0.3)
+            # Add transition visual cue
+            transition_message = "\n🔒 Inscribing to Sacred Timeline..."
+            self.stream_content(transition_message)
+            await AnimationRates.sleep(0.3)
 
-        # Stop any simulation
-        self.stop_simulation()
+            # Stop any simulation
+            self.stop_simulation()
 
-        # Stop cognition progress timer
-        if self.cognition_progress:
-            self.cognition_progress.stop_timer()
+            # Stop cognition progress timer
+            if self.cognition_progress:
+                self.cognition_progress.stop_timer()
 
-        # Create inscribed block
-        inscribed = InscribedBlock(
-            id=self.id,
-            role=self.role,
-            content=self.data.content,
-            timestamp=self.created_at,
-            metadata={
-                **self.data.metadata,
-                "wall_time_seconds": self.data.wall_time_seconds,
-                "tokens_input": self.data.tokens_input,
-                "tokens_output": self.data.tokens_output,
-                "sub_blocks": [block.to_dict() for block in self.data.sub_blocks],
-            },
-        )
+            # Complete wall time tracking and get final metrics
+            final_metrics = complete_block_tracking(self.id)
 
-        # Complete transition
-        self.state = BlockState.INSCRIBED
-        self._notify_update()
+            # Create inscribed block with enhanced metadata including performance metrics
+            inscribed = InscribedBlock(
+                id=self.id,
+                role=self.role,
+                content=self.data.content,
+                timestamp=self.created_at,
+                metadata={
+                    **self.data.metadata,
+                    "wall_time_seconds": self.data.wall_time_seconds,
+                    "tokens_input": self.data.tokens_input,
+                    "tokens_output": self.data.tokens_output,
+                    "sub_blocks": [block.to_dict() for block in self.data.sub_blocks],
+                    "performance_metrics": final_metrics,  # Add detailed performance data
+                },
+            )
 
-        # Final transition effect
-        await AnimationRates.sleep(0.2)
+            # Complete transition
+            self.state = BlockState.INSCRIBED
+            self._notify_update()
 
-        return inscribed
+            # Final transition effect
+            await AnimationRates.sleep(0.2)
+
+            return inscribed
 
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary representation."""

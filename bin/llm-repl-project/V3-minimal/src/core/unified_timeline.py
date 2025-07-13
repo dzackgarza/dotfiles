@@ -11,6 +11,11 @@ import asyncio
 
 from .live_blocks import LiveBlock, InscribedBlock
 from ..widgets.timeline import TimelineBlock
+from .wall_time_tracker import (
+    track_block_creation,
+    time_block_stage,
+    complete_block_tracking,
+)
 
 
 class TimelineEvent:
@@ -98,14 +103,16 @@ class UnifiedTimeline:
         The block is immediately added to the timeline in live state.
         UI can show it with live styling while it updates.
         """
-        block = LiveBlock(role, content)
+        # Time the block creation process
+        with time_block_stage("timeline_creation", "creation"):
+            block = LiveBlock(role, content)
 
-        # Add to timeline immediately
-        self._blocks.append(block)
-        self._block_index[block.id] = block
+            # Add to timeline immediately
+            self._blocks.append(block)
+            self._block_index[block.id] = block
 
-        # Set up callback to notify observers when block updates
-        block.add_update_callback(self._on_live_block_update)
+            # Set up callback to notify observers when block updates
+            block.add_update_callback(self._on_live_block_update)
 
         # Notify observers
         self._notify_observers(BlockAdded(block))

@@ -13,6 +13,11 @@ from .unified_timeline import UnifiedTimelineManager
 from .live_blocks import LiveBlock
 from ..cognition import CognitionManager, CognitionEvent, CognitionResult
 from .processing_queue import ProcessingQueue
+from .wall_time_tracker import (
+    track_block_creation,
+    time_block_stage,
+    record_block_tokens,
+)
 
 if TYPE_CHECKING:
     from .response_generator import ResponseGenerator
@@ -205,9 +210,16 @@ class UnifiedAsyncInputProcessor:
 
                     # Add the assistant response to staging area for inspection
                     if response:
-                        from ..widgets.chatbox import Chatbox
-                        assistant_preview = Chatbox(str(response), role="assistant")
-                        await workspace.mount(assistant_preview)
+                        # Track wall time for debug mode block creation
+                        with time_block_stage("debug_assistant_block", "creation"):
+                            from ..widgets.chatbox import Chatbox
+                            assistant_preview = Chatbox(str(response), role="assistant")
+                            
+                            # Track tokens for this response (estimate)
+                            estimated_output_tokens = len(str(response).split()) // 2  # Rough estimate
+                            record_block_tokens("debug_assistant_block", 0, estimated_output_tokens)
+                            
+                            await workspace.mount(assistant_preview)
                         print("DEBUG: Added assistant response to staging area for inspection")
 
                         # Add help text for debug mode
@@ -271,8 +283,14 @@ class UnifiedAsyncInputProcessor:
         chat_container = self.app.query_one("#chat-container")
 
         # FIRST: Add user message (Turn 2 starts with user input)
-        user_chatbox = Chatbox(str(data["user_input"]), role="user")
-        await chat_container.mount(user_chatbox)
+        with time_block_stage("user_message_block", "creation"):
+            user_chatbox = Chatbox(str(data["user_input"]), role="user")
+            
+            # Track tokens for user input (estimate)
+            estimated_input_tokens = len(str(data["user_input"]).split()) // 2  # Rough estimate
+            record_block_tokens("user_message_block", estimated_input_tokens, 0)
+            
+            await chat_container.mount(user_chatbox)
 
         # Add cognition result using unified widget
         cognition_result = data["cognition_result"]
@@ -450,9 +468,11 @@ class UnifiedAsyncInputProcessor:
             if event.content:
                 from ..widgets.cognition_widget import CognitionWidget
 
-                # Store reference to the cognition widget for later updates
-                self._active_cognition_widget = CognitionWidget(content=event.content, is_live=True)
-                await workspace.mount(self._active_cognition_widget)
+                # Track wall time for cognition widget creation
+                with time_block_stage("cognition_widget_block", "creation"):
+                    # Store reference to the cognition widget for later updates
+                    self._active_cognition_widget = CognitionWidget(content=event.content, is_live=True)
+                    await workspace.mount(self._active_cognition_widget)
 
         elif event.type == "add_submodule":
             print("DEBUG: Handling add_submodule event")
