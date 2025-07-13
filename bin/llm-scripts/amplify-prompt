@@ -1,0 +1,9 @@
+#!/bin/bash
+
+response=$(nwg-dialog --entry \
+    --text "Enter multiline debug input:" \
+    --height 300 --width 500 --no-wrap --multiline)
+
+if [ $? -eq 0 ] && [ -n "$response" ]; then
+    ~/your-script.sh "$response"
+fi
