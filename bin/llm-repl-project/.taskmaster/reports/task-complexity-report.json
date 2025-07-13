@@ -1,0 +1,397 @@
+{
+	"meta": {
+		"generatedAt": "2025-07-13T04:02:25.248Z",
+		"tasksAnalyzed": 48,
+		"totalTasks": 52,
+		"analysisCount": 48,
+		"thresholdScore": 5,
+		"projectName": "Taskmaster",
+		"usedResearch": true
+	},
+	"complexityAnalysis": [
+		{
+			"taskId": 2,
+			"taskTitle": "Implement Sacred GUI Layout",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Decompose the task into subtasks for creating each of the three main areas (`SacredTimeline`, `LiveWorkspace`, `InputArea`), implementing scrolling, enforcing the 'No Nested Containers Rule', and writing TDD user story validation.",
+			"reasoning": "Requires understanding of Textual's layout system, vertical scrolling, and input widgets. The 'No Nested Containers Rule' adds complexity. TDD requirement needs a dedicated subtask."
+		},
+		{
+			"taskId": 3,
+			"taskTitle": "Create SimpleBlockWidget with Color Coding",
+			"complexityScore": 5,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Break down the task into subtasks for creating the `SimpleBlockWidget` class, implementing the `compose` method, adding properties for content and role, and implementing color coding based on the role.",
+			"reasoning": "Involves creating a custom widget and applying styling. Color coding adds a bit of complexity."
+		},
+		{
+			"taskId": 4,
+			"taskTitle": "Build PromptInput Widget",
+			"complexityScore": 6,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Divide the task into subtasks for creating the `PromptInput` class, enabling multiline support, implementing smart validation, and adding event handlers for user input.",
+			"reasoning": "Requires handling user input and implementing validation logic. Multiline support adds complexity."
+		},
+		{
+			"taskId": 5,
+			"taskTitle": "Implement Basic Conversation Flow",
+			"complexityScore": 8,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Decompose the task into subtasks for capturing user input, creating a mock cognition pipeline, generating a mock assistant response, adding elements to the Sacred Timeline, integrating the widgets, and writing TDD user story validation.",
+			"reasoning": "Integrates multiple components and requires implementing a mock AI pipeline. TDD requirement needs a dedicated subtask."
+		},
+		{
+			"taskId": 6,
+			"taskTitle": "Add Persistent Timeline Storage",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Break down the task into subtasks for choosing a storage mechanism, implementing save functions, implementing load functions, ensuring timeline restoration, and handling data migrations.",
+			"reasoning": "Requires choosing and implementing a storage solution. Session restoration adds complexity."
+		},
+		{
+			"taskId": 7,
+			"taskTitle": "Implement Turn Lifecycle Management",
+			"complexityScore": 8,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Divide the task into subtasks for implementing state management, switching between layouts, controlling `LiveWorkspace` visibility, disabling the `InputArea`, integrating with the conversation flow, and writing TDD user story validation.",
+			"reasoning": "Involves state management and UI layout changes. TDD requirement needs a dedicated subtask."
+		},
+		{
+			"taskId": 8,
+			"taskTitle": "Implement Auto-Scroll and Content-Driven Sizing",
+			"complexityScore": 6,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Decompose the task into subtasks for implementing auto-scroll behavior, implementing content-driven sizing, ensuring timeline scrolling, and optimizing performance.",
+			"reasoning": "Requires implementing auto-scroll and dynamic sizing. Performance optimization adds complexity."
+		},
+		{
+			"taskId": 9,
+			"taskTitle": "Create Error Boundary System",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Break down the task into subtasks for implementing error boundaries for each UI section, implementing error catching, implementing error logging, implementing user error messages, and testing error scenarios.",
+			"reasoning": "Requires implementing error handling and logging. Displaying user-friendly messages adds complexity."
+		},
+		{
+			"taskId": 10,
+			"taskTitle": "Build SubModuleWidget",
+			"complexityScore": 5,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Divide the task into subtasks for creating the `SubModuleWidget` class, implementing the `compose` method, adding properties for content and status, and implementing styling for status display.",
+			"reasoning": "Involves creating a custom widget and applying styling. Status display adds a bit of complexity."
+		},
+		{
+			"taskId": 11,
+			"taskTitle": "Implement Sacred Timeline Core",
+			"complexityScore": 9,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Decompose the task into subtasks for defining data structures, implementing the staging area, tracking time and tokens, implementing state transition logic, and ensuring data transparency.",
+			"reasoning": "Core functionality with complex state management and data tracking. Data transparency adds complexity."
+		},
+		{
+			"taskId": 12,
+			"taskTitle": "Implement Context Management",
+			"complexityScore": 9,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Break down the task into subtasks for implementing recency/relevance scoring, token counting, context formatting, summarization, integrating with the timeline, and optimizing performance.",
+			"reasoning": "Complex task involving multiple algorithms and integrations. Performance optimization is crucial."
+		},
+		{
+			"taskId": 13,
+			"taskTitle": "Implement Streaming Live Output",
+			"complexityScore": 8,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Divide the task into subtasks for implementing live data streaming, displaying time/tokens/responses, animating transitions, integrating with the timeline, and handling errors.",
+			"reasoning": "Requires real-time data streaming and UI updates. Animation adds complexity."
+		},
+		{
+			"taskId": 14,
+			"taskTitle": "Implement Event-Driven Communication",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Decompose the task into subtasks for implementing the event system, integrating with the Timeline manager, ensuring UI responsiveness, enforcing plugin isolation, and handling event routing.",
+			"reasoning": "Requires implementing an asynchronous event system. Plugin isolation adds complexity."
+		},
+		{
+			"taskId": 15,
+			"taskTitle": "Implement Plugin System Foundation",
+			"complexityScore": 8,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Break down the task into subtasks for implementing the plugin architecture, supporting nesting, implementing data aggregation, implementing validation, integrating with the MCP server, and handling plugin dependencies.",
+			"reasoning": "Complex task involving plugin architecture and integration with external systems. Nesting and validation add complexity."
+		},
+		{
+			"taskId": 16,
+			"taskTitle": "Implement Intelligent Router System",
+			"complexityScore": 8,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Divide the task into subtasks for implementing intent analysis, supporting LLM providers, enabling plugin extensibility, implementing dynamic routing, handling provider failover, and optimizing performance.",
+			"reasoning": "Requires implementing AI-based routing and supporting multiple LLMs. Dynamic routing adds complexity."
+		},
+		{
+			"taskId": 17,
+			"taskTitle": "Implement Rich Content Display Engine",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Decompose the task into subtasks for integrating Markdown rendering, integrating LaTeX display, implementing syntax highlighting, implementing deep linking, and handling different content types.",
+			"reasoning": "Requires integrating multiple libraries for content display. Deep linking adds complexity."
+		},
+		{
+			"taskId": 18,
+			"taskTitle": "Implement Testing Framework",
+			"complexityScore": 9,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Break down the task into subtasks for implementing unit tests, integration tests, UI tests, end-to-end tests, ensuring code coverage, and automating test execution.",
+			"reasoning": "Comprehensive testing across multiple components. Automation and code coverage add complexity."
+		},
+		{
+			"taskId": 19,
+			"taskTitle": "Implement LLM Routing and Cognitive Plugins",
+			"complexityScore": 8,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Divide the task into subtasks for implementing LLM routing logic, implementing plugin orchestration, visualizing reasoning, integrating with Cognition block display, handling errors, and optimizing performance.",
+			"reasoning": "Requires integrating LLMs and plugins. Visualization adds complexity."
+		},
+		{
+			"taskId": 20,
+			"taskTitle": "Implement Intelligent Context Pruning",
+			"complexityScore": 8,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Decompose the task into subtasks for implementing relevance scoring, context window management, user preferences, optimizing performance, handling edge cases, and testing with large conversations.",
+			"reasoning": "Requires implementing complex algorithms and handling large datasets. User preferences add complexity."
+		},
+		{
+			"taskId": 21,
+			"taskTitle": "Implement Turn Summarization System",
+			"complexityScore": 8,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Break down the task into subtasks for implementing the summarization algorithm, implementing compression techniques, integrating with context pruning, ensuring coherence, handling errors, and optimizing performance.",
+			"reasoning": "Requires implementing AI-based summarization and integrating with other components. Coherence is crucial."
+		},
+		{
+			"taskId": 22,
+			"taskTitle": "Implement Sacred Timeline Persistence",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Divide the task into subtasks for implementing timeline persistence, session restoration, subset selection, conversation threading, and handling data migrations.",
+			"reasoning": "Requires implementing data persistence and session management. Conversation threading adds complexity."
+		},
+		{
+			"taskId": 23,
+			"taskTitle": "Implement Graceful Rate Limit Handling",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Decompose the task into subtasks for implementing rate limit detection, provider failover, request queuing, user notification, and handling different LLM providers.",
+			"reasoning": "Requires handling external API rate limits. Provider failover adds complexity."
+		},
+		{
+			"taskId": 24,
+			"taskTitle": "Implement Long-Running Work Ledger",
+			"complexityScore": 8,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Break down the task into subtasks for implementing task persistence, progress tracking, integrating with the timeline, implementing recovery mechanisms, handling errors, and optimizing performance.",
+			"reasoning": "Requires managing long-running tasks and ensuring data consistency. Recovery mechanisms add complexity."
+		},
+		{
+			"taskId": 25,
+			"taskTitle": "Implement Manual Context Re-injection",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Divide the task into subtasks for implementing history re-injection, context prioritization, toggle options, the user interface, and handling different conversation histories.",
+			"reasoning": "Requires implementing a user interface for context management. Prioritization adds complexity."
+		},
+		{
+			"taskId": 26,
+			"taskTitle": "Implement YAML Configuration Foundation",
+			"complexityScore": 7,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Decompose the task into subtasks for implementing the ConfigLoader class, integrating a validation library, implementing hot-reload, generating default configurations, handling errors, and testing different configuration scenarios.",
+			"reasoning": "Requires YAML parsing, validation, and hot-reloading. Error handling adds complexity."
+		},
+		{
+			"taskId": 27,
+			"taskTitle": "Remove Unused Code and Dependencies",
+			"complexityScore": 6,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Break down the task into subtasks for deleting the InputProcessor, consolidating demo files, removing dead imports, refactoring code, and measuring codebase size reduction.",
+			"reasoning": "Requires code analysis and refactoring. Measuring codebase size adds a bit of complexity."
+		},
+		{
+			"taskId": 28,
+			"taskTitle": "Unify Timeline Ownership and Block Management",
+			"complexityScore": 8,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Divide the task into subtasks for identifying conflicts, designing an ownership model, implementing atomic state transitions, implementing a state machine, using synchronization mechanisms, and testing concurrency.",
+			"reasoning": "Requires understanding of concurrency and state management. Atomic state transitions add complexity."
+		},
+		{
+			"taskId": 29,
+			"taskTitle": "Consolidate Animation System",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Decompose the task into subtasks for removing the AnimationRates wrapper, migrating timing logic, implementing YAML configuration, implementing environment-based FPS settings, and ensuring consistent timing.",
+			"reasoning": "Requires migrating timing logic and implementing YAML configuration. Environment-based settings add complexity."
+		},
+		{
+			"taskId": 30,
+			"taskTitle": "Isolate Mock System",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Break down the task into subtasks for cleaning the LiveBlock class, creating a mock API, implementing YAML configuration, ensuring separation, and isolating dependencies.",
+			"reasoning": "Requires creating a mock API and ensuring separation of concerns. YAML configuration adds complexity."
+		},
+		{
+			"taskId": 31,
+			"taskTitle": "Fix Scroll Stealing Issues",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Divide the task into subtasks for separating callbacks, implementing smart auto-scroll, ensuring smooth animations, eliminating timing hacks, and preserving user review capability.",
+			"reasoning": "Requires understanding of scroll behavior and animation. Smart auto-scroll adds complexity."
+		},
+		{
+			"taskId": 32,
+			"taskTitle": "Migrate Widget CSS to YAML",
+			"complexityScore": 8,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Decompose the task into subtasks for implementing the CSS template system, making dimensions configurable, implementing hot-reload, ensuring consistent spacing, enabling theme customization, and testing visual changes.",
+			"reasoning": "Requires implementing a CSS template system and YAML value injection. Hot-reload adds complexity."
+		},
+		{
+			"taskId": 33,
+			"taskTitle": "Holistic Code Complexity Review",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Break down the task into subtasks for utilizing code analysis tools, manually reviewing code, mapping module dependencies, comparing against the baseline, and documenting complexity hotspots.",
+			"reasoning": "Requires code analysis and manual review. Mapping module dependencies adds complexity."
+		},
+		{
+			"taskId": 34,
+			"taskTitle": "Module Boundary Analysis",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Divide the task into subtasks for evaluating module organization, identifying modules to split/consolidate, designing a subdirectory structure, mapping a dependency graph, and creating a migration plan.",
+			"reasoning": "Requires architectural review and planning. Mapping a dependency graph adds complexity."
+		},
+		{
+			"taskId": 35,
+			"taskTitle": "Technical Debt Assessment",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Decompose the task into subtasks for cataloging monkey-patches, identifying code duplication, documenting unused code, assessing test coverage, and prioritizing debt.",
+			"reasoning": "Requires code analysis and prioritization. Assessing test coverage adds complexity."
+		},
+		{
+			"taskId": 36,
+			"taskTitle": "Core Timeline Simplification",
+			"complexityScore": 8,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Break down the task into subtasks for analyzing the timeline implementation, consolidating state management, simplifying the block lifecycle, removing intermediate layers, refactoring the code, and testing the simplified implementation.",
+			"reasoning": "Requires deep understanding of the timeline implementation and careful refactoring. Simplifying the block lifecycle adds complexity."
+		},
+		{
+			"taskId": 37,
+			"taskTitle": "Plugin System Rationalization",
+			"complexityScore": 8,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Divide the task into subtasks for simplifying registration, eliminating validation layers, consolidating communication, reducing the API surface, refactoring the architecture, and testing the streamlined architecture.",
+			"reasoning": "Requires understanding of the plugin architecture and careful refactoring. Reducing the API surface adds complexity."
+		},
+		{
+			"taskId": 38,
+			"taskTitle": "Configuration System Cleanup",
+			"complexityScore": 8,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Decompose the task into subtasks for consolidating approaches, eliminating complexity, simplifying hot-reload, reducing file complexity, ensuring clear defaults, and testing the simplified system.",
+			"reasoning": "Requires understanding of the configuration system and careful refactoring. Simplifying hot-reload adds complexity."
+		},
+		{
+			"taskId": 39,
+			"taskTitle": "Directory Structure Reorganization",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Break down the task into subtasks for creating subdirectories, separating core logic, isolating the plugin system, organizing utilities, and establishing import patterns.",
+			"reasoning": "Requires architectural planning and code refactoring. Establishing import patterns adds complexity."
+		},
+		{
+			"taskId": 40,
+			"taskTitle": "Interface Simplification",
+			"complexityScore": 8,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Divide the task into subtasks for defining essential APIs, eliminating overloads, creating contracts, simplifying event communication, reducing the number of ways to accomplish tasks, and testing the simplified interfaces.",
+			"reasoning": "Requires careful API design and code refactoring. Creating contracts adds complexity."
+		},
+		{
+			"taskId": 41,
+			"taskTitle": "Dependency Graph Optimization",
+			"complexityScore": 8,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Decompose the task into subtasks for eliminating circular dependencies, reducing the number of dependencies, creating a hierarchy, isolating external dependencies, enabling independent testing, and analyzing the dependency graph.",
+			"reasoning": "Requires understanding of dependency management and careful refactoring. Analyzing the dependency graph adds complexity."
+		},
+		{
+			"taskId": 42,
+			"taskTitle": "Simplified Testing Strategy",
+			"complexityScore": 6,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Break down the task into subtasks for eliminating complex setup, focusing on essential behavior, simplifying test data, reducing execution time, and ensuring separation of test types.",
+			"reasoning": "Requires refactoring the testing framework. Ensuring separation of test types adds complexity."
+		},
+		{
+			"taskId": 43,
+			"taskTitle": "Documentation and Guidelines",
+			"complexityScore": 6,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Divide the task into subtasks for documenting principles, creating guidelines, establishing code review criteria, documenting responsibilities, and creating examples.",
+			"reasoning": "Requires writing documentation and creating code examples. Establishing code review criteria adds complexity."
+		},
+		{
+			"taskId": 44,
+			"taskTitle": "Continuous Complexity Monitoring",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Decompose the task into subtasks for establishing metrics, creating automated checks, implementing regular reviews, creating an escalation path, and integrating with the workflow.",
+			"reasoning": "Requires implementing automated checks and integrating with the workflow. Creating an escalation path adds complexity."
+		},
+		{
+			"taskId": 48,
+			"taskTitle": "Implement 'test-story' Command",
+			"complexityScore": 6,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Break down the task into subtasks for creating the command, implementing the command logic, integrating with the user story framework, and storing the temporal grid.",
+			"reasoning": "Requires CLI implementation and integration with existing frameworks. Storing the temporal grid adds complexity."
+		},
+		{
+			"taskId": 49,
+			"taskTitle": "Implement 'update-story' Command",
+			"complexityScore": 6,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Divide the task into subtasks for creating the command, implementing the command logic, updating the task data, and storing the updated data.",
+			"reasoning": "Requires CLI implementation and data manipulation. Storing the updated data adds complexity."
+		},
+		{
+			"taskId": 50,
+			"taskTitle": "Implement 'validate-task' Command",
+			"complexityScore": 7,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Decompose the task into subtasks for creating the command, implementing the command logic, checking for a user story, verifying the temporal grid, and validating visual quality.",
+			"reasoning": "Requires CLI implementation and validation logic. Verifying the temporal grid adds complexity."
+		},
+		{
+			"taskId": 51,
+			"taskTitle": "Enhance 'set-status' Command with Story Validation",
+			"complexityScore": 6,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Break down the task into subtasks for modifying the command, adding a check for validation, displaying an error message, and testing the command.",
+			"reasoning": "Requires modifying an existing command and adding validation logic. Displaying an error message adds complexity."
+		},
+		{
+			"taskId": 52,
+			"taskTitle": "Implement 'complete-with-story' Command",
+			"complexityScore": 6,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Divide the task into subtasks for creating the command, implementing the command logic, updating the task status, and storing the story ID.",
+			"reasoning": "Requires CLI implementation and data manipulation. Storing the story ID adds complexity."
+		}
+	]
+}

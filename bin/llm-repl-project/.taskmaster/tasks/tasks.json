@@ -15,34 +15,34 @@
       {
         "id": 2,
         "title": "Implement Sacred GUI Layout",
-        "description": "Implement the immutable three-area Sacred GUI layout using Textual. This includes the Sacred Timeline (top), Live Workspace (middle), and Input Area (bottom).",
-        "details": "1. Create a new Textual application class.\n2. Define the three main areas: `SacredTimeline`, `LiveWorkspace`, and `InputArea`.\n3. Use `VerticalScroll` for `SacredTimeline` and `LiveWorkspace`.\n4. Use `PromptInput` for the `InputArea`.\n5. Implement the layout using Textual's layout system, ensuring the three areas are correctly positioned and sized.\n6. Enforce the 'No Nested Containers Rule'.\n<info added on 2025-07-13T03:17:24.586Z>\nTDD REQUIREMENT: This task requires user story validation showing Sacred GUI layout works correctly with three distinct areas visible. Must generate temporal grid proof before completion.\n</info added on 2025-07-13T03:17:24.586Z>",
-        "testStrategy": "Run the application and verify that the three areas are displayed correctly. Test scrolling in the `SacredTimeline` and `LiveWorkspace`. Ensure that the `InputArea` is fixed at the bottom. Verify that no nested containers are used within `VerticalScroll`.",
-        "priority": "high",
+        "description": "Implement the immutable three-area Sacred GUI layout using Textual. This includes the Sacred Timeline (top), Live Workspace (middle), and Input Area (bottom). The layout should be responsive but maintain clear visual separation between these areas.",
+        "status": "pending",
         "dependencies": [
           1
         ],
-        "status": "pending",
+        "priority": "high",
+        "details": "1. Create a new Textual application class.\n2. Define the three main areas: `SacredTimeline`, `LiveWorkspace`, and `InputArea`.\n3. Use `VerticalScroll` for `SacredTimeline` and `LiveWorkspace`.\n4. Use `PromptInput` for the `InputArea`.\n5. Implement the layout using Textual's layout system, ensuring the three areas are correctly positioned and sized.\n6. Enforce the 'No Nested Containers Rule'.\n7. Ensure the `SacredTimeline` displays conversation history.\n8. The `LiveWorkspace` should only be visible during processing to show real-time AI work.\n9. The `InputArea` should always be available for typing.\n<info added on 2025-07-13T03:17:24.586Z>\nTDD REQUIREMENT: This task requires user story validation showing Sacred GUI layout works correctly with three distinct areas visible. Must generate temporal grid proof before completion.\n</info added on 2025-07-13T03:17:24.586Z>",
+        "testStrategy": "Run the application and verify that the three areas are displayed correctly. Test scrolling in the `SacredTimeline` and `LiveWorkspace`. Ensure that the `InputArea` is fixed at the bottom. Verify that no nested containers are used within `VerticalScroll`. Verify that the `LiveWorkspace` is only visible during processing. Use `task-master validate-task` command to validate task completion with story proof.",
         "subtasks": []
       },
       {
         "id": 3,
         "title": "Create SimpleBlockWidget with Color Coding",
-        "description": "Create a `SimpleBlockWidget` for displaying timeline entries in the Sacred Timeline. Implement role-based color coding to distinguish between user input, AI cognition, and assistant responses.",
-        "details": "1. Create a new class `SimpleBlockWidget` inheriting from Textual's `Widget`.\n2. Implement the `compose` method to render the content of the block.\n3. Add properties for setting the content and role (user, cognition, assistant).\n4. Implement color coding based on the role using Textual's styling system.\n5. Add hrule separators between timeline entries.",
-        "testStrategy": "Create instances of `SimpleBlockWidget` with different roles and content. Verify that the color coding is applied correctly. Ensure that the widgets are displayed correctly in the Sacred Timeline.",
-        "priority": "high",
+        "description": "Create a `SimpleBlockWidget` for displaying timeline entries in the Sacred Timeline. Implement role-based color coding to distinguish between user input, AI cognition, and assistant responses, ensuring clear visual distinction and spacing for easy scanning of conversation flow.",
+        "status": "pending",
         "dependencies": [
           2
         ],
-        "status": "pending",
+        "priority": "high",
+        "details": "1. Create a new class `SimpleBlockWidget` inheriting from Textual's `Widget`.\n2. Implement the `compose` method to render the content of the block.\n3. Add properties for setting the content and role (user, cognition, assistant).\n4. Implement color coding based on the role using Textual's styling system. Use distinct colors for each role to enhance visual differentiation: User (representing 'me'), Assistant (representing 'response'), and Cognition (representing 'thinking process').\n5. Add hrule separators between timeline entries to visually separate blocks.\n6. Implement proper spacing and padding around the text within the block to improve readability.",
+        "testStrategy": "Create instances of `SimpleBlockWidget` with different roles and content. Verify that the color coding is applied correctly and the colors are visually distinct. Ensure that the widgets are displayed correctly in the Sacred Timeline with appropriate spacing and separators. Test with various text lengths and content types to ensure consistent visual presentation.",
         "subtasks": []
       },
       {
         "id": 4,
         "title": "Build PromptInput Widget",
         "description": "Build the `PromptInput` widget with multiline support and smart validation. This widget will be used for user input in the Input Area.",
-        "details": "1. Create a new class `PromptInput` inheriting from Textual's `Input`.\n2. Enable multiline support by configuring the input widget.\n3. Implement smart validation to prevent invalid input.\n4. Add event handlers for handling user input and submitting messages.",
+        "details": "1. Create a new class `PromptInput` inheriting from Textual's `Input`.\n2. Enable multiline support by configuring the input widget.\n3. Implement smart validation to prevent invalid input.\n4. Add event handlers for handling user input and submitting messages.\n<info added on 2025-07-13T04:05:24.362Z>\nUSER STORY: As a user, I want a responsive input area where I can type both short and long messages with confidence, knowing the system will guide me with smart validation and handle multiline content properly. The input should feel natural - expanding for longer content, providing helpful feedback for invalid input, and making it clear when I can submit. I should be able to use standard keyboard shortcuts and have a predictable way to submit my message.\n</info added on 2025-07-13T04:05:24.362Z>",
         "testStrategy": "Test multiline input by entering multiple lines of text. Verify that the input is validated correctly. Ensure that the input is submitted correctly when the user presses Enter.",
         "priority": "high",
         "dependencies": [
@@ -63,7 +63,76 @@
           4
         ],
         "status": "pending",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Capture User Input in PromptInput Widget",
+            "description": "Implement an event handler in the `PromptInput` widget to capture user input.",
+            "dependencies": [],
+            "details": "Implement an event listener (e.g., onKeyPress, onChange) to capture text entered by the user in the `PromptInput` widget. Store the captured input for subsequent processing.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Create Mock Cognition Pipeline",
+            "description": "Create a mock cognition pipeline that simulates AI processing.",
+            "dependencies": [
+              1
+            ],
+            "details": "Develop a mock function or class that takes the user input as input and returns a simulated cognition output. This could involve simple keyword extraction, sentiment analysis, or any other mock AI processing step. The output should be structured data.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Generate Mock Assistant Response",
+            "description": "Implement a function to generate a mock assistant response based on the cognition output.",
+            "dependencies": [
+              2
+            ],
+            "details": "Implement a function that takes the output from the mock cognition pipeline and generates a text-based response that simulates an assistant's reply. This could involve simple string concatenation or more complex template-based generation.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Add Elements to Sacred Timeline",
+            "description": "Add the user input, cognition output, and assistant response to the Sacred Timeline using `SimpleBlockWidget`.",
+            "dependencies": [
+              1,
+              2,
+              3
+            ],
+            "details": "Use the `SimpleBlockWidget` to display the user input, the output from the mock cognition pipeline, and the generated assistant response in the Sacred Timeline. Ensure that the data is formatted clearly and visually distinct.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Integrate Widgets",
+            "description": "Integrate all widgets to ensure seamless conversation flow.",
+            "dependencies": [
+              1,
+              4
+            ],
+            "details": "Connect the `PromptInput` widget, the mock cognition pipeline, the assistant response generator, and the `SimpleBlockWidget` in the Sacred Timeline to create a complete conversation flow. Ensure that data is passed correctly between components.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Implement TDD User Story Validation",
+            "description": "Write TDD user story validation to demonstrate complete conversation flow.",
+            "dependencies": [
+              4,
+              5
+            ],
+            "details": "Write a user story that describes the complete conversation flow from user input to assistant response. Implement automated tests to validate that the user story is fulfilled. The tests should verify that the user input, cognition output, and assistant response are displayed correctly in the Sacred Timeline.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 6,
@@ -89,7 +158,80 @@
           5
         ],
         "status": "pending",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement State Management System",
+            "description": "Implement a state management system to track the application's current state (idle or processing).",
+            "dependencies": [],
+            "details": "Choose a suitable state management library or pattern and implement it to manage the application's state related to turn lifecycle.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement Layout Switching Functions",
+            "description": "Implement functions to switch between the 2-way and 3-way layouts based on the current application state.",
+            "dependencies": [
+              1
+            ],
+            "details": "Create functions that dynamically adjust the UI layout to switch between the 2-way (Timeline + Input) and 3-way (Timeline + Workspace + Input) splits.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Control LiveWorkspace Visibility",
+            "description": "Ensure the `LiveWorkspace` is only visible during the processing state.",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Implement logic to show or hide the `LiveWorkspace` component based on the current state. It should be visible only when the application is in the processing state.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Disable InputArea During Processing",
+            "description": "Disable the `InputArea` component during the processing state.",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement logic to disable the `InputArea` component when the application is in the processing state to prevent user input during processing.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Integrate with Conversation Flow",
+            "description": "Integrate the turn lifecycle management with the existing conversation flow.",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "details": "Connect the state management and layout switching functions to the conversation flow to trigger state transitions based on user input and assistant responses.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Implement TDD User Story Validation",
+            "description": "Write TDD user story validation to demonstrate turn lifecycle transitions between 2-way and 3-way splits.",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "details": "Write automated tests that verify the correct transitions between the 2-way and 3-way layouts, the visibility of the `LiveWorkspace`, and the disabled state of the `InputArea` during processing. Cover the user story provided.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 8,
@@ -154,7 +296,7 @@
             "title": "Implement Live Block Staging Area",
             "description": "Implement a staging area to hold 'live' blocks before they are inscribed. This includes mechanisms for adding, retrieving, and managing blocks in the staging area. The staging area should support operations like adding new blocks, retrieving blocks for processing, and removing blocks after inscription.",
             "dependencies": [],
-            "details": "Implement staging area for live blocks, including adding, retrieving, and managing blocks.",
+            "details": "Implement staging area for live blocks, including adding, retrieving, and managing blocks.\n<info added on 2025-07-13T04:02:59.065Z>\nAs a developer, when I add a new conversation turn to the timeline, I want the system to hold it in a staging area as a 'live' block that shows real-time updates (processing status, token consumption, timing) before it gets permanently inscribed to the timeline. The staging area should be visible to users and show: 1) Block content preview, 2) Current processing stage, 3) Real-time token count, 4) Wall time elapsed. Users should be able to see multiple live blocks if multiple operations are running concurrently.\n</info added on 2025-07-13T04:02:59.065Z>",
             "status": "pending",
             "testStrategy": "Verify that the staging area correctly manages live blocks. Create user stories to demonstrate the addition, retrieval, and removal of blocks from the staging area. Test concurrency and error handling."
           },
@@ -163,7 +305,7 @@
             "title": "Implement Wall Time and Token Usage Tracking",
             "description": "Implement mechanisms to track wall time and token usage for each block. This includes recording the time spent processing each block and the number of tokens consumed. Implement APIs to query the wall time and token usage for a given block.",
             "dependencies": [],
-            "details": "Track wall time and token usage per block, including recording time spent and tokens consumed.",
+            "details": "Track wall time and token usage per block, including recording time spent and tokens consumed.\n<info added on 2025-07-13T04:03:17.286Z>\nCapture the following metrics for each block:\n1.  Total wall time (start to completion).\n2.  Processing time breakdown by stage.\n3.  Input tokens consumed.\n4.  Output tokens generated.\n5.  Cost estimate (if available).\n\nAccuracy should be to millisecond precision, and the tracking mechanism must handle concurrent operations without interference.\n</info added on 2025-07-13T04:03:17.286Z>",
             "status": "pending",
             "testStrategy": "Verify that wall time and token usage are accurately tracked for each block. Create unit tests to validate the tracking mechanisms. Test with different block sizes and processing complexities."
           },
@@ -172,7 +314,7 @@
             "title": "Implement Block State Transition Logic",
             "description": "Implement the logic for transitioning blocks between 'live' and 'inscribed' states. This includes defining the conditions for state transitions and implementing the necessary code to update the block's state. The state transition logic should handle error conditions and ensure data consistency.",
             "dependencies": [],
-            "details": "Implement state transition logic between 'live' and 'inscribed' states, including conditions and error handling.",
+            "details": "Implement state transition logic between 'live' and 'inscribed' states, including conditions and error handling.\n<info added on 2025-07-13T04:03:28.041Z>\nAs a user interacting with the timeline, I want to see blocks smoothly transition from 'live' (showing real-time updates) to 'inscribed' (permanent, historical) states with clear visual feedback. When a conversation turn completes processing, I should see: 1) Visual indication of state change (color, styling), 2) Final metrics locked in, 3) Block moves from staging area to permanent timeline, 4) No loss of data during transition, 5) Ability to retry failed transitions. The system should handle edge cases like interrupted processing, network failures, or partial completions gracefully.\n</info added on 2025-07-13T04:03:28.041Z>",
             "status": "pending",
             "testStrategy": "Verify that blocks transition correctly between states. Create user stories to demonstrate the state transitions. Test with different scenarios, including error conditions and edge cases."
           },
@@ -181,7 +323,7 @@
             "title": "Implement Data Transparency for Block Operations",
             "description": "Ensure data transparency for all operations related to blocks, including creation, modification, and state transitions. This includes logging all relevant events and providing mechanisms for auditing block operations. Implement a system to track changes to blocks and provide an audit trail of all operations.",
             "dependencies": [],
-            "details": "Ensure data transparency for all block operations, including logging and auditing.",
+            "details": "Ensure data transparency for all block operations, including logging and auditing.\n<info added on 2025-07-13T04:03:38.022Z>\nUSER STORY: As a system administrator debugging issues, I want complete transparency into all block operations so I can audit, troubleshoot, and understand system behavior. For every block operation, I should have access to: 1) Detailed operation logs with timestamps, 2) State change audit trail, 3) Error logs with context, 4) Performance metrics per operation, 5) Data integrity checks and validation results. The logging should be searchable, filterable by operation type, and exportable for analysis. I should be able to reconstruct the exact sequence of events that led to any block's current state.\n</info added on 2025-07-13T04:03:38.022Z>",
             "status": "pending",
             "testStrategy": "Verify that all block operations are transparent and auditable. Create user stories to demonstrate the transparency of block operations. Test the audit logging and reporting mechanisms."
           }
@@ -196,7 +338,76 @@
         "priority": "high",
         "dependencies": [],
         "status": "pending",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Recency and Relevance Scoring",
+            "description": "Implement algorithms to score context turns based on recency and relevance to the current query. User story: As a user, I want the system to prioritize recent and relevant information in the context window to improve response accuracy.",
+            "dependencies": [],
+            "details": "Develop and test scoring functions that consider both the age of a context turn and its semantic similarity to the current user input. Ensure the scoring is efficient and scalable.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement Token Counting",
+            "description": "Implement real-time token counting for both input and output text. User story: As a developer, I need accurate token counts to manage context window size and avoid exceeding API limits.",
+            "dependencies": [],
+            "details": "Integrate a token counting library (e.g., tiktoken) to accurately measure the number of tokens in user inputs, system outputs, and context turns. Implement caching to improve performance.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Develop Context Formatting Logic",
+            "description": "Develop logic to format the context window for optimal model performance. User story: As a user, I want the system to present context in a clear and structured format to improve response quality.",
+            "dependencies": [],
+            "details": "Design a context formatting strategy that includes separators, prefixes, and other formatting elements to help the model understand the relationships between different context turns. Experiment with different formats to optimize performance.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement Summarization of Older Conversation Turns",
+            "description": "Implement automated summarization of older conversation turns to reduce context window size. User story: As a user, I want the system to retain key information from past conversations without exceeding token limits.",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Integrate a summarization model to automatically generate concise summaries of older context turns. Implement a mechanism to decide when to summarize based on token count and relevance scores.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Integrate with the Timeline",
+            "description": "Integrate the context management system with the existing timeline to preserve conversation history. User story: As a user, I want the system to seamlessly integrate with the timeline to maintain a consistent and complete record of my interactions.",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "details": "Modify the context management system to store and retrieve context turns from the timeline. Ensure that the timeline is updated whenever the context window changes.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Optimize Performance",
+            "description": "Optimize the performance of the context management system to ensure real-time responsiveness. User story: As a user, I want the system to respond quickly even with a large context window.",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "details": "Profile the context management system to identify performance bottlenecks. Implement caching, parallelization, and other optimization techniques to improve response time.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 13,
@@ -209,7 +420,61 @@
           11
         ],
         "status": "pending",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Live Data Streaming Infrastructure",
+            "description": "Set up the backend infrastructure to stream live data for blocks, including wall time, token usage, and intermediate responses. Focus on testable components.",
+            "dependencies": [],
+            "details": "Establish a streaming pipeline using appropriate technologies (e.g., WebSockets, Server-Sent Events) to transmit real-time data from the backend to the frontend. Ensure the pipeline is robust and scalable.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Display Real-Time Metrics",
+            "description": "Develop the UI components to display wall time, token usage, and intermediate responses in real-time. Provide clear visual feedback.",
+            "dependencies": [
+              1
+            ],
+            "details": "Create UI elements to display the streamed data. Implement mechanisms to update these elements dynamically as new data arrives. Ensure the display is user-friendly and informative.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Animate Block Transitions",
+            "description": "Implement smooth animations for blocks transitioning from live to inscribed states. Focus on visual appeal and performance.",
+            "dependencies": [
+              2
+            ],
+            "details": "Design and implement animations that visually represent the transition of blocks from a live, actively streaming state to an inscribed, finalized state. Optimize animations for smooth performance.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Integrate with Sacred Timeline",
+            "description": "Integrate the live data streaming and block transitions with the Sacred Timeline for updates and synchronization.",
+            "dependencies": [
+              3
+            ],
+            "details": "Ensure that the Sacred Timeline is updated in real-time with the latest data from the live stream and that block transitions are reflected accurately on the timeline. Implement mechanisms to synchronize the live data with the timeline's state.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Handle Streaming Errors Gracefully",
+            "description": "Implement error handling mechanisms to gracefully manage streaming errors and provide informative feedback to the user.",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement error detection and handling mechanisms to catch and manage potential errors during the streaming process. Provide informative error messages to the user and implement fallback strategies to maintain a stable user experience.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 14,
@@ -231,7 +496,74 @@
         "priority": "medium",
         "dependencies": [],
         "status": "pending",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Core Plugin Architecture",
+            "description": "Design and implement the core plugin architecture, including plugin loading, unloading, and management. Focus on extensibility and testability.",
+            "dependencies": [],
+            "details": "Define plugin interfaces, implement plugin discovery mechanisms, and create a plugin manager.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Support Plugin Nesting",
+            "description": "Implement the ability for plugins to contain and manage other plugins, creating a hierarchical plugin structure.",
+            "dependencies": [
+              1
+            ],
+            "details": "Modify the plugin architecture to allow plugins to register child plugins and manage their lifecycle.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement Data Aggregation Across Plugins",
+            "description": "Develop a mechanism for plugins to share and aggregate data, enabling cross-plugin communication and collaboration.",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Define a data sharing protocol and implement data aggregation functions within the plugin architecture.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement External Validation Systems",
+            "description": "Integrate with external validation systems to allow plugins to validate data and operations against external rules and constraints.",
+            "dependencies": [
+              1
+            ],
+            "details": "Define an interface for external validation and implement adapters for specific validation systems.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Integrate with MCP Server",
+            "description": "Establish communication and data exchange between the plugin architecture and the MCP server.",
+            "dependencies": [
+              1,
+              3
+            ],
+            "details": "Implement an API client for the MCP server and integrate it into the plugin architecture.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Manage Plugin Dependencies",
+            "description": "Implement a system for managing plugin dependencies, ensuring that plugins have access to the required resources and libraries.",
+            "dependencies": [
+              1
+            ],
+            "details": "Develop a dependency resolution mechanism and integrate it into the plugin loading process.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 16,
@@ -244,7 +576,74 @@
           15
         ],
         "status": "pending",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement User Intent Analysis Algorithms",
+            "description": "Develop and implement algorithms to analyze user input and determine the user's intent for routing purposes. Focus on testable routing decisions based on intent.",
+            "dependencies": [],
+            "details": "Design and implement algorithms for intent recognition, including natural language processing (NLP) techniques. Ensure the algorithms can accurately classify user intent for routing.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Support Multiple LLM Provider Integrations",
+            "description": "Integrate with multiple LLM providers to allow for flexible routing and provider failover. Focus on testable routing decisions based on provider capabilities.",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement an abstraction layer to interact with different LLM providers. Ensure the system can seamlessly switch between providers based on availability and performance.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Enable Plugin Extensibility for Routing",
+            "description": "Design and implement a plugin architecture to allow for extending the routing capabilities of the system. Focus on testable routing decisions based on plugin functionality.",
+            "dependencies": [
+              2
+            ],
+            "details": "Develop a plugin interface that allows developers to create custom routing logic. Ensure the system can dynamically load and execute plugins.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement Dynamic Routing Logic Based on Context",
+            "description": "Implement dynamic routing logic that considers user intent, context, and LLM provider capabilities to make routing decisions. Focus on testable routing decisions based on context.",
+            "dependencies": [
+              3
+            ],
+            "details": "Develop a routing engine that can dynamically adjust routing decisions based on real-time data. Consider factors such as user intent, context, and LLM provider availability.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Handle Provider Failover Mechanisms",
+            "description": "Implement mechanisms to handle LLM provider failover, ensuring continuous operation of the routing system. Focus on testable failover scenarios.",
+            "dependencies": [
+              2,
+              4
+            ],
+            "details": "Implement health checks for LLM providers. Develop a failover strategy that automatically switches to a backup provider if the primary provider is unavailable.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Optimize Routing Performance",
+            "description": "Optimize the routing system for performance, ensuring low latency and high throughput. Focus on testable performance metrics.",
+            "dependencies": [
+              4,
+              5
+            ],
+            "details": "Profile the routing system to identify performance bottlenecks. Implement caching and other optimization techniques to improve performance.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 17,
@@ -274,7 +673,72 @@
           17
         ],
         "status": "pending",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Unit Tests for Block Transitions",
+            "description": "Implement unit tests to validate individual block transitions. User Story: As a developer, I want to ensure each block transition functions correctly in isolation, so that I can quickly identify and fix issues with individual transitions.",
+            "dependencies": [],
+            "details": "Write unit tests for each block transition function, covering various input scenarios and expected outputs. Use a mocking framework to isolate the block transition logic.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement Integration Tests for Context Pruning",
+            "description": "Implement integration tests to verify context pruning functionality. User Story: As a tester, I want to verify that context pruning correctly removes irrelevant information while preserving essential context, so that the system remains efficient and accurate.",
+            "dependencies": [
+              1
+            ],
+            "details": "Create integration tests that simulate real-world scenarios with varying conversation lengths and complexities. Verify that the context pruning algorithm correctly identifies and removes irrelevant information.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement UI Tests for Dynamic Rendering",
+            "description": "Implement UI tests to ensure dynamic rendering of elements. User Story: As a user, I want to see elements dynamically rendered on the UI correctly and responsively, so that I have a smooth and intuitive user experience.",
+            "dependencies": [
+              2
+            ],
+            "details": "Use a UI testing framework to automate UI interactions and verify that elements are rendered correctly based on different data inputs and user actions. Test responsiveness across different screen sizes.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement End-to-End Tests for Plugin Integration",
+            "description": "Implement end-to-end tests to validate plugin integration. User Story: As a system administrator, I want to ensure that plugins integrate seamlessly with the core system, so that I can extend functionality without compromising stability.",
+            "dependencies": [
+              3
+            ],
+            "details": "Create end-to-end tests that simulate user workflows involving plugin interactions. Verify that data flows correctly between the core system and plugins, and that plugins function as expected.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Automate Code Coverage Measurement",
+            "description": "Automate the process of measuring code coverage. User Story: As a QA engineer, I want to automatically measure code coverage during test execution, so that I can identify areas of the codebase that are not adequately tested.",
+            "dependencies": [
+              4
+            ],
+            "details": "Integrate a code coverage tool into the build process. Configure the tool to generate code coverage reports after each test run. Set up thresholds for minimum acceptable code coverage.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Automate Test Execution",
+            "description": "Automate the execution of all tests (unit, integration, UI, and end-to-end). User Story: As a DevOps engineer, I want to automate the execution of all tests as part of the CI/CD pipeline, so that I can ensure code quality and prevent regressions.",
+            "dependencies": [
+              5
+            ],
+            "details": "Set up a CI/CD pipeline to automatically trigger test execution upon code commits. Configure the pipeline to run all tests and report results. Integrate with a notification system to alert developers of test failures.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
       },
       {
         "id": 19,

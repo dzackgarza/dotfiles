@@ -17,10 +17,10 @@ task-master show <id>                             # View detailed task informati
 task-master set-status --id=<id> --status=done    # Mark task complete
 
 # TDD Workflow Commands (MANDATORY for all task completion)
-./task-master-generate-story --id=<id> --prompt="<user_interaction>"    # Generate user story for task
-./task-master-test-story --id=<id>                                      # Run user story test with temporal grid
-./task-master-validate-task --id=<id>                                   # Validate task meets TDD requirements
-./task-master-complete-with-story --id=<id>                             # Complete task with TDD proof
+./scripts/task-master-generate-story --id=<id> --prompt="<user_interaction>"    # Generate user story for task
+./scripts/task-master-test-story --id=<id>                                      # Run user story test with temporal grid
+./scripts/task-master-validate-task --id=<id>                                   # Validate task meets TDD requirements
+./scripts/task-master-complete-with-story --id=<id>                             # Complete task with TDD proof
 
 # Task Management
 task-master add-task --prompt="description" --research        # Add new task with AI assistance
@@ -304,10 +304,10 @@ This project enforces Test-Driven Development through user story validation. **N
 task-master next
 
 # Step 2: BEFORE ANY CODING - Generate user story first
-./task-master-generate-story --id=<task-id> --prompt="<describe user interaction>"
+./scripts/task-master-generate-story --id=<task-id> --prompt="<describe user interaction>"
 
 # Step 3: Verify story fails (shows incomplete/broken behavior)  
-./task-master-test-story --id=<task-id>
+./scripts/task-master-test-story --id=<task-id>
 ```
 
 #### 2. Implementation Phase
@@ -316,41 +316,41 @@ task-master next
 # ... write your code ...
 
 # Step 5: Test story regularly during development
-./task-master-test-story --id=<task-id>
+./scripts/task-master-test-story --id=<task-id>
 ```
 
 #### 3. Completion Phase (MANDATORY VALIDATION)
 ```bash
 # Step 6: Story MUST pass before completion
-./task-master-test-story --id=<task-id>
+./scripts/task-master-test-story --id=<task-id>
 
 # Step 7: Validate task meets all TDD requirements
-./task-master-validate-task --id=<task-id>
+./scripts/task-master-validate-task --id=<task-id>
 
 # Step 8: Complete with story proof (only way to mark done)
-./task-master-complete-with-story --id=<task-id>
+./scripts/task-master-complete-with-story --id=<task-id>
 ```
 
 ### TDD Commands Available
 
 ```bash
 # Generate user story template for task
-./task-master-generate-story --id=5 --prompt="User starts conversation"
+./scripts/task-master-generate-story --id=5 --prompt="User starts conversation"
 
 # Run user story for specific task (creates temporal grid proof)
-./task-master-test-story --id=5
+./scripts/task-master-test-story --id=5
 
 # Validate task completion with story proof
-./task-master-validate-task --id=5
+./scripts/task-master-validate-task --id=5
 
 # Complete task with story validation (ONLY way to mark done)
-./task-master-complete-with-story --id=5
+./scripts/task-master-complete-with-story --id=5
 
 # Helper: Show help for any command
-./task-master-generate-story --help
-./task-master-test-story --help
-./task-master-validate-task --help
-./task-master-complete-with-story --help
+./scripts/task-master-generate-story --help
+./scripts/task-master-test-story --help
+./scripts/task-master-validate-task --help
+./scripts/task-master-complete-with-story --help
 ```
 
 ### Quality Gates (ENFORCED)
@@ -661,11 +661,11 @@ task-master expand --id=5 --research
 ## TDD CLI Command Reference
 
 ### File Locations
-- **TDD Commands**: Project root directory (executable shell scripts)
-  - `./task-master-generate-story`
-  - `./task-master-test-story` 
-  - `./task-master-validate-task`
-  - `./task-master-complete-with-story`
+- **TDD Commands**: scripts/ directory (executable shell scripts)
+  - `./scripts/task-master-generate-story`
+  - `./scripts/task-master-test-story` 
+  - `./scripts/task-master-validate-task`
+  - `./scripts/task-master-complete-with-story`
 - **Story Data**: `.taskmaster/stories/task_stories.json`
 - **Temporal Grids**: `V3-minimal/debug_screenshots/task_*_temporal_grid_*.png`
 
@@ -677,9 +677,9 @@ task-master expand --id=5 --research
 
 ### Best Practices for Agents
 1. **Always generate story before coding**: Use TDD story-first approach
-2. **Test frequently during development**: Run `./task-master-test-story` regularly
-3. **Validate before completion**: Use `./task-master-validate-task` before marking done
-4. **Use TDD completion**: Always use `./task-master-complete-with-story` instead of manual status changes
+2. **Test frequently during development**: Run `./scripts/task-master-test-story` regularly
+3. **Validate before completion**: Use `./scripts/task-master-validate-task` before marking done
+4. **Use TDD completion**: Always use `./scripts/task-master-complete-with-story` instead of manual status changes
 5. **Document implementation notes**: Use `task-master update-subtask` to log progress
 
 ## Session Management Best Practices
