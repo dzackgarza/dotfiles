@@ -8,6 +8,7 @@ Eliminates dual-system architectural conflicts by making Timeline own everything
 from dataclasses import dataclass
 from typing import List, Dict, Optional, Union, Protocol, Any
 import asyncio
+from datetime import datetime, timezone
 
 from .live_blocks import LiveBlock, InscribedBlock, BlockState
 from ..widgets.timeline import TimelineBlock
@@ -163,32 +164,128 @@ class UnifiedTimeline:
             raise
 
     def _on_live_block_update(self, block: LiveBlock) -> None:
-        """Handle live block updates"""
+        """Handle live block updates with context management integration"""
         # Log block modification
-        audit_logger.start_operation(
+        operation_id = audit_logger.start_operation(
             block_id=block.id,
             operation_type=OperationType.MODIFICATION,
             user_context="live_block_update"
         )
         
         try:
+            # Check if this update should trigger context summarization
+            self._check_context_triggers_on_update(block)
+            
+            # Notify observers of the update
             self._notify_observers(BlockUpdated(block))
             
-            # Log successful update
+            # Log successful update with context awareness
             audit_logger.log_performance_metric(
                 block_id=block.id,
                 operation_type=OperationType.MODIFICATION,
                 metrics={
                     "content_length": len(block.content),
-                    "observer_count": len(self._observers)
-                }
+                    "observer_count": len(self._observers),
+                    "total_timeline_blocks": len(self._blocks),
+                    "total_inscribed_blocks": len(self.get_inscribed_blocks())
+                },
+                operation_id=operation_id
             )
+            
+            audit_logger.end_operation(operation_id, success=True)
             
         except Exception as e:
             audit_logger.log_error(
                 block_id=block.id,
                 operation_type=OperationType.MODIFICATION,
-                message=f"Failed to notify observers of block update: {str(e)}",
+                message=f"Failed to handle live block update: {str(e)}",
+                exception=e,
+                operation_id=operation_id
+            )
+            audit_logger.end_operation(operation_id, success=False)
+    
+    def _check_context_triggers_on_update(self, updated_block: LiveBlock) -> None:
+        """Check if block updates should trigger context management actions"""
+        try:
+            # Check if we have too many blocks (trigger summarization)
+            total_blocks = len(self._blocks)
+            if total_blocks > 20:  # Configurable threshold
+                # Schedule background summarization
+                asyncio.create_task(self._background_summarization())
+            
+            # Check if the updated block is large (might need special handling)
+            content_length = len(updated_block.content)
+            if content_length > 5000:  # Large block threshold
+                audit_logger.log_performance_metric(
+                    block_id=updated_block.id,
+                    operation_type=OperationType.MODIFICATION,
+                    metrics={
+                        "large_block_detected": True,
+                        "content_length": content_length,
+                        "recommendation": "consider_chunking"
+                    }
+                )
+                
+        except Exception as e:
+            # Don't fail the update due to context check issues
+            print(f"Warning: Context trigger check failed: {e}")
+    
+    async def _background_summarization(self) -> None:
+        """Perform background summarization when timeline grows large"""
+        try:
+            from .summarization import ContextSummarizationManager, SummaryConfig
+            
+            # Get current inscribed blocks for summarization
+            inscribed_blocks = self.get_inscribed_blocks()
+            if len(inscribed_blocks) < 5:  # Need minimum blocks for summarization
+                return
+            
+            # Convert to conversation turns
+            from .context_scoring import ConversationTurn
+            from datetime import datetime, timezone
+            
+            turns = []
+            for block in inscribed_blocks[:-3]:  # Keep last 3 blocks, summarize older ones
+                role = self._determine_block_role(block)
+                turn = ConversationTurn(
+                    id=block.id,
+                    content=block.content,
+                    role=role,
+                    timestamp=self._get_block_timestamp(block),
+                    tokens=len(block.content.split()) * 1.3
+                )
+                turns.append(turn)
+            
+            if turns:
+                # Configure summarization for background processing
+                config = SummaryConfig(
+                    max_context_tokens=2000,
+                    summary_target_tokens=400,
+                    preserve_recent_turns=0  # We already filtered to older blocks
+                )
+                
+                summarization_manager = ContextSummarizationManager(config=config)
+                remaining_turns, summaries = await summarization_manager.process_conversation_for_summarization(
+                    turns, force_summarize=True
+                )
+                
+                if summaries:
+                    # Log successful background summarization
+                    audit_logger.log_performance_metric(
+                        block_id="timeline_background_summarization",
+                        operation_type=OperationType.MODIFICATION,
+                        metrics={
+                            "original_blocks": len(turns),
+                            "summaries_created": len(summaries),
+                            "storage_reduction": f"{len(turns) - len(remaining_turns)} blocks summarized"
+                        }
+                    )
+                    
+        except Exception as e:
+            audit_logger.log_error(
+                block_id="timeline_background_summarization",
+                operation_type=OperationType.MODIFICATION,
+                message=f"Background summarization failed: {str(e)}",
                 exception=e
             )
 
@@ -393,54 +490,333 @@ class UnifiedTimeline:
         
         return ready_block_ids
 
-    async def get_formatted_context(self, format_style: FormatStyle = FormatStyle.CONVERSATIONAL, max_tokens: int = 4000) -> str:
+    async def get_formatted_context(self, format_style: FormatStyle = FormatStyle.CONVERSATIONAL, 
+                                  max_tokens: int = 4000, query: str = None) -> str:
         """
         Get formatted conversation context from inscribed blocks with optional summarization.
         
-        Uses the new context formatting system with summarization support to present 
-        timeline history in optimal format for AI model consumption.
+        Enhanced integration with context management system providing:
+        - Accurate token counting via ConversationTokenManager
+        - Smart context selection based on relevance to current query
+        - Automatic summarization when context exceeds limits
+        - Proper timeline-to-conversation-turn conversion
+        
+        Args:
+            format_style: How to format the context (conversational, technical, etc.)
+            max_tokens: Maximum tokens to include in context
+            query: Current query for relevance scoring (optional)
         """
-        from .context_scoring import ConversationTurn
+        from .context_scoring import ConversationTurn, advanced_context_scorer
+        from .token_counter import ConversationTokenManager
+        from .summarization import ContextSummarizationManager, SummaryConfig
         from datetime import datetime, timezone
         
-        # Convert inscribed blocks to conversation turns
+        # Initialize enhanced context management components
+        token_manager = ConversationTokenManager()
+        summary_config = SummaryConfig(
+            max_context_tokens=max_tokens,
+            summary_target_tokens=max_tokens // 4,  # 25% of available space for summaries
+            preserve_recent_turns=3  # Always keep last 3 turns
+        )
+        summarization_manager = ContextSummarizationManager(config=summary_config)
+        
+        # Convert timeline blocks to conversation turns with proper metadata
         turns = []
         for block in self.get_inscribed_blocks():
-            # Determine role from block metadata or content
-            role = "assistant" if hasattr(block, 'role') and block.role else "user"
+            # Enhanced role detection from block metadata
+            role = self._determine_block_role(block)
+            
+            # Get accurate token count using token manager
+            token_count = token_manager.token_counter.count_tokens(block.content)
+            actual_tokens = token_count.get('total_tokens', len(block.content.split()) * 1.3)
+            
+            # Create conversation turn with complete metadata
+            turn = ConversationTurn(
+                id=block.id,
+                content=block.content,
+                role=role,
+                timestamp=self._get_block_timestamp(block),
+                tokens=actual_tokens,
+                metadata={
+                    'block_type': 'inscribed',
+                    'original_metadata': getattr(block, 'metadata', {}),
+                    'wall_time_seconds': getattr(block, 'metadata', {}).get('wall_time_seconds'),
+                    'tokens_input': getattr(block, 'metadata', {}).get('tokens_input'),
+                    'tokens_output': getattr(block, 'metadata', {}).get('tokens_output')
+                }
+            )
+            turns.append(turn)
+        
+        # Handle empty timeline
+        if not turns:
+            return "--- No conversation history available ---"
+            
+        # Apply intelligent context selection and summarization
+        if len(turns) > 1:
+            # Check if summarization is needed
+            total_tokens = sum(turn.tokens for turn in turns)
+            if total_tokens > max_tokens:
+                # Process with summarization
+                remaining_turns, summaries = await summarization_manager.process_conversation_for_summarization(
+                    turns, force_summarize=True
+                )
+                selected_turns = remaining_turns
+                
+                # Log summarization for timeline audit
+                if summaries:
+                    audit_logger.log_performance_metric(
+                        block_id="timeline_context",
+                        operation_type=OperationType.MODIFICATION,
+                        metrics={
+                            'original_turns': len(turns),
+                            'summarized_turns': len(selected_turns),
+                            'summaries_generated': len(summaries),
+                            'compression_ratio': summaries[0].metadata.compression_ratio if summaries else 1.0
+                        }
+                    )
+            else:
+                # Use context scoring for optimal selection
+                query_text = query or "current conversation context"
+                selected_turns = advanced_context_scorer.get_optimal_context(
+                    turns,
+                    query_text,
+                    max_tokens=max_tokens
+                )
+        else:
+            selected_turns = turns
+            
+        # Apply enhanced formatting with timeline context
+        from .context_formatting import FormatSettings
+        settings = FormatSettings(
+            style=format_style,
+            include_metadata=True,
+            enable_summarization=True,
+            max_context_tokens=max_tokens,
+            summarization_config=summary_config
+        )
+        
+        formatted_result = await context_formatting_manager.format_context(
+            selected_turns, 
+            format_style,
+            settings
+        )
+        
+        # Update timeline metadata with context usage
+        self._update_context_usage_metadata(formatted_result)
+        
+        return formatted_result.formatted_text
+    
+    async def get_live_context(self, format_style: FormatStyle = FormatStyle.CONVERSATIONAL, 
+                             max_tokens: int = 2000, query: str = None) -> str:
+        """
+        Get formatted context from currently active live blocks.
+        
+        This provides context from ongoing conversations/work that hasn't been
+        inscribed yet, useful for real-time context during live interactions.
+        """
+        from .context_scoring import ConversationTurn
+        from .token_counter import ConversationTokenManager
+        from datetime import datetime, timezone
+        
+        # Initialize token manager for accurate counting
+        token_manager = ConversationTokenManager()
+        
+        # Convert live blocks to conversation turns
+        turns = []
+        for block in self.get_live_blocks():
+            # Only include blocks with meaningful content
+            if not block.content.strip():
+                continue
+                
+            role = self._determine_block_role(block)
+            
+            # Get accurate token count
+            token_count = token_manager.token_counter.count_tokens(block.content)
+            actual_tokens = token_count.get('total_tokens', len(block.content.split()) * 1.3)
             
             turn = ConversationTurn(
                 id=block.id,
                 content=block.content,
                 role=role,
                 timestamp=getattr(block, 'created_at', datetime.now(timezone.utc)),
-                tokens=len(block.content.split()) * 1.3  # Rough token estimate
+                tokens=actual_tokens,
+                metadata={
+                    'block_type': 'live',
+                    'progress': getattr(block.data, 'progress', 0.0),
+                    'is_simulating': getattr(block, '_is_simulating', False),
+                    'wall_time_seconds': getattr(block.data, 'wall_time_seconds', 0)
+                }
             )
             turns.append(turn)
         
-        # Apply formatting
         if not turns:
-            return "--- No conversation history ---"
-            
-        # Limit to recent turns that fit in token budget
-        from .context_scoring import advanced_context_scorer
-        if len(turns) > 1:
-            # Use context scoring to select optimal turns
+            return "--- No active live blocks ---"
+        
+        # Apply context selection if needed
+        if len(turns) > 1 and query:
+            from .context_scoring import advanced_context_scorer
             selected_turns = advanced_context_scorer.get_optimal_context(
-                turns,
-                "current conversation",  # Generic query for context
-                max_tokens=max_tokens
+                turns, query, max_tokens=max_tokens
             )
         else:
-            selected_turns = turns
-            
-        # Format the context with summarization support
+            # Keep all live turns but respect token limit
+            total_tokens = sum(turn.tokens for turn in turns)
+            if total_tokens > max_tokens:
+                # Take most recent turns that fit
+                selected_turns = []
+                current_tokens = 0
+                for turn in reversed(turns):
+                    if current_tokens + turn.tokens <= max_tokens:
+                        selected_turns.insert(0, turn)
+                        current_tokens += turn.tokens
+                    else:
+                        break
+            else:
+                selected_turns = turns
+        
+        # Format the live context
+        from .context_formatting import FormatSettings
+        settings = FormatSettings(
+            style=format_style,
+            include_metadata=True,
+            enable_summarization=False,  # Don't summarize live content
+            max_context_tokens=max_tokens
+        )
+        
         formatted_result = await context_formatting_manager.format_context(
-            selected_turns, 
-            format_style
+            selected_turns, format_style, settings
         )
         
         return formatted_result.formatted_text
+    
+    async def get_complete_context(self, format_style: FormatStyle = FormatStyle.CONVERSATIONAL,
+                                 max_tokens: int = 6000, query: str = None,
+                                 include_live: bool = True) -> str:
+        """
+        Get complete conversation context combining inscribed and live blocks.
+        
+        This provides the full timeline context, intelligently managed with
+        summarization and context scoring to fit within token limits.
+        """
+        # Allocate tokens between inscribed and live content
+        if include_live:
+            inscribed_tokens = int(max_tokens * 0.7)  # 70% for inscribed history
+            live_tokens = int(max_tokens * 0.3)       # 30% for live content
+        else:
+            inscribed_tokens = max_tokens
+            live_tokens = 0
+        
+        # Get inscribed context (historical conversation)
+        inscribed_context = await self.get_formatted_context(
+            format_style=format_style,
+            max_tokens=inscribed_tokens,
+            query=query
+        )
+        
+        # Get live context if requested
+        if include_live and live_tokens > 0:
+            live_context = await self.get_live_context(
+                format_style=format_style,
+                max_tokens=live_tokens,
+                query=query
+            )
+        else:
+            live_context = ""
+        
+        # Combine contexts with appropriate separators
+        if format_style == FormatStyle.TECHNICAL:
+            separator = "\n\n=== LIVE BLOCKS ===\n"
+        elif format_style == FormatStyle.STRUCTURED:
+            separator = "\n\n## Current Live Blocks\n"
+        else:  # CONVERSATIONAL
+            separator = "\n\n--- Current Activity ---\n"
+        
+        if live_context and not live_context.startswith("--- No active"):
+            complete_context = inscribed_context + separator + live_context
+        else:
+            complete_context = inscribed_context
+        
+        # Log complete context generation
+        audit_logger.log_performance_metric(
+            block_id="timeline_complete_context",
+            operation_type=OperationType.QUERY,
+            metrics={
+                'inscribed_length': len(inscribed_context),
+                'live_length': len(live_context),
+                'total_length': len(complete_context),
+                'format_style': format_style.value if hasattr(format_style, 'value') else str(format_style),
+                'token_allocation': f"{inscribed_tokens}/{live_tokens}",
+                'query_provided': bool(query)
+            }
+        )
+        
+        return complete_context
+    
+    def _determine_block_role(self, block) -> str:
+        """Enhanced role detection from block metadata"""
+        # Check explicit role field
+        if hasattr(block, 'role') and block.role:
+            return block.role
+            
+        # Check metadata for role hints
+        metadata = getattr(block, 'metadata', {})
+        if 'role' in metadata:
+            return metadata['role']
+            
+        # Heuristic based on content patterns
+        content = block.content.strip().lower()
+        if content.startswith(('hello', 'hi', 'help', 'how', 'what', 'why', 'when', 'where')):
+            return 'user'
+        elif content.startswith(('i can', 'let me', 'here\'s', 'to do this', 'the solution')):
+            return 'assistant'
+            
+        # Default fallback - alternate between user and assistant
+        # This could be enhanced with more sophisticated detection
+        return 'user'  # Conservative default
+    
+    def _get_block_timestamp(self, block) -> datetime:
+        """Get proper timestamp from block with fallbacks"""
+        # Try different timestamp fields
+        for attr in ['timestamp', 'created_at', 'inscribed_at']:
+            if hasattr(block, attr):
+                ts = getattr(block, attr)
+                if isinstance(ts, datetime):
+                    return ts
+                    
+        # Check metadata
+        metadata = getattr(block, 'metadata', {})
+        if 'created_at' in metadata:
+            try:
+                return datetime.fromisoformat(metadata['created_at'])
+            except (ValueError, TypeError):
+                pass
+                
+        # Fallback to current time
+        return datetime.now(timezone.utc)
+    
+    def _update_context_usage_metadata(self, formatted_result) -> None:
+        """Update timeline metadata with context usage statistics"""
+        try:
+            # Store context usage metrics in timeline metadata
+            # This helps track how context management is performing
+            usage_stats = {
+                'last_context_generation': datetime.now(timezone.utc).isoformat(),
+                'context_length': len(formatted_result.formatted_text),
+                'total_tokens': formatted_result.total_tokens,
+                'turns_included': formatted_result.turn_count,
+                'summaries_used': len(formatted_result.summaries_used) if hasattr(formatted_result, 'summaries_used') else 0
+            }
+            
+            # This could be stored in a timeline-level metadata store
+            # For now, we log it for audit purposes
+            audit_logger.log_performance_metric(
+                block_id="timeline_context_usage",
+                operation_type=OperationType.QUERY,
+                metrics=usage_stats
+            )
+        except Exception as e:
+            # Don't fail context generation due to metadata issues
+            print(f"Warning: Could not update context usage metadata: {e}")
 
     def add_sub_block(
         self, parent_id: str, role: str, content: str = ""
@@ -512,9 +888,10 @@ class UnifiedTimeline:
 
 
 class UnifiedTimelineManager:
-    """Manages multiple timeline instances and provides factory methods
-
-    This replaces LiveBlockManager but with clear ownership boundaries.
+    """Enhanced timeline manager with integrated context management capabilities
+    
+    This replaces LiveBlockManager with clear ownership boundaries and provides
+    a complete context management interface for the Sacred Timeline.
     """
 
     def __init__(self):
@@ -541,3 +918,82 @@ class UnifiedTimelineManager:
     def stop_all_simulations(self) -> None:
         """Stop all live simulations"""
         self.timeline.clear_all_live_blocks()
+    
+    # Enhanced Context Management Interface
+    
+    async def get_conversation_context(self, format_style: FormatStyle = FormatStyle.CONVERSATIONAL,
+                                     max_tokens: int = 4000, query: str = None) -> str:
+        """Get formatted conversation context with intelligent management"""
+        return await self.timeline.get_formatted_context(format_style, max_tokens, query)
+    
+    async def get_live_conversation_context(self, format_style: FormatStyle = FormatStyle.CONVERSATIONAL,
+                                          max_tokens: int = 2000, query: str = None) -> str:
+        """Get context from currently active live blocks"""
+        return await self.timeline.get_live_context(format_style, max_tokens, query)
+    
+    async def get_complete_conversation_context(self, format_style: FormatStyle = FormatStyle.CONVERSATIONAL,
+                                              max_tokens: int = 6000, query: str = None,
+                                              include_live: bool = True) -> str:
+        """Get complete conversation context combining all blocks"""
+        return await self.timeline.get_complete_context(format_style, max_tokens, query, include_live)
+    
+    def get_context_statistics(self) -> Dict[str, Any]:
+        """Get statistics about the current timeline and context state"""
+        inscribed_blocks = self.timeline.get_inscribed_blocks()
+        live_blocks = self.timeline.get_live_blocks()
+        
+        # Calculate content statistics
+        total_inscribed_content = sum(len(block.content) for block in inscribed_blocks)
+        total_live_content = sum(len(block.content) for block in live_blocks)
+        
+        return {
+            'total_blocks': len(self.timeline._blocks),
+            'inscribed_blocks': len(inscribed_blocks),
+            'live_blocks': len(live_blocks),
+            'total_inscribed_characters': total_inscribed_content,
+            'total_live_characters': total_live_content,
+            'estimated_inscribed_tokens': total_inscribed_content * 0.75,  # Rough estimate
+            'estimated_live_tokens': total_live_content * 0.75,
+            'blocks_ready_for_inscription': len(self.timeline.get_blocks_ready_for_inscription()),
+            'context_management_active': True
+        }
+    
+    async def optimize_timeline_context(self, target_tokens: int = 4000) -> Dict[str, Any]:
+        """Optimize timeline for better context management
+        
+        Returns summary of optimization actions taken.
+        """
+        optimization_results = {
+            'actions_taken': [],
+            'before_stats': self.get_context_statistics(),
+            'summarization_triggered': False,
+            'blocks_inscribed': 0
+        }
+        
+        # Check if we should inscribe ready blocks
+        ready_blocks = self.timeline.get_blocks_ready_for_inscription()
+        if ready_blocks:
+            for block_id in ready_blocks[:5]:  # Limit to 5 at a time
+                inscribed = await self.timeline.inscribe_block(block_id)
+                if inscribed:
+                    optimization_results['blocks_inscribed'] += 1
+                    optimization_results['actions_taken'].append(f'inscribed_block_{block_id}')
+        
+        # Check if we should trigger summarization
+        stats = self.get_context_statistics()
+        if stats['estimated_inscribed_tokens'] > target_tokens * 2:
+            # Trigger background summarization
+            await self.timeline._background_summarization()
+            optimization_results['summarization_triggered'] = True
+            optimization_results['actions_taken'].append('background_summarization')
+        
+        optimization_results['after_stats'] = self.get_context_statistics()
+        
+        # Log optimization results
+        audit_logger.log_performance_metric(
+            block_id="timeline_optimization",
+            operation_type=OperationType.MODIFICATION,
+            metrics=optimization_results
+        )
+        
+        return optimization_results

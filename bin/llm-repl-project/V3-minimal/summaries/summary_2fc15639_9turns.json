@@ -14,7 +14,7 @@
       "turn_7",
       "turn_8"
     ],
-    "created_at": "2025-07-13T06:55:39.192843",
+    "created_at": "2025-07-13T07:00:20.334215",
     "summary_type": "EXTRACTIVE",
     "trigger_reason": "MANUAL",
     "compression_ratio": 0.9725274725274725,
@@ -33,16 +33,16 @@
     "pandas"
   ],
   "important_entities": [
-    "Pandas",
     "Now",
+    "Can",
+    "They",
     "CSV",
+    "Python",
     "What",
     "List",
-    "Python",
-    "Can",
-    "This",
     "For",
-    "They"
+    "Pandas",
+    "This"
   ],
   "semantic_vectors": null
 }
