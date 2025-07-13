@@ -9,7 +9,7 @@
       "timeline_block_2",
       "timeline_block_3"
     ],
-    "created_at": "2025-07-13T07:32:22.445578",
+    "created_at": "2025-07-13T07:34:10.117659",
     "summary_type": "EXTRACTIVE",
     "trigger_reason": "MANUAL",
     "compression_ratio": 0.8394160583941606,
@@ -28,8 +28,8 @@
   ],
   "important_entities": [
     "What",
-    "JWT",
-    "Great"
+    "Great",
+    "JWT"
   ],
   "semantic_vectors": null
 }
