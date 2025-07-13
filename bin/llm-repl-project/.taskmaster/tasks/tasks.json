@@ -599,56 +599,57 @@
       {
         "id": 12,
         "title": "Implement Context Management",
-        "description": "Implement dynamic context pruning with recency and relevance filtering, real-time token counting, intelligent context formatting, and automated summarization.",
-        "details": "1. Implement recency and relevance scoring algorithms. 2. Implement token counting for input and output. 3. Develop context formatting logic. 4. Integrate summarization of older conversation turns.",
-        "testStrategy": "Verify context pruning effectiveness, token count accuracy, and summarization quality. Test with various conversation lengths.",
-        "priority": "high",
-        "dependencies": [],
+        "description": "Implement dynamic context management, including pruning, token counting, formatting, and summarization, critical for maintaining conversation coherence across multi-agent handoffs and ensuring the Sacred Timeline serves as the authoritative conversation record.",
         "status": "pending",
+        "dependencies": [],
+        "priority": "high",
+        "details": "Implement core context management components as outlined: 1. Implement recency and relevance scoring algorithms. 2. Implement real-time token counting for input and output. 3. Develop intelligent context formatting logic. 4. Integrate automated summarization of older conversation turns. This system is essential for the multi-agent architecture, enabling seamless agent handoffs and overcoming 'Context Window Limitations' and 'Repetitive Explanations' as described in the `productContext.md` vision document. It must ensure the Sacred Timeline remains the single source of truth for conversation history.",
+        "testStrategy": "Verify context pruning effectiveness, token count accuracy, context formatting, and summarization quality. Test with various conversation lengths and complexities, including scenarios involving agent handoffs. Ensure seamless integration with and accurate representation of the Sacred Timeline as the authoritative record.",
         "subtasks": [
           {
             "id": 1,
             "title": "Implement Recency and Relevance Scoring",
             "description": "Implement algorithms to score context turns based on recency and relevance to the current query. User story: As a user, I want the system to prioritize recent and relevant information in the context window to improve response accuracy.",
+            "status": "done",
             "dependencies": [],
-            "details": "Develop and test scoring functions that consider both the age of a context turn and its semantic similarity to the current user input. Ensure the scoring is efficient and scalable.",
-            "status": "pending",
+            "details": "Develop and test scoring functions that consider both the age of a context turn and its semantic similarity to the current user input. Ensure the scoring is efficient and scalable.\n<info added on 2025-07-13T10:19:22.704Z>\nIMPLEMENTATION COMPLETE: Built comprehensive context scoring system with recency and relevance algorithms. Delivered SimpleSimilarityCalculator, ContextScorer, and AdvancedContextScorer components. Implemented features include recency scoring with exponential decay (24hr half-life), semantic relevance using keyword overlap and frequency weighting, combined scoring with configurable weights (30% recency, 70% relevance), optimal context selection within token limits, conversation boundary detection and Q&A pair bonuses, and human-readable scoring explanations. Comprehensive testing was performed on programming help conversations, long conversations with intelligent context pruning, token limit enforcement with optimal selection, and recency vs relevance trade-offs. Created src/core/context_scoring.py (400+ lines) and tests/test_context_scoring.py (350+ lines). Ready for integration with Sacred Timeline context management.\n</info added on 2025-07-13T10:19:22.704Z>",
             "testStrategy": ""
           },
           {
             "id": 2,
             "title": "Implement Token Counting",
             "description": "Implement real-time token counting for both input and output text. User story: As a developer, I need accurate token counts to manage context window size and avoid exceeding API limits.",
+            "status": "done",
             "dependencies": [],
             "details": "Integrate a token counting library (e.g., tiktoken) to accurately measure the number of tokens in user inputs, system outputs, and context turns. Implement caching to improve performance.",
-            "status": "pending",
             "testStrategy": ""
           },
           {
             "id": 3,
             "title": "Develop Context Formatting Logic",
             "description": "Develop logic to format the context window for optimal model performance. User story: As a user, I want the system to present context in a clear and structured format to improve response quality.",
+            "status": "done",
             "dependencies": [],
             "details": "Design a context formatting strategy that includes separators, prefixes, and other formatting elements to help the model understand the relationships between different context turns. Experiment with different formats to optimize performance.",
-            "status": "pending",
             "testStrategy": ""
           },
           {
             "id": 4,
             "title": "Implement Summarization of Older Conversation Turns",
             "description": "Implement automated summarization of older conversation turns to reduce context window size. User story: As a user, I want the system to retain key information from past conversations without exceeding token limits.",
+            "status": "pending",
             "dependencies": [
               1,
               2
             ],
             "details": "Integrate a summarization model to automatically generate concise summaries of older context turns. Implement a mechanism to decide when to summarize based on token count and relevance scores.",
-            "status": "pending",
             "testStrategy": ""
           },
           {
             "id": 5,
             "title": "Integrate with the Timeline",
             "description": "Integrate the context management system with the existing timeline to preserve conversation history. User story: As a user, I want the system to seamlessly integrate with the timeline to maintain a consistent and complete record of my interactions.",
+            "status": "pending",
             "dependencies": [
               1,
               2,
@@ -656,13 +657,13 @@
               4
             ],
             "details": "Modify the context management system to store and retrieve context turns from the timeline. Ensure that the timeline is updated whenever the context window changes.",
-            "status": "pending",
             "testStrategy": ""
           },
           {
             "id": 6,
             "title": "Optimize Performance",
             "description": "Optimize the performance of the context management system to ensure real-time responsiveness. User story: As a user, I want the system to respond quickly even with a large context window.",
+            "status": "pending",
             "dependencies": [
               1,
               2,
@@ -671,7 +672,6 @@
               5
             ],
             "details": "Profile the context management system to identify performance bottlenecks. Implement caching, parallelization, and other optimization techniques to improve response time.",
-            "status": "pending",
             "testStrategy": ""
           }
         ]
@@ -679,66 +679,66 @@
       {
         "id": 13,
         "title": "Implement Streaming Live Output",
-        "description": "Enable real-time transparency through live data streaming for all block types, wall time, token usage, and intermediate response display, and smooth animation of blocks transitioning from live to inscribed.",
-        "details": "1. Implement live data streaming for blocks. 2. Display wall time, token usage, and intermediate responses. 3. Animate block transitions. 4. Integrate with Sacred Timeline for updates.",
-        "testStrategy": "Verify live data streaming, display accuracy, and animation smoothness. Test integration with the Sacred Timeline.",
-        "priority": "high",
+        "description": "Implement the 'Live Streaming and Transparency' pillar and 'Live Cognition Transparency' from the vision documents. This task focuses on making AI thinking visible in real-time within the Live Workspace by streaming live output, displaying cognition pipeline metrics (wall time, token usage), and intermediate responses, along with smooth animation of blocks transitioning from live to inscribed states.",
+        "status": "pending",
         "dependencies": [
           11
         ],
-        "status": "pending",
+        "priority": "high",
+        "details": "1. Implement live data streaming for blocks and cognition pipeline events. 2. Display real-time cognition pipeline metrics (wall time, token usage) and streaming intermediate responses. 3. Implement smooth animations for block transitions from live to inscribed. 4. Integrate live streaming data and block transitions with the Sacred Timeline for real-time updates and visualization of the cognition pipeline flow.",
+        "testStrategy": "Verify real-time streaming of block data and cognition pipeline metrics (wall time, token usage, intermediate responses). Test the accuracy and real-time nature of the displayed information. Verify the smoothness and correctness of block transition animations. Test the integration with the Sacred Timeline to ensure accurate representation of the live cognition pipeline and block states.",
         "subtasks": [
           {
             "id": 1,
             "title": "Implement Live Data Streaming Infrastructure",
-            "description": "Set up the backend infrastructure to stream live data for blocks, including wall time, token usage, and intermediate responses. Focus on testable components.",
-            "dependencies": [],
-            "details": "Establish a streaming pipeline using appropriate technologies (e.g., WebSockets, Server-Sent Events) to transmit real-time data from the backend to the frontend. Ensure the pipeline is robust and scalable.",
+            "description": "Set up the backend infrastructure to stream live data for blocks and cognition pipeline events, including wall time, token usage, and intermediate responses. Focus on testable components.",
             "status": "pending",
+            "dependencies": [],
+            "details": "Establish a streaming pipeline using appropriate technologies (e.g., WebSockets, Server-Sent Events) to transmit real-time data from the backend to the frontend. Ensure the pipeline is robust and scalable to support streaming cognition pipeline events and block data.",
             "testStrategy": ""
           },
           {
             "id": 2,
-            "title": "Display Real-Time Metrics",
-            "description": "Develop the UI components to display wall time, token usage, and intermediate responses in real-time. Provide clear visual feedback.",
+            "title": "Display Real-Time Metrics and Output",
+            "description": "Develop the UI components to display real-time cognition pipeline metrics (wall time, token usage) and streaming intermediate responses. Provide clear visual feedback within the Live Workspace.",
+            "status": "pending",
             "dependencies": [
               1
             ],
-            "details": "Create UI elements to display the streamed data. Implement mechanisms to update these elements dynamically as new data arrives. Ensure the display is user-friendly and informative.",
-            "status": "pending",
+            "details": "Create UI elements to display the streamed data, specifically focusing on wall time, token usage, and the evolving intermediate responses for each block. Implement mechanisms to update these elements dynamically as new data arrives. Ensure the display is user-friendly, informative, and clearly visualizes the AI's thinking process.",
             "testStrategy": ""
           },
           {
             "id": 3,
             "title": "Animate Block Transitions",
-            "description": "Implement smooth animations for blocks transitioning from live to inscribed states. Focus on visual appeal and performance.",
+            "description": "Implement smooth animations for blocks transitioning from live (streaming) to inscribed (finalized) states. Focus on visual appeal and performance.",
+            "status": "pending",
             "dependencies": [
               2
             ],
-            "details": "Design and implement animations that visually represent the transition of blocks from a live, actively streaming state to an inscribed, finalized state. Optimize animations for smooth performance.",
-            "status": "pending",
+            "details": "Design and implement animations that visually represent the transition of blocks from a live, actively streaming state to an inscribed, finalized state. This animation should provide clear visual cues about the block's current status. Optimize animations for smooth performance.",
             "testStrategy": ""
           },
           {
             "id": 4,
             "title": "Integrate with Sacred Timeline",
-            "description": "Integrate the live data streaming and block transitions with the Sacred Timeline for updates and synchronization.",
+            "description": "Integrate the live data streaming, cognition pipeline metrics, and block transitions with the Sacred Timeline for real-time updates and synchronization, visualizing the live cognition process.",
+            "status": "pending",
             "dependencies": [
               3
             ],
-            "details": "Ensure that the Sacred Timeline is updated in real-time with the latest data from the live stream and that block transitions are reflected accurately on the timeline. Implement mechanisms to synchronize the live data with the timeline's state.",
-            "status": "pending",
+            "details": "Ensure that the Sacred Timeline is updated in real-time with the latest data from the live stream, including cognition pipeline events and metrics. Block transitions should be reflected accurately on the timeline, providing a historical view of the live process. Implement mechanisms to synchronize the live data with the timeline's state.",
             "testStrategy": ""
           },
           {
             "id": 5,
             "title": "Handle Streaming Errors Gracefully",
-            "description": "Implement error handling mechanisms to gracefully manage streaming errors and provide informative feedback to the user.",
+            "description": "Implement error handling mechanisms to gracefully manage streaming errors and provide informative feedback to the user regarding the live process.",
+            "status": "pending",
             "dependencies": [
               1
             ],
-            "details": "Implement error detection and handling mechanisms to catch and manage potential errors during the streaming process. Provide informative error messages to the user and implement fallback strategies to maintain a stable user experience.",
-            "status": "pending",
+            "details": "Implement error detection and handling mechanisms to catch and manage potential errors during the streaming process of block data and cognition events. Provide informative error messages to the user and implement fallback strategies to maintain a stable user experience, even if the live stream is interrupted.",
             "testStrategy": ""
           }
         ]
@@ -1050,14 +1050,14 @@
       {
         "id": 22,
         "title": "Implement Sacred Timeline Persistence",
-        "description": "Implement full timeline preservation, session restoration, subset selection, and cross-session conversation threading.",
-        "details": "1. Implement timeline persistence. 2. Implement session restoration. 3. Implement subset selection. 4. Implement conversation threading.",
-        "testStrategy": "Verify timeline persistence, session restoration, subset selection, and conversation threading. Test with multiple sessions.",
-        "priority": "medium",
+        "description": "Implement the core Sacred Timeline persistence layer. This involves creating an append-only, immutable log of all actions, visualized as blocks, providing a transparent and trustworthy history as envisioned in the project brief (projectbrief.md). This task includes implementing full timeline preservation, session restoration based on the timeline, subset selection from the timeline, and cross-session conversation threading built upon the persistent timeline.",
+        "status": "pending",
         "dependencies": [
           11
         ],
-        "status": "pending",
+        "priority": "medium",
+        "details": "1. Design and implement the core append-only, immutable data structure for the Sacred Timeline.\n2. Implement mechanisms for persisting the Sacred Timeline data reliably.\n3. Implement session restoration logic that loads the timeline state from persistence.\n4. Implement functionality for selecting subsets of the timeline based on criteria (e.g., time range, conversation thread).\n5. Implement cross-session conversation threading by linking actions/blocks within the timeline.\n6. Ensure the implementation aligns with the 'Sacred Timeline' vision of transparency and immutability.",
+        "testStrategy": "Verify that the Sacred Timeline is strictly append-only and immutable. Test timeline persistence across application restarts. Verify session restoration correctly loads the previous timeline state. Test subset selection functionality with various criteria. Verify cross-session conversation threading is correctly maintained and retrievable from the timeline. Test with multiple sessions and complex conversation flows.",
         "subtasks": []
       },
       {
@@ -1517,7 +1517,7 @@
     ],
     "metadata": {
       "created": "2025-07-13T02:33:23.087Z",
-      "updated": "2025-07-13T09:24:08.520Z",
+      "updated": "2025-07-13T10:30:08.177Z",
       "description": "Tasks for master context"
     }
   }

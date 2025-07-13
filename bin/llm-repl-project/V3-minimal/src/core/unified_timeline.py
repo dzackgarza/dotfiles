@@ -17,6 +17,7 @@ from .wall_time_tracker import (
     complete_block_tracking,
 )
 from .block_audit_logger import audit_logger, OperationType
+from .context_formatting import context_formatting_manager, FormatStyle
 
 
 class TimelineEvent:
@@ -391,6 +392,55 @@ class UnifiedTimeline:
                 ready_block_ids.append(block.id)
         
         return ready_block_ids
+
+    def get_formatted_context(self, format_style: FormatStyle = FormatStyle.CONVERSATIONAL, max_tokens: int = 4000) -> str:
+        """
+        Get formatted conversation context from inscribed blocks.
+        
+        Uses the new context formatting system to present timeline history
+        in optimal format for AI model consumption.
+        """
+        from .context_scoring import ConversationTurn
+        from datetime import datetime, timezone
+        
+        # Convert inscribed blocks to conversation turns
+        turns = []
+        for block in self.get_inscribed_blocks():
+            # Determine role from block metadata or content
+            role = "assistant" if hasattr(block, 'role') and block.role else "user"
+            
+            turn = ConversationTurn(
+                id=block.id,
+                content=block.content,
+                role=role,
+                timestamp=getattr(block, 'created_at', datetime.now(timezone.utc)),
+                tokens=len(block.content.split()) * 1.3  # Rough token estimate
+            )
+            turns.append(turn)
+        
+        # Apply formatting
+        if not turns:
+            return "--- No conversation history ---"
+            
+        # Limit to recent turns that fit in token budget
+        from .context_scoring import advanced_context_scorer
+        if len(turns) > 1:
+            # Use context scoring to select optimal turns
+            selected_turns = advanced_context_scorer.get_optimal_context(
+                turns,
+                "current conversation",  # Generic query for context
+                max_tokens=max_tokens
+            )
+        else:
+            selected_turns = turns
+            
+        # Format the context
+        formatted_result = context_formatting_manager.format_context(
+            selected_turns, 
+            format_style
+        )
+        
+        return formatted_result.formatted_text
 
     def add_sub_block(
         self, parent_id: str, role: str, content: str = ""
