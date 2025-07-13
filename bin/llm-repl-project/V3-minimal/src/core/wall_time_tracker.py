@@ -12,6 +12,7 @@ from datetime import datetime
 from typing import Dict, Optional, List, Any
 from contextlib import contextmanager
 from .block_metadata import BlockMetadata, ProcessingStage
+from .block_audit_logger import audit_logger, OperationType
 
 
 @dataclass

@@ -471,6 +471,14 @@ Direct test execution bypasses:
             print("🤔 Complexity alert: Are you overengineering a simple feature?", file=sys.stderr)
             print("💡 Remember: This is a simple chat app, not NASA mission control", file=sys.stderr)
     
+    # Temporal grid transparency - just ask honest questions
+    if tool_name == 'Read':
+        file_path = tool_input.get('file_path', '')
+        if 'temporal_grid' in file_path:
+            print("📊 Reading temporal grid as proof of functionality...", file=sys.stderr)
+            print("🤔 Did you generate this grid yourself in this session?", file=sys.stderr)
+            print("⚡ Or are you referencing existing work as current proof?", file=sys.stderr)
+    
     # Direct challenges for code changes  
     if tool_name in ['Edit', 'Write', 'MultiEdit']:
         file_path = tool_input.get('file_path', '')

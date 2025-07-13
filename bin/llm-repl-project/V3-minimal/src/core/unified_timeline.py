@@ -16,6 +16,7 @@ from .wall_time_tracker import (
     time_block_stage,
     complete_block_tracking,
 )
+from .block_audit_logger import audit_logger, OperationType
 
 
 class TimelineEvent:
@@ -103,25 +104,92 @@ class UnifiedTimeline:
         The block is immediately added to the timeline in live state.
         UI can show it with live styling while it updates.
         """
-        # Time the block creation process
-        with time_block_stage("timeline_creation", "creation"):
-            block = LiveBlock(role, content)
+        # Start audit tracking for block creation
+        operation_id = audit_logger.start_operation(
+            block_id="pending",  # Will update once we have block ID
+            operation_type=OperationType.CREATION,
+            user_context=f"role={role}",
+            initial_content_length=len(content)
+        )
+        
+        try:
+            # Time the block creation process
+            with time_block_stage("timeline_creation", "creation"):
+                block = LiveBlock(role, content)
 
-            # Add to timeline immediately
-            self._blocks.append(block)
-            self._block_index[block.id] = block
+                # Update audit log with actual block ID
+                audit_logger.log_performance_metric(
+                    block_id=block.id,
+                    operation_type=OperationType.CREATION,
+                    metrics={"content_length": len(content)},
+                    operation_id=operation_id
+                )
 
-            # Set up callback to notify observers when block updates
-            block.add_update_callback(self._on_live_block_update)
+                # Add to timeline immediately
+                self._blocks.append(block)
+                self._block_index[block.id] = block
 
-        # Notify observers
-        self._notify_observers(BlockAdded(block))
+                # Set up callback to notify observers when block updates
+                block.add_update_callback(self._on_live_block_update)
 
-        return block
+            # Notify observers
+            self._notify_observers(BlockAdded(block))
+            
+            # Complete audit tracking
+            audit_logger.end_operation(
+                operation_id, 
+                success=True,
+                result_data={
+                    "block_id": block.id,
+                    "role": role,
+                    "content_length": len(content),
+                    "total_blocks": len(self._blocks)
+                }
+            )
+
+            return block
+            
+        except Exception as e:
+            # Log error in audit trail
+            audit_logger.log_error(
+                block_id="creation_failed",
+                operation_type=OperationType.CREATION,
+                message=f"Failed to create live block: {str(e)}",
+                exception=e,
+                operation_id=operation_id
+            )
+            audit_logger.end_operation(operation_id, success=False)
+            raise
 
     def _on_live_block_update(self, block: LiveBlock) -> None:
         """Handle live block updates"""
-        self._notify_observers(BlockUpdated(block))
+        # Log block modification
+        audit_logger.start_operation(
+            block_id=block.id,
+            operation_type=OperationType.MODIFICATION,
+            user_context="live_block_update"
+        )
+        
+        try:
+            self._notify_observers(BlockUpdated(block))
+            
+            # Log successful update
+            audit_logger.log_performance_metric(
+                block_id=block.id,
+                operation_type=OperationType.MODIFICATION,
+                metrics={
+                    "content_length": len(block.content),
+                    "observer_count": len(self._observers)
+                }
+            )
+            
+        except Exception as e:
+            audit_logger.log_error(
+                block_id=block.id,
+                operation_type=OperationType.MODIFICATION,
+                message=f"Failed to notify observers of block update: {str(e)}",
+                exception=e
+            )
 
     def get_block(self, block_id: str) -> Optional[Union[LiveBlock, InscribedBlock]]:
         """Get block by ID"""
@@ -156,13 +224,44 @@ class UnifiedTimeline:
         """
         from .block_state_transitions import transition_manager, ValidationError, InscriptionError
         
+        # Start audit tracking for inscription
+        operation_id = audit_logger.start_operation(
+            block_id=block_id,
+            operation_type=OperationType.STATE_TRANSITION,
+            user_context=f"inscribe_block(force={force})"
+        )
+        
         async with self._inscription_lock:
             # Find the live block
             live_block = self._block_index.get(block_id)
             if not live_block or not isinstance(live_block, LiveBlock):
+                audit_logger.log_error(
+                    block_id=block_id,
+                    operation_type=OperationType.STATE_TRANSITION,
+                    message=f"Block not found or not live: {block_id}",
+                    operation_id=operation_id
+                )
+                audit_logger.end_operation(operation_id, success=False)
                 return None
 
             try:
+                # Log pre-inscription state
+                audit_logger.log_integrity_check(
+                    block_id=block_id,
+                    check_results={
+                        "block_exists": True,
+                        "is_live": isinstance(live_block, LiveBlock),
+                        "has_content": bool(live_block.content),
+                        "in_timeline": block_id in self._block_index
+                    },
+                    data_snapshot={
+                        "content_length": len(live_block.content),
+                        "role": live_block.role,
+                        "state": str(live_block.state)
+                    },
+                    operation_id=operation_id
+                )
+                
                 # Use the new transition manager for safe inscription
                 inscribed_block = await transition_manager.transition_to_inscribed(
                     block=live_block,
@@ -171,6 +270,13 @@ class UnifiedTimeline:
                 )
                 
                 if not inscribed_block:
+                    audit_logger.log_error(
+                        block_id=block_id,
+                        operation_type=OperationType.STATE_TRANSITION,
+                        message="Transition manager failed to create inscribed block",
+                        operation_id=operation_id
+                    )
+                    audit_logger.end_operation(operation_id, success=False)
                     return None
 
                 # Atomic replacement in timeline
@@ -183,14 +289,54 @@ class UnifiedTimeline:
 
                 # Notify observers
                 self._notify_observers(BlockInscribed(inscribed_block, block_id))
+                
+                # Log successful inscription with final state
+                audit_logger.log_state_transition(
+                    block_id=block_id,
+                    from_state="LIVE",
+                    to_state="INSCRIBED",
+                    operation_id=operation_id,
+                    validation_results={
+                        "inscription_successful": True,
+                        "content_preserved": inscribed_block.content == live_block.content,
+                        "timeline_updated": inscribed_block.id in self._block_index
+                    }
+                )
+                
+                audit_logger.end_operation(
+                    operation_id,
+                    success=True,
+                    result_data={
+                        "inscribed_block_id": inscribed_block.id,
+                        "original_block_id": block_id,
+                        "content_length": len(inscribed_block.content),
+                        "timeline_position": self._blocks.index(inscribed_block)
+                    }
+                )
 
                 return inscribed_block
                 
             except (ValidationError, InscriptionError) as e:
+                audit_logger.log_error(
+                    block_id=block_id,
+                    operation_type=OperationType.STATE_TRANSITION,
+                    message=f"Validation/Inscription error: {str(e)}",
+                    exception=e,
+                    operation_id=operation_id
+                )
+                audit_logger.end_operation(operation_id, success=False)
                 print(f"Failed to inscribe block {block_id}: {e}")
                 # Block remains in live state
                 return None
             except Exception as e:
+                audit_logger.log_error(
+                    block_id=block_id,
+                    operation_type=OperationType.STATE_TRANSITION,
+                    message=f"Unexpected error during inscription: {str(e)}",
+                    exception=e,
+                    operation_id=operation_id
+                )
+                audit_logger.end_operation(operation_id, success=False)
                 print(f"Unexpected error inscribing block {block_id}: {e}")
                 return None
 
