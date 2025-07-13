@@ -324,12 +324,13 @@ class TestTDDWorkflow:
         story = manager.generate_story_for_task(task_id, task_title, user_prompt)
         assert story.story_status == "generated"
         
-        # Step 2: Run story test (mock the temporal grid creation)
-        with patch.object(manager, '_create_placeholder_temporal_grid') as mock_grid:
-            mock_grid.return_value = {
+        # Step 2: Run story test (mock the canonical pilot test)
+        with patch.object(manager, '_run_canonical_pilot_test') as mock_pilot:
+            mock_pilot.return_value = {
                 "success": True,
-                "message": "Mock temporal grid created",
-                "execution_time": 0.1
+                "message": "Mock canonical pilot test passed",
+                "execution_time": 0.1,
+                "temporal_grid_path": "/mock/path/to/grid.png"
             }
             
             result = manager.run_story_for_task(task_id)

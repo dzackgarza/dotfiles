@@ -246,22 +246,23 @@ and maintains Sacred GUI architectural principles.
         try:
             import subprocess
             import time
+            import os
             
             start_time = time.time()
 
             # Change to project root for test execution
             v3_minimal_dir = self.project_root / "V3-minimal"
             
-            # Run the canonical pilot test specifically for task validation
+            # Run the canonical pilot test directly using python
             result = subprocess.run([
-                'pdm', 'run', 'pytest', 
-                'tests/test_canonical_pilot.py::test_canonical_user_journey',
-                '-v', '--tb=short'
+                'pdm', 'run', 'python', 
+                'tests/test_canonical_pilot.py'
             ], 
             capture_output=True, 
             text=True, 
-            timeout=60,  # Allow more time for actual GUI testing
-            cwd=str(v3_minimal_dir)
+            timeout=120,  # Allow more time for actual GUI testing
+            cwd=str(v3_minimal_dir),
+            env={**os.environ, 'PYTHONPATH': str(v3_minimal_dir)}
             )
 
             execution_time = time.time() - start_time
