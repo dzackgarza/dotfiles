@@ -2490,5 +2490,58 @@
       "command": "git add -A && git commit -m \"chore: update logs and complete TDD tasks memory documentation\n\n- Add memory file documenting TDD enforcement completion\n- Update task status logs\n- All TDD tasks (47-52) now complete with temporal grid proof\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.ai/code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\"",
       "description": "Commit remaining changes"
     }
+  },
+  {
+    "session_id": "9b9a9f4d-8ea3-4466-b0c5-3ba1d427025f",
+    "transcript_path": "/home/dzack/.claude/projects/-home-dzack-dotfiles-bin-llm-repl-project/9b9a9f4d-8ea3-4466-b0c5-3ba1d427025f.jsonl",
+    "hook_event_name": "PreToolUse",
+    "tool_name": "Read",
+    "tool_input": {
+      "file_path": "/home/dzack/dotfiles/bin/llm-repl-project/CLAUDE.md",
+      "limit": 100
+    }
+  },
+  {
+    "session_id": "9b9a9f4d-8ea3-4466-b0c5-3ba1d427025f",
+    "transcript_path": "/home/dzack/.claude/projects/-home-dzack-dotfiles-bin-llm-repl-project/9b9a9f4d-8ea3-4466-b0c5-3ba1d427025f.jsonl",
+    "hook_event_name": "PreToolUse",
+    "tool_name": "Edit",
+    "tool_input": {
+      "file_path": "/home/dzack/dotfiles/bin/llm-repl-project/CLAUDE.md",
+      "old_string": "# Daily Development Workflow\ntask-master list                                   # Show all tasks with status\ntask-master next                                   # Get next available task to work on\ntask-master show <id>                             # View detailed task information (e.g., task-master show 1.2)\ntask-master set-status --id=<id> --status=done    # Mark task complete",
+      "new_string": "# Daily Development Workflow\ntask-master list                                   # Show all tasks with status\ntask-master next                                   # Get next available task to work on\ntask-master show <id>                             # View detailed task information (e.g., task-master show 1.2)\ntask-master set-status --id=<id> --status=done    # Mark task complete\n\n# TDD Workflow Commands (NEW)\n./scripts/task-master-generate-story --id=<id> --prompt=\"user interaction\"    # Generate user story for task\n./scripts/task-master-test-story --id=<id>                                   # Run story test & generate temporal grid\n./scripts/task-master-update-story --id=<id> --grid-path=<path>             # Update story with grid proof\n./scripts/task-master-validate-task --id=<id>                               # Validate task ready for completion\n./scripts/task-master-complete-with-story --id=<id>                         # Complete task with TDD validation"
+    }
+  },
+  {
+    "session_id": "9b9a9f4d-8ea3-4466-b0c5-3ba1d427025f",
+    "transcript_path": "/home/dzack/.claude/projects/-home-dzack-dotfiles-bin-llm-repl-project/9b9a9f4d-8ea3-4466-b0c5-3ba1d427025f.jsonl",
+    "hook_event_name": "PreToolUse",
+    "tool_name": "Read",
+    "tool_input": {
+      "file_path": "/home/dzack/dotfiles/bin/llm-repl-project/CLAUDE.md",
+      "offset": 400,
+      "limit": 100
+    }
+  },
+  {
+    "session_id": "9b9a9f4d-8ea3-4466-b0c5-3ba1d427025f",
+    "transcript_path": "/home/dzack/.claude/projects/-home-dzack-dotfiles-bin-llm-repl-project/9b9a9f4d-8ea3-4466-b0c5-3ba1d427025f.jsonl",
+    "hook_event_name": "PreToolUse",
+    "tool_name": "Edit",
+    "tool_input": {
+      "file_path": "/home/dzack/dotfiles/bin/llm-repl-project/CLAUDE.md",
+      "old_string": "### Research Mode\n\n- Add `--research` flag for research-based AI enhancement\n- Requires a research model API key like Perplexity (`PERPLEXITY_API_KEY`) in environment\n- Provides more informed task creation and updates\n- Recommended for complex technical tasks\n\n---\n\n_This guide ensures Claude Code has immediate access to Task Master's essential functionality for agentic development workflows._",
+      "new_string": "### Research Mode\n\n- Add `--research` flag for research-based AI enhancement\n- Requires a research model API key like Perplexity (`PERPLEXITY_API_KEY`) in environment\n- Provides more informed task creation and updates\n- Recommended for complex technical tasks\n\n## TDD Integration (NEW)\n\n### Test-Driven Development Workflow\n\nTask Master now integrates with Sacred GUI's user story framework for TDD enforcement:\n\n1. **Generate Story**: Create user story with 12-step validation flow\n   ```bash\n   ./scripts/task-master-generate-story --id=47 --prompt=\"User implements CLI command\"\n   ```\n\n2. **Test Story**: Run automated test and generate temporal grid proof\n   ```bash\n   ./scripts/task-master-test-story --id=47\n   ```\n\n3. **Update Story** (optional): Link temporal grid to story metadata\n   ```bash\n   ./scripts/task-master-update-story --id=47 --grid-path=<generated_path>\n   ```\n\n4. **Validate Task**: Check if task meets TDD requirements\n   ```bash\n   ./scripts/task-master-validate-task --id=47\n   ```\n\n5. **Complete with Story**: Mark task done with full TDD validation\n   ```bash\n   ./scripts/task-master-complete-with-story --id=47\n   ```\n\n### TDD Files\n\n- **Story Data**: `V3-minimal/.taskmaster/stories/task_stories.json`\n- **Temporal Grids**: `V3-minimal/debug_screenshots/task_*_temporal_grid_*.png`\n- **TDD Scripts**: `scripts/task-master-*` commands\n- **Core Implementation**: `V3-minimal/src/tdd_integration/`\n\n### TDD Requirements\n\nTasks marked with \"TDD REQUIREMENT\" in their details must:\n- Have a generated user story\n- Pass the 12-step Sacred GUI validation\n- Generate temporal grid visual proof\n- Be validated before marking as done\n\n### TDD CLI Path Resolution Fix\n\n**CRITICAL**: TDD CLI scripts require correct PROJECT_ROOT path resolution:\n\n```bash\n# Correct pattern for scripts in scripts/ subdirectory:\nSCRIPT_DIR=\"$(cd \"$(dirname \"${BASH_SOURCE[0]}\")\" && pwd)\"\nPROJECT_ROOT=\"$(cd \"$SCRIPT_DIR/..\" && pwd)\"\n```\n\n---\n\n_This guide ensures Claude Code has immediate access to Task Master's essential functionality for agentic development workflows._"
+    }
+  },
+  {
+    "session_id": "9b9a9f4d-8ea3-4466-b0c5-3ba1d427025f",
+    "transcript_path": "/home/dzack/.claude/projects/-home-dzack-dotfiles-bin-llm-repl-project/9b9a9f4d-8ea3-4466-b0c5-3ba1d427025f.jsonl",
+    "hook_event_name": "PreToolUse",
+    "tool_name": "Bash",
+    "tool_input": {
+      "command": "git add -A && git commit -m \"docs: update CLAUDE.md with TDD integration documentation\n\n- Add TDD workflow commands section\n- Document 5-step TDD process\n- Include file locations and requirements\n- Add critical path resolution fix note\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.ai/code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\"",
+      "description": "Commit documentation updates"
+    }
   }
 ]

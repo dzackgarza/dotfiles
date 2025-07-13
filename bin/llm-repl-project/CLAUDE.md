@@ -16,6 +16,13 @@ task-master next                                   # Get next available task to 
 task-master show <id>                             # View detailed task information (e.g., task-master show 1.2)
 task-master set-status --id=<id> --status=done    # Mark task complete
 
+# TDD Workflow Commands (NEW)
+./scripts/task-master-generate-story --id=<id> --prompt="user interaction"    # Generate user story for task
+./scripts/task-master-test-story --id=<id>                                   # Run story test & generate temporal grid
+./scripts/task-master-update-story --id=<id> --grid-path=<path>             # Update story with grid proof
+./scripts/task-master-validate-task --id=<id>                               # Validate task ready for completion
+./scripts/task-master-complete-with-story --id=<id>                         # Complete task with TDD validation
+
 # Task Management
 task-master add-task --prompt="description" --research        # Add new task with AI assistance
 task-master expand --id=<id> --research --force              # Break task into subtasks
@@ -429,6 +436,62 @@ These commands make AI calls and may take up to a minute:
 - Requires a research model API key like Perplexity (`PERPLEXITY_API_KEY`) in environment
 - Provides more informed task creation and updates
 - Recommended for complex technical tasks
+
+## TDD Integration (NEW)
+
+### Test-Driven Development Workflow
+
+Task Master now integrates with Sacred GUI's user story framework for TDD enforcement:
+
+1. **Generate Story**: Create user story with 12-step validation flow
+   ```bash
+   ./scripts/task-master-generate-story --id=47 --prompt="User implements CLI command"
+   ```
+
+2. **Test Story**: Run automated test and generate temporal grid proof
+   ```bash
+   ./scripts/task-master-test-story --id=47
+   ```
+
+3. **Update Story** (optional): Link temporal grid to story metadata
+   ```bash
+   ./scripts/task-master-update-story --id=47 --grid-path=<generated_path>
+   ```
+
+4. **Validate Task**: Check if task meets TDD requirements
+   ```bash
+   ./scripts/task-master-validate-task --id=47
+   ```
+
+5. **Complete with Story**: Mark task done with full TDD validation
+   ```bash
+   ./scripts/task-master-complete-with-story --id=47
+   ```
+
+### TDD Files
+
+- **Story Data**: `V3-minimal/.taskmaster/stories/task_stories.json`
+- **Temporal Grids**: `V3-minimal/debug_screenshots/task_*_temporal_grid_*.png`
+- **TDD Scripts**: `scripts/task-master-*` commands
+- **Core Implementation**: `V3-minimal/src/tdd_integration/`
+
+### TDD Requirements
+
+Tasks marked with "TDD REQUIREMENT" in their details must:
+- Have a generated user story
+- Pass the 12-step Sacred GUI validation
+- Generate temporal grid visual proof
+- Be validated before marking as done
+
+### TDD CLI Path Resolution Fix
+
+**CRITICAL**: TDD CLI scripts require correct PROJECT_ROOT path resolution:
+
+```bash
+# Correct pattern for scripts in scripts/ subdirectory:
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+```
 
 ---
 
