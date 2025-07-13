@@ -1,7 +1,4 @@
-#!/usr/bin/env -S uv run --script
-# /// script
-# requires-python = ">=3.8"
-# ///
+#!/usr/bin/env python3
 
 """
 PreToolUse Hook - Security Validation and Access Control
@@ -41,7 +38,39 @@ CURRENT IMPLEMENTATION: Uses method #1 (Exit Code 2 + stderr) for security block
 import json
 import sys
 import re
+import time
+import subprocess
 from pathlib import Path
+
+# ================================================================================
+# PROPORTIONALITY HELPERS
+# ================================================================================
+
+def get_task_duration():
+    """Get time in minutes since last commit (simple task duration estimate)"""
+    try:
+        result = subprocess.run(['git', 'log', '-1', '--format=%ct'], 
+                              capture_output=True, text=True, timeout=2)
+        if result.returncode == 0:
+            last_commit = int(result.stdout.strip())
+            return (time.time() - last_commit) / 60  # minutes
+    except:
+        pass
+    return 0
+
+def detect_overengineering_patterns(content):
+    """Detect patterns that suggest overengineering for simple tasks"""
+    if not content:
+        return False
+        
+    OVERENGINEERING_PATTERNS = [
+        'microsecond', 'nanosecond', 'high_precision', 'performance_critical',
+        'optimization', 'benchmark', 'profiling', 'async.*async.*async',
+        'sub_millisecond', 'ultra_precise', 'mission_critical'
+    ]
+    
+    content_lower = content.lower()
+    return any(pattern in content_lower for pattern in OVERENGINEERING_PATTERNS)
 
 # ================================================================================
 # EXTENSIBLE SECURITY VALIDATORS
@@ -395,6 +424,52 @@ You can't mark something done without proof. Use 'task-master complete-with-stor
         # Challenge notify-send claims
         if 'notify-send' in command:
             print("That's a bold claim...", file=sys.stderr)
+            
+        # Block ALL manual test execution methods - ALL testing must go through canonical pilot test framework
+        test_commands = [
+            'pytest',
+            'python tests/',
+            'python test/',
+            'pdm run pytest',
+            'pdm run python tests/',
+            'uv run pytest', 
+            'uv run python tests/',
+            'python -m pytest',
+            'python -c',           # Ban ALL python inlines
+            'pdm run python -c',   # Ban pdm python inlines  
+            'uv run python -c'     # Ban uv python inlines
+        ]
+        
+        for test_cmd in test_commands:
+            if test_cmd in command:
+                return True, """BLOCKED: Direct test execution bypasses TDD workflow.
+
+Instead use:
+• task-master-test-story --id=<task_id> (for story-based testing)
+• ./scripts/task-master-test-story --id=<task_id> (generates temporal grids)
+• Integration through canonical pilot test framework
+
+Direct test execution bypasses:
+- User story context and validation
+- Temporal grid generation for visual proof  
+- Integration with Sacred GUI canonical tests
+- Structured TDD workflow with proper evidence"""
+    
+    # PROPORTIONALITY CHECKS - Catch overengineering before it spirals
+    
+    # Time-based complexity check
+    task_time = get_task_duration()
+    if task_time > 60:  # More than 1 hour since last commit
+        print(f"⏰ Working on this for {task_time:.0f}+ minutes. Step back and simplify?", file=sys.stderr)
+        print("🎯 What does the user ACTUALLY want to see?", file=sys.stderr)
+        print("📏 Is this proportional to the original request?", file=sys.stderr)
+    
+    # Pattern-based overengineering detection for code changes
+    if tool_name in ['Edit', 'Write', 'MultiEdit']:
+        content = tool_input.get('new_string', '') or tool_input.get('content', '')
+        if detect_overengineering_patterns(content):
+            print("🤔 Complexity alert: Are you overengineering a simple feature?", file=sys.stderr)
+            print("💡 Remember: This is a simple chat app, not NASA mission control", file=sys.stderr)
     
     # Direct challenges for code changes  
     if tool_name in ['Edit', 'Write', 'MultiEdit']:
@@ -444,6 +519,7 @@ def main():
         
         tool_name = input_data.get('tool_name', '')
         tool_input = input_data.get('tool_input', {})
+        
         
         # Run all security validators
         is_blocked, reason = run_security_validation(tool_name, tool_input)

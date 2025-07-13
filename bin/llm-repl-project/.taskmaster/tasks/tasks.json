@@ -573,7 +573,7 @@
             "description": "Implement mechanisms to track wall time and token usage for each block. This includes recording the time spent processing each block and the number of tokens consumed. Implement APIs to query the wall time and token usage for a given block.",
             "dependencies": [],
             "details": "Track wall time and token usage per block, including recording time spent and tokens consumed.\n<info added on 2025-07-13T04:03:17.286Z>\nCapture the following metrics for each block:\n1.  Total wall time (start to completion).\n2.  Processing time breakdown by stage.\n3.  Input tokens consumed.\n4.  Output tokens generated.\n5.  Cost estimate (if available).\n\nAccuracy should be to millisecond precision, and the tracking mechanism must handle concurrent operations without interference.\n</info added on 2025-07-13T04:03:17.286Z>",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Verify that wall time and token usage are accurately tracked for each block. Create unit tests to validate the tracking mechanisms. Test with different block sizes and processing complexities."
           },
           {
@@ -582,7 +582,7 @@
             "description": "Implement the logic for transitioning blocks between 'live' and 'inscribed' states. This includes defining the conditions for state transitions and implementing the necessary code to update the block's state. The state transition logic should handle error conditions and ensure data consistency.",
             "dependencies": [],
             "details": "Implement state transition logic between 'live' and 'inscribed' states, including conditions and error handling.\n<info added on 2025-07-13T04:03:28.041Z>\nAs a user interacting with the timeline, I want to see blocks smoothly transition from 'live' (showing real-time updates) to 'inscribed' (permanent, historical) states with clear visual feedback. When a conversation turn completes processing, I should see: 1) Visual indication of state change (color, styling), 2) Final metrics locked in, 3) Block moves from staging area to permanent timeline, 4) No loss of data during transition, 5) Ability to retry failed transitions. The system should handle edge cases like interrupted processing, network failures, or partial completions gracefully.\n</info added on 2025-07-13T04:03:28.041Z>",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verify that blocks transition correctly between states. Create user stories to demonstrate the state transitions. Test with different scenarios, including error conditions and edge cases."
           },
           {
@@ -1459,11 +1459,65 @@
         ],
         "status": "done",
         "subtasks": []
+      },
+      {
+        "id": 53,
+        "title": "Implement Sequential Sub-Module Display with Animated Token Counts and Timers",
+        "description": "Refine the sequential processing display. Sub-modules should appear one at a time, and their associated wall time timers (already functional) and animated token counts should start only when that specific sub-module begins processing, stopping when it completes. This creates the core Sacred Timeline user experience.",
+        "status": "pending",
+        "dependencies": [
+          29
+        ],
+        "priority": "medium",
+        "details": "1. Modify the UI rendering logic to display sub-modules sequentially, ensuring only one is 'active' or visible at a time during its processing phase.\n2. Integrate with the processing flow to trigger the start of a sub-module's wall time timer (from Task 11.3) precisely when that sub-module begins processing.\n3. Implement animation for the token counts for the currently active sub-module, animating from 0/0 to the final X/Y values during its processing.\n4. Stop the wall time timer and freeze the display of the sub-module's final state (timer value, token counts) when its processing completes.\n5. Ensure smooth transitions and sequencing between the completion of one sub-module and the start of the next.\n6. Integrate animation timing with the AnimationClock system for consistent visual updates.\n7. Consider using CSS animations or JavaScript animation libraries for the animated token counts.",
+        "testStrategy": "1. Verify that sub-modules appear and become active one at a time in the correct sequence.\n2. Confirm that each sub-module's wall time timer starts only when that specific sub-module begins processing.\n3. Confirm that each sub-module's wall time timer stops precisely when that sub-module completes processing.\n4. Check that the token counts animate correctly from 0/0 to the final values for the active sub-module.\n5. Ensure that the display (timer, token counts) freezes correctly when a sub-module completes.\n6. Test with different numbers of sub-modules and varying processing times to ensure correct sequential behavior.\n7. Verify consistent animation timing and sequential display across different browsers and devices.",
+        "subtasks": []
+      },
+      {
+        "id": 54,
+        "title": "Implement Sub-Module Visual Redesign with Block Widgets",
+        "description": "Implement a visual redesign of sub-modules, converting existing floating text elements into block-style widgets with clear boundaries. Integrate the existing timer and token counter functionalities into these new block widgets, focusing on visual styling and presentation to improve clarity and user experience.",
+        "status": "pending",
+        "dependencies": [],
+        "priority": "medium",
+        "details": "1. Convert existing floating text elements used for sub-modules into distinct block-style widgets.\n2. Design and implement clear visual boundaries and styling for each sub-module block.\n3. Integrate the existing timer display functionality (from Task 11.3) into the new sub-module block widgets, ensuring correct positioning and styling within the block.\n4. Integrate the existing token counter display functionality (from Task 11.3) into the new sub-module block widgets, implementing or styling token counter animations as required by the design.\n5. Ensure the new block widget design is responsive and adapts correctly to different screen sizes.\n6. Refactor relevant existing code to integrate seamlessly with the new block widget UI components.",
+        "testStrategy": "1. Verify that all sub-modules are rendered as distinct block widgets with clear visual boundaries and styling.\n2. Verify that the integrated timer displays are visible within their respective blocks and continue to display time accurately.\n3. Verify that the integrated token counter displays are visible within their respective blocks and that token counter animations (if applicable) are smooth and visually informative.\n4. Test the sub-module block UI on various screen sizes and orientations to ensure responsiveness.\n5. Conduct user testing to gather feedback on the clarity, usability, and overall visual appeal of the new block widget design.",
+        "subtasks": []
+      },
+      {
+        "id": 55,
+        "title": "Fix Scrolling Glitches in Live Workspace",
+        "description": "Address scrolling glitches in the live workspace to ensure smooth and seamless user experience during sub-module processing. The scrolling should be fluid and responsive, allowing users to easily follow the AI's thinking process without visual interruptions.",
+        "details": "1. Analyze the current scrolling implementation in the Live Workspace to identify the root cause of the glitches.\n2. Implement a debouncing or throttling mechanism to limit the frequency of scroll updates, preventing excessive rendering.\n3. Optimize the rendering of `SubModuleWidget` to improve performance during scrolling.\n4. Investigate and resolve any layout issues that may be causing the glitches when new sub-modules appear.\n5. Implement virtual scrolling or similar techniques to render only the visible portion of the workspace, reducing the rendering overhead.\n6. Ensure that the scrolling behavior is consistent across different browsers and devices.\n7. Profile the scrolling performance using browser developer tools to identify and address any performance bottlenecks.\n8. Consider using CSS transitions or animations to smooth out the scrolling experience.",
+        "testStrategy": "1. Manually test the scrolling behavior in the Live Workspace with various sub-module configurations.\n2. Verify that the scrolling is smooth and glitch-free, even when new sub-modules appear and process.\n3. Test the scrolling performance on different browsers and devices to ensure consistency.\n4. Use browser developer tools to measure the frame rate and identify any performance issues during scrolling.\n5. Conduct user testing to gather feedback on the scrolling experience and identify any remaining issues.\n6. Test with different screen sizes and resolutions to ensure the scrolling remains smooth and responsive.\n7. Verify that the scrolling behavior is consistent with the expected user experience.",
+        "status": "pending",
+        "dependencies": [
+          10,
+          53,
+          54
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 56,
+        "title": "Develop User Stories and Canonical Tests for Sequential AI Processing Display",
+        "description": "Create user stories and canonical tests for the sequential AI processing display, ensuring the user experience is well-defined and validated with sub-second precision.",
+        "details": "1.  Develop user stories that capture the expected behavior of the sequential AI processing display, including the step-by-step appearance of sub-modules, animated token counts, and timers.  These stories should cover scenarios such as initial loading, processing states, completion states, and error handling.\n2.  Write canonical tests to validate the sequential processing experience. These tests should use screenshot comparisons with sub-second precision to ensure that the animations, timers, and sub-module displays are rendered correctly at specific points in time.\n3.  Incorporate tests for different screen sizes and resolutions to ensure responsiveness.\n4.  Include tests for edge cases, such as very short or very long processing times, and error conditions.\n5.  Document the user stories and tests in a clear and organized manner, linking them to the relevant code modules.",
+        "testStrategy": "1.  Execute the canonical tests and verify that all screenshot comparisons pass with the specified precision.\n2.  Manually review the user stories to ensure they accurately reflect the expected behavior of the sequential AI processing display.\n3.  Perform manual testing of the UI to ensure that the animations, timers, and sub-module displays are visually appealing and informative.\n4.  Test the application on different devices and screen sizes to ensure responsiveness.\n5.  Introduce artificial delays and errors to test the handling of edge cases and error conditions.",
+        "status": "pending",
+        "dependencies": [
+          3,
+          10,
+          53
+        ],
+        "priority": "medium",
+        "subtasks": []
       }
     ],
     "metadata": {
       "created": "2025-07-13T02:33:23.087Z",
-      "updated": "2025-07-13T06:14:49.850Z",
+      "updated": "2025-07-13T08:43:04.802Z",
       "description": "Tasks for master context"
     }
   }

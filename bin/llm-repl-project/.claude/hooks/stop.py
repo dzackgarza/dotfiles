@@ -1,10 +1,4 @@
-#!/usr/bin/env -S uv run --script
-# /// script
-# requires-python = ">=3.11"
-# dependencies = [
-#     "python-dotenv",
-# ]
-# ///
+#!/usr/bin/env python3
 
 """
 Stop Hook - Session Completion and Continuation Control
@@ -89,7 +83,7 @@ def get_llm_completion_message():
         if groq_script.exists():
             try:
                 result = subprocess.run([
-                    "uv", "run", str(groq_script), "--completion"
+                    "pdm", "run", "python", str(groq_script), "--completion"
                 ], 
                 capture_output=True,
                 text=True,
@@ -106,7 +100,7 @@ def get_llm_completion_message():
         if gemini_script.exists():
             try:
                 result = subprocess.run([
-                    "uv", "run", str(gemini_script), "--completion"
+                    "pdm", "run", "python", str(gemini_script), "--completion"
                 ], 
                 capture_output=True,
                 text=True,
@@ -149,7 +143,7 @@ def check_tests_passing():
         else:
             # No V3-minimal tests directory, check current directory
             if Path("tests").exists():
-                result = subprocess.run(['pytest', 'tests', '--tb=short'], 
+                result = subprocess.run(['pdm', 'run', 'pytest', 'tests', '--tb=short'], 
                                       capture_output=True, text=True, timeout=30)
                 if result.returncode == 0:
                     return True, ""

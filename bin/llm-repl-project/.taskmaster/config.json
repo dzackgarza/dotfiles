@@ -2,7 +2,7 @@
   "models": {
     "main": {
       "provider": "google",
-      "modelId": "gemini-2.0-flash",
+      "modelId": "gemini-2.5-flash-preview-04-17",
       "maxTokens": 1048000,
       "temperature": 0.2
     },

@@ -493,6 +493,37 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 ```
 
+## Code Quality Standards
+
+### Error Handling
+
+**NEVER fail silently** - All errors must be surfaced and handled explicitly:
+
+```python
+# WRONG - Silent failure
+try:
+    subprocess.run(['notify-send', 'message'])
+except:
+    pass  # Silent failure hides problems
+
+# CORRECT - Explicit error handling
+try:
+    result = subprocess.run(['notify-send', 'message'], 
+                          capture_output=True, text=True, timeout=5)
+    if result.returncode != 0:
+        print(f"Warning: notify-send failed: {result.stderr}", file=sys.stderr)
+except subprocess.TimeoutExpired:
+    print("Warning: notify-send timed out", file=sys.stderr)
+except FileNotFoundError:
+    print("Warning: notify-send not found - install libnotify-bin", file=sys.stderr)
+except Exception as e:
+    print(f"Warning: notify-send error: {e}", file=sys.stderr)
+```
+
+**Rationale**: Silent failures mask real problems and make debugging impossible. Users need to know when systems aren't working properly.
+
+**Enforcement**: This is a permanent project standard. Any code that uses `except: pass` or similar silent failure patterns will be rejected.
+
 ---
 
 _This guide ensures Claude Code has immediate access to Task Master's essential functionality for agentic development workflows._

@@ -23,7 +23,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "uv run /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/pre_tool_use.py"
+            "command": "/home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/pre_tool_use.py"
           }
         ]
       }
@@ -34,7 +34,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "uv run /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/post_tool_use.py"
+            "command": "/home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/post_tool_use.py"
           }
         ]
       },
@@ -74,7 +74,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "uv run /home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/stop.py --chat"
+            "command": "/home/dzack/dotfiles/bin/llm-repl-project/.claude/hooks/stop.py --chat --loop"
           }
         ]
       }
