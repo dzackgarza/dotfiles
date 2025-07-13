@@ -1,0 +1,140 @@
+#!/bin/bash
+
+# Task Master test-story command wrapper
+# Runs user story tests for TDD validation
+
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$SCRIPT_DIR"
+
+# Default values
+TASK_ID=""
+HELP=false
+
+# Function to display help
+show_help() {
+    cat << EOF
+Task Master test-story Command
+
+Run user story test for test-driven development validation.
+
+Usage:
+    task-master-test-story --id=<task_id>
+
+Options:
+    --id=<task_id>      Task ID to test story for (required)
+    --help              Show this help message
+
+Examples:
+    task-master-test-story --id=47
+
+Description:
+    This command runs the user story test for a task and generates:
+    1. 12-step temporal grid showing user interaction flow
+    2. Visual proof of Sacred GUI behavior
+    3. Validation that the task implementation works from user perspective
+
+Prerequisites:
+    - User story must exist (run task-master-generate-story first)
+    - Task functionality should be implemented
+    - Sacred GUI application should be functional
+
+Output:
+    - Temporal grid image in V3-minimal/debug_screenshots/
+    - Updated story status in .taskmaster/stories/task_stories.json
+    - Test execution metadata and results
+
+EOF
+}
+
+# Parse command line arguments
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --id=*)
+            TASK_ID="${1#*=}"
+            shift
+            ;;
+        --help)
+            HELP=true
+            shift
+            ;;
+        *)
+            echo "Unknown option: $1"
+            echo "Use --help for usage information"
+            exit 1
+            ;;
+    esac
+done
+
+# Show help if requested
+if [ "$HELP" = true ]; then
+    show_help
+    exit 0
+fi
+
+# Validate required arguments
+if [ -z "$TASK_ID" ]; then
+    echo "Error: --id parameter is required"
+    echo "Use --help for usage information"
+    exit 1
+fi
+
+# Check if we're in a Task Master project
+if [ ! -f "$PROJECT_ROOT/.taskmaster/config.json" ]; then
+    echo "Error: Not in a Task Master project directory"
+    echo "Run 'task-master init' first"
+    exit 1
+fi
+
+# Check if TDD integration exists
+TDD_COMMANDS="$PROJECT_ROOT/V3-minimal/src/tdd_integration/tdd_commands.py"
+if [ ! -f "$TDD_COMMANDS" ]; then
+    echo "Error: TDD integration not found at $TDD_COMMANDS"
+    echo "Ensure the TDD integration system is properly installed"
+    exit 1
+fi
+
+# Check if Python/PDM is available
+if ! command -v pdm &> /dev/null; then
+    echo "Warning: PDM not found, falling back to python3"
+    PYTHON_CMD="python3"
+else
+    PYTHON_CMD="pdm run python"
+fi
+
+echo "🧪 Running user story test for Task $TASK_ID..."
+
+# Change to V3-minimal directory for execution
+cd "$PROJECT_ROOT/V3-minimal"
+
+# Execute the TDD command
+echo "⚙️  Executing: $PYTHON_CMD $TDD_COMMANDS test-story --id=$TASK_ID"
+echo ""
+
+$PYTHON_CMD "$TDD_COMMANDS" test-story --id="$TASK_ID"
+
+# Check the exit code
+if [ $? -eq 0 ]; then
+    echo ""
+    echo "✅ User story test completed!"
+    echo ""
+    echo "Next steps:"
+    echo "1. Review the generated temporal grid image"
+    echo "2. Verify all 12 steps show expected behavior"
+    echo "3. Run: task-master-validate-task --id=$TASK_ID"
+    echo "4. If valid: task-master-complete-with-story --id=$TASK_ID"
+    echo ""
+    echo "📁 Test results in: .taskmaster/stories/task_stories.json"
+    echo "🖼️  Temporal grid in: V3-minimal/debug_screenshots/"
+else
+    echo ""
+    echo "❌ User story test failed"
+    echo "Check the error messages above for details"
+    echo ""
+    echo "Troubleshooting:"
+    echo "1. Ensure user story exists: task-master-generate-story --id=$TASK_ID"
+    echo "2. Check that task functionality is implemented"
+    echo "3. Verify Sacred GUI application works correctly"
+    exit 1
+fi
