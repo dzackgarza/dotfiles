@@ -256,29 +256,32 @@ def main():
                 except Exception as e:
                     logger.log_error(f"Failed to export chat transcript: {str(e)}", {"transcript_path": transcript_path})
 
-        # GUIDANCE: Always provide completion guidance to Claude
+        # GUIDANCE: Only block completion if loop mode is active and checks fail
         guidance_messages = []
         
-        # Add any loop mode failure messages if they exist
+        # Check loop mode conditions
         if args.loop:
             should_continue, failure_reasons = run_loop_mode_checks()
             if should_continue and failure_reasons:
+                # Only in loop mode with failures do we block completion
                 guidance_messages.extend([f"• {reason}" for reason in failure_reasons])
+                guidance_messages.append("• Fix these issues before stopping")
+                
+                full_message = "Cannot stop - loop mode violations:\n" + "\n".join(guidance_messages)
+                print(full_message, file=sys.stderr)
+                sys.exit(2)  # Block stopping only for loop mode failures
         
-        # Always add Task Master and notify-send guidance
-        guidance_messages.append("• Check for next Task Master task: run 'task-master next' to see if there are more tasks to work on")
-        guidance_messages.append("• Update CLAUDE.md with any new instructions or patterns for future agents")
-        guidance_messages.append("• Synthesize lessons learned into a new file in .ai/memories/ directory")
-        guidance_messages.append("• Follow proper git protocols: commit changes, create branches for features, tag releases, merge appropriately")
-        guidance_messages.append("• If you are truly done with your work, use notify-send to inform the user of what was accomplished")
-        guidance_messages.append("  Example: notify-send \"Claude Session Complete\" \"Successfully implemented user authentication. All tests passing.\"")
-        guidance_messages.append("• Otherwise, continue working on remaining tasks")
+        # For normal completion, just provide final reminders without blocking
+        final_reminders = []
+        final_reminders.append("• Remember to update CLAUDE.md if you discovered new patterns")
+        final_reminders.append("• Use notify-send to inform the user of completion")
+        final_reminders.append("  Example: notify-send \"Claude Session Complete\" \"Task completed successfully.\"")
         
-        # Send all guidance to Claude
-        if guidance_messages:
-            full_message = "Session completion guidance:\n" + "\n".join(guidance_messages)
-            print(full_message, file=sys.stderr)
-            sys.exit(2)  # Block stopping, provide guidance
+        if final_reminders:
+            print("Final reminders:\n" + "\n".join(final_reminders), file=sys.stderr)
+        
+        # Allow normal completion
+        # Do NOT suggest continuing with more tasks or exit with code 2
 
         # Generate completion summary (but don't announce via TTS)
         completion_summary = get_llm_completion_message()

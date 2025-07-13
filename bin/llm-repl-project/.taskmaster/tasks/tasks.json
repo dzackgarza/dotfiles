@@ -547,7 +547,7 @@
         "testStrategy": "Verify block state transitions, time tracking, and token usage accuracy. Test data transparency.",
         "priority": "high",
         "dependencies": [],
-        "status": "pending",
+        "status": "in-progress",
         "subtasks": [
           {
             "id": 1,
@@ -564,7 +564,7 @@
             "description": "Implement a staging area to hold 'live' blocks before they are inscribed. This includes mechanisms for adding, retrieving, and managing blocks in the staging area. The staging area should support operations like adding new blocks, retrieving blocks for processing, and removing blocks after inscription.",
             "dependencies": [],
             "details": "Implement staging area for live blocks, including adding, retrieving, and managing blocks.\n<info added on 2025-07-13T04:02:59.065Z>\nAs a developer, when I add a new conversation turn to the timeline, I want the system to hold it in a staging area as a 'live' block that shows real-time updates (processing status, token consumption, timing) before it gets permanently inscribed to the timeline. The staging area should be visible to users and show: 1) Block content preview, 2) Current processing stage, 3) Real-time token count, 4) Wall time elapsed. Users should be able to see multiple live blocks if multiple operations are running concurrently.\n</info added on 2025-07-13T04:02:59.065Z>",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verify that the staging area correctly manages live blocks. Create user stories to demonstrate the addition, retrieval, and removal of blocks from the staging area. Test concurrency and error handling."
           },
           {
@@ -573,7 +573,7 @@
             "description": "Implement mechanisms to track wall time and token usage for each block. This includes recording the time spent processing each block and the number of tokens consumed. Implement APIs to query the wall time and token usage for a given block.",
             "dependencies": [],
             "details": "Track wall time and token usage per block, including recording time spent and tokens consumed.\n<info added on 2025-07-13T04:03:17.286Z>\nCapture the following metrics for each block:\n1.  Total wall time (start to completion).\n2.  Processing time breakdown by stage.\n3.  Input tokens consumed.\n4.  Output tokens generated.\n5.  Cost estimate (if available).\n\nAccuracy should be to millisecond precision, and the tracking mechanism must handle concurrent operations without interference.\n</info added on 2025-07-13T04:03:17.286Z>",
-            "status": "pending",
+            "status": "in-progress",
             "testStrategy": "Verify that wall time and token usage are accurately tracked for each block. Create unit tests to validate the tracking mechanisms. Test with different block sizes and processing complexities."
           },
           {
@@ -1463,7 +1463,7 @@
     ],
     "metadata": {
       "created": "2025-07-13T02:33:23.087Z",
-      "updated": "2025-07-13T06:04:21.190Z",
+      "updated": "2025-07-13T06:14:49.850Z",
       "description": "Tasks for master context"
     }
   }
