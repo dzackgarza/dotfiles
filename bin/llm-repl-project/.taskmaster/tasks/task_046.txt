@@ -1,0 +1,13 @@
+# Task ID: 46
+# Title: Extend Task Structure with User Story Metadata
+# Status: done
+# Dependencies: 45
+# Priority: high
+# Description: Extend the Task Master task structure to include user story metadata as specified in the PRD.
+# Details:
+1.  Modify the Task data structure to include the `userStory` field with `storyId`, `title`, `description`, `acceptanceCriteria`, and `temporalGridPath`.
+2.  Update the Task Master database schema to accommodate the new fields.
+3.  Ensure that the existing task management functionality is not affected by the changes.
+
+# Test Strategy:
+Create new tasks with user story metadata and verify that the data is stored correctly in the database. Retrieve the tasks and ensure that the user story metadata is displayed correctly.

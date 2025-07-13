@@ -1,0 +1,14 @@
+# Task ID: 48
+# Title: Implement 'test-story' Command
+# Status: done
+# Dependencies: 46, 47
+# Priority: medium
+# Description: Implement the `task-master test-story` command to run user stories for specific tasks and generate temporal grids.
+# Details:
+1.  Create a new command `test-story` in the Task Master CLI.
+2.  Implement the command logic to run the user story associated with the specified task ID.
+3.  Integrate with the existing Sacred GUI user story framework to execute the user story and generate a temporal grid.
+4.  Store the generated temporal grid in the specified location (e.g., `debug_screenshots/task_X_grid.png`).
+
+# Test Strategy:
+Run the `task-master test-story` command with different task IDs. Verify that the user stories are executed correctly and that the temporal grids are generated and stored in the specified locations.

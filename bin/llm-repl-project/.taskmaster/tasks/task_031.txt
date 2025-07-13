@@ -1,0 +1,17 @@
+# Task ID: 31
+# Title: Fix Scroll Stealing Issues
+# Status: pending
+# Dependencies: 26, 27, 28
+# Priority: medium
+# Description: Separate progress callbacks from content update callbacks, implement smart auto-scroll, and eliminate timing-based hacks.
+# Details:
+1.  Separate progress callbacks from content update callbacks.
+2.  Implement smart auto-scroll that respects user navigation intent.
+3.  Ensure smooth animations without scroll position interference.
+4.  Eliminate timing-based hacks and workarounds.
+5.  Preserve user's timeline review capability during live updates.
+
+# Test Strategy:
+1.  Manual testing to ensure that auto-scroll respects user navigation intent.
+2.  Integration tests to verify that scroll position is not interfered with during live updates.
+3.  Verify that user's timeline review capability is preserved during live updates.

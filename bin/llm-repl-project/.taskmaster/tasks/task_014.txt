@@ -1,0 +1,11 @@
+# Task ID: 14
+# Title: Implement Event-Driven Communication
+# Status: pending
+# Dependencies: None
+# Priority: medium
+# Description: Establish decoupled plugin-UI communication via an async event system for live updates, Timeline manager integration, responsive UI updates, and plugin isolation.
+# Details:
+1. Implement async event system. 2. Integrate with Timeline manager. 3. Ensure responsive UI updates. 4. Enforce plugin isolation.
+
+# Test Strategy:
+Verify event system functionality, UI responsiveness, and plugin isolation. Test with multiple plugins.

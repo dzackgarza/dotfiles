@@ -1,0 +1,17 @@
+# Task ID: 28
+# Title: Unify Timeline Ownership and Block Management
+# Status: pending
+# Dependencies: None
+# Priority: high
+# Description: Establish a single source of truth for block management, clear ownership model, atomic state transitions, and proper state machine for the block lifecycle.
+# Details:
+1.  Identify the existing LiveBlock/Timeline conflicts.
+2.  Design a clear ownership model for block management.
+3.  Implement atomic state transitions to preserve block relationships.
+4.  Implement a state machine for the complete block lifecycle.
+5.  Use locks or other synchronization mechanisms to prevent race conditions and ownership conflicts.
+
+# Test Strategy:
+1.  Unit tests to verify the state machine transitions.
+2.  Integration tests to ensure that block relationships are preserved during state transitions.
+3.  Concurrency tests to verify that race conditions are eliminated.

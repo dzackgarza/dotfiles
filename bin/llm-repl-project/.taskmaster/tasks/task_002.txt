@@ -1,0 +1,57 @@
+# Task ID: 2
+# Title: Implement Sacred GUI Layout
+# Status: pending
+# Dependencies: 1
+# Priority: high
+# Description: Implement the immutable three-area Sacred GUI layout using Textual. This includes the Sacred Timeline (top), Live Workspace (middle), and Input Area (bottom). The layout should be responsive but maintain clear visual separation between these areas.
+# Details:
+1. Create a new Textual application class.
+2. Define the three main areas: `SacredTimeline`, `LiveWorkspace`, and `InputArea`.
+3. Use `VerticalScroll` for `SacredTimeline` and `LiveWorkspace`.
+4. Use `PromptInput` for the `InputArea`.
+5. Implement the layout using Textual's layout system, ensuring the three areas are correctly positioned and sized.
+6. Enforce the 'No Nested Containers Rule'.
+7. Ensure the `SacredTimeline` displays conversation history.
+8. The `LiveWorkspace` should only be visible during processing to show real-time AI work.
+9. The `InputArea` should always be available for typing.
+<info added on 2025-07-13T03:17:24.586Z>
+TDD REQUIREMENT: This task requires user story validation showing Sacred GUI layout works correctly with three distinct areas visible. Must generate temporal grid proof before completion.
+</info added on 2025-07-13T03:17:24.586Z>
+
+# Test Strategy:
+Run the application and verify that the three areas are displayed correctly. Test scrolling in the `SacredTimeline` and `LiveWorkspace`. Ensure that the `InputArea` is fixed at the bottom. Verify that no nested containers are used within `VerticalScroll`. Verify that the `LiveWorkspace` is only visible during processing. Use `task-master validate-task` command to validate task completion with story proof.
+
+# Subtasks:
+## 1. Define and Structure the Three Main Areas [pending]
+### Dependencies: None
+### Description: Create the `SacredTimeline`, `LiveWorkspace`, and `InputArea` classes as Textual widgets. Define their initial structure and properties, including placeholder content for each.
+### Details:
+Each class should inherit from `Widget` or a suitable base class. Define initial content and styling for each area to visualize the layout.
+<info added on 2025-07-13T05:57:35.456Z>
+USER STORY: As a developer implementing the Sacred GUI, I want to create three distinct widget classes (SacredTimeline, LiveWorkspace, InputArea) that clearly define their responsibilities and boundaries. Each widget should have clear initialization parameters, maintain its own state, and expose clean interfaces for interaction. The structure should make it immediately obvious which area handles which functionality, supporting the principle of separation of concerns.
+</info added on 2025-07-13T05:57:35.456Z>
+
+## 2. Implement Layout and Vertical Scrolling [pending]
+### Dependencies: 2.1
+### Description: Use Textual's layout system to arrange the three areas vertically. Implement `VerticalScroll` for the `SacredTimeline` and `LiveWorkspace` to handle overflowing content.
+### Details:
+Utilize `DockLayout` or other suitable layout managers. Ensure `VerticalScroll` is correctly applied to the timeline and workspace. Configure initial sizes and constraints for each area.
+
+## 3. Enforce 'No Nested Containers Rule' [pending]
+### Dependencies: 2.2
+### Description: Review the implementation to ensure no nested containers are used within the `VerticalScroll` widgets. Refactor the code if necessary to comply with this rule.
+### Details:
+Carefully examine the widget hierarchy within `SacredTimeline` and `LiveWorkspace`. Use direct children widgets instead of nested containers within the scrolling areas.
+
+## 4. Implement Input Area with PromptInput [pending]
+### Dependencies: 2.1
+### Description: Integrate the `PromptInput` widget for the `InputArea`. Configure its properties and connect it to the application logic for handling user input.
+### Details:
+Set up event handlers for the `PromptInput` to capture user input. Ensure the input area remains fixed at the bottom of the screen.
+
+## 5. Write TDD User Story Validation [pending]
+### Dependencies: 2.2, 2.3, 2.4
+### Description: Write TDD tests to validate the layout, scrolling, and input functionality based on user stories. Include visual proof generation in the tests.
+### Details:
+Create tests to verify the correct positioning and sizing of the three areas. Test scrolling behavior in the timeline and workspace. Validate input handling in the input area. Generate screenshots or other visual artifacts to demonstrate correct rendering.
+

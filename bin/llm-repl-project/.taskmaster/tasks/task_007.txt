@@ -1,0 +1,55 @@
+# Task ID: 7
+# Title: Implement Turn Lifecycle Management
+# Status: pending
+# Dependencies: 5
+# Priority: medium
+# Description: Establish turn lifecycle management (idle/processing states). This includes switching between the 2-way split (Timeline + Input) and the 3-way split (Timeline + Workspace + Input).
+# Details:
+1. Implement a state management system to track the current state of the application (idle or processing).
+2. Implement functions to switch between the 2-way and 3-way splits based on the current state.
+3. Ensure that the `LiveWorkspace` is only visible during the processing state.
+4. Disable the `InputArea` during the processing state.
+<info added on 2025-07-13T03:17:36.721Z>
+TDD REQUIREMENT: This task requires a user story demonstrating turn lifecycle transitions between 2-way and 3-way split layouts. Must show: 1) Idle state (Timeline + Input), 2) Processing state (Timeline + Workspace + Input), 3) Return to idle state. Generate temporal grid proof before completion.
+</info added on 2025-07-13T03:17:36.721Z>
+
+# Test Strategy:
+Enter a message in the `PromptInput` widget. Verify that the application switches to the 3-way split during processing and then switches back to the 2-way split after the assistant response is displayed. Ensure that the `InputArea` is disabled during processing.
+
+# Subtasks:
+## 1. Implement State Management System [pending]
+### Dependencies: None
+### Description: Implement a state management system to track the application's current state (idle or processing).
+### Details:
+Choose a suitable state management library or pattern and implement it to manage the application's state related to turn lifecycle.
+
+## 2. Implement Layout Switching Functions [pending]
+### Dependencies: 7.1
+### Description: Implement functions to switch between the 2-way and 3-way layouts based on the current application state.
+### Details:
+Create functions that dynamically adjust the UI layout to switch between the 2-way (Timeline + Input) and 3-way (Timeline + Workspace + Input) splits.
+
+## 3. Control LiveWorkspace Visibility [pending]
+### Dependencies: 7.1, 7.2
+### Description: Ensure the `LiveWorkspace` is only visible during the processing state.
+### Details:
+Implement logic to show or hide the `LiveWorkspace` component based on the current state. It should be visible only when the application is in the processing state.
+
+## 4. Disable InputArea During Processing [pending]
+### Dependencies: 7.1
+### Description: Disable the `InputArea` component during the processing state.
+### Details:
+Implement logic to disable the `InputArea` component when the application is in the processing state to prevent user input during processing.
+
+## 5. Integrate with Conversation Flow [pending]
+### Dependencies: 7.1, 7.2, 7.3, 7.4
+### Description: Integrate the turn lifecycle management with the existing conversation flow.
+### Details:
+Connect the state management and layout switching functions to the conversation flow to trigger state transitions based on user input and assistant responses.
+
+## 6. Implement TDD User Story Validation [pending]
+### Dependencies: 7.1, 7.2, 7.3, 7.4, 7.5
+### Description: Write TDD user story validation to demonstrate turn lifecycle transitions between 2-way and 3-way splits.
+### Details:
+Write automated tests that verify the correct transitions between the 2-way and 3-way layouts, the visibility of the `LiveWorkspace`, and the disabled state of the `InputArea` during processing. Cover the user story provided.
+

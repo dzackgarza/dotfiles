@@ -1,0 +1,14 @@
+# Task ID: 49
+# Title: Implement 'update-story' Command
+# Status: done
+# Dependencies: 48
+# Priority: medium
+# Description: Implement the `task-master update-story` command to update tasks with story results and temporal grid paths.
+# Details:
+1.  Create a new command `update-story` in the Task Master CLI.
+2.  Implement the command logic to update the task with the story results and the path to the temporal grid.
+3.  Update the `userStory` field in the Task data structure with the new information.
+4.  Store the updated task data in the database.
+
+# Test Strategy:
+Run the `task-master update-story` command with different task IDs and grid paths. Verify that the tasks are updated correctly with the story results and temporal grid paths.

@@ -1,0 +1,14 @@
+# Task ID: 47
+# Title: Implement 'generate-story' Command
+# Status: done
+# Dependencies: 46
+# Priority: medium
+# Description: Implement the `task-master generate-story` command to generate user story templates for tasks.
+# Details:
+1.  Create a new command `generate-story` in the Task Master CLI.
+2.  Implement the command logic to generate a user story template based on the task ID and prompt.
+3.  The template should include fields for story ID, title, description, acceptance criteria, and temporal grid path.
+4.  Store the generated template in a predefined location (e.g., `tests/user_stories.py`).
+
+# Test Strategy:
+Run the `task-master generate-story` command with different task IDs and prompts. Verify that the generated user story templates are created correctly and contain the expected fields.

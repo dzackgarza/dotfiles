@@ -1,0 +1,14 @@
+# Task ID: 6
+# Title: Add Persistent Timeline Storage
+# Status: pending
+# Dependencies: 5
+# Priority: medium
+# Description: Add persistent timeline storage and session restoration. This ensures that the conversation history is preserved across sessions.
+# Details:
+1. Choose a storage mechanism (e.g., SQLite database, JSON file).
+2. Implement functions to save the conversation history to the storage.
+3. Implement functions to load the conversation history from the storage when the application starts.
+4. Ensure that the timeline is restored correctly when the application restarts.
+
+# Test Strategy:
+Start the application, enter a few messages, and close the application. Restart the application and verify that the conversation history is restored correctly.

@@ -1,0 +1,11 @@
+# Task ID: 21
+# Title: Implement Turn Summarization System
+# Status: pending
+# Dependencies: 12
+# Priority: medium
+# Description: Implement automated summarization of older turns, context-preserving compression techniques, integration with context pruning, and maintain conversation coherence.
+# Details:
+1. Implement summarization algorithm. 2. Implement compression techniques. 3. Integrate with context pruning. 4. Ensure conversation coherence.
+
+# Test Strategy:
+Verify summarization quality, compression effectiveness, integration with pruning, and conversation coherence. Test with long conversations.

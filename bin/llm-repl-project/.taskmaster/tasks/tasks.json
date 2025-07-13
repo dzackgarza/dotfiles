@@ -15,68 +15,68 @@
       {
         "id": 2,
         "title": "Implement Sacred GUI Layout",
-        "description": "Implement the immutable three-area Sacred GUI layout using Textual. This includes the Sacred Timeline (top), Live Workspace (middle), and Input Area (bottom). The layout should be responsive but maintain clear visual separation between these areas.",
+        "description": "Implement the core immutable three-area Sacred GUI layout using Textual, as specified in the vision document `GUI-VISION.md`. This layout serves as the foundational user interface for the multi-agent AI orchestration system. It includes the Sacred Timeline (top), Live Workspace (middle), and Input Area (bottom). The layout should be responsive but maintain clear visual separation between these areas, reflecting the Sacred Architecture States and the 2-way/3-way split behavior described in the vision.",
         "status": "pending",
         "dependencies": [
           1
         ],
         "priority": "high",
-        "details": "1. Create a new Textual application class.\n2. Define the three main areas: `SacredTimeline`, `LiveWorkspace`, and `InputArea`.\n3. Use `VerticalScroll` for `SacredTimeline` and `LiveWorkspace`.\n4. Use `PromptInput` for the `InputArea`.\n5. Implement the layout using Textual's layout system, ensuring the three areas are correctly positioned and sized.\n6. Enforce the 'No Nested Containers Rule'.\n7. Ensure the `SacredTimeline` displays conversation history.\n8. The `LiveWorkspace` should only be visible during processing to show real-time AI work.\n9. The `InputArea` should always be available for typing.\n<info added on 2025-07-13T03:17:24.586Z>\nTDD REQUIREMENT: This task requires user story validation showing Sacred GUI layout works correctly with three distinct areas visible. Must generate temporal grid proof before completion.\n</info added on 2025-07-13T03:17:24.586Z>",
-        "testStrategy": "Run the application and verify that the three areas are displayed correctly. Test scrolling in the `SacredTimeline` and `LiveWorkspace`. Ensure that the `InputArea` is fixed at the bottom. Verify that no nested containers are used within `VerticalScroll`. Verify that the `LiveWorkspace` is only visible during processing. Use `task-master validate-task` command to validate task completion with story proof.",
+        "details": "1. Create a new Textual application class.\n2. Define the three main areas: `SacredTimeline`, `LiveWorkspace`, and `InputArea`.\n3. Use `VerticalScroll` for `SacredTimeline` and `LiveWorkspace`.\n4. Use `PromptInput` for the `InputArea`.\n5. Implement the layout using Textual's layout system, ensuring the three areas are correctly positioned and sized according to the 2-way/3-way split behavior described in `GUI-VISION.md`.\n6. Enforce the 'No Nested Containers Rule'.\n7. Ensure the `SacredTimeline` displays conversation history, representing the immutable state.\n8. The `LiveWorkspace` should only be visible during processing to show real-time AI work, reflecting the mutable state during operations.\n9. The `InputArea` should always be available for typing.\n10. Ground implementation decisions by referencing the Sacred Architecture States and layout principles outlined in `GUI-VISION.md`.\n<info added on 2025-07-13T03:17:24.586Z>\nTDD REQUIREMENT: This task requires user story validation showing Sacred GUI layout works correctly with three distinct areas visible. Must generate temporal grid proof before completion.\n</info added on 2025-07-13T03:17:24.586Z>",
+        "testStrategy": "Run the application and verify that the three areas are displayed correctly according to the `GUI-VISION.md` specification. Test scrolling in the `SacredTimeline` and `LiveWorkspace`. Ensure that the `InputArea` is fixed at the bottom. Verify that no nested containers are used within `VerticalScroll`. Verify that the `LiveWorkspace` is only visible during processing, demonstrating the 2-way/3-way split. Use `task-master validate-task` command to validate task completion with story proof, ensuring the visual output matches the vision document's layout description.",
         "subtasks": [
           {
             "id": 1,
             "title": "Define and Structure the Three Main Areas",
             "description": "Create the `SacredTimeline`, `LiveWorkspace`, and `InputArea` classes as Textual widgets. Define their initial structure and properties, including placeholder content for each.",
+            "status": "pending",
             "dependencies": [],
             "details": "Each class should inherit from `Widget` or a suitable base class. Define initial content and styling for each area to visualize the layout.\n<info added on 2025-07-13T05:57:35.456Z>\nUSER STORY: As a developer implementing the Sacred GUI, I want to create three distinct widget classes (SacredTimeline, LiveWorkspace, InputArea) that clearly define their responsibilities and boundaries. Each widget should have clear initialization parameters, maintain its own state, and expose clean interfaces for interaction. The structure should make it immediately obvious which area handles which functionality, supporting the principle of separation of concerns.\n</info added on 2025-07-13T05:57:35.456Z>",
-            "status": "pending",
             "testStrategy": ""
           },
           {
             "id": 2,
             "title": "Implement Layout and Vertical Scrolling",
-            "description": "Use Textual's layout system to arrange the three areas vertically. Implement `VerticalScroll` for the `SacredTimeline` and `LiveWorkspace` to handle overflowing content.",
+            "description": "Use Textual's layout system to arrange the three areas vertically, adhering to the 2-way/3-way split described in `GUI-VISION.md`. Implement `VerticalScroll` for the `SacredTimeline` and `LiveWorkspace` to handle overflowing content.",
+            "status": "pending",
             "dependencies": [
               1
             ],
-            "details": "Utilize `DockLayout` or other suitable layout managers. Ensure `VerticalScroll` is correctly applied to the timeline and workspace. Configure initial sizes and constraints for each area.",
-            "status": "pending",
+            "details": "Utilize `DockLayout` or other suitable layout managers. Ensure `VerticalScroll` is correctly applied to the timeline and workspace. Configure initial sizes and constraints for each area, reflecting the proportions specified in the vision document.",
             "testStrategy": ""
           },
           {
             "id": 3,
             "title": "Enforce 'No Nested Containers Rule'",
             "description": "Review the implementation to ensure no nested containers are used within the `VerticalScroll` widgets. Refactor the code if necessary to comply with this rule.",
+            "status": "pending",
             "dependencies": [
               2
             ],
             "details": "Carefully examine the widget hierarchy within `SacredTimeline` and `LiveWorkspace`. Use direct children widgets instead of nested containers within the scrolling areas.",
-            "status": "pending",
             "testStrategy": ""
           },
           {
             "id": 4,
             "title": "Implement Input Area with PromptInput",
             "description": "Integrate the `PromptInput` widget for the `InputArea`. Configure its properties and connect it to the application logic for handling user input.",
+            "status": "pending",
             "dependencies": [
               1
             ],
             "details": "Set up event handlers for the `PromptInput` to capture user input. Ensure the input area remains fixed at the bottom of the screen.",
-            "status": "pending",
             "testStrategy": ""
           },
           {
             "id": 5,
             "title": "Write TDD User Story Validation",
-            "description": "Write TDD tests to validate the layout, scrolling, and input functionality based on user stories. Include visual proof generation in the tests.",
+            "description": "Write TDD tests to validate the layout, scrolling, and input functionality based on user stories and the `GUI-VISION.md` specification. Include visual proof generation in the tests.",
+            "status": "pending",
             "dependencies": [
               2,
               3,
               4
             ],
-            "details": "Create tests to verify the correct positioning and sizing of the three areas. Test scrolling behavior in the timeline and workspace. Validate input handling in the input area. Generate screenshots or other visual artifacts to demonstrate correct rendering.",
-            "status": "pending",
+            "details": "Create tests to verify the correct positioning and sizing of the three areas according to the vision document. Test scrolling behavior in the timeline and workspace. Validate input handling in the input area. Generate screenshots or other visual artifacts to demonstrate correct rendering and adherence to the 2-way/3-way split and Sacred Architecture States.",
             "testStrategy": ""
           }
         ]
@@ -757,77 +757,77 @@
       {
         "id": 15,
         "title": "Implement Plugin System Foundation",
-        "description": "Create an extensible plugin architecture with support for plugin nesting, data aggregation, external validation, and MCP server integration.",
-        "details": "1. Implement plugin architecture. 2. Support plugin nesting. 3. Implement data aggregation. 4. Implement external validation. 5. Integrate with MCP server.",
-        "testStrategy": "Verify plugin loading, nesting, data aggregation, and MCP integration. Test with various plugins.",
-        "priority": "medium",
-        "dependencies": [],
+        "description": "Implement the foundational 'Pluggable Cognition Architecture' as described in the vision documents. This system will enable dynamic swapping and evolution of cognitive units, serving as a core 'Radical Extensibility' feature. It will support nesting, data aggregation, external validation (including the Plugin Validator for transparency), and MCP server integration.",
         "status": "pending",
+        "dependencies": [],
+        "priority": "medium",
+        "details": "1. Implement core architecture for pluggable cognitive units. 2. Support nesting of cognitive units. 3. Implement data aggregation/communication between cognitive units. 4. Implement integration with external validation systems, specifically the Plugin Validator for transparency enforcement. 5. Integrate with MCP server for managing cognitive units and their state. 6. Manage dependencies between cognitive units.",
+        "testStrategy": "Verify loading, nesting, and dynamic swapping of different cognitive units. Test data aggregation and communication between units. Verify integration with external validation systems, including the Plugin Validator's transparency enforcement. Test integration with the MCP server for cognitive unit management. Test with various example cognitive units.",
         "subtasks": [
           {
             "id": 1,
             "title": "Implement Core Plugin Architecture",
-            "description": "Design and implement the core plugin architecture, including plugin loading, unloading, and management. Focus on extensibility and testability.",
-            "dependencies": [],
-            "details": "Define plugin interfaces, implement plugin discovery mechanisms, and create a plugin manager.",
+            "description": "Design and implement the core architecture for pluggable cognitive units, including loading, unloading, and management. Focus on extensibility and testability for dynamic cognitive capabilities.",
             "status": "pending",
+            "dependencies": [],
+            "details": "Define interfaces for cognitive units, implement discovery mechanisms, and create a manager for cognitive units.",
             "testStrategy": ""
           },
           {
             "id": 2,
             "title": "Support Plugin Nesting",
-            "description": "Implement the ability for plugins to contain and manage other plugins, creating a hierarchical plugin structure.",
+            "description": "Implement the ability for cognitive units to contain and manage other cognitive units, creating a hierarchical structure for complex cognitive processes.",
+            "status": "pending",
             "dependencies": [
               1
             ],
-            "details": "Modify the plugin architecture to allow plugins to register child plugins and manage their lifecycle.",
-            "status": "pending",
+            "details": "Modify the architecture to allow cognitive units to register child units and manage their lifecycle.",
             "testStrategy": ""
           },
           {
             "id": 3,
             "title": "Implement Data Aggregation Across Plugins",
-            "description": "Develop a mechanism for plugins to share and aggregate data, enabling cross-plugin communication and collaboration.",
+            "description": "Develop a mechanism for cognitive units to share and aggregate data, enabling cross-unit communication and collaboration for integrated cognitive functions.",
+            "status": "pending",
             "dependencies": [
               1,
               2
             ],
-            "details": "Define a data sharing protocol and implement data aggregation functions within the plugin architecture.",
-            "status": "pending",
+            "details": "Define a data sharing protocol and implement data aggregation functions within the cognitive unit architecture.",
             "testStrategy": ""
           },
           {
             "id": 4,
             "title": "Implement External Validation Systems",
-            "description": "Integrate with external validation systems to allow plugins to validate data and operations against external rules and constraints.",
+            "description": "Integrate with external validation systems, specifically focusing on the 'Plugin Validator' to enforce transparency and adherence to rules for cognitive units, as per the vision documents.",
+            "status": "pending",
             "dependencies": [
               1
             ],
-            "details": "Define an interface for external validation and implement adapters for specific validation systems.",
-            "status": "pending",
+            "details": "Define an interface for external validation tailored for cognitive units and implement integration with the Plugin Validator.",
             "testStrategy": ""
           },
           {
             "id": 5,
             "title": "Integrate with MCP Server",
-            "description": "Establish communication and data exchange between the plugin architecture and the MCP server.",
+            "description": "Establish communication and data exchange between the cognitive unit architecture and the MCP server for managing and monitoring cognitive units.",
+            "status": "pending",
             "dependencies": [
               1,
               3
             ],
-            "details": "Implement an API client for the MCP server and integrate it into the plugin architecture.",
-            "status": "pending",
+            "details": "Implement an API client for the MCP server and integrate it into the cognitive unit architecture.",
             "testStrategy": ""
           },
           {
             "id": 6,
             "title": "Manage Plugin Dependencies",
-            "description": "Implement a system for managing plugin dependencies, ensuring that plugins have access to the required resources and libraries.",
+            "description": "Implement a system for managing dependencies between cognitive units, ensuring they have access to required resources and libraries for proper function.",
+            "status": "pending",
             "dependencies": [
               1
             ],
-            "details": "Develop a dependency resolution mechanism and integrate it into the plugin loading process.",
-            "status": "pending",
+            "details": "Develop a dependency resolution mechanism and integrate it into the cognitive unit loading process.",
             "testStrategy": ""
           }
         ]
@@ -835,79 +835,79 @@
       {
         "id": 16,
         "title": "Implement Intelligent Router System",
-        "description": "Implement core cognition routing through user intent analysis, multiple LLM provider support, plugin extensibility, and dynamic routing based on context and capabilities.",
-        "details": "1. Implement user intent analysis. 2. Support multiple LLM providers. 3. Enable plugin extensibility. 4. Implement dynamic routing logic.",
-        "testStrategy": "Verify intent analysis accuracy, LLM provider switching, and dynamic routing effectiveness. Test with various user inputs.",
-        "priority": "medium",
+        "description": "Implement the core 'intelligent routing' feature, serving as the 'Universal Entry Point' (productContext.md) and 'intelligent hub' (projectbrief.md) of the system. This involves implementing cognition routing through user intent analysis, supporting multiple LLM providers for cost optimization and capability matching, enabling plugin extensibility for routing to specialized agents, and implementing dynamic routing based on context, capabilities, and cost considerations. This task is crucial for the core user experience of intelligent request handling.",
+        "status": "pending",
         "dependencies": [
           15
         ],
-        "status": "pending",
+        "priority": "medium",
+        "details": "1. Implement user intent analysis for routing decisions. 2. Support multiple LLM providers, including free/paid options, for cost optimization and capability routing. 3. Enable plugin extensibility to route requests to specialized agents and custom logic. 4. Implement dynamic routing logic considering intent, context, provider capabilities, cost, and agent availability. 5. Integrate with agent system for routing specialized queries.",
+        "testStrategy": "Verify intent analysis accuracy for routing to appropriate providers/agents. Test LLM provider switching, including failover and cost-based routing. Verify dynamic routing effectiveness across various scenarios, including routing to specialized agents via plugins. Test with diverse user inputs and measure cost optimization effectiveness where applicable.",
         "subtasks": [
           {
             "id": 1,
             "title": "Implement User Intent Analysis Algorithms",
-            "description": "Develop and implement algorithms to analyze user input and determine the user's intent for routing purposes. Focus on testable routing decisions based on intent.",
-            "dependencies": [],
-            "details": "Design and implement algorithms for intent recognition, including natural language processing (NLP) techniques. Ensure the algorithms can accurately classify user intent for routing.",
+            "description": "Develop and implement algorithms to analyze user input and determine the user's intent, specifically for routing requests to the most appropriate LLM provider or specialized agent. Focus on testable routing decisions based on intent.",
             "status": "pending",
+            "dependencies": [],
+            "details": "Design and implement algorithms for intent recognition, including natural language processing (NLP) techniques. Ensure the algorithms can accurately classify user intent for routing to different system components (LLMs, agents).",
             "testStrategy": ""
           },
           {
             "id": 2,
             "title": "Support Multiple LLM Provider Integrations",
-            "description": "Integrate with multiple LLM providers to allow for flexible routing and provider failover. Focus on testable routing decisions based on provider capabilities.",
+            "description": "Integrate with multiple LLM providers, including different models and pricing tiers (free/paid), to allow for flexible routing, cost optimization, and provider failover. Focus on testable routing decisions based on provider capabilities and cost.",
+            "status": "pending",
             "dependencies": [
               1
             ],
-            "details": "Implement an abstraction layer to interact with different LLM providers. Ensure the system can seamlessly switch between providers based on availability and performance.",
-            "status": "pending",
+            "details": "Implement an abstraction layer to interact with different LLM providers. Ensure the system can seamlessly switch between providers based on intent, capabilities, cost, availability, and performance.",
             "testStrategy": ""
           },
           {
             "id": 3,
             "title": "Enable Plugin Extensibility for Routing",
-            "description": "Design and implement a plugin architecture to allow for extending the routing capabilities of the system. Focus on testable routing decisions based on plugin functionality.",
+            "description": "Design and implement a plugin architecture to allow for extending the routing capabilities, specifically enabling routing to specialized agents or custom logic based on intent and context. Focus on testable routing decisions based on plugin functionality.",
+            "status": "pending",
             "dependencies": [
               2
             ],
-            "details": "Develop a plugin interface that allows developers to create custom routing logic. Ensure the system can dynamically load and execute plugins.",
-            "status": "pending",
+            "details": "Develop a plugin interface that allows developers to create custom routing logic or integrate specialized agents. Ensure the system can dynamically load and execute plugins for routing.",
             "testStrategy": ""
           },
           {
             "id": 4,
-            "title": "Implement Dynamic Routing Logic Based on Context",
-            "description": "Implement dynamic routing logic that considers user intent, context, and LLM provider capabilities to make routing decisions. Focus on testable routing decisions based on context.",
+            "title": "Implement Dynamic Routing Logic Based on Context, Cost, and Capabilities",
+            "description": "Implement the core dynamic routing logic that considers user intent, context, LLM provider capabilities, cost considerations (e.g., preferring free providers), and specialized agent availability to make optimal routing decisions. Focus on testable routing decisions based on these dynamic factors.",
+            "status": "pending",
             "dependencies": [
               3
             ],
-            "details": "Develop a routing engine that can dynamically adjust routing decisions based on real-time data. Consider factors such as user intent, context, and LLM provider availability.",
-            "status": "pending",
+            "details": "Develop a routing engine that can dynamically adjust routing decisions based on real-time data. Consider factors such as user intent, conversation context, LLM provider availability and cost, and specialized agent capabilities and load.",
             "testStrategy": ""
           },
           {
             "id": 5,
             "title": "Handle Provider Failover Mechanisms",
-            "description": "Implement mechanisms to handle LLM provider failover, ensuring continuous operation of the routing system. Focus on testable failover scenarios.",
+            "description": "Implement mechanisms to handle LLM provider failover, ensuring continuous operation and reliability of the routing system even if a preferred provider is unavailable. Focus on testable failover scenarios.",
+            "status": "pending",
             "dependencies": [
               2,
               4
             ],
-            "details": "Implement health checks for LLM providers. Develop a failover strategy that automatically switches to a backup provider if the primary provider is unavailable.",
-            "status": "pending",
+            "details": "Implement health checks for LLM providers. Develop a failover strategy that automatically switches to a backup provider if the primary provider is unavailable, potentially considering cost implications during failover.",
             "testStrategy": ""
           },
           {
             "id": 6,
             "title": "Optimize Routing Performance",
-            "description": "Optimize the routing system for performance, ensuring low latency and high throughput. Focus on testable performance metrics.",
+            "description": "Optimize the routing system for performance, ensuring low latency and high throughput while making complex routing decisions based on multiple factors. Focus on testable performance metrics.",
+            "status": "pending",
             "dependencies": [
               4,
               5
             ],
-            "details": "Profile the routing system to identify performance bottlenecks. Implement caching and other optimization techniques to improve performance.",
-            "status": "pending",
+            "details": "Profile the routing system to identify performance bottlenecks. Implement caching and other optimization techniques to improve performance without compromising the accuracy or intelligence of the routing decisions.",
             "testStrategy": ""
           }
         ]
@@ -1063,12 +1063,12 @@
       {
         "id": 23,
         "title": "Implement Graceful Rate Limit Handling",
-        "description": "Implement automatic rate limit detection, provider failover, request queuing, and user notification of service limitations.",
-        "details": "1. Implement rate limit detection. 2. Implement provider failover. 3. Implement request queuing. 4. Implement user notification.",
-        "testStrategy": "Verify rate limit handling, provider failover, request queuing, and user notification. Test with different LLM providers.",
-        "priority": "medium",
-        "dependencies": [],
+        "description": "Implement automatic rate limit detection, provider failover, request queuing, and user notification of service limitations. This is a core user experience feature for cost optimization, enabling the application to juggle free API providers as described in the vision. This directly supports the vision of making AI accessible through intelligent cost optimization.",
         "status": "pending",
+        "dependencies": [],
+        "priority": "medium",
+        "details": "1. Implement rate limit detection for various LLM providers, focusing on free tiers.\n2. Implement intelligent provider failover logic to switch to alternative free providers upon hitting rate limits.\n3. Implement a request queuing mechanism to manage bursts and smooth out requests across providers.\n4. Implement user notification to inform users about rate limits being encountered and the system's handling of them.\n5. Ensure the implementation prioritizes the use of available free providers to minimize costs.",
+        "testStrategy": "Verify rate limit detection and graceful handling across different free LLM providers. Test the provider failover mechanism under rate-limited conditions. Verify the request queuing behavior and its impact on user experience and provider usage. Test user notifications for rate limit events. Ensure the system effectively juggles providers to minimize reliance on paid tiers or hitting hard limits.",
         "subtasks": []
       },
       {
