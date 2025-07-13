@@ -8,6 +8,8 @@ context window size while preserving key information.
 
 import asyncio
 import logging
+import threading
+import queue
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
 from enum import Enum, auto
@@ -15,6 +17,7 @@ from typing import Dict, List, Optional, Set, Tuple, Union
 import json
 import hashlib
 from pathlib import Path
+import concurrent.futures
 
 from .context_scoring import ConversationTurn, ContextScore, AdvancedContextScorer
 from .token_counter import ConversationTokenManager, TokenCount
@@ -154,7 +157,7 @@ class ConversationSummary:
 
 
 class SummarizationService:
-    """Service for generating summaries of conversation content"""
+    """Service for generating summaries of conversation content with background processing"""
     
     def __init__(self, config: SummaryConfig = None):
         self.config = config or SummaryConfig()
@@ -167,6 +170,16 @@ class SummarizationService:
         # Summary cache
         self._summary_cache: Dict[str, ConversationSummary] = {}
         self._cache_timestamps: Dict[str, datetime] = {}
+        
+        # Background processing
+        self._background_queue = queue.Queue()
+        self._background_thread = None
+        self._background_executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
+        self._shutdown_event = threading.Event()
+        self._processing_lock = threading.Lock()
+        
+        # Start background summarization thread (temporarily disabled)
+        # self._start_background_processing()
     
     def should_summarize(self, 
                         turns: List[ConversationTurn],
@@ -567,6 +580,90 @@ class ContextSummarizationManager:
             
         except Exception as e:
             self.logger.error(f"Failed to save summary {summary.summary_id}: {e}")
+    
+    def _start_background_processing(self):
+        """Start background thread for async summarization"""
+        if self._background_thread is None or not self._background_thread.is_alive():
+            self._background_thread = threading.Thread(
+                target=self._background_worker,
+                daemon=True
+            )
+            self._background_thread.start()
+    
+    def _background_worker(self):
+        """Background worker thread for processing summarization tasks"""
+        while not self._shutdown_event.is_set():
+            try:
+                # Get task from queue with timeout
+                try:
+                    task = self._background_queue.get(timeout=1.0)
+                except queue.Empty:
+                    continue
+                
+                if task is None:  # Shutdown signal
+                    break
+                
+                # Process summarization task
+                turns, callback = task
+                try:
+                    # Run summarization in executor to avoid blocking
+                    future = self._background_executor.submit(
+                        self._process_summarization_task, turns
+                    )
+                    result = future.result(timeout=30.0)  # 30 second timeout
+                    
+                    if callback:
+                        callback(result)
+                        
+                except Exception as e:
+                    self.logger.error(f"Background summarization failed: {e}")
+                finally:
+                    self._background_queue.task_done()
+                    
+            except Exception as e:
+                self.logger.error(f"Background worker error: {e}")
+    
+    def _process_summarization_task(self, turns: List[ConversationTurn]) -> ConversationSummary:
+        """Process a single summarization task synchronously"""
+        try:
+            # Use the existing generate_summary method
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            try:
+                summary = loop.run_until_complete(self.generate_summary(turns))
+                return summary
+            finally:
+                loop.close()
+        except Exception as e:
+            self.logger.error(f"Summarization task failed: {e}")
+            raise
+    
+    def queue_background_summarization(self, 
+                                     turns: List[ConversationTurn],
+                                     callback: callable = None):
+        """Queue turns for background summarization"""
+        try:
+            self._background_queue.put((turns, callback), timeout=0.1)
+            self.logger.debug(f"Queued {len(turns)} turns for background summarization")
+        except queue.Full:
+            self.logger.warning("Background summarization queue is full, skipping")
+    
+    def shutdown(self):
+        """Shutdown background processing gracefully"""
+        self._shutdown_event.set()
+        
+        # Signal shutdown to background worker
+        try:
+            self._background_queue.put(None, timeout=1.0)
+        except queue.Full:
+            pass
+        
+        # Wait for background thread to finish
+        if self._background_thread and self._background_thread.is_alive():
+            self._background_thread.join(timeout=5.0)
+        
+        # Shutdown executor
+        self._background_executor.shutdown(wait=True, timeout=5.0)
     
     async def load_summary(self, summary_id: str) -> Optional[ConversationSummary]:
         """Load summary from storage"""

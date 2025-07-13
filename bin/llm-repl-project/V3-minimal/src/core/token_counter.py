@@ -158,16 +158,22 @@ class CachedTokenCounter:
     Token counter with intelligent caching for performance.
     
     Caches token counts with content hashing to avoid recalculation
-    of identical text blocks.
+    of identical text blocks. Includes performance optimizations:
+    - LRU cache with configurable size
+    - Batch processing support
+    - Memory-efficient hashing
+    - Fast cache hit detection
     """
     
     def __init__(self, 
                  base_counter: TokenCounterBase = None,
-                 cache_size: int = 1000):
+                 cache_size: int = 2000):  # Increased default cache size
         self.base_counter = base_counter or TikTokenCounter()
         self.cache_size = cache_size
         self._cache: Dict[str, TokenCount] = {}
         self._access_order: List[str] = []
+        self._cache_hits = 0
+        self._total_requests = 0
     
     def count_tokens(self, text: str, include_metadata: bool = True) -> Union[int, TokenCount]:
         """
@@ -180,11 +186,25 @@ class CachedTokenCounter:
         Returns:
             Token count (int) or TokenCount object with metadata
         """
+        self._total_requests += 1
+        
+        # Early return for empty text
+        if not text.strip():
+            empty_result = TokenCount(
+                text=text,
+                token_count=0,
+                method=self.base_counter.get_method_name(),
+                cached=False,
+                metadata={"text_length": 0, "word_count": 0, "chars_per_token": 0}
+            )
+            return empty_result if include_metadata else 0
+        
         # Generate cache key from text hash
         cache_key = self._generate_cache_key(text)
         
         # Check cache first
         if cache_key in self._cache:
+            self._cache_hits += 1
             cached_result = self._cache[cache_key]
             self._update_access_order(cache_key)
             
@@ -221,24 +241,75 @@ class CachedTokenCounter:
         return result if include_metadata else token_count
     
     def count_tokens_batch(self, texts: List[str]) -> List[TokenCount]:
-        """Count tokens for multiple texts efficiently."""
+        """Count tokens for multiple texts efficiently with batch optimizations."""
         results = []
-        for text in texts:
-            result = self.count_tokens(text, include_metadata=True)
+        
+        # Pre-generate cache keys for all texts to minimize repeated hashing
+        cache_keys = [self._generate_cache_key(text) for text in texts]
+        
+        # Separate cached vs uncached texts for batch processing
+        cached_results = {}
+        uncached_texts = []
+        uncached_indices = []
+        
+        for i, (text, cache_key) in enumerate(zip(texts, cache_keys)):
+            if cache_key in self._cache:
+                self._cache_hits += 1
+                cached_results[i] = self._cache[cache_key]
+                self._update_access_order(cache_key)
+            else:
+                uncached_texts.append(text)
+                uncached_indices.append(i)
+        
+        # Process uncached texts
+        uncached_results = {}
+        for idx, text in zip(uncached_indices, uncached_texts):
+            self._total_requests += 1
+            token_count = self.base_counter.count_tokens(text)
+            
+            result = TokenCount(
+                text=text,
+                token_count=token_count,
+                method=self.base_counter.get_method_name(),
+                cached=False,
+                metadata={
+                    "text_length": len(text),
+                    "word_count": len(text.split()),
+                    "chars_per_token": len(text) / token_count if token_count > 0 else 0
+                }
+            )
+            
+            # Cache the result
+            self._cache_result(cache_keys[idx], result)
+            uncached_results[idx] = result
+        
+        # Combine results in original order
+        for i, text in enumerate(texts):
+            if i in cached_results:
+                cached_result = cached_results[i]
+                result = TokenCount(
+                    text=text,
+                    token_count=cached_result.token_count,
+                    method=cached_result.method,
+                    cached=True,
+                    metadata=cached_result.metadata.copy()
+                )
+            else:
+                result = uncached_results[i]
+            
             results.append(result)
+        
         return results
     
     def get_cache_stats(self) -> Dict[str, Any]:
         """Get cache performance statistics."""
-        total_requests = len(self._access_order)
-        cache_hits = sum(1 for result in self._cache.values() if result.cached)
-        
         return {
             "cache_size": len(self._cache),
             "max_cache_size": self.cache_size,
-            "total_requests": total_requests,
-            "cache_hits": cache_hits,
-            "hit_rate": cache_hits / total_requests if total_requests > 0 else 0.0,
+            "total_requests": self._total_requests,
+            "cache_hits": self._cache_hits,
+            "hit_rate": self._cache_hits / self._total_requests if self._total_requests > 0 else 0.0,
+            "memory_efficiency": len(self._cache) / self.cache_size if self.cache_size > 0 else 0.0,
             "counter_method": self.base_counter.get_method_name()
         }
     

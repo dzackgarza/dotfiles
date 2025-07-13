@@ -7,6 +7,8 @@ recency and semantic relevance to current query for optimal context management.
 
 import time
 import math
+import asyncio
+import concurrent.futures
 from datetime import datetime, timezone
 from typing import List, Dict, Tuple, Optional, Any
 from dataclasses import dataclass
@@ -165,6 +167,18 @@ class ContextScorer:
         if current_time is None:
             current_time = datetime.now(timezone.utc)
         
+        # Use parallel processing for large turn sets
+        if len(turns) > 10:
+            return self._score_turns_parallel(turns, current_query, current_time)
+        else:
+            return self._score_turns_sequential(turns, current_query, current_time)
+    
+    def _score_turns_sequential(self, 
+                               turns: List[ConversationTurn],
+                               current_query: str,
+                               current_time: datetime) -> List[ContextScore]:
+        """Score turns sequentially (for small turn sets)."""
+        
         scores = []
         
         for turn in turns:
@@ -190,6 +204,47 @@ class ContextScorer:
                 combined_score=combined_score,
                 reasoning=reasoning
             ))
+        
+        # Sort by combined score (highest first)
+        scores.sort(key=lambda s: s.combined_score, reverse=True)
+        return scores
+    
+    def _score_turns_parallel(self, 
+                             turns: List[ConversationTurn],
+                             current_query: str,
+                             current_time: datetime) -> List[ContextScore]:
+        """Score turns in parallel using ThreadPoolExecutor (for large turn sets)."""
+        
+        def score_single_turn(turn: ConversationTurn) -> ContextScore:
+            """Score a single turn (thread-safe function)."""
+            # Calculate recency score
+            recency_score = self._calculate_recency_score(turn.timestamp, current_time)
+            
+            # Calculate relevance score
+            relevance_score = self._calculate_relevance_score(turn.content, current_query)
+            
+            # Combine scores
+            combined_score = (
+                self.recency_weight * recency_score +
+                self.relevance_weight * relevance_score
+            )
+            
+            # Generate reasoning
+            reasoning = self._generate_reasoning(turn, recency_score, relevance_score)
+            
+            return ContextScore(
+                turn_id=turn.id,
+                recency_score=recency_score,
+                relevance_score=relevance_score,
+                combined_score=combined_score,
+                reasoning=reasoning
+            )
+        
+        # Use ThreadPoolExecutor for CPU-bound similarity calculations
+        max_workers = min(len(turns), 4)  # Limit to 4 threads for performance
+        
+        with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+            scores = list(executor.map(score_single_turn, turns))
         
         # Sort by combined score (highest first)
         scores.sort(key=lambda s: s.combined_score, reverse=True)
