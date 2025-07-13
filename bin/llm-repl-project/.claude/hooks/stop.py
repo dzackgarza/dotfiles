@@ -133,13 +133,29 @@ def check_tests_passing():
     Add your test validation logic here.
     """
     try:
-        # Example: Check if pytest exists and run it
-        result = subprocess.run(['pytest', '--tb=short'], 
-                              capture_output=True, text=True, timeout=30)
-        if result.returncode == 0:
-            return True, ""
+        # Check if V3-minimal directory exists and has tests
+        v3_minimal_dir = Path.cwd() / "V3-minimal"
+        if v3_minimal_dir.exists() and (v3_minimal_dir / "tests").exists():
+            # Run pytest in V3-minimal directory
+            result = subprocess.run(['pdm', 'run', 'pytest', '--tb=short'], 
+                                  capture_output=True, text=True, timeout=30,
+                                  cwd=str(v3_minimal_dir))
+            if result.returncode == 0:
+                return True, ""
+            else:
+                return False, f"Tests failing in V3-minimal: {result.stdout[-200:]}"
         else:
-            return False, f"Tests failing: {result.stdout[-200:]}"  # Last 200 chars
+            # No V3-minimal tests directory, check current directory
+            if Path("tests").exists():
+                result = subprocess.run(['pytest', 'tests', '--tb=short'], 
+                                      capture_output=True, text=True, timeout=30)
+                if result.returncode == 0:
+                    return True, ""
+                else:
+                    return False, f"Tests failing: {result.stdout[-200:]}"
+            else:
+                # No tests found, assume OK
+                return True, ""
     except (subprocess.TimeoutExpired, FileNotFoundError):
         # If pytest not found or times out, assume tests are OK
         return True, ""
@@ -151,13 +167,24 @@ def check_lint_passing():
     Check if linting is passing. Returns (lint_passing, failure_reason).
     """
     try:
-        # Check if there are Python files and run basic syntax check
-        result = subprocess.run(['python', '-m', 'py_compile', '.'], 
-                              capture_output=True, text=True, timeout=10)
-        if result.returncode == 0:
-            return True, ""
+        # Check if V3-minimal directory exists
+        v3_minimal_dir = Path.cwd() / "V3-minimal"
+        if v3_minimal_dir.exists():
+            # Run ruff in V3-minimal directory
+            result = subprocess.run(['pdm', 'run', 'ruff', 'check', '.'], 
+                                  capture_output=True, text=True, timeout=10,
+                                  cwd=str(v3_minimal_dir))
+            if result.returncode == 0:
+                return True, ""
+            else:
+                # Just check for E (error) level issues, not warnings
+                if " E" in result.stdout:
+                    return False, f"Lint errors in V3-minimal: {result.stdout[-200:]}"
+                else:
+                    return True, ""  # Only warnings, not blocking
         else:
-            return False, f"Syntax errors found: {result.stderr[-200:]}"
+            # No V3-minimal, assume OK
+            return True, ""
     except (subprocess.TimeoutExpired, FileNotFoundError):
         return True, ""  # Don't block if tools not available
     except Exception:
@@ -256,32 +283,29 @@ def main():
                 except Exception as e:
                     logger.log_error(f"Failed to export chat transcript: {str(e)}", {"transcript_path": transcript_path})
 
-        # GUIDANCE: Only block completion if loop mode is active and checks fail
+        # GUIDANCE: Always provide completion guidance to Claude
         guidance_messages = []
         
-        # Check loop mode conditions
+        # Add any loop mode failure messages if they exist
         if args.loop:
             should_continue, failure_reasons = run_loop_mode_checks()
             if should_continue and failure_reasons:
-                # Only in loop mode with failures do we block completion
                 guidance_messages.extend([f"• {reason}" for reason in failure_reasons])
-                guidance_messages.append("• Fix these issues before stopping")
-                
-                full_message = "Cannot stop - loop mode violations:\n" + "\n".join(guidance_messages)
-                print(full_message, file=sys.stderr)
-                sys.exit(2)  # Block stopping only for loop mode failures
         
-        # For normal completion, just provide final reminders without blocking
-        final_reminders = []
-        final_reminders.append("• Remember to update CLAUDE.md if you discovered new patterns")
-        final_reminders.append("• Use notify-send to inform the user of completion")
-        final_reminders.append("  Example: notify-send \"Claude Session Complete\" \"Task completed successfully.\"")
+        # Always add Task Master and notify-send guidance
+        guidance_messages.append("• Check for next Task Master task: run 'task-master next' to see if there are more tasks to work on")
+        guidance_messages.append("• Update CLAUDE.md with any new instructions or patterns for future agents")
+        guidance_messages.append("• Synthesize lessons learned into a new file in .ai/memories/ directory")
+        guidance_messages.append("• Follow proper git protocols: commit changes, create branches for features, tag releases, merge appropriately")
+        guidance_messages.append("• If you are truly done with your work, use notify-send to inform the user of what was accomplished")
+        guidance_messages.append("  Example: notify-send \"Claude Session Complete\" \"Successfully implemented user authentication. All tests passing.\"")
+        guidance_messages.append("• Otherwise, continue working on remaining tasks")
         
-        if final_reminders:
-            print("Final reminders:\n" + "\n".join(final_reminders), file=sys.stderr)
-        
-        # Allow normal completion
-        # Do NOT suggest continuing with more tasks or exit with code 2
+        # Send all guidance to Claude
+        if guidance_messages:
+            full_message = "Session completion guidance:\n" + "\n".join(guidance_messages)
+            print(full_message, file=sys.stderr)
+            sys.exit(2)  # Block stopping, provide guidance
 
         # Generate completion summary (but don't announce via TTS)
         completion_summary = get_llm_completion_message()
