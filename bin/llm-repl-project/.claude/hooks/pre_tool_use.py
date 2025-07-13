@@ -34,7 +34,7 @@ This hook can directly communicate with Claude using these methods:
    - Tool proceeds normally
    - Only logging occurs, no Claude interaction
 
-CURRENT IMPLEMENTATION: Uses method #1 (Exit Code 2 + stderr) for security blocks
+CURRENT IMPLEMENTATION: Uses method #1 (Exit Code 2 + stderr) for security blocks and direct challenges
 ================================================================================
 """
 
@@ -362,54 +362,53 @@ def is_textual_gui_app_launch(tool_name, tool_input):
     
     return False, ""
 
-def check_tdd_workflow_reminders(tool_name, tool_input):
+def provide_direct_challenges(tool_name, tool_input):
     """
-    Provide TDD workflow reminders based on tool usage patterns.
-    These are educational reminders, not blocks.
+    Direct confrontational questions that force immediate verification.
+    Based on observed patterns that actually work to challenge Claude.
     """
-    # TDD reminders for code editing
-    if tool_name in ['Edit', 'Write', 'MultiEdit']:
-        file_path = tool_input.get('file_path', '')
-        if file_path.endswith(('.py', '.js', '.ts')) and 'src/' in file_path:
-            print("🧪 TDD REMINDER: Are you implementing a task with user story validation?", file=sys.stderr)
-            print("   Run: task-master test-story --id=<task> to verify story passes", file=sys.stderr)
-            
-        # Sacred GUI specific reminders
-        content = tool_input.get('new_string', '') or tool_input.get('content', '')
-        if content and ('Sacred' in content or 'Timeline' in content):
-            print("🏛️ SACRED GUI: Ensure story demonstrates 3-area layout", file=sys.stderr)
-            print("   Required: Timeline/Workspace/Input visibility in temporal grid", file=sys.stderr)
-    
-    # Task Master command interception
+    # Direct blocking for task completion
     if tool_name == 'Bash':
         command = tool_input.get('command', '')
         
-        # Block set-status=done, require complete-with-story
+        # Block task completion without verification
         if 'task-master set-status' in command and '--status=done' in command:
-            message = """Task completion command blocked.
+            message = """Really? When did you last see this working?
 
-⚠️  STOP: Use 'task-master complete-with-story' instead of 'set-status=done'
+Do you have any evidence this task is complete?
 
-Required for completion:
-• Visual proof through temporal grid validation
-• User story must pass before marking done
-• Ensures TDD compliance
+If I tested this right now, would it work or fail?
 
-Correct command:
-task-master complete-with-story --id=<task-id>
-
-This enforces the requirement for visual validation."""
+You can't mark something done without proof. Use 'task-master complete-with-story' only after actual validation."""
             return True, message
             
-        # Git commit TDD check
-        if command.startswith('git commit'):
-            print("📋 TDD CHECK: All completed tasks have user story validation?", file=sys.stderr)
-            print("   Verify: Pre-commit hook will validate this automatically", file=sys.stderr)
+        # Challenge testing attempts
+        if 'test-story' in command or 'temporal_grid' in command:
+            print("Really? Will this actually test the GUI or just generate fake screenshots?", file=sys.stderr)
+            print("Did you actually read the docs on how temporal grids work?", file=sys.stderr)
             
-        # Task Master next command guidance
-        if 'task-master next' in command:
-            print("🎯 NEXT STEP: Generate user story BEFORE coding", file=sys.stderr)
-            print("   Command: task-master generate-story --id=<task-id>", file=sys.stderr)
+        # Challenge commits
+        if command.startswith('git commit'):
+            print("Really? Did you test this code before committing?", file=sys.stderr)
+            print("Do you have any evidence it works?", file=sys.stderr)
+            
+        # Challenge notify-send claims
+        if 'notify-send' in command:
+            print("That's a bold claim...", file=sys.stderr)
+    
+    # Direct challenges for code changes  
+    if tool_name in ['Edit', 'Write', 'MultiEdit']:
+        file_path = tool_input.get('file_path', '')
+        content = tool_input.get('new_string', '') or tool_input.get('content', '')
+        
+        if file_path.endswith(('.py', '.js', '.ts')) and 'src/' in file_path:
+            print("Really? Did you test your previous changes first?", file=sys.stderr)
+            print("Are you sure this will work?", file=sys.stderr)
+            
+        # Challenge Sacred GUI claims
+        if content and ('Sacred' in content or 'Timeline' in content or 'Layout' in content):
+            print("Really? If I run this, will I see three areas or will it crash?", file=sys.stderr)
+            print("Do you have any visual proof this layout works?", file=sys.stderr)
     
     return False, ""
 
@@ -424,7 +423,7 @@ SECURITY_VALIDATORS = [
     is_sudo_command_usage,
     is_network_exposure,
     is_textual_gui_app_launch,
-    check_tdd_workflow_reminders,
+    provide_direct_challenges,
 ]
 
 def run_security_validation(tool_name, tool_input):
@@ -454,7 +453,7 @@ def main():
             sys.exit(2)  # Exit code 2 blocks tool call and shows error to Claude
         
         # Simple logging like canonical hooks
-        log_dir = Path.cwd() / '.claude' / 'logs'
+        log_dir = Path.cwd() / 'logs'
         log_dir.mkdir(parents=True, exist_ok=True)
         log_path = log_dir / 'pre_tool_use.json'
         

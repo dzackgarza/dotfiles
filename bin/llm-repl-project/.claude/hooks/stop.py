@@ -134,7 +134,9 @@ def check_tests_passing():
     """
     try:
         # Check if V3-minimal directory exists and has tests
-        v3_minimal_dir = Path.cwd() / "V3-minimal"
+        # Get project root (from .claude/hooks/ to project root)
+        project_root = Path.cwd().parent.parent
+        v3_minimal_dir = project_root / "V3-minimal"
         if v3_minimal_dir.exists() and (v3_minimal_dir / "tests").exists():
             # Run pytest in V3-minimal directory
             result = subprocess.run(['pdm', 'run', 'pytest', '--tb=short'], 
@@ -168,7 +170,9 @@ def check_lint_passing():
     """
     try:
         # Check if V3-minimal directory exists
-        v3_minimal_dir = Path.cwd() / "V3-minimal"
+        # Get project root (from .claude/hooks/ to project root)
+        project_root = Path.cwd().parent.parent
+        v3_minimal_dir = project_root / "V3-minimal"
         if v3_minimal_dir.exists():
             # Run ruff in V3-minimal directory
             result = subprocess.run(['pdm', 'run', 'ruff', 'check', '.'], 
@@ -283,29 +287,40 @@ def main():
                 except Exception as e:
                     logger.log_error(f"Failed to export chat transcript: {str(e)}", {"transcript_path": transcript_path})
 
-        # GUIDANCE: Always provide completion guidance to Claude
-        guidance_messages = []
+        # POINTED QUESTIONING: Force Claude to confront what they've actually accomplished
+        pointed_questions = []
         
         # Add any loop mode failure messages if they exist
         if args.loop:
             should_continue, failure_reasons = run_loop_mode_checks()
             if should_continue and failure_reasons:
-                guidance_messages.extend([f"• {reason}" for reason in failure_reasons])
+                pointed_questions.extend([f"❌ {reason}" for reason in failure_reasons])
+                pointed_questions.append("🤨 You have failing tests - but you're trying to stop anyway?")
         
-        # Always add Task Master and notify-send guidance
-        guidance_messages.append("• Check for next Task Master task: run 'task-master next' to see if there are more tasks to work on")
-        guidance_messages.append("• Update CLAUDE.md with any new instructions or patterns for future agents")
-        guidance_messages.append("• Synthesize lessons learned into a new file in .ai/memories/ directory")
-        guidance_messages.append("• Follow proper git protocols: commit changes, create branches for features, tag releases, merge appropriately")
-        guidance_messages.append("• If you are truly done with your work, use notify-send to inform the user of what was accomplished")
-        guidance_messages.append("  Example: notify-send \"Claude Session Complete\" \"Successfully implemented user authentication. All tests passing.\"")
-        guidance_messages.append("• Otherwise, continue working on remaining tasks")
+        # Direct confrontational questions that work
+        pointed_questions.extend([
+            "Really? What did you actually complete today?",
+            "Do you have any evidence your code works?",
+            "If I ran 'just run' right now, would I see anything working?",
+            "Did you actually test this?",
+            "Are you sure I'll see that if I run it?",
+            "Do you have any visual proof that this actually appears?",
+            "",
+            "Really? Are you done?",
+            "• Run 'task-master next' - are there more tasks?",
+            "• Can you show me one thing that actually works?",
+            "• Did you actually run your code?",
+            "• Do your temporal grids show real GUI or fake screenshots?",
+            "",
+            "Really? You're stopping without proving anything works?",
+            "Go test your code first."
+        ])
         
-        # Send all guidance to Claude
-        if guidance_messages:
-            full_message = "Session completion guidance:\n" + "\n".join(guidance_messages)
+        # Send pointed questions to Claude
+        if pointed_questions:
+            full_message = "🤨 ACCOUNTABILITY CHECK - Answer honestly:\n\n" + "\n".join(pointed_questions)
             print(full_message, file=sys.stderr)
-            sys.exit(2)  # Block stopping, provide guidance
+            sys.exit(2)  # Block stopping, force self-reflection
 
         # Generate completion summary (but don't announce via TTS)
         completion_summary = get_llm_completion_message()

@@ -32,8 +32,7 @@ This hook can directly communicate with Claude using these methods:
    - Normal completion, only logging occurs
    - No Claude interaction
 
-CURRENT IMPLEMENTATION: Uses method #3 (no communication) - pure logging
-NOTE: Could be extended to validate tool results and communicate failures to Claude
+CURRENT IMPLEMENTATION: Uses stderr messages to challenge Claude with direct questions
 ================================================================================
 """
 
@@ -42,33 +41,51 @@ import os
 import sys
 from pathlib import Path
 
-def provide_tdd_feedback(tool_name, tool_input, tool_result):
+def provide_direct_confrontation(tool_name, tool_input, tool_result):
     """
-    Provide immediate TDD feedback after tool execution.
+    Direct confrontational questions that actually work to force verification.
+    Based on observed successful patterns of challenging Claude.
     """
-    # After code implementation feedback
+    result_text = str(tool_result.get('result', ''))
+    
+    # Direct challenges after code changes
     if tool_name in ['Edit', 'Write', 'MultiEdit']:
         file_path = tool_input.get('file_path', '')
         if 'src/' in file_path and file_path.endswith(('.py', '.js', '.ts')):
-            print("🧪 TEST NOW: Run your user story to verify implementation", file=sys.stderr)
-            print("   Command: task-master test-story --id=<current-task>", file=sys.stderr)
+            print("Really? Did you actually test this?", file=sys.stderr)
+            print("Do you have any evidence that this code works?", file=sys.stderr)
     
-    # After getting next task
+    # Direct challenges after bash commands
     if tool_name == 'Bash':
         command = tool_input.get('command', '')
-        if 'task-master next' in command:
-            print("📖 TDD WORKFLOW REMINDER:", file=sys.stderr)
-            print("   1. task-master generate-story --id=<task-id>", file=sys.stderr)
-            print("   2. task-master test-story --id=<task-id> (verify fails)", file=sys.stderr)
-            print("   3. Implement feature", file=sys.stderr)
-            print("   4. task-master test-story --id=<task-id> (verify passes)", file=sys.stderr)
-            print("   5. task-master complete-with-story --id=<task-id>", file=sys.stderr)
-            
-        # Error recovery reminders
-        result_text = str(tool_result.get('result', ''))
+        
+        # Challenge test claims
+        if 'test' in command.lower() and 'story' in command.lower():
+            if 'success' in result_text.lower() or 'passed' in result_text.lower():
+                print("Really? Did that actually test GUI interaction?", file=sys.stderr)
+                print("Do you have visual proof that this shows real application behavior?", file=sys.stderr)
+        
+        # Challenge run commands
+        if any(word in command.lower() for word in ['python', 'run', 'pdm', 'just run']):
+            if 'error' not in result_text.lower():
+                print("Does that really work? Are you sure I'll see something if I run that?", file=sys.stderr)
+                print("Did you actually see it working, or are you assuming?", file=sys.stderr)
+        
+        # Challenge ignored errors
         if 'error' in result_text.lower() or 'failed' in result_text.lower():
-            print("🚨 Consider: Does this error affect your user story?", file=sys.stderr)
-            print("   Action: Re-run task-master test-story --id=<task> to verify", file=sys.stderr)
+            print("That failed. Are you going to fix it or ignore it?", file=sys.stderr)
+            print("Really? You're moving on with broken code?", file=sys.stderr)
+        
+        # Challenge task progression
+        if 'task-master' in command and 'next' in command:
+            print("Really? Have you actually verified your previous work?", file=sys.stderr)
+            print("Do you have any proof the last task actually works?", file=sys.stderr)
+    
+    # Challenge Task Master completions
+    if tool_name.startswith('mcp__taskmaster-ai__'):
+        if 'set_task_status' in tool_name and 'done' in str(tool_input):
+            print("Really? When did you last see this working?", file=sys.stderr)
+            print("Do you have any evidence this task is complete?", file=sys.stderr)
 
 def main():
     try:
@@ -79,11 +96,11 @@ def main():
         tool_input = input_data.get('tool_input', {})
         tool_result = input_data.get('tool_result', {})
         
-        # Provide TDD feedback
-        provide_tdd_feedback(tool_name, tool_input, tool_result)
+        # Provide direct confrontation
+        provide_direct_confrontation(tool_name, tool_input, tool_result)
         
         # Simple logging like canonical hooks
-        log_dir = Path.cwd() / '.claude' / 'logs'
+        log_dir = Path.cwd() / 'logs'
         log_dir.mkdir(parents=True, exist_ok=True)
         log_path = log_dir / 'post_tool_use.json'
         
