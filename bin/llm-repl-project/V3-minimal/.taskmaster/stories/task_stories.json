@@ -166,7 +166,7 @@
     "story_title": "User validates: Task 11.2",
     "story_description": "User story for Task 11.2: Task 11.2\n\nUser Interaction: Developer implements live block staging area to hold conversation blocks in real-time before inscription to the Sacred Timeline\n\nThis story validates the task implementation through a complete 12-step user interaction flow,\ndemonstrating proper Sacred GUI behavior with Timeline, Workspace, and Input areas.\n\nExpected Flow:\n1. Launch - App starts in clean state\n2. Focus - User attention on input area\n3. Input - User types or performs action\n4. Submit - User triggers the functionality\n5. Process Start - System begins response\n6. Active - Live workspace becomes visible\n7. Working - Processing indicators active\n8. Streaming - Content flows in real-time\n9. Complete - Processing finishes\n10. Collapse - Workspace hides automatically\n11. Updated - Timeline shows complete result\n12. Ready - App ready for next interaction\n\nThis ensures the implemented feature works from the user's perspective\nand maintains Sacred GUI architectural principles.",
     "story_status": "failing",
-    "last_run": "2025-07-13T02:47:28.017452",
+    "last_run": "2025-07-13T02:54:07.491100",
     "temporal_grid_path": null,
     "acceptance_criteria": [
       "App launches and shows Sacred GUI layout",
@@ -176,7 +176,27 @@
       "Final state shows completed task functionality",
       "Input area remains responsive for next interaction"
     ],
-    "test_execution_time": 1.0371546745300293,
-    "error_message": "Canonical pilot test failed with return code 4"
+    "test_execution_time": 0.7615094184875488,
+    "error_message": "Canonical pilot test failed with return code 2"
+  },
+  "11.3": {
+    "task_id": "11.3",
+    "task_title": "Task 11.3",
+    "story_id": "task_11_3",
+    "story_title": "User validates: Task 11.3",
+    "story_description": "User story for Task 11.3: Task 11.3\n\nUser Interaction: User wants to track wall time and token usage for each block in the Sacred Timeline to monitor performance\n\nThis story validates the task implementation through a complete 12-step user interaction flow,\ndemonstrating proper Sacred GUI behavior with Timeline, Workspace, and Input areas.\n\nExpected Flow:\n1. Launch - App starts in clean state\n2. Focus - User attention on input area\n3. Input - User types or performs action\n4. Submit - User triggers the functionality\n5. Process Start - System begins response\n6. Active - Live workspace becomes visible\n7. Working - Processing indicators active\n8. Streaming - Content flows in real-time\n9. Complete - Processing finishes\n10. Collapse - Workspace hides automatically\n11. Updated - Timeline shows complete result\n12. Ready - App ready for next interaction\n\nThis ensures the implemented feature works from the user's perspective\nand maintains Sacred GUI architectural principles.",
+    "story_status": "failing",
+    "last_run": "2025-07-13T03:31:17.032833",
+    "temporal_grid_path": null,
+    "acceptance_criteria": [
+      "App launches and shows Sacred GUI layout",
+      "User interaction triggers expected functionality",
+      "Sacred Timeline displays proper block progression",
+      "Live Workspace shows/hides appropriately during processing",
+      "Final state shows completed task functionality",
+      "Input area remains responsive for next interaction"
+    ],
+    "test_execution_time": 0.8256349563598633,
+    "error_message": "Canonical pilot test failed with return code 2"
   }
 }
