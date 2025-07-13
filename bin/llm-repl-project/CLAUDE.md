@@ -16,12 +16,6 @@ task-master next                                   # Get next available task to 
 task-master show <id>                             # View detailed task information (e.g., task-master show 1.2)
 task-master set-status --id=<id> --status=done    # Mark task complete
 
-# TDD Workflow Commands (MANDATORY for all task completion)
-./scripts/task-master-generate-story --id=<id> --prompt="<user_interaction>"    # Generate user story for task
-./scripts/task-master-test-story --id=<id>                                      # Run user story test with temporal grid
-./scripts/task-master-validate-task --id=<id>                                   # Validate task meets TDD requirements
-./scripts/task-master-complete-with-story --id=<id>                             # Complete task with TDD proof
-
 # Task Management
 task-master add-task --prompt="description" --research        # Add new task with AI assistance
 task-master expand --id=<id> --research --force              # Break task into subtasks
@@ -183,6 +177,24 @@ cd project-test-worktree && claude
 cd project-docs-worktree && claude
 ```
 
+### TDD CLI Command Path Resolution Fix
+
+**CRITICAL**: TDD CLI scripts require correct PROJECT_ROOT path resolution:
+
+```bash
+# Correct pattern for scripts in scripts/ subdirectory:
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+# Verify project structure
+if [ ! -f "$PROJECT_ROOT/.taskmaster/config.json" ]; then
+    echo "Error: Not in a Task Master project directory"
+    exit 1
+fi
+```
+
+**Fixed in Task 48**: All 4 TDD CLI scripts (`task-master-generate-story`, `task-master-test-story`, `task-master-validate-task`, `task-master-complete-with-story`) now use correct path resolution.
+
 ### Custom Slash Commands
 
 Create `.claude/commands/taskmaster-next.md`:
@@ -290,84 +302,6 @@ task-master models --set-fallback gpt-4o-mini
 }
 ```
 
-## MANDATORY: Test-Driven Development with User Stories
-
-**⚠️ CRITICAL: ALL TASKS MUST FOLLOW TDD WORKFLOW ⚠️**
-
-This project enforces Test-Driven Development through user story validation. **NO TASK CAN BE MARKED COMPLETE WITHOUT VISUAL STORY PROOF.**
-
-### Required TDD Workflow (NEVER SKIP)
-
-#### 1. Story-First Development (MANDATORY)
-```bash
-# Step 1: Get your task
-task-master next
-
-# Step 2: BEFORE ANY CODING - Generate user story first
-./scripts/task-master-generate-story --id=<task-id> --prompt="<describe user interaction>"
-
-# Step 3: Verify story fails (shows incomplete/broken behavior)  
-./scripts/task-master-test-story --id=<task-id>
-```
-
-#### 2. Implementation Phase
-```bash
-# Step 4: Implement feature to satisfy user story
-# ... write your code ...
-
-# Step 5: Test story regularly during development
-./scripts/task-master-test-story --id=<task-id>
-```
-
-#### 3. Completion Phase (MANDATORY VALIDATION)
-```bash
-# Step 6: Story MUST pass before completion
-./scripts/task-master-test-story --id=<task-id>
-
-# Step 7: Validate task meets all TDD requirements
-./scripts/task-master-validate-task --id=<task-id>
-
-# Step 8: Complete with story proof (only way to mark done)
-./scripts/task-master-complete-with-story --id=<task-id>
-```
-
-### TDD Commands Available
-
-```bash
-# Generate user story template for task
-./scripts/task-master-generate-story --id=5 --prompt="User starts conversation"
-
-# Run user story for specific task (creates temporal grid proof)
-./scripts/task-master-test-story --id=5
-
-# Validate task completion with story proof
-./scripts/task-master-validate-task --id=5
-
-# Complete task with story validation (ONLY way to mark done)
-./scripts/task-master-complete-with-story --id=5
-
-# Helper: Show help for any command
-./scripts/task-master-generate-story --help
-./scripts/task-master-test-story --help
-./scripts/task-master-validate-task --help
-./scripts/task-master-complete-with-story --help
-```
-
-### Quality Gates (ENFORCED)
-
-- **NO task can be marked `done` without user story validation**
-- **All features must be proven through 12-step temporal grid screenshots**  
-- **Visual proof required showing complete user interaction flow**
-- **Story must demonstrate Sacred GUI behavior (Timeline/Workspace/Input)**
-
-### User Story Requirements
-
-Every task must include:
-- **User Story Definition**: Clear 12-step user interaction scenario
-- **Acceptance Criteria**: Specific visual/behavioral outcomes expected
-- **Temporal Grid**: 4x3 screenshot grid proving story passes
-- **Test-First**: Story written and failing BEFORE implementation
-
 ## Claude Code Best Practices with Task Master
 
 ### Context Management
@@ -376,20 +310,15 @@ Every task must include:
 - This CLAUDE.md file is automatically loaded for context
 - Use `task-master show <id>` to pull specific task context when needed
 
-### TDD-Enforced Implementation (MANDATORY)
+### Iterative Implementation
 
-1. `task-master next` - Get next task
-2. `task-master generate-story --id=<id>` - **CREATE STORY FIRST**
-3. `task-master test-story --id=<id>` - **VERIFY STORY FAILS**
-4. `task-master show <id>` - Understand requirements
-5. Explore codebase and plan implementation
-6. `task-master update-subtask --id=<id> --prompt="detailed plan"` - Log plan
-7. `task-master set-status --id=<id> --status=in-progress` - Start work
-8. Implement code following logged plan
-9. `task-master test-story --id=<id>` - **TEST STORY REGULARLY**
-10. `task-master update-subtask --id=<id> --prompt="what worked/didn't work"` - Log progress
-11. `task-master test-story --id=<id>` - **STORY MUST PASS**
-12. `task-master complete-with-story --id=<id>` - **ONLY WAY TO COMPLETE**
+1. `task-master show <subtask-id>` - Understand requirements
+2. Explore codebase and plan implementation
+3. `task-master update-subtask --id=<id> --prompt="detailed plan"` - Log plan
+4. `task-master set-status --id=<id> --status=in-progress` - Start work
+5. Implement code following logged plan
+6. `task-master update-subtask --id=<id> --prompt="what worked/didn't work"` - Log progress
+7. `task-master set-status --id=<id> --status=done` - Complete task
 
 ### Complex Workflows with Checklists
 
@@ -500,224 +429,6 @@ These commands make AI calls and may take up to a minute:
 - Requires a research model API key like Perplexity (`PERPLEXITY_API_KEY`) in environment
 - Provides more informed task creation and updates
 - Recommended for complex technical tasks
-
-## AI-Driven Development Workflow
-
-The Cursor agent is pre-configured (via the rules file) to follow this workflow:
-
-### 1. Task Discovery and Selection
-
-Ask the agent to list available tasks:
-
-> What tasks are available to work on next?
-> Can you show me tasks 1, 3, and 5 to understand their current status?
-
-The agent will:
-- Run `task-master list` to see all tasks
-- Run `task-master next` to determine the next task to work on
-- Run `task-master show 1,3,5` to display multiple tasks with interactive options
-- Analyze dependencies to determine which tasks are ready to be worked on
-- Prioritize tasks based on priority level and ID order
-- Suggest the next task(s) to implement
-
-### 2. Task Implementation
-
-When implementing a task, the agent will:
-- Reference the task's details section for implementation specifics
-- Consider dependencies on previous tasks
-- Follow the project's coding standards
-- Create appropriate tests based on the task's testStrategy
-
-You can ask:
-> Let's implement task 3. What does it involve?
-
-#### 2.1. Viewing Multiple Tasks
-
-For efficient context gathering and batch operations:
-> Show me tasks 5, 7, and 9 so I can plan my implementation approach.
-
-The agent will:
-- Run `task-master show 5,7,9` to display a compact summary table
-- Show task status, priority, and progress indicators
-- Provide an interactive action menu with batch operations
-- Allow you to perform group actions like marking multiple tasks as in-progress
-
-### 3. Task Verification
-
-Before marking a task as complete, verify it according to:
-- The task's specified testStrategy
-- Any automated tests in the codebase
-- Manual verification if required
-
-### 4. Task Completion
-
-When a task is completed, tell the agent:
-> Task 3 is now complete. Please update its status.
-
-The agent will execute:
-```bash
-task-master set-status --id=3 --status=done
-```
-
-### 5. Handling Implementation Drift
-
-If during implementation, you discover that:
-- The current approach differs significantly from what was planned
-- Future tasks need to be modified due to current implementation choices
-- New dependencies or requirements have emerged
-
-Tell the agent:
-> We've decided to use MongoDB instead of PostgreSQL. Can you update all future tasks (from ID 4) to reflect this change?
-
-The agent will execute:
-```bash
-task-master update --from=4 --prompt="Now we are using MongoDB instead of PostgreSQL."
-
-# OR, if research is needed to find best practices for MongoDB:
-task-master update --from=4 --prompt="Update to use MongoDB, researching best practices" --research
-```
-
-This will rewrite or re-scope subsequent tasks in tasks.json while preserving completed work.
-
-### 6. Reorganizing Tasks
-
-If you need to reorganize your task structure:
-> I think subtask 5.2 would fit better as part of task 7 instead. Can you move it there?
-
-The agent will execute:
-```bash
-task-master move --from=5.2 --to=7.3
-```
-
-You can reorganize tasks in various ways:
-- Moving a standalone task to become a subtask: `--from=5 --to=7`
-- Moving a subtask to become a standalone task: `--from=5.2 --to=7`
-- Moving a subtask to a different parent: `--from=5.2 --to=7.3`
-- Reordering subtasks within the same parent: `--from=5.2 --to=5.4`
-- Moving a task to a new ID position: `--from=5 --to=25` (even if task 25 doesn't exist yet)
-- Moving multiple tasks at once: `--from=10,11,12 --to=16,17,18` (must have same number of IDs, Taskmaster will look through each position)
-
-When moving tasks to new IDs:
-- The system automatically creates placeholder tasks for non-existent destination IDs
-- This prevents accidental data loss during reorganization
-- Any tasks that depend on moved tasks will have their dependencies updated
-- When moving a parent task, all its subtasks are automatically moved with it and renumbered
-
-This is particularly useful as your project understanding evolves and you need to refine your task structure.
-
-#### 6.1. Resolving Merge Conflicts with Tasks
-
-When working with a team, you might encounter merge conflicts in your tasks.json file if multiple team members create tasks on different branches. The move command makes resolving these conflicts straightforward:
-
-> I just merged the main branch and there's a conflict with tasks.json. My teammates created tasks 10-15 while I created tasks 10-12 on my branch. Can you help me resolve this?
-
-The agent will help you:
-1. Keep your teammates' tasks (10-15)
-2. Move your tasks to new positions to avoid conflicts:
-
-```bash
-# Move your tasks to new positions (e.g., 16-18)
-task-master move --from=10 --to=16
-task-master move --from=11 --to=17
-task-master move --from=12 --to=18
-```
-
-This approach preserves everyone's work while maintaining a clean task structure, making it much easier to handle task conflicts than trying to manually merge JSON files.
-
-### 7. Breaking Down Complex Tasks
-
-For complex tasks that need more granularity:
-> Task 5 seems complex. Can you break it down into subtasks?
-
-The agent will execute:
-```bash
-task-master expand --id=5 --num=3
-```
-
-You can provide additional context:
-> Please break down task 5 with a focus on security considerations.
-
-The agent will execute:
-```bash
-task-master expand --id=5 --prompt="Focus on security aspects"
-```
-
-You can also expand all pending tasks:
-> Please break down all pending tasks into subtasks.
-
-The agent will execute:
-```bash
-task-master expand --all
-```
-
-For research-backed subtask generation using the configured research model:
-> Please break down task 5 using research-backed generation.
-
-The agent will execute:
-```bash
-task-master expand --id=5 --research
-```
-
-## TDD CLI Command Reference
-
-### File Locations
-- **TDD Commands**: scripts/ directory (executable shell scripts)
-  - `./scripts/task-master-generate-story`
-  - `./scripts/task-master-test-story` 
-  - `./scripts/task-master-validate-task`
-  - `./scripts/task-master-complete-with-story`
-- **Story Data**: `.taskmaster/stories/task_stories.json`
-- **Temporal Grids**: `V3-minimal/debug_screenshots/task_*_temporal_grid_*.png`
-
-### Integration Notes
-- All TDD commands integrate with PDM environment automatically
-- Commands detect project root and configuration
-- Error handling provides clear next-step guidance
-- Each command has comprehensive `--help` documentation
-
-### Best Practices for Agents
-1. **Always generate story before coding**: Use TDD story-first approach
-2. **Test frequently during development**: Run `./scripts/task-master-test-story` regularly
-3. **Validate before completion**: Use `./scripts/task-master-validate-task` before marking done
-4. **Use TDD completion**: Always use `./scripts/task-master-complete-with-story` instead of manual status changes
-5. **Document implementation notes**: Use `task-master update-subtask` to log progress
-
-## Session Management Best Practices
-
-### Git Protocol Requirements
-- **ALWAYS commit changes** before session completion
-- **Create feature branches** for significant implementations
-- **Use descriptive commit messages** with task references
-- **Tag releases** when major milestones are reached
-- **Merge branches properly** using appropriate merge strategies
-
-### Memory and Continuity
-- **Update CLAUDE.md** with new patterns and instructions
-- **Create memory files** in `.ai/memories/` to preserve lessons learned
-- **Document TDD validation results** for audit trails
-- **Preserve temporal grid evidence** for task completion proof
-
-### Required Git Workflow Example
-```bash
-# Before starting work
-git checkout -b feature/task-47-generate-story
-git status
-
-# During implementation
-git add .
-git commit -m "feat: implement task-master-generate-story CLI command (task 47)
-
-- Created shell script wrapper for TDD generate-story command
-- Added comprehensive help documentation and error handling
-- Integrated with PDM environment for reliable execution
-- Tested with Task 47 itself using TDD validation workflow"
-
-# After completion and TDD validation
-git checkout main
-git merge feature/task-47-generate-story
-git tag v1.0.0-task-47-complete
-git push origin main --tags
-```
 
 ---
 
