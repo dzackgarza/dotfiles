@@ -1,0 +1,14 @@
+#!/bin/bash
+# Test Starship prompt temporarily
+
+echo "🌟 Testing Starship prompt..."
+echo "Press Ctrl+D to exit and return to your normal prompt"
+echo ""
+
+# Start new zsh with Starship
+STARSHIP_CONFIG=~/.config/starship-preview.toml zsh -c '
+    eval "$(~/.local/bin/starship init zsh)"
+    export PS1=""  # Clear any existing prompt
+    cd ~/  # Start in home directory
+    exec zsh
+'

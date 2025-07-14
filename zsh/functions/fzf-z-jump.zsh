@@ -204,7 +204,7 @@ zle -N _fzf_cd_subdir
 zle -N _fzf_insert_subdir
 
 # Bind keys (can be customized in .zshrc)
-bindkey '^T' _fzf_cd_subdir
+bindkey '^[t' _fzf_cd_subdir
 bindkey '^[T' _fzf_insert_subdir
 
 # Only define the widgets if running interactively and not in a script
@@ -217,7 +217,7 @@ if [[ $- == *i* ]] && [[ -z "$ZSH_FZF_JUMP_NO_WIDGET" ]]; then
   # Set up key bindings if not already set
   if ! bindkey | grep -q _fzf_z_widget; then
     bindkey '^G' _fzf_z_widget        # Ctrl+G - Jump to frequent directory
-    bindkey '^T' _fzf_cd_subdir      # Ctrl+T - Change to deep subdirectory
+    bindkey '^[t' _fzf_cd_subdir      # Alt+T - Change to deep subdirectory
     bindkey '^[^T' _fzf_insert_subdir # Ctrl+Shift+T - Insert directory path
     # No console output during initialization for Powerlevel10k compatibility
   fi

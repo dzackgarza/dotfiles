@@ -1,0 +1,90 @@
+#!/bin/bash
+# Switch between different Starship rice aesthetics
+
+show_help() {
+    echo "🌟 Starship Rice Style Switcher"
+    echo ""
+    echo "Usage: starship-style [STYLE]"
+    echo ""
+    echo "Available styles:"
+    echo "  minimal    - Clean, Pure-inspired aesthetic"
+    echo "  powerline  - Full powerline with segments"
+    echo "  rice       - Aesthetic with box drawing"
+    echo "  default    - Current Base16 integrated style"
+    echo ""
+    echo "Examples:"
+    echo "  starship-style minimal"
+    echo "  starship-style powerline"
+    echo ""
+    echo "Current style will be backed up before switching."
+}
+
+backup_current() {
+    if [ -f ~/.config/starship.toml ]; then
+        cp ~/.config/starship.toml ~/.config/starship.toml.backup
+        echo "💾 Backed up current config to starship.toml.backup"
+    fi
+}
+
+apply_style() {
+    local style=$1
+    local source_file=""
+    
+    case $style in
+        "minimal")
+            source_file=~/.config/starship-minimal-rice.toml
+            ;;
+        "powerline")
+            source_file=~/.config/starship-powerline-rice.toml
+            ;;
+        "rice")
+            source_file=~/.config/starship-rice.toml
+            ;;
+        "default")
+            echo "🔄 Regenerating default style with current theme..."
+            current_theme=$(grep 'BASE16_THEME=' ~/.config/zsh/base16-theme.zsh 2>/dev/null | cut -d'"' -f2)
+            if [ -n "$current_theme" ]; then
+                flavours apply "$current_theme"
+                echo "✨ Applied default style with $current_theme theme"
+                return 0
+            else
+                echo "❌ Could not determine current theme"
+                return 1
+            fi
+            ;;
+        *)
+            echo "❌ Unknown style: $style"
+            show_help
+            return 1
+            ;;
+    esac
+    
+    if [ -f "$source_file" ]; then
+        backup_current
+        
+        # Apply Base16 colors to the template
+        current_theme=$(grep 'BASE16_THEME=' ~/.config/zsh/base16-theme.zsh 2>/dev/null | cut -d'"' -f2)
+        if [ -n "$current_theme" ]; then
+            # Use sed to replace template variables with current Base16 colors
+            sed "s/{{base00-hex}}/${BASE00:-282828}/g; s/{{base01-hex}}/${BASE01:-3c3836}/g; s/{{base02-hex}}/${BASE02:-504945}/g; s/{{base03-hex}}/${BASE03:-665c54}/g; s/{{base04-hex}}/${BASE04:-bdae93}/g; s/{{base05-hex}}/${BASE05:-d5c4a1}/g; s/{{base0D-hex}}/${BASE0D:-83a598}/g; s/{{base0E-hex}}/${BASE0E:-d3869b}/g; s/{{base0A-hex}}/${BASE0A:-fabd2f}/g; s/{{base0B-hex}}/${BASE0B:-b8bb26}/g; s/{{base0C-hex}}/${BASE0C:-8ec07c}/g; s/{{base08-hex}}/${BASE08:-fb4934}/g; s/{{base09-hex}}/${BASE09:-fe8019}/g; s/{{base0F-hex}}/${BASE0F:-d65d0e}/g" "$source_file" > ~/.config/starship.toml
+        else
+            cp "$source_file" ~/.config/starship.toml
+        fi
+        
+        echo "✨ Applied $style style"
+        echo "🔄 Restart your shell or run 'exec zsh' to see changes"
+    else
+        echo "❌ Style template not found: $source_file"
+        return 1
+    fi
+}
+
+# Main logic
+case ${1:-""} in
+    ""|"-h"|"--help"|"help")
+        show_help
+        ;;
+    *)
+        apply_style "$1"
+        ;;
+esac
