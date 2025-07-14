@@ -1,3 +1,21 @@
+#!/bin/bash
+# system-info - Displays comprehensive system information
+# 
+# Description:
+#   Collects and displays detailed system information including kernel version,
+#   distribution details, BIOS version, hardware devices (I2C, HID, USB),
+#   touchpad configuration, ACPI devices, and kernel parameters.
+#   Contains multiple command variations for different output formats.
+#
+# Usage:
+#   system-info
+#
+# Output formats:
+#   - First command: Saves to ~/touchpad_diagnostics_<date>_<time>.log
+#   - Second command: Copies system info to clipboard (wl-copy)
+#   - Third command: Basic system info to stdout
+#   - Fourth command: Formatted system info with emojis to clipboard
+
 (echo "=== Kernel Version ==="; uname -r; \
 echo -e "\n=== Distro Info ==="; cat /etc/os-release; \
 echo -e "\n=== BIOS Version ==="; sudo dmidecode -s bios-version; \
@@ -34,4 +52,3 @@ echo -e "\n## CPU"; lscpu | grep -E 'Model name|Socket|Thread|Core|CPU\(s\)|Flag
     (nvidia-smi --query-gpu=name,memory.total,driver_version --format=csv,noheader 2>/dev/null || echo "  nvidia-smi not available");
   echo -e "\n## 🐍 PyTorch Info"; python3 -c 'import torch; print(f"  torch: {torch.__version__}\n  cuda: {torch.cuda.is_available()}"); print(f\"  mps: {hasattr(torch.backends, 'mps') and torch.backends.mps.is_available()}\")' 2>/dev/null || echo "  PyTorch not found";
 } | wl-copy
-

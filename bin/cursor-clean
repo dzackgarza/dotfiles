@@ -1,4 +1,17 @@
 #!/bin/bash
+# cursor-clean - Cleans Cursor editor cache and temporary files
+#
+# Description:
+#   Removes old bubble ID entries from Cursor's SQLite database.
+#   Cleans entries that are older than 10 minutes to free up space
+#   and improve performance. Performs VACUUM to reclaim disk space.
+#
+# Usage:
+#   cursor-clean
+#
+# Database location:
+#   ~/.config/Cursor/User/globalStorage/state.vscdb
+
 DB_PATH="$HOME/.config/Cursor/User/globalStorage/state.vscdb"
 
 sqlite3 "$DB_PATH" "

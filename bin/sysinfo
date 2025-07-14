@@ -1,7 +1,6 @@
 #!/bin/bash
-
-# LLM System Information Script for Arch Linux
-# Comprehensive system stats for ML/AI workloads
+# sysinfo - Comprehensive system information display
+# Complete system diagnostics for ML/AI workloads and general system analysis
 
 set -euo pipefail
 
