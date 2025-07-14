@@ -1,0 +1,27 @@
+#!/bin/bash
+# Theme switcher using flavours and fzf
+# Provides instant theme switching across all configured applications
+
+set -euo pipefail
+
+# Show current theme
+current_theme=$(flavours current 2>/dev/null || echo "none")
+echo "Current theme: $current_theme"
+echo ""
+
+# Let user select a new theme
+selected_theme=$(flavours list | tr ' ' '\n' | fzf --height 50% --reverse --border \
+    --prompt="Select theme: " \
+    --preview='flavours info {} 2>/dev/null || echo "No preview available"' \
+    --preview-window=right:50%:wrap)
+
+if [[ -n "$selected_theme" ]]; then
+    echo "Applying theme: $selected_theme"
+    flavours apply "$selected_theme"
+    echo "✓ Theme applied successfully!"
+    echo "Theme is now active in:"
+    echo "  • Kitty terminal (reload with Ctrl+Shift+F5)"
+    echo "  • Add more apps by editing ~/.config/flavours/config.toml"
+else
+    echo "No theme selected"
+fi
