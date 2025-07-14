@@ -35,3 +35,5 @@ PandocPreview/test/outputs/
 # Misc
 .DS_Store
 .env
+envkeys
+**/envkeys
