@@ -1,5 +1,21 @@
 #!/usr/bin/env bash
-# copyfile.sh — copy contents of a file to the Wayland clipboard using wl-copy
+# clip - Clipboard management utility
+#
+# Description:
+#   Copies the contents of a specified file to the Wayland clipboard
+#   using wl-copy. Provides error checking for file existence and
+#   proper argument validation. Useful for quickly copying file
+#   contents without opening an editor.
+#
+# Usage:
+#   clip <filename>
+#
+# Example:
+#   clip ~/.ssh/id_rsa.pub
+#
+# Requirements:
+#   - wl-copy (part of wl-clipboard package)
+#   - Wayland display server
 
 # Exit immediately on error
 set -e

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 cp ~/.pandoc/bin/LatestMakefile ./Makefile
 mkdir ./sections
 mkdir ./sections/figures

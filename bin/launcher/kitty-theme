@@ -1,0 +1,39 @@
+#!/bin/bash
+# Interactive theme switcher for kitty terminal
+# Displays available themes and updates kitty.conf with auto-reload
+
+KITTY_CONFIG="$HOME/.config/kitty/kitty.conf"
+THEMES_DIR="$HOME/.config/kitty/themes"
+
+# List available themes
+echo "Available themes:"
+themes=($(ls "$THEMES_DIR"/*.conf 2>/dev/null | xargs -n1 basename | sed 's/\.conf$//' | sort))
+
+for i in "${!themes[@]}"; do
+    echo "$((i+1)). ${themes[$i]}"
+done
+
+# Get user selection
+echo -n "Select a theme (1-${#themes[@]}): "
+read selection
+
+if [[ "$selection" =~ ^[0-9]+$ ]] && [ "$selection" -ge 1 ] && [ "$selection" -le "${#themes[@]}" ]; then
+    selected_theme="${themes[$((selection-1))]}"
+    
+    # Update kitty.conf
+    sed -i '/^include themes\//d' "$KITTY_CONFIG"
+    echo "include themes/${selected_theme}.conf" >> "$KITTY_CONFIG"
+    
+    echo "Theme switched to: $selected_theme"
+    
+    # Auto-reload kitty config
+    kill -SIGUSR1 $(pidof kitty) 2>/dev/null
+    if [ $? -eq 0 ]; then
+        echo "Kitty configuration reloaded!"
+    else
+        echo "Could not auto-reload. Use Ctrl+Shift+F5 to reload manually."
+    fi
+else
+    echo "Invalid selection"
+    exit 1
+fi

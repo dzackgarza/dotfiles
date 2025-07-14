@@ -1,0 +1,156 @@
+#!/usr/bin/env bash
+# filter_zsh_history.sh
+# Remove multiline commands from zsh history file, keep only single-line commands.
+
+set -uo pipefail
+
+# Input and output files can be passed as arguments, or default to ~/.zsh_history and ~/.zsh_history_clean
+INPUT_FILE="${1:-$HOME/.zsh_history}"
+OUTPUT_FILE="${2:-$HOME/.zsh_history_clean}"
+
+# Count entries before processing
+echo "=== Clean History Script ==="
+echo "Processing: $INPUT_FILE"
+BEFORE_COUNT=$(grep -c "^:" "$INPUT_FILE" 2>/dev/null || echo 0)
+echo "Before: $BEFORE_COUNT entries"
+
+
+# Optimized: Use awk record separator to process blocks, print only single-line commands, remove duplicates, and filter out complex/rarely used commands
+# 1. Remove multiline commands (keep only single-line)
+# 2. Remove leading/trailing whitespace
+# 3. Deduplicate commands (keep most recent)
+# 4. Optionally, filter out commands matching rare/complex patterns (customizable)
+
+
+# Use Python with fuzzy string matching to deduplicate similar commands in a mathematically sophisticated way
+# Requirements: pip install rapidfuzz
+
+# 1. Extract single-line commands from zsh history (simplified approach)
+echo "Extracting single-line commands..."
+# Just copy lines that start with ": " (zsh format) and don't contain newlines within the command
+grep "^: " "$INPUT_FILE" | awk -F';' 'NF>=2 {cmd=$NF; gsub(/^ +| +$/, "", cmd); if(length(cmd) > 0 && length(cmd) < 300) print cmd "\t" $0}' > "$OUTPUT_FILE.tmp1"
+
+# Check if tmp file was created
+if [ ! -f "$OUTPUT_FILE.tmp1" ]; then
+    echo "Error: Failed to process history file"
+    exit 1
+fi
+
+# 2. Use Python to deduplicate similar commands using Levenshtein/fuzzy matching
+echo "Deduplicating similar commands..."
+if ! python3 -c "import rapidfuzz" 2>/dev/null; then
+    echo "Warning: rapidfuzz not installed. Using simple deduplication instead."
+    # Fallback: simple exact match deduplication
+    awk -F'\t' '!seen[$1]++ {print $2}' "$OUTPUT_FILE.tmp1" > "$OUTPUT_FILE.tmp2"
+else
+    python3 - "$OUTPUT_FILE.tmp1" "$OUTPUT_FILE.tmp2" <<'EOF'
+import sys
+from rapidfuzz import fuzz
+
+input_file, output_file = sys.argv[1:3]
+SIMILARITY_THRESHOLD = 90  # 0-100, higher is stricter
+
+commands = []
+full_entries = []
+with open(input_file) as f:
+    for line in f:
+        if '\t' in line:
+            cmd, entry = line.rstrip('\n').split('\t', 1)
+            commands.append(cmd)
+            full_entries.append(entry)
+
+kept = []
+kept_entries = []
+for i, cmd in enumerate(commands):
+    is_similar = False
+    for prev in kept:
+        if fuzz.ratio(cmd, prev) >= SIMILARITY_THRESHOLD:
+            is_similar = True
+            break
+    if not is_similar:
+        kept.append(cmd)
+        kept_entries.append(full_entries[i])
+with open(output_file, 'w') as f:
+    for entry in kept_entries:
+        f.write(entry + '\n')
+EOF
+fi
+
+# 3. Optionally, filter out commands matching rare/complex patterns (edit as needed)
+echo "Filtering complex commands..."
+if [ -f "$OUTPUT_FILE.tmp2" ] && [ -s "$OUTPUT_FILE.tmp2" ]; then
+    # Use grep but don't fail if all lines match the pattern
+    grep -Ev '\\||for |while |<<' "$OUTPUT_FILE.tmp2" > "$OUTPUT_FILE" 2>/dev/null || true
+    # If grep removed all lines, use the unfiltered file
+    if [ ! -s "$OUTPUT_FILE" ]; then
+        echo "Note: All commands were filtered out, using unfiltered list"
+        cp "$OUTPUT_FILE.tmp2" "$OUTPUT_FILE"
+    fi
+else
+    echo "Warning: Deduplication step produced no output"
+    if [ -f "$OUTPUT_FILE.tmp1" ] && [ -s "$OUTPUT_FILE.tmp1" ]; then
+        echo "Using original extracted commands"
+        awk -F'\t' '{print $2}' "$OUTPUT_FILE.tmp1" > "$OUTPUT_FILE"
+    fi
+fi
+
+# Clean up temp files
+rm -f "$OUTPUT_FILE.tmp1" "$OUTPUT_FILE.tmp2"
+
+# Count entries after processing
+if [ -f "$OUTPUT_FILE" ] && [ -s "$OUTPUT_FILE" ]; then
+    # Count lines that start with ": " (zsh history format)
+    AFTER_COUNT=$(grep -c "^:" "$OUTPUT_FILE" 2>/dev/null || echo 0)
+    if [ "$AFTER_COUNT" -eq 0 ]; then
+        # If no lines start with ":", count all non-empty lines
+        AFTER_COUNT=$(grep -c . "$OUTPUT_FILE" 2>/dev/null || echo 0)
+    fi
+else
+    AFTER_COUNT=0
+    echo "Error: Output file was not created or is empty"
+fi
+
+# Calculate removed entries safely
+if [ -n "$BEFORE_COUNT" ] && [ -n "$AFTER_COUNT" ]; then
+    REMOVED=$((BEFORE_COUNT - AFTER_COUNT))
+else
+    REMOVED=0
+fi
+
+echo ""
+echo "After: $AFTER_COUNT entries"
+echo "Removed: $REMOVED duplicate/multiline/complex commands"
+echo "Output saved to: $OUTPUT_FILE"
+
+# Ask if user wants to replace the original history file
+if [ "$OUTPUT_FILE" != "$INPUT_FILE" ]; then
+    echo ""
+    read -p "Replace original history file with cleaned version? (y/N): " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        # Create backup directory
+        BACKUP_DIR="$HOME/dotfiles/history-backups"
+        mkdir -p "$BACKUP_DIR"
+        
+        # Create timestamped backup
+        TIMESTAMP=$(date '+%Y%m%d-%H%M%S')
+        BACKUP_FILE="$BACKUP_DIR/zsh_history_backup_$TIMESTAMP"
+        
+        echo "Creating backup: $BACKUP_FILE"
+        cp "$INPUT_FILE" "$BACKUP_FILE"
+        
+        echo "Replacing original history file..."
+        cp "$OUTPUT_FILE" "$INPUT_FILE"
+        
+        echo "✓ Original history replaced with cleaned version"
+        echo "✓ Backup saved to: $BACKUP_FILE"
+        
+        # Clean up the temporary output file
+        rm -f "$OUTPUT_FILE"
+    else
+        echo "Original history file left unchanged"
+    fi
+fi
+
+echo "=== Done! ==="
+

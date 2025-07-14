@@ -43,5 +43,9 @@
       "mcp__taskmaster-ai__parse_prd"
     ],
     "deny": []
-  }
+  },
+  "enabledMcpjsonServers": [
+    "taskmaster-ai"
+  ],
+  "enableAllProjectMcpServers": true
 }
