@@ -1,0 +1,230 @@
+#!/bin/bash
+
+# Script launcher with descriptions
+# Based on llm-query.sh template system
+
+# Cleanup function
+cleanup() {
+    rm -f /tmp/script_launcher_preview.sh
+}
+trap cleanup EXIT
+
+# Configuration
+SCRIPTS_DIR="${HOME}/dotfiles/bin/launcher"
+THEME="${1:-catppuccin}"  # Default to catppuccin if no theme specified
+
+# Function to extract docstring from script
+get_docstring() {
+    local script_path="$1"
+    local docstring=""
+    
+    if [[ ! -f "$script_path" ]]; then
+        return
+    fi
+    
+    # For shell scripts, look for comments after shebang
+    if [[ "$script_path" =~ \.(sh|bash)$ ]] || [[ "$(head -n1 "$script_path" 2>/dev/null)" =~ ^#!/.*sh ]]; then
+        # Skip shebang and empty lines, then get consecutive comment lines
+        docstring=$(awk '
+            NR==1 && /^#!/ { next }
+            /^[[:space:]]*$/ { next }
+            /^[[:space:]]*#/ { 
+                gsub(/^[[:space:]]*#[[:space:]]?/, "")
+                print
+                found=1
+            }
+            found && !/^[[:space:]]*#/ { exit }
+        ' "$script_path")
+    
+    # For Python scripts, look for docstrings
+    elif [[ "$script_path" =~ \.py$ ]] || [[ "$(head -n1 "$script_path" 2>/dev/null)" =~ ^#!/.*python ]]; then
+        docstring=$(python3 -c "
+import ast
+try:
+    with open('$script_path', 'r') as f:
+        tree = ast.parse(f.read())
+    docstring = ast.get_docstring(tree)
+    if docstring:
+        print(docstring.split('\\n')[0])  # First line only
+except:
+    pass
+" 2>/dev/null)
+        
+        # If no module docstring, look for comments after shebang
+        if [[ -z "$docstring" ]]; then
+            docstring=$(awk '
+                NR==1 && /^#!/ { next }
+                /^[[:space:]]*$/ { next }
+                /^[[:space:]]*#/ { 
+                    gsub(/^[[:space:]]*#[[:space:]]?/, "")
+                    print
+                    found=1
+                }
+                found && !/^[[:space:]]*#/ { exit }
+            ' "$script_path")
+        fi
+    fi
+    
+    echo "$docstring" | head -n1  # Return first line
+}
+
+# Function to get theme colors for fzf
+get_theme_colors() {
+    case "$1" in
+        catppuccin)
+            echo "--color=bg:#1e1e2e,fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc,marker:#f5e0dc,spinner:#f5e0dc,prompt:#cba6f7,hl:#f38ba8,hl+:#f38ba8,bg+:#313244,fg+:#cdd6f4,gutter:#1e1e2e,border:#6c7086"
+            ;;
+        dracula)
+            echo "--color=bg:#282a36,fg:#f8f8f2,header:#ff79c6,info:#bd93f9,pointer:#ffb86c,marker:#50fa7b,spinner:#8be9fd,prompt:#bd93f9,hl:#ff79c6,hl+:#ff79c6,bg+:#44475a,fg+:#f8f8f2,gutter:#282a36,border:#6272a4"
+            ;;
+        nord)
+            echo "--color=bg:#2e3440,fg:#d8dee9,header:#bf616a,info:#5e81ac,pointer:#d08770,marker:#a3be8c,spinner:#88c0d0,prompt:#5e81ac,hl:#bf616a,hl+:#bf616a,bg+:#3b4252,fg+:#d8dee9,gutter:#2e3440,border:#4c566a"
+            ;;
+        gruvbox)
+            echo "--color=bg:#1d2021,fg:#ebdbb2,header:#fb4934,info:#fabd2f,pointer:#fe8019,marker:#b8bb26,spinner:#8ec07c,prompt:#fabd2f,hl:#fb4934,hl+:#fb4934,bg+:#3c3836,fg+:#ebdbb2,gutter:#1d2021,border:#504945"
+            ;;
+        tokyo)
+            echo "--color=bg:#1a1b26,fg:#c0caf5,header:#f7768e,info:#bb9af7,pointer:#ff9e64,marker:#9ece6a,spinner:#7dcfff,prompt:#bb9af7,hl:#f7768e,hl+:#f7768e,bg+:#24283b,fg+:#c0caf5,gutter:#1a1b26,border:#565f89"
+            ;;
+        onedark)
+            echo "--color=bg:#282c34,fg:#abb2bf,header:#e06c75,info:#c678dd,pointer:#d19a66,marker:#98c379,spinner:#56b6c2,prompt:#c678dd,hl:#e06c75,hl+:#e06c75,bg+:#3e4451,fg+:#abb2bf,gutter:#282c34,border:#4b5263"
+            ;;
+        *)
+            echo "--color=bg:#1e1e2e,fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc,marker:#f5e0dc,spinner:#f5e0dc,prompt:#cba6f7,hl:#f38ba8,hl+:#f38ba8,bg+:#313244,fg+:#cdd6f4,gutter:#1e1e2e,border:#6c7086"
+            ;;
+    esac
+}
+
+# Get all executable scripts (including symlinks)
+get_scripts() {
+    find "$SCRIPTS_DIR" -maxdepth 1 \( -type f -o -type l \) -executable -printf "%f\n" | sort
+}
+
+# Get theme colors
+theme_colors=$(get_theme_colors "$THEME")
+
+# Create preview script
+cat > /tmp/script_launcher_preview.sh << 'EOF'
+#!/bin/bash
+SCRIPTS_DIR="$1"
+script_name="$2"
+
+# Function to extract docstring from script
+get_docstring() {
+    local script_path="$1"
+    local docstring=""
+    
+    if [[ ! -f "$script_path" ]]; then
+        return
+    fi
+    
+    # For shell scripts, look for comments after shebang
+    if [[ "$script_path" =~ \.(sh|bash)$ ]] || [[ "$(head -n1 "$script_path" 2>/dev/null)" =~ ^#!/.*sh ]]; then
+        # Skip shebang and empty lines, then get consecutive comment lines
+        docstring=$(awk '
+            NR==1 && /^#!/ { next }
+            /^[[:space:]]*$/ { next }
+            /^[[:space:]]*#/ { 
+                gsub(/^[[:space:]]*#[[:space:]]?/, "")
+                print
+                found=1
+            }
+            found && !/^[[:space:]]*#/ { exit }
+        ' "$script_path")
+    
+    # For Python scripts, look for docstrings
+    elif [[ "$script_path" =~ \.py$ ]] || [[ "$(head -n1 "$script_path" 2>/dev/null)" =~ ^#!/.*python ]]; then
+        docstring=$(python3 -c "
+import ast
+try:
+    with open('$script_path', 'r') as f:
+        tree = ast.parse(f.read())
+    docstring = ast.get_docstring(tree)
+    if docstring:
+        print(docstring.split('\\n')[0])  # First line only
+except:
+    pass
+" 2>/dev/null)
+        
+        # If no module docstring, look for comments after shebang
+        if [[ -z "$docstring" ]]; then
+            docstring=$(awk '
+                NR==1 && /^#!/ { next }
+                /^[[:space:]]*$/ { next }
+                /^[[:space:]]*#/ { 
+                    gsub(/^[[:space:]]*#[[:space:]]?/, "")
+                    print
+                    found=1
+                }
+                found && !/^[[:space:]]*#/ { exit }
+            ' "$script_path")
+        fi
+    fi
+    
+    echo "$docstring" | head -n1  # Return first line
+}
+
+echo "╭─────────────────────────────────────────╮"
+echo "│ Script: $script_name"
+echo "╰─────────────────────────────────────────╯"
+echo
+
+full_path="$SCRIPTS_DIR/$script_name"
+docstring=$(get_docstring "$full_path")
+
+if [[ -n "$docstring" ]]; then
+    echo "Description:"
+    echo "  $docstring"
+    echo
+fi
+
+echo "Path: $full_path"
+echo
+
+if [[ -f "$full_path" ]]; then
+    echo "Type: $(file -b "$full_path" | cut -d, -f1)"
+    echo
+    echo "First 10 lines:"
+    echo "────────────────"
+    head -n 10 "$full_path" 2>/dev/null | sed 's/^/  /'
+fi
+EOF
+
+chmod +x /tmp/script_launcher_preview.sh
+
+# Export variables for preview
+export SCRIPTS_DIR
+
+# Select script with preview
+selected_script=$(get_scripts | fzf \
+    --prompt="❯ Select script: " \
+    --height=90% \
+    --border=rounded \
+    --margin=1% \
+    --padding=1% \
+    --info=inline \
+    --layout=reverse \
+    --pointer='▶' \
+    --marker='✓' \
+    --no-mouse \
+    --bind='ctrl-c:abort' \
+    --bind='esc:abort' \
+    --bind='alt-p:preview-page-up' \
+    --bind='alt-n:preview-page-down' \
+    --cycle \
+    --preview="/tmp/script_launcher_preview.sh '$SCRIPTS_DIR' {}" \
+    --preview-window=right:60%:wrap \
+    $theme_colors)
+
+[[ -z "$selected_script" ]] && exit 0
+
+# Execute the selected script
+"$SCRIPTS_DIR/$selected_script"
+
+# Keep terminal open to see results
+echo
+read -p "Press Enter or Esc to close..." -s -n 1 key
+case $key in
+    $'\e') echo " (Esc pressed)" ;;
+    *) echo ;;
+esac

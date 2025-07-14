@@ -1,3 +1,20 @@
+#!/bin/bash
+# cpu-info-print - Displays detailed CPU information
+#
+# Description:
+#   Shows comprehensive CPU details including model name, cores, threads,
+#   clock speeds, cache sizes, and flags. Also displays memory information,
+#   GPU details with VRAM detection for Intel and AMD GPUs.
+#
+# Usage:
+#   cpu-info-print
+#
+# Output:
+#   - CPU specifications (model, cores, threads, frequencies)
+#   - Memory information
+#   - CPU cache details
+#   - GPU information with VRAM detection
+
 echo "=== CPU ==="
 lscpu | grep -E 'Model name|Socket|Core\(s\)|Thread|MHz|Flags' | sed 's/^/  /'
 echo
