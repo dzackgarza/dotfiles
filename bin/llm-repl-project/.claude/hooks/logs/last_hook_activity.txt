@@ -1,5 +1,0 @@
-Last hook: block-premature-completion
-Time: 2025-07-12 22:26:03
-Tool: Stop
-Decision: soft_block
-Message: Comprehensive reality check

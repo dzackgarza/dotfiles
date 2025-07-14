@@ -1,7 +1,0 @@
-Test file for edit tracking
-Edit #1
-Edit #2
-Edit #3
-Edit #4 - Testing Update tool tracking
-Edit #5 - Debug tool name
-Edit #6 - Testing with canonical hook

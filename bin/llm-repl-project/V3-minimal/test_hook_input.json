@@ -1,7 +1,0 @@
-{
-  "tool": "Write",
-  "tool_input": {
-    "content": "✅ Fixed the turn separator issue!",
-    "file_path": "test.md"
-  }
-}

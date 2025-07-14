@@ -1,9 +1,0 @@
-/* Idle Animation Widget Styling */
-
-.idle-animation {
-    height: auto;
-    width: 100%;
-    padding: 1 2;
-    text-align: center;
-    color: $text-muted;
-}
