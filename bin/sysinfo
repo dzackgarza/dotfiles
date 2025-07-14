@@ -1,8 +1,15 @@
 #!/bin/bash
 # sysinfo - Comprehensive system information display
 # Complete system diagnostics for ML/AI workloads and general system analysis
+# Automatically copies all output to clipboard
 
 set -euo pipefail
+
+# Always copy to clipboard unless this is the second run
+if [ "${1:-}" != "--no-clipboard" ]; then
+    # Run the script again and tee to both display and clipboard
+    exec "$0" --no-clipboard | tee >(wl-copy)
+fi
 
 # Colors for output
 RED='\033[0;31m'
@@ -220,6 +227,8 @@ fi
 # Mesa/DRI Information
 print_section "Mesa/DRI Information"
 if check_command "glxinfo"; then
+    # Set environment to avoid fontconfig warnings
+    export FONTCONFIG_PATH=/etc/fonts
     mesa_version=$(glxinfo | grep "OpenGL version" | cut -d: -f2 | sed 's/^ *//')
     print_value "OpenGL Version" "$mesa_version"
     
@@ -488,4 +497,5 @@ fi
 
 print_header "REPORT COMPLETE"
 echo -e "${GREEN}System information gathering complete!${NC}"
+echo -e "${GREEN}✓ Complete output copied to clipboard${NC}"
 echo -e "${BLUE}For real-time monitoring, consider using: htop, nvidia-smi, or iostat${NC}"

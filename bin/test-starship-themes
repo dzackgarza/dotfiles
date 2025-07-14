@@ -1,0 +1,27 @@
+#!/bin/bash
+# Test Starship with different themes
+
+echo "🚀 Testing Starship theme integration..."
+echo ""
+
+themes=("nord" "gruvbox-dark" "catppuccin-mocha" "tokyo-night")
+
+for theme in "${themes[@]}"; do
+    echo "🎨 Applying theme: $theme"
+    if flavours apply "$theme" 2>/dev/null; then
+        echo "✅ Theme applied successfully"
+        echo "📋 Current Starship colors:"
+        echo "  - Directory: $(grep 'style.*#.*bold' ~/.config/starship.toml | head -1 | cut -d'"' -f2)"
+        echo "  - Git branch: $(grep -A1 '\[git_branch\]' ~/.config/starship.toml | grep style | cut -d'"' -f2)"
+        echo "  - Success prompt: $(grep 'success_symbol' ~/.config/starship.toml | cut -d'#' -f2 | cut -d')' -f1)"
+        echo ""
+        sleep 2
+    else
+        echo "❌ Theme $theme not available"
+        echo ""
+    fi
+done
+
+echo "🎯 Theme integration test complete!"
+echo "💡 Run 'flavours apply <theme>' to change themes"
+echo "⚙️  Edit ~/.config/starship.toml to customize prompt"

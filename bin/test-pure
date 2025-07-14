@@ -1,0 +1,15 @@
+#!/bin/bash
+# Test Pure prompt temporarily
+
+echo "✨ Testing Pure prompt..."
+echo "Press Ctrl+D to exit and return to your normal prompt"
+echo ""
+
+# Start new zsh with Pure
+zsh -c '
+    fpath+=(~/.zsh/pure-preview)
+    autoload -U promptinit; promptinit
+    prompt pure
+    cd ~/  # Start in home directory
+    exec zsh
+'

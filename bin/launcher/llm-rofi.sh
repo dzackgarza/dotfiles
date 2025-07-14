@@ -1,1 +1,0 @@
-../llm-rofi.sh
