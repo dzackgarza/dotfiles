@@ -1,0 +1,330 @@
+# Starship prompt initialization
+# Fast, cross-shell prompt with TOML configuration
+
+# ~/.zshrc
+#
+# Sourced for interactive Zsh sessions.
+
+# ------------------------------------------------------------------------------
+# History Configuration with zsh-hist
+# Install with: zinit light zdharma-continuum/zsh-hist
+
+# Set history file location
+export HISTFILE="$HOME/.zsh_history"
+
+# Ensure history directory exists
+[[ ! -d "${HISTFILE%/*}" ]] && mkdir -p "${HISTFILE%/*}"
+
+# Create history file if it doesn't exist and set permissions
+touch "$HISTFILE" 2>/dev/null
+chmod 600 "$HISTFILE" 2>/dev/null
+
+# History settings
+export HISTSIZE=1000000
+export SAVEHIST=1000000
+
+# Enable extended history format (timestamp, duration, etc.)
+setopt EXTENDED_HISTORY       # Save timestamp and duration
+setopt INC_APPEND_HISTORY     # Append to history immediately
+setopt SHARE_HISTORY          # Share history between all sessions
+setopt HIST_IGNORE_ALL_DUPS   # Don't record duplicate entries
+setopt HIST_IGNORE_SPACE      # Don't record commands starting with space
+setopt HIST_REDUCE_BLANKS     # Remove unnecessary blanks
+setopt HIST_FCNTL_LOCK        # Use fcntl() for file locking (more reliable)
+setopt HIST_FIND_NO_DUPS      # Don't show duplicates when searching history
+setopt HIST_EXPIRE_DUPS_FIRST # Expire duplicates first when trimming history
+
+# Load zsh-hist if available
+if [[ -f "${ZINIT[PLUGINS_DIR]}/zsh-hist/zsh-hist.plugin.zsh" ]]; then
+  source "${ZINIT[PLUGINS_DIR]}/zsh-hist/zsh-hist.plugin.zsh"
+  
+  # Configure zsh-hist
+  ZSH_HISTORY_FILTER="fzf"  # Use fzf for history search
+  ZSH_HISTORY_KEYBIND_GET_BY_CMD="^r"  # Ctrl+R for searching by command
+  ZSH_HISTORY_KEYBIND_GET_BY_DIR="^xr" # Ctrl+X R for searching by directory
+  
+  # Additional zsh-hist settings
+  ZSH_HISTORY_AUTO_SYNC=true      # Auto-sync history between sessions
+  ZSH_HISTORY_AUTO_SYNC_INTERVAL=30  # Sync every 30 seconds
+  ZSH_HISTORY_AUTO_SYNC_THRESHOLD=10 # Sync after 10 commands
+  
+  # Function to ensure history is properly saved
+  function zshaddhistory() {
+    emulate -L zsh
+    # Don't add empty commands or commands starting with space
+    [[ -n "$1" && "$1" != [[:space:]]# ]] || return 1
+    
+    # Let zsh-hist handle the actual history writing
+    print -sr -- "${1%%$'\n'}"
+    
+    # Trigger history sync
+    [[ -n "$ZSH_HISTORY_CMD" ]] && $ZSH_HISTORY_CMD --sync
+    
+    return 0
+  }
+  
+  # Ensure history is saved when the shell exits
+  function zshexit() {
+    # Trigger final history sync
+    [[ -n "$ZSH_HISTORY_CMD" ]] && $ZSH_HISTORY_CMD --sync
+    return 0
+  }
+  
+else
+  # Fallback to basic history handling if zsh-hist is not available
+  autoload -Uz add-zsh-hook
+  
+  function zshaddhistory() {
+    emulate -L zsh
+    [[ -n "$1" && "$1" != [[:space:]]# ]] || return 1
+    print -s -- "${1%%$'\n'}"
+    return 0
+  }
+  
+  function precmd() {
+    # Save history after each command
+    fc -AI
+  }
+  
+  function zshexit() {
+    # Final history save on exit
+    fc -AI
+    return 0
+  }
+  
+  # Load history at startup
+  fc -R "$HISTFILE" 2>/dev/null
+fi
+
+# Load other config files
+() {
+  local file files=(
+    "$HOME/.config/zsh/environment.zsh"
+    "$HOME/.config/zsh/aliases.zsh"
+    "$HOME/.config/zsh/functions.zsh"
+    "$HOME/.config/zsh/extras.zsh"
+  )
+  
+  for file in "${files[@]}"; do
+    [[ -f "$file" ]] && source "$file"
+  done
+}
+
+# ------------------------------------------------------------------------------
+# Zsh Options (setopt)
+# ------------------------------------------------------------------------------
+setopt complete_aliases       # Enable command completion for aliases.
+setopt histignorealldups      # History: ignore lines that are exact duplicates of the previous line.
+setopt AUTO_CD                # Change directory by just typing the directory name.
+setopt EXTENDED_GLOB          # Enables more powerful globbing features.
+setopt NOTIFY                 # Report status of background jobs immediately.
+setopt AUTO_PUSHD             # Automatically push the current directory onto the directory stack.
+setopt PUSHD_IGNORE_DUPS      # Don't push multiple copies of the same directory onto the directory stack.
+
+# ------------------------------------------------------------------------------
+# Zinit Configuration
+# ------------------------------------------------------------------------------
+source ~/.zinit/bin/zinit.zsh
+
+# Load Oh My Zsh framework
+# zinit ice wait
+# zinit light ohmyzsh/ohmyzsh
+
+# Load plugins
+# zinit ice wait
+zinit light zsh-users/zsh-autosuggestions
+# zinit ice wait
+zinit light zsh-users/zsh-history-substring-search
+# zinit ice wait
+zinit light zsh-users/zsh-completions
+# zinit ice wait
+zinit light zsh-users/zsh-syntax-highlighting
+
+# Load FZF as a program
+zinit light junegunn/fzf
+source <(fzf --zsh)
+zinit ice modifiers silent
+zinit light agkozak/zsh-z
+#init light "mrjohannchang/zsh-interactive-cd"
+# zinit light Aloxaf/fzf-tab
+
+# Initialize completions
+autoload -Uz compinit
+compinit -d ~/.zcompdump-$ZSH_VERSION
+
+# Enable menu selection for completions
+zstyle ':completion:*' menu select
+zmodload zsh/complist
+
+# Bind shift-tab to reverse menu complete (navigate backwards through completions)
+bindkey '^[[Z' reverse-menu-complete
+
+# Alternative binding in case your terminal sends a different sequence
+# Uncomment the line below if the above doesn't work
+# bindkey "${terminfo[kcbt]}" reverse-menu-complete
+
+# Load Direnv as a program
+zinit ice as'program' from'gh-r' bpick'*linux_amd64'
+zinit light direnv/direnv
+
+# Initialize Starship prompt
+eval "$(~/.local/bin/starship init zsh)"
+
+# fzf + zsh-z interactive directory jump
+# Source the fzf-z-jump script
+if [ -n "$ZSH_VERSION" ] && [ -f ~/dotfiles/zsh/functions/fzf-z-jump.zsh ]; then
+  source ~/dotfiles/zsh/functions/fzf-z-jump.zsh
+fi
+
+# fzf for deep subdirectories (cd)
+# fzf key bindings are now managed in ~/.config/zsh/functions.zsh (Ctrl+[ then Ctrl+T)
+
+
+
+# ------------------------------------------------------------------------------
+# Starship Configuration
+# ------------------------------------------------------------------------------
+# Configuration is in ~/.config/starship.toml
+
+# ------------------------------------------------------------------------------
+# Tool Initializations
+# ------------------------------------------------------------------------------
+# NVM
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# GRC
+# if [ -f /etc/profile.d/grc.sh ]; then
+#     source /etc/profile.d/grc.sh
+# fi
+
+# Direnv
+eval "$(direnv hook zsh)"
+
+# Remove timing output that interferes with instant prompt
+
+# Directory navigation with Ctrl+G
+# This is loaded on-demand when the widget is first used
+# function _lazy_dirnav_widget() {
+#   # Remove this function so it only runs once
+#   unfunction _lazy_dirnav_widget
+#
+#   # Define the widget function that will be called after loading dirnav
+#   function _dirnav_wrapper() {
+#     # Activate the virtual environment
+#     if [ -f "$HOME/.dotfiles/py-dirnav/venv/bin/activate" ]; then
+#       source "$HOME/.dotfiles/py-dirnav/venv/bin/activate"
+#     fi
+#
+#     # Call the real _dirnav_widget if it exists
+#     if (( $+functions[_dirnav_widget] )); then
+#       zle _dirnav_widget
+#     else
+#       zle -M "dirnav widget not found. Please check your installation."
+#       return 1
+#     fi
+#   }
+#
+#   # Load dirnav
+#   if [ -f "$HOME/.local/bin/dirnav" ]; then
+#     # Load in silent mode
+#     DIRNAV_SILENT=1 source "$HOME/.local/bin/dirnav"
+#
+#     # If dirnav defined its widget, set up the binding
+#     if (( $+functions[_dirnav_widget] )); then
+#       zle -N _dirnav_wrapper
+#       bindkey '^G' _dirnav_wrapper 2>/dev/null
+#       # Call the widget immediately
+#       zle _dirnav_wrapper
+#     else
+#       zle -M "Failed to load dirnav widget. Check your installation."
+#       return 1
+#     fi
+#   else
+#     zle -M "dirnav not found at ~/.local/bin/dirnav"
+#     return 1
+#   fi
+# }
+#
+# # Create the initial widget that will load dirnav on first use
+# zle -N _lazy_dirnav_widget
+# bindkey '^G' _lazy_dirnav_widget 2>/dev/null
+
+
+# Custom backward-kill-word that stops at /
+# This makes Ctrl+W stop at directory delimiters when deleting file paths
+backward-kill-dir () {
+    local WORDCHARS="${WORDCHARS:s#/#}"
+    zle backward-kill-word
+}
+zle -N backward-kill-dir
+bindkey '^W' backward-kill-dir
+
+# Directory Navigation
+export DIRNAV_ROOT="$HOME"
+export DIRNAV_MAX_DEPTH=6
+export DIRNAV_DEBUG=0
+
+#alias clean-cursor='echo "DELETE FROM cursorDiskKV; DELETE FROM ItemTable; VACUUM;" | sqlite3 ~/.config/Cursor/User/globalStorage/state.vscdb'
+
+# # hello_world_widget with output handling
+# hello_world_widget() {
+#     BUFFER=""
+#     zle push-input
+    
+#     # Create a command that runs the script then puts output as next command
+#     BUFFER="{ output=\$(~/.zsh_functions/hello_world.sh); print -z \"\$output\"; }"
+#     zle accept-line
+# }
+# zle -N hello_world_widget
+# bindkey '^O' hello_world_widget
+
+# askterm_widget - using same output handling as hello_world_widget
+# askterm_widget() {
+#     BUFFER=""
+#     zle push-input
+#     BUFFER='{ output=$(~/.zsh_functions/askterm.sh); print -z "$output"; }'
+#     zle accept-line
+# }
+# zle -N askterm_widget
+# bindkey '^O' askterm_widget  # Ctrl+Alt+O
+
+# Task Master aliases added on 7/12/2025
+#alias tm='task-master'
+#alias taskmaster='task-master'
+#alias claude="/home/dzack/.local/bin/claude"
+
+export GEMINI_SYSTEM_MD="/home/dzack/gitclones/claude_improvement/gemini/system.md"
+
+# pnpm
+export PNPM_HOME="/home/dzack/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# Cargo (Rust)
+export CARGO_HOME="$HOME/.cargo"
+case ":$PATH:" in
+  *":$CARGO_HOME/bin:"*) ;;
+  *) export PATH="$CARGO_HOME/bin:$PATH" ;;
+esac
+
+[ ! -f "$HOME/.x-cmd.root/X" ] || . "$HOME/.x-cmd.root/X" # boot up x-cmd.
+
+export $(grep -v '^#' /home/dzack/.env | xargs)
+
+# Base16 Shell
+[ -n "$PS1" ] && \
+    [ -s "$HOME/.config/base16-shell/profile_helper.sh" ] && \
+        source "$HOME/.config/base16-shell/profile_helper.sh"
+
+eval "$(zoxide init zsh)"
+
+
+# add CloudyPad CLI PATH
+export PATH=$PATH:/home/dzack/.cloudypad/bin
+
+# Paperspace
+export PAPERSPACE_INSTALL="/home/dzack/.paperspace"
+export PATH="$PAPERSPACE_INSTALL/bin:$PATH"
