@@ -1,0 +1,97 @@
+#!/bin/bash
+
+# Mathematical Thesis Reviewer Script using LLM
+# Usage: ./math-reviewer <file.md>
+# Default model: Gemini 2.5 Pro (best for complex mathematical reasoning)
+# Alternative: Use gemini-2.5-flash for faster, still excellent reviews
+
+set -e
+
+# Check if file argument provided
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 <file.md>"
+    echo "Example: $0 part3/06_The_Main_Theorem.md"
+    exit 1
+fi
+
+FILE="$1"
+
+# Check if file exists
+if [ ! -f "$FILE" ]; then
+    echo "Error: File '$FILE' not found."
+    exit 1
+fi
+
+# Load environment variables
+if [ -f ~/.env ]; then
+    export $(grep -v '^#' ~/.env | xargs)
+fi
+
+# Export the Gemini API key for llm
+export LLM_GEMINI_KEY="$GEMINI_API_KEY"
+
+echo "📄 Mathematical Thesis Review for: $FILE"
+echo "=============================================="
+echo
+
+# Read the file content
+CONTENT=$(cat "$FILE")
+
+# Create the reviewer prompt
+PROMPT="You are a careful reviewer helping a mathematician identify potential issues in a thesis section. 
+
+CRITICAL INSTRUCTION: You do NOT know the full context of this thesis, and this section may reference definitions, theorems, or results from elsewhere.
+
+**PRIORITY 1: FLAG GLARING MATHEMATICAL ERRORS IMMEDIATELY**
+If you detect fundamental mathematical inconsistencies, impossible claims, or clear computational errors that would invalidate results, FLAG THESE STRONGLY and STOP reviewing style issues.
+
+Examples of GLARING ERRORS to flag strongly:
+- Signature mismatches in lattice theory (e.g., claiming (3,19) when standard is (3,19))
+- Impossible singularity counts (e.g., claiming 15 A₁ singularities on a del Pezzo surface)
+- Contradictory involution behavior (e.g., claiming both symplectic and antisymplectic)
+- Basic arithmetic errors in dimension counting
+- Contradictory mathematical statements within the same section
+
+**PRIORITY 1.5: FLAG IMPRECISE CITATIONS**
+ALWAYS flag instances where mathematical work is mentioned by name only without proper citations:
+- \"the work of Kollár, Shepherd-Barron, and others\" → NEEDS SPECIFIC CITATIONS
+- \"through the work of X and Y\" → NEEDS [Author Year] format
+- \"established by Smith\" → NEEDS [Smith Year] or [Smith Year, Theorem X.Y]
+- Any mention of mathematical results without bracketed citations
+
+**PRIORITY 2: For non-critical issues, ask questions**
+For unclear content, missing citations, or style issues - use gentle questioning approach.
+
+**PRIORITY 2.5: FLAG PROSE-HEAVY SECTIONS**
+Flag sections with extensive prose but minimal mathematical content:
+- Long paragraphs with little mathematical notation ($...$ or $$...$$)
+- Historical discussions without technical definitions or theorems
+- Sections that might be purely expository vs contributing mathematical content
+- Note: This is NOT a critical issue, but worth reviewing for contribution to thesis
+
+## Response Structure:
+🚨 **CRITICAL MATHEMATICAL ISSUES** (if any exist - use strong language here)
+[Mathematical errors that could invalidate the entire section]
+
+❓ **Questions for Verification** (gentle approach)
+[Unclear statements, missing citations, notation questions]
+
+✅ **Assessment**
+[Overall judgment - is this mathematically sound or are there serious problems?]
+
+=== THESIS SECTION TO REVIEW ===
+$CONTENT
+=== END CONTENT ===
+
+Provide your review following the priority structure above.
+
+CONVERGENCE NOTE: If no critical mathematical issues exist and the section appears to meet publication standards, you may note: '✅ This section appears mathematically sound with no critical issues to flag.'"
+
+echo "🤖 Generating review using Gemini 2.5 Pro..."
+echo
+
+# Call LLM with the prompt
+echo "$PROMPT" | llm -m gemini-2.5-pro
+
+echo
+echo "✅ Review complete!"

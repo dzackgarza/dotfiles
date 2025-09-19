@@ -1,0 +1,61 @@
+#!/usr/bin/env python3
+
+import subprocess
+import sys
+
+def main():
+    # Get the staged diff
+    result = subprocess.run(['git', 'diff', '--staged'], 
+                          capture_output=True, text=True)
+    diff = result.stdout
+    
+    if not diff:
+        print("No staged changes to check")
+        sys.exit(0)
+    
+    prompt = f"""You are checking a git diff for citation accuracy. Here's the diff:
+
+{diff}
+
+**YOUR JOB:**
+1. Look for any citations in the added lines (lines starting with +)
+2. For each citation you find, go to `/home/dzack/gitclones/diss/000-writing/refs/extracted_enhanced/individual/`
+3. Find the matching reference file (be flexible with naming - CD89 might be CD89_Cossec_Dolgachev_1989)
+4. For each citation, provide DETAILED mathematical information about what you found:
+   - What theorems/propositions/corollaries exist near the cited location
+   - What the actual mathematical content says
+   - Whether it matches the claimed statement
+5. Verify if the mathematical claims are supported by the sources
+
+**RESPOND WITH:** Either "ALL VERIFIED" or "SUSPICIOUS: [list problems]"
+
+This is a quick check for citation fabrication - focus on obvious problems."""
+
+    try:
+        result = subprocess.run(
+            ['/home/dzack/.claude/local/claude', '-p', prompt,
+             '--allowedTools', 'Read,Grep,LS,Glob',
+             '--add-dir', '/home/dzack/gitclones/diss/000-writing/refs'],
+            text=True,
+            capture_output=True,
+            timeout=120
+        )
+        
+        print(result.stdout)
+        
+        if "SUSPICIOUS" in result.stdout:
+            print("\n❌ COMMIT BLOCKED: Citation problems found")
+            sys.exit(1)
+        else:
+            print("\n✅ Citation check passed")
+            sys.exit(0)
+            
+    except subprocess.TimeoutExpired:
+        print("TIMEOUT: Citation check took too long")
+        sys.exit(1)
+    except Exception as e:
+        print(f"ERROR: {e}")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
