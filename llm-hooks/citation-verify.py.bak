@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+
+import subprocess
+import sys
+
+prompt = """Claude, I need you to verify a citation for me. Here's your task:
+
+**CITATION TO VERIFY:** [CD89, Proposition 1.2.3]
+**CLAIM:** "ω_Z is the only nontrivial 2-torsion element in Pic(Z)"
+
+**YOUR JOB:** 
+1. Go to `/home/dzack/gitclones/diss/000-writing/refs`
+2. Find the CD89 reference (should be a directory with "CD89" in the name)
+3. Look for Proposition 1.2.3 in the enhanced text file
+4. Check if it actually says what I claim it says
+
+**RESPOND WITH:** Either "VERIFIED" or "SUSPICIOUS" and a brief explanation.
+
+This is a simple fact-check - does the source actually support the claim I made in my thesis?"""
+
+result = subprocess.run(
+    ['/home/dzack/.claude/local/claude', '-p', prompt, 
+     '--allowedTools', 'Read,Grep,LS,Glob',
+     '--add-dir', '/home/dzack/gitclones/diss/000-writing/refs'],
+    text=True,
+    capture_output=True,
+    timeout=120
+)
+
+print(result.stdout)
+if "SUSPICIOUS" in result.stdout:
+    sys.exit(1)

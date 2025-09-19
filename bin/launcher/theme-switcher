@@ -1,27 +1,72 @@
 #!/bin/bash
-# Theme switcher using flavours and fzf
-# Provides instant theme switching across all configured applications
+# Theme switcher using base16-shell-preview
+# Provides instant theme preview and switching
 
 set -euo pipefail
 
-# Show current theme
-current_theme=$(flavours current 2>/dev/null || echo "none")
-echo "Current theme: $current_theme"
-echo ""
+# Set BASE16_SHELL environment variable
+export BASE16_SHELL="$HOME/.config/base16-shell"
 
-# Let user select a new theme
-selected_theme=$(flavours list | tr ' ' '\n' | fzf --height 50% --reverse --border \
-    --prompt="Select theme: " \
-    --preview='flavours info {} 2>/dev/null || echo "No preview available"' \
-    --preview-window=right:50%:wrap)
+# Launch base16-shell-preview
+/home/dzack/.local/bin/base16-shell-preview "$@"
 
-if [[ -n "$selected_theme" ]]; then
-    echo "Applying theme: $selected_theme"
-    flavours apply "$selected_theme"
+# Check if a theme was selected (symlink exists)
+if [ -L "$HOME/.base16_theme" ]; then
+    selected_theme=$(basename "$(readlink "$HOME/.base16_theme")" .sh)
+    echo ""
     echo "✓ Theme applied successfully!"
+    echo "Selected theme: $selected_theme"
+    
+    # Apply the theme to all applications using tinty
+    echo "Applying theme to all applications..."
+    if /home/dzack/.cargo/bin/tinty apply "$selected_theme" 2>&1; then
+        echo "✓ All applications themed successfully"
+    else
+        echo "⚠ Some applications may not have been themed (check tinty install)"
+    fi
+    
+    # Manually reload kitty terminals with SIGUSR1
+    echo "Reloading Kitty terminals..."
+    pkill -USR1 kitty || echo "  (No kitty processes found or reload failed)"
+    
+    echo ""
     echo "Theme is now active in:"
-    echo "  • Kitty terminal (reload with Ctrl+Shift+F5)"
-    echo "  • Add more apps by editing ~/.config/flavours/config.toml"
+    echo "  • Current shell session"
+    echo "  • Kitty terminal (reloaded via SIGUSR1)"
+    echo "  • Neovim (using base16-vim)"
+    echo "  • Tmux (if running)"
+    echo "  • Other configured applications"
 else
     echo "No theme selected"
 fi
+
+# Original tinty code (commented out in case we need it):
+# #!/bin/bash
+# # Theme switcher using tinty and fzf
+# # Provides instant theme switching across all configured applications
+# 
+# set -euo pipefail
+# 
+# # Show current theme
+# current_theme=$(/home/dzack/.cargo/bin/tinty current 2>/dev/null || echo "none")
+# echo "Current theme: $current_theme"
+# echo ""
+# 
+# # Let user select a new theme
+# selected_theme=$(/home/dzack/.cargo/bin/tinty list | fzf --height 50% --reverse --border \
+#     --prompt="Select theme: " \
+#     --preview='echo "Theme: {}"' \
+#     --preview-window=right:50%:wrap)
+# 
+# if [[ -n "$selected_theme" ]]; then
+#     echo "Applying theme: $selected_theme"
+#     /home/dzack/.cargo/bin/tinty apply "$selected_theme"
+#     echo "✓ Theme applied successfully!"
+#     echo "Theme is now active in:"
+#     echo "  • Kitty terminal (will reload automatically)"
+#     echo "  • Neovim (reload config or restart)"
+#     echo "  • ZSH (new shells will use the theme)"
+#     echo "  • Ranger, Tmux, Rofi, and more"
+# else
+#     echo "No theme selected"
+# fi

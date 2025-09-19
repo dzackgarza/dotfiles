@@ -1,0 +1,9 @@
+79829cac64e3f6ff97aaf8a89fa31d685399ee54 commit	refs/heads/backup-before-cleanup-20250714-033256
+b28725fb14d21e5b0b621aa86ae1b5fdae7bbcc8 commit	refs/heads/main
+79829cac64e3f6ff97aaf8a89fa31d685399ee54 commit	refs/heads/master
+b28725fb14d21e5b0b621aa86ae1b5fdae7bbcc8 commit	refs/remotes/origin/HEAD
+42bf2b0140c07eda9808dc792a76d9011bf08ceb commit	refs/remotes/origin/esm-refactor
+b28725fb14d21e5b0b621aa86ae1b5fdae7bbcc8 commit	refs/remotes/origin/main
+b28725fb14d21e5b0b621aa86ae1b5fdae7bbcc8 commit	refs/remotes/origin/master
+d32d2655cb28600e65104ee72308b173ed88ed7b commit	refs/stash
+45f56f671eb45b89bb8bd142e74a4a7be85dcbc9 tag	refs/tags/v1.0.0-stable
