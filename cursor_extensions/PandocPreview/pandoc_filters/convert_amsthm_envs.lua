@@ -1,1 +1,0 @@
-/home/dzack/.pandoc/filters/convert_amsthm_envs.lua

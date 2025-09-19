@@ -1,7 +1,0 @@
-This is a hook script that runs after Claude finishes responding. It:
-
-1. Sends a desktop notification "Claude Done"
-2. Blocks execution (exit code 2) with detailed instructions for Claude to continue thesis revisions in `/home/dzack/diss/000-write`
-3. The blocking message includes strict mathematical writing guidelines and workflow instructions
-
-The `BLOCK = True` flag controls whether it blocks or allows continuation.
