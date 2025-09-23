@@ -264,7 +264,6 @@ export DIRNAV_ROOT="$HOME"
 export DIRNAV_MAX_DEPTH=6
 export DIRNAV_DEBUG=0
 
-#alias clean-cursor='echo "DELETE FROM cursorDiskKV; DELETE FROM ItemTable; VACUUM;" | sqlite3 ~/.config/Cursor/User/globalStorage/state.vscdb'
 
 # # hello_world_widget with output handling
 # hello_world_widget() {
