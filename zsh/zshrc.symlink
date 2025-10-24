@@ -328,6 +328,7 @@ export PATH=$PATH:/home/dzack/.cloudypad/bin
 export PAPERSPACE_INSTALL="/home/dzack/.paperspace"
 export PATH="$PAPERSPACE_INSTALL/bin:$PATH"
 export PYTHONPATH=~/gitclones/sage/src:$PYTHONPATH
+export MYPYPATH=~/gitclones/sage/src:$MYPYPATH
 
 . "$HOME/.atuin/bin/env"
 
