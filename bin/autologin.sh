@@ -1,0 +1,1 @@
+url="http://172.16.254.250/cgi-bin/login?cmd=login&mac=e0:2e:0b:08:fb:24&ip=10.1.203.109&essid=NCTS%2DVISITOR&apname=f4%3A2e%3A7f%3Ac4%3Ae9%3A60&apgroup=default&url=http%3A%2F%2Fconnectivitycheck%2Egstatic%2Ecom%2Fgenerate%5F204"
