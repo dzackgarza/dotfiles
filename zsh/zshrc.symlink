@@ -332,6 +332,7 @@ export PYTHONPATH=~/gitclones/sage/src:$PYTHONPATH
 export MYPYPATH=~/gitclones/sage/src:$MYPYPATH
 export GP_DATA_DIR=~/.local/share/pari
 # source /home/dzack/gitclones/sage/.venv/bin/activate
+source /usr/share/nvm/init-nvm.sh
 
 
 . "$HOME/.atuin/bin/env"
