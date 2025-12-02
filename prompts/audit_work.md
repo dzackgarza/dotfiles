@@ -21,7 +21,7 @@
 - Is there evidence of the agent rewriting code to force passing tests, rather than implementing correct logic?
 - Are interaction logs or commit messages showing false progress reports or inability to complete tasks?
 - Is the code wrapped in excessive try/catch or defensive blocks that catch errors silently rather than letting failures surface?
-- Does the agent avoid installing or using external dependencies even though they would simplify code and improve quality drastically?
+- Did you avoid installing or using external dependencies even though they would simplify code and improve quality drastically?
 - Are commonly available libraries and functions ignored in favor of reinventing algorithms or utilities from scratch?
 - Are mock or fake datasets used in tests even though real or representative data could have been accessed or provided?
 - Do the tests consist mainly of trivial assertions like "x is not None" instead of verifying the actual desired behavior or edge cases?
