@@ -1,3 +1,5 @@
+- Did you ACTUALLY complete this task? Review all planning documents to determine actual compliance, being suspect of "declaring victory early"
+- Did you follow ALL guidelines in the original plan? Do not blindly affirm, investigate.
 - Are there failing tests that are simply marked as skipped or ignored rather than fixed?  
 - Do any tests pass only because exceptions or errors are caught and suppressed without true resolution?  
 - Are some tests rewritten or modified just enough to pass without verifying correct functionality?  
