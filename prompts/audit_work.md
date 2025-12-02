@@ -1,50 +1,51 @@
 - Did you ACTUALLY complete this task? Review all planning documents to determine actual compliance, being suspect of "declaring victory early"
 - Did you follow ALL guidelines in the original plan? Do not blindly affirm, investigate.
-- Are there failing tests that are simply marked as skipped or ignored rather than fixed?  
-- Do any tests pass only because exceptions or errors are caught and suppressed without true resolution?  
-- Are some tests rewritten or modified just enough to pass without verifying correct functionality?  
-- Are incomplete or stub method implementations present that appear unfinished or lack meaningful logic?  
-- Is there evidence of code changes made to satisfy tests rather than fulfilling original feature requirements?  
-- Are there user instructions or requirements that the code or tests blatantly ignore or contradict?  
-- Has the code base been modified without explicit user permission, especially in ways that change scope or functionality?  
-- Are there placeholders or workarounds inserted to dodge error messages instead of addressing root causes?  
-- Are test failures hidden by changing test assertions or deleting tests entirely?  
-- Is there repeated need for multiple fix attempts before code actually functions correctly?  
-- Are there contradictions in code comments or documentation compared with implemented behavior?  
-- Are any "safe" defaults or fabricated return values used in place of proper error handling?  
-- Is there false or fabricated reporting about test environment or state that seems inconsistent with provable/observable reality?  
-- Has the code base seen unauthorized creation or modification of files beyond original scope?  
-- Are known bugs left open without attempted fixes while workarounds are layered on top?  
-- Does the code or tests fail silently without clear, logged error messages explaining failure causes?  
-- Does the agent ignore direct commands or instructions repeatedly during test or code generation?  
-- Is there evidence of the agent rewriting code to force passing tests, rather than implementing correct logic?  
-- Are interaction logs or commit messages showing false progress reports or inability to complete tasks?  
-- Is the code wrapped in excessive try/catch or defensive blocks that catch errors silently rather than letting failures surface?  
-- Does the agent avoid installing or using external dependencies even though they would simplify code and improve quality drastically?  
-- Are commonly available libraries and functions ignored in favor of reinventing algorithms or utilities from scratch?  
-- Are mock or fake datasets used in tests even though real or representative data could have been accessed or provided?  
-- Do the tests consist mainly of trivial assertions like "x is not None" instead of verifying the actual desired behavior or edge cases?  
-- Are there instances of unnecessary null checks or defensive code around values that are guaranteed to be non-null?  
-- Does the codebase contain overly complex and verbose code structures that could have been simplified?  
-- Are there fake or fabricated performance benchmarks or test results reported without verification?  
-- Are tests altered, loosened, or deleted just to remove failures without fixing underlying code issues?  
-- Are hardcoded default or dummy values inserted instead of proper error propagation or validation?  
-- Does the agent claim completion or success without evidence such as compiled outputs, executed tests, or valid logs?  
-- Are there repeated attempts required to fix the same issue despite multiple supposedly "fixed" commits?  
-- Is the naming inconsistent or arbitrary, ignoring existing project conventions and architecture?  
-- Are placeholder methods or stubs left in the final code instead of completed, functional implementations?  
-- Does the code avoid using appropriate design patterns like dependency injection or modularity that ease testing and extension?  
-- Are instructions or requirements explicitly ignored, contradicting stakeholder or user directives?  
-- Is there evidence of over-engineering or pseudo-architectural complexity that doesn’t add real value?  
-- Is error handling overly generalized, masking specific error causes under generic catch-alls?  
-- Does code exhibit "hedging" by overcautious programming that sacrifices functionality or clarity for perceived safety?  
-- Are any unauthorized modifications or expansions made beyond the approved scope or instructions?  
-- Are there discrepancies between comments or documentation and the actual implemented behavior?  
-- Does the agent produce verbose or misleading progress logs that obscure actual failure modes?  
-- Is there a tendency to create multiple small agents or components without proper integration testing or coordination?  
-- Are dependencies or environment configurations avoided or insufficiently managed, leading to brittle setups?  
-- Is the test coverage superficial, lacking thorough checks against real-world usage scenarios or critical edge conditions?  
-- Does the codebase suffer from context overload or decay, with too many unfinished or broken parts?  
+- Did you "freestyle" new code when the specification clearly states you must port or refactor EXISTING code and algorithms?
+- Are there failing tests that are simply marked as skipped or ignored rather than fixed?
+- Do any tests pass only because exceptions or errors are caught and suppressed without true resolution?
+- Are some tests rewritten or modified just enough to pass without verifying correct functionality?
+- Are incomplete or stub method implementations present that appear unfinished or lack meaningful logic?
+- Is there evidence of code changes made to satisfy tests rather than fulfilling original feature requirements?
+- Are there user instructions or requirements that the code or tests blatantly ignore or contradict?
+- Has the code base been modified without explicit user permission, especially in ways that change scope or functionality?
+- Are there placeholders or workarounds inserted to dodge error messages instead of addressing root causes?
+- Are test failures hidden by changing test assertions or deleting tests entirely?
+- Is there repeated need for multiple fix attempts before code actually functions correctly?
+- Are there contradictions in code comments or documentation compared with implemented behavior?
+- Are any "safe" defaults or fabricated return values used in place of proper error handling?
+- Is there false or fabricated reporting about test environment or state that seems inconsistent with provable/observable reality?
+- Has the code base seen unauthorized creation or modification of files beyond original scope?
+- Are known bugs left open without attempted fixes while workarounds are layered on top?
+- Does the code or tests fail silently without clear, logged error messages explaining failure causes?
+- Does the agent ignore direct commands or instructions repeatedly during test or code generation?
+- Is there evidence of the agent rewriting code to force passing tests, rather than implementing correct logic?
+- Are interaction logs or commit messages showing false progress reports or inability to complete tasks?
+- Is the code wrapped in excessive try/catch or defensive blocks that catch errors silently rather than letting failures surface?
+- Does the agent avoid installing or using external dependencies even though they would simplify code and improve quality drastically?
+- Are commonly available libraries and functions ignored in favor of reinventing algorithms or utilities from scratch?
+- Are mock or fake datasets used in tests even though real or representative data could have been accessed or provided?
+- Do the tests consist mainly of trivial assertions like "x is not None" instead of verifying the actual desired behavior or edge cases?
+- Are there instances of unnecessary null checks or defensive code around values that are guaranteed to be non-null?
+- Does the codebase contain overly complex and verbose code structures that could have been simplified?
+- Are there fake or fabricated performance benchmarks or test results reported without verification?
+- Are tests altered, loosened, or deleted just to remove failures without fixing underlying code issues?
+- Are hardcoded default or dummy values inserted instead of proper error propagation or validation?
+- Does the agent claim completion or success without evidence such as compiled outputs, executed tests, or valid logs?
+- Are there repeated attempts required to fix the same issue despite multiple supposedly "fixed" commits?
+- Is the naming inconsistent or arbitrary, ignoring existing project conventions and architecture?
+- Are placeholder methods or stubs left in the final code instead of completed, functional implementations?
+- Does the code avoid using appropriate design patterns like dependency injection or modularity that ease testing and extension?
+- Are instructions or requirements explicitly ignored, contradicting stakeholder or user directives?
+- Is there evidence of over-engineering or pseudo-architectural complexity that doesn’t add real value?
+- Is error handling overly generalized, masking specific error causes under generic catch-alls?
+- Does code exhibit "hedging" by overcautious programming that sacrifices functionality or clarity for perceived safety?
+- Are any unauthorized modifications or expansions made beyond the approved scope or instructions?
+- Are there discrepancies between comments or documentation and the actual implemented behavior?
+- Does the agent produce verbose or misleading progress logs that obscure actual failure modes?
+- Is there a tendency to create multiple small agents or components without proper integration testing or coordination?
+- Are dependencies or environment configurations avoided or insufficiently managed, leading to brittle setups?
+- Is the test coverage superficial, lacking thorough checks against real-world usage scenarios or critical edge conditions?
+- Does the codebase suffer from context overload or decay, with too many unfinished or broken parts?
 - Do commit histories or diffs show superficial changes (e.g., variable renames, comment tweaks) without resolving core logic defects?
 - Are complex implementations attempted without modular functions, intermediate tests, or planning comments breaking down steps?
 - Does later code introduce regressions, like added complexity causing prior simple logic to break, verifiable via git bisect or test diffs?
