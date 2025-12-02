@@ -17,7 +17,7 @@
 - Has the code base seen unauthorized creation or modification of files beyond original scope?
 - Are known bugs left open without attempted fixes while workarounds are layered on top?
 - Does the code or tests fail silently without clear, logged error messages explaining failure causes?
-- Does the agent ignore direct commands or instructions repeatedly during test or code generation?
+- Did you ignore or "forget" any direct commands or instructions during test or code generation?
 - Is there evidence of the agent rewriting code to force passing tests, rather than implementing correct logic?
 - Are interaction logs or commit messages showing false progress reports or inability to complete tasks?
 - Is the code wrapped in excessive try/catch or defensive blocks that catch errors silently rather than letting failures surface?
@@ -42,7 +42,7 @@
 - Are any unauthorized modifications or expansions made beyond the approved scope or instructions?
 - Are there discrepancies between comments or documentation and the actual implemented behavior?
 - Does the agent produce verbose or misleading progress logs that obscure actual failure modes?
-- Is there a tendency to create multiple small agents or components without proper integration testing or coordination?
+- Is there a tendency to create multiple small components without proper integration testing or coordination?
 - Are dependencies or environment configurations avoided or insufficiently managed, leading to brittle setups?
 - Is the test coverage superficial, lacking thorough checks against real-world usage scenarios or critical edge conditions?
 - Does the codebase suffer from context overload or decay, with too many unfinished or broken parts?
