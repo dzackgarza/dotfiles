@@ -1,6 +1,7 @@
 - Did you ACTUALLY complete this task? Review all planning documents to determine actual compliance, being suspect of "declaring victory early"
 - Did you follow ALL guidelines in the original plan? Do not blindly affirm, investigate.
 - Did you "freestyle" new code when the specification clearly states you must port or refactor EXISTING code and algorithms?
+- Did you inject "workarounds" when faced with difficulties, instead of porting the known working code? 
 - Are there failing tests that are simply marked as skipped or ignored rather than fixed?
 - Do any tests pass only because exceptions or errors are caught and suppressed without true resolution?
 - Are some tests rewritten or modified just enough to pass without verifying correct functionality?
@@ -31,7 +32,7 @@
 - Are tests altered, loosened, or deleted just to remove failures without fixing underlying code issues?
 - Are hardcoded default or dummy values inserted instead of proper error propagation or validation?
 - Does the agent claim completion or success without evidence such as compiled outputs, executed tests, or valid logs?
-- Are there repeated attempts required to fix the same issue despite multiple supposedly "fixed" commits?
+- Were there repeated attempts required to fix the same issue despite multiple supposedly "fixed" commits?
 - Is the naming inconsistent or arbitrary, ignoring existing project conventions and architecture?
 - Are placeholder methods or stubs left in the final code instead of completed, functional implementations?
 - Does the code avoid using appropriate design patterns like dependency injection or modularity that ease testing and extension?
