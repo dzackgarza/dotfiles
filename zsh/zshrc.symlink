@@ -330,6 +330,7 @@ export PATH="$PAPERSPACE_INSTALL/bin:$PATH"
 export PATH="/home/dzack/.sage/local/bin:$PATH"
 export PYTHONPATH=~/gitclones/sage/src:$PYTHONPATH
 export MYPYPATH=~/gitclones/sage/src:$MYPYPATH
+export XDG_PICTURES_DIR=~/Screenshots/
 #export GP_DATA_DIR=~/.local/share/pari
 export GP_DATA_DIR=/usr/share/pari 
 # source /home/dzack/gitclones/sage/.venv/bin/activate
