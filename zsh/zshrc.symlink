@@ -322,7 +322,7 @@ eval "$(zoxide init zsh)"
 
 
 # add CloudyPad CLI PATH
-export PATH=$PATH:/home/dzack/.cloudypad/bin
+# export PATH=$PATH:/home/dzack/.cloudypad/bin
 
 # Paperspace
 export PAPERSPACE_INSTALL="/home/dzack/.paperspace"
