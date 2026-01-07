@@ -292,7 +292,7 @@ export DIRNAV_DEBUG=0
 #alias taskmaster='task-master'
 #alias claude="/home/dzack/.local/bin/claude"
 
-export GEMINI_SYSTEM_MD="/home/dzack/gitclones/claude_improvement/gemini/system.md"
+#export GEMINI_SYSTEM_MD="/home/dzack/gitclones/claude_improvement/gemini/system.md"
 
 # pnpm
 export PNPM_HOME="/home/dzack/.local/share/pnpm"
