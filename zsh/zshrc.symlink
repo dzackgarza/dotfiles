@@ -342,4 +342,4 @@ source /usr/share/nvm/init-nvm.sh
 eval "$(atuin init zsh)"
 
 export SAGE_ROOT=~/gitclones/sage
-export SAGE_LOCAL=$SAGE_ROOT/local
+export SAGE_LOCAL="$SAGE_ROOT/local"
