@@ -340,3 +340,5 @@ source /usr/share/nvm/init-nvm.sh
 . "$HOME/.atuin/bin/env"
 
 eval "$(atuin init zsh)"
+
+export SAGE_ROOT=~/gitclones/sage
