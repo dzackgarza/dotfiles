@@ -1,29 +1,30 @@
 #!/bin/bash
-# Test cadence: stop, force restart, and start
+# Test JACK audio session control via Cadence
 
 set -e
 
-echo "1. Stopping Cadence..."
-pkill -9 -f "/share/cadence/src/cadence.py" || echo "Cadence was not running"
+echo "1. Stopping JACK..."
+jack_control stop || echo "JACK was not running"
 sleep 1
 
 echo "2. Verifying stopped..."
-if pgrep -f "/share/cadence/src/cadence.py" > /dev/null; then
-    echo "ERROR: Cadence still running"
+if jack_control status > /dev/null 2>&1; then
+    echo "ERROR: JACK still running"
     exit 1
 fi
-echo "✓ Stopped"
+echo "✓ JACK stopped"
 sleep 1
 
-echo "3. Starting Cadence..."
-cadence &
-sleep 3
+echo "3. Starting JACK..."
+jack_control start
+sleep 2
 
 echo "4. Verifying running..."
-if pgrep -f "/share/cadence/src/cadence.py" > /dev/null; then
-    echo "✓ Started successfully"
+if jack_control status > /dev/null 2>&1; then
+    echo "✓ JACK started successfully"
+    jack_control status
 else
-    echo "ERROR: Failed to start"
+    echo "ERROR: JACK failed to start"
     exit 1
 fi
 
