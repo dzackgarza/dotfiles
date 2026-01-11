@@ -15,7 +15,7 @@ echo "3. Force restarting (stopping all audio processes)..."
 killall -9 a2j a2jmidid artsd jackd jackdmp knotify4 lash ladishd ladiappd ladiconfd jmcore jackdbus 2>/dev/null || true
 sleep 2
 
-echo "3. Verifying stopped..."
+echo "4. Verifying stopped..."
 if jack_control status > /dev/null 2>&1; then
     echo "ERROR: JACK still running"
     exit 1
@@ -23,11 +23,11 @@ fi
 echo "✓ JACK stopped"
 sleep 1
 
-echo "4. Starting JACK..."
+echo "5. Starting JACK..."
 jack_control start
 sleep 2
 
-echo "5. Verifying running..."
+echo "6. Verifying running..."
 if jack_control status > /dev/null 2>&1; then
     echo "✓ JACK started successfully"
     jack_control status
