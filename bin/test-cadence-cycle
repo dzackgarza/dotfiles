@@ -31,7 +31,7 @@ echo "6. Starting JACK..."
 jack_control start
 sleep 2
 
-echo "6. Verifying running..."
+echo "7. Verifying running..."
 if jack_control status > /dev/null 2>&1; then
     echo "✓ JACK started successfully"
     jack_control status
@@ -40,7 +40,7 @@ else
     exit 1
 fi
 
-echo "7. Starting Reaper..."
+echo "8. Starting Reaper..."
 reaper &
 sleep 2
 
