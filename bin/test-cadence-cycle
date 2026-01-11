@@ -3,16 +3,16 @@
 
 set -e
 
-echo "1. Killing pulseaudio (will respawn)..."
-killall -9 pulseaudio 2>/dev/null || true
-sleep 2
+echo "1. Stopping pulseaudio systemd service..."
+systemctl --user stop pulseaudio.service pulseaudio.socket 2>/dev/null || true
+sleep 1
 
 echo "2. Stopping JACK..."
 jack_control stop || echo "JACK was not running"
 sleep 1
 
 echo "3. Force restarting (stopping all audio processes)..."
-killall -9 a2j a2jmidid artsd jackd jackdmp knotify4 lash ladishd ladiappd ladiconfd jmcore jackdbus 2>/dev/null || true
+killall -9 a2j a2jmidid artsd jackd jackdmp knotify4 lash ladishd ladiappd ladiconfd jmcore jackdbus pulseaudio 2>/dev/null || true
 sleep 2
 
 echo "4. Verifying stopped..."
