@@ -23,7 +23,11 @@ fi
 echo "✓ JACK stopped"
 sleep 1
 
-echo "5. Starting JACK..."
+echo "5. Syncing yabridgectl..."
+yabridgectl sync
+sleep 1
+
+echo "6. Starting JACK..."
 jack_control start
 sleep 2
 
