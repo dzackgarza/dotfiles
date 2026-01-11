@@ -4,29 +4,27 @@
 set -e
 
 echo "1. Stopping Cadence..."
-pkill -9 -f "cadence.py" || echo "Cadence was not running"
+pkill -9 -f "/share/cadence/src/cadence.py" || echo "Cadence was not running"
 sleep 1
 
-echo "2. Verifying Cadence is stopped..."
-if pgrep -f "cadence.py" > /dev/null; then
+echo "2. Verifying stopped..."
+if pgrep -f "/share/cadence/src/cadence.py" > /dev/null; then
     echo "ERROR: Cadence still running"
     exit 1
 fi
-echo "Cadence stopped successfully"
+echo "✓ Stopped"
 sleep 1
 
-echo "3. Force restarting Cadence..."
+echo "3. Starting Cadence..."
 cadence &
-CADENCE_PID=$!
 sleep 3
 
-echo "4. Verifying Cadence is running (PID: $CADENCE_PID)..."
-if pgrep -f "cadence.py" > /dev/null; then
-    echo "Cadence started successfully"
-    ps aux | grep -i cadence | grep -v grep
+echo "4. Verifying running..."
+if pgrep -f "/share/cadence/src/cadence.py" > /dev/null; then
+    echo "✓ Started successfully"
 else
-    echo "ERROR: Cadence failed to start"
+    echo "ERROR: Failed to start"
     exit 1
 fi
 
-echo "Done. Cadence is running."
+echo "Done"
