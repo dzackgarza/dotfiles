@@ -1,0 +1,32 @@
+#!/bin/bash
+# Test cadence: stop, force restart, and start
+
+set -e
+
+echo "1. Stopping Cadence..."
+pkill -9 -f "cadence.py" || echo "Cadence was not running"
+sleep 1
+
+echo "2. Verifying Cadence is stopped..."
+if pgrep -f "cadence.py" > /dev/null; then
+    echo "ERROR: Cadence still running"
+    exit 1
+fi
+echo "Cadence stopped successfully"
+sleep 1
+
+echo "3. Force restarting Cadence..."
+cadence &
+CADENCE_PID=$!
+sleep 3
+
+echo "4. Verifying Cadence is running (PID: $CADENCE_PID)..."
+if pgrep -f "cadence.py" > /dev/null; then
+    echo "Cadence started successfully"
+    ps aux | grep -i cadence | grep -v grep
+else
+    echo "ERROR: Cadence failed to start"
+    exit 1
+fi
+
+echo "Done. Cadence is running."
