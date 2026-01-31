@@ -352,5 +352,5 @@ export NVM_DIR="$HOME/.nvm"
 export PATH=/home/dzack/.opencode/bin:$PATH
 
 
-# Common fixes
+# Commonly forgotten arguments or misused commands
 alias latexmk='latexmk'
