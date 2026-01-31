@@ -353,3 +353,4 @@ export PATH=/home/dzack/.opencode/bin:$PATH
 
 
 # Common fixes
+alias latexmk='latexmk'
