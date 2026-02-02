@@ -357,3 +357,6 @@ alias latexmk='latexmk -gg -pdf'
 
 # export UV_VENV_CLEAR=1
 # export MESONPY_EDITABLE_VERBOSE=1
+
+# bun completions
+[ -s "/home/dzack/.bun/_bun" ] && source "/home/dzack/.bun/_bun"
