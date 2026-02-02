@@ -356,3 +356,4 @@ export PATH=/home/dzack/.opencode/bin:$PATH
 alias latexmk='latexmk -gg -pdf'
 
 export UV_VENV_CLEAR=1
+export MESONPY_EDITABLE_VERBOSE=1
