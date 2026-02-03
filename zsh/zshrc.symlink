@@ -343,7 +343,6 @@ eval "$(atuin init zsh)"
 
 export SAGE_ROOT=~/gitclones/sage
 export SAGE_LOCAL="$SAGE_ROOT/local"
-export PATH="$SAGE_ROOT/src/bin:$PATH"
 alias sage='uv --project /home/dzack/gitclones/sage run sage'
 
 export NVM_DIR="$HOME/.nvm"
