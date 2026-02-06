@@ -360,3 +360,4 @@ alias latexmk='latexmk -gg -pdf'
 
 # bun completions
 [ -s "/home/dzack/.bun/_bun" ] && source "/home/dzack/.bun/_bun"
+export PATH="$HOME/.claude/bin:$PATH"
