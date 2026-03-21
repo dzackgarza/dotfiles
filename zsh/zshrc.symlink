@@ -110,7 +110,8 @@ zinit ice as'program' from'gh-r' bpick'*linux_amd64'
 zinit light direnv/direnv
 
 # Initialize Starship prompt
-eval "$(~/.local/bin/starship init zsh)"
+eval "$(starship init zsh)"
+
 
 # fzf + zsh-z interactive directory jump
 # Source the fzf-z-jump script
