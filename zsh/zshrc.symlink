@@ -34,6 +34,11 @@ setopt HIST_FCNTL_LOCK        # Use fcntl() for file locking (more reliable)
 setopt HIST_FIND_NO_DUPS      # Don't show duplicates when searching history
 setopt HIST_EXPIRE_DUPS_FIRST # Expire duplicates first when trimming history
 
+# ------------------------------------------------------------------------------
+# Zinit Configuration (must be loaded before config files that use zinit)
+# ------------------------------------------------------------------------------
+source ~/.zinit/bin/zinit.zsh
+
 # Load other config files
 () {
   local file files=(
@@ -42,7 +47,7 @@ setopt HIST_EXPIRE_DUPS_FIRST # Expire duplicates first when trimming history
     "$HOME/.config/zsh/functions.zsh"
     "$HOME/.config/zsh/extras.zsh"
   )
-  
+
   for file in "${files[@]}"; do
     [[ -f "$file" ]] && source "$file"
   done
