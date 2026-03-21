@@ -35,39 +35,39 @@ setopt HIST_FIND_NO_DUPS      # Don't show duplicates when searching history
 setopt HIST_EXPIRE_DUPS_FIRST # Expire duplicates first when trimming history
 
 # Load zsh-hist if available
-  source "${ZINIT[PLUGINS_DIR]}/zsh-hist/zsh-hist.plugin.zsh"
-  
-  # Configure zsh-hist
-  ZSH_HISTORY_FILTER="fzf"  # Use fzf for history search
-  ZSH_HISTORY_KEYBIND_GET_BY_CMD="^r"  # Ctrl+R for searching by command
-  ZSH_HISTORY_KEYBIND_GET_BY_DIR="^xr" # Ctrl+X R for searching by directory
-  
-  # Additional zsh-hist settings
-  ZSH_HISTORY_AUTO_SYNC=true      # Auto-sync history between sessions
-  ZSH_HISTORY_AUTO_SYNC_INTERVAL=30  # Sync every 30 seconds
-  ZSH_HISTORY_AUTO_SYNC_THRESHOLD=10 # Sync after 10 commands
-  
-  # Function to ensure history is properly saved
-  function zshaddhistory() {
-    emulate -L zsh
-    # Don't add empty commands or commands starting with space
-    [[ -n "$1" && "$1" != [[:space:]]# ]] || return 1
-    
-    # Let zsh-hist handle the actual history writing
-    print -sr -- "${1%%$'\n'}"
-    
-    # Trigger history sync
-    [[ -n "$ZSH_HISTORY_CMD" ]] && $ZSH_HISTORY_CMD --sync
-    
-    return 0
-  }
-  
-  # Ensure history is saved when the shell exits
-  function zshexit() {
-    # Trigger final history sync
-    [[ -n "$ZSH_HISTORY_CMD" ]] && $ZSH_HISTORY_CMD --sync
-    return 0
-  }
+source "${ZINIT[PLUGINS_DIR]}/zsh-hist/zsh-hist.plugin.zsh"
+
+# Configure zsh-hist
+ZSH_HISTORY_FILTER="fzf"  # Use fzf for history search
+ZSH_HISTORY_KEYBIND_GET_BY_CMD="^r"  # Ctrl+R for searching by command
+ZSH_HISTORY_KEYBIND_GET_BY_DIR="^xr" # Ctrl+X R for searching by directory
+
+# Additional zsh-hist settings
+ZSH_HISTORY_AUTO_SYNC=true      # Auto-sync history between sessions
+ZSH_HISTORY_AUTO_SYNC_INTERVAL=30  # Sync every 30 seconds
+ZSH_HISTORY_AUTO_SYNC_THRESHOLD=10 # Sync after 10 commands
+
+# Function to ensure history is properly saved
+function zshaddhistory() {
+emulate -L zsh
+# Don't add empty commands or commands starting with space
+[[ -n "$1" && "$1" != [[:space:]]# ]] || return 1
+
+# Let zsh-hist handle the actual history writing
+print -sr -- "${1%%$'\n'}"
+
+# Trigger history sync
+[[ -n "$ZSH_HISTORY_CMD" ]] && $ZSH_HISTORY_CMD --sync
+
+return 0
+}
+
+# Ensure history is saved when the shell exits
+function zshexit() {
+# Trigger final history sync
+[[ -n "$ZSH_HISTORY_CMD" ]] && $ZSH_HISTORY_CMD --sync
+return 0
+}
   
 else
   # Fallback to basic history handling if zsh-hist is not available
