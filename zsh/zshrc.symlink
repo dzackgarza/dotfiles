@@ -35,7 +35,6 @@ setopt HIST_FIND_NO_DUPS      # Don't show duplicates when searching history
 setopt HIST_EXPIRE_DUPS_FIRST # Expire duplicates first when trimming history
 
 # Load zsh-hist if available
-if [[ -f "${ZINIT[PLUGINS_DIR]}/zsh-hist/zsh-hist.plugin.zsh" ]]; then
   source "${ZINIT[PLUGINS_DIR]}/zsh-hist/zsh-hist.plugin.zsh"
   
   # Configure zsh-hist
