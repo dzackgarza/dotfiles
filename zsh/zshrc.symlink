@@ -34,7 +34,6 @@ setopt HIST_FCNTL_LOCK        # Use fcntl() for file locking (more reliable)
 setopt HIST_FIND_NO_DUPS      # Don't show duplicates when searching history
 setopt HIST_EXPIRE_DUPS_FIRST # Expire duplicates first when trimming history
 
-
 # Load other config files
 () {
   local file files=(
