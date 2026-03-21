@@ -1,4 +1,4 @@
 
 . "$HOME/.cargo/env"
-source /usr/share/nvm/init-nvm.sh
+# NVM lazy loaded in functions.zsh
 
