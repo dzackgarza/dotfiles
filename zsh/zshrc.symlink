@@ -105,10 +105,6 @@ bindkey '^[[Z' reverse-menu-complete
 # Uncomment the line below if the above doesn't work
 # bindkey "${terminfo[kcbt]}" reverse-menu-complete
 
-# Load Direnv as a program
-zinit ice as'program' from'gh-r' bpick'*linux_amd64'
-zinit light direnv/direnv
-
 # Initialize Starship prompt
 eval "$(starship init zsh)"
 
