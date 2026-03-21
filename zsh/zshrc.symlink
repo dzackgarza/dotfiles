@@ -65,9 +65,8 @@ setopt AUTO_PUSHD             # Automatically push the current directory onto th
 setopt PUSHD_IGNORE_DUPS      # Don't push multiple copies of the same directory onto the directory stack.
 
 # ------------------------------------------------------------------------------
-# Zinit Configuration
+# Zinit Plugins
 # ------------------------------------------------------------------------------
-source ~/.zinit/bin/zinit.zsh
 
 # Load Oh My Zsh framework
 # zinit ice wait
