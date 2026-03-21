@@ -1,4 +1,4 @@
 
 . "$HOME/.cargo/env"
-# NVM is now lazy-loaded in .zshrc to improve startup time
+source /usr/share/nvm/init-nvm.sh
 

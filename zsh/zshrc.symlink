@@ -84,11 +84,7 @@ zinit light zsh-users/zsh-syntax-highlighting
 
 # Load FZF as a program
 zinit light junegunn/fzf
-# Use cached fzf completions instead of regenerating every startup
-if [[ ! -f "${ZDOTDIR:-$HOME}/.fzf.zsh" ]]; then
-    source <(fzf --zsh) > "${ZDOTDIR:-$HOME}/.fzf.zsh"
-fi
-source "${ZDOTDIR:-$HOME}/.fzf.zsh"
+source <(fzf --zsh)
 zinit ice modifiers silent
 zinit light agkozak/zsh-z
 #init light "mrjohannchang/zsh-interactive-cd"
