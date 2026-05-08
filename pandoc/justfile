@@ -102,3 +102,6 @@ clean build_dir_pandoc=BUILD_DIR_PANDOC build_dir_tex=BUILD_DIR_TEX:
 # Clean all build artifacts from reference directories
 clean-refs:
   find references -type f ! \( -name "*.tex" -o -name "*.sty" -o -name "*.cls" -o -name "*.bib" -o -name "*.bbl" -o -name "*.png" -o -name "*.jpg" -o -name "tex4ht.cfg" \) -delete
+test-pwd:
+  #!/usr/bin/env bash
+  pwd
