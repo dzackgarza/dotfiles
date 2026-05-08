@@ -108,9 +108,9 @@ compile-pandoc input_file="main.md" output_name="output" template="research_draf
   export TEXINPUTS=".:{{figures_dir}}//:$HOME/.pandoc/styles//:$HOME/.pandoc/macros//:$HOME/.pandoc/config//:${TEXINPUTS:-}"
 
   pandoc "$ROOT/{{input_file}}" \
-      --lua-filter=include.lua \
-      --lua-filter=convert_amsthm_envs.lua \
-      --lua-filter=select_images.lua \
+      --lua-filter="$HOME/.pandoc/filters/include.lua" \
+      --lua-filter="$HOME/.pandoc/filters/convert_amsthm_envs.lua" \
+      --lua-filter="$HOME/.pandoc/filters/select_images.lua" \
       --natbib \
       --bibliography="$ROOT/global.bib" \
       --resource-path={{figures_dir}}/rendered \
