@@ -18,93 +18,118 @@ BUILD_DIR_TEX := ".build_tex"
 
 # Sync bibliography from global source to local project
 sync-bib local_path="references.bib" source=GLOBAL_BIB_SOURCE:
-  cp {{source}} {{local_path}}
+  #!/usr/bin/env bash
+  set -euo pipefail
+  ROOT="{{invocation_directory()}}"
+  cp {{source}} "$ROOT/{{local_path}}"
 
 # Format markdown files to enforce one sentence per line
 format-md *files:
   #!/usr/bin/env bash
   set -euo pipefail
+  ROOT="{{invocation_directory()}}"
   if [ -s "$HOME/.nvm/nvm.sh" ]; then
     . "$HOME/.nvm/nvm.sh"
     nvm use node
   fi
   npm install --no-save prettier prettier-plugin-sentences-per-line
-  npx prettier --write {{files}}
+  
+  # Adjust file paths to be relative to ROOT
+  TARGETS=()
+  for f in {{files}}; do
+    TARGETS+=("$ROOT/$f")
+  done
+  
+  npx prettier --write "${TARGETS[@]}"
 
 # Compile LaTeX source
 compile-tex main_file="main.tex" output_name="paper" figures_dir=GLOBAL_FIGURES_DIR build_dir=BUILD_DIR_TEX:
   #!/usr/bin/env bash
   set -euo pipefail
-  # Ensure build dir exists relative to project root
-  mkdir -p {{build_dir}}
+  ROOT="{{invocation_directory()}}"
   
   # Extract dir and file names
   DIR=$(dirname "{{main_file}}")
   FILE=$(basename "{{main_file}}")
   
+  mkdir -p "$ROOT/{{build_dir}}"
+  
   # Use TEXINPUTS for inclusion. Note: trailing // for recursive search
   export TEXINPUTS=".:{{figures_dir}}//:${TEXINPUTS:-}"
   
   # Change to the source directory and run latexmk
-  cd "$DIR"
-  latexmk -gg -pdf -outdir=../{{build_dir}} "$FILE" -use-make
+  cd "$ROOT/$DIR"
+  latexmk -gg -pdf -outdir="$ROOT/{{build_dir}}" "$FILE" -use-make
   
-  # Copy result back to project root (which is parent of $DIR)
-  cp ../{{build_dir}}/${FILE%.tex}.pdf ../{{output_name}}-$(date +%d-%m-%y).pdf
+  # Copy result back to project root
+  cp "$ROOT/{{build_dir}}/${FILE%.tex}.pdf" "$ROOT/{{output_name}}-$(date +%d-%m-%y).pdf"
 
 # Compile Pandoc source to PDF via LaTeX
 compile-pandoc input_file="main.md" output_name="output" template="research_draft.tex" bibliography="references.bib" figures_dir=GLOBAL_FIGURES_DIR build_dir=BUILD_DIR_PANDOC:
   #!/usr/bin/env bash
   set -euo pipefail
-  mkdir -p {{build_dir}}
-  pandoc {{input_file}} \
+  ROOT="{{invocation_directory()}}"
+  mkdir -p "$ROOT/{{build_dir}}"
+  
+  pandoc "$ROOT/{{input_file}}" \
       --lua-filter=include.lua \
       --lua-filter=convert_amsthm_envs.lua \
       --lua-filter=select_images.lua \
       --natbib \
-      --bibliography={{bibliography}} \
+      --bibliography="$ROOT/{{bibliography}}" \
       --resource-path={{figures_dir}}/rendered \
       --resource-path={{figures_dir}} \
       --template={{template}} \
       --biblatex \
       --number-sections \
       --toc --toc-depth=2 \
-      -s -o {{build_dir}}/output.tex
-  latexmk -pdf -outdir={{build_dir}} -interaction=nonstopmode -gg {{build_dir}}/output.tex
-  cp {{build_dir}}/output.pdf ./{{output_name}}-$(date +%d-%m-%y).pdf
+      -s -o "$ROOT/{{build_dir}}/output.tex"
+  
+  cd "$ROOT/{{build_dir}}"
+  latexmk -pdf -interaction=nonstopmode -gg output.tex
+  cp output.pdf "$ROOT/{{output_name}}-$(date +%d-%m-%y).pdf"
 
 # Download and extract an arXiv tarball
 download-arxiv arxiv_id dir:
-  @mkdir -p references/{{dir}}
-  wget -qO - "https://arxiv.org/e-print/{{arxiv_id}}" | tar -xz -C references/{{dir}}
+  #!/usr/bin/env bash
+  set -euo pipefail
+  ROOT="{{invocation_directory()}}"
+  mkdir -p "$ROOT/references/{{dir}}"
+  wget -qO - "https://arxiv.org/e-print/{{arxiv_id}}" | tar -xz -C "$ROOT/references/{{dir}}"
 
 # Compile a reference LaTeX file to Markdown (Modern extraction pipeline)
 extract-ref dir file="main":
   #!/usr/bin/env bash
   set -euo pipefail
-  mkdir -p references
-  cd {{dir}}
+  ROOT="{{invocation_directory()}}"
+  mkdir -p "$ROOT/references"
+  
+  cd "$ROOT/{{dir}}"
   rm -f {{file}}.aux
+  
   # Expand macros
   xpandlatex -x on -m on -I on $(ls *.sty 2>/dev/null | sed 's/^/-f /' | xargs) {{file}}.tex > {{file}}_expanded.tex
+  
   # Preprocess: Wrap tikzcd in displaymath
   pandoc {{file}}_expanded.tex -s -f latex+raw_tex -t latex --lua-filter=wrap_tikzcd_semantic.lua -o {{file}}_wrapped.tex
-  # Semantically preprocess the TeX (allow failure)
+  
+  # Semantically preprocess the TeX
   make4ht -c "$HOME/.pandoc/custom/config/tex4ht.cfg" -u -f html5 {{file}}_wrapped.tex "mathjax,section+" || true
+  
   # Convert to Markdown
-  pandoc {{file}}_wrapped.html --lua-filter=semanticlean.lua -f html -t gfm-tex_math_gfm+tex_math_dollars -o {{justfile_directory()}}/references/$(basename {{dir}}).md
+  pandoc {{file}}_wrapped.html --lua-filter=semanticlean.lua -f html -t gfm-tex_math_gfm+tex_math_dollars -o "$ROOT/references/$(basename {{dir}}).md"
 
 # Clean build artifacts
 clean build_dir_pandoc=BUILD_DIR_PANDOC build_dir_tex=BUILD_DIR_TEX:
-  rm -rf {{build_dir_pandoc}} {{build_dir_tex}} .build
-  rm -f *.pdf *.aux *.log *.fls *.fdb_latexmk *.bbl *.bcf *.blg *.run.xml *.out *.toc *SAVE-ERROR
+  #!/usr/bin/env bash
+  set -euo pipefail
+  ROOT="{{invocation_directory()}}"
+  rm -rf "$ROOT/{{build_dir_pandoc}}" "$ROOT/{{build_dir_tex}}" "$ROOT/.build"
+  rm -f "$ROOT"/*.pdf "$ROOT"/*.aux "$ROOT"/*.log "$ROOT"/*.fls "$ROOT"/*.fdb_latexmk "$ROOT"/*.bbl "$ROOT"/*.bcf "$ROOT"/*.blg "$ROOT"/*.run.xml "$ROOT"/*.out "$ROOT"/*.toc "$ROOT"/*SAVE-ERROR
 
 # Clean all build artifacts from reference directories
 clean-refs:
-  find references -type f ! \( -name "*.tex" -o -name "*.sty" -o -name "*.cls" -o -name "*.bib" -o -name "*.bbl" -o -name "*.png" -o -name "*.jpg" -o -name "tex4ht.cfg" \) -delete
-test-pwd:
   #!/usr/bin/env bash
-  pwd
-test-inv:
-  #!/usr/bin/env bash
-  echo {{invocation_directory()}}
+  set -euo pipefail
+  ROOT="{{invocation_directory()}}"
+  find "$ROOT/references" -type f ! \( -name "*.tex" -o -name "*.sty" -o -name "*.cls" -o -name "*.bib" -o -name "*.bbl" -o -name "*.png" -o -name "*.jpg" -o -name "tex4ht.cfg" \) -delete
