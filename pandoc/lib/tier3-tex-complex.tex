@@ -7,3 +7,42 @@
 % Migrated from macros/latexmacs.tex on 2025-01-09
 
 % Macros will be added here by macro-categorizer agent
+
+% ================================================================================
+% Complex formatting macros from latexmacs_commands.tex
+% ================================================================================
+
+% Case expressions
+\newcommand{\fourcase}[4]{
+\begin{cases}{#1} & {#2} \\ {#3} & {#4}\end{cases} 
+}
+
+% Column vectors
+\newcommand{\cvec}[2]{{ \begin{bmatrix} {#1} \\ {#2} \end{bmatrix} }}
+
+% 2x2 matrices
+\newcommand{\matt}[4]{{ \begin{bmatrix} {#1} & {#2}  \\ {#3} & {#4} \end{bmatrix} }}
+
+% 3x3 matrices
+\newcommand{\mattt}[9]{{
+\begin{bmatrix}
+  {#1} & {#2} & {#3}
+\\
+  {#4} & {#5} & {#6}
+\\
+  {#7} & {#8} & {#9}
+\end{bmatrix}
+}}
+
+% Stacking with custom spacing
+\newcommand{\stack}[1]{\mathclap{\substack{ #1 }}}
+
+\newcommand\stacksymbol[3]{
+  \mathrel{\stackunder[2pt]{\stackon[4pt]{$#3$}{$\scriptscriptstyle#1$}}{
+  $\scriptscriptstyle#2$}}
+}
+
+% Text operators
+\newcommand{\textoperatorname}[1]{
+  \operatorname{\textnormal{#1}}
+}
