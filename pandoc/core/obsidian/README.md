@@ -68,7 +68,7 @@ These will only work in full LaTeX/Pandoc documents, not in Obsidian MathJax.
 
 ## Adding New Macros
 
-1. Add macro to appropriate tier file in `lib/`:
+1. Add macro to appropriate tier file in `core/lib/`:
    - `tier1-mathjax-simple.tex` (no args, simple shortcuts)
    - `tier2-mathjax-args.tex` (with args, MathJax-safe)
 
