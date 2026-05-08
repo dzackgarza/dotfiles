@@ -105,3 +105,6 @@ clean-refs:
 test-pwd:
   #!/usr/bin/env bash
   pwd
+test-inv:
+  #!/usr/bin/env bash
+  echo {{invocation_directory()}}
