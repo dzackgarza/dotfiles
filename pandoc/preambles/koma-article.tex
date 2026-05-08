@@ -1,0 +1,179 @@
+% KOMA-Script Article Preamble
+% Modern replacement for macros/preamble.tex
+% Created 2025-01-09 as part of macro consolidation
+
+\documentclass[11pt, a4paper, bibliography=totoc, parskip=full]{scrartcl}
+
+% Load unified DZG macros (includes all tiers)
+\usepackage{dzg-unified}
+
+% ============================================================================
+% Font and Encoding
+% ============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[dvipsnames]{xcolor}
+
+% KOMA-specific font settings
+\setkomafont{subsection}{\normalfont\itshape}
+\setkomafont{author}{\fontfamily{qzc}\selectfont\LARGE}
+
+% ============================================================================
+% Hyperlinks and PDF
+% ============================================================================
+\usepackage[stretch=10]{microtype}
+\usepackage[pdfencoding=auto]{hyperref}
+\hypersetup{
+    colorlinks,
+    linktoc=all,
+    citecolor=blue,
+    filecolor=blue,
+    linkcolor=blue,
+    urlcolor=blue
+}
+\usepackage{bookmark}
+
+% ============================================================================
+% Tables and Lists
+% ============================================================================
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tabularx}
+
+% Pandoc tightlist fix
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% ============================================================================
+% Math and Diagrams
+% ============================================================================
+\usepackage{amscd}
+\usepackage{spectralsequences}
+\usepackage{centernot}
+\usepackage{dynkin-diagrams}
+
+% ============================================================================
+% Figures and Graphics
+% ============================================================================
+\usepackage{graphicx}
+\usepackage{float}
+\floatplacement{figure}{H}
+\usepackage{svg}
+
+% ============================================================================
+% Bibliography
+% ============================================================================
+\usepackage[
+backend=biber,
+style=alphabetic,
+]{biblatex}
+
+% ============================================================================
+% Page Layout
+% ============================================================================
+\setlength{\topmargin}{-.3 in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\textheight}{9.in}
+\setlength{\textwidth}{6.5in}
+
+% ============================================================================
+% Headers and Footers (KOMA-Script)
+% ============================================================================
+\usepackage[autooneside=false,automark]{scrlayer-scrpage}
+\clearpairofpagestyles
+\renewcommand*{\sectionmarkformat}{}
+\KOMAoption{headwidth}{198mm:-9em}
+\KOMAoption{headheight}{50mm}
+\KOMAoption{footwidth}{159mm:0em}
+\KOMAoption{headsepline}{1.1pt}
+\KOMAoption{footsepline}{0.5pt}
+
+\ihead[\clearscrheadfoot]{\mbox{
+    \sffamily\bfseries\smash{%
+    \setlength\fboxsep{0pt}\raisebox{-2pt}{
+        \colorbox{gray!80}{\makebox[33.7mm]{\hfill%
+        \ifnum\value{section}>0
+            \textcolor{white}{\fontsize{18}{19}\selectfont
+            \thesection }~
+        \fi%
+    \rule[-2.85pt]{2mm}{13mm}}}}}
+}}
+\chead{\hspace{33.7mm}\leftmark}
+\cfoot*{\scriptsize \rightmark \hfill \pagemark}
+
+% ============================================================================
+% Section Formatting
+% ============================================================================
+\newdimen\thesectionwdmax
+\newdimen\sectiontitlewd
+\AtBeginDocument{%
+  \setbox0=\hbox{{\usekomafont{disposition}\usekomafont{section}\scalebox{2}{99}}}%
+  \thesectionwdmax\wd0%
+  \sectiontitlewd\dimexpr\textwidth-\thesectionwdmax-.75cm-1pt\relax
+}
+\renewcommand\sectionformat{\protect\scalebox{2}{\thesection}}
+\addtokomafont{section}{\huge}
+
+\makeatletter
+\renewcommand\sectionlinesformat[4]{%
+  \ifstr{#1}{section}
+    {\ifstr{#3}{}
+      {\@hangfrom{\hskip #2#3}{#4}}
+      {%
+        \begin{tabular}{@{}r@{\hspace{.25cm}\vrule width 1pt\hspace{.5cm}}l@{}}
+        \parbox{\thesectionwdmax}{\centering#3}%
+        &%
+        {\parbox{\sectiontitlewd}{\raggedright#4}}%
+        \end{tabular}%
+      }%
+    }
+    {\@hangfrom{\hskip #2#3}{#4}}%
+}
+\makeatother
+
+% Center subsections
+\definecolor{ssec}{HTML}{20639B}
+\setkomafont{subsection}{\mysection}
+\newcommand{\mysection}[1]{%
+    \Large%
+    \setlength{\fboxsep}{0cm}%
+    \colorbox{ssec!30}{%
+        \begin{minipage}{\linewidth}%
+            \vspace*{2pt}%
+            \adfflourishleft \hfill
+            \adjustbox{width=4in,totalheight=4in}{
+              \parbox{4in}{\centering #1}
+            }
+            \hfill \adfflourishright
+            \vspace*{2pt}%
+        \end{minipage}%
+    }
+}
+
+% ============================================================================
+% References and Cross-references
+% ============================================================================
+\usepackage[noabbrev, capitalise, nameinlink]{cleveref}
+\crefname{figure}{fig.}{figs.}
+\Crefname{figure}{Fig.}{Figs.}
+\crefname{equation}{equation}{eqns.}
+\Crefname{equation}{Equation}{Eqns.}
+\crefname{section}{section}{secs.}
+\Crefname{section}{Section}{Secs.}
+
+% ============================================================================
+% Utilities
+% ============================================================================
+\usepackage{datetime}
+\usepackage[textwidth=25mm, textsize=tiny]{todonotes}
+\usepackage{csquotes}
+\usepackage{marginnote}
+\newcommand{\lmargnote}[1]{\reversemarginpar\marginnote{#1}\normalmarginpar}
+\newcommand{\rmargnote}[1]{\marginnote{{\footnotesize #1}}\index{#1}}
+
+% Wide tikz equations
+\newsavebox{\wideeqbox}
+\newenvironment{wideeq}
+  {\begin{displaymath}\begin{lrbox}{\wideeqbox}$\displaystyle}
+  {$\end{lrbox}\makebox[0pt]{\usebox{\wideeqbox}}\end{displaymath}}
