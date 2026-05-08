@@ -24,23 +24,63 @@ sync-bib local_path="references.bib" source=GLOBAL_BIB_SOURCE:
   cp {{source}} "$ROOT/{{local_path}}"
 
 # Format markdown files to enforce one sentence per line
-format-md *files:
+# Usage: just pandoc::format-md [globs/dirs...]
+format-md *targets:
   #!/usr/bin/env bash
   set -euo pipefail
   ROOT="{{invocation_directory()}}"
+  
   if [ -s "$HOME/.nvm/nvm.sh" ]; then
     . "$HOME/.nvm/nvm.sh"
     nvm use node
   fi
   npm install --no-save prettier prettier-plugin-sentences-per-line
   
-  # Adjust file paths to be relative to ROOT
-  TARGETS=()
-  for f in {{files}}; do
-    TARGETS+=("$ROOT/$f")
-  done
-  
-  npx prettier --write "${TARGETS[@]}"
+  # Determine targets
+  FINAL_TARGETS=()
+  if [ $# -eq 0 ]; then
+    # Standard research repo layout
+    [ -d "$ROOT/references" ] && FINAL_TARGETS+=("$ROOT/references")
+    [ -d "$ROOT/sections" ] && FINAL_TARGETS+=("$ROOT/sections")
+    [ -d "$ROOT/content_pandoc" ] && FINAL_TARGETS+=("$ROOT/content_pandoc")
+    [ -f "$ROOT/main.md" ] && FINAL_TARGETS+=("$ROOT/main.md")
+  else
+    for t in "$@"; do
+      # Support both relative paths and direct globs
+      # If it's a glob, expansion happened in the shell calling just, 
+      # but we need to handle it relative to invocation_directory
+      if [[ "$t" == /* ]]; then
+        FINAL_TARGETS+=("$t")
+      else
+        FINAL_TARGETS+=("$ROOT/$t")
+      fi
+    done
+  fi
+
+  if [ ${#FINAL_TARGETS[@]} -eq 0 ]; then
+    echo "No targets found for formatting."
+    exit 0
+  fi
+
+  # Resolve all targets to real files to handle symlinks correctly
+  # (Prettier often fails to follow symlinks to directories or formats links themselves)
+  REAL_FILES=()
+  while IFS=  read -r -d $'\0'; do
+      REAL_FILES+=("$REPLY")
+  done < <(find "${FINAL_TARGETS[@]}" -type f -name "*.md" -exec readlink -f {} + | tr '\n' '\0' 2>/dev/null)
+
+  if [ ${#REAL_FILES[@]} -eq 0 ]; then
+    echo "No markdown files found in targets."
+    exit 0
+  fi
+
+  # Use repo-local config if it exists
+  CONFIG_ARGS=()
+  if [ -f "$ROOT/.prettierrc" ]; then
+    CONFIG_ARGS+=(--config "$ROOT/.prettierrc")
+  fi
+
+  npx prettier "${CONFIG_ARGS[@]}" --ignore-path=/dev/null --write "${REAL_FILES[@]}"
 
 # Compile LaTeX source
 compile-tex main_file="main.tex" output_name="paper" figures_dir=GLOBAL_FIGURES_DIR build_dir=BUILD_DIR_TEX:
