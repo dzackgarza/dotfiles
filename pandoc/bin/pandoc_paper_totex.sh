@@ -42,7 +42,7 @@ filename="${filename%.*}";
 [[ $totex == false ]] && params+=("--pdf-engine=pdflatex")
 [[ $vimpreview == true ]] && params+=("--variable=vimpreview")
 [[ -z "$TMP_DIR" ]] && TMP_DIR=$(mktemp -d -t ci-XXXXXXXXXX);
-[[ -f "$directory/data.yaml" ]] && DATA_FILE="$directory/data.yaml" || DATA_FILE="$PANDOC_DIR/custom/preview_data.yaml";
+[[ -f "$directory/data.yaml" ]] && DATA_FILE="$directory/data.yaml" || DATA_FILE="$PANDOC_DIR/metadata/preview_data.yaml";
 
 BUILD_LOG="$directory/build.log";
 echo -e "" > "$BUILD_LOG";
@@ -73,7 +73,7 @@ cat "$TMP_DIR/combined.temp" | pandoc \
     --quiet \
     --metadata-file="$DATA_FILE" \
     -r markdown+fenced_divs+tex_math_single_backslash+citations \
-    --template=$PANDOC_DIR/custom/pandoc_paper_template.tex \
+    --template=$PANDOC_DIR/templates/pandoc_paper_template.tex \
 		--lua-filter=$PANDOC_DIR/filters/tikzcd.lua \
     --lua-filter=$PANDOC_DIR/filters/convert_amsthm_envs.lua \
     --lua-filter=$PANDOC_DIR/filters/convert_math_delimiters.lua \
