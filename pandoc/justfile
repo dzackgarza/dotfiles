@@ -16,13 +16,6 @@ BUILD_DIR_TEX := ".build_tex"
 
 # --- Recipes ---
 
-# Sync bibliography from global source to local project
-sync-bib local_path="references.bib" source=GLOBAL_BIB_SOURCE:
-  #!/usr/bin/env bash
-  set -euo pipefail
-  ROOT="{{invocation_directory()}}"
-  cp {{source}} "$ROOT/{{local_path}}"
-
 # Format markdown files to enforce one sentence per line
 # Usage: just pandoc::format-md [globs/dirs...]
 format-md *targets:
@@ -53,7 +46,6 @@ format-md *targets:
   fi
 
   # Resolve all targets to real files to handle symlinks correctly
-  # (Prettier often fails to follow symlinks to directories or formats links themselves)
   REAL_FILES=()
   while IFS=  read -r -d $'\0'; do
       REAL_FILES+=("$REPLY")
@@ -75,7 +67,7 @@ format-md *targets:
   npx prettier "${CONFIG_ARGS[@]}" --ignore-path=/dev/null --write "${REAL_FILES[@]}"
 
 # Compile LaTeX source
-compile-tex main_file="main.tex" output_name="paper" figures_dir=GLOBAL_FIGURES_DIR build_dir=BUILD_DIR_TEX:
+compile-tex main_file="main.tex" output_name="paper" figures_dir=GLOBAL_FIGURES_DIR bib_source=GLOBAL_BIB_SOURCE build_dir=BUILD_DIR_TEX:
   #!/usr/bin/env bash
   set -euo pipefail
   ROOT="{{invocation_directory()}}"
@@ -88,7 +80,10 @@ compile-tex main_file="main.tex" output_name="paper" figures_dir=GLOBAL_FIGURES_
   
   # Use TEXINPUTS for inclusion. Include standard ~/.pandoc paths for robustness.
   export TEXINPUTS=".:{{figures_dir}}//:$HOME/.pandoc/styles//:$HOME/.pandoc/macros//:$HOME/.pandoc/config//:${TEXINPUTS:-}"
-  export BIBINPUTS=".:$ROOT//:$HOME/.pandoc/bib//:${BIBINPUTS:-}"
+  
+  # Ensure the global bib directory is in BIBINPUTS
+  BIB_DIR=$(dirname "{{bib_source}}")
+  export BIBINPUTS=".:$ROOT//:$BIB_DIR//:$HOME/.pandoc/bib//:${BIBINPUTS:-}"
   
   # Change to the source directory and run latexmk
   cd "$ROOT/$DIR"
@@ -98,13 +93,13 @@ compile-tex main_file="main.tex" output_name="paper" figures_dir=GLOBAL_FIGURES_
   cp "$ROOT/{{build_dir}}/${FILE%.tex}.pdf" "$ROOT/{{output_name}}-$(date +%d-%m-%y).pdf"
 
 # Compile Pandoc source to PDF via LaTeX
-compile-pandoc input_file="main.md" output_name="output" template="research_draft.tex" bibliography="references.bib" figures_dir=GLOBAL_FIGURES_DIR build_dir=BUILD_DIR_PANDOC:
+compile-pandoc input_file="main.md" output_name="output" template="research_draft.tex" bib_source=GLOBAL_BIB_SOURCE figures_dir=GLOBAL_FIGURES_DIR build_dir=BUILD_DIR_PANDOC:
   #!/usr/bin/env bash
   set -euo pipefail
   ROOT="{{invocation_directory()}}"
   mkdir -p "$ROOT/{{build_dir}}"
   
-  # Use TEXINPUTS for pandoc's latex engine as well
+  # Use TEXINPUTS for pandoc's latex engine
   export TEXINPUTS=".:{{figures_dir}}//:$HOME/.pandoc/styles//:$HOME/.pandoc/macros//:$HOME/.pandoc/config//:${TEXINPUTS:-}"
 
   pandoc "$ROOT/{{input_file}}" \
@@ -112,7 +107,7 @@ compile-pandoc input_file="main.md" output_name="output" template="research_draf
       --lua-filter=convert_amsthm_envs.lua \
       --lua-filter=select_images.lua \
       --natbib \
-      --bibliography="$ROOT/{{bibliography}}" \
+      --bibliography="{{bib_source}}" \
       --resource-path={{figures_dir}}/rendered \
       --resource-path={{figures_dir}} \
       --template={{template}} \
@@ -122,6 +117,9 @@ compile-pandoc input_file="main.md" output_name="output" template="research_draf
       -s -o "$ROOT/{{build_dir}}/output.tex"
   
   cd "$ROOT/{{build_dir}}"
+  # Ensure bib dir is available for the latexmk phase of pandoc
+  BIB_DIR=$(dirname "{{bib_source}}")
+  export BIBINPUTS=".:$ROOT//:$BIB_DIR//:$HOME/.pandoc/bib//:${BIBINPUTS:-}"
   latexmk -pdf -interaction=nonstopmode -gg output.tex
   cp output.pdf "$ROOT/{{output_name}}-$(date +%d-%m-%y).pdf"
 
