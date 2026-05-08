@@ -78,12 +78,14 @@ compile-tex main_file="main.tex" output_name="paper" figures_dir=GLOBAL_FIGURES_
   
   mkdir -p "$ROOT/{{build_dir}}"
   
+  # Symlink global bib for easy resolution
+  ln -sf "{{bib_source}}" "$ROOT/global.bib"
+  
   # Use TEXINPUTS for inclusion. Include standard ~/.pandoc paths for robustness.
   export TEXINPUTS=".:{{figures_dir}}//:$HOME/.pandoc/styles//:$HOME/.pandoc/macros//:$HOME/.pandoc/config//:${TEXINPUTS:-}"
   
-  # Ensure the global bib directory is in BIBINPUTS (No recursive crawl!)
-  BIB_DIR=$(dirname "{{bib_source}}")
-  export BIBINPUTS=".:$ROOT//:$BIB_DIR:$HOME/.pandoc/bib//:${BIBINPUTS:-}"
+  # BIBINPUTS setup
+  export BIBINPUTS=".:$ROOT:$HOME/.pandoc/bib//:${BIBINPUTS:-}"
   
   # Change to the source directory and run latexmk
   cd "$ROOT/$DIR"
@@ -99,6 +101,9 @@ compile-pandoc input_file="main.md" output_name="output" template="research_draf
   ROOT="{{invocation_directory()}}"
   mkdir -p "$ROOT/{{build_dir}}"
   
+  # Symlink global bib for easy resolution
+  ln -sf "{{bib_source}}" "$ROOT/global.bib"
+
   # Use TEXINPUTS for pandoc's latex engine
   export TEXINPUTS=".:{{figures_dir}}//:$HOME/.pandoc/styles//:$HOME/.pandoc/macros//:$HOME/.pandoc/config//:${TEXINPUTS:-}"
 
@@ -107,7 +112,7 @@ compile-pandoc input_file="main.md" output_name="output" template="research_draf
       --lua-filter=convert_amsthm_envs.lua \
       --lua-filter=select_images.lua \
       --natbib \
-      --bibliography="{{bib_source}}" \
+      --bibliography="$ROOT/global.bib" \
       --resource-path={{figures_dir}}/rendered \
       --resource-path={{figures_dir}} \
       --template={{template}} \
@@ -117,9 +122,8 @@ compile-pandoc input_file="main.md" output_name="output" template="research_draf
       -s -o "$ROOT/{{build_dir}}/output.tex"
   
   cd "$ROOT/{{build_dir}}"
-  # Ensure bib dir is available for the latexmk phase (No recursive crawl!)
-  BIB_DIR=$(dirname "{{bib_source}}")
-  export BIBINPUTS=".:$ROOT//:$BIB_DIR:$HOME/.pandoc/bib//:${BIBINPUTS:-}"
+  # BIBINPUTS setup
+  export BIBINPUTS=".:$ROOT:$HOME/.pandoc/bib//:${BIBINPUTS:-}"
   latexmk -pdf -interaction=nonstopmode -gg output.tex
   cp output.pdf "$ROOT/{{output_name}}-$(date +%d-%m-%y).pdf"
 
@@ -160,6 +164,7 @@ clean build_dir_pandoc=BUILD_DIR_PANDOC build_dir_tex=BUILD_DIR_TEX:
   ROOT="{{invocation_directory()}}"
   rm -rf "$ROOT/{{build_dir_pandoc}}" "$ROOT/{{build_dir_tex}}" "$ROOT/.build"
   rm -f "$ROOT"/*.pdf "$ROOT"/*.aux "$ROOT"/*.log "$ROOT"/*.fls "$ROOT"/*.fdb_latexmk "$ROOT"/*.bbl "$ROOT"/*.bcf "$ROOT"/*.blg "$ROOT"/*.run.xml "$ROOT"/*.out "$ROOT"/*.toc "$ROOT"/*SAVE-ERROR
+  rm -f "$ROOT/global.bib"
 
 # Clean all build artifacts from reference directories
 clean-refs:
