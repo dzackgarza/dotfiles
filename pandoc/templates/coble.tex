@@ -1,0 +1,137 @@
+$passoptions.latex()$
+\documentclass{amsart}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{tikzit}
+\usepackage{dynkin-diagrams}
+
+\newif\ifshort
+\shortfalse
+
+\usepackage{hyperref}
+\hypersetup{colorlinks,citecolor=blue,linktocpage,hyperindex=true,backref=true}
+
+\usepackage{tikz-cd, bm}
+
+\usepackage[textsize=tiny]{todonotes}
+\newcommand\va[1]{\todo[color=green!40]{#1}} %valery
+\newcommand\vainline[1]{\todo[inline,color=green!40]{#1}} %valery inline
+\newcommand\ls[1]{\todo[color=orange!40]{#1}} %luca
+\newcommand\lsinline[1]{\todo[inline,color=orange!40]{#1}} %luca inline
+\newcommand\phil[1]{\todo[color=red!40]{#1}} %valery
+\newcommand\philinline[1]{\todo[inline,color=red!40]{#1}} %valery inline
+
+$if(title)$
+\title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
+$else$
+\title{Complete moduli spaces of Coble surfaces}
+$endif$
+\date{June 14th, 2024}
+
+$for(author)$
+\author{$author.name$}
+\address{$author.address$}
+\email{$author.email$}
+$endfor$
+
+\usepackage{etex}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx} 
+\usepackage{longtable}
+\usepackage{hyperref}
+\hypersetup{colorlinks,citecolor=blue,linktocpage,hyperindex=true,backref=true}
+\usepackage{amsfonts, amsmath, amssymb, amsthm, mathtools}
+\usepackage[nameinlink]{cleveref}
+\usepackage{mathrsfs, stmaryrd}
+\usepackage{color}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{fontenc}
+\usepackage{url}
+\usepackage{caption}
+\usepackage{subcaption}
+\newdimen\figrasterwd
+\figrasterwd\textwidth
+\usepackage{epstopdf}
+\usepackage{hyphenat}
+\usepackage{float}
+\floatplacement{figure}{H}
+\usepackage{indentfirst}
+\usepackage[export]{adjustbox}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{color}
+\usepackage[all]{xy}\usepackage{array}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+\usepackage{booktabs}
+\usepackage{etoolbox}
+\usepackage{placeins}
+\makeatletter
+\AddToHook{cmd/section/before}{\FloatBarrier}
+\AddToHook{cmd/subsection/before}{\FloatBarrier}
+\makeatother
+\usepackage{dynkin-diagrams}
+\usepackage{quiver}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, cd, fadings, patterns, calc, matrix, positioning, decorations, decorations.pathreplacing, decorations.markings, shapes, backgrounds, fit, shapes.geometric, intersections, hobby, matrix,arrows,decorations.pathmorphing}
+\tikzfading[name=fade out, inner color=transparent!0, outer color=transparent!100]
+
+\usepackage[
+style=alphabetic,
+sorting=ynt,
+backend=biber
+]{biblatex}
+\addbibresource{references.bib}
+
+\renewcommand{\hat}{\widehat}
+\renewcommand{\tilde}{\widetilde}
+
+\usepackage{Coble}
+
+% Pandoc compatibility macros
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% Standard Pandoc macros for figures
+$if(graphics)$
+\usepackage{graphicx}
+\usepackage{longtable}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\textwidth\textwidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to H or value from metadata
+\makeatletter
+\def\fps@figure{$if(fig-pos)$$fig-pos$$else$H$endif$}
+\makeatother
+$endif$
+
+\makeatletter
+\newcommand{\pandocbounded}[1]{#1}
+\makeatother
+
+$header-includes$
+
+\begin{document}
+
+$if(abstract)$
+\begin{abstract}
+    $abstract$
+\end{abstract}
+$endif$
+
+\maketitle
+\tableofcontents
+
+\newpage
+
+$body$
+
+\clearpage
+ \printbibliography
+
+\end{document}
