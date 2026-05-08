@@ -5,7 +5,7 @@
 # --- Variables ---
 
 # Default bibliography source
-GLOBAL_BIB_SOURCE := env_var_or_default("BIB_SOURCE", home_dir() / "zotero_global.bib")
+GLOBAL_BIB_SOURCE := env_var_or_default("ZOTERO_GLOBAL_BIB", home_dir() / "zotero_global.bib")
 
 # Default figures directory
 GLOBAL_FIGURES_DIR := env_var_or_default("FIGURES_DIR", home_dir() / "figures")
