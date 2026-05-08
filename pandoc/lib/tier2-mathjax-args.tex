@@ -177,3 +177,234 @@
 
 % Ring freezing
 \newcommand{\freezmod}[1]{\ZZ\left[ {#1} \right] }
+% ================================================================================
+% Additional macros with arguments from latexmacs.tex
+% ================================================================================
+
+% Conjugation and closures
+\newcommand{\conjugate}[1]{{\overline{{#1}}}}
+\newcommand{\closure}[1]{\overline{#1}}
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\univcover}[1]{\overline{#1}}
+\renewcommand{\bar}[1]{\overline{#1}}
+\renewcommand{\hat}[1]{\widehat{#1}}
+
+% Vector and bundle notations
+\newcommand{\bundle}[1]{\mathcal{#1}}
+\renewcommand{\vector}[1]{\mathbf{#1}}
+\newcommand{\vhat}[1]{\widehat{ \vector{#1} }}
+
+% Diagonal and correspondence
+\newcommand{\diagonal}[1]{\Delta}
+\newcommand{\Diagonal}[1]{\Delta}
+\newcommand{\correspond}[1]{\theset{\substack{#1}}}
+
+% Convergence notations
+\newcommand{\converges}[1]{\overset{#1}}
+\newcommand{\convergesto}[1]{\overset{#1}\too}
+
+% Derivatives
+\newcommand{\ddd}[2]{{\frac{d #1}{d #2}\,}}
+\newcommand{\dd}[2]{{\frac{\partial #1}{\partial #2}\,}}
+
+% Evaluation and restriction
+\newcommand{\evalfrom}[0]{\Big|}
+\newcommand{\restrictionof}[2]{ {\left.{{#1}} \right|_{{#2}} }}
+\newcommand{\ro}[2]{{ \left.{{#1}} \right|_{{#2}} }}
+
+% Inner products and brackets
+\newcommand{\ip}[2]{{\left\langle {#1},~{#2} \right\rangle}}
+
+% Kernel symbols and spacing
+\newcommand{\ddt}{\tfrac{\dif}{\dif t}}
+\newcommand{\ddx}{\tfrac{\dif}{\dif x}}
+\newcommand{\logd}[0]{{ \del^{\scriptsize \log} }}
+
+% Lists and tuples
+\newcommand{\theset}[1]{\left\{{#1}\right\}}
+\newcommand{\thevector}[1]{{\left[ {#1} \right]}}
+\newcommand{\ts}[1]{\left\{{#1}\right\}}
+\newcommand{\tv}[1]{{\left[ {#1} \right]}}
+
+% Matrix and vector helpers
+\newcommand{\mltext}[1]{\left\{\begin{array}{c}#1\end{array}\right\}}
+
+% Modular arithmetic
+\newcommand{\Suchthat}[0]{\middle\vert}
+
+% Multinomial coefficients  
+\newcommand{\multinomial}[1]{\left(\!\!{#1}\!\!\right)}
+
+% Pairing with overhead notation
+\newcommand{\realpart}[1]{{\mathcal{Re}({#1})}}
+
+% Sheaf notation
+\newcommand{\sheaf}[1]{\operatorname{\mathcal{#1}}}
+
+% Sets with specific elements
+\newcommand{\smpt}[1]{\setminus\theset{#1}}
+\newcommand{\smts}[1]{\setminus\theset{ #1 }}
+
+% Stirling numbers
+\newcommand{\stirlingfirst}[2]{\genfrac{[}{]}{0pt}{}{#1}{#2}}
+\newcommand{\stirling}[2]{\genfrac\{\}{0pt}{}{#1}{#2}}
+
+% Surjections with labels
+\newcommand{\surjectsvia}[2][]{ \xrightarrow[#1]{#2} { \mathrel{\mkern-16mu}\rightarrow }\, }
+
+% Category theory notations
+\newcommand{\thecat}[1]{\mathbf{#1}}
+\newcommand{\constantsheaf}[1]{\underline{#1}}
+\newcommand{\ul}[1]{\underline{#1}}
+
+% Colored text for vectors
+\newcommand{\vecc}[2]{\textcolor{#1}{\textbf{#2}}}
+
+% Additional field extensions
+\newcommand{\places}[1]{ \mathrm{Pl}\qty{#1}}
+\newcommand{\ZZlocal}[1]{{ \ZZ_{\hat{#1}} }}
+
+% Radical and square root
+\newcommand{\rad}[1]{\sqrt{#1}}
+
+% Rising and falling factorials
+\def\rising#1#2{ \qty{#1}^{ (#2) }}
+\def\falling#1#2{ \qty{#1}_{ (#2) }}
+
+% Lists with index ranges
+\newcommand\elts[2]{{ {#1}_1, {#1}_2, \cdots, {#1}_{#2}}}
+\newcommand\tselts[2]{{ \theset{ {#1}_1, {#1}_2, \cdots, {#1}_{#2} } }}
+
+% Fiber products and mixed products
+\newcommand\mix[1]{\overset{\scriptscriptstyle {#1} }{\times}}
+\newcommand\fiberproduct[1]{\underset{\scriptscriptstyle {#1} }{\times}}
+\newcommand\fiberprod[1]{ \fiberproduct{#1}}
+\newcommand\basechange[1]{{ \fiberproduct{k} {#1} }}
+\newcommand\fprod[1]{{ \fiberproduct{#1} }}
+
+% Complex-valued functions
+\newcommand{\qsymb}[2]{{ \left( {#1} \over {#2} \right)  }}
+
+% Polynomial rings
+\newcommand{\kx}[1]{k[x_1, \cdots, x_{#1}]}
+
+% K-theory variants
+\newcommand{\lktt}[1]{ {L_{\mathrm{K3}, \1}} }
+
+% Fractional ideals and parts
+\newcommand{\fractional}[1]{\theset{#1}}
+\newcommand{\fractionalpart}[1]{\theset{#1}}
+\newcommand{\integerpart}[1]{\left[ {#1}\right] }
+\newcommand{\zadjoin}[1]{\ZZ\left[ {#1} \right]}
+
+% Special map notations
+\newcommand{\mapscorrespond}[2]{\mathrel{\operatorname*{\rightleftharpoons}_{#2}^{#1}}}
+\newcommand{\mapsvia}[1]{\xrightarrow{#1}}
+\newcommand{\mapsfromvia}[1]{\xleftarrow{#1}}
+\newcommand{\mapstovia}[1]{\xmapsto{#1}}
+\newcommand{\tovia}[1]{\xrightarrow{#1}}
+\newcommand{\too}[1]{{\xrightarrow{#1}}}
+
+% Birational and stable birational
+\newcommand{\birational}[0]{\overset{\sim}{\torational}}
+\newcommand{\birationaliso}[0]{\overset{\sim}{\torational}}
+\newcommand{\sbirational}[0]{\overset{\sim_{ \stab} }{\torational}}
+
+% Isomorphism with labels
+\newcommand{\isovia}[1]{\underset{#1}{\iso}}
+\newcommand{\isoin}[1]{\overset{#1}{\iso}}
+
+% Injections with labels
+\newcommand{\injectsvia}[1]{\xhookrightarrow{#1}}
+\newcommand{\injectsfromvia}[1]{\xhookleftarrow{#1}}
+
+% Relative spectrum
+\newcommand{\relspec}[0]{\ul{ \operatorname{Spec}} }
+
+% Nerves and realizations
+\newcommand{\nerve}[1]{{ \mathcal{N}({#1}) }}
+\newcommand{\realize}[1]{{ \abs{#1} }}
+
+% Category operations
+\newcommand{\opcat}[1]{{ {#1}\op }}
+
+% Gluing
+\newcommand{\glue}[1]{{ \Disjoint_{#1} }}
+
+% Norm of complexes
+\newcommand{\normcomplex}[1]{{\norm{\complex{#1}}}}
+
+% Extalgebra
+\newcommand{\Extalgebra}[0]{\cocomplex{\bigwedge}}
+\newcommand{\Extalg}[0]{\Extalgebra}
+\newcommand{\Extcomplex}[0]{\cocomplex{ \Extalgebra}}
+
+% DR complexes and Hodge
+\newcommand{\drcomplex}[0]{{\cocomplex{\Omega}}}
+\newcommand{\cxH}[0]{{\complex{H}}}
+\newcommand{\ccxH}[0]{{\cocomplex{H}}}
+\newcommand{\stardstar}[0]{\hodgestar \mathrm{d} \mkern-1mu \hodgestar}
+
+% Sheaf homomorphisms
+\newcommand{\sheafhom}[0]{\mathop{\mathcal{H}\! \mathit{om}}}
+\newcommand{\HHom}{\mathscr{H}\kern-2pt\operatorname{om}}
+\newcommand{\shom}{ {\mathcal{H}}\kern-0.5pt{\operatorname{om}}}
+
+% Multicase definitions
+\newcommand{\smallprod}[0]{{ \scriptscriptstyle\prod }}
+
+% Equal because
+\newcommand{\eqLH}[0]{{ \equalsbecause{\scriptscriptstyle\text{LH}} }}
+\newcommand{\eqae}[0]{\underset{\ae}{=}}
+
+% Hodge structure variants
+\newcommand{\eq}{\operatorname*{=}}
+
+% Roman numeral macro
+\newcommand{\RM}[1]{%
+  \textup{\uppercase\expandafter{\romannumeral#1}}%
+}
+
+% Canonical isomorphism
+\newcommand\caniso[0]{{ \underset{\can}{\iso} }}
+
+% Other notations
+\newcommand\dif{\mathop{}\!\operatorname{d}}
+\newcommand{\aug}{\fboxsep=-\fboxrule\!\!\!\fbox{\strut}\!\!\!}
+
+% Rotate utility (MathJax may not support)
+\newcommand{\rotate}[2]{{\style{display: inline-block; transform: rotate(#1deg)}{#2}}}
+
+% Triple arrow decoration
+\newcommand\rrrarrows{
+    \mathrel{\substack{\textstyle\rightarrow\\[-0.6ex]
+        \textstyle\rightarrow \\[-0.6ex]
+        \textstyle\rightarrow}}
+}
+
+% Right triple arrows operator
+\DeclareMathOperator{\righttriplearrows} {{\; \tikz{ \foreach \y in {0, 0.1, 0.2} { \draw [-stealth] (0, \y) -- +(0.5, 0);}} \; }}
+
+% Normal subgroup not-equal
+\newcommand{\trianglerightneq}{\mathrel{\ooalign{\raisebox{-0.5ex}{\reflectbox{\rotatebox{90}{$\nshortmid$}}}\cr$\triangleright$\cr}\mkern-3mu}}
+\newcommand{\normalneq}{\mathrel{\reflectbox{$\trianglerightneq$}}}
+
+% Big ast for smash products
+\newcommand{\bigast}[0]{{\mathop{\text{\Large $\ast$}}}}
+
+% Connect sum
+\newcommand{\connectsum}[0]{\mathop{ \Large\mypound }}
+\newcommand{\mypound}{\scalebox{0.8}{\raisebox{0.4ex}{\#}}}
+
+% Horizontal and vertical bars
+\newcommand*{\horzbar}{\rule[.5ex]{2.5ex}{0.5pt}}
+\newcommand*{\vertbar}{\rule[-1ex]{0.5pt}{2.5ex}}
+
+% Git quotient
+\newcommand{\gitquot}{{ \mathbin{/\mkern-6mu/}}}
+
+% Multi-choose
+\def\multichoose#1#2{{\left(\kern-.3em\left(\genfrac{}{0pt}{}{#1}{#2}\right)\kern-.3em\right)}}
+
+% Ceiling paired delimiter (from physics package usually)
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
