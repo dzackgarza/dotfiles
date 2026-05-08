@@ -38,7 +38,7 @@ format-md *targets:
   
   # Determine targets
   FINAL_TARGETS=()
-  for t in "$@"; do
+  for t in {{targets}}; do
     # Support both relative paths and direct globs
     if [[ "$t" == /* ]]; then
       FINAL_TARGETS+=("$t")
