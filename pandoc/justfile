@@ -14,9 +14,6 @@ GLOBAL_FIGURES_DIR := env_var_or_default("FIGURES_DIR", home_dir() / "figures")
 BUILD_DIR_PANDOC := ".build_pandoc"
 BUILD_DIR_TEX := ".build_tex"
 
-# Standard TEXINPUTS that includes all global styles, macros, and configs
-TEXINPUTS_GLOBAL := ".:" + GLOBAL_FIGURES_DIR + "//:" + home_dir() + "/.pandoc/styles//:" + home_dir() + "/.pandoc/macros//:" + home_dir() + "/.pandoc/config//:" + env_var_or_default("TEXINPUTS", "")
-
 # --- Recipes ---
 
 # Format markdown files to enforce one sentence per line
@@ -73,11 +70,11 @@ format-md *targets:
 render-figures:
   #!/usr/bin/env bash
   set -euo pipefail
-  export TEXINPUTS="{{TEXINPUTS_GLOBAL}}"
+  # TEXINPUTS inherited from shell env (~/.zshrc)
   python3 "$HOME/.pandoc/scripts/render_figures.py"
 
 # Compile LaTeX source
-compile-tex main_file="main.tex" output_name="paper" figures_dir=GLOBAL_FIGURES_DIR bib_source=GLOBAL_BIB_SOURCE build_dir=BUILD_DIR_TEX:
+compile-tex main_file="main.tex" output_name="paper" bib_source=GLOBAL_BIB_SOURCE build_dir=BUILD_DIR_TEX:
   #!/usr/bin/env bash
   set -euo pipefail
   ROOT="{{invocation_directory()}}"
@@ -91,11 +88,7 @@ compile-tex main_file="main.tex" output_name="paper" figures_dir=GLOBAL_FIGURES_
   # Symlink global bib for easy resolution
   ln -sf "{{bib_source}}" "$ROOT/global.bib"
   
-  # Use global TEXINPUTS
-  export TEXINPUTS="{{TEXINPUTS_GLOBAL}}"
-  
-  # BIBINPUTS setup
-  export BIBINPUTS=".:$ROOT:$HOME/.pandoc/bib//:${BIBINPUTS:-}"
+  # TEXINPUTS inherited from shell env (~/.zshrc)
   
   # Change to the source directory and run latexmk
   cd "$ROOT/$DIR"
@@ -105,7 +98,7 @@ compile-tex main_file="main.tex" output_name="paper" figures_dir=GLOBAL_FIGURES_
   cp "$ROOT/{{build_dir}}/${FILE%.tex}.pdf" "$ROOT/{{output_name}}-$(date +%d-%m-%y).pdf"
 
 # Compile Pandoc source to PDF via LaTeX
-compile-pandoc input_file="main.md" output_name="output" template="research_draft.tex" bib_source=GLOBAL_BIB_SOURCE figures_dir=GLOBAL_FIGURES_DIR build_dir=BUILD_DIR_PANDOC:
+compile-pandoc input_file="main.md" output_name="output" template="research_draft.tex" bib_source=GLOBAL_BIB_SOURCE build_dir=BUILD_DIR_PANDOC:
   #!/usr/bin/env bash
   set -euo pipefail
   ROOT="{{invocation_directory()}}"
@@ -113,9 +106,6 @@ compile-pandoc input_file="main.md" output_name="output" template="research_draf
   
   # Symlink global bib for easy resolution
   ln -sf "{{bib_source}}" "$ROOT/global.bib"
-
-  # Use global TEXINPUTS
-  export TEXINPUTS="{{TEXINPUTS_GLOBAL}}"
 
   # Run pandoc from ROOT to ensure relative include.lua paths work correctly
   cd "$ROOT"
@@ -125,8 +115,6 @@ compile-pandoc input_file="main.md" output_name="output" template="research_draf
       --lua-filter="$HOME/.pandoc/filters/select_images.lua" \
       --natbib \
       --bibliography="global.bib" \
-      --resource-path={{figures_dir}}/rendered \
-      --resource-path={{figures_dir}} \
       --template={{template}} \
       --biblatex \
       --number-sections \
@@ -134,8 +122,7 @@ compile-pandoc input_file="main.md" output_name="output" template="research_draf
       -s -o "{{build_dir}}/output.tex"
   
   cd "{{build_dir}}"
-  # BIBINPUTS setup
-  export BIBINPUTS=".:$ROOT:$HOME/.pandoc/bib//:${BIBINPUTS:-}"
+  # BIBINPUTS inherited from shell env (~/.zshrc)
   latexmk -pdf -interaction=nonstopmode -gg output.tex
   cp output.pdf "$ROOT/{{output_name}}-$(date +%d-%m-%y).pdf"
 
