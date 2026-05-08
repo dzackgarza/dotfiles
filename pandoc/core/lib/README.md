@@ -1,5 +1,9 @@
 # LaTeX Macro Library Organization
 
+**Location:** `~/.pandoc/core/lib/`
+
+This directory contains the organized LaTeX macro library, consolidated from scattered legacy files into a tier-based system.
+
 ## Tier System
 
 ### Tier 1: Simple MathJax-Compatible Shortcuts
