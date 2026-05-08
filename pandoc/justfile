@@ -88,7 +88,8 @@ compile-tex main_file="main.tex" output_name="paper" bib_source=GLOBAL_BIB_SOURC
   # Symlink global bib for easy resolution
   ln -sf "{{bib_source}}" "$ROOT/global.bib"
   
-  # TEXINPUTS inherited from shell env (~/.zshrc)
+  # BIBINPUTS setup (Augment environment with project root)
+  export BIBINPUTS=".:$ROOT:${BIBINPUTS:-}"
   
   # Change to the source directory and run latexmk
   cd "$ROOT/$DIR"
@@ -122,7 +123,8 @@ compile-pandoc input_file="main.md" output_name="output" template="research_draf
       -s -o "{{build_dir}}/output.tex"
   
   cd "{{build_dir}}"
-  # BIBINPUTS inherited from shell env (~/.zshrc)
+  # BIBINPUTS setup (Augment environment with project root so global.bib is found)
+  export BIBINPUTS=".:$ROOT:${BIBINPUTS:-}"
   latexmk -pdf -interaction=nonstopmode -gg output.tex
   cp output.pdf "$ROOT/{{output_name}}-$(date +%d-%m-%y).pdf"
 
