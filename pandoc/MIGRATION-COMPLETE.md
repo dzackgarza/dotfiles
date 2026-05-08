@@ -162,7 +162,7 @@ ln -s ~/dotfiles/pandoc/obsidian/mathjax-macros.tex \
 
 ### TEXINPUTS (in ~/.zshrc)
 ```bash
-export TEXINPUTS=".:$HOME/figures//:$HOME/.pandoc/styles//:$HOME/.pandoc/lib//:$HOME/.pandoc/preambles//:$HOME/.pandoc/config//:"
+export TEXINPUTS=".:$HOME/figures//:$HOME/.pandoc/core/styles//:$HOME/.pandoc/core/lib//:$HOME/.pandoc/core/preambles//:$HOME/.pandoc/config//:"
 ```
 
 **Note:** Reload shell (`source ~/.zshrc`) to apply changes.
