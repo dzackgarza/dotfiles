@@ -29,7 +29,7 @@ g-format-md *files:
 # Compile LaTeX source
 g-compile-tex main_file="main.tex" output_name="paper" figures_dir=GLOBAL_FIGURES_DIR build_dir=DEFAULT_BUILD_DIR_TEX:
     @mkdir -p {{build_dir}}
-    latexmk -gg -pdf -outdir=../{{build_dir}} -cd {{main_file}} -use-make -latexoption="--include-directory={{figures_dir}}"
+    TEXINPUTS=".:{{figures_dir}}:" latexmk -gg -pdf -outdir=../{{build_dir}} -cd {{main_file}} -use-make
     @cp {{build_dir}}/$(basename {{main_file}} .tex).pdf ./{{output_name}}-`date +%d-%m-%y`.pdf
 
 # Compile Pandoc source to PDF via LaTeX
