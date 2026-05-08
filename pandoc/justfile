@@ -56,6 +56,7 @@ compile-tex main_file="main.tex" output_name="paper" figures_dir=GLOBAL_FIGURES_
   
   # Use TEXINPUTS for inclusion. Include standard ~/.pandoc paths for robustness.
   export TEXINPUTS=".:{{figures_dir}}//:$HOME/.pandoc/styles//:$HOME/.pandoc/macros//:$HOME/.pandoc/config//:${TEXINPUTS:-}"
+  export BIBINPUTS=".:$ROOT//:$HOME/.pandoc/bib//:${BIBINPUTS:-}"
   
   # Change to the source directory and run latexmk
   cd "$ROOT/$DIR"
