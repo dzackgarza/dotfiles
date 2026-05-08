@@ -1,0 +1,127 @@
+---
+title: "Pandoc Macro System Test Document"
+author: "Test Suite"
+date: \today
+---
+
+# Tier 1: Simple MathJax-Compatible Shortcuts
+
+## Number Systems
+
+Basic number systems work: $\ZZ, \QQ, \RR, \CC, \FF, \HH, \NN$.
+
+Field extensions: $\FFp, \FFpn, \Fp, \Fpn, \QQbar, \ZZpadic$.
+
+## Calligraphic Letters
+
+Categories: $\mca, \mcb, \mcc, \mcd, \mce$ and $\mcTop, \Path$.
+
+## Operators
+
+Functors: $\Hom, \Aut, \End, \Ext, \Tor$.
+
+Geometry: $\Pic, \Spec, \Proj, \Div$.
+
+Galois theory: $\Gal, \Frob$.
+
+# Tier 2: Commands with Arguments
+
+## Delimiters
+
+Absolute value: $\abs{x}$, norm: $\norm{v}$, inner product: $\inner{u}{v}$.
+
+Generators: $\gens{a, b, c}$, brackets: $\bracket{x, y}$.
+
+Floor and ceiling: $\floor{3.7} = 3$, $\ceiling{3.2} = 4$.
+
+## Algebraic Constructions
+
+Polynomial ring: $\polynomialring{x, y, z}$, formal power series: $\fps{t}$.
+
+Quotients: $\quotright{G}{H}$, localizations: $\localize{S}$.
+
+## Function Fields
+
+Rational function field: $\functionfield{x}$, Laurent series: $\laurent{t}$.
+
+## Complexes
+
+Chain complex: $\complex{C}$, cochain complex: $\cocomplex{C}$.
+
+Bicomplex: $\bicomplex{K}$.
+
+# Category Theory Macros
+
+## Basic Categories
+
+Categories: $\Set, \Grp, \Ring, \Mod, \Top, \Vect$.
+
+Functors: $\Hom_{\mcc}(X, Y)$, $\Aut(G)$, $\End(V)$.
+
+## Limits and Colimits
+
+Limits: $\varprojlim F_n$, colimits: $\varinjlim G_n$.
+
+## Derived Categories
+
+Derived functors: $\Ext^i(M, N)$, $\Tor_i(M, N)$.
+
+# Spectral Sequence Macros
+
+Bordism spectra: $\MO, \MSO, \MU$.
+
+K-theory: $\KO, \KU$.
+
+Topological modular forms: $\tmf, \TMF$.
+
+# Mixed Examples
+
+## Algebraic Geometry
+
+The Picard group $\Pic(X)$ classifies line bundles on $X$.
+
+The spectrum $\Spec R$ of a ring $R$ with structure sheaf $\OO_X$.
+
+Cohomology: $H^i(X, \OO_X)$ and Chern classes $c_i \in \CH^i(X)$.
+
+## Number Theory
+
+For a prime $p$, the $p$-adic integers are $\ZZpadic$ and $p$-adic numbers are $\QQpadic$.
+
+Galois group: $\Gal(\QQbar / \QQ)$ acts on roots.
+
+## Topology
+
+Fundamental group: $\pi_1(X, x_0) \cong \ZZ$ for the circle.
+
+Homology: $H_n(X; \ZZ)$ and cohomology: $H^n(X; \ZZ)$.
+
+Homotopy groups: $\pi_n(S^n) \cong \ZZ$.
+
+## Representation Theory
+
+Group ring: $\ZZG$ where $G$ is a group.
+
+Character: $\chi: G \to \CCstar$.
+
+Schur's lemma: $\Hom_G(V, W) = 0$ for inequivalent irreps.
+
+# Symbols and Relations
+
+Embeddings: $X \embeds Y$, surjections: $X \surjects Y$.
+
+Isomorphisms: $X \isomorphic Y$, homotopy equivalence: $X \homotopic Y$.
+
+Normal subgroup: $H \normal G$.
+
+Direct sum: $V \oplus W$, tensor product: $V \tensor W$.
+
+# Conclusion
+
+This document exercises macros from:
+
+- Tier 1: Simple shortcuts (number systems, operators)
+- Tier 2: Commands with arguments (delimiters, constructions)
+- Domain files: Categories, spectral sequences
+
+All macros loaded via pandoc template using `koma-article` preamble with `dzg-unified.sty`.
