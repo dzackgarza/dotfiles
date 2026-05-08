@@ -35,11 +35,22 @@ format-md *files:
 compile-tex main_file="main.tex" output_name="paper" figures_dir=GLOBAL_FIGURES_DIR build_dir=BUILD_DIR_TEX:
   #!/usr/bin/env bash
   set -euo pipefail
+  # Ensure build dir exists relative to project root
   mkdir -p {{build_dir}}
+  
+  # Extract dir and file names
+  DIR=$(dirname "{{main_file}}")
+  FILE=$(basename "{{main_file}}")
+  
   # Use TEXINPUTS for inclusion. Note: trailing // for recursive search
   export TEXINPUTS=".:{{figures_dir}}//:${TEXINPUTS:-}"
-  latexmk -gg -pdf -outdir=../{{build_dir}} -cd {{main_file}} -use-make
-  cp {{build_dir}}/$(basename {{main_file}} .tex).pdf ./{{output_name}}-$(date +%d-%m-%y).pdf
+  
+  # Change to the source directory and run latexmk
+  cd "$DIR"
+  latexmk -gg -pdf -outdir=../{{build_dir}} "$FILE" -use-make
+  
+  # Copy result back to project root (which is parent of $DIR)
+  cp ../{{build_dir}}/${FILE%.tex}.pdf ../{{output_name}}-$(date +%d-%m-%y).pdf
 
 # Compile Pandoc source to PDF via LaTeX
 compile-pandoc input_file="main.md" output_name="output" template="research_draft.tex" bibliography="references.bib" figures_dir=GLOBAL_FIGURES_DIR build_dir=BUILD_DIR_PANDOC:
