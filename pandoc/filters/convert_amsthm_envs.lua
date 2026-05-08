@@ -19,61 +19,42 @@ require "utilities"
 -- Supports math within the title. 
 
 function Div(el)
+  local envs = {
+    theorem=true, lemma=true, proposition=true, corollary=true,
+    proof=true, remark=true, definition=true, example=true,
+    conjecture=true, claim=true, observation=true, question=true,
+    problem=true, assumption=true, warning=true, exercise=true
+  }
+  
+  local env = el.classes[1]
+  if not (env and envs[env]) then
+    return el
+  end
+
   -- For markdown cleaning, just leave as-is
   if FORMAT:match 'markdown' then
     return el
   end
-  --if FORMAT:match 'markdown' then
-    --if el.attributes["title"]==nil then
-      --return el
-    --end
-    --tprint(el)
-    --print("---------------")
-    --print(el.attributes["title"])
-    --print("---------------")
-    --local cont = pandoc.read(el.attributes["title"], "markdown")
-    --tprint(cont)
-    --print("---------------")
-    --tprint(cont.blocks[1])
-    --print("---------------")
-    --newblock = pandoc.walk_block(cont.blocks[1], {
-      --Math = function (m)
-        --if m.mathtype == "InlineMath" then
-          --m.text = '\\( ' .. m.text .. ' \\)'
-          --return m
-        --end
-      --end
-    --})
-    --el.attributes["title"] = pandoc.utils.stringify(newblock)
-    --tprint(el)
-    --return el
-  --end
 
-  el.classes[#el.classes+1] = "proofenv" 
+  if FORMAT:match 'latex' or FORMAT:match 'pdf' or FORMAT:match 'beamer' then
+    local beginString = "\\begin{" .. env .. "}"
+    if el.attributes["title"] ~= nil then 
+      beginString = beginString .. "[" .. el.attributes["title"] .. "]"
+    end
+    if el.attributes["ref"] ~= nil then 
+      beginString = beginString .. "\\label{" .. el.attributes["ref"] .. "}"
+    end
 
-  -- Prepend to this blocks contents \begin{env}[...]\label{}...
-  beginString = "\n\\begin{" .. el.classes[1] .. "}"
-
-  if el.attributes["title"]~=nil then 
-    beginString = beginString .. "[" .. el.attributes["title"] .. "]"
+    local out = {pandoc.RawBlock('latex', beginString)}
+    for _, block in ipairs(el.content) do
+      table.insert(out, block)
+    end
+    table.insert(out, pandoc.RawBlock('latex', "\\end{" .. env .. "}"))
+    return out
+  else
+    -- For HTML and other formats, add proofenv class for CSS styling
+    el.classes[#el.classes+1] = "proofenv" 
+    return el
   end
-  
-  if el.attributes["ref"]~=nil then 
-    beginString = beginString .. "\\label{" .. el.attributes["ref"] .. "}"
-  end
-
-  -- Prepend above string to open
-  table.insert(
-    el.content, 1,
-    pandoc.RawBlock("latex", beginString)
-  )
-
-  -- Append at *end* of table to close
-  table.insert(
-      el.content,
-      pandoc.RawBlock("latex", "\\end{" .. el.classes[1] .. "}")
-    )
-
-  return el
 end
 
