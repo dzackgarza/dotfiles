@@ -1,0 +1,415 @@
+\ProvidesPackage{Coble}
+
+\graphicspath{{/home/dzack/figures/}}
+\makeatletter
+\def\input@path{{/home/dzack/figures/}{/home/dzack/figures/tikz/}{/home/dzack/figures/tikzcd/}}
+\makeatother
+
+% --- Layout and TOC Fixes (from AE_Style) ---
+\makeatletter
+\def\@tocline#1#2#3#4#5#6#7{\relax
+  \ifnum #1>\c@tocdepth % then omit
+  \else
+    \par \addpenalty\@secpenalty\addvspace{#2}%
+    \begingroup \hyphenpenalty\@M
+    \@ifempty{#4}{%
+      \@tempdima\csname r@tocindent\number#1\endcsname\relax
+    }{%
+      \@tempdima#4\relax
+    }%
+    \parindent\z@ \leftskip#3\relax \advance\leftskip\@tempdima\relax
+    \rightskip\@pnumwidth plus4em \parfillskip-\@pnumwidth
+    #5\leavevmode\hskip-\@tempdima
+      \ifcase #1
+       \or\or \hskip 2em \or \hskip 3em \else \hskip 4em \fi%
+      #6\nobreak\relax
+    \hfill\hbox to\@pnumwidth{\@tocpagenum{#7}}\par
+    \nobreak
+    \endgroup
+  \fi}
+\makeatother
+
+% --- Common Abbreviations (Ga_Style) ---
+\newcommand{\FF}[0]{\mathbb{F}}
+\newcommand{\ZZ}[0]{\mathbb{Z}}
+\newcommand{\QQ}[0]{\mathbb{Q}}
+\newcommand{\RR}[0]{\mathbb{R}}
+\newcommand{\CC}[0]{\mathbb{C}}
+\newcommand{\PP}[0]{\mathbb{P}}
+\newcommand{\RP}[0]{\mathbb{RP}}
+\newcommand{\HH}[0]{\mathbb{H}}
+\newcommand{\OO}[0]{\mathcal{O}}
+
+% --- Calligraphic (from AE_Style) ---
+\newcommand\cA{{\mathcal A}}
+\newcommand\cB{{\mathcal B}}
+\newcommand\cC{{\mathcal C}}
+\newcommand\cD{{\mathcal D}}
+\newcommand\cE{{\mathcal E}}
+\newcommand\cF{{\mathcal F}}
+\newcommand\cG{{\mathcal G}}
+\newcommand\cH{{\mathcal H}}
+\newcommand\cI{{\mathcal I}}
+\newcommand\cJ{{\mathcal J}}
+\newcommand\cK{{\mathcal K}}
+\newcommand\cL{{\mathcal L}}
+\newcommand\cM{{\mathcal M}}
+\newcommand\cN{{\mathcal N}}
+\newcommand\cO{{\mathcal O}}
+\newcommand\cP{{\mathcal P}}
+\newcommand\cQ{{\mathcal Q}}
+\newcommand\cR{{\mathcal R}}
+\newcommand\cS{{\mathcal S}}
+\newcommand\cT{{\mathcal T}}
+\newcommand\cU{{\mathcal U}}
+\newcommand\cV{{\mathcal V}}
+\newcommand\cW{{\mathcal W}}
+\newcommand\cX{{\mathcal X}}
+\newcommand\cY{{\mathcal Y}}
+\newcommand\cZ{{\mathcal Z}}
+
+% --- Fraktur (from AE_Style) ---
+\newcommand\fA{{\mathfrak A}}
+\newcommand\fB{{\mathfrak B}}
+\newcommand\fC{{\mathfrak C}}
+\newcommand\fD{{\mathfrak D}}
+\newcommand\fE{{\mathfrak E}}
+\newcommand\fF{{\mathfrak F}}
+\newcommand\fG{{\mathfrak G}}
+\newcommand\fH{{\mathfrak H}}
+\newcommand\fI{{\mathfrak I}}
+\newcommand\fJ{{\mathfrak J}}
+\newcommand\fK{{\mathfrak K}}
+\newcommand\fL{{\mathfrak L}}
+\newcommand\fM{{\mathfrak M}}
+\newcommand\fN{{\mathfrak N}}
+\newcommand\fO{{\mathfrak O}}
+\newcommand\fP{{\mathfrak P}}
+\newcommand\fQ{{\mathfrak Q}}
+\newcommand\fR{{\mathfrak R}}
+\newcommand\fS{{\mathfrak S}}
+\newcommand\fT{{\mathfrak T}}
+\newcommand\fU{{\mathfrak U}}
+\newcommand\fV{{\mathfrak V}}
+\newcommand\fW{{\mathfrak W}}
+\newcommand\fX{{\mathfrak X}}
+\newcommand\fY{{\mathfrak Y}}
+\newcommand\fZ{{\mathfrak Z}}
+
+% --- Blackboard Bold (from AE_Style, reconciled) ---
+\newcommand\bA{{\mathbb A}}
+\newcommand\bB{{\mathbb B}}
+\newcommand\bC{{\mathbb C}}
+\newcommand\bD{{\mathbb D}}
+\newcommand\bE{{\mathbb E}}
+\newcommand\bF{{\mathbb F}}
+\newcommand\bG{{\mathbb G}}
+\newcommand\bH{{\mathbb H}}
+\newcommand\bI{{\mathbb I}}
+\newcommand\bJ{{\mathbb J}}
+\newcommand\bK{{\mathbb K}}
+\newcommand\bL{{\mathbb L}}
+\newcommand\bM{{\mathbb M}}
+\newcommand\bN{{\mathbb N}}
+\newcommand\bO{{\mathbb O}}
+\newcommand\bP{{\mathbb P}}
+\newcommand\bQ{{\mathbb Q}}
+\newcommand\bR{{\mathbb R}}
+\newcommand\bS{{\mathbb S}}
+\newcommand\bT{{\mathbb T}}
+\newcommand\bU{{\mathbb U}}
+\newcommand\bV{{\mathbb V}}
+\newcommand\bW{{\mathbb W}}
+\newcommand\bX{{\mathbb X}}
+\newcommand\bY{{\mathbb Y}}
+\newcommand\bZ{{\mathbb Z}}
+
+% --- Hats and Tildes ---
+\newcommand\hA{{\widehat A}}
+\newcommand\hB{{\widehat B}}
+\newcommand\hC{{\widehat C}}
+\newcommand\hD{{\widehat D}}
+\newcommand\hE{{\widehat E}}
+\newcommand\hF{{\widehat F}}
+\newcommand\hG{{\widehat G}}
+\newcommand\hH{{\widehat H}}
+\newcommand\hI{{\widehat I}}
+\newcommand\hJ{{\widehat J}}
+\newcommand\hK{{\widehat K}}
+\newcommand\hL{{\widehat L}}
+\newcommand\hM{{\widehat M}}
+\newcommand\hN{{\widehat N}}
+\newcommand\hO{{\widehat O}}
+\newcommand\hP{{\widehat P}}
+\newcommand\hQ{{\widehat Q}}
+\newcommand\hR{{\widehat R}}
+\newcommand\hS{{\widehat S}}
+\newcommand\hT{{\widehat T}}
+\newcommand\hU{{\widehat U}}
+\newcommand\hV{{\widehat V}}
+\newcommand\hW{{\widehat W}}
+\newcommand\hX{{\widehat X}}
+\newcommand\hY{{\widehat Y}}
+\newcommand\hZ{{\widehat Z}}
+
+\newcommand\wA{{\widetilde A}}
+\newcommand\wB{{\widetilde B}}
+\newcommand\wC{{\widetilde C}}
+\newcommand\wD{{\widetilde D}}
+\newcommand\wE{{\widetilde E}}
+\newcommand\wF{{\widetilde F}}
+\newcommand\wG{{\widetilde G}}
+\newcommand\wH{{\widetilde H}}
+\newcommand\wI{{\widetilde I}}
+\newcommand\wJ{{\widetilde J}}
+\newcommand\wK{{\widetilde K}}
+\newcommand\wL{{\widetilde L}}
+\newcommand\wM{{\widetilde M}}
+\newcommand\wN{{\widetilde N}}
+\newcommand\wO{{\widetilde O}}
+\newcommand\wP{{\widetilde P}}
+\newcommand\wQ{{\widetilde Q}}
+\newcommand\wR{{\widetilde R}}
+\newcommand\wS{{\widetilde S}}
+\newcommand\wT{{\widetilde T}}
+\newcommand\wU{{\widetilde U}}
+\newcommand\wV{{\widetilde V}}
+\newcommand\wW{{\widetilde W}}
+\newcommand\wX{{\widetilde X}}
+\newcommand\wY{{\widetilde Y}}
+\newcommand\wZ{{\widetilde Z}}
+
+\newcommand\oA{{\overline A}}
+\newcommand\oB{{\overline B}}
+\newcommand\oC{{\overline C}}
+\newcommand\oD{{\overline D}}
+\newcommand\oE{{\overline E}}
+\newcommand\oF{{\overline F}}
+\newcommand\oG{{\overline G}}
+\newcommand\oH{{\overline H}}
+\newcommand\oI{{\overline I}}
+\newcommand\oJ{{\overline J}}
+\newcommand\oK{{\overline K}}
+\newcommand\oL{{\overline L}}
+\newcommand\oM{{\overline M}}
+\newcommand\oN{{\overline N}}
+\newcommand\oO{{\overline O}}
+\newcommand\oP{{\overline P}}
+\newcommand\oQ{{\overline Q}}
+\newcommand\oR{{\overline R}}
+\newcommand\oS{{\overline S}}
+\newcommand\oT{{\overline T}}
+\newcommand\oU{{\overline U}}
+\newcommand\oV{{\overline V}}
+\newcommand\oW{{\overline W}}
+\newcommand\oX{{\overline X}}
+\newcommand\oY{{\overline Y}}
+\newcommand\oZ{{\overline Z}}
+
+% --- Standard Operators ---
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\AG}{AG}
+\DeclareMathOperator{\AGL}{AGL}
+\DeclareMathOperator{\ASL}{ASL}
+\DeclareMathOperator{\AO}{AO}
+\DeclareMathOperator{\Bir}{Bir}
+\DeclareMathOperator{\Bl}{Bl}
+\DeclareMathOperator{\codim}{codim}
+\DeclareMathOperator{\coim}{coim}
+\DeclareMathOperator{\coker}{coker}
+\DeclareMathOperator{\Conv}{Conv}
+\DeclareMathOperator{\Cone}{Cone}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\Div}{Div}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Exc}{Exc}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\GCD}{GCD}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\Gr}{Gr}
+\DeclareMathOperator{\Hilb}{Hilb}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\M}{M}
+\DeclareMathOperator{\Mat}{Mat}
+\DeclareMathOperator{\mult}{mult}
+\DeclareMathOperator{\Nef}{Nef}
+\DeclareMathOperator{\order}{order}
+\DeclareMathOperator{\PGL}{PGL}
+\DeclareMathOperator{\PSU}{PSU}
+\DeclareMathOperator{\Pic}{Pic}
+\DeclareMathOperator{\PO}{PO}
+\DeclareMathOperator{\Proj}{Proj}
+\DeclareMathOperator{\Projm}{Projm}
+\DeclareMathOperator{\PSL}{PSL}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\SL}{SL}
+\DeclareMathOperator{\Sp}{Sp}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\Specm}{Specm}
+\DeclareMathOperator{\SO}{SO}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\Supp}{Supp}
+\DeclareMathOperator{\Tor}{Tor}
+\DeclareMathOperator{\Tors}{Tors}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\Trace}{Trace}
+\DeclareMathOperator{\val}{val}
+\DeclareMathOperator{\Ver}{Ver}
+\DeclareMathOperator{\vol}{vol}
+\DeclareMathOperator{\Vol}{Vol}
+
+% --- Custom Operators (Ga_Style and AE_Style) ---
+\DeclareMathOperator{\KSBA}{KSBA}
+\DeclareMathOperator{\IAS}{IAS}
+\DeclareMathOperator{\IA}{IA}
+\DeclareMathOperator{\Orth}{O}
+\DeclareMathOperator{\Num}{Num}
+\DeclareMathOperator{\Fix}{Fix}
+\DeclareMathOperator{\Sing}{Sing}
+\DeclareMathOperator{\Cur}{Cur}
+\DeclareMathOperator{\Sym}{Sym}
+\DeclareMathOperator{\Star}{Star}
+
+% --- Arrows and Maps ---
+\newcommand\onto{\twoheadrightarrow}
+\newcommand\into{\hookrightarrow}
+\newcommand\isoto{\xrightarrow{\sim}}
+\newcommand{\acts}{\curvearrowright}
+\newcommand{\injects}[0]{\hookrightarrow}
+\newcommand{\embeds}[0]{\hookrightarrow}
+\newcommand{\sing}[0]{{\mathrm{sing}}}
+\newcommand{\smooth}[0]{{\mathrm{smooth}}}
+
+\newcommand{\union}[0]{\cup}
+\newcommand{\Union}[0]{\bigcup}
+\newcommand{\intersect}[0]{\cap}
+\newcommand{\Intersect}[0]{\bigcap}
+\newcommand{\disjoint}[0]{\amalg}
+\newcommand{\semidirect}[0]{\rtimes}
+\newcommand{\torational}[0]{\dashrightarrow}
+\newcommand{\rational}[0]{\torational}
+\newcommand{\birational}[0]{\overset{\sim}{\torational}}
+\newcommand{\birationaliso}[0]{\overset{\sim}{\torational}}
+
+\newcommand{\inv}{^{-1}}
+\newcommand{\la}{\langle}
+\newcommand{\ra}{\rangle}
+
+\usepackage{amssymb,tikz}
+\newcommand*{\ratmap}[1][]{\mathbin{\tikz [baseline=-0.25ex,-latex, dashed,#1] \draw [#1] (0pt,0.5ex) -- (1.3em,0.5ex);}}
+
+% --- Environments ---
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{metatheorem}[theorem]{Meta-Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem*{acknowledgements}{Acknowledgements}
+\newtheorem{addendum}[theorem]{Addendum}
+\newtheorem{answer}[theorem]{Answer}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{condition}[theorem]{Condition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{convention}[theorem]{Convention}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{examples}[theorem]{Examples}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{notations}[theorem]{Notations}
+\newtheorem{num}[theorem]{}
+\newtheorem{numl}{}[theorem]
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{project}[theorem]{Project}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{proposal}[theorem]{Proposal}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{setup}[theorem]{Setup}
+\newtheorem{warning}[theorem]{Warning}
+\newtheorem{sketch}[theorem]{Sketch}
+\newtheorem{strategy}[theorem]{Strategy}
+
+% --- Formatting Helpers ---
+\newcommand{\abs}[1]{{\left\lvert #1 \right\rvert}}
+\newcommand{\qty}[1]{\left( {#1} \right)}
+\newcommand{\ts}[1]{\left\{ {#1} \right\} }
+\newcommand{\gens}[1]{\left\langle {#1} \right\rangle}
+\newcommand{\da}[0]{\coloneqq}
+
+\newcommand{\mcx}[0]{\mathcal{X}}
+\newcommand{\mcy}[0]{\mathcal{Y}}
+
+
+% --- Specific Project Commands ---
+\newcommand\lk{L_{\rm K3}}
+\newcommand\lias{L_{\rm IAS}}
+\newcommand\liasplus{\lias^+}
+\newcommand\liasminus{\lias^-}
+\newcommand\rhok{\rho_{\rm K3}}
+\newcommand\rhoias{\rho_{\rm IAS}}
+
+\newcommand\uslc{^{\rm KSBA}}
+\newcommand\utor{^{\rm tor}}
+\newcommand\NS{\operatorname{NS}}
+\newcommand\di{\operatorname{div}}
+\newcommand{\tensor}{\otimes}
+
+\newcommand{\lkt}[0]{ {{\rm II}_{3, 19} } }
+\newcommand{\lEn}[0]{ {\rm II}_{1, 9} }
+\newcommand{\latI}{\mathrm{I}}
+\newcommand{\latII}{\mathrm{II}}
+\newcommand{\En}[0]{\mathrm{En}}
+\newcommand{\Co}[0]{\mathrm{Co}}
+\newcommand{\dP}[0]{\mathrm{dP}}
+\newcommand{\Nik}[0]{\mathrm{Nik}}
+\newcommand{\Nod}[0]{\mathrm{Nod}}
+
+% --- Vinberg and TikZ Settings ---
+\tikzset{wh/.style={draw, circle, inner sep=2.5pt, fill=white}}
+\tikzset{swh/.style={draw, circle, inner sep=2pt, fill=white}}
+\tikzset{dwh/.style={draw, circle, inner sep=3.5pt, fill=white}}
+\tikzset{bl/.style={draw=black, circle, inner sep=2.5pt, fill=black}}
+\tikzset{do/.style={double, double distance=1.5pt}}
+\tikzset{bo/.style={line width=2pt}}
+\tikzset{da/.style={red, dashed}}
+\tikzset{hlt/.style={cyan, double=cyan, double distance=.25cm, opacity=.3, line cap=round, rounded corners}}
+\tikzset{hltred/.style={red, double=red, double distance=.25cm, opacity=.3, line cap=round, rounded corners}}
+
+% --- Complex Decorations (from AE_Style) ---
+\newcommand\myraise{\raise.65pt}
+\newcommand\phmi{\myraise\hbox{$\ph^-$}\protect\kern -2pt}
+\newcommand\phpl{\myraise\hbox{$\ph^+$}\protect\kern -2pt}
+
+\newcommand\mA{\myraise\hbox{$\ph^-$}\protect\kern -4pt A}
+\newcommand\mD{\myraise\hbox{$\ph^-$}\protect\kern -2pt D}
+\newcommand\mE{\myraise\hbox{$\ph^-$}\protect\kern -2pt E}
+\newcommand\mX{\myraise\hbox{$\ph^-$}\protect\kern -2pt X}
+\newcommand\mS{\myraise\hbox{$\ph^-$}\protect\kern -2pt S}
+
+\newcommand\plA{\myraise\hbox{$\ph^+$}\protect\kern -4pt A}
+\newcommand\plD{\myraise\hbox{$\ph^+$}\protect\kern -2pt D}
+\newcommand\plE{\myraise\hbox{$\ph^+$}\protect\kern -2pt E}
+\newcommand\plX{\myraise\hbox{$\ph^+$}\protect\kern -2pt X}
+\newcommand\plS{\myraise\hbox{$\ph^+$}\protect\kern -2pt S}
+
+\newcommand\pA{\php \kern -1pt A}
+\newcommand\pD{\php D}
+\newcommand\pE{\php E}
+\newcommand\pX{\php X}
+\newcommand\pS{\php S}
+
+\newcommand\ppA{\phpp \kern -1pt A}
+\newcommand\ppD{\phpp D}
+\newcommand\ppE{\phpp E}
+\newcommand\ppX{\phpp X}
+\newcommand\ppS{\phpp S}
+
+\newcommand\ccy{\rowcolor{black!8}}
+\newcommand\dnor{_{\rm nor}}
