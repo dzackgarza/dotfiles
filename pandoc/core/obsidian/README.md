@@ -45,7 +45,7 @@ All macros should render correctly.
 - Categories: `\Set`, `\Grp`, `\Ring`, `\Mod`, etc.
 - Operators: `\Hom`, `\Aut`, `\End`, `\Ext`, `\Tor`, etc.
 
-See `lib/tier1-mathjax-simple.tex` for full list.
+See `core/lib/tier1-mathjax-simple.tex` for full list.
 
 ### Tier 2 (With arguments, MathJax-safe)
 - Delimiters: `\abs{x}`, `\norm{v}`, `\gens{a,b}`, `\bracket{x}`
@@ -54,7 +54,7 @@ See `lib/tier1-mathjax-simple.tex` for full list.
 - Complexes: `\complex{C}`, `\cocomplex{C}`
 - Function fields: `\fps{x}`, `\functionfield{K}`
 
-See `lib/tier2-mathjax-args.tex` for full list.
+See `core/lib/tier2-mathjax-args.tex` for full list.
 
 ## What Won't Work in Obsidian?
 
