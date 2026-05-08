@@ -1,0 +1,16 @@
+% DZG MathJax-Safe Subset
+% Only tiers 1 and 2 for Obsidian compatibility
+%
+% Created 2025-01-09 as part of macro consolidation
+% Use this in Obsidian via better-mathjax plugin
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{dzg-mathjax}[2025/01/09 DZG MathJax-Safe Macros]
+
+% Tier 1: Simple shortcuts (no arguments)
+\input{tier1-mathjax-simple}
+
+% Tier 2: Commands with arguments (MathJax-safe)
+\input{tier2-mathjax-args}
+
+\endinput
