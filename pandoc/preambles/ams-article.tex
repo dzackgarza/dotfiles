@@ -1,0 +1,123 @@
+% AMS Article Preamble
+% Alternative for journal/conference submissions
+% Created 2025-01-09 as part of macro consolidation
+
+\documentclass[11pt,reqno]{amsart}
+
+% Load unified DZG macros (includes all tiers)
+\usepackage{dzg-unified}
+
+% ============================================================================
+% Core AMS Packages
+% ============================================================================
+\usepackage{amsmath,amsthm,amssymb,mathrsfs}
+
+% ============================================================================
+% Font and Encoding
+% ============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[dvipsnames]{xcolor}
+
+% ============================================================================
+% Page Geometry
+% ============================================================================
+\usepackage{geometry}
+\geometry{margin=1in}
+
+% ============================================================================
+% Hyperlinks and PDF
+% ============================================================================
+\usepackage[colorlinks=true,hyperindex, linkcolor=magenta, pagebackref=false, citecolor=cyan,pdfpagelabels]{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linktoc=all,
+    linkcolor=magenta,
+    citecolor=cyan,
+    filecolor=black,
+    urlcolor=black
+}
+
+% ============================================================================
+% Theorem Environments (AMS style)
+% ============================================================================
+\newtheorem{theorem}{Theorem}[subsection]
+\newtheorem*{theorem*}{Theorem}
+\newtheorem*{definition*}{Definition}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{variant}[theorem]{Variant}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem{warning}[theorem]{Warning}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{convention}[theorem]{Convention}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{assumption}[theorem]{Assumption}
+
+% ============================================================================
+% Lists and Enumerations
+% ============================================================================
+\usepackage{enumitem}
+\setlist[enumerate]{itemsep=2pt,parsep=2pt,before={\parskip=2pt}}
+
+% Pandoc tightlist fix
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% ============================================================================
+% Tables
+% ============================================================================
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tabularx}
+
+% ============================================================================
+% Math and Diagrams
+% ============================================================================
+\usepackage{amscd}
+\usepackage{spectralsequences}
+\usepackage[all]{xy}
+\usepackage{slashed}
+
+% ============================================================================
+% Figures and Graphics
+% ============================================================================
+\usepackage{graphicx}
+
+% Auto-scale images to page width/height
+\makeatletter
+\def\ScaleWidthIfNeeded{%
+ \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\def\ScaleHeightIfNeeded{%
+  \ifdim\Gin@nat@height>0.9\textheight
+    0.9\textheight
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\setkeys{Gin}{width=\ScaleWidthIfNeeded,height=\ScaleHeightIfNeeded,keepaspectratio}
+
+% ============================================================================
+% Utilities
+% ============================================================================
+\usepackage{datetime}
+\usepackage[textwidth=25mm, textsize=tiny]{todonotes}
+\usepackage{csquotes}
+\usepackage{url}
