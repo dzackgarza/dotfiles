@@ -2,7 +2,7 @@
 # Compile Pandoc test document
 # Sets TEXINPUTS to include lib/ and preambles/
 
-export TEXINPUTS=".:$HOME/.pandoc/styles//:$HOME/.pandoc/lib//:$HOME/.pandoc/preambles//:$HOME/.pandoc/config//:"
+export TEXINPUTS=".:$HOME/.pandoc/core/styles//:$HOME/.pandoc/core/lib//:$HOME/.pandoc/core/preambles//:$HOME/.pandoc/config//:"
 
 pandoc test-pandoc-macros.md \
     -o test-pandoc-macros.pdf \
