@@ -1,0 +1,76 @@
+# Global Pandoc & LaTeX Build System
+# Source this file in your project justfile:
+# import '~/.pandoc/justfile'
+
+# --- Variables (Override these in your local justfile) ---
+
+# Global bibliography source (e.g. Zotero export)
+BIB_SOURCE := env_var_or_default("BIB_SOURCE", home_dir() / "zotero_global.bib")
+
+# Global figures directory
+FIGURES_DIR := env_var_or_default("FIGURES_DIR", home_dir() / "figures")
+
+# Build directories
+BUILD_DIR_PANDOC := ".build_pandoc"
+BUILD_DIR_TEX := ".build_tex"
+
+# --- Recipes ---
+
+# Sync bibliography from global source to local project
+sync-bib local_path="references.bib":
+    cp {{BIB_SOURCE}} {{local_path}}
+
+# Format markdown files to enforce one sentence per line
+format-md *files:
+    @if [ -s "$HOME/.nvm/nvm.sh" ]; then . "$HOME/.nvm/nvm.sh"; nvm use node; fi; \
+    npm install --no-save prettier prettier-plugin-sentences-per-line; \
+    npx prettier --write {{files}}
+
+# Compile LaTeX source
+compile-tex main_file="main.tex" output_name="paper" build_dir=BUILD_DIR_TEX:
+    @mkdir -p {{build_dir}}
+    latexmk -gg -pdf -outdir=../{{build_dir}} -cd {{main_file}} -use-make -latexoption="--include-directory={{FIGURES_DIR}}"
+    @cp {{build_dir}}/$(basename {{main_file}} .tex).pdf ./{{output_name}}-`date +%d-%m-%y`.pdf
+
+# Compile Pandoc source to PDF via LaTeX
+compile-pandoc input_file="main.md" output_name="output" template="research_draft.tex" bibliography="references.bib" build_dir=BUILD_DIR_PANDOC:
+    @mkdir -p {{build_dir}}
+    pandoc {{input_file}} \
+        --lua-filter=include.lua \
+        --lua-filter=convert_amsthm_envs.lua \
+        --lua-filter=select_images.lua \
+        --natbib \
+        --bibliography={{bibliography}} \
+        --resource-path={{FIGURES_DIR}}/rendered \
+        --resource-path={{FIGURES_DIR}} \
+        --template={{template}} \
+        --biblatex \
+        --number-sections \
+        --toc --toc-depth=2 \
+        -s -o {{build_dir}}/output.tex && \
+    latexmk -pdf -outdir={{build_dir}} -interaction=nonstopmode -gg {{build_dir}}/output.tex
+    @cp {{build_dir}}/output.pdf ./{{output_name}}-`date +%d-%m-%y`.pdf
+
+# Download and extract an arXiv tarball
+download-ref arxiv_id dir:
+    @mkdir -p references/{{dir}}
+    wget -qO - "https://arxiv.org/e-print/{{arxiv_id}}" | tar -xz -C references/{{dir}}
+
+# Compile a reference LaTeX file to Markdown (Modern extraction pipeline)
+compile-reference dir file="main":
+    @mkdir -p references
+    cd {{dir}} && rm -f {{file}}.aux && xpandlatex -x on -m on -I on $(ls *.sty 2>/dev/null | sed 's/^/-f /' | xargs) {{file}}.tex > {{file}}_expanded.tex
+    @# Preprocess: Wrap tikzcd in displaymath using Pandoc Lua filter
+    pandoc {{dir}}/{{file}}_expanded.tex -s -f latex+raw_tex -t latex --lua-filter=wrap_tikzcd_semantic.lua -o {{dir}}/{{file}}_wrapped.tex
+    @# Semantically preprocess the TeX (fix macro expansion, protect tikzcd)
+    -cd {{dir}} && make4ht -c "$HOME/.pandoc/custom/config/tex4ht.cfg" -u -f html5 {{file}}_wrapped.tex "mathjax,section+"
+    pandoc {{dir}}/{{file}}_wrapped.html --lua-filter=semanticlean.lua -f html -t gfm-tex_math_gfm+tex_math_dollars -o references/$(basename {{dir}}).md
+
+# Clean build artifacts
+clean:
+    rm -rf {{BUILD_DIR_PANDOC}} {{BUILD_DIR_TEX}} .build
+    rm -f *.pdf *.aux *.log *.fls *.fdb_latexmk *.bbl *.bcf *.blg *.run.xml *.out *.toc *SAVE-ERROR
+
+# Clean all build artifacts from reference directories
+clean-refs:
+    find references -type f ! \( -name "*.tex" -o -name "*.sty" -o -name "*.cls" -o -name "*.bib" -o -name "*.bbl" -o -name "*.png" -o -name "*.jpg" -o -name "tex4ht.cfg" \) -delete
