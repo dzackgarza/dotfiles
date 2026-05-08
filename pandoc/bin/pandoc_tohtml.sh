@@ -55,7 +55,7 @@ if [ -f "$directory/data.yaml" ]; then
 else 
   debug_print "Data file not found in $directory"
   debug_print "Using default preview data.";
-  DATA_FILE="$PANDOC_DIR/custom/preview_data.yaml";
+  DATA_FILE="$PANDOC_DIR/metadata/preview_data.yaml";
 fi
 debug_print "Using data file: $DATA_FILE";
 
