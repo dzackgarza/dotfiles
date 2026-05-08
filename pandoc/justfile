@@ -37,7 +37,7 @@ compile-tex main_file="main.tex" output_name="paper" figures_dir=GLOBAL_FIGURES_
   set -euo pipefail
   mkdir -p {{build_dir}}
   # Use TEXINPUTS for inclusion. Note: trailing // for recursive search
-  export TEXINPUTS=".:{{figures_dir}}//:"
+  export TEXINPUTS=".:{{figures_dir}}//:${TEXINPUTS:-}"
   latexmk -gg -pdf -outdir=../{{build_dir}} -cd {{main_file}} -use-make
   cp {{build_dir}}/$(basename {{main_file}} .tex).pdf ./{{output_name}}-$(date +%d-%m-%y).pdf
 
