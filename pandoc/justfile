@@ -38,28 +38,18 @@ format-md *targets:
   
   # Determine targets
   FINAL_TARGETS=()
-  if [ $# -eq 0 ]; then
-    # Standard research repo layout
-    [ -d "$ROOT/references" ] && FINAL_TARGETS+=("$ROOT/references")
-    [ -d "$ROOT/sections" ] && FINAL_TARGETS+=("$ROOT/sections")
-    [ -d "$ROOT/content_pandoc" ] && FINAL_TARGETS+=("$ROOT/content_pandoc")
-    [ -f "$ROOT/main.md" ] && FINAL_TARGETS+=("$ROOT/main.md")
-  else
-    for t in "$@"; do
-      # Support both relative paths and direct globs
-      # If it's a glob, expansion happened in the shell calling just, 
-      # but we need to handle it relative to invocation_directory
-      if [[ "$t" == /* ]]; then
-        FINAL_TARGETS+=("$t")
-      else
-        FINAL_TARGETS+=("$ROOT/$t")
-      fi
-    done
-  fi
+  for t in "$@"; do
+    # Support both relative paths and direct globs
+    if [[ "$t" == /* ]]; then
+      FINAL_TARGETS+=("$t")
+    else
+      FINAL_TARGETS+=("$ROOT/$t")
+    fi
+  done
 
   if [ ${#FINAL_TARGETS[@]} -eq 0 ]; then
-    echo "No targets found for formatting."
-    exit 0
+    echo "Usage: just pandoc::format-md <targets...>"
+    exit 1
   fi
 
   # Resolve all targets to real files to handle symlinks correctly
