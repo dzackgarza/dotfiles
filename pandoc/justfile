@@ -81,9 +81,9 @@ compile-tex main_file="main.tex" output_name="paper" figures_dir=GLOBAL_FIGURES_
   # Use TEXINPUTS for inclusion. Include standard ~/.pandoc paths for robustness.
   export TEXINPUTS=".:{{figures_dir}}//:$HOME/.pandoc/styles//:$HOME/.pandoc/macros//:$HOME/.pandoc/config//:${TEXINPUTS:-}"
   
-  # Ensure the global bib directory is in BIBINPUTS
+  # Ensure the global bib directory is in BIBINPUTS (No recursive crawl!)
   BIB_DIR=$(dirname "{{bib_source}}")
-  export BIBINPUTS=".:$ROOT//:$BIB_DIR//:$HOME/.pandoc/bib//:${BIBINPUTS:-}"
+  export BIBINPUTS=".:$ROOT//:$BIB_DIR:$HOME/.pandoc/bib//:${BIBINPUTS:-}"
   
   # Change to the source directory and run latexmk
   cd "$ROOT/$DIR"
@@ -117,9 +117,9 @@ compile-pandoc input_file="main.md" output_name="output" template="research_draf
       -s -o "$ROOT/{{build_dir}}/output.tex"
   
   cd "$ROOT/{{build_dir}}"
-  # Ensure bib dir is available for the latexmk phase of pandoc
+  # Ensure bib dir is available for the latexmk phase (No recursive crawl!)
   BIB_DIR=$(dirname "{{bib_source}}")
-  export BIBINPUTS=".:$ROOT//:$BIB_DIR//:$HOME/.pandoc/bib//:${BIBINPUTS:-}"
+  export BIBINPUTS=".:$ROOT//:$BIB_DIR:$HOME/.pandoc/bib//:${BIBINPUTS:-}"
   latexmk -pdf -interaction=nonstopmode -gg output.tex
   cp output.pdf "$ROOT/{{output_name}}-$(date +%d-%m-%y).pdf"
 
