@@ -1,0 +1,14 @@
+theoremnos-number-by-section: True
+numbersections: True
+xnos-number-by-section: True
+theoremnos-names:
+  - {id: theorem, name: Theorem}
+  - {id: lemma, name: Lemma}
+  - {id: corollary, name: Corollary}
+  - {id: proposition, name: Proposition}
+  - {id: definition, name: Definition}
+  - {id: remark, name: Remark}
+  - {id: num, name: ""}
+  - {id: prob, name: Problem}
+  - {id: question, name: Question}
+  - {id: construction, name: Construction}
