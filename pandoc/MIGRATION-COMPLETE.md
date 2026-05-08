@@ -222,6 +222,28 @@ All moved to `archive/legacy-macros-2025-01-09/`
 ✅ TEXINPUTS configured correctly
 ✅ Zero breaking changes to existing workflow
 
+## Post-Migration Updates (2025-05-09)
+
+### Phase 8: Core Directory Reorganization
+- Moved lib/, styles/, preambles/, obsidian/ under core/ subdirectory
+- Separates macro system from templates, filters, config
+- Updated TEXINPUTS in ~/.zshrc to reference core/ paths
+- Updated test-macros.sty and compile-pandoc-test.sh with new paths
+
+### Phase 9: Integration with Dissertation Repository
+- Pulled in tikzcd_figure_filter.lua from ~/diss (cleaner, simpler version)
+- Archived obsolete DZG.sty (415 lines, superseded by dzg-unified.sty)
+- Updated qtikz-template.pgs to use dzg-unified instead of deprecated preamble_common
+- Note: DZG-Macros.sty from diss (1,664 lines) is dissertation-specific with minted, algorithm2e, etc.
+  Our tier system remains the canonical general-purpose macro library.
+
+### Files Retired
+- styles/DZG.sty → archive/legacy-macros-2025-01-09/DZG.sty
+
+### Files Updated from diss
+- filters/tikzcd_figure_filter.lua (new, cleaner version)
+- config/qtikz-template.pgs (now uses dzg-unified)
+
 ## Migration Complete! 🎉
 
 The LaTeX macro consolidation project is complete. All phases executed successfully, tested, and documented.
