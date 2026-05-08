@@ -54,8 +54,8 @@ compile-tex main_file="main.tex" output_name="paper" figures_dir=GLOBAL_FIGURES_
   
   mkdir -p "$ROOT/{{build_dir}}"
   
-  # Use TEXINPUTS for inclusion. Note: trailing // for recursive search
-  export TEXINPUTS=".:{{figures_dir}}//:${TEXINPUTS:-}"
+  # Use TEXINPUTS for inclusion. Include standard ~/.pandoc paths for robustness.
+  export TEXINPUTS=".:{{figures_dir}}//:$HOME/.pandoc/styles//:$HOME/.pandoc/macros//:$HOME/.pandoc/config//:${TEXINPUTS:-}"
   
   # Change to the source directory and run latexmk
   cd "$ROOT/$DIR"
@@ -71,6 +71,9 @@ compile-pandoc input_file="main.md" output_name="output" template="research_draf
   ROOT="{{invocation_directory()}}"
   mkdir -p "$ROOT/{{build_dir}}"
   
+  # Use TEXINPUTS for pandoc's latex engine as well
+  export TEXINPUTS=".:{{figures_dir}}//:$HOME/.pandoc/styles//:$HOME/.pandoc/macros//:$HOME/.pandoc/config//:${TEXINPUTS:-}"
+
   pandoc "$ROOT/{{input_file}}" \
       --lua-filter=include.lua \
       --lua-filter=convert_amsthm_envs.lua \
