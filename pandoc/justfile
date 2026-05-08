@@ -64,10 +64,12 @@ format-md *targets:
     exit 0
   fi
 
-  # Use repo-local config if it exists
+  # Use repo-local config if it exists, otherwise fall back to global ~/.pandoc/.prettierrc
   CONFIG_ARGS=()
   if [ -f "$ROOT/.prettierrc" ]; then
     CONFIG_ARGS+=(--config "$ROOT/.prettierrc")
+  elif [ -f "$HOME/.pandoc/.prettierrc" ]; then
+    CONFIG_ARGS+=(--config "$HOME/.pandoc/.prettierrc")
   fi
 
   npx prettier "${CONFIG_ARGS[@]}" --ignore-path=/dev/null --write "${REAL_FILES[@]}"
