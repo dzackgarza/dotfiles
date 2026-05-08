@@ -61,28 +61,29 @@ preamble_paper.tex (179)            → ams-article.tex
 preamble_common.tex (212)           → tier files
 ```
 
-### New Structure (2,318 lines)
+### New Structure (2,318 lines) - Organized under core/
 ```
-lib/
-├── tier1-mathjax-simple.tex     847 lines (MathJax-safe shortcuts)
-├── tier2-mathjax-args.tex       410 lines (MathJax-safe with args)
-├── tier3-tex-complex.tex        101 lines (LaTeX-only complex)
-├── tier4-preamble.tex            78 lines (package-dependent)
-├── categories.tex               286 lines (category theory)
-├── spectral.tex                  57 lines (spectral sequences)
-├── tikz.tex                     463 lines (TikZ styles)
-└── environments.tex             353 lines (theorem environments)
-
-styles/
-├── dzg-unified.sty     (loads all tiers)
-└── dzg-mathjax.sty     (MathJax subset)
-
-preambles/
-├── koma-article.tex    (modern KOMA preamble)
-└── ams-article.tex     (modern AMS preamble)
-
-obsidian/
-└── mathjax-macros.tex  (MathJax subset for Obsidian)
+core/
+├── lib/
+│   ├── tier1-mathjax-simple.tex     847 lines (MathJax-safe shortcuts)
+│   ├── tier2-mathjax-args.tex       410 lines (MathJax-safe with args)
+│   ├── tier3-tex-complex.tex        101 lines (LaTeX-only complex)
+│   ├── tier4-preamble.tex            78 lines (package-dependent)
+│   ├── categories.tex               286 lines (category theory)
+│   ├── spectral.tex                  57 lines (spectral sequences)
+│   ├── tikz.tex                     463 lines (TikZ styles)
+│   └── environments.tex             353 lines (theorem environments)
+├── styles/
+│   ├── dzg-unified.sty     (loads all tiers)
+│   ├── dzg-mathjax.sty     (MathJax subset)
+│   ├── freetikz.sty        (external dependency)
+│   ├── quiver.sty          (external dependency)
+│   └── tikzit.sty          (external dependency)
+├── preambles/
+│   ├── koma-article.tex    (modern KOMA preamble)
+│   └── ams-article.tex     (modern AMS preamble)
+└── obsidian/
+    └── mathjax-macros.tex  (MathJax subset for Obsidian)
 ```
 
 ## Testing & Verification
