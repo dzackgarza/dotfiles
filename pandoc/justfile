@@ -45,11 +45,11 @@ format-md *targets:
     exit 1
   fi
 
-  # Resolve all targets to real files to handle symlinks correctly
+  # Resolve all targets to real files. DO NOT follow symlinks outside the project root to avoid formatting Zotero storage.
   REAL_FILES=()
   while IFS=  read -r -d $'\0'; do
       REAL_FILES+=("$REPLY")
-  done < <(find "${FINAL_TARGETS[@]}" -type f -name "*.md" -exec readlink -f {} + | tr '\n' '\0' 2>/dev/null)
+  done < <(find "${FINAL_TARGETS[@]}" -type f -name "*.md" -not -path '*/.*' -tr '\n' '\0' 2>/dev/null)
 
   if [ ${#REAL_FILES[@]} -eq 0 ]; then
     echo "No markdown files found in targets."
@@ -107,21 +107,23 @@ compile-pandoc input_file="main.md" output_name="output" template="research_draf
   # Use TEXINPUTS for pandoc's latex engine
   export TEXINPUTS=".:{{figures_dir}}//:$HOME/.pandoc/styles//:$HOME/.pandoc/macros//:$HOME/.pandoc/config//:${TEXINPUTS:-}"
 
-  pandoc "$ROOT/{{input_file}}" \
+  # Run pandoc from ROOT to ensure relative include.lua paths work correctly
+  cd "$ROOT"
+  pandoc "{{input_file}}" \
       --lua-filter="$HOME/.pandoc/filters/include.lua" \
       --lua-filter="$HOME/.pandoc/filters/convert_amsthm_envs.lua" \
       --lua-filter="$HOME/.pandoc/filters/select_images.lua" \
       --natbib \
-      --bibliography="$ROOT/global.bib" \
+      --bibliography="global.bib" \
       --resource-path={{figures_dir}}/rendered \
       --resource-path={{figures_dir}} \
       --template={{template}} \
       --biblatex \
       --number-sections \
       --toc --toc-depth=2 \
-      -s -o "$ROOT/{{build_dir}}/output.tex"
+      -s -o "{{build_dir}}/output.tex"
   
-  cd "$ROOT/{{build_dir}}"
+  cd "{{build_dir}}"
   # BIBINPUTS setup
   export BIBINPUTS=".:$ROOT:$HOME/.pandoc/bib//:${BIBINPUTS:-}"
   latexmk -pdf -interaction=nonstopmode -gg output.tex
