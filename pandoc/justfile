@@ -2,23 +2,23 @@
 # Source this file in your project justfile:
 # import '~/.pandoc/justfile'
 
-# --- Variables (Override these in your local justfile) ---
+# --- Default Variables ---
 
 # Global bibliography source (e.g. Zotero export)
-BIB_SOURCE := env_var_or_default("BIB_SOURCE", home_dir() / "zotero_global.bib")
+GLOBAL_BIB_SOURCE := env_var_or_default("BIB_SOURCE", home_dir() / "zotero_global.bib")
 
 # Global figures directory
-FIGURES_DIR := env_var_or_default("FIGURES_DIR", home_dir() / "figures")
+GLOBAL_FIGURES_DIR := env_var_or_default("FIGURES_DIR", home_dir() / "figures")
 
 # Build directories
-BUILD_DIR_PANDOC := ".build_pandoc"
-BUILD_DIR_TEX := ".build_tex"
+DEFAULT_BUILD_DIR_PANDOC := ".build_pandoc"
+DEFAULT_BUILD_DIR_TEX := ".build_tex"
 
 # --- Recipes ---
 
 # Sync bibliography from global source to local project
-sync-bib local_path="references.bib":
-    cp {{BIB_SOURCE}} {{local_path}}
+sync-bib local_path="references.bib" source=GLOBAL_BIB_SOURCE:
+    cp {{source}} {{local_path}}
 
 # Format markdown files to enforce one sentence per line
 format-markdown *files:
@@ -27,13 +27,13 @@ format-markdown *files:
     npx prettier --write {{files}}
 
 # Compile LaTeX source
-compile-latex main_file="main.tex" output_name="paper" build_dir=BUILD_DIR_TEX:
+compile-latex main_file="main.tex" output_name="paper" figures_dir=GLOBAL_FIGURES_DIR build_dir=DEFAULT_BUILD_DIR_TEX:
     @mkdir -p {{build_dir}}
-    latexmk -gg -pdf -outdir=../{{build_dir}} -cd {{main_file}} -use-make -latexoption="--include-directory={{FIGURES_DIR}}"
+    latexmk -gg -pdf -outdir=../{{build_dir}} -cd {{main_file}} -use-make -latexoption="--include-directory={{figures_dir}}"
     @cp {{build_dir}}/$(basename {{main_file}} .tex).pdf ./{{output_name}}-`date +%d-%m-%y`.pdf
 
 # Compile Pandoc source to PDF via LaTeX
-compile-pandoc-pdf input_file="main.md" output_name="output" template="research_draft.tex" bibliography="references.bib" build_dir=BUILD_DIR_PANDOC:
+compile-pandoc-pdf input_file="main.md" output_name="output" template="research_draft.tex" bibliography="references.bib" figures_dir=GLOBAL_FIGURES_DIR build_dir=DEFAULT_BUILD_DIR_PANDOC:
     @mkdir -p {{build_dir}}
     pandoc {{input_file}} \
         --lua-filter=include.lua \
@@ -41,8 +41,8 @@ compile-pandoc-pdf input_file="main.md" output_name="output" template="research_
         --lua-filter=select_images.lua \
         --natbib \
         --bibliography={{bibliography}} \
-        --resource-path={{FIGURES_DIR}}/rendered \
-        --resource-path={{FIGURES_DIR}} \
+        --resource-path={{figures_dir}}/rendered \
+        --resource-path={{figures_dir}} \
         --template={{template}} \
         --biblatex \
         --number-sections \
@@ -67,8 +67,8 @@ extract-reference dir file="main":
     pandoc {{dir}}/{{file}}_wrapped.html --lua-filter=semanticlean.lua -f html -t gfm-tex_math_gfm+tex_math_dollars -o references/$(basename {{dir}}).md
 
 # Clean build artifacts
-clean-build:
-    rm -rf {{BUILD_DIR_PANDOC}} {{BUILD_DIR_TEX}} .build
+clean-build build_dir_pandoc=DEFAULT_BUILD_DIR_PANDOC build_dir_tex=DEFAULT_BUILD_DIR_TEX:
+    rm -rf {{build_dir_pandoc}} {{build_dir_tex}} .build
     rm -f *.pdf *.aux *.log *.fls *.fdb_latexmk *.bbl *.bcf *.blg *.run.xml *.out *.toc *SAVE-ERROR
 
 # Clean all build artifacts from reference directories
