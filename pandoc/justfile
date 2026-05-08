@@ -14,6 +14,9 @@ GLOBAL_FIGURES_DIR := env_var_or_default("FIGURES_DIR", home_dir() / "figures")
 BUILD_DIR_PANDOC := ".build_pandoc"
 BUILD_DIR_TEX := ".build_tex"
 
+# Standard TEXINPUTS that includes all global styles, macros, and configs
+TEXINPUTS_GLOBAL := ".:" + GLOBAL_FIGURES_DIR + "//:" + home_dir() + "/.pandoc/styles//:" + home_dir() + "/.pandoc/macros//:" + home_dir() + "/.pandoc/config//:" + env_var_or_default("TEXINPUTS", "")
+
 # --- Recipes ---
 
 # Format markdown files to enforce one sentence per line
@@ -66,6 +69,13 @@ format-md *targets:
 
   npx prettier "${CONFIG_ARGS[@]}" --ignore-path=/dev/null --write "${REAL_FILES[@]}"
 
+# Render TikZ figures to SVG using the global renderer
+render-figures:
+  #!/usr/bin/env bash
+  set -euo pipefail
+  export TEXINPUTS="{{TEXINPUTS_GLOBAL}}"
+  python3 "$HOME/.pandoc/scripts/render_figures.py"
+
 # Compile LaTeX source
 compile-tex main_file="main.tex" output_name="paper" figures_dir=GLOBAL_FIGURES_DIR bib_source=GLOBAL_BIB_SOURCE build_dir=BUILD_DIR_TEX:
   #!/usr/bin/env bash
@@ -81,8 +91,8 @@ compile-tex main_file="main.tex" output_name="paper" figures_dir=GLOBAL_FIGURES_
   # Symlink global bib for easy resolution
   ln -sf "{{bib_source}}" "$ROOT/global.bib"
   
-  # Use TEXINPUTS for inclusion. Include standard ~/.pandoc paths for robustness.
-  export TEXINPUTS=".:{{figures_dir}}//:$HOME/.pandoc/styles//:$HOME/.pandoc/macros//:$HOME/.pandoc/config//:${TEXINPUTS:-}"
+  # Use global TEXINPUTS
+  export TEXINPUTS="{{TEXINPUTS_GLOBAL}}"
   
   # BIBINPUTS setup
   export BIBINPUTS=".:$ROOT:$HOME/.pandoc/bib//:${BIBINPUTS:-}"
@@ -104,8 +114,8 @@ compile-pandoc input_file="main.md" output_name="output" template="research_draf
   # Symlink global bib for easy resolution
   ln -sf "{{bib_source}}" "$ROOT/global.bib"
 
-  # Use TEXINPUTS for pandoc's latex engine
-  export TEXINPUTS=".:{{figures_dir}}//:$HOME/.pandoc/styles//:$HOME/.pandoc/macros//:$HOME/.pandoc/config//:${TEXINPUTS:-}"
+  # Use global TEXINPUTS
+  export TEXINPUTS="{{TEXINPUTS_GLOBAL}}"
 
   # Run pandoc from ROOT to ensure relative include.lua paths work correctly
   cd "$ROOT"
