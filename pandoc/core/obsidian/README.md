@@ -7,7 +7,7 @@ This directory contains MathJax-safe macros (tiers 1 and 2) for use in Obsidian 
 ### 1. Symlink mathjax-macros.tex to your Obsidian vault
 
 ```bash
-ln -s /home/dzack/dotfiles/pandoc/obsidian/mathjax-macros.tex \
+ln -s /home/dzack/dotfiles/pandoc/core/obsidian/mathjax-macros.tex \
       /home/dzack/notes/Obsidian/.obsidian/mathjax-macros.tex
 ```
 
