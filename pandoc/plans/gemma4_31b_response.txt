@@ -1,0 +1,24 @@
+Based on the provided image, here is the precise description of the mathematical diagram:
+
+### (1) Nodes
+*   **Node A**: Circular shape, filled with gray, labeled "**A**". Positioned on the far left.
+*   **Node B**: Square shape, filled with light purple, labeled "**B**". Positioned at the top center.
+*   **Node D**: Circular shape, filled with light yellow, labeled "**D**". Positioned on the right.
+*   **Node E**: Pentagonal shape, filled with light green, labeled "**E**". Positioned at the bottom center.
+*   **Node $\tau$**: Small circular shape (acting as a junction point), unfilled/white, labeled "**$\tau$**". Positioned in the center, partially overlapped by a red square region.
+
+### (2) Arrows
+*   **A $\rightarrow$ B**: Solid black arrow, labeled "**$f$**".
+*   **B $\rightarrow$ D**: Solid black arrow, labeled "**$\alpha$**".
+*   **A $\rightarrow$ D**: Solid black curved arrow (arching downwards), labeled "**$g$**".
+*   **A $\rightarrow$ E**: Solid black arrow, labeled "**$\phi$**".
+*   **B $\rightarrow$ E**: Solid black arrow passing through $\tau$, labeled "**$\psi$**" (near the destination E).
+*   **$\tau \rightarrow$ D**: Solid black arrow, labeled "**$\beta$**" (placed near the dashed line, but the solid arrow originates from the red region).
+*   **$\tau \rightarrow$ E**: Solid black arrow, labeled "**$h$**".
+*   **A $\dashrightarrow$ $\tau$**: Dashed black curved arrow, connecting node A to the point $\tau$.
+*   **$\tau \dashrightarrow$ D**: Dashed black curved arrow, connecting point $\tau$ to node D (overlaps with the $\beta$ label).
+*   **D $\rightarrow$ D**: Solid black curved self-loop arrow, labeled "**$id$**".
+
+### (3) Shaded Regions
+*   **Purple Region**: A light purple shaded area forming a triangle (or polygon) that encompasses the path from **A $\to$ B $\to$ D**.
+*   **Red Region**: A small, light red shaded square rotated by 45 degrees (diamond orientation), centered over the node **$\tau$**.
