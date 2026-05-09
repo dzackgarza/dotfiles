@@ -208,10 +208,19 @@ test-templates clean="true":
   # Only test standalone LaTeX templates (not Pandoc templates with $variables$)
   for template in homework_template.tex MakeMeAQual_template.tex pandoc_paper_template.tex; do
     echo "Testing $template..."
-    cp "$PANDOC_DIR/templates/$template" "$BUILD_DIR/"
-    cd "$BUILD_DIR"
-    pdflatex -interaction=nonstopmode "$template" >/dev/null 2>&1 || true
+
+    # Create hidden temp directory for this template
+    TEMP_DIR="$BUILD_DIR/.tmp_${template%.tex}"
+    mkdir -p "$TEMP_DIR"
+
+    # Copy template and compile in temp directory
+    cp "$PANDOC_DIR/templates/$template" "$TEMP_DIR/"
+    cd "$TEMP_DIR"
+    latexmk -pdf -interaction=nonstopmode -gg "$template" >/dev/null 2>&1 || true
+
+    # Copy only the PDF to main build directory
     if [ -f "${template%.tex}.pdf" ]; then
+      cp "${template%.tex}.pdf" "$BUILD_DIR/"
       echo "  ✅ $template"
     else
       echo "  ❌ $template failed"
