@@ -1,7 +1,0 @@
-\contentsline {section}{\nonumberline Table of Contents}{3}{section*.1}%
-\contentsline {section}{\nonumberline ToDos}{4}{section*.2}%
-\contentsline {section}{\nonumberline Definitions}{5}{section*.3}%
-\contentsline {section}{\nonumberline Theorems}{6}{section*.4}%
-\contentsline {section}{\nonumberline Exercises}{7}{section*.5}%
-\contentsline {section}{\nonumberline Figures}{8}{section*.6}%
-\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
