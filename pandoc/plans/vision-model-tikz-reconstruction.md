@@ -171,7 +171,7 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
   - google/gemini-3.1-flash-lite ($0.00000025/1M)
 
 ### Conclusion So Far
-**Free models tested:** 12 models across OpenRouter, NVIDIA NIM, HuggingFace
+**Models tested:** 18 total across OpenRouter, NVIDIA NIM, HuggingFace
 - **Best available:** Nemotron 30B (OpenRouter) - 60-70% accuracy
 - **Best found:** Phi-4-multimodal (NVIDIA) - 80-90% (currently degraded/unavailable)
 - **NVIDIA reality:** 137 models total, only ~8 vision-capable, only 2-3 accessible
