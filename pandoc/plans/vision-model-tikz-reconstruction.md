@@ -71,18 +71,38 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
 5. qwen/qwen3-vl-8b-instruct - 8B small ($0.00000008/1M)
 6. meta-llama/llama-3.2-11b-vision-instruct - Meta ($0.000000245/1M)
 
-### Model Test Results
-(Format: Model | Description Quality | Reconstruction Accuracy | Notes)
+### Model Test Results: Complex Diagram
 
-1. **nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free** ✅
-   - Quality: Excellent - captured 2x3 grid, all LaTeX labels, arrow directions, commutativity
-   - Reconstruction: High confidence - very precise positioning and labeling
-   - Response: Clean, structured, complete
+1. **nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free** ✅ BEST FREE MODEL
+   - **Correctly Identified:**
+     - All 5 node shapes (circle, square, diamond, pentagon)
+     - All node colors (gray, blue, red, yellow, green)
+     - All node labels (A, B, C, D, E)
+     - Self-loop on D with "id" label
+     - Dashed vs solid arrow distinction (β, ψ dashed)
+     - Most arrow directions and labels (f, g, φ, α, β, h, ψ, id)
 
-2. **nvidia/nemotron-nano-12b-v2-vl:free** ✅
-   - Quality: Good - captured all elements but verbose
-   - Reconstruction: Medium-high - all info present but less structured
-   - Response: Very detailed but harder to parse
+   - **MISSED/INCORRECT:**
+     - Curved arrow "h" (A→D with bend) - thought h was D→C
+     - Double arrow styling on ψ (E→C)
+     - Snake/decorated arrow on φ (A→E)
+     - Shaded background region (triangle A-B-D)
+     - Bend angles and specific curvatures
+     - Label "τ" location (thought it was node label, not arrow label)
+
+   - **Reconstruction Potential:** 60-70% - would get basic structure but miss decorations
+   - **Response Quality:** Clean, structured, includes reasoning trace (1734 reasoning tokens)
+
+2. **nvidia/nemotron-nano-12b-v2-vl:free** ❌ POOR
+   - **Problems:**
+     - Hallucinated nodes ("Sensitivity", "σ", white circle τ)
+     - Wrong colors (purple instead of blue)
+     - Made up arrows (∂, ⌃d) that don't exist
+     - Confused about arrow count (listed 6 nodes instead of 5)
+     - Incoherent arrow descriptions
+
+   - **Reconstruction Potential:** <20% - too many errors
+   - **Response Quality:** Verbose, confused, unreliable
 
 3. **google/gemma-4-31b-it:free** ❌
    - Error: "Provider returned error" - model unavailable
