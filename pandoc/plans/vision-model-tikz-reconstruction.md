@@ -164,6 +164,19 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
 24. **gemini-3.1-pro, gemini-2.5-pro** (Google Gemini API)
    - Status: Failed - Quota exceeded
 
+25. **qwen3-vl:235b-instruct** (Ollama Cloud API)
+   - Status: Success
+   - Correct: All 5 nodes, shapes (circle/square/pentagon), most colors (gray/blue/yellow/green), most arrow labels (f/g/φ/α/h/β/ψ/id), shaded region identified
+   - Errors: Called diamond node "τ" (τ is arrow label), said it's a "right triangle" filled pink (actually diamond/rhombus filled red), confused h and ψ arrow paths, over-complicated description with speculation
+
+26. **qwen3-vl:235b** (Ollama Cloud API)
+   - Status: Success
+   - Correct: All 5 nodes, shapes, colors (gray/lavender/yellow/green/red), many arrows identified, shaded region
+   - Errors: Called diamond "τ" not C, called it triangle not diamond, wrong arrow connections (g said A→τ actually B→D, β said D→τ actually C→D), hallucinated unlabeled arrows (B→τ, dashed A→D)
+
+27. **minimax-m2.7, deepseek-v4-pro, glm-5.1, kimi-k2.6** (Ollama Cloud API)
+   - Status: No vision support (null response with image input)
+
 ---
 
 ## Summary of Findings
