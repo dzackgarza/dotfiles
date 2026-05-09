@@ -1,0 +1,9 @@
+# Fdb version 4
+["pdflatex"] 0 "homework_template.tex" "homework_template.pdf" "homework_template" 0 -1
+  "homework_template.aux" 0 -1 0 "pdflatex"
+  "homework_template.tex" 0 -1 0 ""
+  (generated)
+  "homework_template.aux"
+  "homework_template.log"
+  "homework_template.pdf"
+  (rewritten before read)
