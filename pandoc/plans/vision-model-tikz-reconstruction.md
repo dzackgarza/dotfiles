@@ -248,8 +248,12 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
 1. Gemini 2.5 Flash (Google) - 95%
 2. Gemini 3.1 Flash Lite (Google) - 90%
 3. Phi-4-multimodal (NVIDIA) - 80%
-4. Nemotron-30B (OpenRouter) - 70%
-5. Pixtral (Mistral) - 65%
+4. Qwen3.5 397B (Ollama) - 70%
+5. Gemma4 31B (Ollama) - 70%
+6. Nemotron-30B (OpenRouter) - 70%
+7. Qwen3-VL 235B (Ollama) - 65%
+8. Pixtral (Mistral) - 65%
+9. Ministral-3 8B (Ollama) - 60%
 
 **Recommendation:** Use Gemini 2.5 Flash via Google Gemini API for mathematical diagram description
 
