@@ -42,13 +42,21 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
 
 ## Test Results
 
-### Reference Diagram
+### Reference Diagrams
+
+#### Test 1: Simple Commutative Diagram (TRIVIAL - OCR test only)
 - Location: `/home/dzack/dotfiles/pandoc/plans/test-diagram.{tex,pdf,png}`
-- Description: 2x3 commutative diagram showing cohomology groups with tensor product and pullback maps
+- Result: Too trivial, any OCR system passes
+
+#### Test 2: Complex Graph Diagram (NONTRIVIAL)
+- Location: `/home/dzack/dotfiles/pandoc/plans/complex-test-diagram.{tex,pdf,png}`
 - Content:
-  - Nodes: H^n(X,Z), H^n(X,Q), H^n(X,R), H^n(Y,Z), H^n(Y,Q), H^n(Y,R)
-  - Horizontal arrows: labeled "⊗Q" and "⊗R"
-  - Vertical arrows: labeled "f*"
+  - 5 nodes with different shapes: circle (A, D), rectangle (B), diamond (C), pentagon (E)
+  - Different fill colors: gray, blue, red, yellow, green
+  - Various arrow styles: solid, dashed, double (ψ), curved (h from A→D), decorated/snake (φ)
+  - Self-loop on D labeled "id"
+  - Shaded background region (triangle A-B-D)
+  - Multiple bend angles and curvatures
 
 ### API Status Check
 - **OPENROUTER_API_KEY**: ❌ INSUFFICIENT CREDITS (Error 402)
