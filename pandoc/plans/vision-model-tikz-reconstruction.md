@@ -186,8 +186,8 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
 
 29. **gemma4:31b** (Ollama Cloud API)
    - Status: Success
-   - Correct: All 5 nodes, shapes, colors, most arrows (f/α/g/φ/ψ/β/h/id), both shaded regions identified
-   - Errors: Called diamond "τ" not C, hallucinated dashed arrows (A→τ, τ→D dashed), wrong connections (g said A→D curved, ψ said B→E through τ, β said τ→D)
+   - Correct: All 5 nodes, 4 shapes (circle/square/pentagon), colors, most arrows (f/α/g/φ/ψ/β/h/id), both shaded regions identified
+   - Errors: Called diamond "small circular shape" acting as junction point (wrong shape), called diamond "τ" not C, hallucinated dashed arrows (A→τ, τ→D dashed), wrong connections (g said A→D curved, ψ said B→E through τ, β said τ→D)
 
 30. **ministral-3:8b** (Ollama Cloud API)
    - Status: Success
