@@ -7,15 +7,16 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{dzg-unified}[2025/01/09 DZG Unified Macro Package]
 
-% Required packages - load before macros
+% Required packages for macros
 \RequirePackage{amsmath,amsthm,amssymb,amsfonts}
 \RequirePackage{mathtools}
 \RequirePackage{mathrsfs}
 \RequirePackage{tikz}
 \RequirePackage{tikz-cd}
-\RequirePackage{graphicx}
-\RequirePackage{xcolor}
-\RequirePackage{hyperref}
+
+% Optional packages (load if not already loaded by document)
+\@ifpackageloaded{graphicx}{}{\RequirePackage{graphicx}}
+\@ifpackageloaded{xcolor}{}{\RequirePackage{xcolor}}
 
 % Set graphics path
 \graphicspath{{~/figures/}}
