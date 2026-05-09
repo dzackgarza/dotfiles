@@ -191,22 +191,24 @@ test-macros:
     exit 1
   fi
 
-# Test all templates compile
+# Test standalone templates compile (not Pandoc templates - those need Pandoc processing)
 test-templates:
   #!/usr/bin/env bash
   set -euo pipefail
   PANDOC_DIR="{{justfile_directory()}}"
   export TEXINPUTS=".:$PANDOC_DIR/styles//:$PANDOC_DIR/styles/macros//:$PANDOC_DIR/styles/preambles//:$HOME/.pandoc/config//:"
   cd "$PANDOC_DIR/templates"
-  for template in homework_template.tex pandoc_template.tex pandoc_problem_template.tex MakeMeAQual_template.tex pandoc_paper_template.tex research_draft.tex; do
+  # Only test standalone LaTeX templates (not Pandoc templates with $variables$)
+  for template in homework_template.tex MakeMeAQual_template.tex pandoc_paper_template.tex; do
     echo "Testing $template..."
     pdflatex -interaction=nonstopmode "$template" >/dev/null 2>&1 || true
     if [ -f "${template%.tex}.pdf" ]; then
-      echo "  ✅ $template ($(du -h ${template%.tex}.pdf | cut -f1))"
+      echo "  ✅ $template"
     else
       echo "  ❌ $template failed"
       tail -20 "${template%.tex}.log"
       exit 1
     fi
   done
-  echo "✅ All templates compiled successfully"
+  echo "✅ All standalone templates compiled successfully"
+  echo "Note: Pandoc templates (pandoc_template.tex, pandoc_problem_template.tex, research_draft.tex) need Pandoc processing"
