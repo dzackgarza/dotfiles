@@ -175,3 +175,13 @@ clean-refs:
   set -euo pipefail
   ROOT="{{invocation_directory()}}"
   find "$ROOT/references" -type f ! \( -name "*.tex" -o -name "*.sty" -o -name "*.cls" -o -name "*.bib" -o -name "*.bbl" -o -name "*.png" -o -name "*.jpg" -o -name "tex4ht.cfg" \) -delete
+
+# Test macro compilation
+test-macros:
+  #!/usr/bin/env bash
+  set -euo pipefail
+  PANDOC_DIR="{{justfile_directory()}}"
+  export TEXINPUTS=".:$HOME/.pandoc/styles//:$HOME/.pandoc/styles/macros//:$HOME/.pandoc/styles/preambles//:$HOME/.pandoc/config//:"
+  cd "$PANDOC_DIR/tests"
+  pdflatex -interaction=nonstopmode test-latex-macros.tex
+  echo "✅ LaTeX test compiled: test-latex-macros.pdf"
