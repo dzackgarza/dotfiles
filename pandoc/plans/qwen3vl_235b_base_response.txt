@@ -1,0 +1,25 @@
+### (1) All nodes with their shapes, colors, and labels  
+- **Node A**: Shape = circle, color = gray, label = $ A $, positioned on the left side of the diagram.  
+- **Node B**: Shape = square, color = light purple (lavender), label = $ B $, positioned at the top-center of the diagram.  
+- **Node D**: Shape = circle, color = yellow, label = $ D $, positioned on the right side of the diagram.  
+- **Node E**: Shape = regular pentagon, color = green, label = $ E $, positioned at the bottom-center of the diagram.  
+- **Node $ \tau $**: Shape = triangle, color = red, label = $ \tau $ (lowercase Greek letter tau), positioned near the center of the diagram, slightly to the right.  
+
+---
+
+### (2) All arrows with their labels, styles, and connections  
+- **$ f $**: Solid line, curved, from $ A $ to $ B $. Positioned above the shaded region, labeled $ f $ on the upper side of the arrow.  
+- **$ g $**: Solid line, curved, from $ A $ to $ \tau $. Labeled $ g $ on the upper side of the arrow, curving downward from $ A $ to $ \tau $.  
+- **$ \alpha $**: Solid line, curved, from $ B $ to $ D $. Labeled $ \alpha $ on the upper side of the arrow, curving downward from $ B $ to $ D $.  
+- **$ id $**: Solid line, self-loop (curved arc), from $ D $ to $ D $. A clockwise loop on the right side of $ D $, labeled $ id $ to the right of the loop.  
+- **$ \beta $**: Dashed line, curved, from $ D $ to $ \tau $. Labeled $ \beta $ on the lower side of the arrow, curving leftward from $ D $ to $ \tau $.  
+- **$ \phi $**: Solid line, straight, from $ A $ to $ E $. Labeled $ \phi $ on the left side of the arrow, sloping downward-left from $ A $ to $ E $.  
+- **$ \psi $**: Solid line, straight, from $ D $ to $ E $. Labeled $ \psi $ on the right side of the arrow, sloping downward-right from $ D $ to $ E $.  
+- **$ h $**: Solid line, straight, from $ \tau $ to $ E $. Labeled $ h $ on the lower side of the arrow, sloping downward from $ \tau $ to $ E $.  
+- **Unlabeled arrow (solid, straight)**: From $ B $ to $ \tau $. A vertical/slightly diagonal line from $ B $ to $ \tau $, no explicit label.  
+- **Unlabeled arrow (dashed, straight)**: From $ A $ to $ D $. A horizontal line from $ A $ to $ D $, passing behind the shaded region, with a dashed pattern and no label.  
+
+---
+
+### (3) Shaded regions  
+- **Light blue shaded region**: A single filled region bounded by the curved paths $ A \xrightarrow{f} B \xrightarrow{\alpha} D $ and the dashed arrow $ A \to D $. This region forms a convex, curved triangular area in the upper-middle portion of the diagram, used to represent a 2-morphism (e.g., a natural transformation) between the composite morphism $ \alpha \circ f $ and the direct morphism $ A \to D $. The shading is pale blue (or light lavender), distinguishing it from the rest of the diagram.
