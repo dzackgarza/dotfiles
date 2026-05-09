@@ -181,7 +181,7 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
 
 28. **qwen3.5:397b** (Ollama Cloud API)
    - Status: Success
-   - Correct: All 5 nodes, precise shapes (correctly called diamond "rhombus"), all colors, most arrows (f/α/g/φ/h/ψ/id/β), dashed β identified, shaded triangle
+   - Correct: All 5 nodes, shapes (diamond), all colors, most arrows (f/α/g/φ/h/ψ/id/β), dashed β identified, shaded triangle
    - Errors: Called diamond "τ" not C, hallucinated 3 unlabeled arrows (dashed A→τ, B→τ, τ→D), wrong connections (g said A→τ actually B→D, ψ said E→τ actually B→E, h said τ→E actually A→D), hallucinated "small sector in τ" shaded region
 
 29. **gemma4:31b** (Ollama Cloud API)
