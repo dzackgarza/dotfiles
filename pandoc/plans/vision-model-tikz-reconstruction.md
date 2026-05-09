@@ -174,7 +174,12 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
    - Correct: All 5 nodes, shapes, colors (gray/lavender/yellow/green/red), many arrows identified, shaded region
    - Errors: Called diamond "τ" not C, called it triangle not diamond, wrong arrow connections (g said A→τ actually B→D, β said D→τ actually C→D), hallucinated unlabeled arrows (B→τ, dashed A→D)
 
-27. **minimax-m2.7, deepseek-v4-pro, glm-5.1, kimi-k2.6** (Ollama Cloud API)
+27. **kimi-k2.6** (Ollama Cloud API)
+   - Status: Success (thinking model - response in "reasoning" field)
+   - Correct: Some colors (gray/lavender/yellow/green/pink), some shapes (circle/square/pentagon)
+   - Errors: Hallucinated 13 white circle nodes (thought arrow labels f/g/α/β/τ/h/φ/ψ/id were separate nodes), completely confused about diagram structure and connections, response cut off mid-analysis at token limit
+
+28. **minimax-m2.7, deepseek-v4-pro, glm-5.1** (Ollama Cloud API)
    - Status: No vision support (null response with image input)
 
 ---
