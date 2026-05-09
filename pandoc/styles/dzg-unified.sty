@@ -7,16 +7,33 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{dzg-unified}[2025/01/09 DZG Unified Macro Package]
 
-% Required packages for macros
+% Core math packages (always required)
 \RequirePackage{amsmath,amsthm,amssymb,amsfonts}
-\RequirePackage{mathtools}
-\RequirePackage{mathrsfs}
+\RequirePackage{mathtools}    % DeclarePairedDelimiter, coloneqq
+\RequirePackage{mathrsfs}     % Script fonts
+\RequirePackage{bm}           % Bold math
+\RequirePackage{esint}        % Integral symbols
+\RequirePackage{stmaryrd}     % Special brackets
+\RequirePackage{upgreek}      % Upright Greek
+
+% Graphics and color
+\RequirePackage{graphicx}
+\RequirePackage{xcolor}
+
+% TikZ and diagrams
 \RequirePackage{tikz}
 \RequirePackage{tikz-cd}
 
-% Optional packages (load if not already loaded by document)
-\@ifpackageloaded{graphicx}{}{\RequirePackage{graphicx}}
-\@ifpackageloaded{xcolor}{}{\RequirePackage{xcolor}}
+% Typography
+\RequirePackage{microtype}
+
+% Tables and lists
+\RequirePackage{booktabs}
+\RequirePackage{enumitem}
+
+% Utilities
+\RequirePackage{etoolbox}
+\RequirePackage{xparse}
 
 % Set graphics path
 \graphicspath{{~/figures/}}
