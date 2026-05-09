@@ -166,8 +166,8 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
 
 25. **qwen3-vl:235b-instruct** (Ollama Cloud API)
    - Status: Success
-   - Correct: All 5 nodes, shapes (circle/square/pentagon), most colors (gray/blue/yellow/green), most arrow labels (f/g/φ/α/h/β/ψ/id), shaded region identified
-   - Errors: Called diamond node "τ" (τ is arrow label), said it's a "right triangle" filled pink (actually diamond/rhombus filled red), confused h and ψ arrow paths, over-complicated description with speculation
+   - Correct: All 5 nodes, 4 shapes (circle/square/pentagon), most colors (gray/blue/yellow/green), most arrow labels (f/g/φ/α/h/β/ψ/id), shaded region identified
+   - Errors: Called diamond "right triangle" filled pink (actually diamond filled red), called diamond node "τ" (τ is arrow label), confused h and ψ arrow paths, over-complicated description with speculation
 
 26. **qwen3-vl:235b** (Ollama Cloud API)
    - Status: Success
