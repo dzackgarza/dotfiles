@@ -96,24 +96,31 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
    - Status: Success
    - Errors: Vague descriptions, listed "f-z" as node labels (are arrow labels), plural "shaded regions" (only 1 exists)
 
-7. **microsoft/phi-3-vision-128k-instruct** (NVIDIA) ❌
-   - Error: "Not found for account" - model unavailable
+7. **microsoft/phi-3-vision-128k-instruct** (NVIDIA NIM)
+   - Status: Failed - "Not found for account"
 
-8. **microsoft/phi-4-multimodal-instruct** (NVIDIA) ✅ **BEST MODEL FOUND**
-   - **Accuracy: ~80-90%**
-   - ✅ Correctly identified 5 nodes (one label wrong: called C "T")
-   - ✅ All shapes correct (circle, rectangle, pentagon, diamond)
-   - ✅ Color identified (D is yellow)
-   - ✅ ALL arrow labels correct (f, g, h, α, β, id)
-   - ✅ Arrow style awareness (solid/dashed/double/curved/snake)
-   - ✅ Mentioned shaded regions
-   - **Status: Model now DEGRADED, cannot re-test for more detail**
-   - **Reconstruction Potential: 80-90%** - best found so far!
+8. **microsoft/phi-4-multimodal-instruct** (NVIDIA NIM)
+   - Status: Success (now DEGRADED)
+   - Correct: 5 nodes, all shapes, D=yellow, all arrow labels (f,g,h,α,β,id), mentioned arrow styles and shaded regions
+   - Errors: Called C "T", didn't enumerate specific styles/positions
 
-9. **nvidia/llama-3.1-nemotron-nano-vl-8b-v1** (NVIDIA) ❌ CATASTROPHIC
-   - Worse than 90B: claims triangle ABC, invents points E through ZZ
-   - Complete hallucination
-   - **Reconstruction Potential: 0%**
+9. **nvidia/llama-3.1-nemotron-nano-vl-8b-v1** (NVIDIA NIM)
+   - Status: Success
+   - Errors: Claims "triangle ABC", invents points E-ZZ (26+ fake points)
+
+10. **adept/fuyu-8b, microsoft/kosmos-2, google/deplot** (NVIDIA NIM)
+   - Status: Failed - "Not found for account"
+
+11. **google/gemma-4-31b-it** (NVIDIA NIM)
+   - Status: Failed - Request timeout (503)
+
+12. **google/gemma-3-27b-it** (NVIDIA NIM)
+   - Status: Failed - DEGRADED
+
+13. **mistralai/mistral-large-3-675b-instruct-2512** (NVIDIA NIM)
+   - Status: Success
+   - Errors: Abstract category theory interpretation not concrete description, no colors/positions/arrow styles, mentioned "Φ and Ψ" not in diagram
+   - Correct: 5 objects, some arrow labels, mentioned shaded regions
 
 ---
 
