@@ -1,3 +1,0 @@
-{
-  "error": "Image input is not enabled for this model (ref: ddee32f4-e186-47bf-a1c8-493021d6bd64)"
-}
