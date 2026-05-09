@@ -43,11 +43,22 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
 ## Test Results
 
 ### Reference Diagram
-- Location: TBD
-- Description: TBD
+- Location: `/home/dzack/dotfiles/pandoc/plans/test-diagram.{tex,pdf,png}`
+- Description: 2x3 commutative diagram showing cohomology groups with tensor product and pullback maps
+- Content:
+  - Nodes: H^n(X,Z), H^n(X,Q), H^n(X,R), H^n(Y,Z), H^n(Y,Q), H^n(Y,R)
+  - Horizontal arrows: labeled "⊗Q" and "⊗R"
+  - Vertical arrows: labeled "f*"
+
+### API Status Check
+- **OPENROUTER_API_KEY**: ❌ INSUFFICIENT CREDITS (Error 402)
+  - Message: "Insufficient credits. Add more using https://openrouter.ai/settings/credits"
+  - Need user to refresh credits before testing
 
 ### Model Test Results
 (Format: Model | API Key Status | Description Quality | Reconstruction Accuracy | Notes)
+
+**Blocked: Need OpenRouter credits refreshed**
 
 ---
 
