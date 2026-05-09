@@ -150,11 +150,19 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
 
 ## Summary of Findings
 
-### Current Best: NVIDIA Nemotron 30B (FREE via OpenRouter)
+### Current Best: Microsoft Phi-4-Multimodal (FREE via NVIDIA NIM)
+- **~80-90% reconstruction accuracy** - BEST FREE MODEL FOUND
+- ✅ All nodes, shapes, colors identified
+- ✅ All arrow labels and style awareness
+- ✅ Shaded regions detected
+- ❌ Minor label error (C called "T")
+- ❌ Model currently DEGRADED (unavailable for re-testing)
+
+### Second Best: NVIDIA Nemotron 30B (FREE via OpenRouter)
 - Gets 60-70% reconstruction accuracy
 - Handles basic structure, shapes, colors, arrows well
 - Misses complex decorations (double arrows, snake patterns, shaded regions)
-- **BETTER than larger models** (90B Llama completely hallucinates!)
+- **More reliable** (Phi-4 currently unavailable)
 
 ### KEY FINDING: Larger ≠ Better for Vision
 - **Llama 90B: Catastrophic hallucination** (invented 13 nodes vs 5 actual)
