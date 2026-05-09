@@ -7,6 +7,19 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{dzg-unified}[2025/01/09 DZG Unified Macro Package]
 
+% Required packages - load before macros
+\RequirePackage{amsmath,amsthm,amssymb,amsfonts}
+\RequirePackage{mathtools}
+\RequirePackage{mathrsfs}
+\RequirePackage{tikz}
+\RequirePackage{tikz-cd}
+\RequirePackage{graphicx}
+\RequirePackage{xcolor}
+\RequirePackage{hyperref}
+
+% Set graphics path
+\graphicspath{{~/figures/}}
+
 % Tier 1: Simple MathJax-compatible shortcuts
 \input{tier1-mathjax-simple}
 
