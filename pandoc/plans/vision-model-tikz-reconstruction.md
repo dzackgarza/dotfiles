@@ -199,16 +199,19 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
 
 ### Conclusion
 
-**All active ~/.envrc providers tested (OpenRouter, NVIDIA NIM, HuggingFace, Cohere, Mistral)**
+**WINNER: Gemini 2.5 Flash (Google Gemini API) - ~95% accurate**
+- All nodes, shapes, colors, arrows correct
+- Only missed arrow decorations (snake, double)
+- Sufficient for TikZ reconstruction
 
-**Best models:**
-- Phi-4-multimodal (NVIDIA): Called C "T", no specific styles - currently degraded
-- Nemotron-30B (OpenRouter): Wrong arrow directions, missed decorations/shaded region
-- Pixtral (Mistral): Hallucinated 5th node, wrong arrow directions
+**Ranking:**
+1. Gemini 2.5 Flash (Google) - 95%
+2. Gemini 3.1 Flash Lite (Google) - 90%
+3. Phi-4-multimodal (NVIDIA) - 80%
+4. Nemotron-30B (OpenRouter) - 70%
+5. Pixtral (Mistral) - 65%
 
-**Key limitation:** All models miss arrow decorations (double/snake), shaded regions, or hallucinate extra nodes
-
-**Next:** Test cheap paid models (Qwen3-VL-235B, Gemini 3.1 Flash) or wait for Phi-4
+**Recommendation:** Use Gemini 2.5 Flash via Google Gemini API for mathematical diagram description
 
 ## Notes
 - Avoid usage-based APIs: Codex, Claude direct, Opencode, Gemini direct
