@@ -185,10 +185,10 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
    - Errors: Called diamond "light pink diamond (rhombus)" (wrong shape - TikZ diamond ≠ rhombus), called diamond "τ" not C, hallucinated 3 unlabeled arrows (vertical B→τ, solid τ→D, dashed A→τ), wrong connections (g said A→τ top-left actually B→D, ψ said E→τ bottom-left actually B→E, h said τ→E bottom actually A→D), hallucinated "lighter circular shaded region" inside τ
    - Note: Test 2 performance degraded from initial test - systematic error calling diamond node "τ"
 
-29. **gemma4:31b** (Ollama Cloud API)
+29. **gemma4:31b-cloud** (Ollama Cloud CLI)
    - Status: Success
-   - Correct: All 5 nodes, 4 shapes (circle/square/pentagon), colors, most arrows (f/α/g/φ/ψ/β/h/id), both shaded regions identified
-   - Errors: Called diamond "small circular shape" acting as junction point (wrong shape), called diamond "τ" not C, hallucinated dashed arrows (A→τ, τ→D dashed), wrong connections (g said A→D curved, ψ said B→E through τ, β said τ→D)
+   - Correct: All 5 nodes, 4 shapes (circle/square/pentagon), colors, most arrows (f/α/g/φ/ψ/β/h/id), shaded triangular region identified
+   - Errors: Called diamond "white circle...partially covered by a red semi-circular arc" (completely wrong shape), called diamond "$\tau$" not C, hallucinated dashed arrows (A→τ, τ→D labeled β), wrong connections (g said A→D, ψ said B→E, β said τ→D actually C→D)
 
 30. **ministral-3:8b** (Ollama Cloud API)
    - Status: Success
