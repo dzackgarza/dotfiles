@@ -137,6 +137,12 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
 18. **Qwen/Qwen3-VL-8B-Instruct, Qwen/Qwen2-VL-7B-Instruct** (HuggingFace)
    - Status: Failed - HuggingFace Inference API doesn't support vision models via chat endpoint
 
+19. **Mistral API (direct)**
+   - Status: Failed - API key unauthorized (stale)
+
+20. **Cohere API (direct)**
+   - Status: Failed - API key invalid/no response (stale)
+
 ---
 
 ## Summary of Findings
