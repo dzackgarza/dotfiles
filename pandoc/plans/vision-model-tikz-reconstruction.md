@@ -134,30 +134,31 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
 
 ## Summary of Findings
 
-### Current Best: NVIDIA Nemotron 30B (FREE)
+### Current Best: NVIDIA Nemotron 30B (FREE via OpenRouter)
 - Gets 60-70% reconstruction accuracy
 - Handles basic structure, shapes, colors, arrows well
 - Misses complex decorations (double arrows, snake patterns, shaded regions)
-- Good enough for simple-to-moderate diagrams
-- NOT good enough for complex TikZ with decorations
+- **BETTER than larger models** (90B Llama completely hallucinates!)
+
+### KEY FINDING: Larger ≠ Better for Vision
+- **Llama 90B: Catastrophic hallucination** (invented 13 nodes vs 5 actual)
+- **Llama 11B: Poor performance** (vague, wrong labels)
+- **Nemotron 30B: Best free option** despite smaller size
+- Suggests specialized vision training > raw parameter count
 
 ### Remaining Tests Needed
-- [ ] Test cheap paid models on OpenRouter (<$0.001/test):
+- [x] NVIDIA NIM API - tested, worse than OpenRouter free models
+- [ ] HuggingFace Inference API vision models
+- [ ] Mistral API (direct) for Pixtral
+- [ ] Brave AI vision capabilities
+- [ ] Cheap paid OpenRouter models (<$0.001/test):
   - qwen/qwen3-vl-235b-a22b-thinking ($0.00000026/1M)
   - google/gemini-3.1-flash-lite ($0.00000025/1M)
-  - qwen/qwen3-vl-32b-instruct ($0.000000104/1M)
-- [ ] Test direct API providers:
-  - NVIDIA NIM API (check available vision models)
-  - HuggingFace vision models
-  - Mistral Pixtral via direct API
-- [ ] Create more test diagrams:
-  - Spectral sequence with diagonal differentials
-  - Dynkin diagram with edge multiplicities
-  - Diagram with filled regions and patterns
 
 ### Conclusion So Far
-Free models insufficient for precise TikZ reconstruction of complex diagrams.
-Need to test cheap paid models or improve prompting strategy.
+**Free models: 60-70% max accuracy** (Nemotron 30B best)
+**Insufficient for precise TikZ reconstruction** of complex diagrams with decorations.
+Need to test HuggingFace and cheap paid models next.
 
 ## Notes
 - Avoid usage-based APIs: Codex, Claude direct, Opencode, Gemini direct
