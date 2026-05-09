@@ -110,6 +110,26 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
 4. **google/gemma-4-26b-a4b-it:free** ❌
    - Error: "Provider returned error" - model unavailable
 
+### NVIDIA NIM API Direct Tests
+
+5. **meta/llama-3.2-90b-vision-instruct** (NVIDIA) ❌ CATASTROPHIC FAILURE
+   - **Completely hallucinated:** Claims 13 nodes (A-M) when only 5 exist
+   - Invented nodes F, G, H, I, J, K, L, M that don't exist in diagram
+   - Made up 12 arrows with Greek letters that don't exist
+   - Generated plausible-looking TikZ code for wrong diagram
+   - **Worse than smaller models**
+   - **Reconstruction Potential:** 0% - total fabrication
+
+6. **meta/llama-3.2-11b-vision-instruct** (NVIDIA) ❌ POOR
+   - Vague descriptions instead of precise details
+   - Wrong labels: lists "f" through "z" as node labels (they're arrow labels)
+   - Says "shaded regions" plural when only one exists
+   - Generic descriptions: "flowchart or network diagram"
+   - **Reconstruction Potential:** <30%
+
+7. **microsoft/phi-3-vision-128k-instruct** (NVIDIA) ❌
+   - Error: "Not found for account" - model unavailable
+
 ---
 
 ## Summary of Findings
