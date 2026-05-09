@@ -78,39 +78,23 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
    - Correct: 5 nodes, shapes, colors, labels, self-loop, dashed vs solid
    - Errors: Arrow h direction wrong (said D→C, actually A→D), ψ said dashed not double, φ said solid not snake, missed shaded region, called C "τ" (τ is arrow label)
 
-2. **nvidia/nemotron-nano-12b-v2-vl:free** ❌ POOR
-   - **Problems:**
-     - Hallucinated nodes ("Sensitivity", "σ", white circle τ)
-     - Wrong colors (purple instead of blue)
-     - Made up arrows (∂, ⌃d) that don't exist
-     - Confused about arrow count (listed 6 nodes instead of 5)
-     - Incoherent arrow descriptions
+2. **nvidia/nemotron-nano-12b-v2-vl:free** (OpenRouter)
+   - Status: Success
+   - Errors: Hallucinated nodes (Sensitivity, σ, white circle), wrong color (purple not blue), made up arrows (∂, ⌃d), claimed 6 nodes not 5
 
-   - **Reconstruction Potential:** <20% - too many errors
-   - **Response Quality:** Verbose, confused, unreliable
+3. **google/gemma-4-31b-it:free** (OpenRouter)
+   - Status: Failed - "Provider returned error"
 
-3. **google/gemma-4-31b-it:free** ❌
-   - Error: "Provider returned error" - model unavailable
+4. **google/gemma-4-26b-a4b-it:free** (OpenRouter)
+   - Status: Failed - "Provider returned error"
 
-4. **google/gemma-4-26b-a4b-it:free** ❌
-   - Error: "Provider returned error" - model unavailable
+5. **meta/llama-3.2-90b-vision-instruct** (NVIDIA NIM)
+   - Status: Success
+   - Errors: Hallucinated 13 nodes (A-M) when only 5 exist, invented 12 fake arrows, generated TikZ for wrong diagram
 
-### NVIDIA NIM API Direct Tests
-
-5. **meta/llama-3.2-90b-vision-instruct** (NVIDIA) ❌ CATASTROPHIC FAILURE
-   - **Completely hallucinated:** Claims 13 nodes (A-M) when only 5 exist
-   - Invented nodes F, G, H, I, J, K, L, M that don't exist in diagram
-   - Made up 12 arrows with Greek letters that don't exist
-   - Generated plausible-looking TikZ code for wrong diagram
-   - **Worse than smaller models**
-   - **Reconstruction Potential:** 0% - total fabrication
-
-6. **meta/llama-3.2-11b-vision-instruct** (NVIDIA) ❌ POOR
-   - Vague descriptions instead of precise details
-   - Wrong labels: lists "f" through "z" as node labels (they're arrow labels)
-   - Says "shaded regions" plural when only one exists
-   - Generic descriptions: "flowchart or network diagram"
-   - **Reconstruction Potential:** <30%
+6. **meta/llama-3.2-11b-vision-instruct** (NVIDIA NIM)
+   - Status: Success
+   - Errors: Vague descriptions, listed "f-z" as node labels (are arrow labels), plural "shaded regions" (only 1 exists)
 
 7. **microsoft/phi-3-vision-128k-instruct** (NVIDIA) ❌
    - Error: "Not found for account" - model unavailable
