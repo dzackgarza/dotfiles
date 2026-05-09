@@ -66,7 +66,21 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
 ### Model Test Results
 (Format: Model | Description Quality | Reconstruction Accuracy | Notes)
 
-**Pending: OpenRouter credits needed**
+1. **nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free** ✅
+   - Quality: Excellent - captured 2x3 grid, all LaTeX labels, arrow directions, commutativity
+   - Reconstruction: High confidence - very precise positioning and labeling
+   - Response: Clean, structured, complete
+
+2. **nvidia/nemotron-nano-12b-v2-vl:free** ✅
+   - Quality: Good - captured all elements but verbose
+   - Reconstruction: Medium-high - all info present but less structured
+   - Response: Very detailed but harder to parse
+
+3. **google/gemma-4-31b-it:free** ❌
+   - Error: "Provider returned error" - model unavailable
+
+4. **google/gemma-4-26b-a4b-it:free** ❌
+   - Error: "Provider returned error" - model unavailable
 
 ---
 
