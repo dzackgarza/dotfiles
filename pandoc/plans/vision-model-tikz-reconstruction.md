@@ -71,27 +71,12 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
 5. qwen/qwen3-vl-8b-instruct - 8B small ($0.00000008/1M)
 6. meta-llama/llama-3.2-11b-vision-instruct - Meta ($0.000000245/1M)
 
-### Model Test Results: Complex Diagram
+### Model Test Results
 
-1. **nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free** ✅ BEST FREE MODEL
-   - **Correctly Identified:**
-     - All 5 node shapes (circle, square, diamond, pentagon)
-     - All node colors (gray, blue, red, yellow, green)
-     - All node labels (A, B, C, D, E)
-     - Self-loop on D with "id" label
-     - Dashed vs solid arrow distinction (β, ψ dashed)
-     - Most arrow directions and labels (f, g, φ, α, β, h, ψ, id)
-
-   - **MISSED/INCORRECT:**
-     - Curved arrow "h" (A→D with bend) - thought h was D→C
-     - Double arrow styling on ψ (E→C)
-     - Snake/decorated arrow on φ (A→E)
-     - Shaded background region (triangle A-B-D)
-     - Bend angles and specific curvatures
-     - Label "τ" location (thought it was node label, not arrow label)
-
-   - **Reconstruction Potential:** 60-70% - would get basic structure but miss decorations
-   - **Response Quality:** Clean, structured, includes reasoning trace (1734 reasoning tokens)
+1. **nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free** (OpenRouter)
+   - Status: Success
+   - Correct: 5 nodes, shapes, colors, labels, self-loop, dashed vs solid
+   - Errors: Arrow h direction wrong (said D→C, actually A→D), ψ said dashed not double, φ said solid not snake, missed shaded region, called C "τ" (τ is arrow label)
 
 2. **nvidia/nemotron-nano-12b-v2-vl:free** ❌ POOR
    - **Problems:**
