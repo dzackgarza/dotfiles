@@ -194,7 +194,7 @@ test-macros:
   fi
 
 # Test standalone templates compile (not Pandoc templates - those need Pandoc processing)
-test-templates:
+test-templates clean="true":
   #!/usr/bin/env bash
   set -euo pipefail
   PANDOC_DIR="{{justfile_directory()}}"
@@ -220,6 +220,11 @@ test-templates:
     fi
   done
 
-  rm -rf "$BUILD_DIR"
   echo "✅ All standalone templates compiled successfully"
   echo "Note: Pandoc templates (pandoc_template.tex, pandoc_problem_template.tex, research_draft.tex) need Pandoc processing"
+
+  if [ "{{clean}}" = "true" ]; then
+    rm -rf "$BUILD_DIR"
+  else
+    echo "Build artifacts kept in: $BUILD_DIR"
+  fi
