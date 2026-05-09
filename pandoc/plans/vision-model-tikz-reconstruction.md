@@ -122,6 +122,21 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
    - Errors: Abstract category theory interpretation not concrete description, no colors/positions/arrow styles, mentioned "Φ and Ψ" not in diagram
    - Correct: 5 objects, some arrow labels, mentioned shaded regions
 
+14. **google/gemini-2.5-pro** (OpenRouter)
+   - Status: Failed - Insufficient credits (402)
+
+15. **meta/llama-3.3-70b-instruct** (NVIDIA NIM)
+   - Status: Tested with image input - no output/timeout (doesn't support vision)
+
+16. **mistralai/mistral-medium-3-instruct** (NVIDIA NIM)
+   - Status: Tested with image input - no output/timeout (doesn't support vision)
+
+17. **nvidia/llama-nemotron-70b-instruct** (NVIDIA NIM)
+   - Status: Tested with image input - no output/timeout (doesn't support vision)
+
+18. **Qwen/Qwen3-VL-8B-Instruct, Qwen/Qwen2-VL-7B-Instruct** (HuggingFace)
+   - Status: Failed - HuggingFace Inference API doesn't support vision models via chat endpoint
+
 ---
 
 ## Summary of Findings
