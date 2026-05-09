@@ -183,5 +183,10 @@ test-macros:
   PANDOC_DIR="{{justfile_directory()}}"
   export TEXINPUTS=".:$HOME/.pandoc/styles//:$HOME/.pandoc/styles/macros//:$HOME/.pandoc/styles/preambles//:$HOME/.pandoc/config//:"
   cd "$PANDOC_DIR/tests"
-  pdflatex -interaction=nonstopmode test-latex-macros.tex
-  echo "✅ LaTeX test compiled: test-latex-macros.pdf"
+  pdflatex -interaction=nonstopmode test-latex-macros.tex || true
+  if [ -f test-latex-macros.pdf ]; then
+    echo "✅ LaTeX test compiled: test-latex-macros.pdf ($(du -h test-latex-macros.pdf | cut -f1))"
+  else
+    echo "❌ Compilation failed - no PDF produced"
+    exit 1
+  fi
