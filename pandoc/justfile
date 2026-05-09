@@ -198,7 +198,7 @@ test-templates:
   PANDOC_DIR="{{justfile_directory()}}"
   export TEXINPUTS=".:$PANDOC_DIR/styles//:$PANDOC_DIR/styles/macros//:$PANDOC_DIR/styles/preambles//:$HOME/.pandoc/config//:"
   cd "$PANDOC_DIR/templates"
-  for template in homework_template.tex pandoc_template.tex pandoc_problem_template.tex; do
+  for template in homework_template.tex pandoc_template.tex pandoc_problem_template.tex MakeMeAQual_template.tex pandoc_paper_template.tex research_draft.tex; do
     echo "Testing $template..."
     pdflatex -interaction=nonstopmode "$template" >/dev/null 2>&1 || true
     if [ -f "${template%.tex}.pdf" ]; then
