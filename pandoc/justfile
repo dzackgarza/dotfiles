@@ -196,11 +196,18 @@ test-templates:
   #!/usr/bin/env bash
   set -euo pipefail
   PANDOC_DIR="{{justfile_directory()}}"
+  BUILD_DIR="$PANDOC_DIR/.build_test_templates"
   export TEXINPUTS=".:$PANDOC_DIR/styles//:$PANDOC_DIR/styles/macros//:$PANDOC_DIR/styles/preambles//:$HOME/.pandoc/config//:"
-  cd "$PANDOC_DIR/templates"
+
+  # Clean and create build directory
+  rm -rf "$BUILD_DIR"
+  mkdir -p "$BUILD_DIR"
+
   # Only test standalone LaTeX templates (not Pandoc templates with $variables$)
   for template in homework_template.tex MakeMeAQual_template.tex pandoc_paper_template.tex; do
     echo "Testing $template..."
+    cp "$PANDOC_DIR/templates/$template" "$BUILD_DIR/"
+    cd "$BUILD_DIR"
     pdflatex -interaction=nonstopmode "$template" >/dev/null 2>&1 || true
     if [ -f "${template%.tex}.pdf" ]; then
       echo "  ✅ $template"
@@ -210,5 +217,7 @@ test-templates:
       exit 1
     fi
   done
+
+  rm -rf "$BUILD_DIR"
   echo "✅ All standalone templates compiled successfully"
   echo "Note: Pandoc templates (pandoc_template.tex, pandoc_problem_template.tex, research_draft.tex) need Pandoc processing"
