@@ -150,6 +150,20 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
    - Status: Success
    - Errors: Wrong colors (light blue/orange vs actual gray/blue/red/yellow/green), said "no shaded regions" (one exists), didn't identify pentagon/diamond, didn't enumerate nodes/arrows
 
+22. **gemini-3.1-flash-lite** (Google Gemini API)
+   - Status: Success
+   - Correct: All 5 nodes, shapes, colors, most arrows (f,α,id,g,h,φ,ψ), shaded triangle, dashed curves
+   - Errors: Called diamond "house shape/pentagon with pointed top", said τ node is "shaded region"
+
+23. **gemini-2.5-flash** (Google Gemini API)
+   - Status: Success - **BEST MODEL**
+   - Correct: All 5 nodes, precise shapes (diamond as "square rotated 45°"), all colors, ALL 9 arrows (f,g,α,τ,β,id,φ,h,ψ), solid/dashed distinction, shaded triangle, noted diamond unlabeled
+   - Errors: Missed arrow decorations (snake on φ, double on ψ)
+   - **~95% accurate - sufficient for TikZ reconstruction**
+
+24. **gemini-3.1-pro, gemini-2.5-pro** (Google Gemini API)
+   - Status: Failed - Quota exceeded
+
 ---
 
 ## Summary of Findings
