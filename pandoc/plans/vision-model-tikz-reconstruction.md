@@ -164,9 +164,6 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
 24. **gemini-3.1-pro, gemini-2.5-pro** (Google Gemini API)
    - Status: Failed - Quota exceeded
 
-25. **Ollama cloud models** (minimax-m2.7, deepseek-v4-pro, glm-5.1, kimi-k2.6)
-   - Status: Not properly tested - stdin PNG piping incompatible with API format (models received binary as text)
-
 ---
 
 ## Summary of Findings
