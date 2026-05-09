@@ -130,6 +130,22 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
 7. **microsoft/phi-3-vision-128k-instruct** (NVIDIA) ❌
    - Error: "Not found for account" - model unavailable
 
+8. **microsoft/phi-4-multimodal-instruct** (NVIDIA) ✅ **BEST MODEL FOUND**
+   - **Accuracy: ~80-90%**
+   - ✅ Correctly identified 5 nodes (one label wrong: called C "T")
+   - ✅ All shapes correct (circle, rectangle, pentagon, diamond)
+   - ✅ Color identified (D is yellow)
+   - ✅ ALL arrow labels correct (f, g, h, α, β, id)
+   - ✅ Arrow style awareness (solid/dashed/double/curved/snake)
+   - ✅ Mentioned shaded regions
+   - **Status: Model now DEGRADED, cannot re-test for more detail**
+   - **Reconstruction Potential: 80-90%** - best found so far!
+
+9. **nvidia/llama-3.1-nemotron-nano-vl-8b-v1** (NVIDIA) ❌ CATASTROPHIC
+   - Worse than 90B: claims triangle ABC, invents points E through ZZ
+   - Complete hallucination
+   - **Reconstruction Potential: 0%**
+
 ---
 
 ## Summary of Findings
