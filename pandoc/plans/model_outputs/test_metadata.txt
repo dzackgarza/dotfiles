@@ -1,0 +1,10 @@
+Test Diagram: complex-test-diagram.tex
+Compiled to: complex-test-diagram.png (41K)
+
+Test Diagram Contents:
+- 5 nodes: A (gray circle), B (blue rectangle), C (red diamond), D (yellow circle), E (green pentagon)
+- Arrows: f (A->B), g (A->C curved), h (A->D curved dashed), α (B->D), β (C->D dashed), φ (A->E snake), ψ (E->C double), id (D->D loop)
+- Shaded region: triangle A-B-D (blue fill)
+
+Standard Prompt Used:
+"Describe this diagram precisely for TikZ reconstruction: node shapes (circle/rectangle/diamond/pentagon), colors, labels, arrow styles (solid/dashed/double/curved/snake), and shaded regions."
