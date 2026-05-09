@@ -171,8 +171,8 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
 
 26. **qwen3-vl:235b** (Ollama Cloud API)
    - Status: Success
-   - Correct: All 5 nodes, shapes, colors (gray/lavender/yellow/green/red), many arrows identified, shaded region
-   - Errors: Called diamond "τ" not C, called it triangle not diamond, wrong arrow connections (g said A→τ actually B→D, β said D→τ actually C→D), hallucinated unlabeled arrows (B→τ, dashed A→D)
+   - Correct: All 5 nodes, 4 shapes (circle/square/pentagon), colors (gray/lavender/yellow/green/red), many arrows identified, shaded region
+   - Errors: Called diamond "triangle" (wrong shape), called diamond "τ" not C, wrong arrow connections (g said A→τ actually B→D, β said D→τ actually C→D), hallucinated unlabeled arrows (B→τ, dashed A→D)
 
 27. **kimi-k2.6** (Ollama Cloud API)
    - Status: Success (thinking model - response in "reasoning" field)
