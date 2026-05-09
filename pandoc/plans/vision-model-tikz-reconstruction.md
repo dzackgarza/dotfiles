@@ -209,11 +209,12 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
 ## Summary of Findings
 
 ### Current Best: Microsoft Phi-4-Multimodal (FREE via NVIDIA NIM)
-- **~80-90% reconstruction accuracy** - BEST FREE MODEL FOUND
-- ✅ All nodes, shapes, colors identified
-- ✅ All arrow labels and style awareness
-- ✅ Shaded regions detected
-- ❌ Minor label error (C called "T")
+- **~80% reconstruction accuracy** - BEST FREE MODEL FOUND
+- ✅ 5 nodes, some shapes, some colors identified
+- ❌ Missed arrows φ and ψ
+- ❌ Missed shaded region
+- ❌ Wrong styles (said D has "dashed outline")
+- ❌ Label error (C called "T")
 - ❌ Model currently DEGRADED (unavailable for re-testing)
 
 ### Second Best: NVIDIA Nemotron 30B (FREE via OpenRouter)
