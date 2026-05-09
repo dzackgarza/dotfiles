@@ -179,10 +179,11 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
    - Correct: Some colors (gray/lavender/yellow/green/pink), some shapes (circle/square/pentagon)
    - Errors: Hallucinated 13 white circle nodes (thought arrow labels f/g/α/β/τ/h/φ/ψ/id were separate nodes), completely confused about diagram structure and connections, response cut off mid-analysis at token limit
 
-28. **qwen3.5:397b** (Ollama Cloud API)
-   - Status: Success
-   - Correct: All 5 nodes, all colors, most arrows (f/α/g/φ/h/ψ/id/β), dashed β identified, shaded triangle
-   - Errors: Called diamond "rhombus" (wrong shape - TikZ diamond ≠ rhombus), called diamond "τ" not C, hallucinated 3 unlabeled arrows (dashed A→τ, B→τ, τ→D), wrong connections (g said A→τ actually B→D, ψ said E→τ actually B→E, h said τ→E actually A→D), hallucinated "small sector in τ" shaded region
+28. **qwen3.5:397b** (Ollama Cloud CLI)
+   - Status: Success (Test 2 - shows HIGH VARIANCE)
+   - Correct: All 5 nodes, most colors (gray/blue/yellow/green/pink), most arrows (f/α/g/φ/h/ψ/id/β), dashed β identified, shaded triangle
+   - Errors: Called diamond "light pink diamond (rhombus)" (wrong shape - TikZ diamond ≠ rhombus), called diamond "τ" not C, hallucinated 3 unlabeled arrows (vertical B→τ, solid τ→D, dashed A→τ), wrong connections (g said A→τ top-left actually B→D, ψ said E→τ bottom-left actually B→E, h said τ→E bottom actually A→D), hallucinated "lighter circular shaded region" inside τ
+   - Note: Test 2 performance degraded from initial test - systematic error calling diamond node "τ"
 
 29. **gemma4:31b** (Ollama Cloud API)
    - Status: Success
