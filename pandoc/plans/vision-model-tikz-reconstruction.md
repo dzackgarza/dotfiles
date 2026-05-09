@@ -53,12 +53,20 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
 ### API Status Check
 - **OPENROUTER_API_KEY**: ❌ INSUFFICIENT CREDITS (Error 402)
   - Message: "Insufficient credits. Add more using https://openrouter.ai/settings/credits"
-  - Need user to refresh credits before testing
+  - **ACTION NEEDED**: Add ~$1 credit to test FREE models (cost per test: <$0.001)
+
+### Free/Cheap 2026 SOTA Vision Models on OpenRouter
+1. qwen/qwen3-vl-235b-a22b-thinking - 235B with thinking ($0.00000026/1M)
+2. qwen/qwen3-vl-235b-a22b-instruct - 235B base ($0.0000002/1M)
+3. google/gemini-3.1-flash-lite - Gemini 3.x ($0.00000025/1M)
+4. qwen/qwen3-vl-32b-instruct - 32B mid-size ($0.000000104/1M)
+5. qwen/qwen3-vl-8b-instruct - 8B small ($0.00000008/1M)
+6. meta-llama/llama-3.2-11b-vision-instruct - Meta ($0.000000245/1M)
 
 ### Model Test Results
-(Format: Model | API Key Status | Description Quality | Reconstruction Accuracy | Notes)
+(Format: Model | Description Quality | Reconstruction Accuracy | Notes)
 
-**Blocked: Need OpenRouter credits refreshed**
+**Pending: OpenRouter credits needed**
 
 ---
 
