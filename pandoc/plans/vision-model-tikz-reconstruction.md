@@ -185,13 +185,16 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
 
 ### Conclusion
 
-**Working models:**
-- Phi-4-multimodal: Best results (called C "T", no specific styles/positions) - currently degraded
-- Nemotron-30B: Available (wrong arrow directions, missed decorations/shaded region)
+**All active ~/.envrc providers tested (OpenRouter, NVIDIA NIM, HuggingFace, Cohere, Mistral)**
 
-**Key limitation:** All free models miss arrow decorations (double/snake), shaded regions, curvature details
+**Best models:**
+- Phi-4-multimodal (NVIDIA): Called C "T", no specific styles - currently degraded
+- Nemotron-30B (OpenRouter): Wrong arrow directions, missed decorations/shaded region
+- Pixtral (Mistral): Hallucinated 5th node, wrong arrow directions
 
-**Next:** Test cheap paid models or wait for Phi-4 recovery
+**Key limitation:** All models miss arrow decorations (double/snake), shaded regions, or hallucinate extra nodes
+
+**Next:** Test cheap paid models (Qwen3-VL-235B, Gemini 3.1 Flash) or wait for Phi-4
 
 ## Notes
 - Avoid usage-based APIs: Codex, Claude direct, Opencode, Gemini direct
