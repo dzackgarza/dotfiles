@@ -1,0 +1,1 @@
+{"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Non-base64 digit found\",\"type\":\"BadRequestError\",\"param\":null,\"code\":400}}","provider_name":"Nvidia","is_byok":false}},"user_id":"user_2ywXSS9JCSz9EpQ8XNlg9GKBC0L"}
