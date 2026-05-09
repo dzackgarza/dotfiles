@@ -1,0 +1,51 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usetikzlibrary{cd, arrows.meta, positioning, decorations.markings, patterns, shapes.geometric}
+\usepackage{amsmath, amssymb}
+
+\begin{document}
+\begin{tikzpicture}[
+    node distance=2cm and 3cm,
+    every node/.style={circle, draw, minimum size=0.8cm},
+    arrow/.style={-Stealth, thick},
+    curved/.style={-Stealth, thick, bend left=30},
+    dashed arrow/.style={-Stealth, thick, dashed},
+  ]
+
+  % Nodes with different shapes
+  \node[fill=gray!30] (A) at (0,0) {$A$};
+  \node[rectangle, fill=blue!20] (B) at (3,1) {$B$};
+  \node[diamond, fill=red!20] (C) at (3,-1) {$C$};
+  \node[fill=yellow!30] (D) at (6,0) {$D$};
+  \node[regular polygon, regular polygon sides=5, fill=green!20] (E) at (1.5,-3) {$E$};
+
+  % Complex arrows with decorations
+  \draw[arrow] (A) -- node[midway, above, draw=none, fill=white] {$f$} (B);
+  \draw[curved] (A) to node[midway, below, draw=none, fill=white] {$g$} (C);
+  \draw[arrow] (B) -- node[midway, above right, draw=none, fill=white] {$\alpha$} (D);
+  \draw[arrow] (C) -- node[midway, below right, draw=none, fill=white] {$\beta$} (D);
+
+  % Dashed commutative arrow
+  \draw[dashed arrow, bend right=45] (A) to node[midway, below, draw=none, fill=white] {$h$} (D);
+
+  % Arrow with decoration
+  \draw[-Stealth, thick, decorate, decoration={snake, amplitude=1mm, segment length=5mm}]
+    (A) -- node[midway, left, draw=none, fill=white] {$\phi$} (E);
+
+  % Double arrow
+  \draw[double, -Implies, thick] (E) -- node[midway, below, draw=none, fill=white] {$\psi$} (C);
+
+  % Loop with label
+  \draw[-Stealth, thick] (D) to [out=30, in=330, looseness=8]
+    node[midway, right, draw=none, fill=white] {$id$} (D);
+
+  % Curved arrow from B to E
+  \draw[arrow, bend left=20] (B) to node[midway, right, draw=none, fill=white] {$\tau$} (E);
+
+  % Add a shaded region
+  \begin{scope}[on background layer]
+    \fill[blue!10, opacity=0.5] (A.center) -- (B.center) -- (D.center) -- cycle;
+  \end{scope}
+
+\end{tikzpicture}
+\end{document}
