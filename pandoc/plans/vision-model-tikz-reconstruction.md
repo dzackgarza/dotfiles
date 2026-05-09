@@ -100,9 +100,9 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
    - Status: Failed - "Not found for account"
 
 8. **microsoft/phi-4-multimodal-instruct** (NVIDIA NIM)
-   - Status: Success (now DEGRADED)
-   - Correct: 5 nodes, all shapes, D=yellow, all arrow labels (f,g,h,α,β,id), mentioned arrow styles and shaded regions
-   - Errors: Called C "T", didn't enumerate specific styles/positions
+   - Status: Success (recovered from DEGRADED state)
+   - Correct: 5 nodes, shapes, colors (B=blue, D=yellow, E=green, C/T=pink), some arrow labels (f,g,h,α,β,id)
+   - Errors: Called C "T", said D has "dashed outline" (wrong - solid yellow), missed arrows φ and ψ, missed shaded region, some arrow connections wrong
 
 9. **nvidia/llama-3.1-nemotron-nano-vl-8b-v1** (NVIDIA NIM)
    - Status: Success
