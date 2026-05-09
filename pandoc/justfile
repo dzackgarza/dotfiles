@@ -166,6 +166,8 @@ clean build_dir_pandoc=BUILD_DIR_PANDOC build_dir_tex=BUILD_DIR_TEX:
   rm -rf "$ROOT/{{build_dir_pandoc}}" "$ROOT/{{build_dir_tex}}" "$ROOT/.build"
   rm -f "$ROOT"/*.pdf "$ROOT"/*.aux "$ROOT"/*.log "$ROOT"/*.fls "$ROOT"/*.fdb_latexmk "$ROOT"/*.bbl "$ROOT"/*.bcf "$ROOT"/*.blg "$ROOT"/*.run.xml "$ROOT"/*.out "$ROOT"/*.toc "$ROOT"/*SAVE-ERROR
   rm -f "$ROOT/global.bib"
+  # Clean test artifacts
+  find "$ROOT/tests" -type f \( -name "*.aux" -o -name "*.log" -o -name "*.fls" -o -name "*.fdb_latexmk" -o -name "*.synctex.gz" -o -name "*.out" -o -name "*.toc" \) -delete 2>/dev/null || true
 
 # Clean all build artifacts from reference directories
 clean-refs:
