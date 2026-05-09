@@ -170,14 +170,15 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
   - qwen/qwen3-vl-235b-a22b-thinking ($0.00000026/1M)
   - google/gemini-3.1-flash-lite ($0.00000025/1M)
 
-### Conclusion So Far
-**Models tested:** 18 total across OpenRouter, NVIDIA NIM, HuggingFace
-- **Best available:** Nemotron 30B (OpenRouter) - 60-70% accuracy
-- **Best found:** Phi-4-multimodal (NVIDIA) - 80-90% (currently degraded/unavailable)
-- **NVIDIA reality:** 137 models total, only ~8 vision-capable, only 2-3 accessible
-- **Insufficient for precise TikZ reconstruction** of complex decorations
+### Conclusion
 
-**Recommendation:** Test cheap paid models next (~$0.0005/test) or wait for Phi-4 recovery.
+**Working models:**
+- Phi-4-multimodal: Best results (called C "T", no specific styles/positions) - currently degraded
+- Nemotron-30B: Available (wrong arrow directions, missed decorations/shaded region)
+
+**Key limitation:** All free models miss arrow decorations (double/snake), shaded regions, curvature details
+
+**Next:** Test cheap paid models or wait for Phi-4 recovery
 
 ## Notes
 - Avoid usage-based APIs: Codex, Claude direct, Opencode, Gemini direct
