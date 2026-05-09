@@ -1,0 +1,9 @@
+# Fdb version 4
+["pdflatex"] 0 "pandoc_paper_template.tex" "pandoc_paper_template.pdf" "pandoc_paper_template" 0 -1
+  "pandoc_paper_template.aux" 0 -1 0 "pdflatex"
+  "pandoc_paper_template.tex" 0 -1 0 ""
+  (generated)
+  "pandoc_paper_template.aux"
+  "pandoc_paper_template.log"
+  "pandoc_paper_template.pdf"
+  (rewritten before read)
