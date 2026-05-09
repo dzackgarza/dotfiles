@@ -152,8 +152,8 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
 
 22. **gemini-3.1-flash-lite** (Google Gemini API)
    - Status: Success
-   - Correct: All 5 nodes, shapes, colors, most arrows (f,α,id,g,h,φ,ψ), shaded triangle, dashed curves
-   - Errors: Called diamond "house shape/pentagon with pointed top", said τ node is "shaded region"
+   - Correct: All 5 nodes, 4 shapes (circle/square/pentagon), colors, most arrows (f,α,id,g,h,φ,ψ), shaded triangle, dashed curves
+   - Errors: Called diamond "house shape/pentagon with pointed top" (wrong shape), said τ node is "shaded region"
 
 23. **gemini-2.5-flash** (Google Gemini API)
    - Status: Success - **BEST MODEL**
