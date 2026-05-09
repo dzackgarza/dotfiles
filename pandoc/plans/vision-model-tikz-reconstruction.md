@@ -179,7 +179,29 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
    - Correct: Some colors (gray/lavender/yellow/green/pink), some shapes (circle/square/pentagon)
    - Errors: Hallucinated 13 white circle nodes (thought arrow labels f/g/α/β/τ/h/φ/ψ/id were separate nodes), completely confused about diagram structure and connections, response cut off mid-analysis at token limit
 
-28. **minimax-m2.7, deepseek-v4-pro, glm-5.1** (Ollama Cloud API)
+28. **qwen3.5:397b** (Ollama Cloud API)
+   - Status: Success
+   - Correct: All 5 nodes, precise shapes (correctly called diamond "rhombus"), all colors, most arrows (f/α/g/φ/h/ψ/id/β), dashed β identified, shaded triangle
+   - Errors: Called diamond "τ" not C, hallucinated 3 unlabeled arrows (dashed A→τ, B→τ, τ→D), wrong connections (g said A→τ actually B→D, ψ said E→τ actually B→E, h said τ→E actually A→D), hallucinated "small sector in τ" shaded region
+
+29. **gemma4:31b** (Ollama Cloud API)
+   - Status: Success
+   - Correct: All 5 nodes, shapes, colors, most arrows (f/α/g/φ/ψ/β/h/id), both shaded regions identified
+   - Errors: Called diamond "τ" not C, hallucinated dashed arrows (A→τ, τ→D dashed), wrong connections (g said A→D curved, ψ said B→E through τ, β said τ→D)
+
+30. **ministral-3:8b** (Ollama Cloud API)
+   - Status: Success
+   - Correct: All 5 nodes, shapes (called diamond "triangle"), colors, most arrows, both shaded regions
+   - Errors: Called diamond "τ" not C, wrong connections (g said A→τ, β said D→τ, ψ said E→τ, φ said dashed)
+
+31. **kimi-k2.5** (Ollama Cloud API)
+   - Status: Success (thinking model - response in "reasoning" field)
+   - Errors: Stream-of-consciousness analysis cut off at token limit, similar confused hallucinations as k2.6
+
+32. **devstral-small-2:24b** (Ollama Cloud API)
+   - Status: Failed - "Image input is not enabled for this model"
+
+33. **minimax-m2.7, deepseek-v4-pro, glm-5.1** (Ollama Cloud API)
    - Status: No vision support (null response with image input)
 
 ---
