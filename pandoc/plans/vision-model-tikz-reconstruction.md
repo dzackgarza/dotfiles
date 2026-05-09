@@ -137,11 +137,18 @@ Find SOTA 2026 vision model that can accurately describe mathematical diagrams f
 18. **Qwen/Qwen3-VL-8B-Instruct, Qwen/Qwen2-VL-7B-Instruct** (HuggingFace)
    - Status: Failed - HuggingFace Inference API doesn't support vision models via chat endpoint
 
-19. **Mistral API (direct)**
-   - Status: Failed - API key unauthorized (stale)
+19. **mistralai/pixtral-large-latest** (Mistral API direct)
+   - Status: Success
+   - Correct: 4 nodes (A/B/D/E) shapes and colors, most arrow labels, blue shaded region
+   - Errors: Hallucinated 5th "white circle" node, wrong arrow directions (β said A→D, actually C→D), hallucinated "pink shaded region", missed node C label, missed some styles
 
-20. **Cohere API (direct)**
-   - Status: Failed - API key invalid/no response (stale)
+20. **command-a-vision-07-2025** (Cohere API direct)
+   - Status: Success
+   - Errors: Complete hallucination - described flowchart with Start/Decision/Action/Subprocess/End nodes that don't exist
+
+21. **c4ai-aya-vision-32b** (Cohere API direct)
+   - Status: Success
+   - Errors: Wrong colors (light blue/orange vs actual gray/blue/red/yellow/green), said "no shaded regions" (one exists), didn't identify pentagon/diamond, didn't enumerate nodes/arrows
 
 ---
 
