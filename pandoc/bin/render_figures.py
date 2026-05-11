@@ -42,14 +42,16 @@ def render_tikz(filepath: str, output_dir: str) -> bool:
         with open(tex_file, 'w') as f:
             f.write(tex_content)
         
-        # Do not override TEXINPUTS, rely on global environment from .zshrc/.envrc
+        # Explicitly set TEXINPUTS to find global styles and macros
+        env = os.environ.copy()
+        env["TEXINPUTS"] = f".:{os.path.expanduser('~/.pandoc/styles//')}:{os.path.expanduser('~/.pandoc/styles/macros//')}:{os.path.expanduser('~/.pandoc/styles/preambles//')}:{os.path.expanduser('~/.pandoc/config//')}:"
         
         # Compile to PDF
         try:
             # Use -interaction=nonstopmode for speed
             subprocess.run(
                 ["pdflatex", "-interaction=nonstopmode", tex_file],
-                cwd=tmpdir, check=True, capture_output=True, text=True
+                cwd=tmpdir, check=True, capture_output=True, text=True, env=env
             )
         except subprocess.CalledProcessError as e:
             pdf_file = os.path.join(tmpdir, f"{name}.pdf")
