@@ -7,17 +7,16 @@ ROOT = pathlib.Path(__file__).parent.parent
 
 TEMPLATE = r"""
 \documentclass[tikz, border=2pt]{{standalone}}
-\usepackage{{amsmath, amssymb, amsfonts, amsthm, mathtools}}
+\usepackage{{dzg-unified}}
 \usepackage{{tikzit}}
 \usepackage{{dynkin-diagrams}}
 \usepackage{{quiver}}
-\usepackage{{dzg-unified}}
 
 \usetikzlibrary{{
     arrows.meta, cd, fadings, patterns, calc, matrix, 
     positioning, decorations, decorations.pathreplacing, 
     decorations.markings, shapes, backgrounds, fit, 
-    shapes.geometric, intersections, hobby, matrix,
+    shapes.geometric, intersections, hobby,
     arrows, decorations.pathmorphing
 }}
 
