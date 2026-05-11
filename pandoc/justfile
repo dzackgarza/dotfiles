@@ -71,7 +71,7 @@ render-figures:
   #!/usr/bin/env bash
   set -euo pipefail
   # TEXINPUTS inherited from shell env (~/.zshrc)
-  python3 "$HOME/.pandoc/scripts/render_figures.py"
+  python3 "$HOME/.pandoc/bin/render_figures.py"
 
 # Compile LaTeX source
 compile-tex main_file="main.tex" output_name="paper" bib_source=GLOBAL_BIB_SOURCE build_dir=BUILD_DIR_TEX:
