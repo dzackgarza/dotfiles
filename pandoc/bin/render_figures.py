@@ -52,10 +52,14 @@ def render_tikz(filepath: str, output_dir: str) -> bool:
                 cwd=tmpdir, check=True, capture_output=True, text=True
             )
         except subprocess.CalledProcessError as e:
-            print(f"Error compiling {filepath}:")
-            print(e.stdout)
-            print(e.stderr)
-            return False
+            pdf_file = os.path.join(tmpdir, f"{name}.pdf")
+            if os.path.exists(pdf_file):
+                print(f"Warnings during compilation of {filepath}, but PDF produced.")
+            else:
+                print(f"Error compiling {filepath}:")
+                print(e.stdout)
+                print(e.stderr)
+                return False
 
         pdf_file = os.path.join(tmpdir, f"{name}.pdf")
         svg_file = os.path.join(output_dir, f"{name}.svg")
