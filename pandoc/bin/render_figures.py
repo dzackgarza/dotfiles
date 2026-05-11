@@ -11,7 +11,7 @@ TEMPLATE = r"""
 \usepackage{{tikzit}}
 \usepackage{{dynkin-diagrams}}
 \usepackage{{quiver}}
-\usepackage{{DZG}}
+\usepackage{dzg-unified}
 
 \usetikzlibrary{{
     arrows.meta, cd, fadings, patterns, calc, matrix, 
