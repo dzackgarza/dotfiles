@@ -58,7 +58,7 @@ $\ZZ, \QQ, \RR, \CC$
 
 ```bash
 pandoc input.md -o output.pdf \
-    --template=pandoc_template.tex \
+    --template=research_draft.tex \
     -H styles/dzg-unified.sty
 ```
 
