@@ -209,9 +209,10 @@ generate-math-macros:
   TIER2="$PANDOC_DIR/styles/macros/tier2-mathjax-args.tex"
 
   # Prepend qty (referenced by tier2, defined in MakeMeAQual template)
-  printf '\\newcommand{\\qty}[1]{\\left( {#1} \\right)}\n' > "$OUTPUT"
+  # printf '\\newcommand{\\qty}[1]{\\left( {#1} \\right)}\n' > "$OUTPUT"
 
   # Concatenate tier macros
+  cat /dev/null > "$OUTPUT"
   cat "$TIER1" "$TIER2" >> "$OUTPUT"
 
   # Transform \renewcommand → \newcommand for MathJax (11 instances)
