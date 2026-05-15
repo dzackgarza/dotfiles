@@ -1,5 +1,4 @@
 \newcommand{\qty}[1]{\left( {#1} \right)}
-
 % Tier 1: Simple MathJax-Compatible Shortcuts
 % No arguments, only \mathbb, \mathcal, \mathsf, \mathrm, \mathfrak
 % Works in: LaTeX, Pandoc, Obsidian MathJax
@@ -7,7 +6,7 @@
 % Migrated from macros/latexmacs.tex on 2025-01-09
 
 % ===== Alphabetical Blackboard Bold =====
-\renewcommand{\AA}[0]{{\mathbf{A}}}
+\newcommand{\AA}[0]{{\mathbf{A}}}
 \newcommand{\CC}[0]{{\mathbf{C}}}
 \newcommand{\DD}[0]{\mathbb{D}}
 \newcommand{\EE}[0]{{\mathbb{E}}}
@@ -20,7 +19,7 @@
 \newcommand{\PP}[0]{{\mathbf{P}}}
 \newcommand{\QQ}[0]{{\mathbf{Q}}}
 \newcommand{\RR}[0]{{\mathbf{R}}}
-\renewcommand{\SS}[0]{{\mathbb{S}}}
+\newcommand{\SS}[0]{{\mathbb{S}}}
 \newcommand{\TT}[0]{{\mathbb{T}}}
 \newcommand{\UU}[0]{\mathbb{U}}
 \newcommand{\VV}[0]{{\mathbf{V}}}
@@ -244,7 +243,7 @@
 \newcommand{\sing}[0]{{\mathrm{sing}}}
 \newcommand{\smol}[0]{{\mathrm{small}}}
 \newcommand{\snc}[0]{{\mathrm{snc}}}
-\renewcommand{\ss}[0]{{\mathrm{ss}}}
+\newcommand{\ss}[0]{{\mathrm{ss}}}
 \newcommand{\stable}[0]{\mathrm{st}}
 \newcommand{\std}[0]{\text{std}}
 \newcommand{\trop}[0]{\mathrm{trop}}
@@ -258,7 +257,7 @@
 \newcommand{\Ad}[0]{{ \operatorname{Ad} }}
 \newcommand{\adj}[0]{\operatorname{adj}}
 \newcommand{\adjoint}[0]{\dagger}
-\renewcommand{\ae}[0]{{ \text{a.e.} }}  % Override LaTeX built-in æ ligature
+\newcommand{\ae}[0]{{ \text{a.e.} }}  % Override LaTeX built-in æ ligature
 \newcommand{\afp}[0]{A_{/\FF_p}}
 \newcommand{\AG}[0]{\operatorname{AG}}
 \newcommand{\AGL}[0]{\operatorname{AGL}}
@@ -347,7 +346,7 @@
 \newcommand{\delbar}[0]{{ \bar{\del}}}
 \newcommand{\depth}{\operatorname{depth}}
 \newcommand{\Der}[0]{{ \operatorname{Der} }}
-\renewcommand{\det}{\operatorname{det}}
+\newcommand{\det}{\operatorname{det}}
 \newcommand{\diag}[0]{\operatorname{diag}}
 \newcommand{\diam}[0]{{\operatorname{diam}}}
 \newcommand{\Diff}[0]{\operatorname{Diff}}
@@ -358,7 +357,7 @@
 \newcommand{\Disk}[0]{{\operatorname{Disk}}}
 \newcommand{\Dist}[0]{\operatorname{Dist}}
 \newcommand{\dist}[0]{\operatorname{dist}}
-\renewcommand{\div}[0]{\operatorname{div}}
+\newcommand{\div}[0]{\operatorname{div}}
 \newcommand{\Div}[0]{\operatorname{Div}}
 \newcommand{\dlog}[0]{\operatorname{dLog}}
 \newcommand{\dom}[0]{\operatorname{dom}}
@@ -468,7 +467,7 @@
 \newcommand{\mHH}[0]{{\operatorname{HH}}}
 \newcommand{\minor}[0]{{\operatorname{minor}}}
 \newcommand{\minpoly}[0]{{\operatorname{minpoly}}}
-\renewcommand{\mod}{\operatorname{mod}}
+\newcommand{\mod}{\operatorname{mod}}
 \newcommand{\Mor}{\operatorname{Mor}}
 \newcommand{\mproj}[0]{\operatorname{mProj}}
 \newcommand{\mspec}[0]{\operatorname{mSpec}}
@@ -826,7 +825,7 @@
 \newcommand{\projectivelim}[0]{\varprojlim}
 \newcommand{\projresolve}[0]{\rightrightarrows}
 \newcommand{\proportional}{ \propto }
-\renewcommand{\qed}[0]{\hfill\blacksquare}
+\newcommand{\qed}[0]{\hfill\blacksquare}
 \newcommand{\rational}[0]{\torational}
 \newcommand{\rationalmap}[0]{\dashrightarrow}
 \newcommand{\semidirect}[0]{\rtimes}
@@ -1241,12 +1240,12 @@
 \newcommand{\closure}[1]{\overline{#1}}
 \newcommand{\ol}[1]{\overline{#1}}
 \newcommand{\univcover}[1]{\overline{#1}}
-\renewcommand{\bar}[1]{\overline{#1}}
-\renewcommand{\hat}[1]{\widehat{#1}}
+\newcommand{\bar}[1]{\overline{#1}}
+\newcommand{\hat}[1]{\widehat{#1}}
 
 % Vector and bundle notations
 \newcommand{\bundle}[1]{\mathcal{#1}}
-\renewcommand{\vector}[1]{\mathbf{#1}}
+\newcommand{\vector}[1]{\mathbf{#1}}
 \newcommand{\vhat}[1]{\widehat{ \vector{#1} }}
 
 % Diagonal and correspondence
