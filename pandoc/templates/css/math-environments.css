@@ -182,14 +182,14 @@
   .lemma,
   .proposition,
   .corollary {
-    border-color: #c58da840;
+    border-color: #c58da850;
     border-left-color: #c58da8;
-    background-color: #c58da815;
+    background-color: #c58da825;
   }
 
   .theorem {
     border-left-color: #c58da8;
-    background-color: #c58da81a;
+    background-color: #c58da830;
   }
 
   .slogan {
