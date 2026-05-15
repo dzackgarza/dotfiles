@@ -2,19 +2,23 @@
  * math-environments.css
  * Theorem/definition/proof environment styles.
  * Included via doctemplates partials.
- * Extracted from MakeMeAQual.css.
+ * Extracted from MakeMeAQual.css, extended with dark-mode support.
  */
 
+/*
+ * Base (light-mode) palette.
+ * Uses alpha channels so environments don't fully obscure the background.
+ * Dark-mode overrides follow below.
+ */
 .theorem,
 .lemma,
 .proposition,
 .corollary {
-  border: 1px solid black;
-  border-left: 5px solid #955670 !important;
-  background-color: #95567075;
-  padding-left: 5px;
-  margin-left: 1%;
-  padding-left: 1%;
+  border: 1px solid #95567040;
+  border-left: 5px solid #955670;
+  background-color: #95567020;
+  padding: 0.5em 1em;
+  margin: 1em 0;
 }
 
 .theorem > .proofenv-header,
@@ -22,47 +26,44 @@
 .proposition > .proofenv-header,
 .definition > .proofenv-header,
 .corollary > .proofenv-header {
-  font-style: normal !important;
+  font-style: normal;
   font-weight: bold;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid currentColor;
   display: block;
 }
 
 .theorem {
-  border: 2px solid #95567050 !important;
-  background-color: #95567050;
-  border-left: 5px solid #955670 !important;
-  margin-left: 1%;
-  padding-left: 1%;
+  border-left-color: #955670;
+  background-color: #95567025;
 }
 
 .slogan {
-  background-color: wheat;
+  background-color: #f5deb330;
+  padding: 0.5em 1em;
+  margin: 1em 0;
 }
 
 .proof {
-  border: 1px dotted;
-  border-color: #000;
-  background-color: #f3e1c075;
-  margin-left: 1%;
+  border: 1px dotted #0003;
+  padding: 0.5em 1em;
+  margin: 1em 0;
 }
-.proof:after {
+.proof::after {
   content: "\25FC";
   float: right;
-  margin-top: -25px;
-  margin-right: 5px;
+  margin-top: -1.4em;
 }
 
 .warnings {
   background-color: #f8d7da;
-  border-color: #f5c6cb;
+  border: 1px solid #f5c6cb;
+  padding: 0.5em 1em;
+  margin: 1em 0;
 }
-
 .warnings > .proofenv-header {
   color: #721c24;
-  font-weight: bold !important;
+  font-weight: bold;
 }
-
 .warnings::before {
   content: "Warning. \26A0\FE0F";
   font-weight: bold;
@@ -71,32 +72,32 @@
 }
 
 .definition {
-  border: 1px solid;
-  border-color: #000;
-  background-color: #27507054;
-  border-left: 5px solid #275070 !important;
-  margin-left: 1%;
-  padding-left: 1%;
+  border: 1px solid #27507040;
+  border-left: 5px solid #275070;
+  background-color: #27507020;
+  padding: 0.5em 1em;
+  margin: 1em 0;
 }
 
 .exercise {
-  border: 2px solid #a0c4ff !important;
+  border: 1px solid #a0c4ff;
+  border-left: 5px solid #a0c4ff;
   background-color: #a0c4ff30;
-  border-left: 5px solid #a0c4ff !important;
-  margin-left: 1%;
-  padding-left: 1%;
+  padding: 0.5em 1em;
+  margin: 1em 0;
 }
 
 .problem {
-  border: 2px solid black;
+  border: 1px solid #0003;
   background: aliceblue;
-  padding-left: 1%;
+  padding: 0.5em 1em;
+  margin: 1em 0;
 }
 
 .solution {
-  border: outset;
-  padding-left: 1%;
-  padding-right: 2%;
+  border: 1px outset;
+  padding: 0.5em 1em;
+  margin: 1em 0;
   background-image: linear-gradient(#b75ea82e, #b75ea82e);
 }
 
@@ -104,7 +105,7 @@
   display: block;
   margin: 12px 0;
   font-style: normal;
-  border-right: 1px dotted black;
+  border-right: 1px dotted currentColor;
   margin-right: 1%;
 }
 
@@ -169,4 +170,69 @@
 .remark > p,
 .fact > p {
   margin-top: 0em;
+}
+
+/* -----------------------------------------------------------------------
+ * Dark-mode overrides
+ * Keep the same accent hues but ensure legibility on dark backgrounds.
+ * ----------------------------------------------------------------------- */
+
+@media (prefers-color-scheme: dark) {
+  .theorem,
+  .lemma,
+  .proposition,
+  .corollary {
+    border-color: #c58da840;
+    border-left-color: #c58da8;
+    background-color: #c58da815;
+  }
+
+  .theorem {
+    border-left-color: #c58da8;
+    background-color: #c58da81a;
+  }
+
+  .slogan {
+    background-color: #f5deb320;
+  }
+
+  .proof {
+    border-color: #fff3;
+  }
+  .proof::after {
+    color: inherit;
+  }
+
+  .warnings {
+    background-color: #481a1d;
+    border-color: #8b3a3f;
+  }
+  .warnings > .proofenv-header {
+    color: #f5c6cb;
+  }
+
+  .definition {
+    border-color: #5b8db840;
+    border-left-color: #5b8db8;
+    background-color: #5b8db815;
+  }
+
+  .exercise {
+    border-color: #7ba8e0;
+    border-left-color: #7ba8e0;
+    background-color: #7ba8e020;
+  }
+
+  .problem {
+    border-color: #fff3;
+    background: #1a2530;
+  }
+
+  .solution {
+    background-image: linear-gradient(#a070a01e, #a070a01e);
+  }
+
+  .proofenv {
+    border-right-color: #fff3;
+  }
 }
