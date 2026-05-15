@@ -197,6 +197,29 @@ test-macros:
     exit 1
   fi
 
+# Generate MathJax macro injection file from canonical tier macro files.
+# Transforms \renewcommand → \newcommand for MathJax compatibility.
+# Output: templates/css/math-macros.html
+generate-math-macros:
+  #!/usr/bin/env bash
+  set -euo pipefail
+  PANDOC_DIR="{{justfile_directory()}}"
+  OUTPUT="$PANDOC_DIR/templates/css/math-macros.html"
+  TIER1="$PANDOC_DIR/styles/macros/tier1-mathjax-simple.tex"
+  TIER2="$PANDOC_DIR/styles/macros/tier2-mathjax-args.tex"
+
+  # Prepend qty (referenced by tier2, defined in MakeMeAQual template)
+  printf '\\newcommand{\\qty}[1]{\\left( {#1} \\right)}\n' > "$OUTPUT"
+
+  # Concatenate tier macros
+  cat "$TIER1" "$TIER2" >> "$OUTPUT"
+
+  # Transform \renewcommand → \newcommand for MathJax (11 instances)
+  sed -i 's/\\renewcommand/\\newcommand/g' "$OUTPUT"
+
+  count=$(grep -c '\\newcommand' "$OUTPUT")
+  echo "Generated $OUTPUT ($count \\newcommand entries)"
+
 # Test standalone templates compile (not Pandoc templates - those need Pandoc processing)
 test-templates clean="true":
   #!/usr/bin/env bash
