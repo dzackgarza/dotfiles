@@ -1,6 +1,7 @@
 /*
- * math-environments.css — theorem/definition/proof environment styles
- * Shared across pandoc HTML templates via ${css/math-environments.css()} partials.
+ * math-environments.css
+ * Theorem/definition/proof environment styles.
+ * Included via doctemplates partials: `${css/math-environments.css()}`
  * Extracted from MakeMeAQual.css.
  */
 
