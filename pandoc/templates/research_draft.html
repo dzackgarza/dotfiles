@@ -52,7 +52,7 @@
       <h2 id="$idprefix$toc-title">$toc-title$</h2>
       $endif$ $table-of-contents$
     </nav>
-    $endif$ \(\newcommand{\PP}{\mathbf{P}}\) $body$ $if(bibliography)$
+    $endif$ \({css/math-macros.html()}\) $body$ $if(bibliography)$
     <div id="refs" role="doc-bibliography">
       $for(bibliography)$ $bibliography$ $endfor$
     </div>
