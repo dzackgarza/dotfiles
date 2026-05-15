@@ -67,7 +67,7 @@ pandoc_compile() {
     pandoc-crossref \
     --lua-filter /home/zack/dotfiles/bin/warning-div.lua \
     -r markdown+fenced_divs+tex_math_single_backslash+citations \
-    --template=/home/zack/Notes/Latex/pandoc_template.tex \
+    --template=$PANDOC_DIR/templates/research_draft.tex \
     --pdf-engine=pdflatex \
     --reference-location=section \
     --file-scope \
