@@ -26,6 +26,9 @@
     $for(css)$
     <link rel="stylesheet" href="$css$" />
     $endfor$ $for(header-includes)$ $header-includes$ $endfor$
+    <style>
+      ${css/math-environments.css()}
+    </style>
   </head>
   <body>
     $for(include-before)$ $include-before$ $endfor$ $if(title)$
