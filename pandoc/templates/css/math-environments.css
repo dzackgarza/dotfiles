@@ -3,8 +3,8 @@
  * Theorem/definition/proof environment styles.
  * Included via doctemplates partials.
  *
- * Derives from ghostwriter's color scheme via currentColor inheritance.
- * Ghostwriter sets color: $text-color on body; all environments inherit it.
+ * Derives from ghostwriter's color scheme via currentColor inheritance
+ * (body color set by ghostwriter, all environments inherit).
  * Backgrounds use color-mix() to produce mode-adaptive tints.
  */
 
