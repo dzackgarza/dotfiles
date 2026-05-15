@@ -112,6 +112,59 @@
   font-style: italic;
 }
 
+/* --- auto-generated environment labels via ::before --- */
+
+.theorem::before,
+.lemma::before,
+.proposition::before,
+.corollary::before,
+.definition::before,
+.exercise::before,
+.problem::before,
+.solution::before,
+.remark::before,
+.fact::before,
+.proof::before {
+  font-weight: bold;
+  font-style: italic;
+  display: block;
+  margin-bottom: 0.25em;
+}
+
+.theorem::before {
+  content: "Theorem.";
+}
+.lemma::before {
+  content: "Lemma.";
+}
+.proposition::before {
+  content: "Proposition.";
+}
+.corollary::before {
+  content: "Corollary.";
+}
+.definition::before {
+  content: "Definition.";
+}
+.exercise::before {
+  content: "Exercise.";
+}
+.problem::before {
+  content: "Problem.";
+}
+.solution::before {
+  content: "Solution.";
+}
+.remark::before {
+  content: "Remark.";
+}
+.fact::before {
+  content: "Fact.";
+}
+.proof::before {
+  content: "Proof.";
+}
+
 .remark > p,
 .fact > p {
   margin-top: 0em;
