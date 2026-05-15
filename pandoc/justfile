@@ -218,9 +218,6 @@ generate-math-macros:
   # Transform \renewcommand → \newcommand for MathJax (11 instances)
   sed -i 's/\\renewcommand/\\newcommand/g' "$OUTPUT"
 
-  # Replace \DeclarePairedDelimiter{\ceil} with \newcommand (MathJax lacks mathtools)
-  sed -i 's/\\DeclarePairedDelimiter{\\ceil}{\\lceil}{\\rceil}/\\newcommand{\\ceil}[1]{\\lceil #1 \\rceil}/' "$OUTPUT"
-
   count=$(grep -c '\\newcommand' "$OUTPUT")
   echo "Generated $OUTPUT ($count \\newcommand entries)"
 
