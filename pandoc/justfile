@@ -206,7 +206,7 @@ test-templates clean="true":
   mkdir -p "$BUILD_DIR"
 
   # Only test standalone LaTeX templates (not Pandoc templates with $variables$)
-  for template in homework_template.tex MakeMeAQual_template.tex pandoc_paper_template.tex; do
+  for template in homework_template.tex MakeMeAQual_template.tex; do
     echo "Testing $template..."
 
     # Create hidden temp directory for this template
