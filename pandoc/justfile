@@ -230,7 +230,7 @@ test-templates clean="true":
   done
 
   echo "✅ All standalone templates compiled successfully"
-  echo "Note: Pandoc templates (pandoc_template.tex, pandoc_problem_template.tex, research_draft.tex) need Pandoc processing"
+  echo "Note: Pandoc templates (pandoc_problem_template.tex, research_draft.tex) need Pandoc processing"
 
   if [ "{{clean}}" = "true" ]; then
     rm -rf "$BUILD_DIR"
