@@ -1,0 +1,117 @@
+/*
+ * math-environments.css — theorem/definition/proof environment styles
+ * Shared across pandoc HTML templates via ${css/math-environments.css()} partials.
+ * Extracted from MakeMeAQual.css.
+ */
+
+.theorem,
+.lemma,
+.proposition,
+.corollary {
+  border: 1px solid black;
+  border-left: 5px solid #955670 !important;
+  background-color: #95567075;
+  padding-left: 5px;
+  margin-left: 1%;
+  padding-left: 1%;
+}
+
+.theorem > .proofenv-header,
+.lemma > .proofenv-header,
+.proposition > .proofenv-header,
+.definition > .proofenv-header,
+.corollary > .proofenv-header {
+  font-style: normal !important;
+  font-weight: bold;
+  border-bottom: 2px solid black;
+  display: block;
+}
+
+.theorem {
+  border: 2px solid #95567050 !important;
+  background-color: #95567050;
+  border-left: 5px solid #955670 !important;
+  margin-left: 1%;
+  padding-left: 1%;
+}
+
+.slogan {
+  background-color: wheat;
+}
+
+.proof {
+  border: 1px dotted;
+  border-color: #000;
+  background-color: #f3e1c075;
+  margin-left: 1%;
+}
+.proof:after {
+  content: "\25FC";
+  float: right;
+  margin-top: -25px;
+  margin-right: 5px;
+}
+
+.warnings {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.warnings > .proofenv-header {
+  color: #721c24;
+  font-weight: bold !important;
+}
+
+.warnings:before {
+  content: "\26A0\FE0F";
+  margin-top: -25px;
+  margin-right: 5px;
+}
+
+.definition {
+  border: 1px solid;
+  border-color: #000;
+  background-color: #27507054;
+  border-left: 5px solid #275070 !important;
+  margin-left: 1%;
+  padding-left: 1%;
+}
+
+.exercise {
+  border: 2px solid #a0c4ff !important;
+  background-color: #a0c4ff30;
+  border-left: 5px solid #a0c4ff !important;
+  margin-left: 1%;
+  padding-left: 1%;
+}
+
+.problem {
+  border: 2px solid black;
+  background: aliceblue;
+  padding-left: 1%;
+}
+
+.solution {
+  border: outset;
+  padding-left: 1%;
+  padding-right: 2%;
+  background-image: linear-gradient(#b75ea82e, #b75ea82e);
+}
+
+.proofenv {
+  display: block;
+  margin: 12px 0;
+  font-style: normal;
+  border-right: 1px dotted black;
+  margin-right: 1%;
+}
+
+.proofenv-header {
+  text-transform: capitalize;
+  font-style: italic;
+}
+
+.remark > p,
+.fact > p {
+  margin-top: 0em;
+}
