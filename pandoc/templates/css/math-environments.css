@@ -63,10 +63,11 @@
   font-weight: bold !important;
 }
 
-.warnings:before {
-  content: "\26A0\FE0F";
-  margin-top: -25px;
-  margin-right: 5px;
+.warnings::before {
+  content: "Warning. \26A0\FE0F";
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.25em;
 }
 
 .definition {
