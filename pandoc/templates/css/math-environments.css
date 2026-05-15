@@ -198,9 +198,10 @@
 
   .proof {
     border-color: #fff3;
+    background-color: #ffffff0a;
   }
   .proof::after {
-    color: inherit;
+    color: #fff6;
   }
 
   .warnings {
