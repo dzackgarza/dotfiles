@@ -45,6 +45,7 @@
 
 .proof {
   border: 1px dotted #0003;
+  background-color: #f3e1c030;
   padding: 0.5em 1em;
   margin: 1em 0;
 }
