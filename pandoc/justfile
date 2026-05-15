@@ -111,9 +111,9 @@ compile-pandoc input_file="main.md" output_name="output" template="research_draf
   # Run pandoc from ROOT to ensure relative include.lua paths work correctly
   cd "$ROOT"
   pandoc "{{input_file}}" \
-      --lua-filter="$HOME/.pandoc/filters/include.lua" \
-      --lua-filter="$HOME/.pandoc/filters/convert_amsthm_envs.lua" \
-      --lua-filter="$HOME/.pandoc/filters/select_images.lua" \
+      --lua-filter="$HOME/.pandoc/bin/include.lua" \
+      --lua-filter="$HOME/.pandoc/bin/convert_amsthm_envs.lua" \
+      --lua-filter="$HOME/.pandoc/bin/select_images.lua" \
       --natbib \
       --bibliography="global.bib" \
       --template={{template}} \
