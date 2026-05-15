@@ -1,4 +1,3 @@
-\newcommand{\qty}[1]{\left( {#1} \right)}
 % Tier 1: Simple MathJax-Compatible Shortcuts
 % No arguments, only \mathbb, \mathcal, \mathsf, \mathrm, \mathfrak
 % Works in: LaTeX, Pandoc, Obsidian MathJax
@@ -1449,4 +1448,4 @@
 \def\multichoose#1#2{{\left(\kern-.3em\left(\genfrac{}{0pt}{}{#1}{#2}\right)\kern-.3em\right)}}
 
 % Ceiling paired delimiter (from physics package usually)
-\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
