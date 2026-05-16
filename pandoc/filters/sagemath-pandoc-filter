@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 # sagemath-pandoc-filter — Global Pandoc filter wrapper.
-# This shell wrapper ensures the filter runs under Sage's Python interpreter,
-# which has both `sage.all` and `panflute` installed.
+# Runs the actual filter under Sage's Python interpreter, which has both
+# `sage.all` and `panflute` installed.
 
 set -euo pipefail
 
-# Resolve the package root
 PKG_ROOT="${HOME}/notes/teaching/sage_filter_package"
-FILTER_PY="${PKG_ROOT}/sagemath_pandoc_filter/filter.py"
 
-# Run the filter using Sage's Python interpreter
-exec sage --python "${FILTER_PY}" "$@"
+exec sage --python -c "
+import sys
+sys.path.insert(0, '${PKG_ROOT}')
+from sagemath_pandoc_filter.filter import main
+main()
+"
