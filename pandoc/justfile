@@ -125,7 +125,15 @@ compile-pandoc input_file="main.md" output_name="output" template="research_draf
   cd "{{build_dir}}"
   # BIBINPUTS setup (Augment environment with project root so global.bib is found)
   export BIBINPUTS=".:$ROOT:${BIBINPUTS:-}"
-  latexmk -pdf -interaction=nonstopmode -f -gg output.tex
+  LATEXMK_RC=0
+  latexmk -pdf -interaction=nonstopmode -f -gg output.tex || LATEXMK_RC=$?
+  if [ ! -f output.pdf ]; then
+    echo "❌ latexmk failed to produce output.pdf (exit code $LATEXMK_RC)"
+    exit 1
+  fi
+  if [ $LATEXMK_RC -ne 0 ]; then
+    echo "⚠️  latexmk exited $LATEXMK_RC but PDF was produced — check warnings above"
+  fi
   cp output.pdf "$ROOT/{{output_name}}-$(date +%d-%m-%y).pdf"
 
 # Download and extract an arXiv tarball
