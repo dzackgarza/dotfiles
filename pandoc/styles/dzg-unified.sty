@@ -28,7 +28,33 @@
 \@ifpackageloaded{etoolbox}{}{\RequirePackage{etoolbox}}
 \@ifpackageloaded{xparse}{}{\RequirePackage{xparse}}
 
-% NOTE: microtype, hyperref, cleveref, booktabs, enumitem, caption
+% Diagrams and Plots
+\RequirePackage{tikzit}
+\RequirePackage{dynkin-diagrams}
+\RequirePackage{quiver}
+\RequirePackage{pgfplots}
+\RequirePackage[all]{xy}
+
+% Tables and Floats
+\RequirePackage{longtable}
+\RequirePackage{array}
+\RequirePackage{booktabs}
+\RequirePackage{placeins}
+\RequirePackage{float}
+\RequirePackage[export]{adjustbox}
+\RequirePackage{caption}
+\RequirePackage{subcaption}
+\RequirePackage{epstopdf}
+
+% Typography and Layout
+\RequirePackage{etex}
+\RequirePackage{hyphenat}
+\RequirePackage{indentfirst}
+\RequirePackage{csquotes}
+\RequirePackage{url}
+\RequirePackage[textsize=tiny]{todonotes}
+
+% NOTE: microtype, hyperref, cleveref, enumitem
 % are NOT loaded here - they often require document-specific options
 % and should be loaded by preambles or document class
 
