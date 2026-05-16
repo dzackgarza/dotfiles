@@ -228,7 +228,7 @@ extract-ref dir file="main":
   xpandlatex -x on -m on -I on $(ls *.sty 2>/dev/null | sed 's/^/-f /' | xargs) {{file}}.tex > {{file}}_expanded.tex
 
   # Preprocess: Wrap tikzcd in displaymath
-  pandoc {{file}}_expanded.tex -s -f latex+raw_tex -t latex --lua-filter=wrap_tikzcd_semantic.lua -o {{file}}_wrapped.tex
+  pandoc {{file}}_expanded.tex -s -f latex+raw_tex -t latex --lua-filter="$HOME/.pandoc/bin/wrap_tikzcd_semantic.lua" -o {{file}}_wrapped.tex
 
   # Semantically preprocess the TeX
   make4ht -c "$HOME/.pandoc/custom/config/tex4ht.cfg" -u -f html5 {{file}}_wrapped.tex "mathjax,section+" || true
