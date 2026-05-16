@@ -13,9 +13,15 @@ import sys
 import os
 
 # Ensure the pandoc venv is on PATH so panflute is importable
-_venv_bin = os.path.expanduser("~/.pandoc/venv/bin")
+_venv = os.path.expanduser("~/.pandoc/venv")
+_venv_bin = os.path.join(_venv, "bin")
 if _venv_bin not in os.environ.get("PATH", "").split(":"):
     os.environ["PATH"] = _venv_bin + ":" + os.environ.get("PATH", "")
+
+# Ensure panflute from the venv is importable
+_venv_site = os.path.join(_venv, "lib", f"python{sys.version_info.major}.{sys.version_info.minor}", "site-packages")
+if _venv_site not in sys.path:
+    sys.path.insert(0, _venv_site)
 
 # Ensure the package is importable
 # Package lives at ~/notes/teaching/sage_filter_package/
