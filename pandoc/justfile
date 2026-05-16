@@ -234,7 +234,7 @@ extract-ref dir file="main":
   make4ht -c "$HOME/.pandoc/custom/config/tex4ht.cfg" -u -f html5 {{file}}_wrapped.tex "mathjax,section+" || true
 
   # Convert to Markdown
-  pandoc {{file}}_wrapped.html --lua-filter=semanticlean.lua -f html -t gfm-tex_math_gfm+tex_math_dollars -o "$ROOT/knowledge/papers/$(basename {{dir}}).md"
+  pandoc {{file}}_wrapped.html --lua-filter="$HOME/.pandoc/bin/semanticlean.lua" -f html -t gfm-tex_math_gfm+tex_math_dollars -o "$ROOT/knowledge/papers/$(basename {{dir}}).md"
 
 # Clean build artifacts
 clean build_dir_pandoc=BUILD_DIR_PANDOC build_dir_tex=BUILD_DIR_TEX:
