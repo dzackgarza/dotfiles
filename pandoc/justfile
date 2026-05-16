@@ -219,22 +219,22 @@ extract-ref dir file="main":
   #!/usr/bin/env bash
   set -euo pipefail
   ROOT="{{invocation_directory()}}"
-  mkdir -p "$ROOT/references"
-  
+  mkdir -p "$ROOT/knowledge/papers"
+
   cd "$ROOT/{{dir}}"
   rm -f {{file}}.aux
-  
+
   # Expand macros
   xpandlatex -x on -m on -I on $(ls *.sty 2>/dev/null | sed 's/^/-f /' | xargs) {{file}}.tex > {{file}}_expanded.tex
-  
+
   # Preprocess: Wrap tikzcd in displaymath
   pandoc {{file}}_expanded.tex -s -f latex+raw_tex -t latex --lua-filter=wrap_tikzcd_semantic.lua -o {{file}}_wrapped.tex
-  
+
   # Semantically preprocess the TeX
   make4ht -c "$HOME/.pandoc/custom/config/tex4ht.cfg" -u -f html5 {{file}}_wrapped.tex "mathjax,section+" || true
-  
+
   # Convert to Markdown
-  pandoc {{file}}_wrapped.html --lua-filter=semanticlean.lua -f html -t gfm-tex_math_gfm+tex_math_dollars -o "$ROOT/references/$(basename {{dir}}).md"
+  pandoc {{file}}_wrapped.html --lua-filter=semanticlean.lua -f html -t gfm-tex_math_gfm+tex_math_dollars -o "$ROOT/knowledge/papers/$(basename {{dir}}).md"
 
 # Clean build artifacts
 clean build_dir_pandoc=BUILD_DIR_PANDOC build_dir_tex=BUILD_DIR_TEX:
