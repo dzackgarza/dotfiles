@@ -5,18 +5,11 @@ $passoptions.latex()$
 % mathrsfs, stmaryrd, bm, esint, upgreek, graphicx, xcolor[dvipsnames],
 % tikz, tikz-cd, etoolbox, xparse, pgfornament, marginnote
 
-% Additional packages not in dzg-unified
-\usepackage{longtable}
-\usepackage{tikzit}
-\usepackage{dynkin-diagrams}
-
 \newif\ifshort
 \shortfalse
 
 \usepackage{hyperref}
 \hypersetup{colorlinks,citecolor=blue,linktocpage,hyperindex=true,backref=true}
-
-\usepackage[textsize=tiny]{todonotes}
 \newcommand\todoinline[1]{\todo[inline]{#1}}
 
 $if(title)$
@@ -36,33 +29,22 @@ $for(author)$
 \email{$author.email$}
 $endfor$
 
-\usepackage{etex}
 \usepackage[utf8]{inputenc}
 \usepackage[nameinlink]{cleveref}
 \usepackage[english]{babel}
-\usepackage{csquotes}
 \usepackage{fontenc}
-\usepackage{url}
-\usepackage{caption}
-\usepackage{subcaption}
+
 \newdimen\figrasterwd
 \figrasterwd\textwidth
-\usepackage{epstopdf}
-\usepackage{hyphenat}
-\usepackage{float}
 \floatplacement{figure}{H}
-\usepackage{indentfirst}
-\usepackage[export]{adjustbox}
-\usepackage{pgfplots}
-\usepackage[all]{xy}\usepackage{array}
+
 \newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
-\usepackage{booktabs}
-\usepackage{placeins}
+
 \makeatletter
 \AddToHook{cmd/section/before}{\FloatBarrier}
 \AddToHook{cmd/subsection/before}{\FloatBarrier}
 \makeatother
-\usepackage{quiver}
+
 \usetikzlibrary{arrows.meta, cd, fadings, patterns, calc, matrix, positioning, decorations, decorations.pathreplacing, decorations.markings, shapes, backgrounds, fit, shapes.geometric, intersections, hobby, matrix,arrows,decorations.pathmorphing}
 \tikzfading[name=fade out, inner color=transparent!0, outer color=transparent!100]
 
