@@ -231,7 +231,7 @@ extract-ref dir file="main":
   pandoc {{file}}_expanded.tex -s -f latex+raw_tex -t latex --lua-filter="$HOME/.pandoc/bin/wrap_tikzcd_semantic.lua" -o {{file}}_wrapped.tex
 
   # Semantically preprocess the TeX
-  make4ht -c "$HOME/.pandoc/custom/config/tex4ht.cfg" -u -f html5 {{file}}_wrapped.tex "mathjax,section+" || true
+  make4ht -c "$HOME/.pandoc/config/tex4ht.cfg" -u -f html5 {{file}}_wrapped.tex "mathjax,section+" || true
 
   # Convert to Markdown
   pandoc {{file}}_wrapped.html --lua-filter="$HOME/.pandoc/bin/semanticlean.lua" -f html -t gfm-tex_math_gfm+tex_math_dollars -o "$ROOT/knowledge/papers/$(basename {{dir}}).md"
