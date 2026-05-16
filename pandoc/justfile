@@ -14,7 +14,76 @@ GLOBAL_FIGURES_DIR := env_var_or_default("FIGURES_DIR", home_dir() / "figures")
 BUILD_DIR_PANDOC := ".build_pandoc"
 BUILD_DIR_TEX := ".build_tex"
 
+# --- Environment ---
+export PANDOC_DIR := home_dir() / "dotfiles/pandoc"
+export TEXINPUTS := ".:" + home_dir() + "/.pandoc/styles//:" + home_dir() + "/.pandoc/macros//:" + home_dir() + "/.pandoc/config//:" + env_var_or_default("TEXINPUTS", "")
+
 # --- Recipes ---
+
+# Preview a markdown file with live-reload
+# Usage: just pandoc::preview <file> [format=pdf] [template=research_draft.tex]
+preview file format="pdf" template="research_draft.tex":
+  #!/usr/bin/env bash
+  set -euo pipefail
+  
+  FILE=$(realpath "{{file}}")
+  DIR=$(dirname "$FILE")
+  NAME=$(basename "$FILE" .md)
+  ROOT="{{invocation_directory()}}"
+  
+  # 1. Setup Sandbox
+  export TMP_DIR=$(mktemp -d -t preview-XXXXXXXXXX)
+  echo "Preview sandbox created at: $TMP_DIR"
+  [ -d "$DIR/figures" ] && ln -sf "$DIR/figures" "$TMP_DIR/figures"
+  
+  export VIEWER_PID_FILE="$TMP_DIR/viewer.pid"
+  
+  # 2. Viewer Lifecycle & Cleanup
+  cleanup() {
+      echo -e "\nCleaning up preview environment..."
+      if [ -f "$VIEWER_PID_FILE" ]; then
+          kill -9 $(cat "$VIEWER_PID_FILE") 2>/dev/null || true
+      fi
+      rm -rf "$TMP_DIR"
+      exit 0
+  }
+  trap cleanup SIGINT SIGTERM EXIT
+
+  # 3. Compilation & Watching Loop
+  export FORMAT="{{format}}"
+  export TEMPLATE="{{template}}"
+  export NAME
+  export FILE
+  export ROOT
+  export BIB_SOURCE="{{GLOBAL_BIB_SOURCE}}"
+
+  compile_and_view() {
+      echo "[preview] Compiling $FILE..."
+      # Use the global compilation recipe
+      just pandoc::compile-pandoc "$FILE" "$NAME" "$TEMPLATE" "$BIB_SOURCE" "$TMP_DIR"
+      
+      if [ "$FORMAT" = "pdf" ]; then
+          OUTFILE="$TMP_DIR/$NAME-$(date +%d-%m-%y).pdf"
+          # The compile-pandoc recipe copies the PDF to ROOT, we move it to TMP_DIR for viewing
+          LITTERED_PDF="$ROOT/$NAME-$(date +%d-%m-%y).pdf"
+          if [ -f "$LITTERED_PDF" ]; then
+              mv "$LITTERED_PDF" "$OUTFILE"
+          fi
+          
+          if [ ! -f "$VIEWER_PID_FILE" ]; then
+              zathura "$OUTFILE" &>/dev/null &
+              echo $! > "$VIEWER_PID_FILE"
+          fi
+      fi
+  }
+  export -f compile_and_view
+  
+  # Initial compile
+  compile_and_view
+  
+  # 4. Watcher
+  echo "[preview] Watching for changes via entr..."
+  find "$DIR" -maxdepth 1 -name "*.md" | entr -n -p bash -c 'compile_and_view'
 
 # Format markdown files to enforce one sentence per line
 # Usage: just pandoc::format-md [globs/dirs...]
