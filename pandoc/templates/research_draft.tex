@@ -1,7 +1,11 @@
 $passoptions.latex()$
 \documentclass{amsart}
 \usepackage{dzg-unified}
-\usepackage{graphicx}
+% dzg-unified provides: amsmath, amsthm, amssymb, amsfonts, mathtools,
+% mathrsfs, stmaryrd, bm, esint, upgreek, graphicx, xcolor[dvipsnames],
+% tikz, tikz-cd, etoolbox, xparse, pgfornament, marginnote
+
+% Additional packages not in dzg-unified
 \usepackage{longtable}
 \usepackage{tikzit}
 \usepackage{dynkin-diagrams}
@@ -11,8 +15,6 @@ $passoptions.latex()$
 
 \usepackage{hyperref}
 \hypersetup{colorlinks,citecolor=blue,linktocpage,hyperindex=true,backref=true}
-
-\usepackage{tikz-cd, bm}
 
 \usepackage[textsize=tiny]{todonotes}
 \newcommand\todoinline[1]{\todo[inline]{#1}}
@@ -36,14 +38,7 @@ $endfor$
 
 \usepackage{etex}
 \usepackage[utf8]{inputenc}
-\usepackage{graphicx} 
-\usepackage{longtable}
-\usepackage{hyperref}
-\hypersetup{colorlinks,citecolor=blue,linktocpage,hyperindex=true,backref=true}
-\usepackage{amsfonts, amsmath, amssymb, amsthm, mathtools}
 \usepackage[nameinlink]{cleveref}
-\usepackage{mathrsfs, stmaryrd}
-\usepackage{color}
 \usepackage[english]{babel}
 \usepackage{csquotes}
 \usepackage{fontenc}
@@ -58,21 +53,16 @@ $endfor$
 \floatplacement{figure}{H}
 \usepackage{indentfirst}
 \usepackage[export]{adjustbox}
-\usepackage{tikz}
 \usepackage{pgfplots}
-\usepackage{color}
 \usepackage[all]{xy}\usepackage{array}
 \newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
 \usepackage{booktabs}
-\usepackage{etoolbox}
 \usepackage{placeins}
 \makeatletter
 \AddToHook{cmd/section/before}{\FloatBarrier}
 \AddToHook{cmd/subsection/before}{\FloatBarrier}
 \makeatother
-\usepackage{dynkin-diagrams}
 \usepackage{quiver}
-\usepackage{tikz}
 \usetikzlibrary{arrows.meta, cd, fadings, patterns, calc, matrix, positioning, decorations, decorations.pathreplacing, decorations.markings, shapes, backgrounds, fit, shapes.geometric, intersections, hobby, matrix,arrows,decorations.pathmorphing}
 \tikzfading[name=fade out, inner color=transparent!0, outer color=transparent!100]
 
@@ -88,16 +78,12 @@ $endfor$
 \renewcommand{\hat}{\widehat}
 \renewcommand{\tilde}{\widetilde}
 
-%\usepackage{DZG}
-
 % Pandoc compatibility macros
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
 % Standard Pandoc macros for figures
 $if(graphics)$
-\usepackage{graphicx}
-\usepackage{longtable}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\textwidth\textwidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
