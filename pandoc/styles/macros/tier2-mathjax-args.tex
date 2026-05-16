@@ -11,366 +11,366 @@
 % ================================================================================
 
 % Absolute value and norms
-\providecommand{\abs}[1]{{\left\lvert {#1} \right\rvert}}
-\providecommand{\norm}[1]{{\left\lVert {#1} \right\rVert}}
-\providecommand{\normm}[1]{{\left\lVert \left\lVert {#1} \right\rVert\right\rVert}}
-\providecommand{\pnorm}[2]{{\left\lVert {#1} \right\rVert}_{#2}}
+\newcommand{\abs}[1]{{\left\lvert {#1} \right\rvert}}
+\newcommand{\norm}[1]{{\left\lVert {#1} \right\rVert}}
+\newcommand{\normm}[1]{{\left\lVert \left\lVert {#1} \right\rVert\right\rVert}}
+\newcommand{\pnorm}[2]{{\left\lVert {#1} \right\rVert}_{#2}}
 
 % Adjoining and algebra constructions
-\providecommand{\adjoin}[1]{ { \left[ \scriptstyle {#1} \right] } }
-\providecommand{\polynomialring}[1]{ { \left[ {#1} \right] } }
+\newcommand{\adjoin}[1]{ { \left[ \scriptstyle {#1} \right] } }
+\newcommand{\polynomialring}[1]{ { \left[ {#1} \right] } }
 
 % Brackets and generators
-\providecommand{\bracket}[1]{ \left\langle #1 \right\rangle }
-\providecommand{\gens}[1]{\left\langle{#1}\right\rangle}
-\providecommand{\generators}[1]{\left\langle{#1}\right\rangle}
-\providecommand{\sqgens}[1]{\left[ {#1} \right]}
-\providecommand{\freeon}[1]{ \left[ {#1} \right]  }
-\providecommand{\dgens}[1]{\gens{\gens{ #1 }}}
+\newcommand{\bracket}[1]{ \left\langle #1 \right\rangle }
+\newcommand{\gens}[1]{\left\langle{#1}\right\rangle}
+\newcommand{\generators}[1]{\left\langle{#1}\right\rangle}
+\newcommand{\sqgens}[1]{\left[ {#1} \right]}
+\newcommand{\freeon}[1]{ \left[ {#1} \right]  }
+\newcommand{\dgens}[1]{\gens{\gens{ #1 }}}
 
 % Ceiling and floor
-\providecommand{\ceiling}[1]{{\left\lceil #1 \right\rceil}}
-\providecommand{\floor}[1]{{\left\lfloor #1 \right\rfloor}}
+\newcommand{\ceiling}[1]{{\left\lceil #1 \right\rceil}}
+\newcommand{\floor}[1]{{\left\lfloor #1 \right\rfloor}}
 
 % Complexes and bicomplexes
-\providecommand{\bicomplex}[1]{{ {#1}_{\scriptscriptstyle \bullet, \bullet}} }
-\providecommand{\cobicomplex}[1]{ { {#1}^{\scriptscriptstyle \bullet, \bullet}} }
-\providecommand{\cocomplex}[1]{ { {#1}^{\scriptscriptstyle \bullet}} }
-\providecommand{\complex}[1]{{ {#1}_{\scriptscriptstyle \bullet}} }
+\newcommand{\bicomplex}[1]{{ {#1}_{\scriptscriptstyle \bullet, \bullet}} }
+\newcommand{\cobicomplex}[1]{ { {#1}^{\scriptscriptstyle \bullet, \bullet}} }
+\newcommand{\cocomplex}[1]{ { {#1}^{\scriptscriptstyle \bullet}} }
+\newcommand{\complex}[1]{{ {#1}_{\scriptscriptstyle \bullet}} }
 
 % Conjugation
-\providecommand{\conj}[1]{{\overline{{#1}}}}
+\newcommand{\conj}[1]{{\overline{{#1}}}}
 
 % Convergence
-\providecommand{\ctz}[1]{\, {{\converges{{#1} \to\infty}\longrightarrow 0}} \, }
+\newcommand{\ctz}[1]{\, {{\converges{{#1} \to\infty}\longrightarrow 0}} \, }
 
 % Function fields and formal series
-\providecommand{\fps}[1]{{\llbracket #1 \rrbracket  }}
-\providecommand{\formalpowerseries}[1]{ \fps{#1} }
-\providecommand{\formalseries}[1]{ \fps{#1} }
-\providecommand{\functionfield}[1]{ { \left( {#1} \right) } }
-\providecommand{\powerseries}[1]{ \fps{#1} }
-\providecommand{\rff}[1]{ \functionfield{#1} }
+\newcommand{\fps}[1]{{\llbracket #1 \rrbracket  }}
+\newcommand{\formalpowerseries}[1]{ \fps{#1} }
+\newcommand{\formalseries}[1]{ \fps{#1} }
+\newcommand{\functionfield}[1]{ { \left( {#1} \right) } }
+\newcommand{\powerseries}[1]{ \fps{#1} }
+\newcommand{\rff}[1]{ \functionfield{#1} }
 
 % Homotopy classes
-\providecommand{\htyclass}[1]{ { \left[ {#1} \right] } }
+\newcommand{\htyclass}[1]{ { \left[ {#1} \right] } }
 
 % Ideals
-\providecommand{\ideal}[1]{\mathcal{#1}}
+\newcommand{\ideal}[1]{\mathcal{#1}}
 
 % Inner products
-\providecommand{\inner}[2]{{\left\langle {#1},~{#2} \right\rangle}}
-\providecommand{\inp}[2]{{\left\langle {#1},~{#2} \right\rangle}}
+\newcommand{\inner}[2]{{\left\langle {#1},~{#2} \right\rangle}}
+\newcommand{\inp}[2]{{\left\langle {#1},~{#2} \right\rangle}}
 
 % Inversion and localization
-\providecommand{\invert}[1]{{ \left[ { \scriptstyle \frac{1}{#1} } \right] }}
-\providecommand{\localize}[1]{ \left[ { \scriptstyle { {#1}\inv}  } \right] }
-\providecommand{\plocalize}[1]{\primelocalize{#1}}
-\providecommand{\primelocalize}[1]{ \left[ { \scriptstyle { { ({#1}^c) }\inv}  } \right]}
+\newcommand{\invert}[1]{{ \left[ { \scriptstyle \frac{1}{#1} } \right] }}
+\newcommand{\localize}[1]{ \left[ { \scriptstyle { {#1}\inv}  } \right] }
+\newcommand{\plocalize}[1]{\primelocalize{#1}}
+\newcommand{\primelocalize}[1]{ \left[ { \scriptstyle { { ({#1}^c) }\inv}  } \right]}
 
 % Laurent series
-\providecommand\fls[1]{(\hspace{-0.25em}( #1 )\hspace{-0.22em}) }
-\providecommand\laurent[1]{\fls{#1}}
-\providecommand\laurentseries[1]{\fls{#1}}
+\newcommand\fls[1]{(\hspace{-0.25em}( #1 )\hspace{-0.22em}) }
+\newcommand\laurent[1]{\fls{#1}}
+\newcommand\laurentseries[1]{\fls{#1}}
 
 % Morphisms
-\providecommand{\embedsvia}[1]{\xhookrightarrow{#1}}
-\providecommand{\fromvia}[1]{\xleftarrow{#1}}
+\newcommand{\embedsvia}[1]{\xhookrightarrow{#1}}
+\newcommand{\fromvia}[1]{\xleftarrow{#1}}
 
 % Open sets
-\providecommand{\open}[1]{\overset{\circ}{#1}}
+\newcommand{\open}[1]{\overset{\circ}{#1}}
 
 % Poisson brackets
-\providecommand{\poisbrack}[2]{{\left\{ {#1},~{#2} \right\} }}
+\newcommand{\poisbrack}[2]{{\left\{ {#1},~{#2} \right\} }}
 
 % Quotients and moduli
 
 % Radicals
-\providecommand{\jacobsonrad}[1]{{J ({#1}) }}
-\providecommand{\nilrad}[1]{{\sqrt{0_{#1}} }}
+\newcommand{\jacobsonrad}[1]{{J ({#1}) }}
+\newcommand{\nilrad}[1]{{\sqrt{0_{#1}} }}
 
 % Restriction and induction
-\providecommand\Restriction[2]{\mathrm{Res}^{#1}_{#2}}
-\providecommand\coRestriction[2]{\mathrm{coRes}^{#1}_{#2}}
-\providecommand\Induction[2]{\mathrm{Ind}^{#1}_{#2}}
-\providecommand\coInduction[2]{\mathrm{coInd}^{#1}_{#2}}
+\newcommand\Restriction[2]{\mathrm{Res}^{#1}_{#2}}
+\newcommand\coRestriction[2]{\mathrm{coRes}^{#1}_{#2}}
+\newcommand\Induction[2]{\mathrm{Ind}^{#1}_{#2}}
+\newcommand\coInduction[2]{\mathrm{coInd}^{#1}_{#2}}
 
 % Sheafification and completion
-\providecommand{\sheafify}[1]{ \left( #1 \right)^{\scriptscriptstyle \mathrm{sh}} }
-\providecommand{\complete}[1]{{ {}_{ \hat{#1} } }}
-\providecommand{\takecompletion}[1]{{ \overbrace{#1}^{\widehat{\hspace{4em}}}  }}
-\providecommand{\pcomplete}[0]{{ {}^{ \wedge }_{p} }}
-\providecommand{\procomplete}[0]{ {}^{ \wedge_{\scriptscriptstyle \pro }} }
-\providecommand{\kv}[0]{{ k_{\hat{v}} }}
-\providecommand{\Lv}[0]{{ L_{\hat{v}} }}
+\newcommand{\sheafify}[1]{ \left( #1 \right)^{\scriptscriptstyle \mathrm{sh}} }
+\newcommand{\complete}[1]{{ {}_{ \hat{#1} } }}
+\newcommand{\takecompletion}[1]{{ \overbrace{#1}^{\widehat{\hspace{4em}}}  }}
+\newcommand{\pcomplete}[0]{{ {}^{ \wedge }_{p} }}
+\newcommand{\procomplete}[0]{ {}^{ \wedge_{\scriptscriptstyle \pro }} }
+\newcommand{\kv}[0]{{ k_{\hat{v}} }}
+\newcommand{\Lv}[0]{{ L_{\hat{v}} }}
 
 % Slices and fibers
-\providecommand{\coslice}[1]{_{{#1/}}}
-\providecommand{\liesabove}[1]{{ {}_{/ {#1}} }}
-\providecommand{\liesover}[1]{{ {}_{/ {#1}} }}
-\providecommand{\slice}[1]{_{/ {#1}}}
+\newcommand{\coslice}[1]{_{{#1/}}}
+\newcommand{\liesabove}[1]{{ {}_{/ {#1}} }}
+\newcommand{\liesover}[1]{{ {}_{/ {#1}} }}
+\newcommand{\slice}[1]{_{/ {#1}}}
 
 % Symbols
-\providecommand{\symb}[2]{{ \qty{ #1 \over #2 } }}
+\newcommand{\symb}[2]{{ \qty{ #1 \over #2 } }}
 
 % Tensor lists
-\providecommand\tl[2]{{ #1_1, \cdots, #1_{#2} }}
-\providecommand\tlset[2]{ \ts{ {#1}_{1}, \cdots, {#1}_{#2} } }
-\providecommand\tlz[2]{{ #1_0, \cdots, #1_{#2} }}
-\providecommand\tsl[3]{ \ts{ {#1}_{#2}, \cdots, {#1}_{#3} } }
+\newcommand\tl[2]{{ #1_1, \cdots, #1_{#2} }}
+\newcommand\tlset[2]{ \ts{ {#1}_{1}, \cdots, {#1}_{#2} } }
+\newcommand\tlz[2]{{ #1_0, \cdots, #1_{#2} }}
+\newcommand\tsl[3]{ \ts{ {#1}_{#2}, \cdots, {#1}_{#3} } }
 
 % Transforms and powers
-\providecommand{\fourier}[1]{\widehat{#1}}
-\providecommand\cartpower[1]{{ {}^{ \scriptscriptstyle\times^{#1} }  }}
-\providecommand\disjointpower[1]{{ {}^{ \scriptscriptstyle\coprod^{#1} }  }}
-\providecommand\derivedtensorpower[3]{{ {}^{ \scriptstyle {}_{#1} {\otimes_{#2}^{#3}} }  }}
-\providecommand\fiberpower[2]{{ {}^{ \scriptscriptstyle\fiberprod{#1}^{#2} }  }}
-\providecommand\powers[1]{{ {}^{\cdot #1} }}
-\providecommand\prodpower[1]{{ {}^{ \scriptscriptstyle\times^{#1} }  }}
-\providecommand\skel[1]{{ {}^{ (#1) } }}
-\providecommand\smashpower[1]{{ {}^{ \scriptscriptstyle\smashprod^{#1} }  }}
-\providecommand\sumpower[1]{{ {}^{ \oplus{#1} }  }}
-\providecommand\tensorpower[2]{{ {}^{ \scriptstyle\otimes_{#1}^{#2} }  }}
-\providecommand\tensorpowerk[1]{{ {}^{ \scriptscriptstyle\otimes_{k}^{#1} }  }}
-\providecommand\transp[1]{{ \, {}^{t}{ \left( #1 \right) } }}
-\providecommand\wedgepower[1]{{ {}^{ \scriptscriptstyle\smashprod^{#1} }  }}
+\newcommand{\fourier}[1]{\widehat{#1}}
+\newcommand\cartpower[1]{{ {}^{ \scriptscriptstyle\times^{#1} }  }}
+\newcommand\disjointpower[1]{{ {}^{ \scriptscriptstyle\coprod^{#1} }  }}
+\newcommand\derivedtensorpower[3]{{ {}^{ \scriptstyle {}_{#1} {\otimes_{#2}^{#3}} }  }}
+\newcommand\fiberpower[2]{{ {}^{ \scriptscriptstyle\fiberprod{#1}^{#2} }  }}
+\newcommand\powers[1]{{ {}^{\cdot #1} }}
+\newcommand\prodpower[1]{{ {}^{ \scriptscriptstyle\times^{#1} }  }}
+\newcommand\skel[1]{{ {}^{ (#1) } }}
+\newcommand\smashpower[1]{{ {}^{ \scriptscriptstyle\smashprod^{#1} }  }}
+\newcommand\sumpower[1]{{ {}^{ \oplus{#1} }  }}
+\newcommand\tensorpower[2]{{ {}^{ \scriptstyle\otimes_{#1}^{#2} }  }}
+\newcommand\tensorpowerk[1]{{ {}^{ \scriptscriptstyle\otimes_{k}^{#1} }  }}
+\newcommand\transp[1]{{ \, {}^{t}{ \left( #1 \right) } }}
+\newcommand\wedgepower[1]{{ {}^{ \scriptscriptstyle\smashprod^{#1} }  }}
 
 % Twisting
-\providecommand{\twistleft}[2]{{ {}^{#1} #2 }}
-\providecommand{\twistright}[2]{{ #2 {}^{#1} }}
+\newcommand{\twistleft}[2]{{ {}^{#1} #2 }}
+\newcommand{\twistright}[2]{{ #2 {}^{#1} }}
 
 % Section and global sections
-\providecommand{\Globsec}[1]{{\Gamma\qty{#1} }}
-\providecommand{\globsec}[1]{{\Gamma\qty{#1} }}
+\newcommand{\Globsec}[1]{{\Gamma\qty{#1} }}
+\newcommand{\globsec}[1]{{\Gamma\qty{#1} }}
 
 % Miscellaneous
-\providecommand{\addbase}[1]{{ {}_{pt} }}
-\providecommand{\catspan}[3]{\roof{#1}{#2}{#3}}
-\providecommand{\cptf}[1]{ \overline{ #1 } }
-\providecommand{\discgroup}[1]{A_{#1}}
-\providecommand{\diverges}[0]{\mapstofrom}
-\providecommand{\langL}[1]{ {}^{L}{#1} }
-\providecommand{\modulo}[0]{{ \bigg/ }}
-\providecommand{\openimmerse}[0]{\underset{\scriptscriptstyle O}{\hookrightarrow}}
-\providecommand{\qtext}[1]{{\quad \operatorname{#1} \quad}}
-\providecommand{\roof}[3]{ #1 {\, \scriptstyle {}^\swarrow\, } #2 {\, \scriptstyle {}^\searrow\,} #3 }
-\providecommand{\shift}[2]{{ \Sigma^{\scriptstyle[#2]} #1 }}
-\providecommand{\squares}[1]{{ {#1}_{\scriptscriptstyle \square} }}
-\providecommand{\weakeq}[0]{\underset{\scriptscriptstyle W}{\rightarrow}}
+\newcommand{\addbase}[1]{{ {}_{pt} }}
+\newcommand{\catspan}[3]{\roof{#1}{#2}{#3}}
+\newcommand{\cptf}[1]{ \overline{ #1 } }
+\newcommand{\discgroup}[1]{A_{#1}}
+\newcommand{\diverges}[0]{\mapstofrom}
+\newcommand{\langL}[1]{ {}^{L}{#1} }
+\newcommand{\modulo}[0]{{ \bigg/ }}
+\newcommand{\openimmerse}[0]{\underset{\scriptscriptstyle O}{\hookrightarrow}}
+\newcommand{\qtext}[1]{{\quad \operatorname{#1} \quad}}
+\newcommand{\roof}[3]{ #1 {\, \scriptstyle {}^\swarrow\, } #2 {\, \scriptstyle {}^\searrow\,} #3 }
+\newcommand{\shift}[2]{{ \Sigma^{\scriptstyle[#2]} #1 }}
+\newcommand{\squares}[1]{{ {#1}_{\scriptscriptstyle \square} }}
+\newcommand{\weakeq}[0]{\underset{\scriptscriptstyle W}{\rightarrow}}
 
 % Equivalence markers
-\providecommand{\congas}[1]{\underset{#1}{\cong}}
-\providecommand{\congbecause}[1]{\overset{#1}{\cong}}
-\providecommand{\equalsbecause}[1]{\overset{#1}{=}}
-\providecommand{\isoas}[1]{\underset{#1}{\cong}}
-\providecommand{\pwiso}[0]{\underset{\mathrm{pw}}{\cong}}
+\newcommand{\congas}[1]{\underset{#1}{\cong}}
+\newcommand{\congbecause}[1]{\overset{#1}{\cong}}
+\newcommand{\equalsbecause}[1]{\overset{#1}{=}}
+\newcommand{\isoas}[1]{\underset{#1}{\cong}}
+\newcommand{\pwiso}[0]{\underset{\mathrm{pw}}{\cong}}
 
 % Prefixes and suffixes
-\providecommand\lshriek[0]{{}_{!}}
-\providecommand\pushf[0]{{}^{*}}
+\newcommand\lshriek[0]{{}_{!}}
+\newcommand\pushf[0]{{}^{*}}
 
 % Terminal and initial objects
-\providecommand{\cofinal}[0]{\mathsf{\emptyset} }
-\providecommand{\final}[0]{\ts{\pt}}
+\newcommand{\cofinal}[0]{\mathsf{\emptyset} }
+\newcommand{\final}[0]{\ts{\pt}}
 
 % Ring freezing
-\providecommand{\freezmod}[1]{\ZZ\left[ {#1} \right] }
+\newcommand{\freezmod}[1]{\ZZ\left[ {#1} \right] }
 % ================================================================================
 % Additional macros with arguments from latexmacs.tex
 % ================================================================================
 
 % Conjugation and closures
-\providecommand{\conjugate}[1]{{\overline{{#1}}}}
-\providecommand{\closure}[1]{\overline{#1}}
-\providecommand{\ol}[1]{\overline{#1}}
-\providecommand{\univcover}[1]{\overline{#1}}
+\newcommand{\conjugate}[1]{{\overline{{#1}}}}
+\newcommand{\closure}[1]{\overline{#1}}
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\univcover}[1]{\overline{#1}}
 \renewcommand{\bar}[1]{\overline{#1}}
 \renewcommand{\hat}[1]{\widehat{#1}}
 
 % Vector and bundle notations
-\providecommand{\bundle}[1]{\mathcal{#1}}
+\newcommand{\bundle}[1]{\mathcal{#1}}
 \renewcommand{\vector}[1]{\mathbf{#1}}
-\providecommand{\vhat}[1]{\widehat{ \vector{#1} }}
+\newcommand{\vhat}[1]{\widehat{ \vector{#1} }}
 
 % Diagonal and correspondence
-\providecommand{\diagonal}[1]{\Delta}
-\providecommand{\Diagonal}[1]{\Delta}
-\providecommand{\correspond}[1]{\theset{\substack{#1}}}
+\newcommand{\diagonal}[1]{\Delta}
+\newcommand{\Diagonal}[1]{\Delta}
+\newcommand{\correspond}[1]{\theset{\substack{#1}}}
 
 % Arrow notations (must come before usage)
 
 % Convergence notations
-\providecommand{\converges}[1]{\overset{#1}}
-\providecommand{\convergesto}[1]{\overset{#1}\too}
+\newcommand{\converges}[1]{\overset{#1}}
+\newcommand{\convergesto}[1]{\overset{#1}\too}
 
 % Derivatives
-\providecommand{\ddd}[2]{{\frac{d #1}{d #2}\,}}
-\providecommand{\dd}[2]{{\frac{\partial #1}{\partial #2}\,}}
+\newcommand{\ddd}[2]{{\frac{d #1}{d #2}\,}}
+\newcommand{\dd}[2]{{\frac{\partial #1}{\partial #2}\,}}
 
 % Evaluation and restriction
-\providecommand{\evalfrom}[0]{\Big|}
-\providecommand{\restrictionof}[2]{ {\left.{{#1}} \right|_{{#2}} }}
-\providecommand{\ro}[2]{{ \left.{{#1}} \right|_{{#2}} }}
+\newcommand{\evalfrom}[0]{\Big|}
+\newcommand{\restrictionof}[2]{ {\left.{{#1}} \right|_{{#2}} }}
+\newcommand{\ro}[2]{{ \left.{{#1}} \right|_{{#2}} }}
 
 % Inner products and brackets
-\providecommand{\ip}[2]{{\left\langle {#1},~{#2} \right\rangle}}
+\newcommand{\ip}[2]{{\left\langle {#1},~{#2} \right\rangle}}
 
 % Kernel symbols and spacing
-\providecommand{\ddt}{\tfrac{\dif}{\dif t}}
-\providecommand{\ddx}{\tfrac{\dif}{\dif x}}
-\providecommand{\logd}[0]{{ \del^{\scriptsize \log} }}
+\newcommand{\ddt}{\tfrac{\dif}{\dif t}}
+\newcommand{\ddx}{\tfrac{\dif}{\dif x}}
+\newcommand{\logd}[0]{{ \del^{\scriptsize \log} }}
 
 % Lists and tuples
-\providecommand{\theset}[1]{\left\{{#1}\right\}}
-\providecommand{\thevector}[1]{{\left[ {#1} \right]}}
-\providecommand{\ts}[1]{\left\{{#1}\right\}}
-\providecommand{\tv}[1]{{\left[ {#1} \right]}}
+\newcommand{\theset}[1]{\left\{{#1}\right\}}
+\newcommand{\thevector}[1]{{\left[ {#1} \right]}}
+\newcommand{\ts}[1]{\left\{{#1}\right\}}
+\newcommand{\tv}[1]{{\left[ {#1} \right]}}
 
 % Matrix and vector helpers
-\providecommand{\mltext}[1]{\left\{\begin{array}{c}#1\end{array}\right\}}
+\newcommand{\mltext}[1]{\left\{\begin{array}{c}#1\end{array}\right\}}
 
 % Modular arithmetic
-\providecommand{\Suchthat}[0]{\middle\vert}
+\newcommand{\Suchthat}[0]{\middle\vert}
 
 % Multinomial coefficients  
-\providecommand{\multinomial}[1]{\left(\!\!{#1}\!\!\right)}
+\newcommand{\multinomial}[1]{\left(\!\!{#1}\!\!\right)}
 
 % Pairing with overhead notation
-\providecommand{\realpart}[1]{{\mathcal{Re}({#1})}}
+\newcommand{\realpart}[1]{{\mathcal{Re}({#1})}}
 
 % Sheaf notation
-\providecommand{\sheaf}[1]{\operatorname{\mathcal{#1}}}
+\newcommand{\sheaf}[1]{\operatorname{\mathcal{#1}}}
 
 % Sets with specific elements
-\providecommand{\smpt}[1]{\setminus\theset{#1}}
-\providecommand{\smts}[1]{\setminus\theset{ #1 }}
+\newcommand{\smpt}[1]{\setminus\theset{#1}}
+\newcommand{\smts}[1]{\setminus\theset{ #1 }}
 
 % Stirling numbers
-\providecommand{\stirlingfirst}[2]{\genfrac{[}{]}{0pt}{}{#1}{#2}}
-\providecommand{\stirling}[2]{\genfrac\{\}{0pt}{}{#1}{#2}}
+\newcommand{\stirlingfirst}[2]{\genfrac{[}{]}{0pt}{}{#1}{#2}}
+\newcommand{\stirling}[2]{\genfrac\{\}{0pt}{}{#1}{#2}}
 
 % Surjections with labels
 
 % Category theory notations
-\providecommand{\thecat}[1]{\mathbf{#1}}
-\providecommand{\constantsheaf}[1]{\underline{#1}}
-\providecommand{\ul}[1]{\underline{#1}}
+\newcommand{\thecat}[1]{\mathbf{#1}}
+\newcommand{\constantsheaf}[1]{\underline{#1}}
+\newcommand{\ul}[1]{\underline{#1}}
 
 % Colored text for vectors
-\providecommand{\vecc}[2]{\textcolor{#1}{\textbf{#2}}}
+\newcommand{\vecc}[2]{\textcolor{#1}{\textbf{#2}}}
 
 % Additional field extensions
-\providecommand{\places}[1]{ \mathrm{Pl}\qty{#1}}
-\providecommand{\ZZlocal}[1]{{ \ZZ_{\hat{#1}} }}
+\newcommand{\places}[1]{ \mathrm{Pl}\qty{#1}}
+\newcommand{\ZZlocal}[1]{{ \ZZ_{\hat{#1}} }}
 
 % Radical and square root
-\providecommand{\rad}[1]{\sqrt{#1}}
+\newcommand{\rad}[1]{\sqrt{#1}}
 
 % Rising and falling factorials
 \def\rising#1#2{ \qty{#1}^{ (#2) }}
 \def\falling#1#2{ \qty{#1}_{ (#2) }}
 
 % Lists with index ranges
-\providecommand\elts[2]{{ {#1}_1, {#1}_2, \cdots, {#1}_{#2}}}
-\providecommand\tselts[2]{{ \theset{ {#1}_1, {#1}_2, \cdots, {#1}_{#2} } }}
+\newcommand\elts[2]{{ {#1}_1, {#1}_2, \cdots, {#1}_{#2}}}
+\newcommand\tselts[2]{{ \theset{ {#1}_1, {#1}_2, \cdots, {#1}_{#2} } }}
 
 % Fiber products and mixed products
-\providecommand\mix[1]{\overset{\scriptscriptstyle {#1} }{\times}}
-\providecommand\fiberproduct[1]{\underset{\scriptscriptstyle {#1} }{\times}}
-\providecommand\fiberprod[1]{ \fiberproduct{#1}}
-\providecommand\basechange[1]{{ \fiberproduct{k} {#1} }}
-\providecommand\fprod[1]{{ \fiberproduct{#1} }}
+\newcommand\mix[1]{\overset{\scriptscriptstyle {#1} }{\times}}
+\newcommand\fiberproduct[1]{\underset{\scriptscriptstyle {#1} }{\times}}
+\newcommand\fiberprod[1]{ \fiberproduct{#1}}
+\newcommand\basechange[1]{{ \fiberproduct{k} {#1} }}
+\newcommand\fprod[1]{{ \fiberproduct{#1} }}
 
 % Complex-valued functions
-\providecommand{\qsymb}[2]{{ \left( {#1} \over {#2} \right)  }}
+\newcommand{\qsymb}[2]{{ \left( {#1} \over {#2} \right)  }}
 
 % Polynomial rings
-\providecommand{\kx}[1]{k[x_1, \cdots, x_{#1}]}
+\newcommand{\kx}[1]{k[x_1, \cdots, x_{#1}]}
 
 % K-theory variants
-\providecommand{\lktt}[1]{ {L_{\mathrm{K3}, \1}} }
+\newcommand{\lktt}[1]{ {L_{\mathrm{K3}, \1}} }
 
 % Fractional ideals and parts
-\providecommand{\fractional}[1]{\theset{#1}}
-\providecommand{\fractionalpart}[1]{\theset{#1}}
-\providecommand{\integerpart}[1]{\left[ {#1}\right] }
-\providecommand{\zadjoin}[1]{\ZZ\left[ {#1} \right]}
+\newcommand{\fractional}[1]{\theset{#1}}
+\newcommand{\fractionalpart}[1]{\theset{#1}}
+\newcommand{\integerpart}[1]{\left[ {#1}\right] }
+\newcommand{\zadjoin}[1]{\ZZ\left[ {#1} \right]}
 
 % Special map notations
-\providecommand{\mapscorrespond}[2]{\mathrel{\operatorname*{\rightleftharpoons}_{#2}^{#1}}}
-\providecommand{\mapsvia}[1]{\xrightarrow{#1}}
-\providecommand{\mapsfromvia}[1]{\xleftarrow{#1}}
-\providecommand{\mapstovia}[1]{\xmapsto{#1}}
-\providecommand{\tovia}[1]{\xrightarrow{#1}}
+\newcommand{\mapscorrespond}[2]{\mathrel{\operatorname*{\rightleftharpoons}_{#2}^{#1}}}
+\newcommand{\mapsvia}[1]{\xrightarrow{#1}}
+\newcommand{\mapsfromvia}[1]{\xleftarrow{#1}}
+\newcommand{\mapstovia}[1]{\xmapsto{#1}}
+\newcommand{\tovia}[1]{\xrightarrow{#1}}
 
 % Birational and stable birational
-\providecommand{\birational}[0]{\overset{\sim}{\torational}}
-\providecommand{\birationaliso}[0]{\overset{\sim}{\torational}}
-\providecommand{\sbirational}[0]{\overset{\sim_{ \stab} }{\torational}}
+\newcommand{\birational}[0]{\overset{\sim}{\torational}}
+\newcommand{\birationaliso}[0]{\overset{\sim}{\torational}}
+\newcommand{\sbirational}[0]{\overset{\sim_{ \stab} }{\torational}}
 
 % Isomorphism with labels
-\providecommand{\isovia}[1]{\underset{#1}{\iso}}
-\providecommand{\isoin}[1]{\overset{#1}{\iso}}
+\newcommand{\isovia}[1]{\underset{#1}{\iso}}
+\newcommand{\isoin}[1]{\overset{#1}{\iso}}
 
 % Injections with labels
-\providecommand{\injectsvia}[1]{\xhookrightarrow{#1}}
-\providecommand{\injectsfromvia}[1]{\xhookleftarrow{#1}}
+\newcommand{\injectsvia}[1]{\xhookrightarrow{#1}}
+\newcommand{\injectsfromvia}[1]{\xhookleftarrow{#1}}
 
 % Relative spectrum
-\providecommand{\relspec}[0]{\ul{ \operatorname{Spec}} }
+\newcommand{\relspec}[0]{\ul{ \operatorname{Spec}} }
 
 % Nerves and realizations
-\providecommand{\nerve}[1]{{ \mathcal{N}({#1}) }}
-\providecommand{\realize}[1]{{ \abs{#1} }}
+\newcommand{\nerve}[1]{{ \mathcal{N}({#1}) }}
+\newcommand{\realize}[1]{{ \abs{#1} }}
 
 % Category operations
-\providecommand{\opcat}[1]{{ {#1}\op }}
+\newcommand{\opcat}[1]{{ {#1}\op }}
 
 % Gluing
-\providecommand{\glue}[1]{{ \Disjoint_{#1} }}
+\newcommand{\glue}[1]{{ \Disjoint_{#1} }}
 
 % Norm of complexes
-\providecommand{\normcomplex}[1]{{\norm{\complex{#1}}}}
+\newcommand{\normcomplex}[1]{{\norm{\complex{#1}}}}
 
 % Extalgebra
-\providecommand{\Extalgebra}[0]{\cocomplex{\bigwedge}}
-\providecommand{\Extalg}[0]{\Extalgebra}
-\providecommand{\Extcomplex}[0]{\cocomplex{ \Extalgebra}}
+\newcommand{\Extalgebra}[0]{\cocomplex{\bigwedge}}
+\newcommand{\Extalg}[0]{\Extalgebra}
+\newcommand{\Extcomplex}[0]{\cocomplex{ \Extalgebra}}
 
 % DR complexes and Hodge
-\providecommand{\drcomplex}[0]{{\cocomplex{\Omega}}}
-\providecommand{\cxH}[0]{{\complex{H}}}
-\providecommand{\ccxH}[0]{{\cocomplex{H}}}
+\newcommand{\drcomplex}[0]{{\cocomplex{\Omega}}}
+\newcommand{\cxH}[0]{{\complex{H}}}
+\newcommand{\ccxH}[0]{{\cocomplex{H}}}
 
 % Sheaf homomorphisms
-\providecommand{\sheafhom}[0]{\mathop{\mathcal{H}\! \mathit{om}}}
+\newcommand{\sheafhom}[0]{\mathop{\mathcal{H}\! \mathit{om}}}
 
 % Multicase definitions
-\providecommand{\smallprod}[0]{{ \scriptscriptstyle\prod }}
+\newcommand{\smallprod}[0]{{ \scriptscriptstyle\prod }}
 
 % Equal because
-\providecommand{\eqLH}[0]{{ \equalsbecause{\scriptscriptstyle\text{LH}} }}
-\providecommand{\eqae}[0]{\underset{\ae}{=}}
+\newcommand{\eqLH}[0]{{ \equalsbecause{\scriptscriptstyle\text{LH}} }}
+\newcommand{\eqae}[0]{\underset{\ae}{=}}
 
 % Hodge structure variants
-\providecommand{\eq}{\operatorname*{=}}
+\newcommand{\eq}{\operatorname*{=}}
 
 % Roman numeral macro
-\providecommand{\RM}[1]{%
+\newcommand{\RM}[1]{%
   \textup{\uppercase\expandafter{\romannumeral#1}}%
 }
 
 % Canonical isomorphism
-\providecommand\caniso[0]{{ \underset{\can}{\iso} }}
+\newcommand\caniso[0]{{ \underset{\can}{\iso} }}
 
 % Other notations
-\providecommand\dif{\mathop{}\!\operatorname{d}}
+\newcommand\dif{\mathop{}\!\operatorname{d}}
 
 % Rotate utility (MathJax may not support)
-\providecommand{\rotate}[2]{{\style{display: inline-block; transform: rotate(#1deg)}{#2}}}
+\newcommand{\rotate}[2]{{\style{display: inline-block; transform: rotate(#1deg)}{#2}}}
 
 % Triple arrow decoration
-\providecommand\rrrarrows{
+\newcommand\rrrarrows{
     \mathrel{\substack{\textstyle\rightarrow\\[-0.6ex]
         \textstyle\rightarrow \\[-0.6ex]
         \textstyle\rightarrow}}
