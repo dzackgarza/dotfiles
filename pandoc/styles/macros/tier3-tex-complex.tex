@@ -13,18 +13,18 @@
 % ================================================================================
 
 % Case expressions
-\newcommand{\fourcase}[4]{
+\providecommand{\fourcase}[4]{
 \begin{cases}{#1} & {#2} \\ {#3} & {#4}\end{cases} 
 }
 
 % Column vectors
-\newcommand{\cvec}[2]{{ \begin{bmatrix} {#1} \\ {#2} \end{bmatrix} }}
+\providecommand{\cvec}[2]{{ \begin{bmatrix} {#1} \\ {#2} \end{bmatrix} }}
 
 % 2x2 matrices
-\newcommand{\matt}[4]{{ \begin{bmatrix} {#1} & {#2}  \\ {#3} & {#4} \end{bmatrix} }}
+\providecommand{\matt}[4]{{ \begin{bmatrix} {#1} & {#2}  \\ {#3} & {#4} \end{bmatrix} }}
 
 % 3x3 matrices
-\newcommand{\mattt}[9]{{
+\providecommand{\mattt}[9]{{
 \begin{bmatrix}
   {#1} & {#2} & {#3}
 \\
@@ -35,66 +35,66 @@
 }}
 
 % Stacking with custom spacing
-\newcommand{\stack}[1]{\mathclap{\substack{ #1 }}}
+\providecommand{\stack}[1]{\mathclap{\substack{ #1 }}}
 
-\newcommand\stacksymbol[3]{
+\providecommand\stacksymbol[3]{
   \mathrel{\stackunder[2pt]{\stackon[4pt]{$#3$}{$\scriptscriptstyle#1$}}{
   $\scriptscriptstyle#2$}}
 }
 
 % Text operators
-\newcommand{\textoperatorname}[1]{
+\providecommand{\textoperatorname}[1]{
   \operatorname{\textnormal{#1}}
 }
 % Additional complex TeX macros from latexmacs.tex
 
 % Normal subgroup inequality (uses \ooalign and \reflectbox)
-\newcommand{\trianglerightneq}{\mathrel{\ooalign{\raisebox{-0.5ex}{\reflectbox{\rotatebox{90}{$\nshortmid$}}}\cr$\triangleright$\cr}\mkern-3mu}}
-\newcommand{\normalneq}{\mathrel{\reflectbox{$\trianglerightneq$}}}
+\providecommand{\trianglerightneq}{\mathrel{\ooalign{\raisebox{-0.5ex}{\reflectbox{\rotatebox{90}{$\nshortmid$}}}\cr$\triangleright$\cr}\mkern-3mu}}
+\providecommand{\normalneq}{\mathrel{\reflectbox{$\trianglerightneq$}}}
 
 % Dirac operator (uses \mkern and spacing hacks)
-\newcommand{\dirac}[0]{\mkern-3mu \not{ \partial}}
+\providecommand{\dirac}[0]{\mkern-3mu \not{ \partial}}
 
 % Hodge star differential (uses \mkern)
-\newcommand{\stardstar}[0]{\hodgestar \mathrm{d} \mkern-1mu \hodgestar}
+\providecommand{\stardstar}[0]{\hodgestar \mathrm{d} \mkern-1mu \hodgestar}
 
 % Sheaf hom (uses \kern for tight spacing)
-\newcommand{\HHom}{\mathscr{H}\kern-2pt\operatorname{om}}
-\newcommand{\shom}{ {\mathcal{H}}\kern-0.5pt{\operatorname{om}}}
-\newcommand{\QHS}[0]{\mathbf{Q}\kern-0.5pt\operatorname{HS}}
+\providecommand{\HHom}{\mathscr{H}\kern-2pt\operatorname{om}}
+\providecommand{\shom}{ {\mathcal{H}}\kern-0.5pt{\operatorname{om}}}
+\providecommand{\QHS}[0]{\mathbf{Q}\kern-0.5pt\operatorname{HS}}
 
 % Bold mathbb BGL with \mkern
-\newcommand{\BGL}[0]{ \mathbf{B}\mkern-3mu \operatorname{GL}}
+\providecommand{\BGL}[0]{ \mathbf{B}\mkern-3mu \operatorname{GL}}
 
 % Git quotient with \mkern
-\newcommand{\gitquot}{{ \mathbin{/\mkern-6mu/}}}
+\providecommand{\gitquot}{{ \mathbin{/\mkern-6mu/}}}
 
 % Surjection arrow with \mkern
-\newcommand{\surjectsvia}[2][]{ \xrightarrow[#1]{#2} { \mathrel{\mkern-16mu}\rightarrow }\, }
+\providecommand{\surjectsvia}[2][]{ \xrightarrow[#1]{#2} { \mathrel{\mkern-16mu}\rightarrow }\, }
 
 % Quotient constructions with \mkern
-\newcommand{\quotleft}[2]{ {}_{#2}\mkern-.5mu\backslash\mkern-2mu^{#1} }
-\newcommand{\quotright}[2]{ {}^{#1}\mkern-2mu/\mkern-2mu_{#2} }
+\providecommand{\quotleft}[2]{ {}_{#2}\mkern-.5mu\backslash\mkern-2mu^{#1} }
+\providecommand{\quotright}[2]{ {}^{#1}\mkern-2mu/\mkern-2mu_{#2} }
 
 % Multi-choose using \kern
 \def\multichoose#1#2{{\left(\kern-.3em\left(\genfrac{}{}{0pt}{}{#1}{#2}\right)\kern-.3em\right)}}
 
 % Augmentation ideal (uses \fboxsep and \fbox)
-\newcommand{\aug}{\fboxsep=-\fboxrule\!\!\!\fbox{\strut}\!\!\!}
+\providecommand{\aug}{\fboxsep=-\fboxrule\!\!\!\fbox{\strut}\!\!\!}
 
 % Large symbols using text sizing
-\newcommand{\bigast}[0]{{\mathop{\text{\Large $\ast$}}}}
-\newcommand{\connectsum}[0]{\mathop{ \Large\mypound }}
+\providecommand{\bigast}[0]{{\mathop{\text{\Large $\ast$}}}}
+\providecommand{\connectsum}[0]{\mathop{ \Large\mypound }}
 
 % Horizontal and vertical bars using \rule
-\newcommand*{\horzbar}{\rule[.5ex]{2.5ex}{0.5pt}}
-\newcommand*{\vertbar}{\rule[-1ex]{0.5pt}{2.5ex}}
+\providecommand*{\horzbar}{\rule[.5ex]{2.5ex}{0.5pt}}
+\providecommand*{\vertbar}{\rule[-1ex]{0.5pt}{2.5ex}}
 
 % Scaled and raised symbols
-\newcommand{\mypound}{\scalebox{0.8}{\raisebox{0.4ex}{\#}}}
+\providecommand{\mypound}{\scalebox{0.8}{\raisebox{0.4ex}{\#}}}
 
 % Triple arrows using \substack
-\newcommand\rrrarrows{
+\providecommand\rrrarrows{
     \mathrel{\substack{\textstyle\rightarrow\\[-0.6ex]
         \textstyle\rightarrow \\[-0.6ex]
         \textstyle\rightarrow}}
