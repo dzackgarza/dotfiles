@@ -211,8 +211,8 @@ download-arxiv arxiv_id dir:
   #!/usr/bin/env bash
   set -euo pipefail
   ROOT="{{invocation_directory()}}"
-  mkdir -p "$ROOT/references/{{dir}}"
-  wget -qO - "https://arxiv.org/e-print/{{arxiv_id}}" | tar -xz -C "$ROOT/references/{{dir}}"
+  mkdir -p "$ROOT/knowledge/papers/{{dir}}"
+  wget -qO - "https://arxiv.org/e-print/{{arxiv_id}}" | tar -xz -C "$ROOT/knowledge/papers/{{dir}}"
 
 # Compile a reference LaTeX file to Markdown (Modern extraction pipeline)
 extract-ref dir file="main":
