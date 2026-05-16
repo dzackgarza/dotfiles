@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+"""SageMath Pandoc Filter — Global wrapper.
+
+Pandoc searches $HOME/.pandoc/filters/ for executables used with -F.
+This thin wrapper imports the canonical filter implementation from the
+sagemath_pandoc_filter package and runs it.
+
+Usage (from any project):
+    pandoc input.md -F sagemath-pandoc-filter -o output.pdf
+"""
+
+import sys
+import os
+
+# Ensure the package is importable
+# Package lives at ~/notes/teaching/sage_filter_package/
+_pkg_root = os.path.expanduser("~/notes/teaching/sage_filter_package")
+if _pkg_root not in sys.path:
+    sys.path.insert(0, _pkg_root)
+
+try:
+    from sagemath_pandoc_filter.filter import main as _filter_main
+except ImportError as e:
+    print(f"sagemath-pandoc-filter: cannot import filter: {e}", file=sys.stderr)
+    sys.exit(1)
+
+if __name__ == "__main__":
+    _filter_main()
