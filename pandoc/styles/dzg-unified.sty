@@ -7,6 +7,11 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{dzg-unified}[2025/01/09 DZG Unified Macro Package]
 
+\newif\if@dzgarxiv
+\@dzgarxivfalse
+\DeclareOption{arxiv}{\@dzgarxivtrue}
+\ProcessOptions\relax
+
 % Core math packages (required for macros to work)
 \RequirePackage{amsmath,amsthm,amssymb,amsfonts}
 \RequirePackage{mathtools}    % DeclarePairedDelimiter, coloneqq
@@ -79,6 +84,11 @@
 \input{categories}
 \input{spectral}
 \input{tikz}
-\input{environments}
+
+\if@dzgarxiv
+  \input{environments-arxiv}
+\else
+  \input{environments}
+\fi
 
 \endinput
