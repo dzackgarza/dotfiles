@@ -25,6 +25,7 @@ export TEXINPUTS := ".:" + home_dir() + "/.pandoc/styles//:" + home_dir() + "/.p
 preview file format="pdf" template="research_draft.tex":
   #!/usr/bin/env bash
   set -euo pipefail
+  cd "{{invocation_directory()}}"
   
   FILE=$(realpath "{{file}}")
   DIR=$(dirname "$FILE")
