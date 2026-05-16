@@ -1,39 +1,13 @@
-#!/usr/bin/env python3
-"""SageMath Pandoc Filter — Global wrapper.
+#!/usr/bin/env bash
+# sagemath-pandoc-filter — Global Pandoc filter wrapper.
+# This shell wrapper ensures the filter runs under Sage's Python interpreter,
+# which has both `sage.all` and `panflute` installed.
 
-Pandoc searches $HOME/.pandoc/filters/ for executables used with -F.
-This thin wrapper imports the canonical filter implementation from the
-sagemath_pandoc_filter package and runs it.
+set -euo pipefail
 
-Usage (from any project):
-    pandoc input.md -F sagemath-pandoc-filter -o output.pdf
-"""
+# Resolve the package root
+PKG_ROOT="${HOME}/notes/teaching/sage_filter_package"
+FILTER_PY="${PKG_ROOT}/sagemath_pandoc_filter/filter.py"
 
-import sys
-import os
-
-# Ensure the pandoc venv is on PATH so panflute is importable
-_venv = os.path.expanduser("~/.pandoc/venv")
-_venv_bin = os.path.join(_venv, "bin")
-if _venv_bin not in os.environ.get("PATH", "").split(":"):
-    os.environ["PATH"] = _venv_bin + ":" + os.environ.get("PATH", "")
-
-# Ensure panflute from the venv is importable
-_venv_site = os.path.join(_venv, "lib", f"python{sys.version_info.major}.{sys.version_info.minor}", "site-packages")
-if _venv_site not in sys.path:
-    sys.path.insert(0, _venv_site)
-
-# Ensure the package is importable
-# Package lives at ~/notes/teaching/sage_filter_package/
-_pkg_root = os.path.expanduser("~/notes/teaching/sage_filter_package")
-if _pkg_root not in sys.path:
-    sys.path.insert(0, _pkg_root)
-
-try:
-    from sagemath_pandoc_filter.filter import main as _filter_main
-except ImportError as e:
-    print(f"sagemath-pandoc-filter: cannot import filter: {e}", file=sys.stderr)
-    sys.exit(1)
-
-if __name__ == "__main__":
-    _filter_main()
+# Run the filter using Sage's Python interpreter
+exec sage --python "${FILTER_PY}" "$@"
