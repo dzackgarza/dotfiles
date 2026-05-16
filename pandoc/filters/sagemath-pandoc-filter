@@ -12,6 +12,11 @@ Usage (from any project):
 import sys
 import os
 
+# Ensure the pandoc venv is on PATH so panflute is importable
+_venv_bin = os.path.expanduser("~/.pandoc/venv/bin")
+if _venv_bin not in os.environ.get("PATH", "").split(":"):
+    os.environ["PATH"] = _venv_bin + ":" + os.environ.get("PATH", "")
+
 # Ensure the package is importable
 # Package lives at ~/notes/teaching/sage_filter_package/
 _pkg_root = os.path.expanduser("~/notes/teaching/sage_filter_package")
