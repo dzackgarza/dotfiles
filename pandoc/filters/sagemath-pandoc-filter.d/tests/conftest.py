@@ -1,9 +1,10 @@
 """Pytest configuration and fixtures for Sage Filter tests."""
+
 import os
 import sys
 import tempfile
+from collections.abc import Generator
 from pathlib import Path
-from typing import Generator
 
 import pytest
 
@@ -15,6 +16,7 @@ if PACKAGE_DIR not in sys.path:
 # Check if Sage is available
 try:
     from sage.all import *  # noqa: F401
+
     SAGE_AVAILABLE = True
 except ImportError:
     SAGE_AVAILABLE = False
@@ -25,7 +27,7 @@ if not SAGE_AVAILABLE:
 
 
 @pytest.fixture(scope="session")
-def temp_dir() -> Generator[str, None, None]:
+def temp_dir() -> Generator[str]:
     """Create a temporary directory for test outputs."""
     with tempfile.TemporaryDirectory(prefix="sage_filter_test_") as temp_dir:
         yield temp_dir
@@ -46,17 +48,21 @@ def add_imports(doctest_namespace):
 
     # Add Sage imports if available
     if SAGE_AVAILABLE:
-        from sage.all import *  # noqa: F401, F403
-        doctest_namespace.update({
-            "sage.all": sage.all,
-            "var": sage.all.var,
-            "plot": sage.all.plot,
-            "show": sage.all.show,
-        })
+        import sage.all
+
+        doctest_namespace.update(
+            {
+                "sage.all": sage.all,
+                "var": sage.all.var,
+                "plot": sage.all.plot,
+                "show": sage.all.show,
+            }
+        )
 
 
 # Configure logging for tests
 import logging
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("sagemath_pandoc_filter")
 logger.setLevel(logging.DEBUG if os.environ.get("DEBUG") else logging.INFO)
