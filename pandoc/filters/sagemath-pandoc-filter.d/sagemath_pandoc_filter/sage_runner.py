@@ -34,17 +34,15 @@ def execute_sage_code(code: str) -> dict[str, Any]:
         # Import Sage modules
         try:
             import sage.all
-
-        # Create a dictionary to store local variables
-        # Seed it with all Sage symbols so user code can reference plot, sin, etc.
-        import sage.all
-        local_vars = dict(sage.all.__dict__)
         except ImportError as e:
             return {
                 "success": False,
                 "output": "",
                 "error": f"Failed to import sage.all: {str(e)}",
             }
+
+        # Seed local variables with all Sage symbols so user code can reference plot, sin, etc.
+        local_vars = dict(sage.all.__dict__)
 
         # Split code into lines and remove empty lines
         lines = [line.strip() for line in code.strip().split("\n") if line.strip()]
