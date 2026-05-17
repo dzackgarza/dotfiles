@@ -1,0 +1,2 @@
+[console_scripts]
+sagemath-pandoc-filter = sagemath_pandoc_filter.cli:main

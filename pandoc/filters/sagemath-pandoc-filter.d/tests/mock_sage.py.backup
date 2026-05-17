@@ -1,0 +1,161 @@
+"""Mock Sage environment for testing."""
+import re
+
+class MockSage:
+    """Mock Sage environment for testing."""
+    
+    def __init__(self):
+        self.variables = {}
+    
+    def execute_code(self, code: str) -> dict:
+        """Execute Sage code and return the result."""
+        try:
+            # Strip any leading/trailing whitespace and normalize newlines
+            code = code.strip()
+            
+            # Handle multi-line code blocks
+            lines = [line.strip() for line in code.split('\n') if line.strip()]
+            
+            # Execute each line, keeping track of variables
+            for line in lines:
+                # Handle variable assignment
+                if '=' in line and not line.startswith('=') and '!=' not in line and '==' not in line:
+                    var_name, expr = [part.strip() for part in line.split('=', 1)]
+                    # Evaluate the right-hand side
+                    result = self._evaluate_expression(expr)
+                    if not result['success']:
+                        return result
+                    self.variables[var_name] = result['result']
+                else:
+                    # Evaluate the expression
+                    return self._evaluate_expression(line)
+            
+            # If we get here, return the last result or None
+            if self.variables:
+                last_var = list(self.variables.keys())[-1]
+                return {'success': True, 'result': self.variables[last_var]}
+            return {'success': True, 'result': None}
+            
+        except Exception as e:
+            return {'success': False, 'error': str(e)}
+    
+    def _evaluate_expression(self, expr: str) -> dict:
+        """Evaluate a single expression and return the result."""
+        try:
+            expr = expr.strip()
+            
+            # Handle boolean literals
+            if expr == 'True':
+                return {'success': True, 'result': True}
+            if expr == 'False':
+                return {'success': True, 'result': False}
+                
+            # Handle numeric literals
+            if expr.isdigit():
+                return {'success': True, 'result': int(expr)}
+                
+            # Handle float literals
+            if '.' in expr and all(part.isdigit() for part in expr.split('.', 1)):
+                return {'success': True, 'result': float(expr)}
+            
+            # Check for variable references
+            for var_name, value in self.variables.items():
+                if var_name in expr:
+                    # Replace variable names with their values
+                    # Only replace whole words to avoid partial matches
+                    expr = re.sub(r'\b' + re.escape(var_name) + r'\b', str(value), expr)
+            
+            # Handle comparison operators (in order of precedence)
+            comparison_ops = [
+                ('!=', lambda a, b: a != b),
+                ('==', lambda a, b: a == b),
+                ('>=', lambda a, b: a >= b),
+                ('<=', lambda a, b: a <= b),
+                ('>', lambda a, b: a > b),
+                ('<', lambda a, b: a < b),
+                ('and', lambda a, b: a and b),
+                ('or', lambda a, b: a or b),
+            ]
+            
+            # Handle not operator first (unary)
+            if expr.startswith('not '):
+                val = self._evaluate_expression(expr[4:].strip())
+                if not val['success']:
+                    return val
+                return {'success': True, 'result': not val['result']}
+            
+            # Check for multi-character operators first (>=, <=, !=, ==)
+            multi_char_ops = ['>=', '<=', '!=', '==']
+            print(f"  Checking multi-char operators: {multi_char_ops} in expression: {expr}")
+            for op in multi_char_ops:
+                if op in expr:
+                    print(f"  Found operator: {op} in expression: {expr}")
+                    parts = [p.strip() for p in expr.split(op, 1)]
+                    if len(parts) == 2:
+                        print(f"  Left part: {parts[0]}, Right part: {parts[1]}")
+                        left = self._evaluate_expression(parts[0])
+                        right = self._evaluate_expression(parts[1])
+                        
+                        if not left['success'] or not right['success']:
+                            print(f"  Evaluation failed - Left: {left}, Right: {right}")
+                            return {'success': False, 'error': 'Failed to evaluate operands'}
+                        
+                        print(f"  Left result: {left['result']} ({type(left['result'])}), Right result: {right['result']} ({type(right['result'])})")
+                        # Look up the comparison function for this operator
+                        op_func = next((f for o, f in comparison_ops if o == op), None)
+                        if op_func is None:
+                            return {'success': False, 'error': f'Unknown operator: {op}'}
+                            
+                        # Ensure we return a boolean for comparison operations
+                        result = bool(op_func(left['result'], right['result']))
+                        print(f"  Comparison result: {result}")
+                        return {'success': True, 'result': result}
+            
+            print(f"  No multi-char operators found in expression: {expr}")
+            
+            # Then check for single-character operators (>, <)
+            for op in ['>', '<']:
+                if op in expr and f"{op}=" not in expr:  # Make sure we're not matching part of >= or <=
+                    print(f"  Found operator: {op} in expression: {expr}")
+                    parts = [p.strip() for p in expr.split(op, 1)]
+                    if len(parts) == 2:
+                        print(f"  Left part: {parts[0]}, Right part: {parts[1]}")
+                        left = self._evaluate_expression(parts[0])
+                        right = self._evaluate_expression(parts[1])
+                        
+                        if not left['success'] or not right['success']:
+                            print(f"  Evaluation failed - Left: {left}, Right: {right}")
+                            return {'success': False, 'error': 'Failed to evaluate operands'}
+                        
+                        print(f"  Left result: {left['result']} ({type(left['result'])}), Right result: {right['result']} ({type(right['result'])})")
+                        # Look up the comparison function for this operator
+                        op_func = next((f for o, f in comparison_ops if o == op), None)
+                        if op_func is None:
+                            return {'success': False, 'error': f'Unknown operator: {op}'}
+                            
+                        # Ensure we return a boolean for comparison operations
+                        result = bool(op_func(left['result'], right['result']))
+                        print(f"  Comparison result: {result}")
+                        return {'success': True, 'result': result}
+            
+            # Try to evaluate as a simple expression
+            try:
+                # Handle numeric expressions with spaces (e.g., "5 + 3")
+                if any(op in expr for op in ['+', '-', '*', '/', '**']):
+                    # For simple arithmetic, we can use eval with a safe environment
+                    safe_dict = {'__builtins__': None}
+                    return {'success': True, 'result': eval(expr, safe_dict, {})}
+                
+                # Try to evaluate as a Python expression
+                result = eval(expr, {'__builtins__': {}}, {})
+                return {'success': True, 'result': result}
+                
+            except Exception as e:
+                return {'success': False, 'error': f'Failed to evaluate expression: {str(e)}'}
+            
+        except Exception as e:
+            return {'success': False, 'error': str(e)}
+
+# Create a mock execute_sage_code function
+mock_sage = MockSage()
+execute_sage_code = mock_sage.execute_code
