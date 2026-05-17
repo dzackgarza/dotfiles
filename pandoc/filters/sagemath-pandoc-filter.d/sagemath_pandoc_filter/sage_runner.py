@@ -35,8 +35,10 @@ def execute_sage_code(code: str) -> dict[str, Any]:
         try:
             import sage.all
 
-            # Create a dictionary to store local variables
-            local_vars = {}
+        # Create a dictionary to store local variables
+        # Seed it with all Sage symbols so user code can reference plot, sin, etc.
+        import sage.all
+        local_vars = dict(sage.all.__dict__)
         except ImportError as e:
             return {
                 "success": False,
