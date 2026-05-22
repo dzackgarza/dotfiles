@@ -1,0 +1,52 @@
+/**
+ * Design tokens for AGS Control Center
+ * Uses GTK theme colors for proper desktop integration
+ */
+
+// Colors from GTK theme
+$panel-bg: #{"@window_bg_color"};
+$tile-bg: #{"@card_bg_color"};
+$tile-active: #{"alpha(@accent_bg_color, 0.3)"};
+$tile-action-active: #{"alpha(@accent_bg_color, 0.4)"};
+$error-border: #{"@error_color"};
+$error-bg: #{"alpha(@error_color, 0.15)"};
+$error-text: #{"@error_color"};
+$backdrop-bg: #{"alpha(@theme_bg_color, 0.01)"};
+
+// Spacing
+$spacing-xs: 2px;
+$spacing-sm: 6px;
+$spacing-md: 8px;
+$spacing-lg: 10px;
+$spacing-xl: 12px;
+$spacing-2xl: 16px;
+$spacing-3xl: 20px;
+
+// Border radius
+$radius-sm: 8px;
+$radius-md: 10px;
+$radius-lg: 12px;
+$radius-xl: 16px;
+
+// Typography
+$font-xs: 11px;
+$font-sm: 12px;
+$font-md: 15px;
+$font-lg: 18px;
+
+// Dimensions
+$min-width-tile: 180px;
+$min-width-panel: 420px;
+$min-width-popover: 220px;
+
+// Icon sizes (used in TypeScript)
+$icon-status: 12px;
+$icon-slider: 18px;
+$icon-tile-action: 16px;
+$icon-status-main: 20px;
+$icon-tile: 22px;
+
+// Opacity
+$opacity-secondary: 0.7;
+$opacity-label: 0.75;
+$opacity-slider: 0.8;
