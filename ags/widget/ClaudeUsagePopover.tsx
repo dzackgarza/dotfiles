@@ -1,20 +1,13 @@
 import type { Accessor } from "ags"
 import { Astal, Gtk } from "ags/gtk4"
+import type { UsageCollection } from "../services/claude-usage-fetcher"
 
 const ICON_SIZE = 16
-
-interface ClaudeUsageData {
-  fiveHourUtilization: number
-  fiveHourResetAt: string
-  sevenDayUtilization: number
-  sevenDayResetAt: string
-  sevenDayOpusUtilization?: number
-}
 
 interface ClaudeUsagePopoverProps {
   visible: Accessor<boolean>
   onVisibleChange: (visible: boolean) => void
-  claudeUsageData?: Accessor<ClaudeUsageData>
+  claudeUsageData?: Accessor<UsageCollection>
 }
 
 function QuotaSection({
@@ -26,73 +19,32 @@ function QuotaSection({
 }: {
   title: string
   icon: string
-  percentage: Accessor<number> | number
-  resetsIn: Accessor<string> | string
+  percentage: number
+  resetsIn: string
   color?: string
 }) {
-  const isAccessor = (val: any): val is Accessor<number> => typeof val === "function"
-  const isAccessorStr = (val: any): val is Accessor<string> => typeof val === "function"
-  
   return (
     <box class="popover-section" orientation={Gtk.Orientation.VERTICAL} spacing={8}>
       <box class="popover-quota-row" orientation={Gtk.Orientation.HORIZONTAL} spacing={12} halign={Gtk.Align.FILL}>
         <image class="popover-quota-icon" iconName={icon} pixelSize={ICON_SIZE} valign={Gtk.Align.CENTER} />
         <label class="popover-quota-label" xalign={0} label={title} hexpand />
-        <label class="popover-quota-value" xalign={1} label={isAccessor(percentage) ? percentage((p) => `${p}%`) : `${percentage}%`} />
+        <label class="popover-quota-value" xalign={1} label={`${percentage}%`} />
       </box>
       <Gtk.ProgressBar
-        class={`popover-progress ${color === "rgb(34, 197, 94)" ? "popover-progress-green" : "popover-progress-yellow"}`}
-        fraction={isAccessor(percentage) ? percentage((p) => p / 100) : percentage / 100}
+        class={`popover-progress ${
+          color === "rgb(239, 68, 68)"
+            ? "popover-progress-red"
+            : color === "rgb(250, 204, 21)"
+            ? "popover-progress-yellow"
+            : "popover-progress-green"
+        }`}
+        fraction={percentage / 100}
         hexpand
         halign={Gtk.Align.FILL}
       />
-      <label class="popover-resets-text" xalign={0} label={isAccessorStr(resetsIn) ? resetsIn : resetsIn} />
+      <label class="popover-resets-text" xalign={0} label={resetsIn} />
     </box>
   )
-}
-
-function AmountSection({
-  title,
-  icon,
-  amount,
-  replenishRate,
-  usagePercent,
-}: {
-  title: string
-  icon: string
-  amount: string
-  replenishRate: string
-  usagePercent: number
-}) {
-  return (
-    <box class="popover-section" orientation={Gtk.Orientation.VERTICAL} spacing={8}>
-      <box class="popover-quota-row" orientation={Gtk.Orientation.HORIZONTAL} spacing={12} halign={Gtk.Align.FILL}>
-        <image class="popover-quota-icon" iconName={icon} pixelSize={ICON_SIZE} valign={Gtk.Align.CENTER} />
-        <label class="popover-quota-label" xalign={0} label={title} hexpand />
-        <label class="popover-quota-value" xalign={1} label={amount} />
-      </box>
-      <Gtk.ProgressBar
-        class="popover-progress popover-progress-green"
-        fraction={usagePercent / 100}
-        hexpand
-        halign={Gtk.Align.FILL}
-      />
-      <label class="popover-resets-text" xalign={0} label={replenishRate} />
-    </box>
-  )
-}
-
-function formatResetTime(dateString: string): string {
-  try {
-    const date = new Date(dateString)
-    const now = new Date()
-    const diffMs = date.getTime() - now.getTime()
-    const diffHours = Math.floor(diffMs / (1000 * 60 * 60))
-    const diffMinutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60))
-    return `Resets in ${diffHours}h ${diffMinutes}m`
-  } catch {
-    return "Resets at unknown time"
-  }
 }
 
 export function ClaudeUsagePopover({ visible, onVisibleChange, claudeUsageData }: ClaudeUsagePopoverProps) {
@@ -121,71 +73,54 @@ export function ClaudeUsagePopover({ visible, onVisibleChange, claudeUsageData }
 
   const popoverContent = (
     <box class="popover-root" orientation={Gtk.Orientation.VERTICAL} spacing={0}>
-      {/* Claude Usage Header */}
-      <label class="popover-title" xalign={0} label="Claude Usage" />
+      {claudeUsageData ? (
+        claudeUsageData((data) => (
+          <box orientation={Gtk.Orientation.VERTICAL} spacing={0}>
+            {data.providers.flatMap((provider) => {
+              const elements = [
+                <label class="popover-title" xalign={0} label={provider.display_name} />,
+                <box class="popover-divider" />
+              ];
 
-      <box class="popover-divider" />
+              if (provider.status === "error") {
+                const errMsg = provider.errors?.[0]?.message || "Failed to fetch usage";
+                elements.push(
+                  <box class="popover-section" orientation={Gtk.Orientation.VERTICAL} spacing={8}>
+                    <label class="popover-resets-text" xalign={0} label={errMsg} />
+                  </box>
+                );
+              } else {
+                provider.rows.forEach((row) => {
+                  const isShortTerm = row.identifier.toLowerCase().includes("5h") || row.identifier.toLowerCase().includes("hour");
+                  const icon = isShortTerm ? "xsi-alarm-symbolic" : "xsi-x-office-calendar-symbolic";
+                  
+                  let color = "rgb(34, 197, 94)"; // green
+                  if (row.pct_used >= 80) {
+                    color = "rgb(239, 68, 68)"; // red
+                  } else if (row.pct_used >= 50) {
+                    color = "rgb(250, 204, 21)"; // yellow
+                  }
 
-      {/* 5-Hour Window Section */}
-      <QuotaSection
-        title="5-Hour Window"
-        icon="xsi-alarm-symbolic"
-        percentage={claudeUsageData ? claudeUsageData((data) => data.fiveHourUtilization) : (() => 0)()}
-        resetsIn={claudeUsageData ? claudeUsageData((data) => formatResetTime(data.fiveHourResetAt)) : (() => "Loading...")()}
-        color="rgb(34, 197, 94)"
-      />
+                  elements.push(
+                    <QuotaSection
+                      title={row.identifier}
+                      icon={icon}
+                      percentage={row.pct_used}
+                      resetsIn={row.time_until_reset ? `Resets ${row.time_until_reset}` : "Resets at unknown time"}
+                      color={color}
+                    />
+                  );
+                });
+              }
 
-      {/* Weekly Section */}
-      <QuotaSection
-        title="7-Day"
-        icon="xsi-x-office-calendar-symbolic"
-        percentage={claudeUsageData ? claudeUsageData((data) => data.sevenDayUtilization) : (() => 0)()}
-        resetsIn={claudeUsageData ? claudeUsageData((data) => formatResetTime(data.sevenDayResetAt)) : (() => "Loading...")()}
-        color="rgb(250, 204, 21)"
-      />
-
-      <box class="popover-divider" />
-
-      {/* Codex Usage Header */}
-      <label class="popover-title" xalign={0} label="Codex Usage" />
-
-      <box class="popover-divider" />
-
-      {/* 5-Hour Window Section */}
-      <QuotaSection
-        title="5-Hour Window"
-        icon="xsi-alarm-symbolic"
-        percentage={35}
-        resetsIn="Resets in 4h 54m"
-        color="rgb(34, 197, 94)"
-      />
-
-      {/* Weekly Section */}
-      <QuotaSection
-        title="7-Day"
-        icon="xsi-x-office-calendar-symbolic"
-        percentage={62}
-        resetsIn="Resets Mon 2:59 PM"
-        color="rgb(250, 204, 21)"
-      />
-
-      <box class="popover-divider" />
-
-      {/* Amp Usage Header */}
-      <label class="popover-title" xalign={0} label="Amp Usage" />
-
-      <box class="popover-divider" />
-
-      {/* Amp Balance Section */}
-      <AmountSection
-        title="Balance"
-        icon="xsi-x-office-calendar-symbolic"
-        amount="$9.03"
-        replenishRate="Replenishes +$0.42/hour"
-        usagePercent={9.7}
-      />
-
-      <box class="popover-divider" />
+              elements.push(<box class="popover-divider" />);
+              return elements;
+            })}
+          </box>
+        )) as any
+      ) : (
+        <label class="popover-title" xalign={0} label="Loading..." />
+      )}
 
       {/* Footer */}
       <box class="popover-footer-row" orientation={Gtk.Orientation.HORIZONTAL} spacing={12} halign={Gtk.Align.FILL}>
