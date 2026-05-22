@@ -146,7 +146,7 @@ export function ClaudeUsagePopover({ visible, onVisibleChange, claudeUsageData }
       $={(self) => {
         const monitor = Gdk.Display.get_default()?.get_monitors().get_item(0) as Gdk.Monitor | null
         const screenHeight = monitor?.get_geometry().height ?? 1080
-        const popoverHeight = Math.floor(screenHeight / 3)
+        const popoverHeight = Math.floor((screenHeight * 2) / 3)
         self.set_default_size(500, popoverHeight)
 
         const bindEscapeToggle = (widget: Gtk.Widget) => {
