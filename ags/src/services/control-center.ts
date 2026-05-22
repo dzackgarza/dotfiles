@@ -22,7 +22,7 @@ import { execAsync } from "ags/process"
 import { interval } from "ags/time"
 import GLib from "gi://GLib?version=2.0"
 import { createLogger } from "../index"
-import { fetchClaudeUsage } from "../../services/claude-usage-fetcher"
+import { fetchClaudeUsage, type UsageCollection } from "../../services/claude-usage-fetcher"
 import {
   clamp,
   cleanTooltip,
@@ -578,24 +578,52 @@ async function readDiskState(): Promise<UsageTileState> {
 async function fetchClaudeUsageData(): Promise<ClaudeUsageData> {
   const logger = createLogger(["ags", "claude"])
   const data = await fetchClaudeUsage()
-  logger.debug`Fetched Claude usage: 5h=${data.fiveHourUtilization}% 7d=${data.sevenDayUtilization}%`
+  const claude = data.providers.find(p => p.provider === "claude")
+  if (claude && claude.status === "ok") {
+    const row5h = claude.rows.find(r => r.identifier.includes("5h"))
+    const row7d = claude.rows.find(r => r.identifier.includes("7d"))
+    const pct5h = row5h ? row5h.pct_used : 0
+    const pct7d = row7d ? row7d.pct_used : 0
+    logger.debug`Fetched Claude usage: 5h=${pct5h}% 7d=${pct7d}%`
+  } else {
+    logger.debug`Fetched Claude usage: (claude provider not found or failed)`
+  }
   return data
 }
 
 async function readAiUsageState(): Promise<UsageTileState> {
   const data = await fetchClaudeUsageData()
 
-  const fiveUtilization = data.fiveHourUtilization
-  const sevenUtilization = data.sevenDayUtilization
+  // Find the claude provider snapshot
+  const claude = data.providers.find(p => p.provider === "claude")
+  if (!claude) {
+    throw new Error("Claude provider not found in usage collection")
+  }
+  if (claude.status === "error") {
+    const errMsg = claude.errors?.[0]?.message || "Claude provider returned error status"
+    throw new Error(errMsg)
+  }
 
-  const fiveReset = new Date(data.fiveHourResetAt)
-  const sevenReset = new Date(data.sevenDayResetAt)
+  // Find 5h and 7d rows
+  const row5h = claude.rows.find(r => r.identifier.includes("5h"))
+  const row7d = claude.rows.find(r => r.identifier.includes("7d"))
+
+  if (!row5h || !row7d) {
+    throw new Error("Required 5h or 7d usage rows not found for Claude")
+  }
+
+  const fiveUtilization = row5h.pct_used
+  const sevenUtilization = row7d.pct_used
+
+  // Parse reset dates or use fallback if null
+  const fiveReset = row5h.reset_at ? new Date(row5h.reset_at) : new Date()
+  const sevenReset = row7d.reset_at ? new Date(row7d.reset_at) : new Date()
 
   if (Number.isNaN(fiveReset.getTime())) {
-    throw new Error(`Invalid fiveHourResetAt: ${data.fiveHourResetAt}`)
+    throw new Error(`Invalid fiveHourResetAt: ${row5h.reset_at}`)
   }
   if (Number.isNaN(sevenReset.getTime())) {
-    throw new Error(`Invalid sevenDayResetAt: ${data.sevenDayResetAt}`)
+    throw new Error(`Invalid sevenDayResetAt: ${row7d.reset_at}`)
   }
 
   const fiveFraction = clamp(fiveUtilization / 100, 0, 1)
@@ -790,6 +818,7 @@ export type ControlCenterService = {
   volume: Accessor<SliderState>
   brightness: Accessor<SliderState>
   battery: Accessor<BatteryState>
+  claudeUsageData: Accessor<UsageCollection>
   lastUpdated: Accessor<string>
   actionError: Accessor<string>
   initializeService: () => Promise<void>
@@ -1013,10 +1042,9 @@ function createControlCenterService(): ControlCenterService {
 
   const claudeUsageDataPoll = createPolledState({
     initial: {
-      fiveHourUtilization: 0,
-      fiveHourResetAt: "",
-      sevenDayUtilization: 0,
-      sevenDayResetAt: "",
+      version: "1",
+      captured_at: "",
+      providers: [],
     } as ClaudeUsageData,
     intervalMs: 300000, // 5 minutes - usage updates infrequently
     load: fetchClaudeUsageData,
