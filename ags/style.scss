@@ -164,6 +164,11 @@ window.NotificationCenter {
     background: rgb(34, 197, 94);
   }
 
+  .provider-dot-unknown {
+    border-radius: 50%;
+    background: rgb(251, 146, 60);
+  }
+
   .provider-eta {
     font-size: 9px;
     color: rgb(239, 68, 68);
