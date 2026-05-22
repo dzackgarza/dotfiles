@@ -28,6 +28,10 @@ window.ClaudeUsagePopover {
     box-shadow: 0 20px 40px #{"alpha(@theme_bg_color, 0.3)"};
   }
 
+  .popover-scroller {
+    min-height: 0;
+  }
+
   .popover-header {
     padding: 0 0 $spacing-lg 0;
   }
