@@ -44,31 +44,36 @@ const PROVIDER_ICONS: Record<string, string> = {
   antigravity: "anthropic-symbolic",
 }
 
-function isProviderUsable(provider: ProviderSnapshot): boolean {
-  if (provider.status === "error") return false
+type ProviderAvail = "ok" | "rate_limited" | "unavailable"
+
+function getProviderAvail(provider: ProviderSnapshot): ProviderAvail {
+  if (provider.status === "rate_limited") return "rate_limited"
+  if (provider.status === "error") return "unavailable"
   if (provider.availability.length > 0) {
-    return provider.availability.some((m) => m.available_now)
+    return provider.availability.some((m) => m.available_now) ? "ok" : "unavailable"
   }
-  return provider.rows.length === 0 || provider.rows.some((r) => !r.is_exhausted)
+  const anyOpen = provider.rows.length === 0 || provider.rows.some((r) => !r.is_exhausted)
+  return anyOpen ? "ok" : "unavailable"
 }
 
 function providerEta(provider: ProviderSnapshot): string | null {
   const avail = provider.availability[0]
   if (!avail || avail.available_now || !avail.available_when) return null
-  const resetAt = new Date(avail.available_when)
-  return formatRelative(resetAt)
+  return formatRelative(new Date(avail.available_when))
 }
 
 function ProviderIcon({ provider, onClicked }: { provider: ProviderSnapshot; onClicked: () => void }) {
   const iconName = PROVIDER_ICONS[provider.provider] ?? "xsi-help-browser-symbolic"
-  const usable = isProviderUsable(provider)
+  const avail = getProviderAvail(provider)
   const eta = providerEta(provider)
   return (
     <button class="provider-icon-btn" onClicked={onClicked} tooltipText={provider.display_name}>
       <box orientation={Gtk.Orientation.VERTICAL} spacing={2} halign={Gtk.Align.CENTER}>
         <image iconName={iconName} pixelSize={24} halign={Gtk.Align.CENTER} />
-        {usable ? (
+        {avail === "ok" ? (
           <box class="provider-dot-ok" halign={Gtk.Align.CENTER} widthRequest={6} heightRequest={6} />
+        ) : avail === "rate_limited" ? (
+          <box class="provider-dot-unknown" halign={Gtk.Align.CENTER} widthRequest={6} heightRequest={6} />
         ) : (
           <label class="provider-eta" label={eta ?? "?"} halign={Gtk.Align.CENTER} />
         )}

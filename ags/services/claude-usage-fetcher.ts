@@ -20,7 +20,7 @@ export interface ModelAvailability {
 export interface ProviderSnapshot {
   provider: string
   display_name: string
-  status: "ok" | "error"
+  status: "ok" | "error" | "rate_limited"
   rows: UsageRow[]
   availability: ModelAvailability[]
   metadata: Record<string, any>
