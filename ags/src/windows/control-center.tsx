@@ -41,10 +41,13 @@ type AiUsageTileProps = {
 function AiUsageTile({ state, onClicked }: AiUsageTileProps & { onClicked: () => void }) {
   return (
     <button
-      class="tile tile-info"
+      class={state((value) =>
+        joinClasses("tile", "tile-info", value.error && "error")
+      )}
       onClicked={onClicked}
       hexpand
       halign={Gtk.Align.FILL}
+      tooltipText={state((value) => value.detail || "")}
     >
       <box
         orientation={Gtk.Orientation.HORIZONTAL}
@@ -54,10 +57,12 @@ function AiUsageTile({ state, onClicked }: AiUsageTileProps & { onClicked: () =>
       >
         <label class="tile-icon" xalign={0.5} label="🤖" />
         <box orientation={Gtk.Orientation.VERTICAL} spacing={4} hexpand halign={Gtk.Align.FILL}>
-          <label class="tile-line1" xalign={0} label="Claude Usage" />
+          <label class="tile-line1" xalign={0} label={state((value) => value.line1 || "LLM Usage")} />
           <box orientation={Gtk.Orientation.VERTICAL} spacing={2}>
-            <label class="tile-line2" xalign={0} label="Pro" />
-            <Gtk.ProgressBar fraction={0.51} />
+            <label class="tile-line2" xalign={0} label={state((value) => value.line2 || "")} />
+            <Gtk.ProgressBar
+              fraction={state((value) => typeof value.percent === "number" ? value.percent : 0)}
+            />
           </box>
         </box>
       </box>
