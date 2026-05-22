@@ -814,7 +814,6 @@ export type ControlCenterService = {
   cpu: Accessor<UsageTileState>
   memory: Accessor<UsageTileState>
   disk: Accessor<UsageTileState>
-  aiUsage: Accessor<UsageTileState>
   volume: Accessor<SliderState>
   brightness: Accessor<SliderState>
   battery: Accessor<BatteryState>
@@ -823,6 +822,7 @@ export type ControlCenterService = {
   actionError: Accessor<string>
   initializeService: () => Promise<void>
   startPollingService: () => void
+  refreshUsage: () => void
   suppressVolumeDrag: (suppress: boolean) => void
   suppressBrightnessDrag: (suppress: boolean) => void
   toggleBluetooth: () => Promise<void>
@@ -841,7 +841,7 @@ export type ControlCenterService = {
 
 function createControlCenterService(): ControlCenterService {
   const logger = createLogger(["ags", "control-center"])
-  const totalPolls = 15
+  const totalPolls = 14
   const [pendingPolls, setPendingPolls] = createState(totalPolls)
   const ready = pendingPolls((count) => count === 0)
   const [lastUpdated, setLastUpdated] = createState("Last updated: waiting for first poll")
@@ -1025,20 +1025,8 @@ function createControlCenterService(): ControlCenterService {
     onFirstComplete: markFirstPollComplete,
   })
 
-  const aiUsagePoll = createPolledState({
-    initial: {
-      percent: 0,
-      line1: "Loading...",
-      line2: "AI Usage",
-      detail: "Waiting for first poll",
-      error: null,
-    },
-    intervalMs: 15000,
-    load: readAiUsageState,
-    onError: (error) => usageError("AI Usage", error),
-    onSuccess: markUpdated,
-    onFirstComplete: markFirstPollComplete,
-  })
+  const USAGE_TTL_MS = 120_000 // 2 minutes
+  let usageLastFetchedAt = 0
 
   const claudeUsageDataPoll = createPolledState({
     initial: {
@@ -1046,15 +1034,20 @@ function createControlCenterService(): ControlCenterService {
       captured_at: "",
       providers: [],
     } as ClaudeUsageData,
-    intervalMs: 300000, // 5 minutes - usage updates infrequently
+    intervalMs: 0, // no background polling — refreshed on window open via refreshUsage()
     load: fetchClaudeUsageData,
     onError: (error) => {
       logger.error`Failed to fetch Claude usage: ${error}`
       throw error
     },
-    onSuccess: markUpdated,
+    onSuccess: () => { usageLastFetchedAt = Date.now(); markUpdated() },
     onFirstComplete: markFirstPollComplete,
   })
+
+  const refreshUsage = () => {
+    if (Date.now() - usageLastFetchedAt < USAGE_TTL_MS) return
+    void claudeUsageDataPoll.refresh()
+  }
 
   const volumePoll = createPolledState({
     initial: {
@@ -1131,7 +1124,7 @@ function createControlCenterService(): ControlCenterService {
   const initializeService = async () => {
     // Await all initializations before resolving
     const logger = createLogger(["ags", "control-center"])
-    logger.info`Initializing 16 system polls [SERVICE] (initializeService)`
+    logger.info`Initializing 14 system polls [SERVICE] (initializeService)`
     try {
       await Promise.all([
         bluetoothPoll.initialize(),
@@ -1145,13 +1138,12 @@ function createControlCenterService(): ControlCenterService {
         cpuPoll.initialize(),
         memoryPoll.initialize(),
         diskPoll.initialize(),
-        aiUsagePoll.initialize(),
         claudeUsageDataPoll.initialize(),
         volumePoll.initialize(),
         brightnessPoll.initialize(),
         batteryPoll.initialize(),
       ])
-      logger.info`All 16 system polls initialized successfully [SERVICE] (initializeService)`
+      logger.info`All 14 system polls initialized successfully [SERVICE] (initializeService)`
     } catch (error) {
       logger.error`Initialization error: ${error} [SERVICE] (initializeService)`
       throw error
@@ -1161,7 +1153,7 @@ function createControlCenterService(): ControlCenterService {
   // Start polling for all state
   const startPollingService = () => {
     const logger = createLogger(["ags", "control-center"])
-    logger.info`Starting continuous polling of all 16 system states [SERVICE] (startPollingService)`
+    logger.info`Starting continuous polling of all 14 system states [SERVICE] (startPollingService)`
     bluetoothPoll.startPolling()
     wifiPoll.startPolling()
     powerProfilePoll.startPolling()
@@ -1173,12 +1165,11 @@ function createControlCenterService(): ControlCenterService {
     cpuPoll.startPolling()
     memoryPoll.startPolling()
     diskPoll.startPolling()
-    aiUsagePoll.startPolling()
-    claudeUsageDataPoll.startPolling()
+    // claudeUsageData: no background polling — refreshed on window open via refreshUsage()
     volumePoll.startPolling()
     brightnessPoll.startPolling()
     batteryPoll.startPolling()
-    logger.info`Polling started for all 16 system states [SERVICE] (startPollingService)`
+    logger.info`Polling started for all 14 system states [SERVICE] (startPollingService)`
   }
 
   return {
@@ -1194,7 +1185,6 @@ function createControlCenterService(): ControlCenterService {
     cpu: cpuPoll.state,
     memory: memoryPoll.state,
     disk: diskPoll.state,
-    aiUsage: aiUsagePoll.state,
     claudeUsageData: claudeUsageDataPoll.state,
     volume: volumePoll.state,
     brightness: brightnessPoll.state,
@@ -1203,6 +1193,7 @@ function createControlCenterService(): ControlCenterService {
     actionError,
     initializeService,
     startPollingService,
+    refreshUsage,
     suppressVolumeDrag: (suppress: boolean) => {
       if (suppress) {
         volumePoll.setSuppressUpdates(true)
