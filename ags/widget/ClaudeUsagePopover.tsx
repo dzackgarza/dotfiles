@@ -1,6 +1,7 @@
 import type { Accessor } from "ags"
+import { For } from "ags"
 import { Astal, Gtk } from "ags/gtk4"
-import type { UsageCollection } from "../services/claude-usage-fetcher"
+import type { UsageCollection, ProviderSnapshot } from "../services/claude-usage-fetcher"
 
 const ICON_SIZE = 16
 
@@ -74,50 +75,44 @@ export function ClaudeUsagePopover({ visible, onVisibleChange, claudeUsageData }
   const popoverContent = (
     <box class="popover-root" orientation={Gtk.Orientation.VERTICAL} spacing={0}>
       {claudeUsageData ? (
-        claudeUsageData((data) => (
-          <box orientation={Gtk.Orientation.VERTICAL} spacing={0}>
-            {data.providers.flatMap((provider) => {
-              const elements = [
-                <label class="popover-title" xalign={0} label={provider.display_name} />,
-                <box class="popover-divider" />
-              ];
+        <For each={claudeUsageData((data) => data.providers)}>
+          {(provider: ProviderSnapshot) => (
+            <box orientation={Gtk.Orientation.VERTICAL} spacing={0}>
+              <label class="popover-title" xalign={0} label={provider.display_name} />
+              <box class="popover-divider" />
+              {provider.status === "error" ? (
+                <box class="popover-section" orientation={Gtk.Orientation.VERTICAL} spacing={8}>
+                  <label class="popover-resets-text" xalign={0} label={provider.errors?.[0]?.message || "Failed to fetch usage"} />
+                </box>
+              ) : (
+                <box orientation={Gtk.Orientation.VERTICAL} spacing={0}>
+                  {provider.rows.map((row) => {
+                    const isShortTerm = row.identifier.toLowerCase().includes("5h") || row.identifier.toLowerCase().includes("hour")
+                    const icon = isShortTerm ? "xsi-alarm-symbolic" : "xsi-x-office-calendar-symbolic"
 
-              if (provider.status === "error") {
-                const errMsg = provider.errors?.[0]?.message || "Failed to fetch usage";
-                elements.push(
-                  <box class="popover-section" orientation={Gtk.Orientation.VERTICAL} spacing={8}>
-                    <label class="popover-resets-text" xalign={0} label={errMsg} />
-                  </box>
-                );
-              } else {
-                provider.rows.forEach((row) => {
-                  const isShortTerm = row.identifier.toLowerCase().includes("5h") || row.identifier.toLowerCase().includes("hour");
-                  const icon = isShortTerm ? "xsi-alarm-symbolic" : "xsi-x-office-calendar-symbolic";
-                  
-                  let color = "rgb(34, 197, 94)"; // green
-                  if (row.pct_used >= 80) {
-                    color = "rgb(239, 68, 68)"; // red
-                  } else if (row.pct_used >= 50) {
-                    color = "rgb(250, 204, 21)"; // yellow
-                  }
+                    let color = "rgb(34, 197, 94)" // green
+                    if (row.pct_used >= 80) {
+                      color = "rgb(239, 68, 68)" // red
+                    } else if (row.pct_used >= 50) {
+                      color = "rgb(250, 204, 21)" // yellow
+                    }
 
-                  elements.push(
-                    <QuotaSection
-                      title={row.identifier}
-                      icon={icon}
-                      percentage={row.pct_used}
-                      resetsIn={row.time_until_reset ? `Resets ${row.time_until_reset}` : "Resets at unknown time"}
-                      color={color}
-                    />
-                  );
-                });
-              }
-
-              elements.push(<box class="popover-divider" />);
-              return elements;
-            })}
-          </box>
-        )) as any
+                    return (
+                      <QuotaSection
+                        title={row.identifier}
+                        icon={icon}
+                        percentage={row.pct_used}
+                        resetsIn={row.time_until_reset ? `Resets ${row.time_until_reset}` : "Resets at unknown time"}
+                        color={color}
+                      />
+                    )
+                  })}
+                </box>
+              )}
+              <box class="popover-divider" />
+            </box>
+          )}
+        </For>
       ) : (
         <label class="popover-title" xalign={0} label="Loading..." />
       )}
