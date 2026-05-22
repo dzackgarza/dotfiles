@@ -13,6 +13,7 @@ import {
   type ToggleTileState,
   type UsageTileState,
 } from "../services/control-center"
+import type { ProviderSnapshot, UsageCollection } from "../../services/claude-usage-fetcher"
 import { ToggleTile } from "../components/ToggleTile"
 import { UsageTile } from "../components/UsageTile"
 import { InfoTile } from "../components/InfoTile"
@@ -34,39 +35,49 @@ function joinClasses(...classes: Array<string | false | null | undefined>): stri
   return classes.filter((value) => Boolean(value)).join(" ")
 }
 
-type AiUsageTileProps = {
-  state: Accessor<UsageTileState>
+const PROVIDER_ICONS: Record<string, string> = {
+  claude: "claude-ai-symbolic",
+  codex: "openai-symbolic",
+  ollama: "ollama-symbolic",
+  opencode: "opencode-symbolic",
+  antigravity: "anthropic-symbolic",
 }
 
-function AiUsageTile({ state, onClicked }: AiUsageTileProps & { onClicked: () => void }) {
+function isProviderUsable(provider: ProviderSnapshot): boolean {
+  if (provider.status === "error") return false
+  if (provider.availability.length > 0) {
+    return provider.availability.some((m) => m.available_now)
+  }
+  return provider.rows.length === 0 || provider.rows.some((r) => !r.is_exhausted)
+}
+
+function ProviderIcon({ provider, onClicked }: { provider: ProviderSnapshot; onClicked: () => void }) {
+  const iconName = PROVIDER_ICONS[provider.provider] ?? "xsi-help-browser-symbolic"
+  const usable = isProviderUsable(provider)
   return (
-    <button
-      class={state((value) =>
-        joinClasses("tile", "tile-info", value.error && "error")
-      )}
-      onClicked={onClicked}
-      hexpand
-      halign={Gtk.Align.FILL}
-      tooltipText={state((value) => value.detail || "")}
-    >
-      <box
-        orientation={Gtk.Orientation.HORIZONTAL}
-        spacing={10}
-        hexpand
-        halign={Gtk.Align.FILL}
-      >
-        <label class="tile-icon" xalign={0.5} label="🤖" />
-        <box orientation={Gtk.Orientation.VERTICAL} spacing={4} hexpand halign={Gtk.Align.FILL}>
-          <label class="tile-line1" xalign={0} label={state((value) => value.line1 || "LLM Usage")} />
-          <box orientation={Gtk.Orientation.VERTICAL} spacing={2}>
-            <label class="tile-line2" xalign={0} label={state((value) => value.line2 || "")} />
-            <Gtk.ProgressBar
-              fraction={state((value) => typeof value.percent === "number" ? value.percent : 0)}
-            />
-          </box>
-        </box>
+    <button class="provider-icon-btn" onClicked={onClicked} tooltipText={provider.display_name}>
+      <box orientation={Gtk.Orientation.VERTICAL} spacing={3} halign={Gtk.Align.CENTER}>
+        <image iconName={iconName} pixelSize={24} halign={Gtk.Align.CENTER} />
+        <box
+          class={usable ? "provider-dot-ok" : "provider-dot-err"}
+          halign={Gtk.Align.CENTER}
+          widthRequest={6}
+          heightRequest={6}
+        />
       </box>
     </button>
+  )
+}
+
+function AiProviderIcons({ claudeUsageData, onClicked }: { claudeUsageData: Accessor<UsageCollection>; onClicked: () => void }) {
+  return (
+    <box class="provider-icons-row" orientation={Gtk.Orientation.HORIZONTAL} spacing={4} halign={Gtk.Align.CENTER}>
+      <For each={claudeUsageData((d) => d.providers)}>
+        {(provider: ProviderSnapshot) => (
+          <ProviderIcon provider={provider} onClicked={onClicked} />
+        )}
+      </For>
+    </box>
   )
 }
 
@@ -178,7 +189,7 @@ export function ControlCenterWindow() {
           </box>
         ))}
       </box>
-      <AiUsageTile state={control.aiUsage} onClicked={() => setClaudeUsagePopoverVisible(true)} />
+      <AiProviderIcons claudeUsageData={control.claudeUsageData} onClicked={() => setClaudeUsagePopoverVisible(true)} />
       <SliderRow
         icon="xsi-audio-volume-high-symbolic"
         state={control.volume}

@@ -144,6 +144,34 @@ window.NotificationCenter {
     font-weight: 600;
   }
 
+  .provider-icons-row {
+    padding: $spacing-sm 0;
+  }
+
+  .provider-icon-btn {
+    background: transparent;
+    border: none;
+    padding: $spacing-sm;
+    border-radius: $radius-md;
+
+    &:hover {
+      background: #{"alpha(@theme_fg_color, 0.06)"};
+    }
+  }
+
+  .provider-dot-ok,
+  .provider-dot-err {
+    border-radius: 50%;
+  }
+
+  .provider-dot-ok {
+    background: rgb(34, 197, 94);
+  }
+
+  .provider-dot-err {
+    background: rgb(239, 68, 68);
+  }
+
   .last-updated {
     font-size: $font-xs;
     opacity: $opacity-label;
