@@ -220,12 +220,12 @@ export function ControlCenterWindow() {
           </button>
         </box>
       </box>
-      <label class="last-updated" xalign={0} label={control.lastUpdated} />
+      <label class="last-updated" xalign={0} label={control.lastUpdated((val) => val)} />
       <label
         class="action-error"
         xalign={0}
         visible={control.actionError((value) => value.length > 0)}
-        label={control.actionError}
+        label={control.actionError((val) => val)}
       />
     </box>
   )
@@ -239,6 +239,7 @@ export function ControlCenterWindow() {
       />
       <window
         name="claude-usage"
+        title="Usage Limits"
         class="NotificationCenter"
         application={app}
         visible={false}
