@@ -35,7 +35,7 @@ export interface UsageCollection {
 
 export async function fetchClaudeUsage(): Promise<UsageCollection> {
   try {
-    const cmd = `uvx --from ${HOME}/dotfiles/usage-limits usage-limits --json`
+    const cmd = ["uv", "run", "--project", `${HOME}/dotfiles/usage-limits`, "usage-limits", "--json"]
     const output = await execAsync(cmd)
     return JSON.parse(output) as UsageCollection
   } catch (error) {
