@@ -20,6 +20,7 @@ import { InfoTile } from "../components/InfoTile"
 import { PowerProfileTile } from "../components/PowerProfileTile"
 import { SliderRow } from "../components/SliderRow"
 import { StatusLine } from "../components/StatusLine"
+import { formatRelative } from "../../lib/utils"
 
 // Icon size constants (matches _tokens.scss)
 const ICON_SIZE = {
@@ -51,19 +52,26 @@ function isProviderUsable(provider: ProviderSnapshot): boolean {
   return provider.rows.length === 0 || provider.rows.some((r) => !r.is_exhausted)
 }
 
+function providerEta(provider: ProviderSnapshot): string | null {
+  const avail = provider.availability[0]
+  if (!avail || avail.available_now || !avail.available_when) return null
+  const resetAt = new Date(avail.available_when)
+  return formatRelative(resetAt)
+}
+
 function ProviderIcon({ provider, onClicked }: { provider: ProviderSnapshot; onClicked: () => void }) {
   const iconName = PROVIDER_ICONS[provider.provider] ?? "xsi-help-browser-symbolic"
   const usable = isProviderUsable(provider)
+  const eta = providerEta(provider)
   return (
     <button class="provider-icon-btn" onClicked={onClicked} tooltipText={provider.display_name}>
-      <box orientation={Gtk.Orientation.VERTICAL} spacing={3} halign={Gtk.Align.CENTER}>
+      <box orientation={Gtk.Orientation.VERTICAL} spacing={2} halign={Gtk.Align.CENTER}>
         <image iconName={iconName} pixelSize={24} halign={Gtk.Align.CENTER} />
-        <box
-          class={usable ? "provider-dot-ok" : "provider-dot-err"}
-          halign={Gtk.Align.CENTER}
-          widthRequest={6}
-          heightRequest={6}
-        />
+        {usable ? (
+          <box class="provider-dot-ok" halign={Gtk.Align.CENTER} widthRequest={6} heightRequest={6} />
+        ) : (
+          <label class="provider-eta" label={eta ?? "?"} halign={Gtk.Align.CENTER} />
+        )}
       </box>
     </button>
   )
