@@ -159,17 +159,15 @@ window.NotificationCenter {
     }
   }
 
-  .provider-dot-ok,
-  .provider-dot-err {
-    border-radius: 50%;
-  }
-
   .provider-dot-ok {
+    border-radius: 50%;
     background: rgb(34, 197, 94);
   }
 
-  .provider-dot-err {
-    background: rgb(239, 68, 68);
+  .provider-eta {
+    font-size: 9px;
+    color: rgb(239, 68, 68);
+    font-weight: 600;
   }
 
   .last-updated {
