@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@logtape/logtape": "^2.0.2",
+    "ags": "*",
+    "gnim": "*"
+  },
+  "prettier": {
+    "semi": false,
+    "tabWidth": 2
+  }
+}

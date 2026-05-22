@@ -1,0 +1,156 @@
+// https://gitlab.gnome.org/GNOME/gtk/-/blob/gtk-3-24/gtk/theme/Adwaita/_colors-public.scss
+$fg-color: #{"@theme_fg_color"};
+$bg-color: #{"@theme_bg_color"};
+
+// Design tokens
+@use "style/_tokens" as *;
+@use "style/_claude-usage-popover" as *;
+
+window.Bar {
+  background: transparent;
+  color: $fg-color;
+  font-weight: bold;
+
+  > centerbox {
+    background: $bg-color;
+    border-radius: 10px;
+    margin: 8px;
+  }
+
+  button {
+    border-radius: 8px;
+    margin: 2px;
+  }
+}
+
+window.NotificationCenter {
+  background: transparent;
+  color: $fg-color;
+
+  .nc-backdrop {
+    background: $backdrop-bg;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .nc-backdrop:hover,
+  .nc-backdrop:active,
+  .nc-backdrop:focus {
+    background: $backdrop-bg;
+    box-shadow: none;
+  }
+
+  .nc-root {
+    background: $panel-bg;
+    border-radius: $radius-xl;
+    padding: $spacing-2xl;
+    min-width: $min-width-panel;
+  }
+
+  .tile,
+  .status-row {
+    background: $tile-bg;
+    border-radius: $radius-lg;
+    padding: $spacing-xl;
+    min-width: $min-width-tile;
+  }
+
+  .slider-row {
+    background: transparent;
+    border-radius: $radius-md;
+    padding: $spacing-sm $spacing-xs;
+  }
+
+  .tile-line2,
+  .popover-footer,
+  .status-sub {
+    font-size: $font-xs;
+    opacity: $opacity-secondary;
+  }
+
+  .tile-line1,
+  .status-title {
+    font-size: $font-md;
+    font-weight: 600;
+  }
+
+  .tile-trigger > button {
+    background: transparent;
+    padding: 0;
+    border-radius: $radius-lg;
+    border: none;
+    box-shadow: none;
+  }
+
+  .tile-trigger {
+    background: transparent;
+    padding: 0;
+    border-radius: $radius-lg;
+    border: none;
+    box-shadow: none;
+  }
+
+  .tile-toggle {
+    border: none;
+    box-shadow: none;
+  }
+
+  .tile-toggle.active {
+    background: $tile-active;
+  }
+
+  .tile.error,
+  .slider-row.error,
+  .status-row.error {
+    border: 1px solid $error-border;
+    background: $error-bg;
+  }
+
+  .tile-action {
+    border-radius: $radius-md;
+    padding: 4px $spacing-md;
+  }
+
+  .tile-action.active {
+    background: $tile-action-active;
+  }
+
+  .status-action {
+    border-radius: $radius-md;
+    padding: $spacing-sm $spacing-md;
+  }
+
+  .slider-icon,
+  .slider-value {
+    font-size: $font-sm;
+    opacity: $opacity-slider;
+  }
+
+  .status-icon {
+    font-size: $font-lg;
+  }
+
+  .status-subrow {
+    opacity: $opacity-secondary;
+  }
+
+  .popover-card {
+    min-width: $min-width-popover;
+  }
+
+  .popover-title {
+    font-weight: 600;
+  }
+
+  .last-updated {
+    font-size: $font-xs;
+    opacity: $opacity-label;
+  }
+
+  .action-error {
+    font-size: $font-xs;
+    color: $error-text;
+  }
+}

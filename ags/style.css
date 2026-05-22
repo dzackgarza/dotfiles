@@ -1,0 +1,131 @@
+* {
+  all: unset;
+  font-family: "Fira Sans", "Noto Sans", sans-serif;
+}
+
+window.anchor-window {
+  background: transparent;
+}
+
+menubutton.anchor-button {
+  min-width: 1px;
+  min-height: 1px;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: 0;
+}
+
+.usage-root {
+  color: #e7e2d6;
+  background-color: #161b20;
+  background-image: linear-gradient(135deg, #161b20 0%, #1c242b 45%, #1a1f24 100%);
+  border: 1px solid #2a3239;
+  border-radius: 16px;
+  padding: 18px;
+  min-width: 360px;
+}
+
+.title-row {
+  margin-bottom: 2px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.subtitle {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #9aa7b1;
+  background-color: #212931;
+  border: 1px solid #2a3239;
+  border-radius: 999px;
+  padding: 3px 8px;
+}
+
+.usage-block {
+  background-color: #1b2229;
+  border: 1px solid #2a3239;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.usage-header {
+  margin-bottom: 2px;
+}
+
+.usage-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #d9d3c5;
+}
+
+.usage-percent {
+  font-size: 12px;
+  font-weight: 700;
+  color: #6bb1a8;
+}
+
+progressbar.usage-progress {
+  margin: 2px 0 0 0;
+}
+
+progressbar.usage-progress > trough {
+  min-height: 8px;
+  border-radius: 6px;
+  background-color: #2a3239;
+}
+
+progressbar.usage-progress > trough > progress {
+  border-radius: 6px;
+  background-color: #6bb1a8;
+}
+
+.usage-meta {
+  margin-top: 6px;
+}
+
+.usage-label {
+  font-size: 11px;
+  color: #b0bac2;
+}
+
+.usage-reset {
+  font-size: 11px;
+  color: #d2a36c;
+}
+
+.stats-row {
+  margin-top: 2px;
+}
+
+.stat-card {
+  background-color: #1f262d;
+  border: 1px solid #2a3239;
+  border-radius: 10px;
+  padding: 8px 10px;
+  min-width: 70px;
+}
+
+.stat-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #9aa7b1;
+}
+
+.stat-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: #e7e2d6;
+}
+
+.last-updated {
+  font-size: 10px;
+  color: #9aa7b1;
+  margin-top: 2px;
+}

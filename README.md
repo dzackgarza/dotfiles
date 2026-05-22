@@ -1,6 +1,6 @@
 # Component Catalog
 
-Config sources: `~/.config/hypr/`, `~/.config/waybar/`, `~/.config/ags/`,
+Config sources: `~/.config/hypr/`, `~/.config/waybar/`, `dotfiles/ags/` (symlinked to `~/.config/ags/`),
 `~/.config/rofi/`, `dotfiles/.config-sync/`, `dotfiles/bin/`.
 
 ## Window Manager
@@ -24,13 +24,9 @@ Config sources: `~/.config/hypr/`, `~/.config/waybar/`, `~/.config/ags/`,
 ## Widgets / Popups
 
 - **AGS (Astal GTK Shell)** — Widget system.
-  Powers claude-usage popover in Waybar.
-  Config: `~/.config/ags/`. Entry: `app.tsx`. Source: `src/`.
-
-  **Usage tracking (independent of `usage-limits`):** The AGS widget fetches Claude
-  usage via its own OAuth pipeline (`services/claude-usage-fetcher.ts`) and Codex usage
-  via a standalone curl script (`get_codex_usage.sh`). Results feed the Waybar
-  `custom/claude-usage` module (center), which toggles a popover.
+  Two AGS programs reside on this system:
+  - **System Config**: Located at `dotfiles/ags/` (symlinked to `~/.config/ags/`). Entry: `app.tsx`. Powers Waybar widgets, the Claude/Codex usage popover (`services/claude-usage-fetcher.ts`, `get_codex_usage.sh`), and a custom control center dashboard (`src/windows/control-center.tsx`).
+  - **Reminder Scheduler**: Located at `~/gitclones/reminder-scheduler/ags/`. Entry: `app.tsx`. Provides a GTK user interface to create, edit, and manage reminders.
 
 ## Launchers
 
