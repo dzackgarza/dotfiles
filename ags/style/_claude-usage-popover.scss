@@ -118,6 +118,20 @@ window.ClaudeUsagePopover {
     min-height: 4px;
   }
 
+  .popover-progress-red trough {
+    all: unset;
+    background: #{"alpha(@theme_fg_color, 0.08)"};
+    border-radius: $radius-sm;
+    min-height: 4px;
+  }
+
+  .popover-progress-red progress {
+    all: unset;
+    background: rgb(239, 68, 68);
+    border-radius: $radius-sm;
+    min-height: 4px;
+  }
+
   .popover-resets-text {
     font-size: $font-xs;
     opacity: $opacity-secondary;
