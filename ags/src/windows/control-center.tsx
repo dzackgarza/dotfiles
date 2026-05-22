@@ -1,5 +1,5 @@
 import type { Accessor } from "ags"
-import { createState } from "ags"
+import { createState, For } from "ags"
 import app from "ags/gtk4/app"
 import { Astal, Gdk, Gtk } from "ags/gtk4"
 import { createLogger } from "../lib/logger"
