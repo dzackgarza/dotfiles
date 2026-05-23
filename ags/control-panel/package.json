@@ -1,0 +1,12 @@
+{
+  "name": "ags-control-panel",
+  "private": true,
+  "dependencies": {
+    "@ags/shared": "workspace:*",
+    "@logtape/logtape": "^2.0.2"
+  },
+  "prettier": {
+    "semi": false,
+    "tabWidth": 2
+  }
+}
