@@ -9,7 +9,6 @@
     "moduleResolution": "Bundler",
     "skipLibCheck": true,
     "strict": true,
-    "strictNullChecks": false,
     "target": "ES2020"
   }
 }
