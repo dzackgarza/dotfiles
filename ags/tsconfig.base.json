@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "downlevelIteration": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "ags/gtk4",
+    "lib": ["ES2023"],
+    "module": "ES2022",
+    "moduleResolution": "Bundler",
+    "skipLibCheck": true,
+    "strict": true,
+    "strictNullChecks": false,
+    "target": "ES2020"
+  }
+}
