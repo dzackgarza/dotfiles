@@ -1,0 +1,37 @@
+set shell := ["bash", "-euo", "pipefail", "-c"]
+
+default:
+    @just --list
+
+# Install all workspace dependencies
+install:
+    bun install
+
+# Type-check all workspace packages
+typecheck:
+    just --justfile control-panel/Justfile typecheck
+    cd reminder-scheduler && just typecheck
+
+# Run all tests across workspace
+check:
+    cd reminder-scheduler && just check
+
+# Type-check shared package only
+typecheck-shared:
+    cd shared && tsc --noEmit -p tsconfig.json
+
+# Run reminder-scheduler AGS tests only
+test-ags:
+    cd reminder-scheduler && just test-ags
+
+# Start control-panel
+run-control-panel:
+    just --justfile control-panel/Justfile run
+
+# Debug reminder-scheduler widget tree
+ags-debug-tree WINDOW="Reminders":
+    ags -i reminders request debug-tree {{WINDOW}} | jq .
+
+# Open a fixture in the running reminder-scheduler instance
+ags-open-fixture CASE:
+    ags -i reminders request open-test-state reminder-scheduler/tests/visual/fixtures/{{CASE}}.json
