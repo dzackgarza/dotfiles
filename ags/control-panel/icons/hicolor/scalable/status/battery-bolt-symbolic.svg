@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+  <defs>
+    <mask id="bolt-cut">
+      <rect width="16" height="16" fill="white"/>
+      <path d="M9 3.5 6 8h2l-1 4.5 4-6h-2z" fill="black"/>
+    </mask>
+  </defs>
+  <rect x="2" y="4" width="10" height="8" rx="1" fill="currentColor" mask="url(#bolt-cut)"/>
+  <rect x="12" y="6" width="2" height="4" rx="0.5" fill="currentColor" mask="url(#bolt-cut)"/>
+</svg>
