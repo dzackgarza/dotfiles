@@ -3,10 +3,7 @@
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "ignoreDeprecations": "6.0",
-    "lib": [
-      "ES2023",
-      "DOM"
-    ],
+    "lib": ["ES2023", "DOM"],
     "noImplicitAny": true,
     "strictNullChecks": false
   },
@@ -17,11 +14,8 @@
     "services/**/*.ts",
     "src/**/*.ts",
     "src/**/*.tsx",
-    "widget/**/*.tsx"
+    "widget/**/*.tsx",
+    "vitest.config.ts"
   ],
-  "exclude": [
-    "@girs",
-    "node_modules",
-    "reminders"
-  ]
+  "exclude": ["@girs", "node_modules", "reminders"]
 }

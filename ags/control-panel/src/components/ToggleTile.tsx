@@ -1,25 +1,25 @@
-import type { Accessor } from "ags"
-import { Gtk } from "ags/gtk4"
-import type { ToggleTileState } from "../services/control-center"
+import type { Accessor } from "ags";
+import { Gtk } from "ags/gtk4";
+import type { ToggleTileState } from "../services/control-center";
 
-const ICON_SIZE = 22
+const ICON_SIZE = 22;
 
 function joinClasses(...classes: Array<string | false | null | undefined>): string {
-  return classes.filter((value) => Boolean(value)).join(" ")
+  return classes.filter((value) => Boolean(value)).join(" ");
 }
 
 type ToggleTileProps = {
-  iconOn: string
-  iconOff: string
-  state: Accessor<ToggleTileState>
-  onToggle: () => Promise<void>
-}
+  iconOn: string;
+  iconOff: string;
+  state: Accessor<ToggleTileState>;
+  onToggle: () => Promise<void>;
+};
 
 export function ToggleTile({ iconOn, iconOff, state, onToggle }: ToggleTileProps) {
   return (
     <button
       class={state((value) =>
-        joinClasses("tile", "tile-toggle", value.active && "active", value.error && "error")
+        joinClasses("tile", "tile-toggle", value.active && "active", value.error && "error"),
       )}
       hexpand
       halign={Gtk.Align.FILL}
@@ -45,5 +45,5 @@ export function ToggleTile({ iconOn, iconOff, state, onToggle }: ToggleTileProps
         </box>
       </box>
     </button>
-  )
+  );
 }

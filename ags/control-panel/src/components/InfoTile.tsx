@@ -1,18 +1,18 @@
-import type { Accessor } from "ags"
-import { Gtk } from "ags/gtk4"
-import type { InfoTileState } from "../services/control-center"
+import type { Accessor } from "ags";
+import { Gtk } from "ags/gtk4";
+import type { InfoTileState } from "../services/control-center";
 
-const ICON_SIZE = 22
+const ICON_SIZE = 22;
 
 function joinClasses(...classes: Array<string | false | null | undefined>): string {
-  return classes.filter((value) => Boolean(value)).join(" ")
+  return classes.filter((value) => Boolean(value)).join(" ");
 }
 
 type InfoTileProps = {
-  icon: string
-  state: Accessor<InfoTileState>
-  onActivate?: () => Promise<void>
-}
+  icon: string;
+  state: Accessor<InfoTileState>;
+  onActivate?: () => Promise<void>;
+};
 
 export function InfoTile({ icon, state, onActivate }: InfoTileProps) {
   const content = (
@@ -30,13 +30,18 @@ export function InfoTile({ icon, state, onActivate }: InfoTileProps) {
         <label class="tile-line2" xalign={0} label={state((value) => value.line2)} />
       </box>
     </box>
-  )
+  );
 
-  if (!onActivate) return content
+  if (!onActivate) return content;
 
   return (
-    <button class="tile-trigger" onClicked={() => void onActivate()} hexpand halign={Gtk.Align.FILL}>
+    <button
+      class="tile-trigger"
+      onClicked={() => void onActivate()}
+      hexpand
+      halign={Gtk.Align.FILL}
+    >
       {content}
     </button>
-  )
+  );
 }

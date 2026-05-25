@@ -1,17 +1,17 @@
-import type { Accessor } from "ags"
-import { Gtk } from "ags/gtk4"
-import type { PowerProfile, PowerProfileState } from "../services/control-center"
+import type { Accessor } from "ags";
+import { Gtk } from "ags/gtk4";
+import type { PowerProfile, PowerProfileState } from "../services/control-center";
 
-const ICON_SIZE = 18
+const ICON_SIZE = 18;
 
 function joinClasses(...classes: Array<string | false | null | undefined>): string {
-  return classes.filter((value) => Boolean(value)).join(" ")
+  return classes.filter((value) => Boolean(value)).join(" ");
 }
 
 type PowerProfileTileProps = {
-  state: Accessor<PowerProfileState>
-  onSetProfile: (profile: PowerProfile) => Promise<void>
-}
+  state: Accessor<PowerProfileState>;
+  onSetProfile: (profile: PowerProfile) => Promise<void>;
+};
 
 export function PowerProfileTile({ state, onSetProfile }: PowerProfileTileProps) {
   const options: Array<{ id: PowerProfile; icon: string; tooltip: string }> = [
@@ -30,7 +30,7 @@ export function PowerProfileTile({ state, onSetProfile }: PowerProfileTileProps)
       icon: "xsi-power-profile-performance-symbolic",
       tooltip: "Performance",
     },
-  ]
+  ];
 
   return (
     <box
@@ -44,7 +44,7 @@ export function PowerProfileTile({ state, onSetProfile }: PowerProfileTileProps)
       {options.map((option) => (
         <button
           class={state((value) =>
-            value.profile === option.id ? "tile-action active" : "tile-action"
+            value.profile === option.id ? "tile-action active" : "tile-action",
           )}
           tooltipText={option.tooltip}
           sensitive={state((value) => !value.error)}
@@ -54,5 +54,5 @@ export function PowerProfileTile({ state, onSetProfile }: PowerProfileTileProps)
         </button>
       ))}
     </box>
-  )
+  );
 }

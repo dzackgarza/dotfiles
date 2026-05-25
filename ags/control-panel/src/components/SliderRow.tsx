@@ -1,18 +1,18 @@
-import type { Accessor } from "ags"
-import { Gtk } from "ags/gtk4"
-import type { SliderState } from "../services/control-center"
+import type { Accessor } from "ags";
+import { Gtk } from "ags/gtk4";
+import type { SliderState } from "../services/control-center";
 
-const ICON_SIZE = 18
+const ICON_SIZE = 18;
 
 function joinClasses(...classes: Array<string | false | null | undefined>): string {
-  return classes.filter((value) => Boolean(value)).join(" ")
+  return classes.filter((value) => Boolean(value)).join(" ");
 }
 
 type SliderRowProps = {
-  icon: string
-  state: Accessor<SliderState>
-  onSetValue: (value: number) => Promise<void>
-}
+  icon: string;
+  state: Accessor<SliderState>;
+  onSetValue: (value: number) => Promise<void>;
+};
 
 export function SliderRow({ icon, state, onSetValue }: SliderRowProps) {
   return (
@@ -31,7 +31,11 @@ export function SliderRow({ icon, state, onSetValue }: SliderRowProps) {
         sensitive={state((value) => !value.error)}
         onChangeValue={({ value }) => void onSetValue(value)}
       />
-      <label class="slider-value" halign={Gtk.Align.END} label={state((value) => value.valueLabel)} />
+      <label
+        class="slider-value"
+        halign={Gtk.Align.END}
+        label={state((value) => value.valueLabel)}
+      />
     </box>
-  )
+  );
 }
