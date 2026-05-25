@@ -20,6 +20,11 @@
 \tikzstyle{Arrow}=[->]
 \tikzstyle{Doubled Arrow}=[->, double distance=0.5mm]
 \tikzstyle{Dashed Arrow}=[->, densely dashed]
+\tikzstyle{grid}=[-, tikzit fill={rgb,255: red,181; green,181; blue,181}, draw={rgb,255: red,103; green,103; blue,103}, tikzit draw={rgb,255: red,95; green,95; blue,95}, fill={rgb,255: red,100; green,100; blue,100}]
+\tikzstyle{blue single edge}=[-, fill=blue, tikzit fill={rgb,255: red,0; green,98; blue,255}, draw=blue, tikzit draw=blue]
+\tikzstyle{blue dashed edge}=[-, fill=blue, draw=blue, tikzit fill=blue, tikzit draw=blue, densely dashed]
+\tikzstyle{red edge}=[-, fill=red, draw=red, tikzit fill=red, tikzit draw=red]
+\tikzstyle{red dashed edge}=[-, draw=red, fill=red, tikzit fill=red, tikzit draw=red, densely dashed]
 
 \tikzstyle{cusp curve}=[rectangle, draw, minimum width=1.5cm]
 \tikzstyle{cusp point}=[fill=white, tikzit category=nodes, shape=circle, draw=black, tikzit fill=white, scale=0.5]
