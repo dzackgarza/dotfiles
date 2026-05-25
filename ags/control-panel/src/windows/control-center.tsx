@@ -162,9 +162,15 @@ export function ControlCenterWindow() {
 
   // Initialize all state synchronously before building UI
   logger.info`Initializing service [SERVICE]`
-  void control.initializeService().then(() => {
-    logger.info`Service initialized [SERVICE]`
-  })
+  void control
+    .initializeService()
+    .then(() => {
+      logger.info`Service initialized [SERVICE]`
+    })
+    .catch((error) => {
+      const message = error instanceof Error ? error.message : String(error)
+      logger.error`Service initialization failed: ${message} [SERVICE]`
+    })
 
   // Start polling loops after window is created
   setTimeout(() => {
