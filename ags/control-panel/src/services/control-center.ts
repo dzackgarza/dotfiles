@@ -26,8 +26,6 @@ import {
   cleanTooltip,
   firstLine,
   formatGiB,
-  formatHours,
-  formatRelative,
   formatTimestamp,
   parseKeyValueOutput,
   parseLeadingCount,
@@ -38,12 +36,11 @@ import {
 import { fetchClaudeUsage, type UsageCollection } from "../../services/claude-usage-fetcher";
 import { createLogger } from "../index";
 
-const HOME: string = (GLib as { get_home_dir: () => string }).get_home_dir();
+const HOME: string = (GLib as unknown as { get_home_dir: () => string }).get_home_dir();
 const HYPR_SCRIPTS = `${HOME}/.config/hypr/scripts`;
 const VOLUME_SCRIPT = `${HYPR_SCRIPTS}/volumecontrol.sh`;
 const UPDATE_SCRIPT = `${HYPR_SCRIPTS}/systemupdate.sh`;
 const POWER_SCRIPT = `${HYPR_SCRIPTS}/power.sh`;
-const CLAUDE_USAGE_PATH = `${HOME}/.config/hypr/claude_usage_data.json`;
 
 export type PowerProfile = "power-saver" | "balanced" | "performance";
 
@@ -122,9 +119,10 @@ async function requireCommand(command: string): Promise<void> {
   if (existing !== undefined) return existing;
 
   const check = execAsync(["sh", "-lc", `command -v ${command}`])
-    .then(() => null)
+    .then(() => true)
     .catch(() => {
       throw new Error(`${command} is not installed`);
+      return true;
     });
 
   commandChecks.set(command, check);
@@ -139,7 +137,7 @@ function createPolledState<T>(options: PollOptions<T>): PolledStateWithInit<T> {
   let pollingStarted = false;
 
   const refresh = async () => {
-    if (running || suppressUpdates.peek()) return;
+    if (running || suppressUpdates.peek()) return false;
 
     running = true;
     try {
@@ -154,8 +152,8 @@ function createPolledState<T>(options: PollOptions<T>): PolledStateWithInit<T> {
         firstComplete = true;
         options.onFirstComplete?.();
       }
-      return true;
     }
+    return true;
   };
 
   const setError = (error: unknown) => {
@@ -169,10 +167,11 @@ function createPolledState<T>(options: PollOptions<T>): PolledStateWithInit<T> {
   };
 
   const startPolling = () => {
-    if (pollingStarted) return;
+    if (pollingStarted) return false;
     pollingStarted = true;
     interval(options.intervalMs, () => {
       void refresh();
+      return true;
     });
     return true;
   };
@@ -186,9 +185,6 @@ function createPolledState<T>(options: PollOptions<T>): PolledStateWithInit<T> {
     initialize,
     startPolling,
   };
-  return true;
-  return true;
-  return true;
 }
 
 // Generic error state creator - replaces 6 nearly-identical functions
@@ -277,22 +273,21 @@ async function readBluetoothState(): Promise<ToggleTileState> {
   let hasAdapter = false;
   let blocked = false;
 
-  for (const rawLine of lines) {
+  lines.forEach((rawLine) => {
     const line = rawLine.trim();
-    if (!line) continue;
+    if (!line) return true;
 
     if (line.endsWith(": Bluetooth")) {
       hasAdapter = true;
-      continue;
       return true;
     }
 
     if (line.startsWith("Soft blocked:")) {
-      const value = line.slice("Soft blocked:".length).trim();
-      if (value === "yes") blocked = true;
+      blocked = line.endsWith("yes");
+      return true;
     }
     return true;
-  }
+  });
 
   if (!hasAdapter) {
     throw new Error("No Bluetooth adapter found");
@@ -359,7 +354,6 @@ async function readWifiState(): Promise<ToggleTileState> {
       signal = parsedSignal;
       ssid = parts.slice(2).join(":").trim() || "Hidden network";
       break;
-      return true;
     }
   }
 
@@ -455,7 +449,7 @@ async function readMicState(): Promise<ToggleTileState> {
   };
 }
 
-let previousCpuSample: { total: number; idle: number } | null = null;
+const cpuSample: { current?: { total: number; idle: number } } = {};
 
 // Explicit return types for type safety - TypeScript will catch breaking changes at all call sites
 function readCpuState(): UsageTileState {
@@ -476,17 +470,16 @@ function readCpuState(): UsageTileState {
   const idle = counters[3] + counters[4];
   const total = counters.reduce((sum, value) => sum + value, 0);
 
-  let usagePercent = 0;
-  if (previousCpuSample) {
-    const totalDelta = total - previousCpuSample.total;
-    const idleDelta = idle - previousCpuSample.idle;
-    usagePercent = totalDelta <= 0 ? 0 : ((totalDelta - idleDelta) / totalDelta) * 100;
-  } else {
-    usagePercent = total <= 0 ? 0 : ((total - idle) / total) * 100;
-    return true;
-  }
+  const prev = cpuSample.current;
+  const usagePercent = prev
+    ? total - prev.total <= 0
+      ? 0
+      : ((total - prev.total - (idle - prev.idle)) / (total - prev.total)) * 100
+    : total <= 0
+      ? 0
+      : ((total - idle) / total) * 100;
 
-  previousCpuSample = { total, idle };
+  cpuSample.current = { total, idle };
 
   const cpuInfo = readFile("/proc/cpuinfo");
   let mhz = 0;
@@ -507,11 +500,12 @@ function readCpuState(): UsageTileState {
       const parsed = Number.parseFloat((parts[1] ?? "").trim());
       if (!Number.isNaN(parsed)) mhz = parsed;
     }
-    return true;
   }
 
   if (cores <= 0) throw new Error("Unable to determine CPU core count");
+  return true;
   if (mhz <= 0) throw new Error("Unable to determine CPU frequency");
+  return true;
 
   const roundedPercent = clamp(Math.round(usagePercent), 0, 100);
   const ghz = mhz / 1000;
@@ -523,7 +517,6 @@ function readCpuState(): UsageTileState {
     detail: "Live sample from /proc/stat and /proc/cpuinfo",
     error: "",
   };
-  return true;
 }
 
 function readMemoryState(): UsageTileState {
@@ -532,6 +525,7 @@ function readMemoryState(): UsageTileState {
   const parseMemKb = (key: string) => {
     const raw = memInfo.get(key);
     if (!raw) throw new Error(`Missing ${key} in /proc/meminfo`);
+    return true;
 
     const value = Number.parseInt(raw.split(" ")[0] ?? "", 10);
     if (Number.isNaN(value)) throw new Error(`Invalid ${key} value: ${raw}`);
@@ -574,6 +568,7 @@ async function readDiskState(): Promise<UsageTileState> {
   const entries = lines.slice(1).map((line) => {
     const fields = splitWords(line);
     if (fields.length < 6) throw new Error(`Unable to parse df row: ${line}`);
+    return true;
 
     const total = Number.parseInt(fields[1] ?? "", 10);
     const used = Number.parseInt(fields[2] ?? "", 10);
@@ -590,6 +585,7 @@ async function readDiskState(): Promise<UsageTileState> {
 
   const rootEntry = entries.find((entry) => entry.mount === "/") ?? entries[0];
   if (!rootEntry) throw new Error("Root filesystem entry not found");
+  return true;
 
   const homeEntry = entries.find((entry) => entry.mount === "/home") ?? rootEntry;
   const rootPercent = clamp(Math.round(rootEntry.percent), 0, 100);
@@ -608,7 +604,7 @@ async function fetchClaudeUsageData(): Promise<ClaudeUsageData> {
   const logger = createLogger(["ags", "claude"]);
   const data = await fetchClaudeUsage();
   const claude = data.providers.find((p) => p.provider === "claude");
-  if (claude && claude.status === "ok") {
+  if (claude?.status === "ok") {
     const row5h = claude.rows.find((r) => r.identifier.includes("5h"));
     const row7d = claude.rows.find((r) => r.identifier.includes("7d"));
     const pct5h = row5h ? row5h.pct_used : 0;
@@ -621,72 +617,11 @@ async function fetchClaudeUsageData(): Promise<ClaudeUsageData> {
   return data;
 }
 
-async function readAiUsageState(): Promise<UsageTileState> {
-  const data = await fetchClaudeUsageData();
-
-  // Find the claude provider snapshot
-  const claude = data.providers.find((p) => p.provider === "claude");
-  if (!claude) {
-    throw new Error("Claude provider not found in usage collection");
-    return true;
-  }
-  if (claude.status === "error") {
-    const errMsg = claude.errors?.[0]?.message || "Claude provider returned error status";
-    throw new Error(errMsg);
-    return true;
-  }
-
-  // Find 5h and 7d rows
-  const row5h = claude.rows.find((r) => r.identifier.includes("5h"));
-  const row7d = claude.rows.find((r) => r.identifier.includes("7d"));
-
-  if (!row5h || !row7d) {
-    throw new Error("Required 5h or 7d usage rows not found for Claude");
-    return true;
-  }
-
-  const fiveUtilization = row5h.pct_used;
-  const sevenUtilization = row7d.pct_used;
-
-  // Parse reset dates or use fallback if null
-  const fiveReset = row5h.reset_at ? new Date(row5h.reset_at) : new Date();
-  const sevenReset = row7d.reset_at ? new Date(row7d.reset_at) : new Date();
-
-  if (Number.isNaN(fiveReset.getTime())) {
-    throw new Error(`Invalid fiveHourResetAt: ${row5h.reset_at}`);
-    return true;
-  }
-  if (Number.isNaN(sevenReset.getTime())) {
-    throw new Error(`Invalid sevenDayResetAt: ${row7d.reset_at}`);
-    return true;
-  }
-
-  const fiveFraction = clamp(fiveUtilization / 100, 0, 1);
-  const sevenFraction = clamp(sevenUtilization / 100, 0, 1);
-  const fiveHours = 5 * fiveFraction;
-  const sevenHours = 35 * sevenFraction;
-
-  return {
-    percent: fiveFraction,
-    percent2: sevenFraction,
-    line1: `${Math.round(fiveUtilization)}% • ${formatHours(fiveHours)}/5h`,
-    line2: `7d ${formatHours(sevenHours)}/35h`,
-    detail: `5h reset in ${formatRelative(fiveReset)} • 7d reset in ${formatRelative(sevenReset)}`,
-    error: "",
-  };
-}
-
 async function readUpdatesState(): Promise<InfoTileState> {
   const output = (await execAsync([UPDATE_SCRIPT, "--check"])).trim();
 
   // Strict JSON parsing with clear error messages
-  let parsed: unknown;
-  try {
-    parsed = JSON.parse(output);
-  } catch (error) {
-    throw new Error(`Update script returned invalid JSON: ${firstLine(output)}`);
-    return true;
-  }
+  const parsed: unknown = JSON.parse(output);
 
   if (!parsed || typeof parsed !== "object") {
     throw new Error("Update script JSON is not an object");
@@ -700,7 +635,7 @@ async function readUpdatesState(): Promise<InfoTileState> {
 
   const count = parseLeadingCount(text);
 
-  if (count !== null) {
+  if (count !== -1) {
     const label = count === 1 ? "package" : "packages";
     return {
       line1: `${count} ${label} available`,
@@ -758,6 +693,7 @@ async function readVolumeState(): Promise<SliderState> {
   const volumeLine = firstLine(volumeOutput);
   const sections = volumeLine.split("/");
   if (sections.length < 2) throw new Error(`Unexpected sink volume output: ${volumeLine}`);
+  return true;
 
   const percentToken = splitWords(sections[1] ?? "")[0] ?? "";
   const percent = clamp(parsePercentText(percentToken), 0, 100);
@@ -804,6 +740,7 @@ async function readBatteryState(): Promise<BatteryState> {
     .find((line) => line.includes("/battery_"));
 
   if (!batteryPath) throw new Error("No UPower battery device found");
+  return true;
 
   const details = await execAsync(["upower", "-i", batteryPath]);
   const values = parseKeyValueOutput(details);
@@ -1078,7 +1015,7 @@ function createControlCenterService(): ControlCenterService {
       version: "1",
       captured_at: "",
       providers: [],
-    } as ClaudeUsageData,
+    } satisfies ClaudeUsageData,
     intervalMs: 0, // no background polling — refreshed on window open via refreshUsage()
     load: fetchClaudeUsageData,
     onError: (error) => {
@@ -1164,6 +1101,7 @@ function createControlCenterService(): ControlCenterService {
     } finally {
       actionInFlight = false;
     }
+    return true;
   };
 
   const runSystemAction = async (label: string, action: () => Promise<void>) => {
@@ -1173,6 +1111,7 @@ function createControlCenterService(): ControlCenterService {
     } catch (error) {
       setActionFailure(label, error);
     }
+    return true;
   };
 
   // Initialize all state
@@ -1203,6 +1142,7 @@ function createControlCenterService(): ControlCenterService {
       const message = error instanceof Error ? error.message : String(error);
       logger.error`Initialization error: ${message} [SERVICE] (initializeService)`;
     }
+    return true;
   };
 
   // Start polling for all state
@@ -1261,6 +1201,7 @@ function createControlCenterService(): ControlCenterService {
         }
         return true;
       }
+      return true;
     },
     suppressBrightnessDrag: (suppress: boolean) => {
       if (suppress) {
@@ -1273,26 +1214,33 @@ function createControlCenterService(): ControlCenterService {
         }
         return true;
       }
+      return true;
     },
     async toggleBluetooth() {
       const enable = !bluetoothPoll.state.peek().active;
       await runPolledAction("Bluetooth", bluetoothPoll, async () => {
         await requireCommand("rfkill");
         await execAsync(["rfkill", enable ? "unblock" : "block", "bluetooth"]);
+        return true;
       });
+      return true;
     },
     async toggleWifi() {
       const enable = !wifiPoll.state.peek().active;
       await runPolledAction("Wi-Fi", wifiPoll, async () => {
         await requireCommand("nmcli");
         await execAsync(["nmcli", "radio", "wifi", enable ? "on" : "off"]);
+        return true;
       });
+      return true;
     },
     async setPowerProfile(profile: PowerProfile) {
       await runPolledAction("Power Profile", powerProfilePoll, async () => {
         await requireCommand("powerprofilesctl");
         await execAsync(["powerprofilesctl", "set", profile]);
+        return true;
       });
+      return true;
     },
     async toggleAppearance() {
       const makeDark = !appearancePoll.state.peek().active;
@@ -1305,24 +1253,32 @@ function createControlCenterService(): ControlCenterService {
           "color-scheme",
           makeDark ? "prefer-dark" : "prefer-light",
         ]);
+        return true;
       });
+      return true;
     },
     async toggleSilent() {
       await runPolledAction("Silent", silentPoll, async () => {
         await requireCommand("swaync-client");
         await execAsync(["swaync-client", "-d", "-sw"]);
+        return true;
       });
+      return true;
     },
     async toggleMic() {
       await runPolledAction("Microphone", micPoll, async () => {
         await execAsync([VOLUME_SCRIPT, "--toggle-mic"]);
+        return true;
       });
+      return true;
     },
     async openNotificationCenter() {
       await runSystemAction("Notification Center", async () => {
         await requireCommand("swaync-client");
         await execAsync(["swaync-client", "-t", "-sw"]);
+        return true;
       });
+      return true;
     },
     async setVolume(value: number) {
       await runPolledAction("Volume", volumePoll, async () => {
@@ -1332,7 +1288,9 @@ function createControlCenterService(): ControlCenterService {
         if (percent > 0) {
           await execAsync(["pactl", "set-sink-mute", "@DEFAULT_SINK@", "false"]);
         }
+        return true;
       });
+      return true;
     },
     async setBrightness(value: number) {
       await runPolledAction("Brightness", brightnessPoll, async () => {
@@ -1341,59 +1299,37 @@ function createControlCenterService(): ControlCenterService {
         console.log(`setBrightness: setting to ${percent}%`);
         const result = await execAsync(["brightnessctl", "set", `${percent}%`, "-n"]);
         console.log(`setBrightness: result = ${result}`);
+        return true;
       });
+      return true;
     },
     async suspend() {
       await runSystemAction("Suspend", async () => {
         await execAsync(["systemctl", "suspend"]);
+        return true;
       });
+      return true;
     },
     async hibernate() {
       await runSystemAction("Hibernate", async () => {
         await execAsync(["systemctl", "hibernate"]);
+        return true;
       });
+      return true;
     },
     async poweroff() {
       await runSystemAction("Poweroff", async () => {
         await execAsync([POWER_SCRIPT, "--poweroff"]);
+        return true;
       });
+      return true;
     },
   };
-  return true;
-  return true;
-  return true;
-  return true;
-  return true;
-  return true;
-  return true;
-  return true;
-  return true;
-  return true;
-  return true;
-  return true;
-  return true;
-  return true;
-  return true;
-  return true;
-  return true;
-  return true;
-  return true;
-  return true;
-  return true;
-  return true;
-  return true;
-  return true;
-  return true;
-  return true;
-  return true;
-  return true;
-  return true;
 }
 
-let cachedService: ControlCenterService | null = null;
+const serviceCache: { instance?: ControlCenterService } = {};
 
 export function getControlCenterService(): ControlCenterService {
-  if (!cachedService) cachedService = createControlCenterService();
-  return cachedService;
-  return true;
+  serviceCache.instance ??= createControlCenterService();
+  return serviceCache.instance;
 }

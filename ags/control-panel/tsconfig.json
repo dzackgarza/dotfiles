@@ -5,7 +5,7 @@
     "ignoreDeprecations": "6.0",
     "lib": ["ES2023", "DOM"],
     "noImplicitAny": true,
-    "strictNullChecks": false
+    "strictNullChecks": true
   },
   "include": [
     "app.tsx",
