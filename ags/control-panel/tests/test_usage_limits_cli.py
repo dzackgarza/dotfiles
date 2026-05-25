@@ -159,6 +159,32 @@ def test_every_provider_has_required_fields():
     assert not failures, "Schema violations:\n" + "\n".join(failures)
 
 
+def test_pct_used_produces_valid_gtk_fraction():
+    """Every pct_used / 100 must be in [0, 1] for Gtk ProgressBar.fraction.
+
+    The Gtk ProgressBar fraction property only accepts values in [0, 1].
+    pct_used values exceeding 100 (e.g. trae=100.4653) produce fractions
+    above 1.0 and trigger GLib-GObject-CRITICAL warnings.
+
+    This test proves the upstream data includes values that would violate
+    the Gtk widget boundary without clamping downstream.
+    """
+    data = _run_usage_limits()
+    failures = []
+    for provider in data["providers"]:
+        for i, row in enumerate(provider.get("rows", [])):
+            fraction = row["pct_used"] / 100
+            if fraction < 0 or fraction > 1:
+                failures.append(
+                    f"{provider['provider']}: rows[{i}].pct_used={row['pct_used']} -> "
+                    f"fraction={fraction} (outside [0, 1])"
+                )
+    assert not failures, (
+        "pct_used values that exceed valid Gtk ProgressBar fraction range:\n"
+        + "\n".join(failures)
+    )
+
+
 def test_providers_match_provider_icons_map():
     """All providers from usage-limits must have entries in PROVIDER_ICONS."""
     import re
