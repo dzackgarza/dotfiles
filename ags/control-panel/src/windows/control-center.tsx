@@ -93,7 +93,11 @@ function ProviderIcon({
     <button
       class="provider-icon-btn"
       onClicked={onClicked}
-      tooltipText={provider.display_name}
+      tooltipText={
+        provider.errors?.length
+          ? `${provider.display_name}: ${provider.errors[0].message}`
+          : provider.display_name
+      }
     >
       <box
         orientation={Gtk.Orientation.VERTICAL}
