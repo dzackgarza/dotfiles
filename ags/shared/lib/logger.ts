@@ -1,17 +1,19 @@
-import { configureSync, getConsoleSink, getLogger } from "@logtape/logtape"
+import { configureSync, getConsoleSink, getLogger } from "@logtape/logtape";
 
-export function initializeLogger(): void {
+export function initializeLogger(): boolean {
   // LogTape checks for addEventListener; shim it for GJS
-  if (typeof (globalThis as any).addEventListener === "undefined") {
-    ;(globalThis as any).addEventListener = () => {}
+  const g = globalThis as unknown as { addEventListener: () => boolean };
+  if (typeof g.addEventListener === "undefined") {
+    g.addEventListener = () => true;
   }
 
   configureSync({
     sinks: { console: getConsoleSink() },
     loggers: [{ category: [], lowestLevel: "debug", sinks: ["console"] }],
-  })
+  });
+  return true;
 }
 
 export function createLogger(category: string[]): ReturnType<typeof getLogger> {
-  return getLogger(category)
+  return getLogger(category);
 }

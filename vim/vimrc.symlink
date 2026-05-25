@@ -262,7 +262,7 @@ set completeopt=longest,menuone
 set complete+=kspell
 set complete+=k/home/zack/Notes/math_dict.txt
 set spelllang=en
-set spellfile=/home/zack/Notes/mathdict.utf-8.add
+set spellfile=~/dotfiles/dictionaries/mathdict.utf-8.add
 set conceallevel=2
 
 " No spellchecking fullstops without capitalization
