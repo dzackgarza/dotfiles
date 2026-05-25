@@ -56,6 +56,42 @@ STATIC_ICON_NAMES = {
     "battery-missing-symbolic",
 }
 
+# ---- Provider keys from usage-limits --json ----
+# These are all known LLM provider identifiers that should have icon mappings.
+# Source: `usage-limits --json` output keys.
+KNOWN_PROVIDER_KEYS = {
+    "antigravity",
+    "claude",
+    "codex",
+    "copilot",
+    "cursor",
+    "kiro",
+    "ollama",
+    "opencode",
+    "opencode-go",
+    "opencode-zen",
+    "qoder",
+    "trae",
+    "windsurf",
+}
+
+# Expected icon name for each provider key
+EXPECTED_PROVIDER_ICONS = {
+    "antigravity": "antigravity-symbolic",
+    "claude": "claude-ai-symbolic",
+    "codex": "codex-symbolic",
+    "copilot": "copilot-symbolic",
+    "cursor": "cursor-symbolic",
+    "kiro": "kiro-symbolic",
+    "ollama": "ollama-symbolic",
+    "opencode": "opencode-symbolic",
+    "opencode-go": "opencode-symbolic",
+    "opencode-zen": "opencode-symbolic",
+    "qoder": "qoder-symbolic",
+    "trae": "trae-symbolic",
+    "windsurf": "windsurf-symbolic",
+}
+
 # Known system icon theme directories where icons may reside
 SYSTEM_ICON_DIRS = [
     Path("/usr/share/icons/hicolor/scalable/actions"),
@@ -111,15 +147,23 @@ def test_custom_project_icons_exist():
         project_svg_files.add(svg.stem)  # stem = filename without .svg
 
     custom_icon_names = {
-        "claude-ai-symbolic",
-        "openai-symbolic",
-        "ollama-symbolic",
-        "opencode-symbolic",
+        "antigravity-symbolic",
         "anthropic-symbolic",
-        "ram-symbolic",
         "battery-bolt-symbolic",
+        "claude-ai-symbolic",
+        "codex-symbolic",
+        "copilot-symbolic",
+        "cursor-symbolic",
         "hourglass-symbolic",
+        "kiro-symbolic",
+        "ollama-symbolic",
+        "openai-symbolic",
+        "opencode-symbolic",
+        "qoder-symbolic",
+        "ram-symbolic",
+        "trae-symbolic",
         "wattage-symbolic",
+        "windsurf-symbolic",
     }
 
     missing = custom_icon_names - project_svg_files
@@ -135,16 +179,24 @@ def test_system_icons_exist():
     one installed icon theme.
     """
     system_icon_names = STATIC_ICON_NAMES - {
-        # Remove custom icons — they're in the project dir, not system
-        "claude-ai-symbolic",
-        "openai-symbolic",
-        "ollama-symbolic",
-        "opencode-symbolic",
+        # Remove custom project icons — they're in the project dir, not system
+        "antigravity-symbolic",
         "anthropic-symbolic",
-        "ram-symbolic",
         "battery-bolt-symbolic",
+        "claude-ai-symbolic",
+        "codex-symbolic",
+        "copilot-symbolic",
+        "cursor-symbolic",
         "hourglass-symbolic",
+        "kiro-symbolic",
+        "ollama-symbolic",
+        "openai-symbolic",
+        "opencode-symbolic",
+        "qoder-symbolic",
+        "ram-symbolic",
+        "trae-symbolic",
         "wattage-symbolic",
+        "windsurf-symbolic",
     }
 
     # Build set of all available system icon names (without extension)
@@ -177,4 +229,83 @@ def test_icons_directory_uses_src_variable():
         "app.tsx uses a hardcoded absolute path for icons.\n"
         "It should use the AGS v2 SRC global variable instead:\n"
         "  icons: `${SRC}/icons`,"
+    )
+
+
+def _parse_provider_icons() -> dict[str, str]:
+    """Extract the PROVIDER_ICONS mapping from control-center.tsx."""
+    tsx_path = PROJECT_ROOT / "src" / "windows" / "control-center.tsx"
+    text = tsx_path.read_text()
+
+    # Find the PROVIDER_ICONS record and extract key-value pairs
+    mapping: dict[str, str] = {}
+    in_block = False
+    for line in text.splitlines():
+        stripped = line.strip()
+        if stripped.startswith("const PROVIDER_ICONS"):
+            in_block = True
+            continue
+        if in_block:
+            if stripped == "}":
+                break
+            # Match: provider_key: "icon-name",
+            m = re.match(r'^\s*"?(\S+?)"?:\s*"([^"]+)"', stripped)
+            if m:
+                key = m.group(1).rstrip(",")
+                mapping[key] = m.group(2)
+    return mapping
+
+
+def test_provider_icons_coverage():
+    """
+    Every known provider key must have an entry in the PROVIDER_ICONS map
+    in control-center.tsx. If this test fails, a new provider was added to
+    usage-limits but has no corresponding icon mapping.
+    """
+    mapping = _parse_provider_icons()
+    mapped_keys = set(mapping.keys())
+
+    missing = KNOWN_PROVIDER_KEYS - mapped_keys
+    assert not missing, (
+        f"Provider keys missing from PROVIDER_ICONS mapping:\n  {sorted(missing)}\n\n"
+        f"Current mapped keys:\n  {sorted(mapped_keys)}\n\n"
+        "Add an entry to PROVIDER_ICONS in src/windows/control-center.tsx\n"
+        "and create an SVG icon in icons/hicolor/scalable/status/."
+    )
+
+    extra = mapped_keys - KNOWN_PROVIDER_KEYS
+    assert not extra, (
+        f"Provider keys in PROVIDER_ICONS not in KNOWN_PROVIDER_KEYS:\n  {sorted(extra)}\n\n"
+        "Either add them to KNOWN_PROVIDER_KEYS (if they're real providers) or\n"
+        "remove them from PROVIDER_ICONS."
+    )
+
+
+def test_provider_icons_correct():
+    """
+    Every provider key must map to its expected icon name.
+    """
+    mapping = _parse_provider_icons()
+    for key, expected_icon in EXPECTED_PROVIDER_ICONS.items():
+        actual = mapping.get(key)
+        assert actual == expected_icon, (
+            f"Provider '{key}' expected icon '{expected_icon}' but got '{actual}'"
+        )
+
+
+def test_provider_icon_files_exist():
+    """
+    Every icon referenced in PROVIDER_ICONS must exist as an SVG file
+    in the project's icon directory.
+    """
+    mapping = _parse_provider_icons()
+    icon_names = set(mapping.values())
+
+    project_svg_files = set()
+    for svg in ICONS_DIR.rglob("*-symbolic.svg"):
+        project_svg_files.add(svg.stem)
+
+    missing = icon_names - project_svg_files
+    assert not missing, (
+        f"Icons referenced in PROVIDER_ICONS but missing from project:\n  {sorted(missing)}"
     )
