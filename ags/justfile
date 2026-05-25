@@ -3,26 +3,40 @@ set shell := ["bash", "-euo", "pipefail", "-c"]
 default:
     @just --list
 
+qc_python := env_var("HOME") / "ai/quality-control/justfile"
+qc_bun := env_var("HOME") / "ai/quality-control/justfile-bun"
+
 # Install all workspace dependencies
 install:
     bun install
 
+# Run the full local QC gate for all AGS projects
+test:
+    just --justfile {{justfile()}} _test-shared
+    just --justfile {{justfile()}} _test-control-panel
+    just --justfile {{justfile()}} _test-reminder-scheduler
+
+# Run the full CI QC gate for all AGS projects
+test-ci:
+    just --justfile {{justfile()}} _test-ci-shared
+    just --justfile {{justfile()}} _test-ci-control-panel
+    just --justfile {{justfile()}} _test-ci-reminder-scheduler
+
 # Type-check all workspace packages
 typecheck:
-    just --justfile control-panel/Justfile typecheck
-    cd reminder-scheduler && just typecheck
+    just --justfile {{justfile()}} test
 
 # Run all tests across workspace
 check:
-    cd reminder-scheduler && just check
+    just --justfile {{justfile()}} test
 
 # Type-check shared package only
 typecheck-shared:
-    cd shared && tsc --noEmit -p tsconfig.json
+    just --justfile {{justfile()}} _test-shared
 
 # Run reminder-scheduler AGS tests only
 test-ags:
-    cd reminder-scheduler && just test-ags
+    cd reminder-scheduler/ags && just --justfile {{qc_bun}} test
 
 # Start control-panel
 run-control-panel:
@@ -35,3 +49,29 @@ ags-debug-tree WINDOW="Reminders":
 # Open a fixture in the running reminder-scheduler instance
 ags-open-fixture CASE:
     ags -i reminders request open-test-state reminder-scheduler/tests/visual/fixtures/{{CASE}}.json
+
+[private]
+_test-shared:
+    just --justfile {{qc_bun}} --working-directory shared test
+
+[private]
+_test-ci-shared:
+    just --justfile {{qc_bun}} --working-directory shared test-ci
+
+[private]
+_test-control-panel:
+    just --justfile {{qc_bun}} --working-directory control-panel test
+    just --justfile {{qc_python}} --working-directory control-panel test
+
+[private]
+_test-ci-control-panel:
+    just --justfile {{qc_bun}} --working-directory control-panel test-ci
+    just --justfile {{qc_python}} --working-directory control-panel test-ci
+
+[private]
+_test-reminder-scheduler:
+    cd reminder-scheduler && just check
+
+[private]
+_test-ci-reminder-scheduler:
+    cd reminder-scheduler && just check

@@ -60,7 +60,7 @@ function QuotaSection({
               ? "popover-progress-yellow"
               : "popover-progress-green"
         }`}
-        fraction={percentage / 100}
+        fraction={Math.min(Math.max(percentage / 100, 0), 1)}
         hexpand
         halign={Gtk.Align.FILL}
       />

@@ -204,15 +204,5 @@ $for(include-after)$
 $include-after$
 $endfor$
 
-
-<script>
-
-// add bootstrap table styles to pandoc tables
-$$(document).ready(function () {
-  $$('tr.header').parent('thead').parent('table').addClass('table table-condensed');
-});
-
-</script>
-
 </body>
 </html>

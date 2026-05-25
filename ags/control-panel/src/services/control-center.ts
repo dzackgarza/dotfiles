@@ -22,7 +22,10 @@ import { execAsync } from "ags/process"
 import { interval } from "ags/time"
 import GLib from "gi://GLib?version=2.0"
 import { createLogger } from "../index"
-import { fetchClaudeUsage, type UsageCollection } from "../../services/claude-usage-fetcher"
+import {
+  fetchClaudeUsage,
+  type UsageCollection,
+} from "../../services/claude-usage-fetcher"
 import {
   clamp,
   cleanTooltip,
@@ -173,14 +176,19 @@ function createPolledState<T>(options: PollOptions<T>): PolledStateWithInit<T> {
     })
   }
 
-  return { state, refresh, setError, suppressUpdates, setSuppressUpdates, initialize, startPolling }
+  return {
+    state,
+    refresh,
+    setError,
+    suppressUpdates,
+    setSuppressUpdates,
+    initialize,
+    startPolling,
+  }
 }
 
 // Generic error state creator - replaces 6 nearly-identical functions
-function createErrorState<T>(
-  baseState: T,
-  error: unknown
-): T & BaseTileState {
+function createErrorState<T>(baseState: T, error: unknown): T & BaseTileState {
   const message = error instanceof Error ? error.message : String(error)
   return {
     ...baseState,
@@ -198,7 +206,7 @@ function toggleError(name: string, error: unknown): ToggleTileState {
       line1: name,
       line2: `Error: ${errorMsg}`,
     },
-    error
+    error,
   )
 }
 
@@ -210,7 +218,7 @@ function usageError(name: string, error: unknown): UsageTileState {
       line1: name,
       line2: `Error: ${errorMsg}`,
     },
-    error
+    error,
   )
 }
 
@@ -221,7 +229,7 @@ function infoError(name: string, error: unknown): InfoTileState {
       line1: name,
       line2: `Error: ${errorMsg}`,
     },
-    error
+    error,
   )
 }
 
@@ -284,12 +292,15 @@ async function readBluetoothState(): Promise<ToggleTileState> {
     throw new Error("No Bluetooth adapter found")
   }
 
-  const devicesOutput = await execAsync(["bluetoothctl", "devices", "Connected"])
+  const devicesOutput = await execAsync([
+    "bluetoothctl",
+    "devices",
+    "Connected",
+  ])
   const connectedCount = devicesOutput
     .split("\n")
     .map((line) => line.trim())
-    .filter((line) => line.startsWith("Device "))
-    .length
+    .filter((line) => line.startsWith("Device ")).length
 
   const active = !blocked
   const deviceLabel = connectedCount === 1 ? "device" : "devices"
@@ -298,7 +309,9 @@ async function readBluetoothState(): Promise<ToggleTileState> {
     active,
     line1: active ? "Powered On" : "Power Off",
     line2: `${connectedCount} ${deviceLabel}`,
-    detail: active ? `${connectedCount} connected ${deviceLabel}` : "Bluetooth radio is disabled",
+    detail: active
+      ? `${connectedCount} connected ${deviceLabel}`
+      : "Bluetooth radio is disabled",
     error: null,
   }
 }
@@ -351,9 +364,17 @@ async function readWifiState(): Promise<ToggleTileState> {
 
   return {
     active,
-    line1: connected ? `Connected • ${bars} bars` : active ? "Disconnected • 0 bars" : "Wi-Fi Off",
+    line1: connected
+      ? `Connected • ${bars} bars`
+      : active
+        ? "Disconnected • 0 bars"
+        : "Wi-Fi Off",
     line2: connected ? ssid : active ? "No network" : "Radio disabled",
-    detail: connected ? `Signal strength ${signal}%` : active ? "Wi-Fi enabled but not connected" : "Wi-Fi radio disabled",
+    detail: connected
+      ? `Signal strength ${signal}%`
+      : active
+        ? "Wi-Fi enabled but not connected"
+        : "Wi-Fi radio disabled",
     error: null,
   }
 }
@@ -362,7 +383,11 @@ async function readPowerProfileState(): Promise<PowerProfileState> {
   await requireCommand("powerprofilesctl")
   const profile = (await execAsync(["powerprofilesctl", "get"])).trim()
 
-  if (profile !== "power-saver" && profile !== "balanced" && profile !== "performance") {
+  if (
+    profile !== "power-saver" &&
+    profile !== "balanced" &&
+    profile !== "performance"
+  ) {
     throw new Error(`Unknown power profile: ${profile}`)
   }
 
@@ -376,12 +401,14 @@ async function readPowerProfileState(): Promise<PowerProfileState> {
 async function readAppearanceState(): Promise<ToggleTileState> {
   await requireCommand("gsettings")
 
-  const raw = (await execAsync([
-    "gsettings",
-    "get",
-    "org.gnome.desktop.interface",
-    "color-scheme",
-  ])).trim()
+  const raw = (
+    await execAsync([
+      "gsettings",
+      "get",
+      "org.gnome.desktop.interface",
+      "color-scheme",
+    ])
+  ).trim()
 
   const dark = raw.includes("dark")
 
@@ -429,7 +456,9 @@ async function readMicState(): Promise<ToggleTileState> {
     active: muted,
     line1: muted ? "Muted" : "Live",
     line2: "Mic",
-    detail: muted ? "Default input source is muted" : "Default input source is live",
+    detail: muted
+      ? "Default input source is muted"
+      : "Default input source is live",
     error: null,
   }
 }
@@ -457,7 +486,8 @@ function readCpuState(): UsageTileState {
   if (previousCpuSample) {
     const totalDelta = total - previousCpuSample.total
     const idleDelta = idle - previousCpuSample.idle
-    usagePercent = totalDelta <= 0 ? 0 : ((totalDelta - idleDelta) / totalDelta) * 100
+    usagePercent =
+      totalDelta <= 0 ? 0 : ((totalDelta - idleDelta) / totalDelta) * 100
   } else {
     usagePercent = total <= 0 ? 0 : ((total - idle) / total) * 100
   }
@@ -562,7 +592,8 @@ async function readDiskState(): Promise<UsageTileState> {
   const rootEntry = entries.find((entry) => entry.mount === "/") ?? entries[0]
   if (!rootEntry) throw new Error("Root filesystem entry not found")
 
-  const homeEntry = entries.find((entry) => entry.mount === "/home") ?? rootEntry
+  const homeEntry =
+    entries.find((entry) => entry.mount === "/home") ?? rootEntry
   const rootPercent = clamp(Math.round(rootEntry.percent), 0, 100)
   const homePercent = clamp(Math.round(homeEntry.percent), 0, 100)
 
@@ -578,10 +609,10 @@ async function readDiskState(): Promise<UsageTileState> {
 async function fetchClaudeUsageData(): Promise<ClaudeUsageData> {
   const logger = createLogger(["ags", "claude"])
   const data = await fetchClaudeUsage()
-  const claude = data.providers.find(p => p.provider === "claude")
+  const claude = data.providers.find((p) => p.provider === "claude")
   if (claude && claude.status === "ok") {
-    const row5h = claude.rows.find(r => r.identifier.includes("5h"))
-    const row7d = claude.rows.find(r => r.identifier.includes("7d"))
+    const row5h = claude.rows.find((r) => r.identifier.includes("5h"))
+    const row7d = claude.rows.find((r) => r.identifier.includes("7d"))
     const pct5h = row5h ? row5h.pct_used : 0
     const pct7d = row7d ? row7d.pct_used : 0
     logger.debug`Fetched Claude usage: 5h=${pct5h}% 7d=${pct7d}%`
@@ -595,18 +626,19 @@ async function readAiUsageState(): Promise<UsageTileState> {
   const data = await fetchClaudeUsageData()
 
   // Find the claude provider snapshot
-  const claude = data.providers.find(p => p.provider === "claude")
+  const claude = data.providers.find((p) => p.provider === "claude")
   if (!claude) {
     throw new Error("Claude provider not found in usage collection")
   }
   if (claude.status === "error") {
-    const errMsg = claude.errors?.[0]?.message || "Claude provider returned error status"
+    const errMsg =
+      claude.errors?.[0]?.message || "Claude provider returned error status"
     throw new Error(errMsg)
   }
 
   // Find 5h and 7d rows
-  const row5h = claude.rows.find(r => r.identifier.includes("5h"))
-  const row7d = claude.rows.find(r => r.identifier.includes("7d"))
+  const row5h = claude.rows.find((r) => r.identifier.includes("5h"))
+  const row7d = claude.rows.find((r) => r.identifier.includes("7d"))
 
   if (!row5h || !row7d) {
     throw new Error("Required 5h or 7d usage rows not found for Claude")
@@ -658,7 +690,9 @@ async function readUpdatesState(): Promise<InfoTileState> {
 
   const data = parsed as Record<string, unknown>
   const text = typeof data.text === "string" ? data.text : ""
-  const tooltip = cleanTooltip(typeof data.tooltip === "string" ? data.tooltip : "")
+  const tooltip = cleanTooltip(
+    typeof data.tooltip === "string" ? data.tooltip : "",
+  )
   const checkTime = formatTimestamp(new Date())
 
   const count = parseLeadingCount(text)
@@ -715,15 +749,24 @@ async function readNotificationState(): Promise<InfoTileState> {
 async function readVolumeState(): Promise<SliderState> {
   await requireCommand("pactl")
 
-  const volumeOutput = await execAsync(["pactl", "get-sink-volume", "@DEFAULT_SINK@"])
+  const volumeOutput = await execAsync([
+    "pactl",
+    "get-sink-volume",
+    "@DEFAULT_SINK@",
+  ])
   const volumeLine = firstLine(volumeOutput)
   const sections = volumeLine.split("/")
-  if (sections.length < 2) throw new Error(`Unexpected sink volume output: ${volumeLine}`)
+  if (sections.length < 2)
+    throw new Error(`Unexpected sink volume output: ${volumeLine}`)
 
   const percentToken = splitWords(sections[1] ?? "")[0] ?? ""
   const percent = clamp(parsePercentText(percentToken), 0, 100)
 
-  const muteOutput = await execAsync(["pactl", "get-sink-mute", "@DEFAULT_SINK@"])
+  const muteOutput = await execAsync([
+    "pactl",
+    "get-sink-mute",
+    "@DEFAULT_SINK@",
+  ])
   const muteValues = parseKeyValueOutput(muteOutput)
   const muteValue = muteValues.get("Mute")
   if (!muteValue || (muteValue !== "yes" && muteValue !== "no")) {
@@ -844,7 +887,9 @@ function createControlCenterService(): ControlCenterService {
   const totalPolls = 14
   const [pendingPolls, setPendingPolls] = createState(totalPolls)
   const ready = pendingPolls((count) => count === 0)
-  const [lastUpdated, setLastUpdated] = createState("Last updated: waiting for first poll")
+  const [lastUpdated, setLastUpdated] = createState(
+    "Last updated: waiting for first poll",
+  )
   const [actionError, setActionError] = createState("")
 
   const markUpdated = () => {
@@ -1037,10 +1082,18 @@ function createControlCenterService(): ControlCenterService {
     intervalMs: 0, // no background polling — refreshed on window open via refreshUsage()
     load: fetchClaudeUsageData,
     onError: (error) => {
-      logger.error`Failed to fetch Claude usage: ${error}`
-      throw error
+      const message = error instanceof Error ? error.message : String(error)
+      logger.error`Failed to fetch Claude usage: ${message}`
+      return {
+        version: "1",
+        captured_at: "",
+        providers: [],
+      } as ClaudeUsageData
     },
-    onSuccess: () => { usageLastFetchedAt = Date.now(); markUpdated() },
+    onSuccess: () => {
+      usageLastFetchedAt = Date.now()
+      markUpdated()
+    },
     onFirstComplete: markFirstPollComplete,
   })
 
@@ -1111,7 +1164,10 @@ function createControlCenterService(): ControlCenterService {
     }
   }
 
-  const runSystemAction = async (label: string, action: () => Promise<void>) => {
+  const runSystemAction = async (
+    label: string,
+    action: () => Promise<void>,
+  ) => {
     try {
       await action()
       clearActionError()
@@ -1145,8 +1201,8 @@ function createControlCenterService(): ControlCenterService {
       ])
       logger.info`All 14 system polls initialized successfully [SERVICE] (initializeService)`
     } catch (error) {
-      logger.error`Initialization error: ${error} [SERVICE] (initializeService)`
-      throw error
+      const message = error instanceof Error ? error.message : String(error)
+      logger.error`Initialization error: ${message} [SERVICE] (initializeService)`
     }
   }
 
@@ -1268,7 +1324,12 @@ function createControlCenterService(): ControlCenterService {
       await runPolledAction("Volume", volumePoll, async () => {
         await requireCommand("pactl")
         const percent = clamp(Math.round(value * 100), 0, 100)
-        await execAsync(["pactl", "set-sink-volume", "@DEFAULT_SINK@", `${percent}%`])
+        await execAsync([
+          "pactl",
+          "set-sink-volume",
+          "@DEFAULT_SINK@",
+          `${percent}%`,
+        ])
         if (percent > 0) {
           await execAsync(["pactl", "set-sink-mute", "@DEFAULT_SINK@", "false"])
         }
@@ -1279,7 +1340,12 @@ function createControlCenterService(): ControlCenterService {
         await requireCommand("brightnessctl")
         const percent = clamp(Math.round(value * 100), 0, 100)
         console.log(`setBrightness: setting to ${percent}%`)
-        const result = await execAsync(["brightnessctl", "set", `${percent}%`, "-n"])
+        const result = await execAsync([
+          "brightnessctl",
+          "set",
+          `${percent}%`,
+          "-n",
+        ])
         console.log(`setBrightness: result = ${result}`)
       })
     },

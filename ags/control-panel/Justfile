@@ -3,17 +3,11 @@ set shell := ["bash", "-euo", "pipefail", "-c"]
 default:
     @just --list
 
-typecheck:
-    ags types 'Astal*' --ignore Gtk3 --ignore Astal3 --update
-    tsc --noEmit --skipLibCheck -p tsconfig.json
-
 test:
-    just typecheck
-    python3 -m pytest tests/ -v
+    just --justfile ../justfile --working-directory .. _test-control-panel
 
-# Run icon infrastructure tests only
-test-icons:
-    python3 -m pytest tests/test_icons.py -v
+test-ci:
+    just --justfile ../justfile --working-directory .. _test-ci-control-panel
 
 run:
     ags quit || true

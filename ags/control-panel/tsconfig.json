@@ -3,13 +3,25 @@
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "ignoreDeprecations": "6.0",
-    "lib": ["ES2023", "DOM"],
-    "noImplicitAny": false,
-    // DEBT: GJS system libraries (/usr/share/ags/js/, gnim) contain internal
-    // TS type mismatches that produce cascading null-safety errors unrelated
-    // to this project's code. strictNullChecks: false suppresses them.
-    // The correct fix is to audit and patch the GJS type stubs, not accepted
-    // as a shared baseline. See control-panel/AGENTS.md §1.
+    "lib": [
+      "ES2023",
+      "DOM"
+    ],
+    "noImplicitAny": true,
     "strictNullChecks": false
-  }
+  },
+  "include": [
+    "app.tsx",
+    "env.d.ts",
+    "lib/**/*.ts",
+    "services/**/*.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "widget/**/*.tsx"
+  ],
+  "exclude": [
+    "@girs",
+    "node_modules",
+    "reminders"
+  ]
 }

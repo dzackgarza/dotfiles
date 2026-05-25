@@ -70,10 +70,10 @@ inoremap <expr> <cr> pumvisible() ? "<C-e><CR>" : "\<C-g>u\<CR>"
 """""coc-snippets test
 
 set dictionary+=~/Notes/corpus.add
-set dictionary+=~/Notes/mathdict.utf-8.add.spl
+set dictionary+=~/dotfiles/dictionaries/mathdict.utf-8.add.spl
 "set complete+=kspell
 set spelllang=en
-set spellfile=/home/zack/Notes/mathdict.utf-8.add
+set spellfile=~/dotfiles/dictionaries/mathdict.utf-8.add
 """"""""
 
 " Commands

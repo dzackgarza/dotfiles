@@ -11,6 +11,10 @@
         "@ags/shared": "workspace:*",
         "@logtape/logtape": "^2.0.2",
       },
+      "devDependencies": {
+        "typescript": "^5.0.0",
+        "vitest": "^2.0.0",
+      },
     },
     "reminder-scheduler/ags": {
       "name": "rem-ags",
@@ -30,6 +34,7 @@
       },
       "devDependencies": {
         "typescript": "^5.0.0",
+        "vitest": "^2.0.0",
       },
     },
   },

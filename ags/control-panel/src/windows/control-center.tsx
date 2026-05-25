@@ -41,21 +41,7 @@ function joinClasses(
   return classes.filter((value) => Boolean(value)).join(" ")
 }
 
-const PROVIDER_ICONS: Record<string, string> = {
-  antigravity: "antigravity-symbolic",
-  claude: "claude-ai-symbolic",
-  codex: "codex-symbolic",
-  copilot: "copilot-symbolic",
-  cursor: "cursor-symbolic",
-  kiro: "kiro-symbolic",
-  ollama: "ollama-symbolic",
-  opencode: "opencode-symbolic",
-  "opencode-go": "opencode-symbolic",
-  "opencode-zen": "opencode-symbolic",
-  qoder: "qoder-symbolic",
-  trae: "trae-symbolic",
-  windsurf: "windsurf-symbolic",
-}
+import { PROVIDER_ICONS } from "../lib/provider-icons"
 
 type ProviderAvail = "ok" | "rate_limited" | "unavailable"
 

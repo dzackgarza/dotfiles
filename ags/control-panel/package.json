@@ -1,9 +1,17 @@
 {
   "name": "ags-control-panel",
   "private": true,
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
   "dependencies": {
     "@ags/shared": "workspace:*",
     "@logtape/logtape": "^2.0.2"
+  },
+  "devDependencies": {
+    "vitest": "^2.0.0",
+    "typescript": "^5.0.0"
   },
   "prettier": {
     "semi": false,

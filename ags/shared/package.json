@@ -4,12 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "test": "vitest run",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "@logtape/logtape": "^2.0.2"
   },
   "devDependencies": {
+    "vitest": "^2.0.0",
     "typescript": "^5.0.0"
   }
 }
