@@ -288,6 +288,41 @@ def test_multiple_blocks_html() -> None:
     assert_html("2 <svg> elements", path, check_dom)
 
 
+# --- tikz code block (```tikz) ---
+
+
+def test_tikzcode_latex() -> None:
+    """```tikz code block: Figure with Image[width=\\columnwidth]."""
+    path = FIXTURES / "tikzcode" / "input.md"
+
+    def check_ast(doc):
+        figures = [
+            b
+            for b in find_blocks(doc)
+            if b["t"] == "Figure" and figure_has_image_with_width(b)
+        ]
+        # Exactly 1 figure (the ```tikz block), not 2 (python block not compiled)
+        return len(figures) == 1
+
+    assert_latex("1 Figure block, python block not compiled", path, check_ast)
+
+
+def test_tikzcode_html() -> None:
+    """```tikz code block: Div > Span.tikzcode > svg."""
+    path = FIXTURES / "tikzcode" / "input.md"
+
+    def check_dom(soup):
+        div = soup.find("div", style="text-align:center;")
+        if not div:
+            return False
+        span = div.find("span", class_="tikzcode")
+        if not span:
+            return False
+        return span.find("svg") is not None
+
+    assert_html("div.center > span.tikzcode > svg", path, check_dom)
+
+
 # --- crash handling ---
 
 
@@ -333,6 +368,13 @@ def main() -> None:
             [
                 test_multiple_blocks_latex,
                 test_multiple_blocks_html,
+            ],
+        ),
+        (
+            "tikz code block (```tikz)",
+            [
+                test_tikzcode_latex,
+                test_tikzcode_html,
             ],
         ),
         (
