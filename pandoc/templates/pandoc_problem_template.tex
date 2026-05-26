@@ -1,4 +1,11 @@
-\input{koma-article}
+$passoptions.latex()$
+\documentclass[11pt, a4paper, bibliography=totoc, parskip=full]{scrartcl}
+\usepackage{dzg-unified}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tabularx}
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
 $for(bibliography)$
 \addbibresource{$bibliography$}

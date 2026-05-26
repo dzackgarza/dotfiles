@@ -1,0 +1,30 @@
+% DZG TikZ Standalone Package
+% Subset of dzg-unified for standalone tikz compilation (diagram -> SVG)
+% Skips document-level environments, tables, and typography packages.
+%
+% Created 2026-05-26
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{dzg-tikz}[2026/05/26 DZG TikZ Standalone Package]
+
+% Shared package loading
+\input{preambles/dzg-preamble}
+
+% Tier 1: Simple MathJax-compatible shortcuts
+\input{tier1-mathjax-simple}
+
+% Tier 2: Commands with arguments (MathJax-compatible)
+\input{tier2-mathjax-args}
+
+% Tier 3: Complex TeX-specific commands
+\input{tier3-tex-complex}
+
+% Tier 4: Preamble content
+\input{tier4-preamble}
+
+% Domain-specific macros
+\input{categories}
+\input{spectral}
+\input{tikz}
+
+\endinput

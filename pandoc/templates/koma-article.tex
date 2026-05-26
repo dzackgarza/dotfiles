@@ -1,10 +1,10 @@
-% KOMA-Script Article Preamble
-% Modern replacement for macros/preamble.tex
-% Created 2025-01-09 as part of macro consolidation
-
+% KOMA-Script Article (Pandoc Template)
+% For general documents, homework, lecture notes, personal writing.
+% Usage: pandoc input.md -o output.pdf --template=koma-article
+$passoptions.latex()$
 \documentclass[11pt, a4paper, bibliography=totoc, parskip=full]{scrartcl}
 
-% Load unified DZG macros (includes all tiers)
+% Load unified DZG macros (includes all tiers and package defaults)
 \usepackage{dzg-unified}
 
 % ============================================================================
@@ -61,6 +61,22 @@
 \floatplacement{figure}{H}
 \usepackage{svg}
 
+% Standard Pandoc macros for figures
+$if(graphics)$
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\textwidth\textwidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\makeatletter
+\def\fps@figure{$if(fig-pos)$$fig-pos$$else$H$endif$}
+\makeatother
+$endif$
+
+\makeatletter
+\newcommand{\pandocbounded}[1]{#1}
+\makeatother
+
 % ============================================================================
 % Bibliography
 % ============================================================================
@@ -68,6 +84,9 @@
 backend=biber,
 style=alphabetic,
 ]{biblatex}
+$for(bibliography)$
+\addbibresource{$bibliography$}
+$endfor$
 
 % ============================================================================
 % Page Layout
@@ -178,3 +197,46 @@ style=alphabetic,
 \newenvironment{wideeq}
   {\begin{displaymath}\begin{lrbox}{\wideeqbox}$\displaystyle}
   {$\end{lrbox}\makebox[0pt]{\usebox{\wideeqbox}}\end{displaymath}}
+
+% ============================================================================
+$if(title)$
+\title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
+$endif$
+$if(subtitle)$
+\subtitle{$subtitle$}
+$endif$
+$for(author)$
+\author{$author.name$}
+$endfor$
+$if(date)$
+\date{$date$}
+$else$
+\date{\today}
+$endif$
+
+$header-includes$
+
+\begin{document}
+
+$if(title)$
+\maketitle
+$endif$
+
+$if(abstract)$
+\begin{abstract}
+    $abstract$
+\end{abstract}
+$endif$
+
+$if(toc)$
+\tableofcontents
+$endif$
+
+$body$
+
+$if(bibliography)$
+\newpage
+\printbibliography[title=Bibliography]
+$endif$
+
+\end{document}
