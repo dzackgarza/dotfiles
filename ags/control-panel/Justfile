@@ -12,3 +12,7 @@ test-ci:
 run:
     ags quit || true
     ags run .
+
+# E2E smoke test: runs ags for 15s, asserts no error logs
+smoke:
+    tests/smoke_test.sh
