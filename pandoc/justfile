@@ -300,10 +300,17 @@ test: _test-macros _test-templates _test-tikz _test-tikz-filter
 _test-tikz-filter:
   python3 "{{justfile_directory()}}/tests/test-tikz-filter.py"
 
-# Generate MathJax macro injection file from canonical tier macro files.
-# Transforms \renewcommand → \newcommand for MathJax compatibility.
-# Output: templates/css/math-macros.html
+# Generate MathJax 3 macro configuration (JS/TS/JSON) from canonical tier .tex files.
+# Parses tier1-mathjax-simple.tex and tier2-mathjax-args.tex and outputs:
+#   templates/css/mathjax-macros.mjs   — ESM module
+#   templates/css/mathjax-macros.ts    — TypeScript module
+#   templates/css/mathjax-macros.json  — JSON config
 generate-math-macros:
+  python3 "{{justfile_directory()}}/bin/generate-mathjax-config.py"
+
+# Legacy: generate raw TeX math macro injection file (templates/css/math-macros.html).
+# Prefer `generate-math-macros` for MathJax 3 JS/TS/JSON output.
+generate-math-macros-legacy:
   #!/usr/bin/env bash
   set -euo pipefail
   PANDOC_DIR="{{justfile_directory()}}"
@@ -311,14 +318,9 @@ generate-math-macros:
   TIER1="$PANDOC_DIR/styles/macros/tier1-mathjax-simple.tex"
   TIER2="$PANDOC_DIR/styles/macros/tier2-mathjax-args.tex"
 
-  # Prepend qty (referenced by tier2, defined in MakeMeAQual template)
-  # printf '\\newcommand{\\qty}[1]{\\left( {#1} \\right)}\n' > "$OUTPUT"
-
-  # Concatenate tier macros
   cat /dev/null > "$OUTPUT"
   cat "$TIER1" "$TIER2" >> "$OUTPUT"
 
-  # Transform \renewcommand → \newcommand for MathJax (11 instances)
   sed -i 's/\\renewcommand/\\newcommand/g' "$OUTPUT"
 
   count=$(grep -c '\\newcommand' "$OUTPUT")
