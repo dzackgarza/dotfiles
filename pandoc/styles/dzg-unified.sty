@@ -19,12 +19,14 @@
 \RequirePackage{longtable}
 \RequirePackage{array}
 \RequirePackage{booktabs}
+\RequirePackage{tabularx}
 \RequirePackage{placeins}
 \RequirePackage{float}
 \RequirePackage[export]{adjustbox}
 \RequirePackage{caption}
 \RequirePackage{subcaption}
 \RequirePackage{epstopdf}
+\RequirePackage{svg}
 
 % Typography and Layout
 \RequirePackage{etex}
@@ -32,7 +34,13 @@
 \RequirePackage{indentfirst}
 \RequirePackage{csquotes}
 \RequirePackage{url}
+\RequirePackage{datetime}
+\RequirePackage{marginnote}
 \RequirePackage[textsize=tiny]{todonotes}
+
+% Page geometry (personal default)
+\RequirePackage{geometry}
+\geometry{margin=1in}
 
 % Tier 1: Simple MathJax-compatible shortcuts
 \input{tier1-mathjax-simple}
@@ -51,13 +59,38 @@
 \input{spectral}
 \input{tikz}
 
+% Spectral sequences diagram package
+\RequirePackage{spectralsequences}
+
 \if@dzgarxiv
   \input{environments-arxiv}
 \else
   \input{environments}
 \fi
 
+% Bibliography with personal defaults
+\RequirePackage[backend=biber, style=alphabetic]{biblatex}
+
+% Pandoc figure compatibility macros (unconditional)
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\textwidth\textwidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\def\fps@figure{H}
+\newcommand{\pandocbounded}[1]{#1}
+\makeatother
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+
 % Cleveref: must be loaded last (hooks into other packages' references)
 \RequirePackage{cleveref}
+\crefname{figure}{fig.}{figs.}
+\Crefname{figure}{Fig.}{Figs.}
+\crefname{equation}{equation}{eqns.}
+\Crefname{equation}{Equation}{Eqns.}
+\crefname{section}{section}{secs.}
+\Crefname{section}{Section}{Secs.}
+
+% Pandoc compatibility
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
 \endinput
