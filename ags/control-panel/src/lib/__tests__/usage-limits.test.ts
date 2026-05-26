@@ -1,6 +1,7 @@
-import { execSync } from "node:child_process"
+import { execFileSync } from "node:child_process"
 import { beforeAll, describe, expect, it } from "vitest"
 import { PROVIDER_ICONS } from "../provider-icons"
+import { USAGE_LIMITS_JSON_COMMAND } from "../usage-limits-command"
 
 interface UsageRow {
   identifier: string
@@ -36,13 +37,11 @@ interface UsageCollection {
 let data: UsageCollection
 
 beforeAll(() => {
-  const output = execSync(
-    "uvx git+https://github.com/dzackgarza/usage-limits --json",
-    {
-      encoding: "utf-8",
-      timeout: 30_000,
-    },
-  )
+  const [command, ...args] = USAGE_LIMITS_JSON_COMMAND
+  const output = execFileSync(command, args, {
+    encoding: "utf-8",
+    timeout: 30_000,
+  })
   data = JSON.parse(output) as UsageCollection
 })
 
@@ -74,6 +73,20 @@ describe("usage-limits --json", () => {
     ]) {
       expect(found.has(key)).toBe(true)
     }
+  })
+
+  it("returns account-specific Antigravity snapshots without cache corruption errors", () => {
+    const antigravity = data.providers.filter((p) => p.provider === "antigravity")
+
+    expect(antigravity).toHaveLength(4)
+    expect(antigravity.every((p) => p.status === "ok")).toBe(true)
+    expect(antigravity.map((p) => p.account).sort()).toEqual([
+      "dzackgarza.tw@gmail.com",
+      "dzackgarza@gmail.com",
+      "skippydzg@gmail.com",
+      "zack@ncts.ntu.edu.tw",
+    ])
+    expect(antigravity.flatMap((p) => p.errors)).toEqual([])
   })
 
   it("every provider has the required ProviderSnapshot fields", () => {

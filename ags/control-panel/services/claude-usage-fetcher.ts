@@ -1,4 +1,5 @@
 import { execAsync } from "ags/process"
+import { USAGE_LIMITS_JSON_COMMAND } from "../src/lib/usage-limits-command"
 
 export interface UsageRow {
   identifier: string
@@ -31,11 +32,6 @@ export interface UsageCollection {
 }
 
 export async function fetchClaudeUsage(): Promise<UsageCollection> {
-  const cmd = [
-    "uvx",
-    "git+https://github.com/dzackgarza/usage-limits",
-    "--json",
-  ]
-  const output = await execAsync(cmd)
+  const output = await execAsync([...USAGE_LIMITS_JSON_COMMAND])
   return JSON.parse(output) as UsageCollection
 }
