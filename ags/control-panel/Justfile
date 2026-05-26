@@ -4,6 +4,8 @@ default:
     @just --list
 
 test:
+    killall -9 ags 2>/dev/null || true
+    sleep 1
     just --justfile ../justfile --working-directory .. _test-control-panel
 
 test-ci:
@@ -13,12 +15,12 @@ run:
     ags quit || true
     ags run .
 
-# Run the control panel for 30s and assert no ERR in logs
+[private]
 smoke-test:
     #!/usr/bin/env python3
     import subprocess, sys, tempfile, time
 
-    subprocess.run(["ags", "quit"], capture_output=True, timeout=10)
+    subprocess.run(["ags", "quit"], capture_output=True, timeout=5)  # safety net
     time.sleep(1)
 
     out = tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".log")

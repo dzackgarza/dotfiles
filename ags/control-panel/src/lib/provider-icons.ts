@@ -5,6 +5,7 @@ export const PROVIDER_ICONS: Record<string, string> = {
   codex: "codex-symbolic",
   copilot: "copilot-symbolic",
   cursor: "cursor-symbolic",
+  deepseek: "deepseek-ai-symbolic",
   kiro: "kiro-symbolic",
   ollama: "ollama-symbolic",
   opencode: "opencode-symbolic",
@@ -13,4 +14,4 @@ export const PROVIDER_ICONS: Record<string, string> = {
   qoder: "qoder-symbolic",
   trae: "trae-symbolic",
   windsurf: "windsurf-symbolic",
-};
+}
