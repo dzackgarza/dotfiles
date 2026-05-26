@@ -48,5 +48,11 @@ smoke-test:
                 print(line)
         sys.exit(1)
 
+    if "Service initialized" not in logs:
+        print("FAIL: app never started — no Service initialized message")
+        print("Full output:")
+        print(logs)
+        sys.exit(1)
+
     print("PASS: no error logs in 30s window")
     sys.exit(0)
