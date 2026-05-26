@@ -1062,6 +1062,7 @@ function setupAuxPolls(
   const USAGE_TTL_MS = 120_000 // 2 minutes
 
   const claudeUsageDataPoll = createPolledState({
+    name: "claudeUsage",
     initial: {
       version: "1",
       captured_at: "",
