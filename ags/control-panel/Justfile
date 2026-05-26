@@ -12,3 +12,39 @@ test-ci:
 run:
     ags quit || true
     ags run .
+
+# Run the control panel for 30s and assert no ERR in logs
+smoke-test:
+    #!/usr/bin/env python3
+    import subprocess, sys, tempfile, time
+
+    subprocess.run(["ags", "quit"], capture_output=True, timeout=10)
+    time.sleep(1)
+
+    out = tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".log")
+    out_path = out.name
+    proc = subprocess.Popen(
+        ["ags", "run", "."],
+        stdout=out,
+        stderr=subprocess.STDOUT,
+        text=True,
+    )
+    try:
+        proc.wait(timeout=30)
+    except subprocess.TimeoutExpired:
+        proc.kill()
+        proc.wait()
+
+    out.close()
+    with open(out_path) as f:
+        logs = f.read()
+
+    if "ERR" in logs:
+        print("FAIL: error logs detected")
+        for line in logs.splitlines():
+            if "ERR" in line:
+                print(line)
+        sys.exit(1)
+
+    print("PASS: no error logs in 30s window")
+    sys.exit(0)

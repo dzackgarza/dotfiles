@@ -60,9 +60,9 @@ _test-ci-shared:
 
 [private]
 _test-control-panel:
+    just --justfile control-panel/Justfile --working-directory control-panel smoke-test
     just --justfile {{qc_bun}} --working-directory control-panel test
     just --justfile {{qc_python}} --working-directory control-panel test
-    control-panel/tests/smoke_test.sh
 
 [private]
 _test-ci-control-panel:

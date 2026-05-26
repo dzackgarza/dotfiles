@@ -649,15 +649,22 @@ async function fetchClaudeUsageData(): Promise<ClaudeUsageData> {
   } else {
     logger.debug`Fetched Claude usage: (claude provider not found or failed)`
   }
+  for (const provider of data.providers) {
+    if (provider.status !== "ok") {
+      for (const err of provider.errors) {
+        logger.error`${provider.provider}: ${err.type}: ${err.message}`
+      }
+    }
+  }
   return splitAntigravityProviders(data)
 }
 
-/** Aggregate antigravity rows into "Gemini" and "Anthropic" bins (one row per bin). */
+/** Collapse each antigravity account's individual model bins into 2 aggregated rows: Gemini and Anthropic. */
 function splitAntigravityProviders(c: UsageCollection): UsageCollection {
   return {
     ...c,
-    providers: c.providers.flatMap((p) => {
-      if (p.provider !== "antigravity") return [p]
+    providers: c.providers.map((p) => {
+      if (p.provider !== "antigravity") return p
 
       const geminiRows = p.rows.filter((r) =>
         r.identifier.toLowerCase().includes("gemini"),
@@ -682,13 +689,13 @@ function splitAntigravityProviders(c: UsageCollection): UsageCollection {
         }
       }
 
-      const out: ProviderSnapshot[] = []
+      const newRows: typeof p.rows = []
       const gemini = aggRow("Gemini", geminiRows)
-      if (gemini) out.push({ ...p, display_name: "Gemini", rows: [gemini] })
+      if (gemini) newRows.push(gemini)
       const anthropic = aggRow("Anthropic", anthropicRows)
-      if (anthropic)
-        out.push({ ...p, display_name: "Anthropic", rows: [anthropic] })
-      return out
+      if (anthropic) newRows.push(anthropic)
+
+      return { ...p, rows: newRows }
     }),
   }
 }
