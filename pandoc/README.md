@@ -1,20 +1,121 @@
 # pandoc
 
-LaTeX styles, pandoc filters, and templates for the dzackgarza publishing
-pipeline.
+LaTeX styles, pandoc filters, and templates for the dzackgarza publishing pipeline.
+
+## Principles
+
+These principles govern all work in this subtree.
+They are not suggestions.
+
+### Personal macros are absolute, never conditional
+
+Personal style definitions must never hedge on availability, wrap in `\@ifundefined`,
+`\ifdefined`, or any other conditional guard.
+They exist to enforce uniformity across the author's content.
+Every macro means the same thing everywhere, or it is not defined.
+There is no fallback, no graceful degradation, no "best effort."
+
+### Macro breakouts serve multiple rendering targets
+
+The separation of macros into category files and tiers exists to support multiple
+consuming applications, each with different capabilities:
+
+- **GUI editors** (QTikz, TikZiT, quiver app, Inkscape) need clean subsets of the macro
+  set to render correctly.
+- **MathJax-based targets** (personal blog, Obsidian notes, pandoc-preview) need a
+  restricted subset that avoids TeX primitives and `\pgf`/TikZ code.
+  Macro files are organized so that a MathJax-compatible subset can be extracted
+  mechanically.
+
+The goal is a single personal macro language that is interpretable everywhere, from
+research papers to blog posts to interactive previews.
+
+### Centralize, never duplicate
+
+No file in this subtree may be copied or reproduced elsewhere.
+The entire point of this tree is:
+
+- **Centralize** every macro, style, filter, and template in one place.
+- **Uniformize** definitions so there is exactly one way to express a given concept.
+- **Propagate automatically** through a canonical rebuild recipe that runs the
+  regression suite, regenerates derivative files (MathJax definitions, SVG caches,
+  etc.), and pushes changes to consuming systems.
+
+Any duplication creates desync.
+Desync is the root cause of the problems this tree exists to solve.
+
+### Single source, multiple outputs
+
+A single source document must cleanly produce:
+
+- A research paper LaTeX draft (via `dzg-unified.sty` or `dzg-tikz.sty`)
+- A PDF (via `xelatex`/`lualatex`)
+- An HTML version for blog posts (via pandoc + MathJax)
+- A viewable preview in pandoc-preview
+- An Obsidian note with rendered mathematics and diagrams
+
+Filters in `filters/` handle the rendering pipeline uniformly.
+TikZ diagrams are compiled into SVGs via minimal standalone templates, then included as
+SVG in both LaTeX and HTML outputs.
+This approach:
+
+- Eliminates all TikZ scaling issues (SVG is vector, scales uniformly)
+- Produces cached SVG artifacts that can be reused across documents
+- Decouples diagram rendering from document compilation
+
+### Centralized figure library
+
+All TikZ figures and diagrams live in a centralized library, not alongside individual
+papers or notes. This prevents:
+
+- **Diagram drift** -- the same Coxeter diagram, cusp diagram, or commutative square
+  looks identical across every document that uses it.
+- **Reinvention** -- commonly reused diagrams (Coxeter diagrams, cusp diagrams, Dynkin
+  diagrams, spectral sequence pages) are defined once and iterated, not recreated
+  per-paper.
+- **Stale variants** -- when a diagram is improved, every document that uses it gets the
+  improvement automatically.
+
+Rendering a diagram from the library should be trivial: invoke it by name, get a cached
+SVG (or PDF), include it anywhere.
+
+### Escape hatches for collaboration
+
+When a document must leave this ecosystem (e.g., submitted to Overleaf for collaborative
+editing), the pipeline must produce a self-contained artifact that:
+
+- Includes all required macro definitions inline (no external dependencies)
+- Optionally renders all diagrams to macro-free PDF/PNG (for collaborators who cannot
+  compile the source TikZ)
+
+The macro breakout structure enables this: extract the relevant subset, prepend it to
+the document, and flatten.
+
+### The rebuild recipe
+
+The canonical workflow for making changes:
+
+1. Add or modify macros in `styles/macros/`.
+2. Run the regression suite (`just test-*`) to verify nothing is broken.
+3. Regenerate derivative files (MathJax definitions, SVG caches, etc.)
+   via the canonical rebuild recipe.
+4. Push updates to consuming systems (blog, Obsidian vault, etc.).
+
+This pipeline should be stable: set up something that works well and leave it mostly
+untouched for years.
+New macros are additive.
+Structural changes to the pipeline itself are rare.
 
 ## Styles Architecture
 
 The canonical LaTeX style definitions live in `styles/`. The hierarchy:
 
-- `styles/macros/tikz/` -- unified TikZ macro definitions, split by category
-  (layers, nodes, edges, commands, diagrams). The aggregator `tikz.tex` sits one
-  level up at `styles/macros/tikz.tex`.
+- `styles/macros/tikz/` -- unified TikZ macro definitions, split by category (layers,
+  nodes, edges, commands, diagrams).
+  The aggregator `tikz.tex` sits one level up at `styles/macros/tikz.tex`.
 - `styles/macros/tikz/tikzstyles/` -- TikZiT GUI-managed `.tikzstyles` files
-- `styles/vendor/` -- files managed by external apps that should not be edited
-  directly
-- `styles/preambles/` -- shared preamble fragments loaded by the `.sty` entry
-  points
+- `styles/vendor/` -- files managed by external apps that should not be edited directly
+- `styles/preambles/` -- shared preamble fragments loaded by the `.sty` entry points
 - `styles/obsidian/` -- Obsidian-specific style overrides
 
 ### The TikZiT Ecosystem
@@ -22,60 +123,58 @@ The canonical LaTeX style definitions live in `styles/`. The hierarchy:
 TikZ macros exist in three parallel representations that must be kept in sync:
 
 | File | Format | Managed by | Purpose |
-|------|--------|------------|---------|
+| --- | --- | --- | --- |
 | `styles/macros/tikz/{nodes,edges,layers,...}.tex` | LaTeX `\tikzset` | Agent/user (canonical) | Primary definitions used in all documents via `dzg-tikz.sty` |
 | `styles/vendor/tikzit.sty` | LaTeX `.sty` | TikZiT GUI (auto-generated) | Used when rendering TikZ from within TikZiT; mirrors the canonical macros |
 | `styles/macros/tikz/tikzstyles/*.tikzstyles` | TikZiT native format | TikZiT GUI | Native format for the GUI style editor; also mirrors the canonical set |
 
-**Important:** `tikzit.sty` is NOT a standard LaTeX style file. TikZiT is a GUI
-application that natively manages styles in `.tikzstyles` files, not `.sty`
-files. The `.sty` is a LaTeX-readable mirror generated so that documents
-loading `\usepackage{tikzit}` get the same styles available inside the GUI.
-TikZiT writes this file for rendering purposes -- it is a vendor artifact, not
-a hand-authored package.
+**Important:** `tikzit.sty` is NOT a standard LaTeX style file.
+TikZiT is a GUI application that natively manages styles in `.tikzstyles` files, not
+`.sty` files. The `.sty` is a LaTeX-readable mirror generated so that documents loading
+`\usepackage{tikzit}` get the same styles available inside the GUI. TikZiT writes this
+file for rendering purposes -- it is a vendor artifact, not a hand-authored package.
 
-The canonical definitions live in `styles/macros/tikz/`. The `.tikzstyles` file
-and `tikzit.sty` are secondary mirrors that must be manually updated when the
-canonical definitions change.
+The canonical definitions live in `styles/macros/tikz/`. The `.tikzstyles` file and
+`tikzit.sty` are secondary mirrors that must be manually updated when the canonical
+definitions change.
 
 ### TikZiT GUI Limitations
 
-TikZiT provides a GUI-based style editor, but it does not support the full
-range of PGF/TikZ features. Styles defined using features outside the GUI's
-supported set (arbitrary `\tikzset` keys, complex styling, etc.) will render
-correctly in the final PDF but may not display properly or may be invisible
+TikZiT provides a GUI-based style editor, but it does not support the full range of
+PGF/TikZ features. Styles defined using features outside the GUI's supported set
+(arbitrary `\tikzset` keys, complex styling, etc.)
+will render correctly in the final PDF but may not display properly or may be invisible
 inside the TikZiT GUI editor.
 
 This is a fundamental limitation of the GUI, not a configuration or setup issue.
 
 ### Ongoing Maintenance
 
-The `.tikzstyles` file and `tikzit.sty` must be manually kept in sync with the
-canonical macros whenever node styles, edge styles, or utility commands are
-added, removed, or changed. There is no automated sync mechanism. The process:
+The `.tikzstyles` file and `tikzit.sty` must be manually kept in sync with the canonical
+macros whenever node styles, edge styles, or utility commands are added, removed, or
+changed. There is no automated sync mechanism.
+The process:
 
 1. Edit the canonical `.tex` files in `styles/macros/tikz/`.
 2. Manually mirror the changes into `styles/vendor/tikzit.sty`.
-3. Manually mirror the changes into
-   `styles/macros/tikz/tikzstyles/*.tikzstyles` (TikZiT format).
+3. Manually mirror the changes into `styles/macros/tikz/tikzstyles/*.tikzstyles` (TikZiT
+   format).
 4. Test by compiling a document that uses the affected styles.
 
 ## Future Work
 
 ### Bespoke TikZ Style Editor
 
-The long-term plan is to build a standalone GUI editor for TikZ style files
-that addresses the limitations of TikZiT's built-in style manager. This editor
-would:
+The long-term plan is to build a standalone GUI editor for TikZ style files that
+addresses the limitations of TikZiT's built-in style manager.
+This editor would:
 
-- Read, parse, and display styles defined with the full range of PGF/TikZ
-  features (not just the subset TikZiT's GUI exposes)
-- Support manual (text-editor) edits to style files and reflect them in the
-  GUI
+- Read, parse, and display styles defined with the full range of PGF/TikZ features (not
+  just the subset TikZiT's GUI exposes)
+- Support manual (text-editor) edits to style files and reflect them in the GUI
 - Provide a live preview renderer for node and edge styles
 - Support the `.tikzstyles` file format natively
-- Act as the canonical source of truth for style definitions, with export to
-  both the unified `macros/tikz/*.tex` format and the `tikzit.sty` vendor
-  mirror
+- Act as the canonical source of truth for style definitions, with export to both the
+  unified `macros/tikz/*.tex` format and the `tikzit.sty` vendor mirror
 
 Until this editor exists, all three representations must be maintained manually.
