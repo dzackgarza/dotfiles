@@ -4,7 +4,7 @@ default:
     @just --list
 
 test:
-    killall -9 ags 2>/dev/null || true
+    ags quit 2>/dev/null || true
     sleep 1
     just --justfile ../justfile --working-directory .. _test-control-panel
 
@@ -20,7 +20,7 @@ smoke-test:
     #!/usr/bin/env python3
     import subprocess, sys, tempfile, time
 
-    subprocess.run(["ags", "quit"], capture_output=True, timeout=5)  # safety net
+    subprocess.run(["ags", "quit"], capture_output=True, timeout=5)
     time.sleep(1)
 
     out = tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".log")
@@ -33,9 +33,15 @@ smoke-test:
     )
     try:
         proc.wait(timeout=30)
+        exited_early = True
     except subprocess.TimeoutExpired:
-        proc.kill()
-        proc.wait()
+        proc.terminate()
+        try:
+            proc.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            proc.kill()
+            proc.wait()
+        exited_early = False
 
     out.close()
     with open(out_path) as f:
@@ -48,11 +54,17 @@ smoke-test:
                 print(line)
         sys.exit(1)
 
-    if "Service initialized" not in logs:
-        print("FAIL: app never started — no Service initialized message")
+    if "main() entry point [STARTUP]" not in logs:
+        print("FAIL: app entry point did not run")
         print("Full output:")
         print(logs)
         sys.exit(1)
 
-    print("PASS: no error logs in 30s window")
+    if exited_early:
+        print(f"FAIL: app exited during smoke window with code {proc.returncode}")
+        print("Full output:")
+        print(logs)
+        sys.exit(1)
+
+    print("PASS: app stayed up and emitted no error logs in 30s window")
     sys.exit(0)
