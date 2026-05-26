@@ -12,12 +12,3 @@ test-ci:
 run:
     ags quit || true
     ags run .
-
-# Run AGS integration tests (requires sway compositor)
-ags-test:
-    ags quit || true
-    @for f in tests/*.ts; do \
-        echo "--- $${f} ---"; \
-        ags run "$${f}" --gtk 4 2>&1 || exit 1; \
-    done
-    @echo "All AGS tests passed"
