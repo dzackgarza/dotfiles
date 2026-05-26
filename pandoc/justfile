@@ -292,6 +292,14 @@ test-tikz:
     exit 1
   fi
 
+# Run all tests
+test: test-macros test-templates test-tikz-filter
+
+# Test tikzcd filter on multiple scenarios
+# Uses pandoc JSON AST (semantic) + BeautifulSoup DOM assertions.
+test-tikz-filter:
+  python3 "{{justfile_directory()}}/tests/test-tikz-filter.py"
+
 # Generate MathJax macro injection file from canonical tier macro files.
 # Transforms \renewcommand → \newcommand for MathJax compatibility.
 # Output: templates/css/math-macros.html
