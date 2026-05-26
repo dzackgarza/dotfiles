@@ -35,6 +35,7 @@ import {
 } from "../../lib/utils"
 import {
   fetchClaudeUsage,
+  type ProviderSnapshot,
   type UsageCollection,
 } from "../../services/claude-usage-fetcher"
 import { createLogger } from "../index"
@@ -648,7 +649,48 @@ async function fetchClaudeUsageData(): Promise<ClaudeUsageData> {
   } else {
     logger.debug`Fetched Claude usage: (claude provider not found or failed)`
   }
-  return data
+  return splitAntigravityProviders(data)
+}
+
+/** Aggregate antigravity rows into "Gemini" and "Anthropic" bins (one row per bin). */
+function splitAntigravityProviders(c: UsageCollection): UsageCollection {
+  return {
+    ...c,
+    providers: c.providers.flatMap((p) => {
+      if (p.provider !== "antigravity") return [p]
+
+      const geminiRows = p.rows.filter((r) =>
+        r.identifier.toLowerCase().includes("gemini"),
+      )
+      const anthropicRows = p.rows.filter((r) => {
+        const id = r.identifier.toLowerCase()
+        return id.includes("claude") || id.includes("gpt-oss")
+      })
+
+      const aggRow = (
+        bin: string,
+        rows: typeof p.rows,
+      ): (typeof p.rows)[0] | null => {
+        if (!rows.length) return null
+        const ref = rows[0]
+        return {
+          identifier: bin,
+          pct_used: Math.max(...rows.map((r) => r.pct_used)),
+          reset_at: ref.reset_at,
+          is_exhausted: rows.some((r) => r.is_exhausted),
+          time_until_reset: ref.time_until_reset,
+        }
+      }
+
+      const out: ProviderSnapshot[] = []
+      const gemini = aggRow("Gemini", geminiRows)
+      if (gemini) out.push({ ...p, display_name: "Gemini", rows: [gemini] })
+      const anthropic = aggRow("Anthropic", anthropicRows)
+      if (anthropic)
+        out.push({ ...p, display_name: "Anthropic", rows: [anthropic] })
+      return out
+    }),
+  }
 }
 
 async function readUpdatesState(): Promise<InfoTileState> {

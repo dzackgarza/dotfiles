@@ -181,9 +181,9 @@ compile-pandoc input_file="main.md" output_name="output" template="research_draf
   # Run pandoc from ROOT to ensure relative include.lua paths work correctly
   cd "$ROOT"
   pandoc "{{input_file}}" \
-      --lua-filter="$HOME/.pandoc/bin/include.lua" \
-      --lua-filter="$HOME/.pandoc/bin/convert_amsthm_envs.lua" \
-      --lua-filter="$HOME/.pandoc/bin/select_images.lua" \
+      --lua-filter="$HOME/.pandoc/filters/include.lua" \
+      --lua-filter="$HOME/.pandoc/filters/convert_amsthm_envs.lua" \
+      --lua-filter="$HOME/.pandoc/filters/select_images.lua" \
       --natbib \
       --bibliography="global.bib" \
       --template={{template}} \
@@ -228,13 +228,13 @@ extract-ref dir file="main":
   xpandlatex -x on -m on -I on $(ls *.sty 2>/dev/null | sed 's/^/-f /' | xargs) {{file}}.tex > {{file}}_expanded.tex
 
   # Preprocess: Wrap tikzcd in displaymath
-  pandoc {{file}}_expanded.tex -s -f latex+raw_tex -t latex --lua-filter="$HOME/.pandoc/bin/wrap_tikzcd_semantic.lua" -o {{file}}_wrapped.tex
+  pandoc {{file}}_expanded.tex -s -f latex+raw_tex -t latex --lua-filter="$HOME/.pandoc/filters/wrap_tikzcd_semantic.lua" -o {{file}}_wrapped.tex
 
   # Semantically preprocess the TeX
   make4ht -c "$HOME/.pandoc/config/tex4ht.cfg" -u -f html5 {{file}}_wrapped.tex "mathjax,section+" || true
 
   # Convert to Markdown
-  pandoc {{file}}_wrapped.html --lua-filter="$HOME/.pandoc/bin/semanticlean.lua" -f html -t gfm-tex_math_gfm+tex_math_dollars -o "$ROOT/knowledge/papers/$(basename {{dir}}).md"
+  pandoc {{file}}_wrapped.html --lua-filter="$HOME/.pandoc/filters/semanticlean.lua" -f html -t gfm-tex_math_gfm+tex_math_dollars -o "$ROOT/knowledge/papers/$(basename {{dir}}).md"
 
 # Clean build artifacts
 clean build_dir_pandoc=BUILD_DIR_PANDOC build_dir_tex=BUILD_DIR_TEX:
@@ -266,6 +266,27 @@ test-macros:
   pdflatex -interaction=nonstopmode test-latex-macros.tex || true
   if [ -f test-latex-macros.pdf ]; then
     echo "✅ LaTeX test compiled: test-latex-macros.pdf ($(du -h test-latex-macros.pdf | cut -f1))"
+  else
+    echo "❌ Compilation failed - no PDF produced"
+    exit 1
+  fi
+
+# Test TikZ macros (nodes, edges, diagrams, utilities)
+test-tikz:
+  #!/usr/bin/env bash
+  set -euo pipefail
+  PANDOC_DIR="{{justfile_directory()}}"
+  export TEXINPUTS=".:$HOME/.pandoc/styles//:$HOME/.pandoc/styles/macros//:$HOME/.pandoc/styles/preambles//:$HOME/.pandoc/config//:"
+  cd "$PANDOC_DIR/tests"
+  pdflatex -interaction=nonstopmode test-tikz-macros.tex 2>&1 | tee /tmp/tikz-test.log
+  if grep -q '^!' /tmp/tikz-test.log; then
+    echo "❌ Errors found:"
+    grep '^!' /tmp/tikz-test.log
+    rm -f test-tikz-macros.pdf
+    exit 1
+  fi
+  if [ -f test-tikz-macros.pdf ]; then
+    echo "✅ TikZ test compiled: test-tikz-macros.pdf ($(du -h test-tikz-macros.pdf | cut -f1))"
   else
     echo "❌ Compilation failed - no PDF produced"
     exit 1

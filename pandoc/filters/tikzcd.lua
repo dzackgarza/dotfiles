@@ -1,10 +1,11 @@
 local system = require 'pandoc.system'
-package.path = package.path .. ';' .. '/home/dzack/.pandoc/filters/?.lua;'
+local home = os.getenv("HOME")
+package.path = package.path .. ';' .. home .. '/.pandoc/filters/?.lua;'
 require "utilities"
 
 local tikz_doc_template = [[
 \documentclass{standalone}
-\input{/home/dzack/.pandoc/macros/preamble_common}
+\usepackage{dzg-tikz}
 \begin{document}
 \nopagecolor
 %s
@@ -21,7 +22,7 @@ if FORMAT:match 'latex' or FORMAT:match 'pdf' or FORMAT:match 'markdown' then
       el.text = "\\begin{figure}\n\\centering\n\\resizebox{\\columnwidth}{!}{%\n" .. el.text .. "\n}\n\\end{figure}"
       return el
     else
-      el.text = "\\begin{center}\n" .. el.text .. "\n\\end{center}"
+      el.text = "\\begin{figure}[H]\n\\centering\n" .. el.text .. "\n\\end{figure}"
       return el
     end
   end
@@ -34,15 +35,17 @@ if FORMAT:match 'html' then
     end
 
     -- Just drop SVG files directly in tmp directory.   
-    local fname = "/tmp/" .. pandoc.sha1(el.text) .. ".svg"
+    local hash = pandoc.sha1(el.text)
+    local base = "/tmp/dzgtikz-" .. hash
+    local fname = base .. ".svg"
 
     if not file_exists(fname) then
       system.with_working_directory("/tmp", function()
-        local f = io.open('/tmp/tikz.tex', 'w')
+        local f = io.open(base .. ".tex", 'w')
         f:write(tikz_doc_template:format(el.text))
         f:close()
         -- 1: Latex -> PDF 
-        cmd1 =  'pdflatex /tmp/tikz.tex'
+        cmd1 = 'pdflatex ' .. base .. '.tex'
         local file1 = io.popen(cmd1)
         local output1 = file1:read('*all')
         local rc1 = {file1:close()}
@@ -52,7 +55,7 @@ if FORMAT:match 'html' then
           return false
         end
         -- 2: PDF -> SVG
-        cmd2 = 'pdf2svg /tmp/tikz.pdf "' .. fname .. '"'
+        cmd2 = 'pdf2svg ' .. base .. '.pdf "' .. fname .. '"'
         local file2 = io.popen(cmd2)
         local output2 = file2:read('*all')
         local rc2 = {file2:close()}
