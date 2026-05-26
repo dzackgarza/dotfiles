@@ -323,6 +323,47 @@ def test_tikzcode_html() -> None:
     assert_html("div.center > span.tikzcode > svg", path, check_dom)
 
 
+# --- tikz code block (standard examples from obsidian-tikzjax) ---
+
+TIKZJAX_EXAMPLES = [
+    "plot",
+    "circuitikz",
+    "pgfplots",
+    "chemfig",
+]
+
+
+def test_tikzjax_examples_latex() -> None:
+    """All obsidian-tikzjax examples produce Figure with Image."""
+    for name in TIKZJAX_EXAMPLES:
+        path = FIXTURES / name / "input.md"
+
+        def check_ast(doc):
+            return any(
+                b["t"] == "Figure" and figure_has_image_with_width(b)
+                for b in find_blocks(doc)
+            )
+
+        assert_latex(f"{name}: Figure > Image", path, check_ast)
+
+
+def test_tikzjax_examples_html() -> None:
+    """All obsidian-tikzjax examples produce Div > Span.tikzcode > svg."""
+    for name in TIKZJAX_EXAMPLES:
+        path = FIXTURES / name / "input.md"
+
+        def check_dom(soup):
+            div = soup.find("div", style="text-align:center;")
+            if not div:
+                return False
+            span = div.find("span", class_="tikzcode")
+            if not span:
+                return False
+            return span.find("svg") is not None
+
+        assert_html(f"{name}: div.center > span.tikzcode > svg", path, check_dom)
+
+
 # --- crash handling ---
 
 
@@ -381,6 +422,13 @@ def main() -> None:
             "crash handling",
             [
                 test_bad_tikz_crashes,
+            ],
+        ),
+        (
+            "tikz code block (obsidian-tikzjax examples)",
+            [
+                test_tikzjax_examples_latex,
+                test_tikzjax_examples_html,
             ],
         ),
     ]

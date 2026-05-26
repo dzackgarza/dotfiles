@@ -3,6 +3,7 @@ title: "Pandoc Macro System Test Document"
 author: "Test Suite"
 date: \today
 ---
+
 # Tier 1: Simple MathJax-Compatible Shortcuts
 
 ## Number Systems
@@ -85,8 +86,7 @@ Cohomology: $H^i(X, \OO_X)$ and Chern classes $c_i \in \CH^i(X)$.
 
 ## Number Theory
 
-For a prime $p$, the $p$-adic integers are $\ZZpadic$ and $p$-adic numbers are
-$\QQpadic$.
+For a prime $p$, the $p$-adic integers are $\ZZpadic$ and $p$-adic numbers are $\QQpadic$.
 
 Galois group: $\Gal(\QQbar / \QQ)$ acts on roots.
 
@@ -120,28 +120,44 @@ Direct sum: $V \oplus W$, tensor product: $V \tensor W$.
 
 ## Raw tikzcd (top-level, hit by current filter)
 
-\begin{tikzcd} A \ar[r] & B \end{tikzcd}
+\begin{tikzcd}
+A \ar[r] & B
+\end{tikzcd}
 
 ## tikzpicture (top-level, hit by current filter)
 
-\begin{tikzpicture} \node (A) at (0,0) {$A$}; \node (B) at (2,0) {$B$}; \draw[->] (A) --
-(B); \end{tikzpicture}
+\begin{tikzpicture}
+\node (A) at (0,0) {$A$};
+\node (B) at (2,0) {$B$};
+\draw[->] (A) -- (B);
+\end{tikzpicture}
 
 ## Fenced div with tikzcd (NOT hit by current filter -- tests render gap)
 
-::: {.definition title="Simplicial Commutative Ring"} Let $\Delta$ denote the *simplex
-category*, the category of non-empty finite ordered sets with order-preserving maps.
+::: {.definition title="Simplicial Commutative Ring"}
+Let $\Delta$ denote the *simplex category*, the category of non-empty finite ordered sets with order-preserving maps.
 We have the following situation:
 
-\begin{tikzcd} \left[0\right] \ar[r, shift right=2.0ex] \ar[r] \ar[r, shift left=2.0ex]
-& \left[1\right] \ar[l] \ar[r, shift right=2.0ex] \ar[r] \ar[r, shift left=2.0ex] &
-\left[2\right] \ar[l, shift right=1.00ex] \ar[l, shift left=1.00ex] & \cdots \\
-\ts{0} & \ts{0\to 1} & \ts{0\to 1\to 2} & \cdots \end{tikzcd}
+\begin{tikzcd}
+\left[0\right]
+  \ar[r, shift right=2.0ex] \ar[r] \ar[r, shift left=2.0ex]
+& \left[1\right]
+  \ar[l]
+  \ar[r, shift right=2.0ex] \ar[r] \ar[r, shift left=2.0ex]
+& \left[2\right]
+  \ar[l, shift right=1.00ex]
+  \ar[l, shift left=1.00ex]
+& \cdots
+\\
+\ts{0}
+& \ts{0\to 1}
+& \ts{0\to 1\to 2}
+& \cdots
+\end{tikzcd}
 
-The arrows going up are **face maps** (or **coface maps**), and the others are
-**degeneracy** maps.
-If $\mathcal{C}$ is a category, then $s\mathcal{C} \da \Fun(\Delta\op, \mathcal{C})$ is
-the category of simplicial objects of $\mathcal{C}$. :::
+The arrows going up are **face maps** (or **coface maps**), and the others are **degeneracy** maps.
+If $\mathcal{C}$ is a category, then $s\mathcal{C} \da \Fun(\Delta\op, \mathcal{C})$ is the category of simplicial objects of $\mathcal{C}$.
+:::
 
 # Conclusion
 
@@ -151,5 +167,4 @@ This document exercises macros from:
 - Tier 2: Commands with arguments (delimiters, constructions)
 - Domain files: Categories, spectral sequences
 
-All macros loaded via pandoc template using `koma-article` preamble with
-`dzg-unified.sty`.
+All macros loaded via pandoc template using `koma-article` preamble with `dzg-unified.sty`.
