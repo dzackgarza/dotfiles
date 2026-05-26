@@ -62,6 +62,7 @@ _test-ci-shared:
 _test-control-panel:
     just --justfile {{qc_bun}} --working-directory control-panel test
     just --justfile {{qc_python}} --working-directory control-panel test
+    just --justfile control-panel/Justfile --working-directory control-panel smoke
 
 [private]
 _test-ci-control-panel:
