@@ -1,0 +1,72 @@
+% =============================================================================
+% Edge, Line, and Arrow Styles
+% =============================================================================
+% Sources: tikzit.sty, quiver.sty, legacy tikz_macros
+% =============================================================================
+
+% ---------------------------------------------------------------------------
+% Basic Line Styles
+% ---------------------------------------------------------------------------
+\tikzset{do/.style={double, double distance=1.5pt}} % double
+\tikzset{bo/.style={line width=2pt}}                 % bold
+\tikzset{da/.style={red, dashed}}                    % dashed
+\tikzset{hlt/.style={cyan, double=cyan,
+  double distance=.25cm, opacity=0.3, line cap=round,
+  rounded corners, line width=1pt}}
+
+% ---------------------------------------------------------------------------
+% TikZiT Edge Styles
+% ---------------------------------------------------------------------------
+\tikzstyle{plain edge}=[-]
+\tikzstyle{dashed edge}=[-, densely dashed]
+\tikzstyle{thick edge}=[-, line width=2.0pt]
+\tikzstyle{double edge}=[-, double distance=0.5mm]
+\tikzstyle{triple edge}=[-, double distance=0.5mm, postaction={draw}]
+\tikzstyle{Arrow}=[->]
+\tikzstyle{Doubled Arrow}=[->, double distance=0.5mm]
+\tikzstyle{Dashed Arrow}=[->, densely dashed]
+
+% ---------------------------------------------------------------------------
+% BB Cusp Arrow Styles
+% ---------------------------------------------------------------------------
+\tikzstyle{BB cusp arrow}=[-{Latex[length=2mm]}, thick]
+\tikzstyle{BB cusp arrow reverse}=[{Latex[length=2mm]}-, thick]
+\tikzstyle{BB cusp brace}=[decorate,
+  decoration={brace,amplitude=5pt,mirror,raise=4ex}]
+
+% ---------------------------------------------------------------------------
+% IAS Edge Styles
+% ---------------------------------------------------------------------------
+\tikzstyle{IAS edge}=[-{Latex[length=3mm]}, ultra thick, blue]
+\tikzstyle{IAS grid}=[very thin, gray!15]
+\tikzstyle{IAS surgery cutout}=[IAS edge, dashed, ultra thick, red,
+  fill=red!40,-]
+\tikzstyle{exceptional curve}=[red, thick]
+
+% ---------------------------------------------------------------------------
+% Arrow and Decoration Styles
+% ---------------------------------------------------------------------------
+\tikzset{> = {Stealth[length=2mm, width=2mm]},
+  foldarrow/.style = {line width=1.5pt, opacity=0.6, red, dashed},
+  ->-/.style = {decoration={markings,
+                          mark=at position 0.5 with {\arrow{>}}
+                         },
+               postaction={decorate}
+              },
+  ->>-/.style = {decoration={markings,
+                          mark=at position 0.5 with {\arrow{>>}}
+                         },
+               postaction={decorate}
+              }
+}
+
+\tikzset{/Dynkin diagram/fold style/.style={stealth-stealth,thick,
+  shorten <=3mm,shorten >=3mm,}}
+
+% ---------------------------------------------------------------------------
+% Quiver Arrowhead/Tail Styles
+% ---------------------------------------------------------------------------
+\tikzset{tail reversed/.code={\pgfsetarrowsstart{tikzcd to}}}
+\tikzset{2tail/.code={\pgfsetarrowsstart{Implies[reversed]}}}
+\tikzset{2tail reversed/.code={\pgfsetarrowsstart{Implies}}}
+\tikzset{no body/.style={/tikz/dash pattern=on 0 off 1mm}}
