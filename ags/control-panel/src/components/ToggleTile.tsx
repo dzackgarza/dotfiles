@@ -1,25 +1,37 @@
-import type { Accessor } from "ags";
-import { Gtk } from "ags/gtk4";
-import type { ToggleTileState } from "../services/control-center";
+import type { Accessor } from "ags"
+import { Gtk } from "ags/gtk4"
+import type { ToggleTileState } from "../services/control-center"
 
-const ICON_SIZE = 22;
+const ICON_SIZE = 22
 
-function joinClasses(...classes: Array<string | false | null | undefined>): string {
-  return classes.filter((value) => Boolean(value)).join(" ");
+function joinClasses(
+  ...classes: Array<string | false | null | undefined>
+): string {
+  return classes.filter((value) => Boolean(value)).join(" ")
 }
 
 type ToggleTileProps = {
-  iconOn: string;
-  iconOff: string;
-  state: Accessor<ToggleTileState>;
-  onToggle: () => Promise<void>;
-};
+  iconOn: string
+  iconOff: string
+  state: Accessor<ToggleTileState>
+  onToggle: () => Promise<boolean>
+}
 
-export function ToggleTile({ iconOn, iconOff, state, onToggle }: ToggleTileProps) {
+export function ToggleTile({
+  iconOn,
+  iconOff,
+  state,
+  onToggle,
+}: ToggleTileProps) {
   return (
     <button
       class={state((value) =>
-        joinClasses("tile", "tile-toggle", value.active && "active", value.error && "error"),
+        joinClasses(
+          "tile",
+          "tile-toggle",
+          value.active && "active",
+          value.error && "error",
+        ),
       )}
       hexpand
       halign={Gtk.Align.FILL}
@@ -40,10 +52,20 @@ export function ToggleTile({ iconOn, iconOff, state, onToggle }: ToggleTileProps
           valign={Gtk.Align.CENTER}
         />
         <box orientation={Gtk.Orientation.VERTICAL} spacing={4} hexpand>
-          <label class="tile-line1" xalign={0} label={state((value) => value.line1)} />
-          <label class="tile-line2" xalign={0} label={state((value) => value.line2)} />
+          <label
+            class="tile-line1"
+            xalign={0}
+            label={state((value) => value.line1)}
+          />
+          <label
+            class="tile-line2"
+            xalign={0}
+            maxWidthChars={25}
+            ellipsize={3}
+            label={state((value) => value.line2)}
+          />
         </box>
       </box>
     </button>
-  );
+  )
 }

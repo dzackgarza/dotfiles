@@ -174,7 +174,7 @@ export function ClaudeUsagePopover({
       title="Usage Limits Popover"
       class="ClaudeUsagePopover"
       visible={visible}
-      $={(self) => {
+      $={(self: Gtk.Window) => {
         const monitor = Gdk.Display.get_default()?.get_monitors().get_item(0) as Gdk.Monitor | null;
         const screenHeight = monitor?.get_geometry().height ?? 1080;
         const popoverHeight = Math.floor((screenHeight * 2) / 3);
@@ -183,7 +183,7 @@ export function ClaudeUsagePopover({
         const bindEscapeToggle = (widget: Gtk.Widget) => {
           const key = Gtk.EventControllerKey.new();
           key.set_propagation_phase(Gtk.PropagationPhase.CAPTURE);
-          key.connect("key-pressed", (_, keyval) => {
+          key.connect("key-pressed", (_: Gtk.EventControllerKey, keyval: number) => {
             if (keyval !== 65307) return false; // Escape key code
             if (self.visible) onVisibleChange(false);
             return true;

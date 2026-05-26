@@ -290,11 +290,11 @@ export function ControlCenterWindow() {
         class="NotificationCenter"
         application={app}
         visible={false}
-        $={(self) => {
+        $={(self: Gtk.Window) => {
           const bindEscapeToggle = (widget: Gtk.Widget) => {
             const key = Gtk.EventControllerKey.new();
             key.set_propagation_phase(Gtk.PropagationPhase.CAPTURE);
-            key.connect("key-pressed", (_, keyval) => {
+            key.connect("key-pressed", (_: Gtk.EventControllerKey, keyval: number) => {
               if (keyval !== Gdk.KEY_Escape) return false;
               if (self.visible) self.visible = false;
               return true;

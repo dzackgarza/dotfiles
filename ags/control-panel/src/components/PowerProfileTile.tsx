@@ -10,7 +10,7 @@ function joinClasses(...classes: Array<string | false | null | undefined>): stri
 
 type PowerProfileTileProps = {
   state: Accessor<PowerProfileState>;
-  onSetProfile: (profile: PowerProfile) => Promise<void>;
+  onSetProfile: (profile: PowerProfile) => Promise<boolean>;
 };
 
 export function PowerProfileTile({ state, onSetProfile }: PowerProfileTileProps) {

@@ -1,7 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "downlevelIteration": true,
     "jsx": "react-jsx",
     "jsxImportSource": "ags/gtk4",
     "lib": ["ES2023"],

@@ -21,7 +21,7 @@ This is the AGS (Aylur's GTK Shell) configuration directory for the user's Wayla
 ### 2. UI Modularization & De-duplication
 - Keep UI configurations completely dynamic and decoupled.
 - Avoid hardcoding provider models, quotas, or layouts. 
-- Leverage external data sources (e.g. CLI tools like `usage-limits --json` for the LLM Usage popovers) and map layouts dynamically over active records/snapshots.
+- external data sources (e.g. CLI tools like `usage-limits --json` for the LLM Usage popovers) and map layouts dynamically over active records/snapshots.
 
 ### 3. State Management
 - Utilize AGS accessors, bindings, and polling services for active, responsive states.
