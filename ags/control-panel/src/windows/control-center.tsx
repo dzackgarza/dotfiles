@@ -48,6 +48,57 @@ function providerEta(provider: ProviderSnapshot): string | null {
   return formatRelative(new Date(avail.available_when));
 }
 
+function getProviderTooltipText(provider: ProviderSnapshot): string {
+  let title = provider.display_name;
+  if (provider.account && provider.account !== "default") {
+    title += ` (${provider.account})`;
+  }
+
+  if (provider.errors?.length) {
+    return `${title}: ${provider.errors[0].message}`;
+  }
+
+  const parts = [title];
+  if (provider.rows?.length) {
+    for (const row of provider.rows) {
+      const resets = row.time_until_reset ? ` (resets ${row.time_until_reset})` : "";
+      parts.push(`• ${row.identifier}: ${row.pct_used}%${resets}`);
+    }
+  } else if (provider.status === "rate_limited") {
+    parts.push("Rate limited");
+  } else {
+    parts.push("Usage available");
+  }
+
+  return parts.join("\n");
+}
+
+function getSmallestWindowResetTime(provider: ProviderSnapshot): string | null {
+  if (!provider.rows || provider.rows.length === 0) return null;
+  const smallest = provider.rows.find((r) => {
+    const id = r.identifier.toLowerCase();
+    return id.includes("5h") || id.includes("hour");
+  }) || provider.rows[0];
+
+  const time = smallest.time_until_reset;
+  if (time === "now" && smallest.identifier.toLowerCase().includes("5h")) {
+    return "5h";
+  }
+  if (!time || time === "now" || time === "") return null;
+  return time.startsWith("in ") ? time.slice(3) : time;
+}
+
+function getProviderSubLabel(provider: ProviderSnapshot): string | null {
+  if (provider.provider === "deepseek" && provider.metadata && typeof provider.metadata.total_balance === "string") {
+    const val = parseFloat(provider.metadata.total_balance);
+    if (!isNaN(val)) {
+      return `$${val.toFixed(2)}`;
+    }
+  }
+
+  return getSmallestWindowResetTime(provider);
+}
+
 function ProviderIcon({
   provider,
   onClicked,
@@ -58,35 +109,47 @@ function ProviderIcon({
   const iconName = PROVIDER_ICONS[provider.provider] ?? "xsi-help-browser-symbolic";
   const avail = getProviderAvail(provider);
   const eta = providerEta(provider);
+
+  // Determine dot class and sub-label based on provider status
+  let dotClass = "provider-dot-unknown";
+  let subLabel: string | null = null;
+  let subLabelClass = "provider-reset-time";
+
+  if (avail === "ok") {
+    dotClass = "provider-dot-ok";
+    subLabel = getProviderSubLabel(provider);
+  } else if (avail === "rate_limited") {
+    dotClass = "provider-dot-unknown";
+  } else {
+    dotClass = "provider-dot-error";
+    subLabel = eta ?? "?";
+    subLabelClass = "provider-reset-time-red";
+  }
+
   return (
     <button
       class="provider-icon-btn"
       onClicked={onClicked}
-      tooltipText={
-        provider.errors?.length
-          ? `${provider.display_name}: ${provider.errors[0].message}`
-          : provider.display_name
-      }
+      tooltipText={getProviderTooltipText(provider)}
     >
       <box orientation={Gtk.Orientation.VERTICAL} spacing={2} halign={Gtk.Align.CENTER}>
         <image iconName={iconName} pixelSize={24} halign={Gtk.Align.CENTER} />
-        {avail === "ok" ? (
+        <box orientation={Gtk.Orientation.VERTICAL} spacing={4} halign={Gtk.Align.CENTER}>
           <box
-            class="provider-dot-ok"
+            class={dotClass}
             halign={Gtk.Align.CENTER}
             widthRequest={6}
             heightRequest={6}
           />
-        ) : avail === "rate_limited" ? (
-          <box
-            class="provider-dot-unknown"
-            halign={Gtk.Align.CENTER}
-            widthRequest={6}
-            heightRequest={6}
-          />
-        ) : (
-          <label class="provider-eta" label={eta ?? "?"} halign={Gtk.Align.CENTER} />
-        )}
+          {subLabel && (
+            <label
+              class={subLabelClass}
+              label={subLabel}
+              halign={Gtk.Align.CENTER}
+              marginTop={6}
+            />
+          )}
+        </box>
       </box>
     </button>
   );
