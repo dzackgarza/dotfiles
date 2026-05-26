@@ -292,8 +292,8 @@ test-tikz:
     exit 1
   fi
 
-# Run all tests
-test: test-macros test-templates test-tikz-filter
+# Run all tests (macros, templates, tikz compilation, filter)
+test: test-macros test-templates test-tikz test-tikz-filter
 
 # Test tikzcd filter on multiple scenarios
 # Uses pandoc JSON AST (semantic) + BeautifulSoup DOM assertions.
