@@ -652,7 +652,29 @@ async function fetchClaudeUsageData(): Promise<ClaudeUsageData> {
 }
 
 async function readUpdatesState(): Promise<InfoTileState> {
-  const output = (await execAsync([UPDATE_SCRIPT, "--check"])).trim()
+  let result: string
+  try {
+    result = await Promise.race([
+      execAsync([UPDATE_SCRIPT, "--check"]),
+      new Promise<string>((_, reject) =>
+        setTimeout(
+          () => reject(new Error("Update check timed out after 15s")),
+          15_000,
+        ),
+      ),
+    ])
+  } catch (error) {
+    // Network timeout or script failure — return unavailable state, not an error
+    const msg = error instanceof Error ? error.message : String(error)
+    logger.warn`Update check: ${msg}`
+    return {
+      line1: "Update check unavailable",
+      line2: formatTimestamp(new Date()),
+      detail: msg,
+      error: "",
+    }
+  }
+  const output = result.trim()
 
   // Strict JSON parsing with clear error messages
   const parsed: unknown = JSON.parse(output)
