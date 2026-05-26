@@ -1,0 +1,25 @@
+% =============================================================================
+% Layer Declarations and Base TikZ Styles
+% =============================================================================
+% Source: tikzit.sty, freetikz.sty
+% =============================================================================
+
+% TikZiT layers
+\pgfdeclarelayer{edgelayer}
+\pgfdeclarelayer{nodelayer}
+\pgfsetlayers{Dynkin behind,background,edgelayer,nodelayer,main}
+
+% TikZiT metadata keys (used by TikZiT editor, ignored by LaTeX)
+\pgfkeys{/tikz/tikzit fill/.initial=0}
+\pgfkeys{/tikz/tikzit draw/.initial=0}
+\pgfkeys{/tikz/tikzit shape/.initial=0}
+\pgfkeys{/tikz/tikzit category/.initial=0}
+
+% Base picture style for \tikzfig
+\tikzstyle{tikzfig}=[baseline=-0.25em,scale=0.5]
+
+% Blank node style
+\tikzstyle{none}=[inner sep=0mm]
+
+% Fix strange self-loops (PGF/TikZ default override)
+\tikzstyle{every loop}=[]
