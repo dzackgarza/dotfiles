@@ -16,14 +16,12 @@ end
 local tikz_doc_template = template_file:read("*a")
 template_file:close()
 
--- Compile tikz source to SVG + PDF, cache in svg_dir
--- Returns (svg_path, pdf_path) or (nil, nil) on failure
-local function compile_tikz(source)
-  local hash = pandoc.sha1(source)
+-- Shared compilation core: given full LaTeX source, compile to PDF then SVG.
+-- Returns (svg_path, pdf_path) or (nil, nil) on failure.
+local function run_pdflatex_and_convert(tex_source, tmp_prefix, hash)
   local svg_path = svg_dir .. "/dzgtikz-" .. hash .. ".svg"
   local pdf_path = svg_dir .. "/dzgtikz-" .. hash .. ".pdf"
 
-  -- Return cached if both files exist
   local sf = io.open(svg_path, "r")
   if sf then sf:close() end
   local pf = io.open(pdf_path, "r")
@@ -34,11 +32,10 @@ local function compile_tikz(source)
 
   os.execute("mkdir -p " .. svg_dir)
 
-  local tmp = "/tmp/tikzcd-" .. hash
+  local tmp = "/tmp/" .. tmp_prefix .. "-" .. hash
   os.execute("mkdir -p " .. tmp)
   local tex_path = tmp .. "/tikz.tex"
 
-  local tex_source = tikz_doc_template:gsub("__TIKZ_CONTENT__", source)
   local f = io.open(tex_path, "w")
   f:write(tex_source)
   f:close()
@@ -62,55 +59,104 @@ local function compile_tikz(source)
   return svg_path, pdf_path
 end
 
+-- Compile a tikz snippet (e.g. \begin{tikzcd}...) by wrapping in standalone template.
+-- Returns (svg_path, pdf_path) or (nil, nil) on failure.
+local function compile_tikz(source)
+  local hash = pandoc.sha1(source)
+  local tex_source = tikz_doc_template:gsub("__TIKZ_CONTENT__", source)
+  return run_pdflatex_and_convert(tex_source, "tikzcd", hash)
+end
+
+-- Compile a full tikz document (from ```tikz code block) directly, no template.
+-- Returns (svg_path, pdf_path) or (nil, nil) on failure.
+local function compile_tikz_document(source)
+  local hash = pandoc.sha1(source)
+  return run_pdflatex_and_convert(source, "tikzfull", hash)
+end
+
+-- Shared helpers for building output from a compiled SVG/PDF pair.
+local function make_latex_output(pdf_path, is_tikzcd)
+  local base = pdf_path:gsub("%.pdf$", "")
+  if is_tikzcd then
+    return "\\begin{figure}[H]\n\\centering\n\\includesvg[width=\\columnwidth]{" .. base .. "}\n\\end{figure}"
+  else
+    return "\\begin{figure}\n\\centering\n\\includesvg[width=\\columnwidth]{" .. base .. "}\n\\end{figure}"
+  end
+end
+
+local function make_html_output(svg_path, css_class)
+  local f = io.open(svg_path, "r")
+  assert(f, "tikzcd.lua: SVG file missing after compilation: " .. svg_path)
+  local svg_content = f:read("*a")
+  f:close()
+
+  local svg_tag = svg_content:match("<svg[^>]*>.-</svg>")
+  if not svg_tag then
+    svg_tag = svg_content
+  end
+
+  local html = '<div style="text-align:center;">'
+    .. '<span class="' .. css_class .. '">'
+    .. svg_tag
+    .. '</span>'
+    .. '</div>'
+  return pandoc.Para(pandoc.RawInline('html', html))
+end
+
 if FORMAT:match 'latex' or FORMAT:match 'pdf' or FORMAT:match 'markdown' then
   function RawBlock(el)
-    if not starts_with('\\begin{tikzcd}', el.text) and not starts_with('\\begin{tikzpicture}', el.text) then
+    local is_tikzcd = starts_with('\\begin{tikzcd}', el.text)
+    local is_tikzpic = starts_with('\\begin{tikzpicture}', el.text)
+    if not is_tikzcd and not is_tikzpic then
       return el
     end
 
     local _, pdf_path = compile_tikz(el.text)
     assert(pdf_path, "tikzcd.lua: compilation failed for tikz block")
 
-    local base = pdf_path:gsub("%.pdf$", "")
-    if starts_with('\\begin{tikzpicture}', el.text) then
-      el.text = "\\begin{figure}\n\\centering\n\\includesvg[width=\\columnwidth]{" .. base .. "}\n\\end{figure}"
-    else
-      el.text = "\\begin{figure}[H]\n\\centering\n\\includesvg[width=\\columnwidth]{" .. base .. "}\n\\end{figure}"
-    end
+    el.text = make_latex_output(pdf_path, is_tikzcd)
     return el
+  end
+
+  function CodeBlock(el)
+    if not el.classes:includes("tikz") then
+      return el
+    end
+
+    local _, pdf_path = compile_tikz_document(el.text)
+    assert(pdf_path, "tikzcd.lua: compilation failed for tikz code block")
+
+    return pandoc.RawBlock('latex', make_latex_output(pdf_path, false))
   end
 end
 
 if FORMAT:match 'html' then
   function RawBlock(el)
-    if not starts_with('\\begin{tikzcd}', el.text) and not starts_with('\\begin{tikzpicture}', el.text) then
+    local is_tikzcd = starts_with('\\begin{tikzcd}', el.text)
+    local is_tikzpic = starts_with('\\begin{tikzpicture}', el.text)
+    if not is_tikzcd and not is_tikzpic then
       return el
     end
 
     local svg_path, _ = compile_tikz(el.text)
     assert(svg_path, "tikzcd.lua: compilation failed for tikz block")
 
-    local f = io.open(svg_path, "r")
-    assert(f, "tikzcd.lua: SVG file missing after compilation: " .. svg_path)
-    local svg_content = f:read("*a")
-    f:close()
-
-    -- Extract the <svg> tag and its content
-    local svg_tag = svg_content:match("<svg[^>]*>.-</svg>")
-    if not svg_tag then
-      svg_tag = svg_content
-    end
-
     local css_class = "tikzcd"
-    if starts_with('\\begin{tikzpicture}', el.text) then
+    if not is_tikzcd then
       css_class = "tikzpic"
     end
 
-    local html = '<div style="text-align:center;">'
-      .. '<span class="' .. css_class .. '">'
-      .. svg_tag
-      .. '</span>'
-      .. '</div>'
-    return pandoc.Para(pandoc.RawInline('html', html))
+    return make_html_output(svg_path, css_class)
+  end
+
+  function CodeBlock(el)
+    if not el.classes:includes("tikz") then
+      return el
+    end
+
+    local svg_path, _ = compile_tikz_document(el.text)
+    assert(svg_path, "tikzcd.lua: compilation failed for tikz code block")
+
+    return make_html_output(svg_path, "tikzcode")
   end
 end
