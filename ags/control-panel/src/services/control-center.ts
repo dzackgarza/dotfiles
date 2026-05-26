@@ -104,6 +104,7 @@ type PolledState<T> = {
 }
 
 type PollOptions<T> = {
+  name: string
   initial: T
   intervalMs: number
   load: () => Promise<T> | T
@@ -145,16 +146,22 @@ function createPolledState<T>(options: PollOptions<T>): PolledStateWithInit<T> {
     if (running || suppressUpdates.peek()) return false
 
     running = true
+    const pollName = options.name
+    logger.debug`${pollName} refresh starting`
     try {
       const next = await options.load()
+      logger.debug`${pollName} refresh OK: ${JSON.stringify(next)}`
       setState(next)
       options.onSuccess?.()
     } catch (error) {
+      // Error already logged by onError handler; add context
+      logger.debug`${pollName} refresh FAILED`
       setState(options.onError(error))
     } finally {
       running = false
       if (!firstComplete) {
         firstComplete = true
+        logger.debug`${pollName} first poll complete`
         options.onFirstComplete?.()
       }
     }
@@ -877,6 +884,7 @@ function setupStandardPolls(
     createStandardPoll(opts, markUpdated, markFirstPollComplete)
 
   const bluetoothPoll = create({
+    name: "bluetooth",
     initial: {
       active: false,
       line1: "Loading...",
@@ -890,6 +898,7 @@ function setupStandardPolls(
   })
 
   const wifiPoll = create({
+    name: "wifi",
     initial: {
       active: false,
       line1: "Loading...",
@@ -903,6 +912,7 @@ function setupStandardPolls(
   })
 
   const powerProfilePoll = create({
+    name: "powerProfile",
     initial: {
       profile: "balanced",
       detail: "Waiting for first poll",
@@ -914,6 +924,7 @@ function setupStandardPolls(
   })
 
   const appearancePoll = create({
+    name: "appearance",
     initial: {
       active: false,
       line1: "Loading...",
@@ -927,6 +938,7 @@ function setupStandardPolls(
   })
 
   const silentPoll = create({
+    name: "silent",
     initial: {
       active: false,
       line1: "Loading...",
@@ -940,6 +952,7 @@ function setupStandardPolls(
   })
 
   const micPoll = create({
+    name: "mic",
     initial: {
       active: false,
       line1: "Loading...",
@@ -953,6 +966,7 @@ function setupStandardPolls(
   })
 
   const updatesPoll = create({
+    name: "updates",
     initial: {
       line1: "Loading...",
       line2: "Updates",
@@ -965,6 +979,7 @@ function setupStandardPolls(
   })
 
   const notificationsPoll = create({
+    name: "notifications",
     initial: {
       line1: "Loading...",
       line2: "Notification Center",
@@ -977,6 +992,7 @@ function setupStandardPolls(
   })
 
   const cpuPoll = create({
+    name: "cpu",
     initial: {
       percent: 0,
       line1: "Loading...",
@@ -990,6 +1006,7 @@ function setupStandardPolls(
   })
 
   const memoryPoll = create({
+    name: "memory",
     initial: {
       percent: 0,
       line1: "Loading...",
@@ -1003,6 +1020,7 @@ function setupStandardPolls(
   })
 
   const diskPoll = create({
+    name: "disk",
     initial: {
       percent: 0,
       line1: "Loading...",
@@ -1075,6 +1093,7 @@ function setupAuxPolls(
   }
 
   const volumePoll = create({
+    name: "volume",
     initial: {
       value: 0,
       valueLabel: "--",
@@ -1086,6 +1105,7 @@ function setupAuxPolls(
   })
 
   const brightnessPoll = create({
+    name: "brightness",
     initial: {
       value: 0,
       valueLabel: "--",
@@ -1097,6 +1117,7 @@ function setupAuxPolls(
   })
 
   const batteryPoll = create({
+    name: "battery",
     initial: {
       iconName: "battery-missing-symbolic",
       percentText: "--",
