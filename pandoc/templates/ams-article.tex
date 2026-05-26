@@ -1,34 +1,16 @@
-% AMS Article Preamble
-% Alternative for journal/conference submissions
-% Created 2025-01-09 as part of macro consolidation
-
+% AMS Article (Pandoc Template)
+% For journal submissions, conference papers, formal mathematics.
+% Usage: pandoc input.md -o output.pdf --template=ams-article
+$passoptions.latex()$
 \documentclass[11pt,reqno]{amsart}
 
-% Load unified DZG macros (includes all tiers)
+% Load unified DZG macros (includes all tiers and package defaults)
 \usepackage{dzg-unified}
-
-% ============================================================================
-% Core AMS Packages
-% ============================================================================
-\usepackage{amsmath,amsthm,amssymb,mathrsfs}
-
-% ============================================================================
-% Font and Encoding
-% ============================================================================
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage[dvipsnames]{xcolor}
-
-% ============================================================================
-% Page Geometry
-% ============================================================================
-\usepackage{geometry}
-\geometry{margin=1in}
 
 % ============================================================================
 % Hyperlinks and PDF
 % ============================================================================
-\usepackage[colorlinks=true,hyperindex, linkcolor=magenta, pagebackref=false, citecolor=cyan,pdfpagelabels]{hyperref}
+\usepackage[pdfencoding=auto]{hyperref}
 \hypersetup{
     colorlinks=true,
     linktoc=all,
@@ -39,30 +21,10 @@
 }
 
 % ============================================================================
-% Theorem Environments (AMS style)
+% Page Geometry
 % ============================================================================
-\newtheorem{theorem}{Theorem}[subsection]
-\newtheorem*{theorem*}{Theorem}
-\newtheorem*{definition*}{Definition}
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{corollary}[theorem]{Corollary}
-\newtheorem{conjecture}[theorem]{Conjecture}
-
-\theoremstyle{definition}
-\newtheorem{variant}[theorem]{Variant}
-\newtheorem{fact}[theorem]{Fact}
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem{question}[theorem]{Question}
-\newtheorem{remark}[theorem]{Remark}
-\newtheorem{exercise}[theorem]{Exercise}
-\newtheorem{warning}[theorem]{Warning}
-\newtheorem{example}[theorem]{Example}
-\newtheorem{notation}[theorem]{Notation}
-\newtheorem{convention}[theorem]{Convention}
-\newtheorem{construction}[theorem]{Construction}
-\newtheorem{claim}[theorem]{Claim}
-\newtheorem{assumption}[theorem]{Assumption}
+\usepackage{geometry}
+\geometry{margin=1in}
 
 % ============================================================================
 % Lists and Enumerations
@@ -94,7 +56,7 @@
 % ============================================================================
 \usepackage{graphicx}
 
-% Auto-scale images to page width/height
+% Auto-scale images
 \makeatletter
 \def\ScaleWidthIfNeeded{%
  \ifdim\Gin@nat@width>\linewidth
@@ -114,6 +76,22 @@
 
 \setkeys{Gin}{width=\ScaleWidthIfNeeded,height=\ScaleHeightIfNeeded,keepaspectratio}
 
+% Standard Pandoc macros for figures
+$if(graphics)$
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\textwidth\textwidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\makeatletter
+\def\fps@figure{$if(fig-pos)$$fig-pos$$else$H$endif$}
+\makeatother
+$endif$
+
+\makeatletter
+\newcommand{\pandocbounded}[1]{#1}
+\makeatother
+
 % ============================================================================
 % Utilities
 % ============================================================================
@@ -121,3 +99,47 @@
 \usepackage[textwidth=25mm, textsize=tiny]{todonotes}
 \usepackage{csquotes}
 \usepackage{url}
+
+% ============================================================================
+% References and Cross-references
+% ============================================================================
+\usepackage[noabbrev, capitalise, nameinlink]{cleveref}
+
+% ============================================================================
+$if(title)$
+\title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
+$endif$
+$for(author)$
+\author{$author.name$}
+\address{$author.address$}
+\email{$author.email$}
+$endfor$
+$if(date)$
+\date{$date$}
+$else$
+\date{\today}
+$endif$
+
+$header-includes$
+
+\begin{document}
+
+$if(abstract)$
+\begin{abstract}
+    $abstract$
+\end{abstract}
+$endif$
+
+\maketitle
+
+$if(toc)$
+\tableofcontents
+$endif$
+
+$body$
+
+$if(bibliography)$
+\printbibliography[title=Bibliography]
+$endif$
+
+\end{document}
