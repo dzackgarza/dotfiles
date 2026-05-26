@@ -1,6 +1,7 @@
 # Pandoc Configuration
 
-Personal Pandoc and LaTeX configuration for generating PDFs from markdown and managing LaTeX macros.
+Personal Pandoc and LaTeX configuration for generating PDFs from markdown and managing
+LaTeX macros.
 
 ## Directory Structure
 
@@ -20,14 +21,19 @@ styles/                     # LaTeX macro system (styles assemble macros)
 │   ├── spectral.tex
 │   ├── tikz.tex
 │   └── environments.tex
-├── preambles/             # Document preambles
-│   ├── koma-article.tex
-│   └── ams-article.tex
-└── obsidian/              # MathJax macros for Obsidian
+├── preambles/             # Shared preamble fragments (\input-ed by .sty files)
+│   └── dzg-preamble.tex   # Core package loading block
+├── obsidian/              # MathJax macros for Obsidian
     └── mathjax-macros.tex
 
-templates/                  # Pandoc and LaTeX templates
-├── *.tex, *.html, *.latex
+templates/                  # Pandoc document templates
+├── koma-article.tex       # KOMA-Script (general docs, homework)
+├── ams-article.tex        # AMS article (journal submissions)
+├── research_draft.tex     # Research draft (amsart-based)
+├── research_paper.tex     # Research paper (amsart, arxiv mode)
+├── homework_template.tex  # Homework problem sets
+├── pandoc_problem_template.tex
+├── *.html, *.latex
 ├── css/                   # CSS for HTML templates
 └── metadata/              # YAML metadata files
 
@@ -67,7 +73,8 @@ pandoc input.md -o output.pdf \
 Required in `~/.zshrc`:
 
 ```bash
-export TEXINPUTS=".:$HOME/figures//:$HOME/.pandoc/styles//:$HOME/.pandoc/styles/macros//:$HOME/.pandoc/styles/preambles//:$HOME/.pandoc/config//:"
+# Canonical source: ~/.envrc
+export TEXINPUTS=".:$HOME/.pandoc/templates//:$HOME/.pandoc/styles//:$HOME/.pandoc/styles/macros//:${TEXINPUTS:-}:"
 export BIBINPUTS=".:$HOME/.pandoc/bib//:${BIBINPUTS:-}"
 export PATH="$HOME/.pandoc/bin:$PATH"
 ```
@@ -87,7 +94,8 @@ Plus domain files: categories, spectral, tikz, environments.
 
 - **dzg-unified.sty**: Main unified package (loads all tiers)
 - **dzg-mathjax.sty**: MathJax subset for Obsidian (tiers 1-2 only)
-- **preambles/**: Modern document preambles (KOMA-Script, AMS)
+- **preambles/**: Shared preamble fragments (loaded via \input by .sty files)
+- **templates/**: Document templates and starters (KOMA-Script, AMS, pandoc)
 - **bin/*.lua**: Pandoc filters (tikzcd, callouts, image handling)
 - **tests/**: Comprehensive test suite verifying all macros compile
 
