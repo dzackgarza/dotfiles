@@ -1,0 +1,12 @@
+% Standalone TikZ compilation template for pandoc tikzcd filter.
+% __TIKZ_CONTENT__ is replaced by the filter with the actual tikz source.
+\documentclass[tikz,border=2pt]{standalone}
+\usepackage{dzg-tikz}
+
+% Additional TikZ libraries beyond what dzg-preamble loads
+\usetikzlibrary{external}
+
+\begin{document}
+\nopagecolor
+__TIKZ_CONTENT__
+\end{document}
