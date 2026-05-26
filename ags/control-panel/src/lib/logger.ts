@@ -23,9 +23,11 @@ const consoleLogSink = (record: LogRecord) => {
  */
 export function initializeLogger(): boolean {
   // Shim addEventListener for GJS environment (LogTape checks for it)
-  const g = globalThis as unknown as { addEventListener: () => boolean };
-  if (typeof g.addEventListener === "undefined") {
-    g.addEventListener = () => true;
+  if (typeof (globalThis as Record<string, unknown>).addEventListener === "undefined") {
+    Object.defineProperty(globalThis, "addEventListener", {
+      value: (): boolean => true,
+      writable: true,
+    });
   }
 
   configureSync({

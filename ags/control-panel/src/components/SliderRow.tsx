@@ -11,7 +11,7 @@ function joinClasses(...classes: Array<string | false | null | undefined>): stri
 type SliderRowProps = {
   icon: string;
   state: Accessor<SliderState>;
-  onSetValue: (value: number) => Promise<void>;
+  onSetValue: (value: number) => Promise<boolean>;
 };
 
 export function SliderRow({ icon, state, onSetValue }: SliderRowProps) {
@@ -29,7 +29,7 @@ export function SliderRow({ icon, state, onSetValue }: SliderRowProps) {
         max={1}
         hexpand
         sensitive={state((value) => !value.error)}
-        onChangeValue={({ value }) => void onSetValue(value)}
+        onChangeValue={({ value }: { value: number }) => void onSetValue(value)}
       />
       <label
         class="slider-value"
