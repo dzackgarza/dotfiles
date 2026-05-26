@@ -11,9 +11,18 @@
 \RequirePackage{stmaryrd}     % Special brackets
 \RequirePackage{upgreek}      % Upright Greek
 
-% Graphics (conditional - may be loaded by document with options)
-\@ifpackageloaded{graphicx}{}{\RequirePackage{graphicx}}
-\@ifpackageloaded{xcolor}{}{\RequirePackage[dvipsnames]{xcolor}}
+% Encoding (modern LaTeX defaults, explicit for older engines)
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+
+% Graphics
+\RequirePackage{graphicx}
+\RequirePackage[dvipsnames]{xcolor}
+
+% Extra math and diagram packages
+\RequirePackage{amscd}
+\RequirePackage{centernot}
+\RequirePackage{slashed}
 
 % TikZ and diagrams
 \RequirePackage{tikz}
@@ -21,9 +30,9 @@
 \usetikzlibrary{arrows.meta, cd, fadings, patterns, calc, matrix, positioning, decorations, decorations.pathreplacing, decorations.markings, shapes, backgrounds, fit, shapes.geometric, intersections, hobby, matrix,arrows,decorations.pathmorphing}
 \tikzfading[name=fade out, inner color=transparent!0, outer color=transparent!100]
 
-% Utilities (if not already loaded)
-\@ifpackageloaded{etoolbox}{}{\RequirePackage{etoolbox}}
-\@ifpackageloaded{xparse}{}{\RequirePackage{xparse}}
+% Utilities
+\RequirePackage{etoolbox}
+\RequirePackage{xparse}
 
 % Diagrams and Plots
 \RequirePackage{tikzit}
@@ -40,6 +49,8 @@
 
 % Hyperlinks
 \RequirePackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\RequirePackage{bookmark}
 
 % List spacing
 \RequirePackage{enumitem}
+\setlist[enumerate]{itemsep=2pt,parsep=2pt,before={\parskip=2pt}}
