@@ -1,0 +1,129 @@
+% Test document for TikZ macros
+% Exercises all style categories from macros/tikz/
+\documentclass{article}
+\usepackage{dzg-tikz}
+\pagestyle{empty}
+
+\begin{document}
+
+\section*{Node Styles}
+
+\begin{tikzpicture}
+  % Basic nodes
+  \node[wh] (wh) at (0,0) {};
+  \node[swh] (swh) at (1,0) {};
+  \node[dwh] (dwh) at (2,0) {};
+  \node[bl] (bl) at (3,0) {};
+  % TikZit nodes
+  \node[white node] (wn) at (0,1) {};
+  \node[black node] (bn) at (1,1) {};
+  \node[doubled node] (dn) at (2,1) {};
+  \node[starred node] (sn) at (3,1) {};
+  \node[two node] (tn) at (0,2) {};
+  \node[four node] (fn) at (1,2) {};
+  % Vinberg
+  \node[vinberg white node] (vwn) at (2,2) {};
+  \node[vinberg black node] (vbn) at (3,2) {};
+  \node[vinberg doubled node] (vdn) at (4,2) {};
+  % ADE
+  \node[ADE blue node] (abn) at (0,3) {};
+  \node[ADE black node] (ablkn) at (1,3) {};
+  \node[ADE white node] (awhn) at (2,3) {};
+  % IAS
+  \node[IAS star] (ias) at (3,3) {};
+  \node[nontoric blowup] (ntb) at (4,3) {};
+  % Cusp
+  \node[cusp point] (cp) at (0,4) {};
+  \node[BB cusp curve] (bcc) at (1,4) {};
+  \node[BB cusp point] (bcp) at (3,4) {};
+  % Dots
+  \node[dot] (dt) at (0,5) {};
+  \node[blackdot] (bdt) at (1,5) {};
+  \node[whitedot] (wdt) at (2,5) {};
+  \node[reddot] (rdt) at (3,5) {};
+  \node[greendot] (gdt) at (4,5) {};
+\end{tikzpicture}
+
+\section*{Edge Styles}
+
+\begin{tikzpicture}
+  % Basic line styles
+  \draw (0,0) -- node[above]{do} (2,0);
+  \draw[do] (0,-1) -- (2,-1);
+  \draw[bo] (0,-2) -- (2,-2);
+  \draw[da] (0,-3) -- (2,-3);
+  \draw[hlt] (0,-4) -- (2,-4);
+  % TikZit edges
+  \draw[plain edge] (3,0) -- (5,0);
+  \draw[dashed edge] (3,-1) -- (5,-1);
+  \draw[thick edge] (3,-2) -- (5,-2);
+  \draw[double edge] (3,-3) -- (5,-3);
+  \draw[triple edge] (3,-4) -- (5,-4);
+  \draw[Arrow] (6,0) -- (8,0);
+  \draw[Doubled Arrow] (6,-1) -- (8,-1);
+  \draw[Dashed Arrow] (6,-2) -- (8,-2);
+  % BB cusp
+  \draw[BB cusp arrow] (0,-6) -- (2,-6);
+  \draw[BB cusp arrow reverse] (3,-6) -- (5,-6);
+  \draw[BB cusp brace] (0,-7) -- (2,-7);
+  % IAS
+  \draw[IAS edge] (0,-8) -- (2,-8);
+  \draw[IAS grid] (0,-9) -- (2,-9);
+  \draw[IAS surgery cutout] (3,-8) -- (5,-8);
+  \draw[exceptional curve] (3,-9) -- (5,-9);
+  % Decorations
+  \draw[foldarrow] (0,-10) -- (2,-10);
+  \draw[->-] (3,-10) -- (5,-10);
+  \draw[->>-] (6,-10) -- (8,-10);
+\end{tikzpicture}
+
+\section*{Utility Commands}
+
+\begin{tikzpicture}
+  \node[wh] (ref) at (0,0) {};
+  \reflectnode{ref}
+\end{tikzpicture}
+
+\KBcircle
+
+\section*{Quiver Curve}
+
+\begin{tikzcd}
+  A \arrow[r, curve={height=6pt}] & B
+\end{tikzcd}
+
+\begin{tikzcd}
+  A \arrow[r, tail reversed, 2tail] & B
+\end{tikzcd}
+
+\section*{Complex Diagrams}
+
+\begin{tikzpicture}
+\eighteen
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\sterkone
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\sterktwo
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\sterkthree
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\sterkfour
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\sterkfive
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\kthreeffour
+\end{tikzpicture}
+
+\end{document}

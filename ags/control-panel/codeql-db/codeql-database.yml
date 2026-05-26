@@ -1,0 +1,45 @@
+---
+sourceLocationPrefix: /home/dzack/dotfiles/ags/control-panel
+baselineLinesOfCode: 2366
+unicodeNewlines: true
+columnKind: utf16
+primaryLanguage: javascript
+inProgress:
+  primaryLanguage: javascript
+  installedExtractors:
+    cpp:
+     - /opt/codeql/cpp
+    csv:
+     - /opt/codeql/csv
+    ruby:
+     - /opt/codeql/ruby
+    xml:
+     - /opt/codeql/xml
+    properties:
+     - /opt/codeql/properties
+    rust:
+     - /opt/codeql/rust
+    actions:
+     - /opt/codeql/actions
+    python:
+     - /opt/codeql/python
+    csharp:
+     - /opt/codeql/csharp
+    swift:
+     - /opt/codeql/swift
+    go:
+     - /opt/codeql/go
+    javascript:
+     - /opt/codeql/javascript
+    html:
+     - /opt/codeql/html
+    yaml:
+     - /opt/codeql/yaml
+    java:
+     - /opt/codeql/java
+creationMetadata:
+  cliVersion: 2.23.8
+  creationTime: 2026-05-25T21:43:08.735376951Z
+overlayBaseDatabase: false
+overlayDatabase: false
+finalised: false
