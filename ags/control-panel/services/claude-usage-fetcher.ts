@@ -23,6 +23,7 @@ export interface ProviderSnapshot {
   availability: ModelAvailability[]
   metadata: Record<string, unknown>
   errors: Array<{ type: string; message: string }>
+  account: string | null
 }
 
 export interface UsageCollection {

@@ -5,11 +5,13 @@ This directory contains test documents that exercise the unified LaTeX macro sys
 ## Test Files
 
 ### LaTeX Test
+
 - **test-latex-macros.tex** - Comprehensive LaTeX document testing all macro tiers
 - **test-latex-macros.pdf** - Compiled output (206KB, 4 pages)
 - **test-macros.sty** - Test-specific package with absolute paths to lib/
 
 ### Pandoc Test
+
 - **test-pandoc-macros.md** - Markdown document with same macro tests
 - **compile-pandoc-test.sh** - Compilation script (work in progress)
 
@@ -33,6 +35,7 @@ This produces `test-latex-macros.pdf` which exercises:
 ## Known Issues
 
 ### Command Conflicts
+
 Some macros conflict with LaTeX defaults:
 - `\ae` (already defined by LaTeX)
 - `\mod`, `\qed`, `\too` (conflicts with standard commands)
@@ -40,25 +43,26 @@ Some macros conflict with LaTeX defaults:
 These are handled by the macro files but may generate warnings.
 
 ### TEXINPUTS Configuration
+
 For the macro system to work correctly in production, TEXINPUTS must include:
 ```bash
 export TEXINPUTS=".:$HOME/.pandoc/styles//:$HOME/.pandoc/lib//:$HOME/.pandoc/preambles//:$HOME/.pandoc/config//:"
 ```
 
-This is already configured in `~/.zshrc`. Reload your shell or run `source ~/.zshrc` to apply.
+This is already configured in `~/.zshrc`. Reload your shell or run `source ~/.zshrc` to
+apply.
 
 ### Test-Specific Package
+
 `test-macros.sty` uses absolute paths to avoid TEXINPUTS issues during testing.
 In production, use `\usepackage{dzg-unified}` instead (requires TEXINPUTS).
 
 ## What the Tests Verify
 
-✅ **Tier 1 macros** (simple shortcuts) compile without errors
-✅ **Tier 2 macros** (with arguments) render correctly
-✅ **Tier 3 macros** (complex TeX) produce correct output
-✅ **Tier 4 macros** (DeclareMathOperator) work with amsmath loaded
-✅ **Category theory macros** from categories.tex work
-✅ **Spectral sequence macros** from spectral.tex work
+✅ **Tier 1 macros** (simple shortcuts) compile without errors ✅ **Tier 2 macros** (with
+arguments) render correctly ✅ **Tier 3 macros** (complex TeX) produce correct output ✅
+**Tier 4 macros** (DeclareMathOperator) work with amsmath loaded ✅ **Category theory
+macros** from categories.tex work ✅ **Spectral sequence macros** from spectral.tex work
 ✅ **Domain separation** is maintained (categories, spectral as separate files)
 
 ## Production Usage

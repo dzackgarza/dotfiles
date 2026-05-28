@@ -11,7 +11,7 @@ window.Bar {
   color: $fg-color;
   font-weight: bold;
 
-  > centerbox {
+  >centerbox {
     background: $bg-color;
     border-radius: 10px;
     margin: 8px;
@@ -76,7 +76,7 @@ window.NotificationCenter {
     font-weight: 600;
   }
 
-  .tile-trigger > button {
+  .tile-trigger>button {
     background: transparent;
     padding: 0;
     border-radius: $radius-lg;
@@ -169,10 +169,29 @@ window.NotificationCenter {
     background: rgb(251, 146, 60);
   }
 
+  .provider-dot-error {
+    border-radius: 50%;
+    background: rgb(239, 68, 68);
+  }
+
   .provider-eta {
     font-size: 9px;
     color: rgb(239, 68, 68);
     font-weight: 600;
+  }
+
+  .provider-reset-time {
+    font-size: 8px;
+    color: #{"alpha(@theme_fg_color, 0.55)"};
+    font-weight: 500;
+    margin-top: 1px;
+  }
+
+  .provider-reset-time-red {
+    font-size: 8px;
+    color: rgb(239, 68, 68);
+    font-weight: 500;
+    margin-top: 3px;
   }
 
   .last-updated {

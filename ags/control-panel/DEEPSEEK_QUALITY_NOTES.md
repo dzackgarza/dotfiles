@@ -134,6 +134,36 @@ The control-panel owns these machine-local scripts and startup state. Returning 
 
 Failure mode: fake success. The code preserves a functioning-looking panel by hiding the fact that an owned path failed.
 
+## WTF-Level Structure
+
+Pattern: the implementation is not merely rough; several parts are shaped in ways that make a reviewer ask why the design was allowed to exist at all.
+
+Concrete evidence:
+
+- `src/services/control-center.ts` is 1,569 lines and owns nearly everything: command discovery, shell parsing, polling, app state types, provider transformations, action orchestration, caching, and user-facing error strings. That is not a service; it is a junk drawer with a singleton at the bottom.
+- The file header at `src/services/control-center.ts:4-16` claims an architecture where each reader throws and errors are handled cleanly. The actual implementation later catches owned failures, returns `error: ""`, and reports initialization success after catch. The prose and behavior disagree inside the same file.
+- `ControlCenterService` at `src/services/control-center.ts:898-934` exposes 35 fields/methods as one giant object. A caller gets every tile, every action, lifecycle control, drag suppression, usage refresh, timestamps, and error state through one unsegmented interface.
+- Poll count is hard-coded as `const totalPolls = 14` at `src/services/control-center.ts:1219`, then the same 14-ish concepts are manually enumerated in initialization at `src/services/control-center.ts:1319-1334` and polling at `src/services/control-center.ts:1348-1362`. Adding or removing a poll requires editing several distant lists and hoping they still match.
+- The action API is boolean theater. Most service methods return `Promise<boolean>` or `boolean`, but callers generally ignore the value. Inside the implementation there are dozens of `return true` statements whose only purpose is to satisfy a shape, not communicate a decision. `requireCommand()` even has `throw new Error(...)` followed by unreachable `return true` at `src/services/control-center.ts:130-132`.
+- `createPolledState()` uses one generic mechanism for every poll, then smears behavior through callbacks: `onError`, `onSuccess`, `onFirstComplete`, `suppressUpdates`, `running`, `firstComplete`, `pollingStarted`. This is a local state machine, but it is encoded as loose booleans and callbacks instead of an explicit lifecycle.
+- The UI has two usage surfaces that look like overlapping generations of the same feature: `ClaudeUsagePopover` at `src/windows/control-center.tsx:282-286` and a hidden `claude-usage` window at `src/windows/control-center.tsx:287-358`. Refresh behavior is attached to the latter while the visible provider icon path opens the former. That is not a small missed wire; it is stale architecture left alive.
+- Backdrop/Escape/catcher-window logic is duplicated between `widget/ClaudeUsagePopover.tsx:68-87, 183-212` and `src/windows/control-center.tsx:293-348`. The same overlay-control idea was hand-rolled twice in two places instead of being a shared AGS popover/window primitive.
+- Provider availability is computed in UI (`src/windows/control-center.tsx:35-49`), provider rows are rewritten in service (`src/services/control-center.ts:662-700`), provider shape is declared in runtime (`services/claude-usage-fetcher.ts:17-25`), and a different provider shape is declared in tests (`src/lib/__tests__/usage-limits.test.ts:19-28`). Four layers are improvising the same domain model.
+- The popover footer at `widget/ClaudeUsagePopover.tsx:163-165` combines a hard-coded freshness claim with a no-op refresh button. A reviewer does not need to run the app to reject that: the code plainly says the visible control is fake.
+
+Why this matters:
+
+These are not isolated defects. They show a generation pattern: add another branch, another callback, another surface, another shape copy, another boolean return, instead of finding the owned abstraction. The correct fix is not to polish these details one by one; it is to collapse the design around real boundaries:
+
+- one control-panel test gate;
+- one AGS structural/visual runtime proof path;
+- one provider contract;
+- one usage popover surface;
+- one poll registry or state model;
+- loud failures for owned scripts and startup.
+
+Failure mode: slop accretion plus impact miscalibration. The code gets larger, more locally plausible, and less trustworthy.
+
 ## Test Suite Shape Bias
 
 Pattern: tests assert that data exists and has plausible primitive types, not that control-panel behavior is correct.

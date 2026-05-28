@@ -1,0 +1,20 @@
+# ---------------------------------------------------------------------------
+# .pathrc -- Non-secret environment variables for tool and search paths
+# ---------------------------------------------------------------------------
+# This is the single source of truth for path-like environment variables.
+# It is sourced by:
+#   - ~/.envrc      (for direnv-managed shells)
+#   - ~/.zshrc      (for interactive zsh sessions)
+#   - ~/.zprofile   (for the login shell that starts Hyprland)
+#
+# It deliberately contains NO API keys or secrets -- those belong in ~/.envrc.
+# ---------------------------------------------------------------------------
+
+# TeX search paths (includes Pandoc custom resources and figures)
+export TEXINPUTS=".:$HOME/figures//:$HOME/.pandoc/templates//:$HOME/.pandoc/styles//:$HOME/.pandoc/styles/macros//:$HOME/.pandoc/lib//:$HOME/.pandoc/preambles//:$HOME/.pandoc/config//:${TEXINPUTS:-}:"
+
+# BibTeX search path
+export BIBINPUTS=".:$HOME/.pandoc/bib//:${BIBINPUTS:-}"
+
+# Zotero global bibliography
+export ZOTERO_GLOBAL_BIB="$HOME/zotero_global.bib"

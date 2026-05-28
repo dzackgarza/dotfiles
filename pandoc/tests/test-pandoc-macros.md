@@ -104,7 +104,7 @@ Group ring: $\ZZG$ where $G$ is a group.
 
 Character: $\chi: G \to \CCstar$.
 
-Schur's lemma: $\Hom_G(V, W) = 0$ for inequivalent irreps.
+Schur’s lemma: $\Hom_G(V, W) = 0$ for inequivalent irreps.
 
 # Symbols and Relations
 

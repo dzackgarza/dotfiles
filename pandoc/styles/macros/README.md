@@ -1,6 +1,6 @@
 # LaTeX Macro Library Organization
 
-**Location:** `~/.pandoc/core/lib/`
+**Location:** `~/.pandoc/styles/macros/`
 
 This directory contains the organized LaTeX macro library, consolidated from scattered legacy files into a tier-based system.
 
@@ -128,7 +128,8 @@ Is it domain-specific? → categories.tex, spectral.tex, or tikz.tex
    - Alphabetical by command name, OR
    - Grouped by topic with clear section comments
 4. **MathJax compatibility:**
-   - If Obsidian-safe (tiers 1-2), it auto-loads in Obsidian on reload
+   - If MathJax-safe, it auto-loads in Obsidian on reload
+   - The generated MathJax config reads `tier1-mathjax-simple.tex`, `tier2-mathjax-args.tex`, `categories.tex`, and `spectral.tex`
    - Tiers 3-4 are LaTeX/Pandoc only
 
 ## Migration History
@@ -156,6 +157,6 @@ Load all macros via unified style:
 
 ### In Obsidian
 
-MathJax-safe subset (tiers 1+2 only) loads automatically via symlinked `mathjax-macros.tex` in `.obsidian/` directory.
+The maximal MathJax-safe subset loads automatically via symlinked `mathjax-macros.tex` in `.obsidian/` directory.
 
 See `obsidian/README.md` for setup instructions.
