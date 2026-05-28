@@ -1,6 +1,6 @@
 # Obsidian MathJax Configuration
 
-This directory contains MathJax-safe macros (tiers 1 and 2) for use in Obsidian with the better-mathjax plugin.
+This directory contains the maximal MathJax-safe macro subset for use in Obsidian with the better-mathjax plugin.
 
 ## Setup
 
@@ -29,11 +29,13 @@ Create a test note with:
 - Number systems: $\ZZ, \QQ, \RR, \CC$
 - Calligraphic: $\cA, \cB, \cC$
 
-**Tier 2 macros (with arguments):**
+**Tier 2 and domain macros:**
 - Generators: $\gens{a, b, c}$
 - Absolute value: $\abs{x}$
 - Norm: $\norm{v}$
 - Inner product: $\inner{u}{v}$
+- Categories: $\Set, \calg, \modsleft{R}$
+- Spectra: $\tmf, \MO, \KU$
 ```
 
 All macros should render correctly.
@@ -45,7 +47,7 @@ All macros should render correctly.
 - Categories: `\Set`, `\Grp`, `\Ring`, `\Mod`, etc.
 - Operators: `\Hom`, `\Aut`, `\End`, `\Ext`, `\Tor`, etc.
 
-See `core/lib/tier1-mathjax-simple.tex` for full list.
+See `styles/macros/tier1-mathjax-simple.tex` for full list.
 
 ### Tier 2 (With arguments, MathJax-safe)
 - Delimiters: `\abs{x}`, `\norm{v}`, `\gens{a,b}`, `\bracket{x}`
@@ -54,7 +56,13 @@ See `core/lib/tier1-mathjax-simple.tex` for full list.
 - Complexes: `\complex{C}`, `\cocomplex{C}`
 - Function fields: `\fps{x}`, `\functionfield{K}`
 
-See `core/lib/tier2-mathjax-args.tex` for full list.
+See `styles/macros/tier2-mathjax-args.tex` for full list.
+
+### Domain Sources
+- Category theory: `\Set`, `\calg`, `\modsleft{R}`, `\gset{G}`
+- Spectral sequences and spectra: `\tmf`, `\MO`, `\KU`, `\Suspendpinf`
+
+See `styles/macros/categories.tex` and `styles/macros/spectral.tex` for full lists.
 
 ## What Won't Work in Obsidian?
 
@@ -68,9 +76,10 @@ These will only work in full LaTeX/Pandoc documents, not in Obsidian MathJax.
 
 ## Adding New Macros
 
-1. Add macro to appropriate tier file in `core/lib/`:
+1. Add macro to the appropriate file in `styles/macros/`:
    - `tier1-mathjax-simple.tex` (no args, simple shortcuts)
    - `tier2-mathjax-args.tex` (with args, MathJax-safe)
+   - `categories.tex` or `spectral.tex` (domain macros that are MathJax-safe)
 
 2. Macros auto-load in Obsidian on next reload (no need to update this file)
 
@@ -84,7 +93,7 @@ These will only work in full LaTeX/Pandoc documents, not in Obsidian MathJax.
 
 **Some macros work, others don't:**
 - Tier 3/4 macros won't work in MathJax (expected)
-- Check that macro is actually in tier 1 or 2
+- Check that macro is actually in a MathJax-compatible source file
 - Complex macros with spacing/boxes won't render
 
 **Symlink broken after moving vault:**

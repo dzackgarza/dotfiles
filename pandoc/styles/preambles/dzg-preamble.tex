@@ -44,8 +44,10 @@
 % Graphics path for \includegraphics in diagrams
 \graphicspath{{~/figures/}}
 
-% Microtype: protrusion and expansion
-\RequirePackage[activate={true,nocompatibility}, final, tracking=true, kerning=true, spacing=true]{microtype}
+% Microtype: protrusion and expansion.
+% Pandoc's default template may load microtype before project styles.
+\RequirePackage{microtype}
+\microtypesetup{activate=true, final=true, tracking=true, kerning=true, spacing=true}
 
 % Hyperlinks
 \RequirePackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
