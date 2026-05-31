@@ -364,6 +364,53 @@ def test_tikzjax_examples_html() -> None:
         assert_html(f"{name}: div.center > span.tikzcode > svg", path, check_dom)
 
 
+# --- complex labels (math in node labels) ---
+
+
+def test_tikzcd_complex_labels_html() -> None:
+    """Complex labels with \\mathrm, ^{}, \\text{} produce valid SVG."""
+    path = FIXTURES / "tikzcd-complex-labels" / "input.md"
+
+    def check_dom(soup):
+        div = soup.find("div", style="text-align:center;")
+        if not div:
+            return False
+        span = div.find("span", class_="tikzcd")
+        if not span:
+            return False
+        svg = span.find("svg")
+        if not svg:
+            return False
+        # SVG should have glyph definitions (text rendered as paths)
+        glyphs = svg.find_all("g", id=True)
+        return len(glyphs) > 10  # complex diagram has many glyphs
+
+    assert_html(
+        "complex labels: div.center > span.tikzcd > svg with glyphs", path, check_dom
+    )
+
+
+def test_tikzcd_complex_labels_latex() -> None:
+    """Complex labels with \\mathrm, ^{}, \\text{} produce raw LaTeX output."""
+    path = FIXTURES / "tikzcd-complex-labels" / "input.md"
+
+    def check_raw(cp):
+        # Raw output should contain includesvg command
+        return "\\includesvg" in cp.stdout
+
+    cp = pandoc_transform(path, "latex")
+    if cp.returncode != 0:
+        fail(
+            "complex labels: raw LaTeX output",
+            f"filter crashed (rc={cp.returncode}): {cp.stderr.strip()}",
+        )
+        return
+    if check_raw(cp):
+        check("complex labels: raw LaTeX contains \\includesvg")
+    else:
+        fail("complex labels: raw LaTeX output", "no \\includesvg found in output")
+
+
 # --- crash handling ---
 
 
@@ -429,6 +476,13 @@ def main() -> None:
             [
                 test_tikzjax_examples_latex,
                 test_tikzjax_examples_html,
+            ],
+        ),
+        (
+            "complex labels (math in node labels)",
+            [
+                test_tikzcd_complex_labels_latex,
+                test_tikzcd_complex_labels_html,
             ],
         ),
     ]
