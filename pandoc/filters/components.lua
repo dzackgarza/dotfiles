@@ -212,6 +212,27 @@ local function render_blog_listing()
   )
 end
 
+local function render_media_gallery(el)
+  local database = decode_json(database_path(el.attributes.source))
+  local items = database.items or {}
+  local filterable = el.attributes.filterable == "true"
+
+  local data = {
+    items = items,
+    filterable = filterable,
+  }
+
+  local json = pandoc.json.encode(data)
+
+  return pandoc.Div(
+    { pandoc.RawBlock("html", "<!-- media gallery placeholder -->") },
+    pandoc.Attr("", {}, {
+      ["data-component"] = "MediaGallery",
+      ["data-json"] = json,
+    })
+  )
+end
+
 function Div(el)
   if not el.classes:includes("component") then
     return nil
@@ -230,6 +251,8 @@ function Div(el)
     return render_gallery(el)
   elseif component_type == "blog-listing" then
     return render_blog_listing()
+  elseif component_type == "media-gallery" then
+    return render_media_gallery(el)
   end
 
   fail("unknown component type: " .. component_type)
