@@ -212,6 +212,22 @@ local function render_blog_listing()
   )
 end
 
+local function render_timeline(el)
+  local database = decode_json(database_path(el.attributes.source))
+  local events = database.events or {}
+
+  local data = { events = events }
+  local json = pandoc.json.encode(data)
+
+  return pandoc.Div(
+    { pandoc.RawBlock("html", "<!-- timeline placeholder -->") },
+    pandoc.Attr("", {}, {
+      ["data-component"] = "Timeline",
+      ["data-json"] = json,
+    })
+  )
+end
+
 local function render_media_gallery(el)
   local database = decode_json(database_path(el.attributes.source))
   local items = database.items or {}
