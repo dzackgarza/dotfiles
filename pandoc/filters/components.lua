@@ -269,6 +269,9 @@ function Div(el)
     return render_blog_listing()
   elseif component_type == "media-gallery" then
     return render_media_gallery(el)
+  elseif component_type == "timeline" then
+    return render_timeline(el)
+    return render_media_gallery(el)
   end
 
   fail("unknown component type: " .. component_type)
