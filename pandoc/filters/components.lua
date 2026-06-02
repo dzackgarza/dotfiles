@@ -266,7 +266,6 @@ local function render_teaching_timeline(el)
     })
   )
 end
-end
 
 local function render_media_gallery(el)
   local database = decode_json(database_path(el.attributes.source))
