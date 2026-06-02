@@ -283,7 +283,9 @@ function Div(el)
     fail(".component div missing type attribute")
   end
 
-  if component_type == "collection" then
+  if component_type == "collapse" then
+    return render_collapse(el)
+  elseif component_type == "collection" then
     return render_collection(el)
   elseif component_type == "link-group" then
     return render_link_group(el)
