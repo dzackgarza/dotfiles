@@ -237,8 +237,9 @@ local function render_timeline(el)
   local events = database.events or {}
   local types = database.types or {}
   local filterable = el.attributes.filterable == "true"
+  local variant = el.attributes.variant or "snap"
 
-  local data = { events = events, types = types, filterable = filterable }
+  local data = { events = events, types = types, filterable = filterable, variant = variant }
   local json = pandoc.json.encode(data)
 
   return pandoc.Div(
