@@ -49,7 +49,7 @@ end
 
 local function make_link(href, label, direction)
   local text = direction == "prev" and "Previous" or "Next"
-  return '<a href="' .. escape_html(href) .. '" class="pagination--pager" title="' .. escape_html(label) .. '">'
+  return '<a href="' .. escape_html(href) .. '" class="join-item btn btn-outline btn-sm" title="' .. escape_html(label) .. '">'
     .. text .. '</a>'
 end
 
@@ -58,22 +58,25 @@ local function make_related_card(post, blog_base, base_url)
   if img_src:sub(1,1) == "/" and img_src:sub(2,2) ~= "/" then
     img_src = base_url .. img_src
   end
-  local img_html = '<div class="archive__item-teaser"><img src="' .. escape_html(img_src) .. '" alt=""></div>'
+  local img_html = '<figure class="px-0 pt-0 m-0"><img src="' .. escape_html(img_src) .. '" class="w-full h-32 object-cover rounded-none border-b border-border" alt="Teaser"></figure>'
   local read_html = ""
   if post.readMinutes then
-    read_html = '<span class="page__meta-readtime"><i class="far fa-clock" aria-hidden="true"></i> ' .. tostring(post.readMinutes) .. ' minute read</span>'
+    read_html = '<span class="text-xs text-base-content/50"><i class="far fa-clock" aria-hidden="true"></i> ' .. tostring(post.readMinutes) .. ' min read</span>'
   end
   local excerpt_html = ""
   if post.excerpt then
-    excerpt_html = '<p class="archive__item-excerpt">' .. escape_html(post.excerpt) .. '</p>'
+    excerpt_html = '<p class="text-xs text-base-content/70 mt-1 line-clamp-2">' .. escape_html(post.excerpt) .. '</p>'
   end
   return [[
-<div class="grid__item">
-  <article class="archive__item">]] .. img_html .. [[
-    <h2 class="archive__item-title no_toc"><a href="]] .. blog_base .. "/" .. post.slug .. '">' .. escape_html(post.title) .. [[</a></h2>
-    <p class="page__meta">]] .. read_html .. [[</p>
-    ]] .. excerpt_html .. [[
-  </article>
+<div class="card card-compact bg-base-100 card-border shadow-sm hover:shadow transition-all duration-200">
+  ]] .. img_html .. [[
+  <div class="card-body p-3 flex flex-col justify-between">
+    <div>
+      <h3 class="card-title text-sm m-0 leading-snug"><a href="]] .. blog_base .. "/" .. post.slug .. '" class="no-underline hover:underline text-base-content hover:text-primary">' .. escape_html(post.title) .. [[</a></h3>
+      ]] .. excerpt_html .. [[
+    </div>
+    <p class="m-0 mt-2">]] .. read_html .. [[</p>
+  </div>
 </div>]]
 end
 
@@ -182,15 +185,15 @@ function Pandoc(doc)
   local all_html = {}
 
   if #html_parts > 0 then
-    table.insert(all_html, '<nav class="post-nav" aria-label="Post navigation">'
+    table.insert(all_html, '<nav class="join grid grid-cols-2 w-full my-6" aria-label="Post navigation">'
       .. table.concat(html_parts, "\n") .. '</nav>')
   end
 
   if #related_html > 0 then
     table.insert(all_html, [[
-<div class="page__related">
-  <h4 class="page__related-title">You May Also Enjoy</h4>
-  <div class="grid__wrapper">]] .. table.concat(related_html, "\n") .. [[</div>
+<div class="mt-8 border-t border-border pt-6">
+  <h4 class="text-xs font-bold uppercase tracking-wider text-base-content/50 mb-4">You May Also Enjoy</h4>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">]] .. table.concat(related_html, "\n") .. [[</div>
 </div>]])
   end
 
@@ -200,7 +203,7 @@ function Pandoc(doc)
 
   local wrapper = pandoc.Div(
     { pandoc.RawBlock("html", table.concat(all_html, "\n")) },
-    pandoc.Attr("", { "post-nav-wrapper" })
+    pandoc.Attr("", { "post-nav-wrapper-clean" })
   )
 
   local blocks = doc.blocks
