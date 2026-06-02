@@ -309,7 +309,9 @@ function Div(el)
     fail(".component div missing type attribute")
   end
 
-  if component_type == "teaching-timeline" then
+  if component_type == "tweet" then
+    return render_tweet(el)
+  elseif component_type == "teaching-timeline" then
     return render_teaching_timeline(el)
   elseif component_type == "collapse" then
     return render_collapse(el)
