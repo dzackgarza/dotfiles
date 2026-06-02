@@ -245,6 +245,12 @@ local function render_timeline(el)
   return pandoc.Div(
     { pandoc.RawBlock("html", "<!-- timeline placeholder -->") },
     pandoc.Attr("", {}, {
+      ["data-component"] = "Timeline",
+      ["data-json"] = json,
+    })
+  )
+end
+
 local function render_teaching_timeline(el)
   local database = decode_json(database_path(el.attributes.source))
   local events = database.events or {}
@@ -260,11 +266,6 @@ local function render_teaching_timeline(el)
     })
   )
 end
-
-      ["data-component"] = "Timeline",
-      ["data-json"] = json,
-    })
-  )
 end
 
 local function render_media_gallery(el)
