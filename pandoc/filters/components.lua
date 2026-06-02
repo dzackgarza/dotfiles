@@ -267,6 +267,17 @@ local function render_teaching_timeline(el)
   )
 end
 
+local function render_tweet(el)
+  local url = el.attributes.url
+  if not url then
+    fail("tweet component requires url attribute")
+  end
+  return {
+    pandoc.RawBlock("html", '<blockquote class="twitter-tweet"><a href="' .. url .. '"></a></blockquote>'),
+    pandoc.RawBlock("html", '<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>'),
+  }
+end
+
 local function render_media_gallery(el)
   local database = decode_json(database_path(el.attributes.source))
   local items = database.items or {}
