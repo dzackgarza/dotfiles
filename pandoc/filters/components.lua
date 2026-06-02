@@ -212,19 +212,16 @@ local function render_blog_listing()
   )
 end
 
-local function render_timeline(el)
 local function render_collapse(el)
   local title = el.attributes.title or "Toggle"
   local blocks = {}
 
-  -- Opening <details> tag
   table.insert(blocks, pandoc.RawBlock("html", '<details class="collapse collapse-arrow bg-base-200 mb-6">'))
   table.insert(blocks, pandoc.RawBlock("html", '<summary class="collapse-title text-lg font-semibold">'))
   table.insert(blocks, pandoc.Plain({ pandoc.Str(title) }))
   table.insert(blocks, pandoc.RawBlock("html", '</summary>'))
   table.insert(blocks, pandoc.RawBlock("html", '<div class="collapse-content">'))
 
-  -- Inner content (already processed by Pandoc's depth-first walk)
   for _, block in ipairs(el.content) do
     table.insert(blocks, block)
   end
@@ -235,6 +232,7 @@ local function render_collapse(el)
   return blocks
 end
 
+local function render_timeline(el)
   local database = decode_json(database_path(el.attributes.source))
   local events = database.events or {}
   local types = database.types or {}
