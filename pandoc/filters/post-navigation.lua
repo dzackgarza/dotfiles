@@ -54,8 +54,12 @@ local function make_link(href, label, direction)
 end
 
 local function make_related_card(post, blog_base, base_url)
-  local img_src = post.image or "/assets/images/bigo.png"
-  if img_src:sub(1,1) == "/" and img_src:sub(2,2) ~= "/" then
+  if not post.image then
+    fail("related post missing image: " .. (post.slug or post.title or "<unknown>"))
+  end
+  local img_src = post.image
+  local already_prefixed = base_url ~= "" and img_src:sub(1, #base_url + 1) == base_url .. "/"
+  if img_src:sub(1,1) == "/" and img_src:sub(2,2) ~= "/" and not already_prefixed then
     img_src = base_url .. img_src
   end
   local img_html = '<figure class="px-0 pt-0 m-0"><img src="' .. escape_html(img_src) .. '" class="w-full h-32 object-cover rounded-none border-b border-border" alt="Teaser"></figure>'
