@@ -119,6 +119,27 @@ local function render_collection(el)
   )
 end
 
+local function render_papers(el)
+  local database = decode_json(database_path(el.attributes.source))
+  local papers = database.papers or {}
+  local filterable = el.attributes.filterable == "true"
+
+  local data = {
+    papers = papers,
+    filterable = filterable,
+  }
+
+  local json = pandoc.json.encode(data)
+
+  return pandoc.Div(
+    { pandoc.RawBlock("html", "<!-- papers listing placeholder -->") },
+    pandoc.Attr("", {}, {
+      ["data-component"] = "PapersListing",
+      ["data-json"] = json,
+    })
+  )
+end
+
 local function render_link_group(el)
   local group_id = el.attributes["group-id"]
   if not group_id then
@@ -317,6 +338,8 @@ function Div(el)
     return render_collapse(el)
   elseif component_type == "collection" then
     return render_collection(el)
+  elseif component_type == "papers" then
+    return render_papers(el)
   elseif component_type == "link-group" then
     return render_link_group(el)
   elseif component_type == "gallery-grid" then
