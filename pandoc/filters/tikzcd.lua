@@ -189,6 +189,18 @@ local function make_html_output(svg_path, css_class)
   svg_tag = namespace_svg_ids(svg_tag, hash)
 
   local html = '<div style="text-align:center;">'
+    .. '<span class="' .. css_class .. ' pandoc-preview-editable" data-edit-kind="' .. css_class .. '">'
+    .. svg_tag
+    .. '</span>'
+    .. '</div>'
+  return pandoc.Para(pandoc.RawInline('html', html))
+end
+
+  -- Namespace IDs using a short hash to prevent cross-SVG collisions
+  local hash = pandoc.sha1(svg_tag):sub(1, 8)
+  svg_tag = namespace_svg_ids(svg_tag, hash)
+
+  local html = '<div style="text-align:center;">'
     .. '<span class="' .. css_class .. '">'
     .. svg_tag
     .. '</span>'
