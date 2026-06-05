@@ -52,6 +52,14 @@ nativefier/
 cursor_extensions/
 xmonad
 
+# Unregistered nested repos (gitlinks removed from index)
+ags/reminder-scheduler/
+new-website/
+scratch_math_conceal/
+scratch_typst_concealer/
+.config-sync/ranger/colorschemes/
+.config-sync/ranger/plugins/ranger-fzf/
+
 # Misc
 .DS_Store
 .env
