@@ -32,6 +32,26 @@ out/
 # Test outputs
 PandocPreview/test/outputs/
 
+# Build/dependency artifacts
+trash/
+.cabal-sandbox/
+
+# Editor and analysis caches
+.config/Atom/Cache/
+ags/control-panel/codeql-db/
+
+# Browser state (ephemeral application data)
+.config/google-chrome/
+.config/chromium/
+.config/TikzEdtWForms/
+
+# Historical junk (should not reappear)
+todoist
+bin/llm-repl-project/
+nativefier/
+cursor_extensions/
+xmonad
+
 # Misc
 .DS_Store
 .env
