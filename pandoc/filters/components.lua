@@ -303,8 +303,6 @@ function Div(el)
     return render_papers(el)
   elseif component_type == "link-group" then
     return render_link_group(el)
-  elseif component_type == "gallery-grid" then
-    return render_gallery(el)
   elseif component_type == "blog-listing" then
     return render_blog_listing()
   elseif component_type == "media-gallery" then
