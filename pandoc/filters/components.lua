@@ -176,45 +176,6 @@ local function render_link_group(el)
   fail("link group not found: " .. group_id)
 end
 
-local function render_gallery(el)
-  local gallery_id = el.attributes["gallery-id"]
-  if not gallery_id then
-    fail("gallery-grid component requires gallery-id")
-  end
-  local database = decode_json(database_path(el.attributes.source))
-  for _, gallery in ipairs(database.items or {}) do
-    if gallery.id == gallery_id then
-      local figures = {}
-      for _, image in ipairs(gallery.images or {}) do
-        if image.src then
-          table.insert(
-            figures,
-            pandoc.Para({ pandoc.Image(tostring(image.caption or ""), image.src) })
-          )
-        elseif image.url then
-          table.insert(
-            figures,
-            pandoc.Para({ pandoc.Link(tostring(image.caption or ""), image.url) })
-          )
-        else
-          fail("gallery item requires src or url")
-        end
-      end
-      local json = pandoc.json.encode({
-        images = gallery.images or {},
-      })
-      return pandoc.Div(
-        { pandoc.RawBlock("html", "<!-- gallery placeholder -->") },
-        pandoc.Attr("", {}, {
-          ["data-component"] = "GalleryGrid",
-          ["data-json"] = json,
-        })
-      )
-    end
-  end
-  fail("gallery not found: " .. gallery_id)
-end
-
 local function render_blog_listing()
   if not data_dir then
     fail("PANDOC_SITE_DATA_DIR is required")
