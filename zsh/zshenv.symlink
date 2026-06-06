@@ -2,3 +2,6 @@
 . "$HOME/.cargo/env"
 # NVM lazy loaded in functions.zsh
 
+# Direnv
+eval "$(direnv hook zsh)"
+
