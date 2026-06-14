@@ -5,25 +5,8 @@ import pathlib
 
 ROOT = pathlib.Path(__file__).parent.parent
 
-TEMPLATE = r"""
-\documentclass[tikz, border=2pt]{{standalone}}
-\usepackage{{dzg-unified}}
-\usepackage{{tikzit}}
-\usepackage{{dynkin-diagrams}}
-\usepackage{{quiver}}
-
-\usetikzlibrary{{
-    arrows.meta, cd, fadings, patterns, calc, matrix, 
-    positioning, decorations, decorations.pathreplacing, 
-    decorations.markings, shapes, backgrounds, fit, 
-    shapes.geometric, intersections, hobby,
-    arrows, decorations.pathmorphing
-}}
-
-\begin{{document}}
-{content}
-\end{{document}}
-"""
+with open(os.path.join(ROOT, "templates", "standalone-tikz.tex"), 'r') as f:
+    TEMPLATE = f.read()
 
 def render_tikz(filepath: str, output_dir: str) -> bool:
     with open(filepath, 'r') as f:
