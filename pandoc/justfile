@@ -318,7 +318,6 @@ _test-tikz-filter:
 #   templates/pandoc_preview_template.html — updated with inlined macros
 generate-math-macros:
   python3 "{{justfile_directory()}}/bin/generate-mathjax-config.py"
-  just {{justfile_directory()}}/_inject-mathjax-into-template
 
 # Legacy: generate raw TeX math macro injection file (templates/css/math-macros.html).
 # Prefer `generate-math-macros` for MathJax 3 JS/TS/JSON output.
