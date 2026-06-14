@@ -21,8 +21,9 @@ local template_file = io.open(template_path, "r")
 if not template_file then
   error("tikzcd.lua: standalone template not found at " .. template_path)
 end
-local tikz_doc_template = template_file:read("*a")
+local tikz_doc_template_str = template_file:read("*a")
 template_file:close()
+local tikz_doc_template = pandoc.template.compile(tikz_doc_template_str)
 
 -- Shared compilation core: given full LaTeX source, compile to PDF then SVG.
 -- Returns (svg_path, pdf_path) or (nil, nil) on failure.
