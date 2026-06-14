@@ -13,7 +13,7 @@ end
 
 -- Output directories
 local pandoc_dir = os.getenv("PANDOC_DIR") or (home .. "/dotfiles/pandoc")
-local figures_dir = os.getenv("FIGURES_DIR") or (home .. "/figures")
+local figures_dir = os.getenv("FIGURES_DIR") or (home .. "/.pandoc/figures")
 local svg_dir = os.getenv("SVG_DIR") or (figures_dir .. "/rendered")
 
 local template_path = pandoc_dir .. "/templates/standalone-tikz.tex"
