@@ -61,10 +61,10 @@ def render_tikz(filepath: str, output_dir: str) -> bool:
 
 def main():
     tikz_dirs = [
-        pathlib.Path("/home/dzack/figures/tikz"),
-        pathlib.Path("/home/dzack/figures/tikzcd")
+        pathlib.Path("/home/dzack/.pandoc/figures/tikz"),
+        pathlib.Path("/home/dzack/.pandoc/figures/tikzcd")
     ]
-    output_dir = pathlib.Path("/home/dzack/figures/rendered")
+    output_dir = pathlib.Path("/home/dzack/.pandoc/figures/rendered")
     output_dir.mkdir(parents=True, exist_ok=True)
 
     success = True
