@@ -42,22 +42,7 @@
 \RequirePackage{geometry}
 \geometry{margin=1in}
 
-% Tier 1: Simple MathJax-compatible shortcuts
-\input{tier1-mathjax-simple}
-
-% Tier 2: Commands with arguments (MathJax-compatible)
-\input{tier2-mathjax-args}
-
-% Tier 3: Complex TeX-specific commands
-\input{tier3-tex-complex}
-
-% Tier 4: Preamble content
-\input{tier4-preamble}
-
-% Domain-specific macros
-\input{categories}
-\input{spectral}
-\input{tikz-macros}
+\RequirePackage{dzg-macros}
 
 % Spectral sequences diagram package
 \RequirePackage{spectralsequences}
