@@ -17,7 +17,7 @@ def render_tikz(filepath: str, output_dir: str) -> bool:
         # Wrap in shorthand or ensure environment is correct
         pass
 
-    tex_content = TEMPLATE.format(content=content)
+    tex_content = TEMPLATE.replace("$body$", content)
     
     name = pathlib.Path(filepath).stem
     with tempfile.TemporaryDirectory() as tmpdir:
