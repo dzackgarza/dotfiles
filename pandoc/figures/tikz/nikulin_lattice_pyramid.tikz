@@ -1,0 +1,136 @@
+﻿\begin{tikzpicture}[
+  x=0.6cm,
+  y=0.6cm,
+  >=Triangle,
+  line cap=round,
+  line join=round,
+  axis/.style={black, line width=1pt},
+  tick/.style={black, line width=0.8pt},
+  coordgrid/.style={gray!50, line width=0.25pt},
+  pt1/.style={circle, fill=black, draw=black, inner sep=0pt, minimum size=4.2pt},
+  pt0/.style={circle, fill=white, draw=black, inner sep=0pt, minimum size=5.8pt, line width=0.8pt},
+  pt01/.style={circle, double, fill=white, draw=black, inner sep=0pt, minimum size=7.0pt, line width=0.8pt, double distance=0.9pt},
+  lbl/.style={black, font=\scriptsize}
+]
+
+% background grid
+\draw[coordgrid,step=1] (0,0) grid (22,12);
+
+% axes: origin at (0,0) so that r=0 is the axis start
+\draw[axis, ->] (0,0) -- (22.1,0) node[right] {$r$};
+\draw[axis, ->] (0,0) -- (0,12.0) node[above] {$a$};
+
+% slanted g- and k-axes / boundary
+\draw[axis, <-] (0.5,0.5) -- (11,11) -- (20,2);
+\draw[axis, ->] (20,2) -- (21.15,0.85);
+
+% x-axis ticks and labels
+\foreach \r in {0,...,21}{
+  \draw[tick] (\r,0.12) -- (\r,-0.12);
+  \node[lbl, below=2pt] at (\r,0) {\r};
+}
+
+% y-axis ticks and labels
+\foreach \a in {1,...,11}{
+  \draw[tick] (-0.12,\a) -- (0.12,\a);
+  \node[lbl, left=4pt] at (0,\a) {\a};
+}
+
+% delta = 0 only
+\node[pt0] at (2,0)  {};
+\node[pt0] at (10,0) {};
+\node[pt0] at (18,0) {};
+\node[pt0] at (6,2)  {};
+\node[pt0] at (14,2) {};
+
+
+% both delta = 0 and delta = 1
+% a=2
+\node[pt01] at (2,2)  {};
+\node[pt01] at (10,2) {};
+\node[pt01] at (18,2) {};
+% a=4
+\node[pt01] at (6,4)  {};
+\node[pt01] at (10,4) {};
+\node[pt01] at (14,4) {};
+\node[pt01] at (18,4) {};
+% a=6
+\node[pt01] at (10,6) {};
+\node[pt01] at (14,6) {};
+% a=8
+\node[pt01] at (10,8) {};
+% a=10
+\node[pt01] at (10,10) {};
+
+% delta = 1 only
+% a=11
+\node[pt1] at (11,11) {};
+% a=10
+\node[pt1] at (12,10) {};
+% a=9
+\node[pt1] at (9,9)  {};
+\node[pt1] at (11,9) {};
+\node[pt1] at (13,9) {};
+% a=8
+\node[pt1] at (8,8)  {};
+\node[pt1] at (12,8) {};
+\node[pt1] at (14,8) {};
+% a=7
+\node[pt1] at (7,7)  {};
+\node[pt1] at (9,7)  {};
+\node[pt1] at (11,7) {};
+\node[pt1] at (13,7) {};
+\node[pt1] at (15,7) {};
+% a=6
+\node[pt1] at (6,6)  {};
+\node[pt1] at (8,6)  {};
+\node[pt1] at (12,6) {};
+\node[pt1] at (16,6) {};
+% a=5
+\node[pt1] at (5,5)  {};
+\node[pt1] at (7,5)  {};
+\node[pt1] at (9,5)  {};
+\node[pt1] at (11,5) {};
+\node[pt1] at (13,5) {};
+\node[pt1] at (15,5) {};
+\node[pt1] at (17,5) {};
+% a=4
+\node[pt1] at (4,4)  {};
+\node[pt1] at (8,4)  {};
+\node[pt1] at (12,4) {};
+\node[pt1] at (16,4) {};
+% a=3
+\node[pt1] at (3,3)  {};
+\node[pt1] at (5,3)  {};
+\node[pt1] at (7,3)  {};
+\node[pt1] at (9,3)  {};
+\node[pt1] at (11,3) {};
+\node[pt1] at (13,3) {};
+\node[pt1] at (15,3) {};
+\node[pt1] at (17,3) {};
+\node[pt1] at (19,3) {};
+% a=2
+\node[pt1] at (4,2)  {};
+\node[pt1] at (8,2)  {};
+\node[pt1] at (12,2) {};
+\node[pt1] at (16,2) {};
+\node[pt1] at (20,2) {};
+% a=1
+\node[pt1] at (1,1)  {};
+\node[pt1] at (3,1)  {};
+\node[pt1] at (9,1)  {};
+\node[pt1] at (11,1) {};
+\node[pt1] at (17,1) {};
+\node[pt1] at (19,1) {};
+
+% legend
+\node[pt1] at (17.2,10.8) {};
+\node[black, right=0.45cm] at (17.2,10.8) {$\delta=1$ only};
+
+\node[pt0] at (17.2,9.9) {};
+\node[black, right=0.45cm] at (17.2,9.9) {$\delta=0$ only};
+
+\node[pt01] at (17.2,9.0) {};
+\node[black, right=0.45cm] at (17.2,9.0) {both};
+
+\end{tikzpicture}
