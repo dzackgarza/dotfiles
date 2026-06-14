@@ -1,0 +1,36 @@
+\usetikzlibrary{patterns}
+\begin{tikzpicture}[scale=1.2]
+  % Define vertices of the diamond
+  \coordinate (A) at (0, 2);   % Top
+  \coordinate (B) at (-2, 0);  % Left
+  \coordinate (C) at (0, -2);  % Bottom
+  \coordinate (D) at (2, 0);   % Right
+  \coordinate (M) at (0, 0);   % Center
+
+  % Internal vertices
+  \coordinate (P1) at (-1, 1);
+  \coordinate (P2) at (1, 1);
+  \coordinate (P3) at (-1, -1);
+  \coordinate (P4) at (1, -1);
+
+  % Shading patterns
+  \fill[pattern=north east lines, pattern color=green!60!black] (A) -- (P1) -- (M) -- (P2) -- cycle;
+  \fill[pattern=vertical lines, pattern color=blue!60!black] (B) -- (P1) -- (M) -- (P3) -- cycle;
+  \fill[pattern=north west lines, pattern color=red!60!black] (C) -- (P3) -- (M) -- (P4) -- cycle;
+  \fill[pattern=horizontal lines, pattern color=orange!60!black] (D) -- (P2) -- (M) -- (P4) -- cycle;
+
+  % Draw edges
+  \draw[thick] (A) -- (B) -- (C) -- (D) -- cycle;
+  \draw (A) -- (C);
+  \draw (B) -- (D);
+  \draw (P1) -- (P4);
+  \draw (P2) -- (P3);
+
+  % Vertices
+  \foreach \p in {A,B,C,D,M,P1,P2,P3,P4} \fill (\p) circle (2pt);
+
+  % Labels
+  \draw[->] (-2, -2) -- +(-0.5, -0.5) node[below left] {$(3, -3)$};
+  \draw[->] (2, -2) -- +(0.5, 0.5) node[above right] {$(2, 2)$};
+
+\end{tikzpicture}

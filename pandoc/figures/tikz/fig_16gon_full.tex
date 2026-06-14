@@ -1,0 +1,41 @@
+\begin{tikzpicture}[scale=0.8]
+    \tikzstyle{node}=[circle, draw, fill=black!10, inner sep=2pt]
+    \tikzstyle{heavy}=[circle, draw, fill=black, inner sep=2.5pt]
+    
+    % Boundary Nodes (16 nodes in a square)
+    \foreach \i in {1,...,4} {
+        \node[node] (bt\i) at (\i-1, 4) {}; % Top
+        \node[node] (br\i) at (4, 4-\i+1) {}; % Right
+        \node[node] (bb\i) at (4-\i+1, 0) {}; % Bottom
+        \node[node] (bl\i) at (0, \i-1) {}; % Left
+    }
+    
+    % Edges on boundary
+    \draw (bt1) -- (bt2) -- (bt3) -- (bt4) -- (br1) -- (br2) -- (br3) -- (br4) -- (bb1) -- (bb2) -- (bb3) -- (bb4) -- (bl1) -- (bl2) -- (bl3) -- (bl4) -- (bt1);
+    
+    % Internal Nodes
+    \node[node, label=above:{$l_{19}$}] (l19) at (1, 3) {};
+    \node[node, label=above:{$l_{18}$}] (l18) at (3, 3) {};
+    \node[node, label=below:{$l_{16}$}] (l16) at (1, 1) {};
+    \node[node, label=below:{$l_{17}$}] (l17) at (3, 1) {};
+    
+    \node[heavy, label=right:{$l_{20}$}] (l20) at (2, 2.5) {};
+    \node[heavy, label=right:{$l_{21}$}] (l21) at (2, 1.5) {};
+    
+    % Internal Edges to corners
+    \draw (bt1) -- (l19);
+    \draw (br1) -- (l18);
+    \draw (bb1) -- (l17);
+    \draw (bl1) -- (l16);
+    
+    % The X-Crossing in the middle
+    \draw[double, double distance=2pt] (l19) -- (l21); % Top-left to Bottom-central
+    \draw[double, double distance=2pt] (l16) -- (l20); % Bottom-left to Top-central
+    \draw[double, double distance=2pt] (l18) -- (l21); % Top-right to Bottom-central
+    \draw[double, double distance=2pt] (l17) -- (l20); % Bottom-right to Top-central
+    
+    \draw[ultra thick] (l20) -- (l21);
+    
+    % Labels for boundary corners
+    \node[below left] at (bl1) {$l_1$};
+\end{tikzpicture}
