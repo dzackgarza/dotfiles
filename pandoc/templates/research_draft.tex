@@ -47,11 +47,6 @@ $endfor$
 \usetikzlibrary{arrows.meta, cd, fadings, patterns, calc, matrix, positioning, decorations, decorations.pathreplacing, decorations.markings, shapes, backgrounds, fit, shapes.geometric, intersections, hobby, matrix,arrows,decorations.pathmorphing}
 \tikzfading[name=fade out, inner color=transparent!0, outer color=transparent!100]
 
-\usepackage[
-style=alphabetic,
-sorting=ynt,
-backend=biber
-]{biblatex}
 $for(bibliography)$
 \addbibresource{$bibliography$}
 $endfor$
