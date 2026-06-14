@@ -132,7 +132,8 @@ local function compile_tikz(source)
   local resolved_source = resolve_inputs(source, doc_dir)
   local hash = pandoc.sha1(resolved_source)
 
-  local tex_source = tikz_doc_template:gsub("__TIKZ_CONTENT__", resolved_source)
+  local ctx = { body = resolved_source }
+  local tex_source = pandoc.template.apply(tikz_doc_template, ctx)
 
   log("compile_tikz: hash=" .. hash .. " source_length=" .. #resolved_source)
   if debug_mode then
