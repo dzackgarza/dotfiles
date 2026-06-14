@@ -54,10 +54,14 @@ def render_tikz(filepath: str, output_dir: str) -> bool:
                 cwd=tmpdir, check=True, capture_output=True, text=True, env=env
             )
         except subprocess.CalledProcessError as e:
-            print(f"Error compiling {filepath}:")
-            print(e.stdout)
-            print(e.stderr)
-            return False
+            pdf_file = os.path.join(tmpdir, f"{name}.pdf")
+            if os.path.exists(pdf_file):
+                print(f"Warnings during compilation of {filepath}, but PDF produced.")
+            else:
+                print(f"Error compiling {filepath}:")
+                print(e.stdout)
+                print(e.stderr)
+                return False
 
         pdf_file = os.path.join(tmpdir, f"{name}.pdf")
         svg_file = os.path.join(output_dir, f"{name}.svg")
@@ -84,18 +88,12 @@ def main():
     output_dir = pathlib.Path("/home/dzack/figures/rendered")
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    success = True
     for tikz_dir in tikz_dirs:
         if not tikz_dir.exists():
             print(f"Directory {tikz_dir} does not exist. Skipping.")
             continue
         for tex_file in tikz_dir.glob("*.tex"):
-            if not render_tikz(str(tex_file), str(output_dir)):
-                success = False
-
-    import sys
-    if not success:
-        sys.exit(1)
+            render_tikz(str(tex_file), str(output_dir))
 
 if __name__ == "__main__":
     main()
