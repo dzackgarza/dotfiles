@@ -24,12 +24,10 @@ from typing import NamedTuple
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 MACRO_DIR = REPO_ROOT / "styles" / "macros"
-MATHJAX_SOURCE_FILES = (
-    MACRO_DIR / "tier1-mathjax-simple.tex",
-    MACRO_DIR / "tier2-mathjax-args.tex",
-    MACRO_DIR / "categories.tex",
-    MACRO_DIR / "spectral.tex",
-)
+# Single source of truth for *which* macro files feed MathJax. Source filenames
+# are NOT hard-coded here — they are declared in the manifest, shared verbatim
+# with the SSG's bundled extractor so both consumers stay in lock-step.
+MACRO_MANIFEST = MACRO_DIR / "mathjax-sources.txt"
 OUT_DIR = REPO_ROOT / "templates" / "css"
 
 
