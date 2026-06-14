@@ -1,5 +1,4 @@
 $passoptions.latex()$
-\PassOptionsToPackage{nameinlink}{cleveref}
 \documentclass{amsart}
 \usepackage{dzg-unified}
 % dzg-unified provides: amsmath, amsthm, amssymb, amsfonts, mathtools,
@@ -31,6 +30,7 @@ $for(author)$
 $endfor$
 
 \usepackage[utf8]{inputenc}
+\usepackage[nameinlink]{cleveref}
 \usepackage[english]{babel}
 \usepackage{fontenc}
 
@@ -48,7 +48,11 @@ $endfor$
 \usetikzlibrary{arrows.meta, cd, fadings, patterns, calc, matrix, positioning, decorations, decorations.pathreplacing, decorations.markings, shapes, backgrounds, fit, shapes.geometric, intersections, hobby, matrix,arrows,decorations.pathmorphing}
 \tikzfading[name=fade out, inner color=transparent!0, outer color=transparent!100]
 
-% biblatex is already loaded by dzg-unified
+\usepackage[
+style=alphabetic,
+sorting=ynt,
+backend=biber
+]{biblatex}
 $for(bibliography)$
 \addbibresource{$bibliography$}
 $endfor$
@@ -77,8 +81,7 @@ $if(graphics)$
 $endif$
 
 \makeatletter
-\providecommand{\pandocbounded}[1]{#1}
-\providecommand{\qty}[1]{\left( {#1} \right)}
+\newcommand{\pandocbounded}[1]{#1}
 \makeatother
 
 $header-includes$
