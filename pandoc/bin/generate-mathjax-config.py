@@ -257,6 +257,33 @@ def _unique_macros(macros: list[MacroDef]) -> list[MacroDef]:
     return unique
 
 
+def _read_manifest(manifest_path: Path) -> tuple[Path, ...]:
+    """Resolve the macro source files declared in the manifest (one path per
+    line, relative to the manifest's directory; '#'-comments and blanks ignored).
+    A missing manifest or listed file is a hard error — never a silent skip."""
+    if not manifest_path.exists():
+        print(f"ERROR: macro manifest not found: {manifest_path}", file=sys.stderr)
+        sys.exit(1)
+    base = manifest_path.parent
+    files: list[Path] = []
+    for line in manifest_path.read_text().splitlines():
+        stripped = line.strip()
+        if stripped == "" or stripped.startswith("#"):
+            continue
+        resolved = (base / stripped).resolve()
+        if not resolved.exists():
+            print(
+                f"ERROR: macro file listed in {manifest_path.name} not found: {resolved}",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+        files.append(resolved)
+    if not files:
+        print(f"ERROR: manifest declares no macro files: {manifest_path}", file=sys.stderr)
+        sys.exit(1)
+    return tuple(files)
+
+
 def _read_macros(source_files: tuple[Path, ...]) -> list[MacroDef]:
     macros: list[MacroDef] = list(MATHJAX_SHIMS)
     for source_file in source_files:
