@@ -309,26 +309,6 @@ test: _test-macros _test-templates _test-tikz _test-tikz-filter
 _test-tikz-filter:
   python3 "{{justfile_directory()}}/tests/test-tikz-filter.py"
 
-# Inject generated MathJax macros into the pandoc preview template.
-# Reads templates/css/mathjax-macros.json and replaces the MATHJAX_MACROS_JSON
-# placeholder in templates/pandoc_preview_template.html with the compact macro object.
-_inject-mathjax-into-template:
-  #!/usr/bin/env bash
-  set -euo pipefail
-  PANDOC_DIR="{{justfile_directory()}}"
-  TEMPLATE="$PANDOC_DIR/templates/pandoc_preview_template.html"
-  MACROS_JSON="$PANDOC_DIR/templates/css/mathjax-macros.json"
-
-  if [ ! -f "$TEMPLATE" ]; then
-    echo "Template not found: $TEMPLATE" >&2
-    exit 1
-  fi
-  if [ ! -f "$MACROS_JSON" ]; then
-    echo "Macros JSON not found: $MACROS_JSON — run generate-math-macros first" >&2
-    exit 1
-  fi
-
-  python3 "$PANDOC_DIR/bin/inject-mathjax-into-template.py" "$TEMPLATE" "$MACROS_JSON"
 
 # Generate MathJax 3 macro configuration (JS/TS/JSON) from canonical tier .tex files.
 # Parses tier1-mathjax-simple.tex and tier2-mathjax-args.tex and outputs:
