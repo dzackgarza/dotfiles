@@ -1,10 +1,35 @@
 % =============================================================================
 % Utility Commands
 % =============================================================================
-% Note: \tikzfig, \ctikzfig, \convexpath provided by tikzit.sty (vendor)
+% Note: \tikzfig, \ctikzfig provided by tikzit.sty (vendor)
 % =============================================================================
 
-% =============================================================================
+\newcommand{\convexpath}[2]{
+  [ create hullnodes/.code={
+      \global\let\numberofnodes\empty
+      \foreach [count=\c] \n in {##1} {
+        \global\let\numberofnodes\c
+        \pgfnodealias{hullnode\c}{\n}
+      }
+      \pgfnodealias{hullnode0}{hullnode\numberofnodes}
+      \pgfnodealias{hullnode\numberofnodes+1}{hullnode1}
+    },
+    create hullnodes
+  ]
+  ($(hullnode1)!#2!-90:(hullnode0)$)
+  \foreach [
+    evaluate=\currentnode as \previousnode using \currentnode-1,
+    evaluate=\currentnode as \nextnode using \currentnode+1
+  ] \currentnode in {1,...,\numberofnodes} {
+    -- ($(hullnode\currentnode)!#2!-90:(hullnode\previousnode)$)
+    let \p1 = ($(hullnode\currentnode)!#2!-90:(hullnode\previousnode) - (hullnode\currentnode)$),
+        \n1 = {atan2(\y1,\x1)},
+        \p2 = ($(hullnode\currentnode)!#2!90:(hullnode\nextnode) - (hullnode\currentnode)$),
+        \n2 = {atan2(\y2,\x2)},
+        \n{delta} = {-Mod(\n1-\n2,360)}
+    in {arc [start angle=\n1, delta angle=\n{delta}, radius=#2]}
+  } -- cycle
+}% =============================================================================
 % Reflect Node Utility
 % =============================================================================
 
