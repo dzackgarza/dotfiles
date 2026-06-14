@@ -3,7 +3,8 @@
 % =============================================================================
 
 % include a .tikz file
-\newcommand{\tikzfig}[1]{%
+\providecommand{\tikzfig}[1]{}
+\renewcommand{\tikzfig}[1]{%
 {\tikzstyle{every picture}=[tikzfig]
 \IfFileExists{#1.tikz}
   {\input{#1.tikz}}
@@ -15,7 +16,8 @@
 }
 
 % the same as \tikzfig, but in a {center} environment
-\newcommand{\ctikzfig}[1]{%
+\providecommand{\ctikzfig}[1]{}
+\renewcommand{\ctikzfig}[1]{%
 \begin{center}\rm
   \tikzfig{#1}
 \end{center}}
