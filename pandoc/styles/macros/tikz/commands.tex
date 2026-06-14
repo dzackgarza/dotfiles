@@ -2,25 +2,7 @@
 % Utility Commands
 % =============================================================================
 
-% include a .tikz file
-\providecommand{\tikzfig}[1]{}
-\renewcommand{\tikzfig}[1]{%
-{\tikzstyle{every picture}=[tikzfig]
-\IfFileExists{#1.tikz}
-  {\input{#1.tikz}}
-  {%
-    \IfFileExists{./figures/#1.tikz}
-      {\[ \input{./figures/#1.tikz} \]}
-      {\tikz[baseline=-0.5em]{\node[draw=red,font=\color{red},fill=red!10!white] {\textit{#1}};}}%
-  }}%
-}
 
-% the same as \tikzfig, but in a {center} environment
-\providecommand{\ctikzfig}[1]{}
-\renewcommand{\ctikzfig}[1]{%
-\begin{center}\rm
-  \tikzfig{#1}
-\end{center}}
 
 % =============================================================================
 % =============================================================================
