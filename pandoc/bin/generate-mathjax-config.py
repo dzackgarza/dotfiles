@@ -447,7 +447,7 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    source_files = MATHJAX_SOURCE_FILES
+    source_files = _read_manifest(MACRO_MANIFEST)
     all_macros = _read_macros(source_files)
 
     if args.count:
