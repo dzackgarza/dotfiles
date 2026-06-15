@@ -10,8 +10,16 @@
 # It deliberately contains NO API keys or secrets -- those belong in ~/.envrc.
 # ---------------------------------------------------------------------------
 
-# TeX search paths (includes Pandoc custom resources and figures)
-export TEXINPUTS=".:$HOME/figures//:$HOME/.pandoc/templates//:$HOME/.pandoc/styles//:$HOME/.pandoc/styles/macros//:$HOME/.pandoc/lib//:$HOME/.pandoc/preambles//:$HOME/.pandoc/config//:${TEXINPUTS:-}:"
+# TeX search paths (includes Pandoc custom resources and figures). Figures live
+# under ~/.pandoc/figures (rendered/, tikz/, tikzcd/); ~/figures is empty.
+export TEXINPUTS=".:$HOME/.pandoc/figures//:$HOME/.pandoc/templates//:$HOME/.pandoc/styles//:$HOME/.pandoc/styles/macros//:$HOME/.pandoc/lib//:$HOME/.pandoc/preambles//:$HOME/.pandoc/config//:${TEXINPUTS:-}:"
+
+# Pandoc resource search path for images/figures. Unlike TEXINPUTS, pandoc's
+# --resource-path does NOT understand the TeX // recursive-search suffix, so this
+# names the figures directory directly (documents reference figures relative to
+# it, e.g. rendered/fig_X.svg). Consumed by ~/.pandoc/bin/pandoc_tohtml.sh and by
+# the pandoc-preview app's renderer.
+export PANDOC_RESOURCE_PATH="$HOME/.pandoc/figures"
 
 # BibTeX search path
 export BIBINPUTS=".:$HOME/.pandoc/bib//:${BIBINPUTS:-}"
