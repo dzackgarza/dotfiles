@@ -8,11 +8,17 @@
 #   - ~/.zprofile   (for the login shell that starts Hyprland)
 #
 # It deliberately contains NO API keys or secrets -- those belong in ~/.envrc.
+#
+# Path vars are SET, not appended: this file is the single source of truth and is
+# sourced three times (.zprofile, .zshrc, .envrc), so any self-reference
+# (${TEXINPUTS:-}) would accumulate duplicate segments on every re-source. The
+# trailing ':' is an empty entry — kpathsea expands it to the distribution's
+# compiled-in default search path, so system .sty/.bib files are still found.
 # ---------------------------------------------------------------------------
 
 # TeX search paths (includes Pandoc custom resources and figures). Figures live
 # under ~/.pandoc/figures (rendered/, tikz/, tikzcd/); ~/figures is empty.
-export TEXINPUTS=".:$HOME/.pandoc/figures//:$HOME/.pandoc/templates//:$HOME/.pandoc/styles//:$HOME/.pandoc/styles/macros//:$HOME/.pandoc/lib//:$HOME/.pandoc/preambles//:$HOME/.pandoc/config//:${TEXINPUTS:-}:"
+export TEXINPUTS=".:$HOME/.pandoc/figures//:$HOME/.pandoc/templates//:$HOME/.pandoc/styles//:$HOME/.pandoc/styles/macros//:$HOME/.pandoc/lib//:$HOME/.pandoc/preambles//:$HOME/.pandoc/config//:"
 
 # Pandoc resource search path for images/figures. Unlike TEXINPUTS, pandoc's
 # --resource-path does NOT understand the TeX // recursive-search suffix, so this
