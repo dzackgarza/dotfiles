@@ -251,6 +251,73 @@ $endif$
 })();
 
 </script>
+
+<!-- pandoc-preview: amsthm environments + Obsidian callouts -->
+<style type="text/css">
+/* amsthm environments: convert_amsthm_envs.lua emits <div class="<env> proofenv">;
+   the visible "<Env>." label is supplied here via ::before. */
+.proofenv { display: block; margin: 12px 0; font-style: normal; }
+.theorem::before, .lemma::before, .proposition::before, .corollary::before,
+.definition::before, .exercise::before, .problem::before, .solution::before,
+.remark::before, .fact::before, .proof::before, .example::before,
+.conjecture::before, .claim::before, .observation::before, .question::before,
+.assumption::before, .warning::before {
+  font-weight: bold; font-style: italic; display: block; margin-bottom: 0.25em;
+}
+.theorem::before { content: "Theorem."; }
+.lemma::before { content: "Lemma."; }
+.proposition::before { content: "Proposition."; }
+.corollary::before { content: "Corollary."; }
+.definition::before { content: "Definition."; }
+.exercise::before { content: "Exercise."; }
+.problem::before { content: "Problem."; }
+.solution::before { content: "Solution."; }
+.remark::before { content: "Remark."; }
+.fact::before { content: "Fact."; }
+.proof::before { content: "Proof."; }
+.example::before { content: "Example."; }
+.conjecture::before { content: "Conjecture."; }
+.claim::before { content: "Claim."; }
+.observation::before { content: "Observation."; }
+.question::before { content: "Question."; }
+.assumption::before { content: "Assumption."; }
+.warning::before { content: "Warning."; }
+.theorem, .lemma, .proposition, .corollary, .definition, .example,
+.conjecture, .claim, .observation, .question, .assumption {
+  border: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+  border-left: 5px solid #955670;
+  background-color: color-mix(in srgb, currentColor 8%, transparent);
+  padding: 0.5em 1em; margin: 1em 0;
+}
+.definition { border-left-color: #275070; }
+.proof {
+  border: 1px dotted color-mix(in srgb, currentColor 25%, transparent);
+  background-color: color-mix(in srgb, currentColor 5%, transparent);
+  padding: 0.5em 1em; margin: 1em 0;
+}
+.proof::after { content: "\25FC"; float: right; margin-top: -1.4em; }
+
+/* Obsidian callouts: obsidian_callouts.lua emits
+   <div class="callout" data-callout="…"><div class="callout-title">…</div>…</div>. */
+.callout {
+  border: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+  border-left: 4px solid #448aff;
+  border-radius: 4px;
+  background-color: color-mix(in srgb, #448aff 8%, transparent);
+  padding: 0.6em 1em; margin: 1em 0;
+}
+.callout-title { font-weight: bold; margin-bottom: 0.3em; }
+.callout > .callout-title + * { margin-top: 0; }
+.callout[data-callout="warning"], .callout[data-callout="caution"] {
+  border-left-color: #e0a030; background-color: color-mix(in srgb, #e0a030 8%, transparent);
+}
+.callout[data-callout="question"], .callout[data-callout="tip"] {
+  border-left-color: #00b8a3; background-color: color-mix(in srgb, #00b8a3 8%, transparent);
+}
+.callout[data-callout="danger"], .callout[data-callout="error"] {
+  border-left-color: #e04848; background-color: color-mix(in srgb, #e04848 8%, transparent);
+}
+</style>
 </head>
 
 <body>
