@@ -1,4 +1,0 @@
-{
-  "proseWrap": "preserve",
-  "plugins": ["prettier-plugin-sentences-per-line"]
-}
