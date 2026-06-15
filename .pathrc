@@ -27,8 +27,8 @@ export TEXINPUTS=".:$HOME/.pandoc/figures//:$HOME/.pandoc/templates//:$HOME/.pan
 # the pandoc-preview app's renderer.
 export PANDOC_RESOURCE_PATH="$HOME/.pandoc/figures"
 
-# BibTeX search path
-export BIBINPUTS=".:$HOME/.pandoc/bib//:${BIBINPUTS:-}"
+# BibTeX search path (trailing ':' appends kpathsea's compiled-in defaults).
+export BIBINPUTS=".:$HOME/.pandoc/bib//:"
 
 # Zotero global bibliography
 export ZOTERO_GLOBAL_BIB="$HOME/zotero_global.bib"
