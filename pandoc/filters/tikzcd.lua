@@ -133,7 +133,9 @@ local function compile_tikz(source)
   local hash = pandoc.sha1(resolved_source)
 
   local ctx = { body = resolved_source }
-  local tex_source = pandoc.template.apply(tikz_doc_template, ctx)
+  -- pandoc 3.6's template.apply returns a Doc; render it to a string before
+  -- writing the .tex file (io.write needs a string, not a Doc).
+  local tex_source = pandoc.layout.render(pandoc.template.apply(tikz_doc_template, ctx))
 
   log("compile_tikz: hash=" .. hash .. " source_length=" .. #resolved_source)
   if debug_mode then
