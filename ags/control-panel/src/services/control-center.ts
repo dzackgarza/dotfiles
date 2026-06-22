@@ -139,6 +139,7 @@ async function requireCommand(command: string): Promise<boolean> {
 
 function createPolledState<T>(options: PollOptions<T>): PolledStateWithInit<T> {
   const [state, setState] = createState(options.initial)
+  const [loading, setLoading] = createState(false)
   const [suppressUpdates, setSuppressUpdates] = createState(false)
   let running = false
   let firstComplete = false
@@ -148,6 +149,7 @@ function createPolledState<T>(options: PollOptions<T>): PolledStateWithInit<T> {
     if (running || suppressUpdates.peek()) return false
 
     running = true
+    setLoading(true)
     const pollName = options.name
     logger.debug`${pollName} refresh starting`
     try {
@@ -161,6 +163,7 @@ function createPolledState<T>(options: PollOptions<T>): PolledStateWithInit<T> {
       setState(options.onError(error))
     } finally {
       running = false
+      setLoading(false)
       if (!firstComplete) {
         firstComplete = true
         logger.debug`${pollName} first poll complete`
