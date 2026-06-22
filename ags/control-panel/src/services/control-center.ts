@@ -1538,6 +1538,7 @@ function createControlCenterService(): ControlCenterService {
     memory: memoryPoll.state,
     disk: diskPoll.state,
     claudeUsageData: claudeUsageDataPoll.state,
+    usageLoading: claudeUsageDataPoll.loading,
     volume: volumePoll.state,
     brightness: brightnessPoll.state,
     battery: batteryPoll.state,
