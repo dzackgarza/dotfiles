@@ -337,6 +337,7 @@ export function ControlCenterWindow() {
       </box>
       <AiProviderIcons
         claudeUsageData={control.claudeUsageData}
+        loading={control.usageLoading}
         onClicked={() => setClaudeUsagePopoverVisible(true)}
       />
       <SliderRow
