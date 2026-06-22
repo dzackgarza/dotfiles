@@ -1129,8 +1129,6 @@ function setupAuxPolls(
 ) {
   const create = <T>(opts: PollOptions<T>) =>
     createStandardPoll(opts, markUpdated, markFirstPollComplete)
-  let usageLastFetchedAt = 0
-  const USAGE_TTL_MS = 120_000 // 2 minutes
 
   const claudeUsageDataPoll = createPolledState({
     name: "claudeUsage",
