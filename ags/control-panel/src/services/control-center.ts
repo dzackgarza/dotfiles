@@ -98,6 +98,7 @@ export type BatteryState = {
 
 type PolledState<T> = {
   state: Accessor<T>
+  loading: Accessor<boolean>
   refresh: () => Promise<boolean>
   setError: (error: unknown) => void
   suppressUpdates: Accessor<boolean>
