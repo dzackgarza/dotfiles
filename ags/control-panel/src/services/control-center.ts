@@ -917,6 +917,7 @@ export type ControlCenterService = {
   brightness: Accessor<SliderState>
   battery: Accessor<BatteryState>
   claudeUsageData: Accessor<UsageCollection>
+  usageLoading: Accessor<boolean>
   lastUpdated: Accessor<string>
   actionError: Accessor<string>
   initializeService: () => Promise<boolean>
