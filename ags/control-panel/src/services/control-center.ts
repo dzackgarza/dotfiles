@@ -1149,15 +1149,15 @@ function setupAuxPolls(
       }
     },
     onSuccess: () => {
-      usageLastFetchedAt = Date.now()
       markUpdated()
       return true
     },
     onFirstComplete: markFirstPollComplete,
   })
 
+  // Fetch fresh on every panel open — opening the panel is itself the request for
+  // up-to-date info, and usage-limits handles its own caching CLI-side.
   const refreshUsage = () => {
-    if (Date.now() - usageLastFetchedAt < USAGE_TTL_MS) return false
     void claudeUsageDataPoll.refresh()
     return true
   }
@@ -1207,8 +1207,6 @@ function setupAuxPolls(
     brightnessPoll,
     batteryPoll,
     refreshUsage,
-    USAGE_TTL_MS,
-    usageLastFetchedAt,
   }
 }
 
