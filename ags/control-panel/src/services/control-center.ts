@@ -195,6 +195,7 @@ function createPolledState<T>(options: PollOptions<T>): PolledStateWithInit<T> {
 
   return {
     state,
+    loading,
     refresh,
     setError,
     suppressUpdates,
