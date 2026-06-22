@@ -181,9 +181,11 @@ function ProviderIcon({
 
 function AiProviderIcons({
   claudeUsageData,
+  loading,
   onClicked,
 }: {
   claudeUsageData: Accessor<UsageCollection>
+  loading: Accessor<boolean>
   onClicked: () => void
 }) {
   return (
@@ -198,6 +200,12 @@ function AiProviderIcons({
           <ProviderIcon provider={provider} onClicked={onClicked} />
         )}
       </For>
+      <Gtk.Spinner
+        class="provider-icons-spinner"
+        spinning={loading}
+        visible={loading}
+        valign={Gtk.Align.CENTER}
+      />
     </box>
   )
 }
