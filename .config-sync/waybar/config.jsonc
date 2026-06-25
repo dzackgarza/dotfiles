@@ -1,0 +1,148 @@
+{
+  "height": 30,
+  "font": "Symbols Nerd Font 10",
+  "spacing": 4,
+  "modules-left": [
+    "sway/mode",
+    "sway/workspaces",
+    "sway/scratchpad",
+    "custom/books",
+    "custom/apps",
+    "custom/osk",
+    "custom/printscreen"
+  ],
+  "modules-center": [
+    "clock",
+    "custom/network-static",
+    "custom/claude-usage"
+  ],
+  "modules-right": [
+    "pulseaudio",
+    "cpu",
+    "memory",
+    :qa
+    "temperature",
+    "battery",
+    "tray"
+  ],
+  "sway/mode": {
+    "format": "<span style=\"italic\"> {}</span>"
+  },
+  "sway/workspaces": {
+    "all-outputs": false,
+    "disable-scroll": false,
+    "format": "{name}",
+    "format-icons": {
+      "A1": "\uf120",
+      "A2": "\uf269",
+      "3": "\uf121",
+      "A3": "\uf121",
+      "A4": "\uf198",
+      "A5": "\uf1fc",
+      "B1": "\uf111",
+      "B2": "\uf111",
+      "B3": "\uf111",
+      "B4": "\uf111",
+      "B5": "\uf02d",
+      "urgent": "\uf06a",
+      "active": "\uf192",
+      "focused": "\uf192",
+      "default": "\uf111"
+      "empty": "\uf111"
+    }
+  },
+  "clock": {
+    "interval": 1,
+    "format": "{:%a %b %d %H:%M:%S}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+  },
+  "cpu": {
+    "format": "{}% ",
+    "tooltip": false
+  },
+  "memory": {
+    "format": "{}% "
+  },
+  "temperature": {
+    "critical-threshold": 80,
+    "format": "{temperatureC}°C ",
+    "format-critical": "{temperatureC}°C "
+  },
+  "battery": {
+    "states": {
+      "good": 95,
+      "warning": 20,
+      "critical": 5
+    },
+    "format": "{capacity}% {icon} {power:.2f}W {time}",
+    "format-charging": "{capacity}%  {power:.2f}W {time}",
+    "format-plugged": "{capacity}%  {power:.2f}W {time}",
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ]
+  },
+  "network": {
+    "format-wifi": "{essid} ({signalStrength}%)  {ipaddr}/{cidr}",
+    "format-ethernet": "{ifname}  {ipaddr}/{cidr}",
+    "format-disconnected": "Disconnected",
+    "on-click": "nm-connection-editor"
+  },
+  "pulseaudio": {
+    "format": "{volume}% {icon} {format_source}",
+    "format-bluetooth": "{volume}% {icon} {format_source}",
+    "format-bluetooth-muted": " {icon} {format_source}",
+    "format-muted": " {format_source}",
+    "format-source": "{volume}% ",
+    "format-source-muted": "",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": [
+        "",
+        "",
+        ""
+      ]
+    },
+    "on-click": "pavucontrol"
+  },
+  "tray": {
+    "spacing": 10
+  },
+  "custom/osk": {
+    "format": "⌨ Keyboard",
+    "tooltip": false,
+    "on-click": "exec toggle_osk.sh"
+  },
+  "custom/books": {
+    "format": "🕮  Books",
+    "tooltip": false,
+    "on-click": "exec dmenuAllPDFs.sh"
+  },
+  "custom/apps": {
+    "format": "💻 Apps",
+    "tooltip": false,
+    "on-click": "exec nwggrid"
+  },
+  "custom/printscreen": {
+    "format": "Screen Clip",
+    "tooltip": false,
+    "on-click": "exec grim -g \"$(slurp)\" - | wl-copy"
+  },
+  "custom/claude-usage": {
+        "format": "󰚩",
+        "on-click": "ags toggle claude-usage"
+  },
+  //"custom/network-static": {
+    //"exec": "cd /home/dzack/gitclones/sway_modules/traffic-hs-simple && /usr/local/bin/stack exec traffic-hs",
+    //"return-type": "json",
+    //"interval": 1
+  //}
+}

@@ -1,0 +1,40 @@
+{
+    "include": [
+        "$HOME/.config/waybar/modules/modules-main.jsonc",
+        "$HOME/.config/waybar/modules/modules-groups.jsonc",
+        "$HOME/.config/waybar/modules/modules-custom.jsonc",
+    ],
+    "layer": "top",
+    "position": "top",
+    "mod": "dock",
+    "exclusive": true,
+    "passthrough": false,
+    "gtk-layer-shell": true,
+    "reload_style_on_change": true,
+    "height": 20,
+    "margin-top": 5,
+    "margin-left": 5,
+    "margin-right": 5,
+
+    "modules-left": [
+        "hyprland/workspaces#preview", 
+        "mpris" 
+    ],
+
+    "modules-center": [
+        "clock"
+    ],
+
+    "modules-right": [
+	    "cpu",        
+        "memory",
+        "disk",
+        "battery", 
+        "custom/notify",
+        "custom/llm-claude",
+        "custom/llm-codex",
+        "custom/claude-usage",
+	    "power-profiles-daemon",
+        "tray"
+    ],
+}
