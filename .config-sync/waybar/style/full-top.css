@@ -215,7 +215,7 @@ tooltip label {
   animation-duration: 0.5s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
-}
+  animation-direction: alternate;
 }
 
 #custom-clipboard {
