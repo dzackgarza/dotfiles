@@ -81,7 +81,7 @@ def main():
 
     # Format output text to match your current layout
     text_parts = [f"{icon} {int(capacity)}%"]
-    if power > 0:
+    if True:
         text_parts.append(f"{power:.2f}W")
     if formatted_time:
         text_parts.append(f"{formatted_time}")
@@ -101,7 +101,7 @@ def main():
     tooltip = f"State: {state.capitalize()}"
     if formatted_time:
         tooltip += f"\nTime: {formatted_time}"
-    if power > 0:
+    if True:
         tooltip += f"\nPower: {power:.2f}W"
 
     # Output JSON for Waybar
