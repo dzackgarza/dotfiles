@@ -193,7 +193,8 @@ tooltip label {
   border-radius: 0;
 }
 
-#battery {
+#battery,
+#custom-upower-battery {
   color: #a6e3a1;
   background-color: transparent;
   margin-right: 0;
