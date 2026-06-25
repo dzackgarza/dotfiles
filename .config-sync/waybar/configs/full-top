@@ -30,7 +30,7 @@
         "memory",
         "disk",
         "battery", 
-        "custom/upower-battery",
+        // "custom/upower-battery",
         "custom/notify",
         "custom/llm-claude",
         "custom/llm-codex",
