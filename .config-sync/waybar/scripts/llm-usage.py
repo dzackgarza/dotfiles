@@ -42,6 +42,22 @@ def _line_for_row(label: str, row: dict | None) -> str:
     return f"  {label:>7}: {row['pct_used']:>3}%  resets {row['time_until_reset'] or 'n/a'}"
 
 
+def _pick_active_snapshot(providers: list[dict]) -> dict | None:
+    candidates = [s for s in providers if s["status"] == "ok" and s["rows"]]
+    if not candidates:
+        return None
+
+    default_snap = next((s for s in candidates if s.get("account") == "default"), None)
+    if default_snap is not None:
+        return default_snap
+
+    ranked = [s for s in candidates if s.get("account")] or candidates
+    return max(
+        ranked,
+        key=lambda s: s.get("metadata", {}).get("last_updated", ""),
+    )
+
+
 def _row_lookup(rows):
     by_window: dict[str, dict[str, dict]] = {}
     for row in rows:
@@ -60,8 +76,8 @@ def main():
         return
 
     data = json.loads(out.stdout)
-    # First ok snapshot with rows = the active account.
-    snap = next((s for s in data["providers"] if s["status"] == "ok" and s["rows"]), None)
+    # Pick the active account snapshot from potentially multiple returned accounts.
+    snap = _pick_active_snapshot(data["providers"])
     if snap is None:
         print(json.dumps({"text": "—", "tooltip": f"{slug}: no active account", "class": "critical"}))
         return
@@ -94,14 +110,11 @@ def main():
         d7 = spark7d
 
     c5, c7 = h5["pct_used"], d7["pct_used"]
-    worst = max(main5h["pct_used"], main7d["pct_used"]) if slug == "codex" else max(c5, c7)
+    worst = max(c5, c7)
 
-    # Exhausted -> show a countdown to when the provider unblocks (latest
-    # exhausted window's reset) instead of the percentages.
-    if slug == "codex":
-        blocked = [r for r in (main5h, main7d) if r["is_exhausted"]]
-    else:
-        blocked = [r for r in (h5, d7) if r["is_exhausted"]]
+    # Exhausted -> show a countdown to when the displayed window unblocks
+    # (latest exhausted window's reset) instead of percentages.
+    blocked = [r for r in (h5, d7) if r["is_exhausted"]]
     show_countdown = bool(blocked)
 
     if blocked and show_countdown:
