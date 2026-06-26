@@ -28,6 +28,27 @@ def countdown(reset_at):
     return "".join(parts)
 
 
+def _window_label(row):
+    return row["identifier"].rsplit("(", 1)[-1].rstrip(")")
+
+
+def _is_spark(row):
+    return "spark" in row["identifier"].lower()
+
+
+def _line_for_row(label: str, row: dict | None) -> str:
+    if row is None:
+        return f"  {label:>7}:  n/a  resets n/a"
+    return f"  {label:>7}: {row['pct_used']:>3}%  resets {row['time_until_reset'] or 'n/a'}"
+
+
+def _row_lookup(rows):
+    by_window: dict[str, dict[str, dict]] = {}
+    for row in rows:
+        by_window.setdefault(_window_label(row), {})["spark" if _is_spark(row) else "main"] = row
+    return by_window
+
+
 def main():
     slug = sys.argv[1]
     out = subprocess.run(
@@ -45,15 +66,46 @@ def main():
         print(json.dumps({"text": "—", "tooltip": f"{slug}: no active account", "class": "critical"}))
         return
 
-    rows = {r["identifier"].rsplit("(", 1)[-1].rstrip(")"): r for r in snap["rows"]}
-    h5, d7 = rows["5h"], rows["7d"]
+    rows_by_window = _row_lookup(snap["rows"])
+
+    main5h = rows_by_window.get("5h", {}).get("main")
+    main7d = rows_by_window.get("7d", {}).get("main")
+    if main5h is None or main7d is None:
+        print(
+            json.dumps(
+                {
+                    "text": "—",
+                    "tooltip": f"{slug}: missing usage rows",
+                    "class": "critical",
+                }
+            )
+        )
+        return
+
+    spark5d = rows_by_window.get("5d", {}).get("spark")
+    spark5h = rows_by_window.get("5h", {}).get("spark")
+    spark5 = spark5d if spark5d is not None else spark5h
+    spark7d = rows_by_window.get("7d", {}).get("spark")
+
+    h5 = main5h
+    d7 = main7d
+    if slug == "codex" and main5h["is_exhausted"] and spark5 is not None:
+        h5 = spark5
+    if slug == "codex" and main7d["is_exhausted"] and spark7d is not None:
+        d7 = spark7d
+
     c5, c7 = h5["pct_used"], d7["pct_used"]
-    worst = max(c5, c7)
+    worst = max(main5h["pct_used"], main7d["pct_used"]) if slug == "codex" else max(c5, c7)
 
     # Exhausted -> show a countdown to when the provider unblocks (latest
     # exhausted window's reset) instead of the percentages.
-    blocked = [r for r in (h5, d7) if r["is_exhausted"]]
-    if blocked:
+    if slug == "codex":
+        blocked = [r for r in (main5h, main7d) if r["is_exhausted"]]
+    else:
+        blocked = [r for r in (h5, d7) if r["is_exhausted"]]
+    show_countdown = bool(blocked)
+
+    if blocked and show_countdown:
         unblock = max(blocked, key=lambda r: r["reset_at"])
         text = f"<span color='{RED}'>{countdown(unblock['reset_at'])}</span>"
     else:
@@ -64,8 +116,15 @@ def main():
         )
     tip = (
         f"{snap['display_name']} — {snap.get('account') or '?'}\n"
-        f"  5h: {c5:>3}%  resets {h5['time_until_reset'] or 'n/a'}\n"
-        f"  7d: {c7:>3}%  resets {d7['time_until_reset'] or 'n/a'}"
+        + _line_for_row("5h", main5h)
+        + "\n"
+        + _line_for_row("7d", main7d)
+        + "\n"
+        + _line_for_row("Spark 5d", spark5d)
+        + "\n"
+        + _line_for_row("Spark 5h", spark5h)
+        + "\n"
+        + _line_for_row("Spark 7d", spark7d)
     )
     cls = "critical" if worst >= 100 else "warning" if worst >= 80 else ""
     print(json.dumps({"text": text, "tooltip": tip, "class": cls}))
