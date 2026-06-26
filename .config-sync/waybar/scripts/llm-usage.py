@@ -99,15 +99,21 @@ def main():
         return
 
     spark5h = rows_by_window.get("5h", {}).get("spark")
-    spark5 = spark5h
     spark7d = rows_by_window.get("7d", {}).get("spark")
 
-    h5 = main5h
-    d7 = main7d
-    if slug == "codex" and main5h["is_exhausted"] and spark5 is not None:
-        h5 = spark5
-    if slug == "codex" and main7d["is_exhausted"] and spark7d is not None:
+    use_spark = (
+        slug == "codex"
+        and (main5h["is_exhausted"] or main7d["is_exhausted"])
+        and spark5h is not None
+        and spark7d is not None
+    )
+
+    if use_spark:
+        h5 = spark5h
         d7 = spark7d
+    else:
+        h5 = main5h
+        d7 = main7d
 
     c5, c7 = h5["pct_used"], d7["pct_used"]
     worst = max(c5, c7)
