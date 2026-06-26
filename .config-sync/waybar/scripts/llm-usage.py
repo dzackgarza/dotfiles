@@ -82,9 +82,8 @@ def main():
         )
         return
 
-    spark5d = rows_by_window.get("5d", {}).get("spark")
     spark5h = rows_by_window.get("5h", {}).get("spark")
-    spark5 = spark5d if spark5d is not None else spark5h
+    spark5 = spark5h
     spark7d = rows_by_window.get("7d", {}).get("spark")
 
     h5 = main5h
@@ -119,8 +118,6 @@ def main():
         + _line_for_row("5h", main5h)
         + "\n"
         + _line_for_row("7d", main7d)
-        + "\n"
-        + _line_for_row("Spark 5d", spark5d)
         + "\n"
         + _line_for_row("Spark 5h", spark5h)
         + "\n"
