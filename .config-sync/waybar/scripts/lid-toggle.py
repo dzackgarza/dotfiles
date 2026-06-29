@@ -18,8 +18,8 @@ WHY = "Waybar lid toggle: ignore lid close"
 WHAT = "handle-lid-switch"
 STATE_DIR_OVERRIDE: Path | None = None
 MODE_LABELS = {
-    "hibernate": "⏾",
-    "ignore": "⊘",
+    "hibernate": "<span size='smaller' rise='3500'>⏾</span>",
+    "ignore": "<span size='smaller' rise='3500'>⊘</span>",
 }
 
 
