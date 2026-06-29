@@ -15,3 +15,4 @@ test:
         exit 1
     fi
     echo "dotfiles: submodules OK"
+    python3 -m unittest discover -s tests -v
