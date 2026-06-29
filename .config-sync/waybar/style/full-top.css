@@ -451,7 +451,10 @@ tooltip label {
 #custom-llm-codex {
   background-position: 6px center;
   background-size: 14px 14px;
-  padding-left: 24px;
+  background-repeat: no-repeat;
+  min-width: 42px;
+  padding-left: 26px;
+  padding-right: 8px;
 }
 
 #tray {
