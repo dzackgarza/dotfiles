@@ -36,7 +36,6 @@
         "custom/llm-claude",
         "custom/llm-codex",
         "custom/claude-usage",
-	    "power-profiles-daemon",
         "tray"
     ],
 }
