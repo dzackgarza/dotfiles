@@ -10,20 +10,30 @@ from pathlib import Path
 SWAYNC_CLIENT = Path("/bin/swaync-client")
 BELL = "󰂚"
 BELL_OFF = "󰂛"
-COUNT = "#ffb454"
+GREEN, YELLOW, RED = "#aad94c", "#ffb454", "#f07178"
+
+
+def _count(text: str) -> int:
+    return int(text) if text.isdecimal() else 0
+
+
+def _severity(count: int) -> str:
+    return RED if count > 100 else YELLOW if count > 0 else GREEN
 
 
 def render_payload(status: dict) -> dict:
     text = str(status.get("text") or "").strip()
+    count_value = _count(text)
+    color = _severity(count_value)
     alt = str(status.get("alt") or "")
     css_class = status.get("class") or alt or "none"
     dnd = "dnd" in alt or "dnd" in str(css_class)
     icon = BELL_OFF if dnd else BELL
     count = ""
-    if text and text != "0":
-        count = f"<span foreground='{COUNT}' size='x-small' rise='4500'>{text}</span>"
+    if count_value > 0:
+        count = f"<span foreground='{color}' size='x-small' rise='4500'>{count_value}</span>"
     return {
-        "text": f"{icon}{count}",
+        "text": f"<span foreground='{color}'>{icon}</span>{count}",
         "tooltip": status.get("tooltip") or "Notifications",
         "class": css_class,
     }
