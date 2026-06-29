@@ -53,6 +53,25 @@ def _cmdline(pid: int) -> list[str] | None:
     return [part.decode() for part in parts if part]
 
 
+def _is_managed_cmdline(cmdline: list[str] | None) -> bool:
+    if cmdline is None:
+        return False
+    joined = " ".join(cmdline)
+    return WHO in joined and WHAT in joined
+
+
+def _wait_for_managed_process(pid: int) -> None:
+    last_cmdline: list[str] | None = None
+    for _ in range(20):
+        last_cmdline = _cmdline(pid)
+        if _is_managed_cmdline(last_cmdline):
+            return
+        time.sleep(0.05)
+    raise AssertionError(
+        f"lid-toggle inhibitor did not become inspectable as expected: pid={pid} cmdline={last_cmdline}"
+    )
+
+
 def _managed_pid() -> int | None:
     pidfile = _pidfile()
     if not pidfile.exists():
@@ -64,7 +83,7 @@ def _managed_pid() -> int | None:
     if cmdline is None:
         pidfile.unlink()
         return None
-    assert WHO in " ".join(cmdline) and WHAT in " ".join(cmdline), (
+    assert _is_managed_cmdline(cmdline), (
         f"lid-toggle pidfile points at an unexpected process: pid={pid} cmdline={cmdline}; "
         f"remove {pidfile} after inspecting the process"
     )
@@ -116,6 +135,7 @@ def _start_inhibitor() -> None:
         stderr=subprocess.DEVNULL,
         start_new_session=True,
     )
+    _wait_for_managed_process(process.pid)
     _pidfile().write_text(f"{process.pid}\n")
 
 
