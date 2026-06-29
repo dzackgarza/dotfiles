@@ -20,13 +20,12 @@ def sev(pct):
     return RED if pct >= 100 else YELLOW if pct >= 80 else GREEN
 
 
-def countdown(reset_at):
-    """Reset timestamp -> 'in 2h21m', rounded to the nearest minute."""
+def countdown(reset_at, now=None):
+    """Reset timestamp -> decimal hours, rounded to the nearest tenth."""
     dt = datetime.fromisoformat(reset_at.replace("Z", "+00:00"))
-    mins = max(0, round((dt - datetime.now(timezone.utc)).total_seconds() / 60))
-    d, h, m = mins // 1440, mins % 1440 // 60, mins % 60
-    parts = [f"{d}d" if d else "", f"{h}h" if d or h else "", f"{m}m"]
-    return "".join(parts)
+    current = now or datetime.now(timezone.utc)
+    hours = max(0, (dt - current).total_seconds() / 3600)
+    return f"{hours:.1f}h"
 
 
 def _window_label(row):
