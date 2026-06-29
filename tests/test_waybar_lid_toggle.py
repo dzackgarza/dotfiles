@@ -2,6 +2,7 @@ import json
 import os
 import subprocess
 import tempfile
+import time
 import unittest
 from pathlib import Path
 
@@ -14,6 +15,23 @@ class WaybarLidToggleTest(unittest.TestCase):
     def _payload(self, state_dir: Path, *args: str) -> dict:
         output = subprocess.check_output([SCRIPT, "--state-dir", state_dir, *args], text=True)
         return json.loads(output)
+
+    def _lid_inhibitors(self) -> list[dict]:
+        output = ""
+        for _ in range(20):
+            output = subprocess.check_output(
+                [
+                    "/usr/bin/systemd-inhibit",
+                    "--list",
+                    "--json=short",
+                    "--what=handle-lid-switch",
+                ],
+                text=True,
+            )
+            if output.strip():
+                return json.loads(output)
+            time.sleep(0.05)
+        self.fail(f"waybar lid inhibitor did not appear in logind list output: {output!r}")
 
     def test_toggle_controls_real_logind_lid_inhibitor(self):
         runtime_dir = tempfile.TemporaryDirectory(prefix="waybar-lid-test-")
@@ -45,17 +63,7 @@ class WaybarLidToggleTest(unittest.TestCase):
             },
         )
 
-        inhibitors = json.loads(
-            subprocess.check_output(
-                [
-                    "/usr/bin/systemd-inhibit",
-                    "--list",
-                    "--json=short",
-                    "--what=handle-lid-switch",
-                ],
-                text=True,
-            )
-        )
+        inhibitors = self._lid_inhibitors()
         self.assertIn(
             {
                 "who": "waybar-lid-toggle",
