@@ -43,11 +43,12 @@ def _line_for_row(label: str, row: dict | None) -> str:
 
 
 def _active_snapshots(slug: str, providers: list[dict]) -> list[dict]:
-    return [
+    snapshots = [
         snapshot
         for snapshot in providers
         if snapshot["provider"] == slug and snapshot["status"] == "ok" and snapshot["rows"]
     ]
+    return sorted(snapshots, key=lambda snapshot: snapshot.get("account") or snapshot["display_name"])
 
 
 def _row_lookup(rows):
