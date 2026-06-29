@@ -16,17 +16,25 @@ SLEEP = Path("/usr/bin/sleep")
 WHO = "waybar-lid-toggle"
 WHY = "Waybar lid toggle: ignore lid close"
 WHAT = "handle-lid-switch"
+STATE_DIR_OVERRIDE: Path | None = None
 
 
 def _assert_setup() -> None:
     for binary in (SYSTEMD_ANALYZE, SYSTEMD_INHIBIT, SLEEP):
         assert binary.is_file(), f"required systemd lid-toggle binary missing: {binary}"
+    if STATE_DIR_OVERRIDE is not None:
+        assert STATE_DIR_OVERRIDE.is_dir(), f"configured lid-toggle state dir does not exist: {STATE_DIR_OVERRIDE}"
+        return
     runtime_dir = os.environ.get("XDG_RUNTIME_DIR")
     assert runtime_dir, "XDG_RUNTIME_DIR is required for the Waybar lid-toggle pidfile"
     assert Path(runtime_dir).is_dir(), f"XDG_RUNTIME_DIR does not exist: {runtime_dir}"
 
 
 def _state_dir() -> Path:
+    if STATE_DIR_OVERRIDE is not None:
+        state_dir = STATE_DIR_OVERRIDE
+        state_dir.mkdir(mode=0o700, exist_ok=True)
+        return state_dir
     runtime_dir = Path(os.environ["XDG_RUNTIME_DIR"])
     state_dir = runtime_dir / "waybar-lid-toggle"
     state_dir.mkdir(mode=0o700, exist_ok=True)
@@ -134,8 +142,12 @@ def _set_mode(mode: str) -> dict[str, str]:
 
 
 def main() -> None:
-    _assert_setup()
+    global STATE_DIR_OVERRIDE
     args = sys.argv[1:]
+    if len(args) >= 2 and args[0] == "--state-dir":
+        STATE_DIR_OVERRIDE = Path(args[1])
+        args = args[2:]
+    _assert_setup()
     if args == [] or args == ["--status"]:
         payload = _payload(_mode())
     elif args == ["--toggle"]:
