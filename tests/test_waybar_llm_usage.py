@@ -107,10 +107,17 @@ class WaybarLlmUsageTest(unittest.TestCase):
 
         self.assertEqual(
             payload["text"],
+            "<span color='#3e4b59'>●</span>"
             "<span color='#aad94c'>65</span>"
             "<span color='#3e4b59'>/</span>"
             "<span color='#aad94c' size='smaller'>34</span>"
+            "<span color='#3e4b59'> </span>"
+            "<span color='#ffb454'>⚡</span>"
+            "<span color='#aad94c'>0</span>"
+            "<span color='#3e4b59'>/</span>"
+            "<span color='#aad94c' size='smaller'>0</span>"
             "<span color='#3e4b59'> | </span>"
+            "<span color='#3e4b59'>●</span>"
             "<span color='#aad94c'>1</span>"
             "<span color='#3e4b59'>/</span>"
             "<span color='#aad94c' size='smaller'>0</span>",
@@ -131,8 +138,9 @@ class WaybarLlmUsageTest(unittest.TestCase):
         )
         self.assertEqual(payload["class"], "")
 
-    def test_codex_payload_keeps_main_usage_when_spark_rows_exist_after_exhaustion(self):
+    def test_codex_payload_renders_regular_countdown_and_spark_item_when_exhausted(self):
         module = load_module()
+        module.countdown = lambda reset_at: "2h56m"
         data = copy.deepcopy(CODEX_TWO_ACCOUNT_RESPONSE)
         first_account_rows = data["providers"][0]["rows"]
         first_account_rows[0]["pct_used"] = 100
@@ -145,10 +153,15 @@ class WaybarLlmUsageTest(unittest.TestCase):
 
         self.assertEqual(
             payload["text"],
-            "<span color='#f07178'>100</span>"
+            "<span color='#3e4b59'>●</span>"
+            "<span color='#f07178'>2h56m</span>"
+            "<span color='#3e4b59'> </span>"
+            "<span color='#ffb454'>⚡</span>"
+            "<span color='#aad94c'>0</span>"
             "<span color='#3e4b59'>/</span>"
-            "<span color='#aad94c' size='smaller'>43</span>"
+            "<span color='#aad94c' size='smaller'>0</span>"
             "<span color='#3e4b59'> | </span>"
+            "<span color='#3e4b59'>●</span>"
             "<span color='#aad94c'>1</span>"
             "<span color='#3e4b59'>/</span>"
             "<span color='#aad94c' size='smaller'>0</span>",
