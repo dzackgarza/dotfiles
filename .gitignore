@@ -38,6 +38,8 @@ trash/
 
 # Editor and analysis caches
 .config/Atom/Cache/
+__pycache__/
+*.pyc
 ags/control-panel/codeql-db/
 
 # Browser state (ephemeral application data)
