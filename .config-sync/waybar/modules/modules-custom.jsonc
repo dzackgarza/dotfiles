@@ -22,23 +22,23 @@
     "custom/notify": {
         "tooltip": true,
         "tooltip-format": "Left Click: Launch Notification Center\nRight Click: Do not Disturb",
-        "format": "{icon}<span foreground='#ffb454' size='xx-small' rise='6500'>{}</span>",
+        "format": "{icon}<span foreground='#ffb454' size='x-small' rise='4500'>{}</span>",
         "format-icons": {
-            "notification": "",
-            "none": "",
-            "dnd-notification": "",
-            "dnd-none": "",
-            "inhibited-notification": "",
-            "inhibited-none": "",
-            "dnd-inhibited-notification": "",
-            "dnd-inhibited-none": ""
+            "notification": "󰂚",
+            "none": "󰂚",
+            "dnd-notification": "󰂛",
+            "dnd-none": "󰂛",
+            "inhibited-notification": "󰂚",
+            "inhibited-none": "󰂚",
+            "dnd-inhibited-notification": "󰂛",
+            "dnd-inhibited-none": "󰂛"
         },
         "return-type": "json",
         "exec-if": "which swaync-client",
         "exec": "swaync-client -swb",
         "on-click": "sleep 0.1 && swaync-client -t -sw",
         "on-click-right": "swaync-client -d -sw",
-        "escape": true,
+        "escape": false,
     },
 
 
