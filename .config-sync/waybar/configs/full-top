@@ -30,6 +30,7 @@
         "memory",
         "disk",
         "battery", 
+        "custom/lid-toggle",
         // "custom/upower-battery",
         "custom/notify",
         "custom/llm-claude",
