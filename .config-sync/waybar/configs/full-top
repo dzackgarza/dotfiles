@@ -17,7 +17,7 @@
     "margin-right": 5,
 
     "modules-left": [
-        "hyprland/workspaces#preview", 
+        "custom/workspaces-compact",
         "mpris" 
     ],
 
