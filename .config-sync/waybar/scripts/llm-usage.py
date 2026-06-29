@@ -13,6 +13,7 @@ USAGE_LIMITS = "/home/dzack/gitclones/usage-limits/.venv/bin/usage-limits"
 
 # Ayu Dark palette (matches waybar colors.css).
 GREEN, YELLOW, RED, DIM = "#aad94c", "#ffb454", "#f07178", "#3e4b59"
+REGULAR_ICON, SPARK_ICON = "●", "⚡"
 
 
 def sev(pct):
@@ -69,6 +70,24 @@ def _display_rows(slug: str, rows_by_window: dict[str, dict[str, dict]]) -> tupl
     return main5h, main7d
 
 
+def _compact_item(icon: str, icon_color: str, h5: dict, d7: dict) -> tuple[str, int]:
+    c5, c7 = h5["pct_used"], d7["pct_used"]
+    worst = max(c5, c7)
+    blocked = [r for r in (h5, d7) if r["is_exhausted"]]
+
+    if blocked:
+        nearest_reset = min(blocked, key=lambda r: r["reset_at"])
+        body = f"<span color='{RED}'>{countdown(nearest_reset['reset_at'])}</span>"
+    else:
+        body = (
+            f"<span color='{sev(c5)}'>{c5}</span>"
+            f"<span color='{DIM}'>/</span>"
+            f"<span color='{sev(c7)}' size='smaller'>{c7}</span>"
+        )
+
+    return f"<span color='{icon_color}'>{icon}</span>{body}", worst
+
+
 def _snapshot_payload(slug: str, snap: dict) -> tuple[str, str, int]:
     rows_by_window = _row_lookup(snap["rows"])
     main5h = rows_by_window.get("5h", {}).get("main")
@@ -76,25 +95,12 @@ def _snapshot_payload(slug: str, snap: dict) -> tuple[str, str, int]:
     h5, d7 = _display_rows(slug, rows_by_window)
     spark5h = rows_by_window.get("5h", {}).get("spark")
     spark7d = rows_by_window.get("7d", {}).get("spark")
-    c5, c7 = h5["pct_used"], d7["pct_used"]
-    worst = max(c5, c7)
+    rendered_items = [_compact_item(REGULAR_ICON, DIM, h5, d7)]
+    if spark5h is not None and spark7d is not None:
+        rendered_items.append(_compact_item(SPARK_ICON, YELLOW, spark5h, spark7d))
 
-    # Exhausted -> show a countdown to when the displayed window unblocks
-    # (latest exhausted window's reset) instead of percentages.
-    blocked = [r for r in (h5, d7) if r["is_exhausted"]]
-    # Codex is compared across accounts; replacing exhausted main usage with
-    # Spark availability or a countdown hides which account is spent.
-    show_countdown = slug != "codex" and bool(blocked)
-
-    if blocked and show_countdown:
-        unblock = max(blocked, key=lambda r: r["reset_at"])
-        text = f"<span color='{RED}'>{countdown(unblock['reset_at'])}</span>"
-    else:
-        text = (
-            f"<span color='{sev(c5)}'>{c5}</span>"
-            f"<span color='{DIM}'>/</span>"
-            f"<span color='{sev(c7)}' size='smaller'>{c7}</span>"
-        )
+    text = f"<span color='{DIM}'> </span>".join(item[0] for item in rendered_items)
+    worst = max(item[1] for item in rendered_items)
     tip = (
         f"{snap['display_name']} - {snap.get('account') or '?'}\n"
         + _line_for_row("5h", main5h)
