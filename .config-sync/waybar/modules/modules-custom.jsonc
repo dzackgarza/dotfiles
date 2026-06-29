@@ -67,6 +67,15 @@
         "return-type": "json"
     },
 
+    "custom/workspaces-compact": {
+        "exec": "~/.config/waybar/scripts/workspaces-compact.py",
+        "return-type": "json",
+        "interval": 1,
+        "tooltip": true,
+        "on-scroll-up": "hyprctl dispatch workspace e+1",
+        "on-scroll-down": "hyprctl dispatch workspace e-1"
+    },
+
     // clipboard manager
     "custom/clipboard": {
         "format": "󰅌 {}",
