@@ -132,24 +132,6 @@ tooltip label {
   margin: 3px 0px;
 }
 
-#custom-llm-claude,
-#custom-llm-codex {
-  background-repeat: no-repeat;
-  background-position: left center;
-  background-size: 16px 16px;
-  padding-left: 20px;
-}
-
-#custom-llm-claude {
-  background-image: url("/usr/share/icons/hicolor/256x256/apps/claude-desktop.png");
-}
-
-#custom-llm-codex {
-  background-image: url("/usr/share/icons/hicolor/512x512/apps/openai-codex-desktop.png");
-  margin-left: 8px;
-  margin-right: 12px;
-}
-
 #custom-system {
   margin: 3px 10px;
   padding: 0 10px;
@@ -455,6 +437,14 @@ tooltip label {
   min-width: 42px;
   padding-left: 26px;
   padding-right: 8px;
+}
+
+#custom-llm-claude {
+  background-image: url("/usr/share/icons/hicolor/256x256/apps/claude-desktop.png");
+}
+
+#custom-llm-codex {
+  background-image: url("/usr/share/icons/hicolor/512x512/apps/openai-codex-desktop.png");
 }
 
 #tray {
