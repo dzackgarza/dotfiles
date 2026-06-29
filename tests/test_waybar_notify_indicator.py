@@ -48,14 +48,38 @@ class WaybarNotifyIndicatorTest(unittest.TestCase):
             },
         )
 
-    def test_render_payload_uses_bell_with_amber_superscript_count(self):
+    def test_render_payload_ramps_count_color_toward_amber(self):
         module = load_module()
 
         payload = module.render_payload(
             {
-                "text": "9",
+                "text": "25",
                 "alt": "notification",
-                "tooltip": "9 Notifications",
+                "tooltip": "25 Notifications",
+                "class": "notification",
+            }
+        )
+
+        self.assertEqual(
+            payload,
+            {
+                "text": (
+                    "<span foreground='#d4c650'>󰂚</span>"
+                    "<span foreground='#d4c650' size='x-small' rise='4500'>25</span>"
+                ),
+                "tooltip": "25 Notifications",
+                "class": "notification",
+            },
+        )
+
+    def test_render_payload_uses_amber_at_half_scale(self):
+        module = load_module()
+
+        payload = module.render_payload(
+            {
+                "text": "50",
+                "alt": "notification",
+                "tooltip": "50 Notifications",
                 "class": "notification",
             }
         )
@@ -65,9 +89,9 @@ class WaybarNotifyIndicatorTest(unittest.TestCase):
             {
                 "text": (
                     "<span foreground='#ffb454'>󰂚</span>"
-                    "<span foreground='#ffb454' size='x-small' rise='4500'>9</span>"
+                    "<span foreground='#ffb454' size='x-small' rise='4500'>50</span>"
                 ),
-                "tooltip": "9 Notifications",
+                "tooltip": "50 Notifications",
                 "class": "notification",
             },
         )
