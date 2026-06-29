@@ -66,18 +66,6 @@ def _display_rows(slug: str, rows_by_window: dict[str, dict[str, dict]]) -> tupl
         f"found windows={sorted(rows_by_window)}; fix usage-limits provider rows"
     )
 
-    spark5h = rows_by_window.get("5h", {}).get("spark")
-    spark7d = rows_by_window.get("7d", {}).get("spark")
-
-    use_spark = (
-        slug == "codex"
-        and (main5h["is_exhausted"] or main7d["is_exhausted"])
-        and spark5h is not None
-        and spark7d is not None
-    )
-
-    if use_spark:
-        return spark5h, spark7d
     return main5h, main7d
 
 
@@ -94,7 +82,9 @@ def _snapshot_payload(slug: str, snap: dict) -> tuple[str, str, int]:
     # Exhausted -> show a countdown to when the displayed window unblocks
     # (latest exhausted window's reset) instead of percentages.
     blocked = [r for r in (h5, d7) if r["is_exhausted"]]
-    show_countdown = bool(blocked)
+    # Codex is compared across accounts; replacing exhausted main usage with
+    # Spark availability or a countdown hides which account is spent.
+    show_countdown = slug != "codex" and bool(blocked)
 
     if blocked and show_countdown:
         unblock = max(blocked, key=lambda r: r["reset_at"])
