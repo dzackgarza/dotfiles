@@ -152,7 +152,7 @@
     },
 
     "custom/claude-usage": {
-        "format": "󰚩 ",
+        "format": "",
         "on-click": "ags toggle claude-usage"
     },
 
