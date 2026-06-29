@@ -120,6 +120,7 @@ tooltip label {
 #custom-notify,
 #battery,
 #custom-upower-battery,
+#custom-lid-toggle,
 #mpris,
 #custom-nightlight,
 #hyprland-keyboard,
@@ -199,6 +200,20 @@ tooltip label {
   background-color: transparent;
   margin-right: 0;
   font-size: 14px;
+}
+
+#custom-lid-toggle {
+  border-radius: 15px;
+  margin-right: 10px;
+  padding: 0 10px;
+}
+
+#custom-lid-toggle.hibernate {
+  color: #aad94c;
+}
+
+#custom-lid-toggle.ignore {
+  color: #ffb454;
 }
 
 @keyframes blink {
