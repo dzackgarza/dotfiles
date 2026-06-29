@@ -11,7 +11,7 @@ SWAYNC_CLIENT = Path("/bin/swaync-client")
 BELL = "󰂚"
 BELL_OFF = "󰂛"
 GREEN, YELLOW, RED = "#aad94c", "#ffb454", "#f07178"
-COLOR_STOPS = ((0, GREEN), (50, YELLOW), (100, RED))
+ACTIVE_MIN, ACTIVE_MAX = 1, 100
 
 
 def _count(text: str) -> int:
@@ -31,20 +31,13 @@ def _mix(start: str, end: str, ratio: float) -> str:
 
 
 def _severity(count: int) -> str:
-    if count <= COLOR_STOPS[0][0]:
+    if count <= 0:
         return GREEN
-    if count >= COLOR_STOPS[-1][0]:
+    if count >= ACTIVE_MAX:
         return RED
 
-    lower, upper = (
-        (COLOR_STOPS[0], COLOR_STOPS[1])
-        if count <= COLOR_STOPS[1][0]
-        else (COLOR_STOPS[1], COLOR_STOPS[2])
-    )
-    lower_count, lower_color = lower
-    upper_count, upper_color = upper
-    ratio = (count - lower_count) / (upper_count - lower_count)
-    return _mix(lower_color, upper_color, ratio)
+    ratio = (count - ACTIVE_MIN) / (ACTIVE_MAX - ACTIVE_MIN)
+    return _mix(YELLOW, RED, ratio)
 
 
 def render_payload(status: dict) -> dict:
