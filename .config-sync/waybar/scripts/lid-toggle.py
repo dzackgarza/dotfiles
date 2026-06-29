@@ -17,6 +17,10 @@ WHO = "waybar-lid-toggle"
 WHY = "Waybar lid toggle: ignore lid close"
 WHAT = "handle-lid-switch"
 STATE_DIR_OVERRIDE: Path | None = None
+MODE_LABELS = {
+    "hibernate": "⏾",
+    "ignore": "⊘",
+}
 
 
 def _assert_setup() -> None:
@@ -146,7 +150,7 @@ def _mode() -> str:
 def _payload(mode: str) -> dict[str, str]:
     next_mode = "hibernate" if mode == "ignore" else "ignore"
     return {
-        "text": f"lid:{mode}",
+        "text": MODE_LABELS[mode],
         "tooltip": f"Lid close action: {mode}\nClick to switch to {next_mode}",
         "class": mode,
     }
