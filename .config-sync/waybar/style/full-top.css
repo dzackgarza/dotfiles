@@ -419,6 +419,10 @@ tooltip label {
   color: #aad94c;
 }
 
+#custom-notify {
+  color: #9db8c1;
+}
+
 #custom-lid-toggle.ignore {
   color: #ffb454;
 }
