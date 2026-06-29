@@ -161,6 +161,14 @@
         "tooltip": true
     },
 
+    "custom/lid-toggle": {
+        "exec": "~/.config/waybar/scripts/lid-toggle.py --status",
+        "on-click": "~/.config/waybar/scripts/lid-toggle.py --toggle",
+        "return-type": "json",
+        "interval": 5,
+        "tooltip": true
+    },
+
     "custom/upower-battery": {
         "exec": "~/.config/waybar/scripts/upower-battery.py",
         "return-type": "json",
