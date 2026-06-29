@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Waybar custom module: one provider's active 5h/7d usage windows.
+"""Waybar custom module: provider active 5h/7d usage windows.
 
 Usage: llm-usage.py <provider-slug>
 Consumes the usage-limits `--json` contract and emits one waybar JSON line.
@@ -42,20 +42,12 @@ def _line_for_row(label: str, row: dict | None) -> str:
     return f"  {label:>7}: {row['pct_used']:>3}%  resets {row['time_until_reset'] or 'n/a'}"
 
 
-def _pick_active_snapshot(providers: list[dict]) -> dict | None:
-    candidates = [s for s in providers if s["status"] == "ok" and s["rows"]]
-    if not candidates:
-        return None
-
-    default_snap = next((s for s in candidates if s.get("account") == "default"), None)
-    if default_snap is not None:
-        return default_snap
-
-    ranked = [s for s in candidates if s.get("account")] or candidates
-    return max(
-        ranked,
-        key=lambda s: s.get("metadata", {}).get("last_updated", ""),
-    )
+def _active_snapshots(slug: str, providers: list[dict]) -> list[dict]:
+    return [
+        snapshot
+        for snapshot in providers
+        if snapshot["provider"] == slug and snapshot["status"] == "ok" and snapshot["rows"]
+    ]
 
 
 def _row_lookup(rows):
