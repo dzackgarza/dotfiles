@@ -27,7 +27,28 @@ def load_module():
 
 
 class WaybarNotifyIndicatorTest(unittest.TestCase):
-    def test_render_payload_uses_bell_with_superscript_count(self):
+    def test_render_payload_uses_bell_with_green_zero_count(self):
+        module = load_module()
+
+        payload = module.render_payload(
+            {
+                "text": "0",
+                "alt": "none",
+                "tooltip": "0 Notifications",
+                "class": "none",
+            }
+        )
+
+        self.assertEqual(
+            payload,
+            {
+                "text": "<span foreground='#aad94c'>󰂚</span>",
+                "tooltip": "0 Notifications",
+                "class": "none",
+            },
+        )
+
+    def test_render_payload_uses_bell_with_amber_superscript_count(self):
         module = load_module()
 
         payload = module.render_payload(
@@ -42,13 +63,40 @@ class WaybarNotifyIndicatorTest(unittest.TestCase):
         self.assertEqual(
             payload,
             {
-                "text": "󰂚<span foreground='#ffb454' size='x-small' rise='4500'>9</span>",
+                "text": (
+                    "<span foreground='#ffb454'>󰂚</span>"
+                    "<span foreground='#ffb454' size='x-small' rise='4500'>9</span>"
+                ),
                 "tooltip": "9 Notifications",
                 "class": "notification",
             },
         )
 
-    def test_render_payload_uses_slashed_bell_for_dnd_and_hides_zero_count(self):
+    def test_render_payload_uses_red_when_count_exceeds_one_hundred(self):
+        module = load_module()
+
+        payload = module.render_payload(
+            {
+                "text": "101",
+                "alt": "notification",
+                "tooltip": "101 Notifications",
+                "class": "notification",
+            }
+        )
+
+        self.assertEqual(
+            payload,
+            {
+                "text": (
+                    "<span foreground='#f07178'>󰂚</span>"
+                    "<span foreground='#f07178' size='x-small' rise='4500'>101</span>"
+                ),
+                "tooltip": "101 Notifications",
+                "class": "notification",
+            },
+        )
+
+    def test_render_payload_uses_green_slashed_bell_for_dnd_zero_count(self):
         module = load_module()
 
         payload = module.render_payload(
@@ -63,7 +111,7 @@ class WaybarNotifyIndicatorTest(unittest.TestCase):
         self.assertEqual(
             payload,
             {
-                "text": "󰂛",
+                "text": "<span foreground='#aad94c'>󰂛</span>",
                 "tooltip": "Do Not Disturb",
                 "class": "dnd-none",
             },
