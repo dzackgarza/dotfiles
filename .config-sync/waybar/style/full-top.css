@@ -410,7 +410,7 @@ tooltip label {
 #custom-llm-codex,
 #custom-claude-usage,
 #tray {
-  background: @background;
+  background-color: @background;
   opacity: 0.88;
   color: @foreground;
   border-radius: 15px;
