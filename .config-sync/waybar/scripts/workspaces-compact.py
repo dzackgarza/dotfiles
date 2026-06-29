@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Compact Hyprland workspace summary for Waybar."""
 
-import html
 import json
 import subprocess
 from pathlib import Path
