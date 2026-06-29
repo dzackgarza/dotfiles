@@ -57,38 +57,13 @@ def _row_lookup(rows):
     return by_window
 
 
-def main():
-    slug = sys.argv[1]
-    out = subprocess.run(
-        [USAGE_LIMITS, "--json", "-p", slug],
-        capture_output=True, text=True, timeout=90,
-    )
-    if out.returncode != 0:
-        print(json.dumps({"text": "err", "tooltip": out.stderr.strip(), "class": "critical"}))
-        return
-
-    data = json.loads(out.stdout)
-    # Pick the active account snapshot from potentially multiple returned accounts.
-    snap = _pick_active_snapshot(data["providers"])
-    if snap is None:
-        print(json.dumps({"text": "—", "tooltip": f"{slug}: no active account", "class": "critical"}))
-        return
-
-    rows_by_window = _row_lookup(snap["rows"])
-
+def _display_rows(slug: str, rows_by_window: dict[str, dict[str, dict]]) -> tuple[dict, dict]:
     main5h = rows_by_window.get("5h", {}).get("main")
     main7d = rows_by_window.get("7d", {}).get("main")
-    if main5h is None or main7d is None:
-        print(
-            json.dumps(
-                {
-                    "text": "—",
-                    "tooltip": f"{slug}: missing usage rows",
-                    "class": "critical",
-                }
-            )
-        )
-        return
+    assert main5h is not None and main7d is not None, (
+        f"{slug}: usage-limits provider snapshot is missing required main windows; "
+        f"found windows={sorted(rows_by_window)}; fix usage-limits provider rows"
+    )
 
     spark5h = rows_by_window.get("5h", {}).get("spark")
     spark7d = rows_by_window.get("7d", {}).get("spark")
@@ -101,12 +76,17 @@ def main():
     )
 
     if use_spark:
-        h5 = spark5h
-        d7 = spark7d
-    else:
-        h5 = main5h
-        d7 = main7d
+        return spark5h, spark7d
+    return main5h, main7d
 
+
+def _snapshot_payload(slug: str, snap: dict) -> tuple[str, str, int]:
+    rows_by_window = _row_lookup(snap["rows"])
+    main5h = rows_by_window.get("5h", {}).get("main")
+    main7d = rows_by_window.get("7d", {}).get("main")
+    h5, d7 = _display_rows(slug, rows_by_window)
+    spark5h = rows_by_window.get("5h", {}).get("spark")
+    spark7d = rows_by_window.get("7d", {}).get("spark")
     c5, c7 = h5["pct_used"], d7["pct_used"]
     worst = max(c5, c7)
 
@@ -125,7 +105,7 @@ def main():
             f"<span color='{sev(c7)}' size='smaller'>{c7}</span>"
         )
     tip = (
-        f"{snap['display_name']} — {snap.get('account') or '?'}\n"
+        f"{snap['display_name']} - {snap.get('account') or '?'}\n"
         + _line_for_row("5h", main5h)
         + "\n"
         + _line_for_row("7d", main7d)
@@ -134,8 +114,36 @@ def main():
         + "\n"
         + _line_for_row("Spark 7d", spark7d)
     )
+    return text, tip, worst
+
+
+def render_waybar_payload(slug: str, data: dict) -> dict:
+    snapshots = _active_snapshots(slug, data["providers"])
+    if not snapshots:
+        return {"text": "-", "tooltip": f"{slug}: no active account", "class": "critical"}
+
+    rendered = [_snapshot_payload(slug, snapshot) for snapshot in snapshots]
+    worst = max(row[2] for row in rendered)
     cls = "critical" if worst >= 100 else "warning" if worst >= 80 else ""
-    print(json.dumps({"text": text, "tooltip": tip, "class": cls}))
+    return {
+        "text": f"<span color='{DIM}'> | </span>".join(row[0] for row in rendered),
+        "tooltip": "\n\n".join(row[1] for row in rendered),
+        "class": cls,
+    }
+
+
+def main():
+    slug = sys.argv[1]
+    out = subprocess.run(
+        [USAGE_LIMITS, "--json", "-p", slug],
+        capture_output=True, text=True, timeout=90,
+    )
+    if out.returncode != 0:
+        print(json.dumps({"text": "err", "tooltip": out.stderr.strip(), "class": "critical"}))
+        return
+
+    data = json.loads(out.stdout)
+    print(json.dumps(render_waybar_payload(slug, data)))
 
 
 if __name__ == "__main__":
