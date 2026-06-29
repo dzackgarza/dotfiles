@@ -1,3 +1,4 @@
+import copy
 import importlib.util
 import sys
 import unittest
@@ -129,6 +130,32 @@ class WaybarLlmUsageTest(unittest.TestCase):
             "  Spark 7d:  n/a  resets n/a",
         )
         self.assertEqual(payload["class"], "")
+
+    def test_codex_payload_keeps_main_usage_when_spark_rows_exist_after_exhaustion(self):
+        module = load_module()
+        data = copy.deepcopy(CODEX_TWO_ACCOUNT_RESPONSE)
+        first_account_rows = data["providers"][0]["rows"]
+        first_account_rows[0]["pct_used"] = 100
+        first_account_rows[0]["is_exhausted"] = True
+        first_account_rows[0]["time_until_reset"] = "in 2h 56m"
+        first_account_rows[1]["pct_used"] = 43
+        first_account_rows[1]["time_until_reset"] = "in 6d 16h"
+
+        payload = module.render_waybar_payload("codex", data)
+
+        self.assertEqual(
+            payload["text"],
+            "<span color='#f07178'>100</span>"
+            "<span color='#3e4b59'>/</span>"
+            "<span color='#aad94c' size='smaller'>43</span>"
+            "<span color='#3e4b59'> | </span>"
+            "<span color='#aad94c'>1</span>"
+            "<span color='#3e4b59'>/</span>"
+            "<span color='#aad94c' size='smaller'>0</span>",
+        )
+        self.assertIn("       5h: 100%  resets in 2h 56m", payload["tooltip"])
+        self.assertIn("  Spark 5h:   0%  resets in 4h 59m", payload["tooltip"])
+        self.assertEqual(payload["class"], "critical")
 
 
 if __name__ == "__main__":
