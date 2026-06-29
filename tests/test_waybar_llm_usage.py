@@ -2,6 +2,7 @@ import copy
 import importlib.util
 import sys
 import unittest
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -100,6 +101,17 @@ CODEX_TWO_ACCOUNT_RESPONSE = {
 
 
 class WaybarLlmUsageTest(unittest.TestCase):
+    def test_countdown_formats_reset_as_decimal_hours(self):
+        module = load_module()
+
+        self.assertEqual(
+            module.countdown(
+                "2026-06-29T10:56:00Z",
+                now=datetime(2026, 6, 29, 8, 0, tzinfo=timezone.utc),
+            ),
+            "2.9h",
+        )
+
     def test_codex_payload_displays_each_account_from_usage_limits_contract(self):
         module = load_module()
 
@@ -140,7 +152,7 @@ class WaybarLlmUsageTest(unittest.TestCase):
 
     def test_codex_payload_renders_regular_countdown_and_spark_item_when_exhausted(self):
         module = load_module()
-        module.countdown = lambda reset_at: "2h56m"
+        module.countdown = lambda reset_at: "2.9h"
         data = copy.deepcopy(CODEX_TWO_ACCOUNT_RESPONSE)
         first_account_rows = data["providers"][0]["rows"]
         first_account_rows[0]["pct_used"] = 100
@@ -154,7 +166,7 @@ class WaybarLlmUsageTest(unittest.TestCase):
         self.assertEqual(
             payload["text"],
             "<span color='#3e4b59'>●</span>"
-            "<span color='#f07178'>2h56m</span>"
+            "<span color='#f07178'>2.9h</span>"
             "<span color='#3e4b59'> </span>"
             "<span color='#ffb454'>⚡</span>"
             "<span color='#aad94c'>0</span>"
