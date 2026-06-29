@@ -48,7 +48,7 @@ class WaybarLidToggleTest(unittest.TestCase):
         self.assertEqual(
             self._payload(state_dir, "--status"),
             {
-                "text": "lid:hibernate",
+                "text": "⏾",
                 "tooltip": "Lid close action: hibernate\nClick to switch to ignore",
                 "class": "hibernate",
             },
@@ -57,7 +57,7 @@ class WaybarLidToggleTest(unittest.TestCase):
         self.assertEqual(
             self._payload(state_dir, "--toggle"),
             {
-                "text": "lid:ignore",
+                "text": "⊘",
                 "tooltip": "Lid close action: ignore\nClick to switch to hibernate",
                 "class": "ignore",
             },
@@ -81,7 +81,7 @@ class WaybarLidToggleTest(unittest.TestCase):
         self.assertEqual(
             self._payload(state_dir, "--toggle"),
             {
-                "text": "lid:hibernate",
+                "text": "⏾",
                 "tooltip": "Lid close action: hibernate\nClick to switch to ignore",
                 "class": "hibernate",
             },
