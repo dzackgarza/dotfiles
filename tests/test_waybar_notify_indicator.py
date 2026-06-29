@@ -48,14 +48,14 @@ class WaybarNotifyIndicatorTest(unittest.TestCase):
             },
         )
 
-    def test_render_payload_ramps_count_color_toward_amber(self):
+    def test_render_payload_uses_amber_for_first_active_notification(self):
         module = load_module()
 
         payload = module.render_payload(
             {
-                "text": "25",
+                "text": "1",
                 "alt": "notification",
-                "tooltip": "25 Notifications",
+                "tooltip": "1 Notifications",
                 "class": "notification",
             }
         )
@@ -64,15 +64,15 @@ class WaybarNotifyIndicatorTest(unittest.TestCase):
             payload,
             {
                 "text": (
-                    "<span foreground='#d4c650'>󰂚</span>"
-                    "<span foreground='#d4c650' size='x-small' rise='4500'>25</span>"
+                    "<span foreground='#ffb454'>󰂚</span>"
+                    "<span foreground='#ffb454' size='x-small' rise='4500'>1</span>"
                 ),
-                "tooltip": "25 Notifications",
+                "tooltip": "1 Notifications",
                 "class": "notification",
             },
         )
 
-    def test_render_payload_uses_amber_at_half_scale(self):
+    def test_render_payload_progresses_active_count_toward_red(self):
         module = load_module()
 
         payload = module.render_payload(
@@ -88,8 +88,8 @@ class WaybarNotifyIndicatorTest(unittest.TestCase):
             payload,
             {
                 "text": (
-                    "<span foreground='#ffb454'>󰂚</span>"
-                    "<span foreground='#ffb454' size='x-small' rise='4500'>50</span>"
+                    "<span foreground='#f79265'>󰂚</span>"
+                    "<span foreground='#f79265' size='x-small' rise='4500'>50</span>"
                 ),
                 "tooltip": "50 Notifications",
                 "class": "notification",
