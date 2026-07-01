@@ -5,9 +5,12 @@ Usage: llm-usage.py <provider-slug>
 Consumes the usage-limits `--json` contract and emits one waybar JSON line.
 """
 import json
+import os
 import subprocess
 import sys
+import time
 from datetime import datetime, timezone
+from pathlib import Path
 
 USAGE_LIMITS = "/home/dzack/gitclones/usage-limits/.venv/bin/usage-limits"
 
@@ -15,17 +18,30 @@ USAGE_LIMITS = "/home/dzack/gitclones/usage-limits/.venv/bin/usage-limits"
 GREEN, YELLOW, RED, DIM = "#aad94c", "#ffb454", "#f07178", "#3e4b59"
 REGULAR_ICON, SPARK_ICON = "●", "⚡"
 
+# Fresh-window "touch": call the model with a trivial prompt so the rolling 5h
+# window starts ticking the moment it opens. ponytail: 4.5h cooldown assumes 5h
+# windows — bump if the window length changes.
+STATE_DIR = Path(os.environ.get("XDG_CACHE_HOME", os.path.expanduser("~/.cache"))) / "waybar-llm-usage"
+TOUCH_COOLDOWN = 4.5 * 3600
+TOUCH_TIMEOUT = "45"  # seconds, passed to timeout(1)
+TOUCH_CMDS = {
+    "claude": ["claude", "-p", "Reply with exactly: Ok"],
+    "codex": ["codex", "exec", "--skip-git-repo-check", "-s", "read-only", "Reply with exactly: Ok"],
+}
+
 
 def sev(pct):
     return RED if pct >= 100 else YELLOW if pct >= 80 else GREEN
 
 
 def countdown(reset_at, now=None):
-    """Reset timestamp -> decimal hours, rounded to the nearest tenth."""
+    """Reset timestamp -> compact remaining time; minutes when <= 1h, else tenths of an hour."""
     dt = datetime.fromisoformat(reset_at.replace("Z", "+00:00"))
     current = now or datetime.now(timezone.utc)
-    hours = max(0, (dt - current).total_seconds() / 3600)
-    return f"{hours:.1f}h"
+    seconds = max(0, (dt - current).total_seconds())
+    if seconds <= 3600:
+        return f"{round(seconds / 60)}m"
+    return f"{seconds / 3600:.1f}h"
 
 
 def _window_label(row):
