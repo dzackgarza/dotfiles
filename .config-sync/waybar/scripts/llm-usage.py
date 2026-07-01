@@ -143,6 +143,40 @@ def render_waybar_payload(slug: str, data: dict) -> dict:
     }
 
 
+def _fresh_5h_window(slug: str, data: dict) -> bool:
+    """A main 5h window is open, not exhausted, and at 0% -- i.e. just reset/untouched."""
+    for snap in _active_snapshots(slug, data["providers"]):
+        h5 = _row_lookup(snap["rows"]).get("5h", {}).get("main")
+        if h5 and not h5["is_exhausted"] and h5["pct_used"] == 0:
+            return True
+    return False
+
+
+def maybe_touch_fresh_window(slug: str, data: dict, now=None) -> None:
+    """On a freshly reset 5h window, notify and fire a trivial model call to start the timer."""
+    cmd = TOUCH_CMDS.get(slug)
+    if cmd is None or not _fresh_5h_window(slug, data):
+        return
+
+    STATE_DIR.mkdir(parents=True, exist_ok=True)
+    marker = STATE_DIR / f"{slug}.touched"
+    current = now if now is not None else time.time()
+    try:
+        if current - marker.stat().st_mtime < TOUCH_COOLDOWN:
+            return  # already touched this window
+    except FileNotFoundError:
+        pass
+    marker.touch()
+
+    subprocess.Popen(["notify-send", "LLM window reset", f"Touching {slug} to start the 5h timer"])
+    # Detached + hard timeout so a hung harness never blocks the waybar poll.
+    subprocess.Popen(
+        ["timeout", TOUCH_TIMEOUT, *cmd],
+        stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+        start_new_session=True,
+    )
+
+
 def main():
     slug = sys.argv[1]
     out = subprocess.run(
@@ -154,6 +188,7 @@ def main():
         return
 
     data = json.loads(out.stdout)
+    maybe_touch_fresh_window(slug, data)
     print(json.dumps(render_waybar_payload(slug, data)))
 
 
