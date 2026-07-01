@@ -116,16 +116,15 @@ def _snapshot_payload(slug: str, snap: dict) -> tuple[str, str, int]:
 
     text = f"<span color='{DIM}'> </span>".join(item[0] for item in rendered_items)
     worst = max(item[1] for item in rendered_items)
-    tip = (
-        f"{snap['display_name']} - {snap.get('account') or '?'}\n"
-        + _line_for_row("5h", main5h)
-        + "\n"
-        + _line_for_row("7d", main7d)
-        + "\n"
-        + _line_for_row("Spark 5h", spark5h)
-        + "\n"
-        + _line_for_row("Spark 7d", spark7d)
-    )
+    lines = [
+        f"{snap['display_name']} - {snap.get('account') or '?'}",
+        _line_for_row("5h", main5h),
+        _line_for_row("7d", main7d),
+    ]
+    if spark5h is not None or spark7d is not None:
+        lines.append(_line_for_row("Spark 5h", spark5h))
+        lines.append(_line_for_row("Spark 7d", spark7d))
+    tip = "\n".join(lines)
     return text, tip, worst
 
 
