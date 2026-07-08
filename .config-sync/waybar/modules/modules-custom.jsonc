@@ -171,5 +171,13 @@
         "return-type": "json",
         "interval": 5,
         "format": "{}"
+    },
+
+    "custom/kbd-backlight": {
+        "exec": "~/.config/waybar/scripts/kbd-backlight.sh",
+        "on-click": "~/.config/waybar/scripts/kbd-backlight.sh --toggle",
+        "return-type": "json",
+        "interval": 5,
+        "tooltip": true
     }
 }
