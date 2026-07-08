@@ -429,6 +429,14 @@ tooltip label {
   color: #ffb454;
 }
 
+#custom-kbd-backlight.on {
+  color: #aad94c;
+}
+
+#custom-kbd-backlight.off {
+  color: #5a6669;
+}
+
 #custom-lid-toggle {
   min-width: 28px;
   padding: 0 6px;
