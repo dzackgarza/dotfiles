@@ -433,6 +433,10 @@ tooltip label {
   color: #aad94c;
 }
 
+#custom-kbd-backlight.low {
+  color: #ffb454;
+}
+
 #custom-kbd-backlight.off {
   color: #5a6669;
 }
