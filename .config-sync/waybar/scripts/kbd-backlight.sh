@@ -9,14 +9,22 @@ if [ "$1" = "--toggle" ]; then
 fi
 
 CUR=$(brightnessctl -d "$DEVICE" get 2>/dev/null || echo 0)
-if [ "$CUR" -gt 0 ]; then
-    ICON="󰌌"
-    CLASS="on"
-    TOOLTIP="Keyboard backlight: $CUR/$MAX"
-else
-    ICON="󰌋"
-    CLASS="off"
-    TOOLTIP="Keyboard backlight: OFF"
-fi
+case "$CUR" in
+    0)
+        ICON="󰌋"
+        CLASS="off"
+        TOOLTIP="Keyboard backlight: OFF"
+        ;;
+    "$MAX")
+        ICON="󰌌"
+        CLASS="on"
+        TOOLTIP="Keyboard backlight: $CUR/$MAX"
+        ;;
+    *)
+        ICON="󰌌"
+        CLASS="low"
+        TOOLTIP="Keyboard backlight: $CUR/$MAX"
+        ;;
+esac
 
 echo "{\"text\": \"$ICON\", \"class\": \"$CLASS\", \"tooltip\": \"$TOOLTIP\"}"
