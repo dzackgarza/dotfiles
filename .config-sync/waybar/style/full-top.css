@@ -1,7 +1,8 @@
 * {
   border: none;
   border-radius: 0;
-  font-family: FiraCode, Roboto, Helvetica, Arial, sans-serif, "Font Awesome 7 Free";
+  font-family:
+    FiraCode, Roboto, Helvetica, Arial, sans-serif, "Font Awesome 7 Free";
   font-size: 14px;
   min-height: 0;
 }
@@ -387,6 +388,7 @@ tooltip label {
 #disk,
 #battery,
 #custom-lid-toggle,
+#custom-kbd-backlight,
 #custom-notify,
 #custom-llm-claude,
 #custom-llm-codex,
