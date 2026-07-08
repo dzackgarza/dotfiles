@@ -4,18 +4,15 @@ MAX=$(brightnessctl -d "$DEVICE" max 2>/dev/null || echo 2)
 
 if [ "$1" = "--toggle" ]; then
     CUR=$(brightnessctl -d "$DEVICE" get 2>/dev/null || echo 0)
-    if [ "$CUR" -gt 0 ]; then
-        brightnessctl -d "$DEVICE" set 0 -q
-    else
-        brightnessctl -d "$DEVICE" set "$MAX" -q
-    fi
+    NEXT=$(( (CUR + 1) % (MAX + 1) ))
+    brightnessctl -d "$DEVICE" set "$NEXT" -q
 fi
 
 CUR=$(brightnessctl -d "$DEVICE" get 2>/dev/null || echo 0)
 if [ "$CUR" -gt 0 ]; then
     ICON="󰌌"
     CLASS="on"
-    TOOLTIP="Keyboard backlight: ON ($CUR/$MAX)"
+    TOOLTIP="Keyboard backlight: $CUR/$MAX"
 else
     ICON="󰌋"
     CLASS="off"
