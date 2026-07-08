@@ -417,7 +417,8 @@ tooltip label {
 }
 
 #battery,
-#custom-lid-toggle.hibernate {
+#custom-lid-toggle.hibernate,
+#custom-kbd-backlight.on {
   color: #aad94c;
 }
 
@@ -425,14 +426,7 @@ tooltip label {
   color: #9db8c1;
 }
 
-#custom-lid-toggle.ignore {
-  color: #ffb454;
-}
-
-#custom-kbd-backlight.on {
-  color: #aad94c;
-}
-
+#custom-lid-toggle.ignore,
 #custom-kbd-backlight.low {
   color: #ffb454;
 }
