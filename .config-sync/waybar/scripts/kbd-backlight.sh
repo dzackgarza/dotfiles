@@ -13,11 +13,11 @@ fi
 
 CUR=$(brightnessctl -d "$DEVICE" get 2>/dev/null || echo 0)
 if [ "$CUR" -gt 0 ]; then
-    ICON="󰌐"
+    ICON="󰌌"
     CLASS="on"
     TOOLTIP="Keyboard backlight: ON ($CUR/$MAX)"
 else
-    ICON="󰌏"
+    ICON="󰌋"
     CLASS="off"
     TOOLTIP="Keyboard backlight: OFF"
 fi
