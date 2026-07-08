@@ -31,6 +31,7 @@
         "disk",
         "battery", 
         "custom/lid-toggle",
+        "custom/kbd-backlight",
         // "custom/upower-battery",
         "custom/notify",
         "custom/llm-claude",
