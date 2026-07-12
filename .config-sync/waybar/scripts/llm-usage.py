@@ -74,10 +74,10 @@ def _row_lookup(rows):
     return by_window
 
 
-def _display_rows(slug: str, rows_by_window: dict[str, dict[str, dict]]) -> tuple[dict, dict]:
+def _display_rows(slug: str, rows_by_window: dict[str, dict[str, dict]]) -> tuple[dict | None, dict | None]:
     main5h = rows_by_window.get("5h", {}).get("main")
     main7d = rows_by_window.get("7d", {}).get("main")
-    assert main5h is not None and main7d is not None, (
+    assert main5h is not None or main7d is not None, (
         f"{slug}: usage-limits provider snapshot is missing required main windows; "
         f"found windows={sorted(rows_by_window)}; fix usage-limits provider rows"
     )
@@ -85,20 +85,31 @@ def _display_rows(slug: str, rows_by_window: dict[str, dict[str, dict]]) -> tupl
     return main5h, main7d
 
 
-def _compact_item(icon: str, icon_color: str, h5: dict, d7: dict) -> tuple[str, int]:
-    c5, c7 = h5["pct_used"], d7["pct_used"]
-    worst = max(c5, c7)
-    blocked = [r for r in (h5, d7) if r["is_exhausted"]]
+def _compact_item(icon: str, icon_color: str, h5: dict | None, d7: dict | None) -> tuple[str, int]:
+    if h5 is None and d7 is None:
+        return f"<span color='{icon_color}'>{icon}</span><span color='{DIM}'>n/a</span>", 0
+
+    blocked = [r for r in (h5, d7) if r is not None and r["is_exhausted"]]
 
     if blocked:
         nearest_reset = min(blocked, key=lambda r: r["reset_at"])
         body = f"<span color='{RED}'>{countdown(nearest_reset['reset_at'])}</span>"
+        worst = 100
     else:
-        body = (
-            f"<span color='{sev(c5)}'>{c5}</span>"
-            f"<span color='{DIM}'>/</span>"
-            f"<span color='{sev(c7)}' size='smaller'>{c7}</span>"
-        )
+        parts = []
+        worst = 0
+        if h5 is not None:
+            c5 = h5["pct_used"]
+            parts.append(f"<span color='{sev(c5)}'>{c5}</span>")
+            worst = max(worst, c5)
+        if d7 is not None:
+            c7 = d7["pct_used"]
+            if h5 is not None:
+                parts.append(f"<span color='{sev(c7)}' size='smaller'>{c7}</span>")
+            else:
+                parts.append(f"<span color='{sev(c7)}'>{c7}</span>")
+            worst = max(worst, c7)
+        body = f"<span color='{DIM}'>/</span>".join(parts)
 
     return f"<span color='{icon_color}'>{icon}</span>{body}", worst
 
@@ -111,7 +122,7 @@ def _snapshot_payload(slug: str, snap: dict) -> tuple[str, str, int]:
     spark5h = rows_by_window.get("5h", {}).get("spark")
     spark7d = rows_by_window.get("7d", {}).get("spark")
     rendered_items = [_compact_item(REGULAR_ICON, DIM, h5, d7)]
-    if spark5h is not None and spark7d is not None:
+    if spark5h is not None or spark7d is not None:
         rendered_items.append(_compact_item(SPARK_ICON, YELLOW, spark5h, spark7d))
 
     text = f"<span color='{DIM}'> </span>".join(item[0] for item in rendered_items)
