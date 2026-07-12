@@ -67,29 +67,11 @@ def _active_snapshots(slug: str, providers: list[dict]) -> list[dict]:
     return sorted(snapshots, key=lambda snapshot: snapshot.get("account") or snapshot["display_name"])
 
 
-def _row_lookup(rows):
-    by_window: dict[str, dict[str, dict]] = {}
-    for row in rows:
-        by_window.setdefault(_window_label(row), {})["spark" if _is_spark(row) else "main"] = row
-    return by_window
-
-
-def _display_rows(slug: str, rows_by_window: dict[str, dict[str, dict]]) -> tuple[dict | None, dict | None]:
-    main5h = rows_by_window.get("5h", {}).get("main")
-    main7d = rows_by_window.get("7d", {}).get("main")
-    assert main5h is not None or main7d is not None, (
-        f"{slug}: usage-limits provider snapshot is missing required main windows; "
-        f"found windows={sorted(rows_by_window)}; fix usage-limits provider rows"
-    )
-
-    return main5h, main7d
-
-
-def _compact_item(icon: str, icon_color: str, h5: dict | None, d7: dict | None) -> tuple[str, int]:
-    if h5 is None and d7 is None:
+def _compact_item(icon: str, icon_color: str, rows: list[dict]) -> tuple[str, int]:
+    if not rows:
         return f"<span color='{icon_color}'>{icon}</span><span color='{DIM}'>n/a</span>", 0
 
-    blocked = [r for r in (h5, d7) if r is not None and r["is_exhausted"]]
+    blocked = [r for r in rows if r["is_exhausted"]]
 
     if blocked:
         nearest_reset = min(blocked, key=lambda r: r["reset_at"])
@@ -98,43 +80,32 @@ def _compact_item(icon: str, icon_color: str, h5: dict | None, d7: dict | None) 
     else:
         parts = []
         worst = 0
-        if h5 is not None:
-            c5 = h5["pct_used"]
-            parts.append(f"<span color='{sev(c5)}'>{c5}</span>")
-            worst = max(worst, c5)
-        if d7 is not None:
-            c7 = d7["pct_used"]
-            if h5 is not None:
-                parts.append(f"<span color='{sev(c7)}' size='smaller'>{c7}</span>")
+        for i, r in enumerate(rows):
+            pct = r["pct_used"]
+            if i == 0:
+                parts.append(f"<span color='{sev(pct)}'>{pct}</span>")
             else:
-                parts.append(f"<span color='{sev(c7)}'>{c7}</span>")
-            worst = max(worst, c7)
+                parts.append(f"<span color='{sev(pct)}' size='smaller'>{pct}</span>")
+            worst = max(worst, pct)
         body = f"<span color='{DIM}'>/</span>".join(parts)
 
     return f"<span color='{icon_color}'>{icon}</span>{body}", worst
 
 
 def _snapshot_payload(slug: str, snap: dict) -> tuple[str, str, int]:
-    rows_by_window = _row_lookup(snap["rows"])
-    main5h = rows_by_window.get("5h", {}).get("main")
-    main7d = rows_by_window.get("7d", {}).get("main")
-    h5, d7 = _display_rows(slug, rows_by_window)
-    spark5h = rows_by_window.get("5h", {}).get("spark")
-    spark7d = rows_by_window.get("7d", {}).get("spark")
-    rendered_items = [_compact_item(REGULAR_ICON, DIM, h5, d7)]
-    if spark5h is not None or spark7d is not None:
-        rendered_items.append(_compact_item(SPARK_ICON, YELLOW, spark5h, spark7d))
+    main_rows = [r for r in snap["rows"] if not _is_spark(r)]
+    spark_rows = [r for r in snap["rows"] if _is_spark(r)]
+
+    rendered_items = [_compact_item(REGULAR_ICON, DIM, main_rows)]
+    if spark_rows:
+        rendered_items.append(_compact_item(SPARK_ICON, YELLOW, spark_rows))
 
     text = f"<span color='{DIM}'> </span>".join(item[0] for item in rendered_items)
     worst = max(item[1] for item in rendered_items)
-    lines = [
-        f"{snap['display_name']} - {snap.get('account') or '?'}",
-        _line_for_row("5h", main5h),
-        _line_for_row("7d", main7d),
-    ]
-    if spark5h is not None or spark7d is not None:
-        lines.append(_line_for_row("Spark 5h", spark5h))
-        lines.append(_line_for_row("Spark 7d", spark7d))
+
+    lines = [f"{snap['display_name']} - {snap.get('account') or '?'}"]
+    for r in snap["rows"]:
+        lines.append(f"  {r['identifier']:>15}: {r['pct_used']:>3}%  resets {r['time_until_reset'] or 'n/a'}")
     tip = "\n".join(lines)
     return text, tip, worst
 
@@ -154,20 +125,21 @@ def render_waybar_payload(slug: str, data: dict) -> dict:
     }
 
 
-def _fresh_5h_window(slug: str, data: dict) -> bool:
-    """A main 5h window is open, not exhausted, and at 0% -- i.e. just reset/untouched."""
+def _fresh_window_ready(slug: str, data: dict) -> bool:
+    """A main window is open, not exhausted, and at 0% -- i.e. just reset/untouched."""
     for snap in _active_snapshots(slug, data["providers"]):
-        h5 = _row_lookup(snap["rows"]).get("5h", {}).get("main")
-        if h5 and not h5["is_exhausted"] and h5["pct_used"] == 0:
-            return True
+        for r in snap["rows"]:
+            if not _is_spark(r) and not r["is_exhausted"] and r["pct_used"] == 0:
+                return True
     return False
 
 
 def maybe_touch_fresh_window(slug: str, data: dict, now=None) -> None:
-    """On a freshly reset 5h window, notify and fire a trivial model call to start the timer."""
+    """On a freshly reset window, notify and fire a trivial model call to start the timer."""
     cmd = TOUCH_CMDS.get(slug)
-    if cmd is None or not _fresh_5h_window(slug, data):
+    if cmd is None or not _fresh_window_ready(slug, data):
         return
+
 
     STATE_DIR.mkdir(parents=True, exist_ok=True)
     marker = STATE_DIR / f"{slug}.touched"
