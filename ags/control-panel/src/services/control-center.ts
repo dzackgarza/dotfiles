@@ -45,7 +45,7 @@ const logger = createLogger(["ags", "control-center"])
 const HOME: string = (GLib as { get_home_dir: () => string }).get_home_dir()
 const HYPR_SCRIPTS = `${HOME}/.config/hypr/scripts`
 const VOLUME_SCRIPT = `${HYPR_SCRIPTS}/volumecontrol.sh`
-const UPDATE_SCRIPT = `${HYPR_SCRIPTS}/systemupdate.sh`
+const UPDATE_STATE_PATH = `${GLib.get_user_state_dir()}/ags/package-updates.json`
 const POWER_SCRIPT = `${HYPR_SCRIPTS}/power.sh`
 
 export type PowerProfile = "power-saver" | "balanced" | "performance"
@@ -706,35 +706,23 @@ function splitAntigravityProviders(c: UsageCollection): UsageCollection {
 }
 
 async function readUpdatesState(): Promise<InfoTileState> {
-  let result: string
+  let parsed: unknown
   try {
-    result = await Promise.race([
-      execAsync([UPDATE_SCRIPT, "--check"]),
-      new Promise<string>((_, reject) =>
-        setTimeout(
-          () => reject(new Error("Update check timed out after 15s")),
-          15_000,
-        ),
-      ),
-    ])
+    parsed = JSON.parse(readFile(UPDATE_STATE_PATH))
   } catch (error) {
-    // Network timeout or script failure — return unavailable state, not an error
+    // The timer owns package-manager work; AGS only reads its last snapshot.
     const msg = error instanceof Error ? error.message : String(error)
-    logger.warn`Update check: ${msg}`
+    logger.warn`Update snapshot unavailable: ${msg}`
     return {
-      line1: "Update check unavailable",
-      line2: formatTimestamp(new Date()),
+      line1: "Update status unavailable",
+      line2: "Never checked",
       detail: msg,
       error: "",
     }
   }
-  const output = result.trim()
-
-  // Strict JSON parsing with clear error messages
-  const parsed: unknown = JSON.parse(output)
 
   if (!parsed || typeof parsed !== "object") {
-    throw new Error("Update script JSON is not an object")
+    throw new Error("Update snapshot is not an object")
   }
 
   const data = parsed as Record<string, unknown>
@@ -742,7 +730,12 @@ async function readUpdatesState(): Promise<InfoTileState> {
   const tooltip = cleanTooltip(
     typeof data.tooltip === "string" ? data.tooltip : "",
   )
-  const checkTime = formatTimestamp(new Date())
+  const checkedAt =
+    typeof data.checked_at === "string" ? new Date(data.checked_at) : null
+  const checkTime =
+    checkedAt && !Number.isNaN(checkedAt.getTime())
+      ? formatTimestamp(checkedAt)
+      : "Unknown"
 
   const count = parseLeadingCount(text)
 
@@ -1050,7 +1043,7 @@ function setupStandardPolls(
       detail: "Waiting for first poll",
       error: "",
     },
-    intervalMs: 120000,
+    intervalMs: 0, // no background polling — refreshed from the snapshot on panel open
     load: readUpdatesState,
     onError: (error) => infoError("Updates", error),
   })
@@ -1270,6 +1263,11 @@ function createControlCenterService(): ControlCenterService {
     diskPoll,
   } = stdPolls
 
+  const refreshUpdates = () => {
+    void updatesPoll.refresh()
+    return true
+  }
+
   const {
     claudeUsageDataPoll,
     volumePoll,
@@ -1346,14 +1344,13 @@ function createControlCenterService(): ControlCenterService {
   // Start polling for all state
   const startPollingService = () => {
     const logger = createLogger(["ags", "control-center"])
-    logger.info`Starting continuous polling of all 14 system states [SERVICE] (startPollingService)`
+    logger.info`Starting continuous polling of 13 live system states [SERVICE] (startPollingService)`
     bluetoothPoll.startPolling()
     wifiPoll.startPolling()
     powerProfilePoll.startPolling()
     appearancePoll.startPolling()
     silentPoll.startPolling()
     micPoll.startPolling()
-    updatesPoll.startPolling()
     notificationsPoll.startPolling()
     cpuPoll.startPolling()
     memoryPoll.startPolling()
@@ -1362,7 +1359,7 @@ function createControlCenterService(): ControlCenterService {
     volumePoll.startPolling()
     brightnessPoll.startPolling()
     batteryPoll.startPolling()
-    logger.info`Polling started for all 14 system states [SERVICE] (startPollingService)`
+    logger.info`Polling started for 13 live system states [SERVICE] (startPollingService)`
     return true
   }
 
@@ -1546,6 +1543,7 @@ function createControlCenterService(): ControlCenterService {
     actionError,
     initializeService,
     startPollingService,
+    refreshUpdates,
     refreshUsage,
     suppressVolumeDrag,
     suppressBrightnessDrag,

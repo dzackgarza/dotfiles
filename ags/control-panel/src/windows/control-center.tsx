@@ -494,7 +494,10 @@ export function ControlCenterWindow() {
               self.visible = false
               return
             }
-            if (self.visible) control.refreshUsage()
+            if (self.visible) {
+              control.refreshUpdates()
+              control.refreshUsage()
+            }
             catcher.visible = self.visible
           })
           self.connect("destroy", () => catcher.destroy())
