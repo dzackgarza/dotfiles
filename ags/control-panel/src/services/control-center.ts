@@ -915,6 +915,7 @@ export type ControlCenterService = {
   actionError: Accessor<string>
   initializeService: () => Promise<boolean>
   startPollingService: () => void
+  refreshUpdates: () => boolean
   refreshUsage: () => void
   suppressVolumeDrag: (suppress: boolean) => void
   suppressBrightnessDrag: (suppress: boolean) => void
