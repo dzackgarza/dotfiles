@@ -32,3 +32,6 @@ export BIBINPUTS=".:$HOME/.pandoc/bib//:"
 
 # Zotero global bibliography
 export ZOTERO_GLOBAL_BIB="$HOME/zotero_global.bib"
+
+# Lean 4 Skills — cameronfreer/lean4-skills wrappers (lean4-skills-*)
+export PATH="$HOME/.local/share/lean4-skills/plugins/lean4/bin:${PATH}"
