@@ -456,7 +456,7 @@ tooltip label {
 }
 
 #custom-llm-codex {
-  background-image: url("/usr/share/icons/hicolor/512x512/apps/openai-codex-desktop.png");
+  background-image: url("/usr/share/pixmaps/chatgpt.png");
 }
 
 #tray {
