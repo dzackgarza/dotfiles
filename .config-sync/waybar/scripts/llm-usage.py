@@ -67,8 +67,9 @@ def _active_snapshots(slug: str, providers: list[dict]) -> list[dict]:
 
 
 def _compact_item(icon: str, icon_color: str, rows: list[dict]) -> tuple[str, int]:
+    prefix = f"<span color='{icon_color}'>{icon}</span>" if icon else ""
     if not rows:
-        return f"<span color='{icon_color}'>{icon}</span><span color='{DIM}'>n/a</span>", 0
+        return f"{prefix}<span color='{DIM}'>n/a</span>", 0
 
     blocked = [r for r in rows if r["is_exhausted"]]
 
@@ -88,7 +89,7 @@ def _compact_item(icon: str, icon_color: str, rows: list[dict]) -> tuple[str, in
             worst = max(worst, pct)
         body = f"<span color='{DIM}'>/</span>".join(parts)
 
-    return f"<span color='{icon_color}'>{icon}</span>{body}", worst
+    return f"{prefix}{body}", worst
 
 
 def _snapshot_payload(slug: str, snap: dict) -> tuple[str, str, int]:
