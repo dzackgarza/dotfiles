@@ -119,7 +119,6 @@ class WaybarLlmUsageTest(unittest.TestCase):
 
         self.assertEqual(
             payload["text"],
-            "<span color='#3e4b59'>●</span>"
             "<span color='#aad94c'>65</span>"
             "<span color='#3e4b59'>/</span>"
             "<span color='#aad94c' size='smaller'>34</span>"
@@ -129,7 +128,6 @@ class WaybarLlmUsageTest(unittest.TestCase):
             "<span color='#3e4b59'>/</span>"
             "<span color='#aad94c' size='smaller'>0</span>"
             "<span color='#3e4b59'> | </span>"
-            "<span color='#3e4b59'>●</span>"
             "<span color='#aad94c'>1</span>"
             "<span color='#3e4b59'>/</span>"
             "<span color='#aad94c' size='smaller'>0</span>",
@@ -137,16 +135,14 @@ class WaybarLlmUsageTest(unittest.TestCase):
         self.assertEqual(
             payload["tooltip"],
             "Codex - dzackgarza@gmail.com\n"
-            "       5h:  65%  resets in 4h 0m\n"
-            "       7d:  34%  resets in 6d 17h\n"
-            "  Spark 5h:   0%  resets in 4h 59m\n"
-            "  Spark 7d:   0%  resets in 6d 23h\n"
+            "      Codex (5h):  65%  resets in 4h 0m\n"
+            "      Codex (7d):  34%  resets in 6d 17h\n"
+            "  Codex Spark (5h):   0%  resets in 4h 59m\n"
+            "  Codex Spark (7d):   0%  resets in 6d 23h\n"
             "\n"
             "Codex - zack@ncts.ntu.edu.tw\n"
-            "       5h:   1%  resets in 4h 59m\n"
-            "       7d:   0%  resets in 6d 23h\n"
-            "  Spark 5h:  n/a  resets n/a\n"
-            "  Spark 7d:  n/a  resets n/a",
+            "      Codex (5h):   1%  resets in 4h 59m\n"
+            "      Codex (7d):   0%  resets in 6d 23h",
         )
         self.assertEqual(payload["class"], "")
 
@@ -165,7 +161,6 @@ class WaybarLlmUsageTest(unittest.TestCase):
 
         self.assertEqual(
             payload["text"],
-            "<span color='#3e4b59'>●</span>"
             "<span color='#f07178'>2.9h</span>"
             "<span color='#3e4b59'> </span>"
             "<span color='#ffb454'>⚡</span>"
@@ -173,13 +168,12 @@ class WaybarLlmUsageTest(unittest.TestCase):
             "<span color='#3e4b59'>/</span>"
             "<span color='#aad94c' size='smaller'>0</span>"
             "<span color='#3e4b59'> | </span>"
-            "<span color='#3e4b59'>●</span>"
             "<span color='#aad94c'>1</span>"
             "<span color='#3e4b59'>/</span>"
             "<span color='#aad94c' size='smaller'>0</span>",
         )
-        self.assertIn("       5h: 100%  resets in 2h 56m", payload["tooltip"])
-        self.assertIn("  Spark 5h:   0%  resets in 4h 59m", payload["tooltip"])
+        self.assertIn("Codex (5h): 100%  resets in 2h 56m", payload["tooltip"])
+        self.assertIn("Codex Spark (5h):   0%  resets in 4h 59m", payload["tooltip"])
         self.assertEqual(payload["class"], "critical")
 
 
