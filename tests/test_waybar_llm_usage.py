@@ -135,14 +135,14 @@ class WaybarLlmUsageTest(unittest.TestCase):
         self.assertEqual(
             payload["tooltip"],
             "Codex - dzackgarza@gmail.com\n"
-            "      Codex (5h):  65%  resets in 4h 0m\n"
-            "      Codex (7d):  34%  resets in 6d 17h\n"
+            "       Codex (5h):  65%  resets in 4h 0m\n"
+            "       Codex (7d):  34%  resets in 6d 17h\n"
             "  Codex Spark (5h):   0%  resets in 4h 59m\n"
             "  Codex Spark (7d):   0%  resets in 6d 23h\n"
             "\n"
             "Codex - zack@ncts.ntu.edu.tw\n"
-            "      Codex (5h):   1%  resets in 4h 59m\n"
-            "      Codex (7d):   0%  resets in 6d 23h",
+            "       Codex (5h):   1%  resets in 4h 59m\n"
+            "       Codex (7d):   0%  resets in 6d 23h",
         )
         self.assertEqual(payload["class"], "")
 
