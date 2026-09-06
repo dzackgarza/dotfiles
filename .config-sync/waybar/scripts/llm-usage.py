@@ -14,7 +14,7 @@ from pathlib import Path
 
 USAGE_LIMITS = "/home/dzack/gitclones/usage-limits/.venv/bin/usage-limits"
 
-# Ayu Dark palette (matches waybar colors.css).
+GREEN, YELLOW, RED, DIM = "#aad94c", "#ffb454", "#f07178", "#3e4b59"
 REGULAR_ICON, SPARK_ICON = "", "⚡"
 
 # Fresh-window "touch": call the model with a trivial prompt so the rolling 5h
