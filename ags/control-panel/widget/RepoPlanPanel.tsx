@@ -120,7 +120,8 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
             percent: number
             vault: string
           }
-          if (j.total > 0) percent = Math.round(((j.total - j.completed) / j.total) * 100)
+          if (j.total > 0)
+            percent = Math.round(((j.total - j.completed) / j.total) * 100)
           else percent = 0
         } catch {
           percent = hasLocal ? r.progress : 12
