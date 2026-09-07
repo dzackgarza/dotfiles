@@ -182,9 +182,12 @@
 }
 
 // ── Subtitle row: GH link + badge + plan ──
-// Visual hierarchy: GH icon (12px, 0.38) → badge (pill, 10px)
-// → plan (11px, 0.55). All secondary to repo name.
+// Spans launchers+repo columns, second grid row
 .gh-plan-btn {
+  grid-column: 2 / span 2;
+  grid-row: 2;
+  align-self: center;
+  justify-self: start;
   background: transparent;
   border: none;
   padding: 2px 4px;
