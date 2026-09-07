@@ -661,7 +661,7 @@ export function RepoPlanPanel({
                 halign={Gtk.Align.FILL}
                 vexpand={false}
                 $={(self: Gtk.Grid) => {
-                  items.forEach((entry, idx) => {
+                  items.forEach((entry: RepoPlan, idx: number) => {
                     const pct = Math.round(
                       Math.min(Math.max(entry.progress, 0), 100),
                     )
