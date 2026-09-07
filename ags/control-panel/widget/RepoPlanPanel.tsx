@@ -46,6 +46,31 @@ function progressClass(pct: number): string {
   return "repo-plan-progress-green"
 }
 
+function closeControlCenter() {
+  try {
+    const w = (
+      app as unknown as { get_window?: (n: string) => Gtk.Window | null }
+    ).get_window?.("claude-usage")
+    if (w) {
+      w.visible = false
+      return
+    }
+  } catch {}
+  try {
+    const wins = (
+      app as unknown as { get_windows?: () => Gtk.Window[] }
+    ).get_windows?.()
+    const target = wins?.find(
+      (win) => (win as unknown as { name?: string }).name === "claude-usage",
+    )
+    if (target) {
+      target.visible = false
+      return
+    }
+  } catch {}
+  void execAsync(["ags", "toggle", "claude-usage"]).catch(() => {})
+}
+
 function RepoPlanRow({ entry }: { entry: RepoPlan }) {
   const pct = Math.round(Math.min(Math.max(entry.progress, 0), 100))
   const fraction = pct / 100
