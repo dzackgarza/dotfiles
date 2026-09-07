@@ -50,17 +50,11 @@
   // spacing handled by row margins/borders, not gap alone
 }
 
-// ── Row: uniform grid — 8px base, aligned columns across all rows ──
-// Grid: [28 folder] [84 launchers] [1fr repo] [112 progress]
-// Row1: launchers + repo + progress
-// Row2: GH meta spans launchers+repo, progress spans 2 rows
+// ── Row: uniform grid via Gtk.Grid — 8px base, aligned columns ──
+// Columns: [28 folder] [84 launchers] [1fr repo] [112 progress]
+// Row1: launchers + repo | progress (row-spans 2)
+// Row2: GH meta spans launchers+repo
 .repo-plan-row {
-  display: grid;
-  grid-template-columns: 28px 84px 1fr 112px;
-  grid-template-rows: auto auto;
-  column-gap: 8px;
-  row-gap: 4px;
-  align-items: center;
   background: #{"alpha(@card_bg_color, 0.52)"};
   border: 1px solid #{"alpha(@theme_fg_color, 0.06)"};
   border-radius: 10px;
@@ -78,8 +72,7 @@
 }
 
 .repo-launchers {
-  grid-column: 2;
-  grid-row: 1;
+  min-width: 84px;
   display: flex;
   gap: 4px;
   align-items: center;
@@ -87,8 +80,7 @@
 }
 
 .progress-col {
-  grid-column: 4;
-  grid-row: 1 / span 2;
+  min-width: 112px;
   display: flex;
   flex-direction: column;
   gap: 6px;
