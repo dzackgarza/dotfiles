@@ -101,11 +101,12 @@ function RepoPlanRow({ entry }: { entry: RepoPlan }) {
         <button
           class="repo-plan-repo-btn"
           tooltipText={`Open ${repoPath} in kitty`}
-          onClicked={() =>
+          onClicked={() => {
+            closeControlCenter()
             void execAsync(["kitty", "-d", repoPath]).catch((e) =>
               console.error(`kitty -d ${repoPath} failed: ${String(e)}`),
             )
-          }
+          }}
         >
           <label
             class="repo-plan-repo"
