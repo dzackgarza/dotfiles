@@ -550,7 +550,7 @@ function RepoPlanRow({
               const safeRepo = entry.repo.replaceAll("/", "-")
               const base = planPath.split("/").pop()?.replace(/\.md$/, "") ?? "plan"
               const out = `/tmp/${safeRepo}-${base}.html`
-              const template = "/home/dzack/dotfiles/.pandoc/custom/pandoc_HTML.template"
+              const template = "/home/dzack/dotfiles/ags/control-panel/templates/elegant-plan.html"
               const hasTemplate = GLib.file_test(template, GLib.FileTest.EXISTS)
               const args = hasTemplate ? ["pandoc", planPath, "-s", "-o", out, `--template=${template}`] : ["pandoc", planPath, "-s", "-o", out]
               void execAsync(args)
@@ -991,7 +991,7 @@ export function RepoPlanPanel({
                           const safeRepo = entry.repo.replaceAll("/", "-")
                           const base = planPath.split("/").pop()?.replace(/\.md$/, "") ?? "plan"
                           const out = `/tmp/${safeRepo}-${base}.html`
-                          const template = "/home/dzack/dotfiles/.pandoc/custom/pandoc_HTML.template"
+                          const template = "/home/dzack/dotfiles/ags/control-panel/templates/elegant-plan.html"
                           const hasTemplate = GLib.file_test(template, GLib.FileTest.EXISTS)
                           const args = hasTemplate ? ["pandoc", planPath, "-s", "-o", out, `--template=${template}`] : ["pandoc", planPath, "-s", "-o", out]
                           void execAsync(args)
