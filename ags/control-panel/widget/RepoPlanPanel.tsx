@@ -166,7 +166,6 @@ function RepoPlanRow({
           >
             <Gtk.Overlay class="gh-overlay">
               <button
-                $type="child"
                 class="repo-launcher-btn"
                 tooltipText={`Open https://github.com/${entry.repo}`}
                 onClicked={() => {
