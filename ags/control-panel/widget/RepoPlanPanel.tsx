@@ -117,13 +117,24 @@ function RepoPlanRow({
       hexpand
       halign={Gtk.Align.FILL}
     >
-      <image
-        iconName="xsi-folder-symbolic"
-        pixelSize={20}
-        valign={Gtk.Align.CENTER}
-        halign={Gtk.Align.CENTER}
-        class="repo-plan-icon"
-      />
+      <button
+        class="repo-folder-btn"
+        tooltipText={`Open ${repoPath} in file manager`}
+        onClicked={() => {
+          closeControlCenter()
+          void execAsync(["xdg-open", repoPath]).catch((e) =>
+            console.error(`xdg-open folder failed: ${String(e)}`),
+          )
+        }}
+      >
+        <image
+          iconName="xsi-folder-symbolic"
+          pixelSize={20}
+          valign={Gtk.Align.CENTER}
+          halign={Gtk.Align.CENTER}
+          class="repo-plan-icon"
+        />
+      </button>
       <box
         orientation={Gtk.Orientation.VERTICAL}
         spacing={2}
