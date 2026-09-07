@@ -199,6 +199,9 @@ function RepoPlanRow({
                 ? "repo-folder-btn repo-folder-btn-missing"
                 : "repo-folder-btn"
             }
+            widthRequest={28}
+            halign={Gtk.Align.CENTER}
+            valign={Gtk.Align.CENTER}
             tooltipText={
               hasLocal
                 ? `Open ${repoPath} in file manager`
