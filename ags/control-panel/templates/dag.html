@@ -257,6 +257,15 @@
       const nodesData = __NODES_JSON__
       const edgesData = __EDGES_JSON__
       const tooltip = document.getElementById("tooltip")
+      // Restore saved layout prefs before building
+      let direction = "TB"
+      let quality = "medium"
+      try {
+        const sd = localStorage.getItem("dag-direction")
+        if (sd === "TB" || sd === "LR") direction = sd
+        const sq = localStorage.getItem("dag-quality")
+        if (sq === "fast" || sq === "medium" || sq === "slow") quality = sq
+      } catch(e) {}
 
       function colorForStatus(s) {
         if (s === "complete") return { bg: "#dcfce7", stroke: "#22c55e" }
