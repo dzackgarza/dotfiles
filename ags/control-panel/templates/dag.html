@@ -408,10 +408,19 @@
           const nCount = stratifyData.length
           const eCount = edgesData.length
           const childrenMap = new Map()
-          for (const [to, froms] of parentMap) for (const f of froms) childrenMap.set(f, (childrenMap.get(f)||0)+1)
-          const maxChildren = Math.max(0, ...Array.from(childrenMap.values()), ...Array.from(parentMap.values()).map(a=>a.length))
+          for (const [to, froms] of parentMap)
+            for (const f of froms)
+              childrenMap.set(f, (childrenMap.get(f) || 0) + 1)
+          const maxChildren = Math.max(
+            0,
+            ...Array.from(childrenMap.values()),
+            ...Array.from(parentMap.values()).map((a) => a.length),
+          )
           const density = eCount / Math.max(1, nCount)
-          wrapWideRank = (maxChildren > 7) || (nCount > 16 && density < 0.9) || (nCount > 12 && maxChildren > 5)
+          wrapWideRank =
+            maxChildren > 7 ||
+            (nCount > 16 && density < 0.9) ||
+            (nCount > 12 && maxChildren > 5)
         }
 
         // Choose sugiyama operator
