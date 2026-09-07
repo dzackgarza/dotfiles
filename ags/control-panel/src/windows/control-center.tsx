@@ -28,6 +28,17 @@ const ICON_SIZE = {
   statusAction: 16,
 } as const
 
+function getControlCenterMaxHeight(): number {
+  try {
+    const m = Gdk.Display.get_default()?.get_monitors().get_item(0) as Gdk.Monitor | null
+    const h = m?.get_geometry().height ?? 1080
+    const capped = Math.floor(h * 0.8)
+    return Math.max(400, Math.min(900, capped))
+  } catch {
+    return 700
+  }
+}
+
 function joinClasses(
   ...classes: Array<string | false | null | undefined>
 ): string {
