@@ -164,11 +164,7 @@ function RepoPlanRow({
             halign={Gtk.Align.END}
             valign={Gtk.Align.CENTER}
           >
-            <Gtk.Overlay
-              class="gh-overlay"
-              halign={Gtk.Align.CENTER}
-              valign={Gtk.Align.CENTER}
-            >
+            <Gtk.Overlay class="gh-overlay">
               <button
                 class="repo-launcher-btn"
                 tooltipText={`Open https://github.com/${entry.repo}`}
