@@ -244,34 +244,24 @@ function RepoPlanRow({
             halign={Gtk.Align.FILL}
             valign={Gtk.Align.CENTER}
           >
-            <Gtk.Overlay class="gh-overlay-small">
-              <image iconName="xsi-github-symbolic" pixelSize={10} />
-              {issueCount ? (
-                <label
-                  $type="overlay"
-                  class="gh-badge-small"
-                  halign={Gtk.Align.END}
-                  valign={Gtk.Align.START}
-                  label={issueCount((n) => (n > 99 ? "99+" : String(n)))}
-                  canTarget={false}
-                />
-              ) : (
-                <label
-                  $type="overlay"
-                  class="gh-badge-small"
-                  halign={Gtk.Align.END}
-                  valign={Gtk.Align.START}
-                  label="0"
-                  canTarget={false}
-                />
-              )}
-            </Gtk.Overlay>
+            <image iconName="xsi-github-symbolic" pixelSize={10} />
             <label
               class="repo-plan-plan"
               xalign={0}
               ellipsize={3}
-              maxWidthChars={28}
+              maxWidthChars={20}
               label={entry.plan}
+              hexpand
+            />
+            <label
+              class="issue-badge"
+              halign={Gtk.Align.END}
+              valign={Gtk.Align.CENTER}
+              label={
+                issueCount
+                  ? issueCount((n) => (n > 99 ? "99+" : String(n)))
+                  : "0"
+              }
             />
           </box>
         </button>
