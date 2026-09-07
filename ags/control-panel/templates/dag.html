@@ -489,39 +489,45 @@
             if (!rankMap.has(y)) rankMap.set(y, [])
             rankMap.get(y).push(n)
           }
-          const ranks = Array.from(rankMap.entries()).sort((a,b)=>a[0]-b[0])
+          const ranks = Array.from(rankMap.entries()).sort(
+            (a, b) => a[0] - b[0],
+          )
           // Find ranks that are too wide
           for (const [y, arr] of ranks) {
             if (arr.length <= 6) continue
             // Sort left-to-right to preserve crossing minimization order
-            arr.sort((a,b)=>a.x-b.x)
+            arr.sort((a, b) => a.x - b.x)
             const perRow = 6 // keep ~6 per row for 1× readability
             const rows = Math.ceil(arr.length / perRow)
             const layerGap = 58 // same as Sugiyama's y gap + node height
             // Reassign y and x for wrapped rows: keep x within perRow columns, y stacked
             // First compute base x for centering: keep original x order but reflow into grid
             // Use uniform column width = max node width in this rank + 22
-            const maxW = Math.max(...arr.map(n=>n.data.width||140))
+            const maxW = Math.max(...arr.map((n) => n.data.width || 140))
             const colW = maxW + 22
             const totalW = perRow * colW
             // Center each sub-row horizontally around original rank's center
-            const rankCenter = (Math.min(...arr.map(n=>n.x)) + Math.max(...arr.map(n=>n.x))) / 2
-            arr.forEach((n,i)=>{
+            const rankCenter =
+              (Math.min(...arr.map((n) => n.x)) +
+                Math.max(...arr.map((n) => n.x))) /
+              2
+            arr.forEach((n, i) => {
               const col = i % perRow
               const row = Math.floor(i / perRow)
               // Center sub-row
-              const colsThisRow = Math.min(perRow, arr.length - row*perRow)
+              const colsThisRow = Math.min(perRow, arr.length - row * perRow)
               const rowW = colsThisRow * colW
-              const rowOffset = rankCenter - rowW/2
-              n.x = rowOffset + col * colW + (n.data.width||140)/2 + 10
+              const rowOffset = rankCenter - rowW / 2
+              n.x = rowOffset + col * colW + (n.data.width || 140) / 2 + 10
               n.y = y + row * layerGap
               // Also update the underlying datum for link routing if needed
               // d3-dag links use node x/y at render time, so this is sufficient
             })
             // Shift all later ranks down to make room
-            const addedHeight = (rows-1)*layerGap
-            if (addedHeight>0) {
-              for (const [y2, arr2] of ranks) if (y2 > y) for (const n of arr2) n.y += addedHeight
+            const addedHeight = (rows - 1) * layerGap
+            if (addedHeight > 0) {
+              for (const [y2, arr2] of ranks)
+                if (y2 > y) for (const n of arr2) n.y += addedHeight
               // Also shift any linking points? Links are computed at render from node x/y, so fine
             }
           }
