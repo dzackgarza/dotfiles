@@ -79,11 +79,11 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
   } catch (e) {
     console.error(`fetchLiveRepoPlans failed: ${String(e)}`)
     const fallback: RepoPlan[] = MOCK_REPO_PLANS.map((r) => {
-      const local = map[r.repo]
-      const hasLocal = !!local && local !== "None"
+      const checkout = getCheckout(map[r.repo])
+      const hasLocal = !!checkout
       return {
         repo: r.repo,
-        plan: hasLocal ? (local as string) : "No local checkout",
+        plan: hasLocal ? (checkout as string) : "No local checkout",
         progress: hasLocal ? r.progress : 12,
       }
     })
