@@ -9,10 +9,8 @@ def extract_yaml_raw(plan_path):
     try:
         with open(plan_path, "r", encoding="utf-8") as f:
             content = f.read()
-        # Find first --- and second ---
         lines = content.splitlines()
         if len(lines) >= 2 and lines[0].strip() == "---":
-            # find second ---
             for i in range(1, len(lines)):
                 if lines[i].strip() == "---":
                     raw = "\n".join(lines[1:i])
@@ -23,21 +21,41 @@ def extract_yaml_raw(plan_path):
 
 
 def main():
-    if len(sys.argv) < 5:
+    if len(sys.argv) < 3:
         print(
-            f"Usage: {sys.argv[0]} <planPath> <repo> <vault> <template> <out>",
+            f"Usage: {sys.argv[0]} <planPath> <repo> [vault] [template] [out]",
             file=sys.stderr,
         )
         sys.exit(1)
     plan_path = sys.argv[1]
     repo = sys.argv[2] if len(sys.argv) > 2 else ""
-    vault = sys.argv[3] if len(sys.argv) > 3 else ""
-    template = sys.argv[4] if len(sys.argv) > 4 else ""
-    out = sys.argv[5] if len(sys.argv) > 5 else "/tmp/plan.html"
-
+    vault = ""
+    template = ""
+    out = "/tmp/plan.html"
+    # Flexible arg handling
+    if len(sys.argv) == 4:
+        # planPath, repo, template
+        template = sys.argv[3]
+    elif len(sys.argv) == 5:
+        # Could be planPath, repo, template, out OR planPath, repo, vault, template
+        if sys.argv[3].endswith(".html") or ".template" in sys.argv[3]:
+            template = sys.argv[3]
+            out = sys.argv[4]
+        else:
+            vault = sys.argv[3]
+            template = sys.argv[4]
+    elif len(sys.argv) >= 6:
+        vault = sys.argv[3] if len(sys.argv) > 3 else ""
+        template = sys.argv[4] if len(sys.argv) > 4 else ""
+        out = sys.argv[5] if len(sys.argv) > 5 else "/tmp/plan.html"
+    # Derive vault from plan_path if not given
+    if not vault and plan_path:
+        parts = plan_path.split("/")
+        if "projects" in parts:
+            idx = parts.index("projects")
+            if idx + 1 < len(parts):
+                vault = parts[idx + 1]
     raw_yaml = extract_yaml_raw(plan_path)
-    # Create temp metadata file
-    # Use yaml_raw as literal block scalar
     meta_fd, meta_path = tempfile.mkstemp(suffix=".yaml", prefix="plan-meta-")
     try:
         with os.fdopen(meta_fd, "w", encoding="utf-8") as mf:
@@ -47,19 +65,15 @@ def main():
                 for line in raw_yaml.splitlines():
                     mf.write(f"  {line}\n")
             if repo:
-                # escape repo
                 repo_esc = repo.replace('"', '\\"')
                 mf.write(f'repo: "{repo_esc}"\n')
             if vault:
                 vault_esc = vault.replace('"', '\\"')
                 mf.write(f'vault: "{vault_esc}"\n')
             mf.write("...\n")
-        # Build pandoc args
         args = ["pandoc", plan_path, "--metadata-file", meta_path, "-s", "-o", out]
         if template and os.path.exists(template):
             args.extend(["--template", template])
-        # Add highlighting
-        # pandoc will auto use highlighting-css if template has $highlighting-css$
         result = subprocess.run(args, capture_output=True, text=True)
         if result.returncode != 0:
             print(f"pandoc failed: {result.stderr}", file=sys.stderr)
