@@ -102,15 +102,31 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
     return withProgress
   } catch (e) {
     console.error(`fetchLiveRepoPlans failed: ${String(e)}`)
-    const fallback: RepoPlan[] = MOCK_REPO_PLANS.map((r) => {
-      const checkout = getCheckout(map[r.repo])
-      const hasLocal = !!checkout
-      return {
-        repo: r.repo,
-        plan: hasLocal ? (checkout as string) : "No local checkout",
-        progress: hasLocal ? r.progress : 12,
-      }
-    })
+    const fallback = await Promise.all(
+      MOCK_REPO_PLANS.map(async (r) => {
+        const checkout = getCheckout(map[r.repo])
+        const hasLocal = !!checkout
+        let percent = hasLocal ? r.progress : 12
+        try {
+          const out = await execAsync([
+            "python3",
+            "/home/dzack/dotfiles/ags/control-panel/scripts/vault-progress.py",
+            r.repo,
+          ])
+          const j = JSON.parse(out) as {
+            total: number
+            completed: number
+            percent: number
+          }
+          if (j.total > 0) percent = j.percent
+        } catch {}
+        return {
+          repo: r.repo,
+          plan: hasLocal ? (checkout as string) : "No local checkout",
+          progress: percent,
+        }
+      }),
+    )
     return fallback
   }
 }
