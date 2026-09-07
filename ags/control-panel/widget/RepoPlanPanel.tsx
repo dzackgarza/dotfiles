@@ -108,20 +108,9 @@ export function RepoPlanPanel({
   items,
   title = "Repo Plans",
 }: RepoPlanPanelProps) {
-  const data: Accessor<RepoPlan[]> = (() => {
-    if (!items)
-      return (() => MOCK_REPO_PLANS) as unknown as Accessor<RepoPlan[]>
-    if (Array.isArray(items)) {
-      // wrap static array as accessor-like function for For compatibility via accessor factory
-      const accessor = ((fn: (v: RepoPlan[]) => unknown) =>
-        fn(items)) as unknown as Accessor<RepoPlan[]>
-      // attach peek for safety where For expects accessor; fallback to static render path
-      return accessor
-    }
-    return items as Accessor<RepoPlan[]>
-  })()
-
-  const isAccessor = typeof items !== "undefined" && !Array.isArray(items)
+  const isAccessor = typeof items === "function"
+  const staticItems = (items as RepoPlan[] | undefined) ?? MOCK_REPO_PLANS
+  const accessorItems = items as Accessor<RepoPlan[]> | undefined
 
   return (
     <box
@@ -140,22 +129,20 @@ export function RepoPlanPanel({
           class="repo-plan-count"
           xalign={1}
           label={
-            isAccessor
-              ? (data as Accessor<RepoPlan[]>)((v) => `${v.length} repos`)
-              : `${(items as RepoPlan[] | undefined)?.length ?? MOCK_REPO_PLANS.length} repos`
+            isAccessor && accessorItems
+              ? accessorItems((v) => `${v.length} repos`)
+              : `${staticItems.length} repos`
           }
         />
       </box>
       <box class="repo-plan-divider" />
       <box orientation={Gtk.Orientation.VERTICAL} spacing={8}>
-        {isAccessor ? (
-          <For each={data}>
+        {isAccessor && accessorItems ? (
+          <For each={accessorItems}>
             {(entry: RepoPlan) => <RepoPlanRow entry={entry} />}
           </For>
         ) : (
-          ((items as RepoPlan[] | undefined) ?? MOCK_REPO_PLANS).map(
-            (entry) => <RepoPlanRow entry={entry} />,
-          )
+          staticItems.map((entry) => <RepoPlanRow entry={entry} />)
         )}
       </box>
     </box>
