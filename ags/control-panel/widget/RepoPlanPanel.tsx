@@ -129,7 +129,7 @@ function RepoPlanRow({
       >
         <image
           iconName="xsi-folder-symbolic"
-          pixelSize={20}
+          pixelSize={18}
           valign={Gtk.Align.CENTER}
           halign={Gtk.Align.CENTER}
           class="repo-plan-icon"
