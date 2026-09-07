@@ -206,12 +206,12 @@
 }
 
 .issue-badge-muted {
-  // zero issues: hidden via visibility, keeps layout stable but no ink
-  opacity: 0;
-  min-width: 0;
-  padding: 0;
-  border: none;
-  background: transparent;
+  // deprecated — zero now shows neutral pill via plain .issue-badge
+  // kept for backwards compat, identical to neutral
+  background: #{"alpha(@theme_fg_color, 0.07)"};
+  color: #{"@theme_fg_color"};
+  border-color: #{"alpha(@theme_fg_color, 0.08)"};
+  opacity: 0.72;
 }
 
 // Legacy overlay badges — keep but make invisible (no longer used)
