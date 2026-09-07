@@ -149,30 +149,10 @@ function RepoPlanRow({
           halign={Gtk.Align.FILL}
           valign={Gtk.Align.CENTER}
         >
-          <button
-            class="repo-plan-repo-btn"
-            tooltipText={`Open ${repoPath} in kitty`}
-            hexpand
-            halign={Gtk.Align.FILL}
-            onClicked={() => {
-              closeControlCenter()
-              void execAsync(["kitty", "-d", repoPath]).catch((e) =>
-                console.error(`kitty -d ${repoPath} failed: ${String(e)}`),
-              )
-            }}
-          >
-            <label
-              class="repo-plan-repo"
-              xalign={0}
-              ellipsize={3}
-              maxWidthChars={24}
-              label={entry.repo}
-            />
-          </button>
           <box
             orientation={Gtk.Orientation.HORIZONTAL}
             spacing={4}
-            halign={Gtk.Align.END}
+            halign={Gtk.Align.START}
             valign={Gtk.Align.CENTER}
           >
             <button
@@ -225,6 +205,26 @@ function RepoPlanRow({
               <image iconName="opencode-symbolic" pixelSize={14} />
             </button>
           </box>
+          <button
+            class="repo-plan-repo-btn"
+            tooltipText={`Open ${repoPath} in kitty`}
+            hexpand
+            halign={Gtk.Align.FILL}
+            onClicked={() => {
+              closeControlCenter()
+              void execAsync(["kitty", "-d", repoPath]).catch((e) =>
+                console.error(`kitty -d ${repoPath} failed: ${String(e)}`),
+              )
+            }}
+          >
+            <label
+              class="repo-plan-repo"
+              xalign={0}
+              ellipsize={3}
+              maxWidthChars={24}
+              label={entry.repo}
+            />
+          </button>
         </box>
         <button
           class="gh-plan-btn"
