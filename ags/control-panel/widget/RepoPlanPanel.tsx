@@ -71,7 +71,7 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
       recent.map(async (r) => {
         const checkout = getCheckout(map[r.nameWithOwner])
         const hasLocal = !!checkout
-        let percent = hasLocal ? 78 : 12
+        let percent = 0
         try {
           const out = await execAsync([
             "python3",
@@ -85,13 +85,13 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
             vault: string
           }
           if (j.total > 0) {
-            // User requested not completed / total, which is 100 - completed%
-            // Show completed% as progress bar, but compute from vault data
             percent = j.percent
-          } else if (j.vault !== "No vault initialized") {
+          } else {
             percent = 0
           }
-        } catch {}
+        } catch {
+          percent = hasLocal ? 78 : 12
+        }
         return {
           repo: r.nameWithOwner,
           plan: hasLocal ? (checkout as string) : "No local checkout",
