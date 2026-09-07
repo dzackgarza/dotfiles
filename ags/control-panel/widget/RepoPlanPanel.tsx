@@ -124,8 +124,7 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
             percent: number
             vault: string
           }
-          if (j.total > 0)
-            percent = j.percent
+          if (j.total > 0) percent = j.percent
           else percent = 0
         } catch {
           percent = hasLocal ? r.progress : 12
