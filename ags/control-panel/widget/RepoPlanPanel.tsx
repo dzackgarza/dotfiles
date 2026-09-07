@@ -171,7 +171,7 @@ function RepoPlanRow({
           </button>
           <box
             orientation={Gtk.Orientation.HORIZONTAL}
-            spacing={2}
+            spacing={4}
             halign={Gtk.Align.END}
             valign={Gtk.Align.CENTER}
           >
