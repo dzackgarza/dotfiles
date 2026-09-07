@@ -223,7 +223,12 @@ function RepoPlanRow({
           </button>
         ) as unknown as Gtk.Widget;
         const launchersBox = (
-          <box class="repo-launchers">
+          <box
+            class="repo-launchers"
+            widthRequest={84}
+            halign={Gtk.Align.START}
+            valign={Gtk.Align.CENTER}
+          >
             <button
               class="repo-launcher-btn"
               tooltipText={
