@@ -178,7 +178,10 @@ function RepoPlanRow({
                   )
                 }}
               >
-                <image iconName="xsi-github-symbolic" pixelSize={16} />
+                <image
+                  file="/usr/share/icons/hicolor/scalable/actions/xsi-github-symbolic.svg"
+                  pixelSize={16}
+                />
               </button>
               {issueCount ? (
                 <label
