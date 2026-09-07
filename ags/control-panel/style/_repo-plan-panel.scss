@@ -76,6 +76,22 @@
   }
 }
 
+.repo-launcher-btn {
+  background: transparent;
+  border: none;
+  padding: 4px;
+  border-radius: $radius-sm;
+  min-width: 24px;
+  min-height: 24px;
+  color: #{"@theme_fg_color"};
+  opacity: 0.75;
+
+  &:hover {
+    background: #{"alpha(@theme_fg_color, 0.08)"};
+    opacity: 1;
+  }
+}
+
 .repo-plan-plan {
   font-size: $font-xs;
   opacity: $opacity-secondary;
