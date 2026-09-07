@@ -284,13 +284,23 @@
           .replace(/>/g, "&gt;")
       }
 
-      // Build stratify input: each node needs parentIds
+      function cleanId(s) {
+        let t = String(s).trim()
+        // strip surrounding quotes/brackets like "[[FEATURE]]" or '[[X]]'
+        t = t.replace(/^['"\s]+|['"\s]+$/g, "")
+        if (t.startsWith("[[") && t.endsWith("]]")) t = t.slice(2, -2)
+        t = t.replace(/^\[\[/, "").replace(/\]\]$/, "")
+        t = t.replace(/^['"]|['"]$/g, "").trim()
+        return t
+      }
+      // Build stratify input: each node needs parentIds (clean [[...]] wrappers)
       const parentMap = new Map()
-      for (const n of nodesData) parentMap.set(n.id, [])
+      for (const n of nodesData) parentMap.set(cleanId(n.id), [])
       for (const e of edgesData) {
-        if (!parentMap.has(e.to)) parentMap.set(e.to, [])
-        parentMap.get(e.to).push(e.from)
-        if (!parentMap.has(e.from)) parentMap.set(e.from, [])
+        const from = cleanId(e.from), to = cleanId(e.to)
+        if (!parentMap.has(to)) parentMap.set(to, [])
+        parentMap.get(to).push(from)
+        if (!parentMap.has(from)) parentMap.set(from, [])
       }
       // Width based on label length — keeps Sugiyama from overlapping
       function nodeWidth(d) {
