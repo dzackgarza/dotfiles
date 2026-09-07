@@ -311,6 +311,7 @@ function RepoPlanRow({
             }
             hexpand
             halign={Gtk.Align.FILL}
+            valign={Gtk.Align.CENTER}
             sensitive={hasLocal}
             onClicked={() => {
               if (!hasLocal) return
