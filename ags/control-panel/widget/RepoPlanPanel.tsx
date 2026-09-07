@@ -1,14 +1,14 @@
-import type { Accessor } from "ags";
-import { createState, For } from "ags";
-import { Astal, Gdk, Gtk } from "ags/gtk4";
-import app from "ags/gtk4/app";
-import { execAsync } from "ags/process";
-import GLib from "gi://GLib?version=2.0";
+import type { Accessor } from "ags"
+import { createState, For } from "ags"
+import { Astal, Gdk, Gtk } from "ags/gtk4"
+import app from "ags/gtk4/app"
+import { execAsync } from "ags/process"
+import GLib from "gi://GLib?version=2.0"
 
 export interface RepoPlan {
-  repo: string;
-  plan: string;
-  progress: number;
+  repo: string
+  plan: string
+  progress: number
 }
 
 export const MOCK_REPO_PLANS: RepoPlan[] = [
@@ -17,22 +17,22 @@ export const MOCK_REPO_PLANS: RepoPlan[] = [
   { repo: "dzackgarza/ai-review-ci", plan: "gate-harness", progress: 92 },
   { repo: "dzackgarza/opencode", plan: "plan-42-refactor", progress: 18 },
   { repo: "dzackgarza/repo-plans", plan: "repo-panel-mock", progress: 56 },
-];
+]
 
-const REPO_MAP_PATH = `${GLib.get_home_dir()}/dotfiles/ags/control-panel/repo-map.json`;
+const REPO_MAP_PATH = `${GLib.get_home_dir()}/dotfiles/ags/control-panel/repo-map.json`
 
 async function loadRepoMap(): Promise<Record<string, string>> {
   try {
-    const out = await execAsync(["cat", REPO_MAP_PATH]);
-    const parsed = JSON.parse(out) as Record<string, string>;
-    return parsed;
+    const out = await execAsync(["cat", REPO_MAP_PATH])
+    const parsed = JSON.parse(out) as Record<string, string>
+    return parsed
   } catch {
-    return {};
+    return {}
   }
 }
 
 async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
-  const map = await loadRepoMap();
+  const map = await loadRepoMap()
   try {
     const out = await execAsync([
       "gh",
@@ -43,70 +43,70 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
       "200",
       "--json",
       "nameWithOwner,pushedAt",
-    ]);
+    ])
     const arr = JSON.parse(out) as {
-      nameWithOwner: string;
-      pushedAt: string;
-    }[];
+      nameWithOwner: string
+      pushedAt: string
+    }[]
     arr.sort((a, b) => {
-      const ta = a.pushedAt ? new Date(a.pushedAt).getTime() : 0;
-      const tb = b.pushedAt ? new Date(b.pushedAt).getTime() : 0;
-      return tb - ta;
-    });
-    const cutoff = Date.now() - 14 * 24 * 60 * 60 * 1000;
+      const ta = a.pushedAt ? new Date(a.pushedAt).getTime() : 0
+      const tb = b.pushedAt ? new Date(b.pushedAt).getTime() : 0
+      return tb - ta
+    })
+    const cutoff = Date.now() - 14 * 24 * 60 * 60 * 1000
     const recent = arr.filter((r) => {
-      if (!r.pushedAt) return false;
-      const t = new Date(r.pushedAt).getTime();
-      return t >= cutoff;
-    });
+      if (!r.pushedAt) return false
+      const t = new Date(r.pushedAt).getTime()
+      return t >= cutoff
+    })
     return recent.map((r) => {
-      const local = map[r.nameWithOwner];
-      const hasLocal = !!local && local !== "None";
+      const local = map[r.nameWithOwner]
+      const hasLocal = !!local && local !== "None"
       return {
         repo: r.nameWithOwner,
         plan: hasLocal ? (local as string) : "No local checkout",
         progress: hasLocal ? 78 : 12,
-      };
-    });
+      }
+    })
   } catch (e) {
-    console.error(`fetchLiveRepoPlans failed: ${String(e)}`);
+    console.error(`fetchLiveRepoPlans failed: ${String(e)}`)
     const fallback: RepoPlan[] = MOCK_REPO_PLANS.map((r) => {
-      const local = map[r.repo];
-      const hasLocal = !!local && local !== "None";
+      const local = map[r.repo]
+      const hasLocal = !!local && local !== "None"
       return {
         repo: r.repo,
         plan: hasLocal ? (local as string) : "No local checkout",
         progress: hasLocal ? r.progress : 12,
-      };
-    });
-    return fallback;
+      }
+    })
+    return fallback
   }
 }
 
 function getRepoPath(repo: string): string {
-  const short = repo.split("/").pop() ?? repo;
-  const home = GLib.get_home_dir();
-  if (short === "dotfiles") return `${home}/dotfiles`;
-  if (short === "notes") return `${home}/notes`;
-  if (short === "ai-review-ci") return `${home}/ai-review-ci`;
+  const short = repo.split("/").pop() ?? repo
+  const home = GLib.get_home_dir()
+  if (short === "dotfiles") return `${home}/dotfiles`
+  if (short === "notes") return `${home}/notes`
+  if (short === "ai-review-ci") return `${home}/ai-review-ci`
   const candidates = [
     `${home}/${short}`,
     `${home}/gitclones/${short}`,
     `${home}/dotfiles`,
     home,
-  ];
+  ]
   for (const p of candidates) {
     try {
-      if (GLib.file_test(p, GLib.FileTest.IS_DIR)) return p;
+      if (GLib.file_test(p, GLib.FileTest.IS_DIR)) return p
     } catch {}
   }
-  return `${home}/${short}`;
+  return `${home}/${short}`
 }
 
 function getLocalPathFromPlan(plan: string): string | null {
-  if (plan === "No local checkout") return null;
-  if (plan.startsWith("/")) return plan;
-  return null;
+  if (plan === "No local checkout") return null
+  if (plan.startsWith("/")) return plan
+  return null
 }
 
 async function fetchIssueCount(repo: string): Promise<number> {
@@ -117,9 +117,9 @@ async function fetchIssueCount(repo: string): Promise<number> {
       `repos/${repo}`,
       "--jq",
       ".open_issues_count",
-    ]);
-    const n = parseInt(out.trim(), 10);
-    if (!Number.isNaN(n)) return n;
+    ])
+    const n = parseInt(out.trim(), 10)
+    if (!Number.isNaN(n)) return n
   } catch {}
   try {
     const out = await execAsync([
@@ -128,42 +128,42 @@ async function fetchIssueCount(repo: string): Promise<number> {
       `search/issues?q=repo:${repo}+type:issue+state:open`,
       "--jq",
       ".total_count",
-    ]);
-    const n = parseInt(out.trim(), 10);
-    if (!Number.isNaN(n)) return n;
+    ])
+    const n = parseInt(out.trim(), 10)
+    if (!Number.isNaN(n)) return n
   } catch {}
-  return 0;
+  return 0
 }
 
 function progressClass(pct: number): string {
-  if (pct >= 80) return "repo-plan-progress-red";
-  if (pct >= 50) return "repo-plan-progress-yellow";
-  return "repo-plan-progress-green";
+  if (pct >= 80) return "repo-plan-progress-red"
+  if (pct >= 50) return "repo-plan-progress-yellow"
+  return "repo-plan-progress-green"
 }
 
 function closeControlCenter() {
   try {
     const w = (
       app as unknown as { get_window?: (n: string) => Gtk.Window | null }
-    ).get_window?.("claude-usage");
+    ).get_window?.("claude-usage")
     if (w) {
-      w.visible = false;
-      return;
+      w.visible = false
+      return
     }
   } catch {}
   try {
     const wins = (
       app as unknown as { get_windows?: () => Gtk.Window[] }
-    ).get_windows?.();
+    ).get_windows?.()
     const target = wins?.find(
       (win) => (win as unknown as { name?: string }).name === "claude-usage",
-    );
+    )
     if (target) {
-      target.visible = false;
-      return;
+      target.visible = false
+      return
     }
   } catch {}
-  void execAsync(["ags", "toggle", "claude-usage"]).catch(() => {});
+  void execAsync(["ags", "toggle", "claude-usage"]).catch(() => {})
 }
 
 function RepoPlanRow({
@@ -171,16 +171,16 @@ function RepoPlanRow({
   issueCount,
   hideProgress,
 }: {
-  entry: RepoPlan;
-  issueCount?: Accessor<number>;
-  hideProgress?: boolean;
+  entry: RepoPlan
+  issueCount?: Accessor<number>
+  hideProgress?: boolean
 }) {
-  const pct = Math.round(Math.min(Math.max(entry.progress, 0), 100));
-  const fraction = pct / 100;
-  const isMissing = entry.plan === "No local checkout";
-  const localPath = getLocalPathFromPlan(entry.plan);
-  const repoPath = isMissing ? "" : (localPath ?? getRepoPath(entry.repo));
-  const hasLocal = !isMissing;
+  const pct = Math.round(Math.min(Math.max(entry.progress, 0), 100))
+  const fraction = pct / 100
+  const isMissing = entry.plan === "No local checkout"
+  const localPath = getLocalPathFromPlan(entry.plan)
+  const repoPath = isMissing ? "" : (localPath ?? getRepoPath(entry.repo))
+  const hasLocal = !isMissing
 
   return (
     <Gtk.Grid
@@ -206,11 +206,11 @@ function RepoPlanRow({
             }
             sensitive={hasLocal}
             onClicked={() => {
-              if (!hasLocal) return;
-              closeControlCenter();
+              if (!hasLocal) return
+              closeControlCenter()
               void execAsync(["xdg-open", repoPath]).catch((e) =>
                 console.error(`xdg-open folder failed: ${String(e)}`),
-              );
+              )
             }}
           >
             <image
@@ -221,7 +221,7 @@ function RepoPlanRow({
               class="repo-plan-icon"
             />
           </button>
-        ) as unknown as Gtk.Widget;
+        ) as unknown as Gtk.Widget
         const launchersBox = (
           <box
             class="repo-launchers"
@@ -238,8 +238,8 @@ function RepoPlanRow({
               }
               sensitive={hasLocal}
               onClicked={() => {
-                if (!hasLocal) return;
-                closeControlCenter();
+                if (!hasLocal) return
+                closeControlCenter()
                 void execAsync([
                   "kitty",
                   "-d",
@@ -248,7 +248,7 @@ function RepoPlanRow({
                   "--dangerously-skip-permissions",
                 ]).catch((e) =>
                   console.error(`kitty claude failed: ${String(e)}`),
-                );
+                )
               }}
             >
               <image iconName="claude-ai-symbolic" pixelSize={14} />
@@ -262,8 +262,8 @@ function RepoPlanRow({
               }
               sensitive={hasLocal}
               onClicked={() => {
-                if (!hasLocal) return;
-                closeControlCenter();
+                if (!hasLocal) return
+                closeControlCenter()
                 void execAsync([
                   "kitty",
                   "-d",
@@ -273,7 +273,7 @@ function RepoPlanRow({
                   "--search",
                 ]).catch((e) =>
                   console.error(`kitty codex failed: ${String(e)}`),
-                );
+                )
               }}
             >
               <image iconName="openai-symbolic" pixelSize={14} />
@@ -287,17 +287,17 @@ function RepoPlanRow({
               }
               sensitive={hasLocal}
               onClicked={() => {
-                if (!hasLocal) return;
-                closeControlCenter();
+                if (!hasLocal) return
+                closeControlCenter()
                 void execAsync(["kitty", "-d", repoPath, "opencode"]).catch(
                   (e) => console.error(`kitty opencode failed: ${String(e)}`),
-                );
+                )
               }}
             >
               <image iconName="opencode-symbolic" pixelSize={14} />
             </button>
           </box>
-        ) as unknown as Gtk.Widget;
+        ) as unknown as Gtk.Widget
         const repoBtn = (
           <button
             class="repo-plan-repo-btn"
@@ -310,11 +310,11 @@ function RepoPlanRow({
             halign={Gtk.Align.FILL}
             sensitive={hasLocal}
             onClicked={() => {
-              if (!hasLocal) return;
-              closeControlCenter();
+              if (!hasLocal) return
+              closeControlCenter()
               void execAsync(["kitty", "-d", repoPath]).catch((e) =>
                 console.error(`kitty -d ${repoPath} failed: ${String(e)}`),
-              );
+              )
             }}
           >
             <label
@@ -325,7 +325,7 @@ function RepoPlanRow({
               label={entry.repo}
             />
           </button>
-        ) as unknown as Gtk.Widget;
+        ) as unknown as Gtk.Widget
         const ghBtn = (
           <button
             class="gh-plan-btn"
@@ -333,11 +333,11 @@ function RepoPlanRow({
             halign={Gtk.Align.FILL}
             tooltipText={`Open https://github.com/${entry.repo}`}
             onClicked={() => {
-              closeControlCenter();
+              closeControlCenter()
               void execAsync([
                 "xdg-open",
                 `https://github.com/${entry.repo}`,
-              ]).catch((e) => console.error(`xdg-open failed: ${String(e)}`));
+              ]).catch((e) => console.error(`xdg-open failed: ${String(e)}`))
             }}
           >
             <box
@@ -386,7 +386,7 @@ function RepoPlanRow({
               />
             </box>
           </button>
-        ) as unknown as Gtk.Widget;
+        ) as unknown as Gtk.Widget
         const progressBox = (
           <box
             class="progress-col"
@@ -419,80 +419,80 @@ function RepoPlanRow({
               halign={Gtk.Align.FILL}
             />
           </box>
-        ) as unknown as Gtk.Widget;
-        self.attach(folderBtn, 0, 0, 1, 2);
-        self.attach(launchersBox, 1, 0, 1, 1);
-        self.attach(repoBtn, 2, 0, 1, 1);
-        self.attach(ghBtn, 1, 1, 2, 1);
-        self.attach(progressBox, 3, 0, 1, 2);
+        ) as unknown as Gtk.Widget
+        self.attach(folderBtn, 0, 0, 1, 2)
+        self.attach(launchersBox, 1, 0, 1, 1)
+        self.attach(repoBtn, 2, 0, 1, 1)
+        self.attach(ghBtn, 1, 1, 2, 1)
+        self.attach(progressBox, 3, 0, 1, 2)
       }}
     />
-  );
+  )
 }
 
 type RepoPlanPanelProps = {
-  items?: RepoPlan[] | Accessor<RepoPlan[]>;
-  title?: string;
-  live?: boolean;
-};
+  items?: RepoPlan[] | Accessor<RepoPlan[]>
+  title?: string
+  live?: boolean
+}
 
 export function RepoPlanPanel({
   items,
   title = "Repo Plans",
   live = true,
 }: RepoPlanPanelProps) {
-  const isAccessor = typeof items === "function";
-  const staticItems = (items as RepoPlan[] | undefined) ?? MOCK_REPO_PLANS;
-  const accessorItems = items as Accessor<RepoPlan[]> | undefined;
+  const isAccessor = typeof items === "function"
+  const staticItems = (items as RepoPlan[] | undefined) ?? MOCK_REPO_PLANS
+  const accessorItems = items as Accessor<RepoPlan[]> | undefined
 
-  const [liveItems, setLiveItems] = createState<RepoPlan[] | null>(null);
-  const [issueCounts, setIssueCounts] = createState<Record<string, number>>({});
+  const [liveItems, setLiveItems] = createState<RepoPlan[] | null>(null)
+  const [issueCounts, setIssueCounts] = createState<Record<string, number>>({})
 
   const fetchAll = async (repos: string[]) => {
     try {
       const results = await Promise.all(
         repos.map(async (repo) => {
-          const n = await fetchIssueCount(repo);
-          return [repo, n] as const;
+          const n = await fetchIssueCount(repo)
+          return [repo, n] as const
         }),
-      );
-      const next: Record<string, number> = {};
-      for (const [repo, n] of results) next[repo] = n;
-      setIssueCounts(next);
+      )
+      const next: Record<string, number> = {}
+      for (const [repo, n] of results) next[repo] = n
+      setIssueCounts(next)
     } catch (e) {
-      console.error(`fetch issue counts failed: ${String(e)}`);
+      console.error(`fetch issue counts failed: ${String(e)}`)
     }
-  };
+  }
 
   const initLive = async () => {
-    console.log("[RepoPlan] initLive start");
+    console.log("[RepoPlan] initLive start")
     if (isAccessor || !live) {
       const repos = isAccessor
         ? (() => {
             try {
               const peeked = (
                 accessorItems as unknown as { peek?: () => RepoPlan[] }
-              )?.peek?.();
+              )?.peek?.()
               if (peeked && Array.isArray(peeked))
-                return peeked.map((r) => r.repo);
+                return peeked.map((r) => r.repo)
             } catch {}
-            return staticItems.map((r) => r.repo);
+            return staticItems.map((r) => r.repo)
           })()
-        : staticItems.map((r) => r.repo);
-      void fetchAll(repos);
-      return;
+        : staticItems.map((r) => r.repo)
+      void fetchAll(repos)
+      return
     }
-    const liveData = await fetchLiveRepoPlans();
-    console.log("[RepoPlan] fetchLiveRepoPlans done", liveData.length);
-    setLiveItems(liveData);
-    void fetchAll(liveData.map((r) => r.repo));
-  };
+    const liveData = await fetchLiveRepoPlans()
+    console.log("[RepoPlan] fetchLiveRepoPlans done", liveData.length)
+    setLiveItems(liveData)
+    void fetchAll(liveData.map((r) => r.repo))
+  }
 
   setTimeout(() => {
-    void initLive();
-  }, 300);
+    void initLive()
+  }, 300)
 
-  const effectiveTitle = live && !isAccessor ? "Active Repos" : title;
+  const effectiveTitle = live && !isAccessor ? "Active Repos" : title
 
   return (
     <box
@@ -559,11 +559,11 @@ export function RepoPlanPanel({
         )}
       </box>
     </box>
-  );
+  )
 }
 
 export function RepoPlanPanelMockWindow() {
-  const { TOP, RIGHT } = Astal.WindowAnchor;
+  const { TOP, RIGHT } = Astal.WindowAnchor
   return (
     <window
       name="repo-plan-panel-mock"
@@ -578,22 +578,22 @@ export function RepoPlanPanelMockWindow() {
       keymode={Astal.Keymode.ON_DEMAND}
       exclusivity={Astal.Exclusivity.IGNORE}
       $={(self: Gtk.Window) => {
-        const key = Gtk.EventControllerKey.new();
-        key.set_propagation_phase(Gtk.PropagationPhase.CAPTURE);
+        const key = Gtk.EventControllerKey.new()
+        key.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
         key.connect(
           "key-pressed",
           (_: Gtk.EventControllerKey, keyval: number) => {
-            if (keyval !== Gdk.KEY_Escape) return false;
-            self.visible = false;
-            return true;
+            if (keyval !== Gdk.KEY_Escape) return false
+            self.visible = false
+            return true
           },
-        );
-        self.add_controller(key);
+        )
+        self.add_controller(key)
       }}
     >
       <box class="repo-plan-window-root">
         <RepoPlanPanel items={MOCK_REPO_PLANS} live={false} />
       </box>
     </window>
-  );
+  )
 }
