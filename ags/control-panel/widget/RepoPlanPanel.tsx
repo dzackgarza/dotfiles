@@ -961,11 +961,11 @@ export function RepoPlanPanel({
                         />
                       </box>
                     ) as unknown as Gtk.Widget
-                    const activeLabelLive = (
+                    const hasActivePathLive = !!entry.activePlanPath && entry.activePlan !== "No plan active"
+                    const activeLabelLiveInner = (
                       <label
                         class={
-                          entry.activePlan &&
-                          entry.activePlan !== "No plan active"
+                          entry.activePlan && entry.activePlan !== "No plan active"
                             ? "repo-plan-active"
                             : "repo-plan-active repo-plan-active-missing"
                         }
@@ -976,11 +976,37 @@ export function RepoPlanPanel({
                         hexpand
                       />
                     ) as unknown as Gtk.Widget
+                    const activeBtnLive = (
+                      <button
+                        class={hasActivePathLive ? "repo-plan-active-btn" : "repo-plan-active-btn repo-plan-active-btn-missing"}
+                        hexpand
+                        halign={Gtk.Align.FILL}
+                        valign={Gtk.Align.CENTER}
+                        sensitive={hasActivePathLive}
+                        tooltipText={hasActivePathLive ? `Render ${entry.activePlanPath} to HTML` : (entry.activePlan ?? "No plan active")}
+                        onClicked={() => {
+                          const planPath = entry.activePlanPath
+                          if (!planPath) return
+                          closeControlCenter()
+                          const safeRepo = entry.repo.replaceAll("/", "-")
+                          const base = planPath.split("/").pop()?.replace(/\.md$/, "") ?? "plan"
+                          const out = `/tmp/${safeRepo}-${base}.html`
+                          const template = "/home/dzack/dotfiles/.pandoc/custom/pandoc_HTML.template"
+                          const hasTemplate = GLib.file_test(template, GLib.FileTest.EXISTS)
+                          const args = hasTemplate ? ["pandoc", planPath, "-s", "-o", out, `--template=${template}`] : ["pandoc", planPath, "-s", "-o", out]
+                          void execAsync(args)
+                            .then(() => execAsync(["xdg-open", out]))
+                            .catch((e) => console.error(`pandoc render failed for ${planPath}: ${String(e)}`))
+                        }}
+                      >
+                        {activeLabelLiveInner}
+                      </button>
+                    ) as unknown as Gtk.Widget
                     self.attach(folderBtn, 0, row, 1, 3)
                     self.attach(launchersBox, 1, row, 1, 1)
                     self.attach(repoBtn, 2, row, 1, 1)
                     self.attach(ghBtn, 1, row + 1, 2, 1)
-                    self.attach(activeLabelLive, 1, row + 2, 2, 1)
+                    self.attach(activeBtnLive, 1, row + 2, 2, 1)
                     self.attach(progressBox, 3, row, 1, 3)
                   })
                 }}
