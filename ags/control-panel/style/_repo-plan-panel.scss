@@ -171,6 +171,18 @@
   color: #{"@theme_fg_color"};
 }
 
+.repo-plan-plan-missing {
+  color: #{"@error_color"};
+  opacity: 0.72;
+  font-style: italic;
+}
+
+.repo-plan-checkout {
+  font-family: monospace;
+  font-size: 10px;
+  letter-spacing: 0.01em;
+}
+
 .gh-plan-icon {
   color: #{"@theme_fg_color"};
   opacity: 0.36;
