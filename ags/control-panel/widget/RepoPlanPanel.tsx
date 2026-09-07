@@ -550,7 +550,7 @@ export function RepoPlanPanel({
               <RepoPlanRow
                 entry={entry}
                 issueCount={issueCounts((m) => m[entry.repo] ?? 0)}
-                hideProgress={true}
+                hideProgress={false}
               />
             )}
           </For>
