@@ -133,6 +133,19 @@ function RepoPlanRow({ entry }: { entry: RepoPlan }) {
           >
             <button
               class="repo-launcher-btn"
+              tooltipText={`Open https://github.com/${entry.repo}`}
+              onClicked={() => {
+                closeControlCenter()
+                void execAsync([
+                  "xdg-open",
+                  `https://github.com/${entry.repo}`,
+                ]).catch((e) => console.error(`xdg-open failed: ${String(e)}`))
+              }}
+            >
+              <image iconName="xsi-github-symbolic" pixelSize={16} />
+            </button>
+            <button
+              class="repo-launcher-btn"
               tooltipText={`Open claude --dangerously-skip-permissions in ${repoPath}`}
               onClicked={() => {
                 closeControlCenter()
