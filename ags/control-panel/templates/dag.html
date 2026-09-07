@@ -309,8 +309,8 @@
         return Math.max(132, Math.min(240, label * 7 + 28))
       }
       const stratifyData = nodesData.map((n) => ({
-        id: n.id,
-        parentIds: parentMap.get(n.id) || [],
+        id: cleanId(n.id),
+        parentIds: parentMap.get(cleanId(n.id)) || [],
         data: n,
         width: n.id === "empty" ? 200 : nodeWidth(n),
         height: 36,
