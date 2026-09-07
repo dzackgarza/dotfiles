@@ -137,14 +137,14 @@ function RepoPlanRow({
       </button>
       <box
         orientation={Gtk.Orientation.VERTICAL}
-        spacing={2}
+        spacing={4}
         hexpand
         halign={Gtk.Align.FILL}
         valign={Gtk.Align.CENTER}
       >
         <box
           orientation={Gtk.Orientation.HORIZONTAL}
-          spacing={6}
+          spacing={8}
           hexpand
           halign={Gtk.Align.FILL}
           valign={Gtk.Align.CENTER}
