@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plan DAG — __VAULT__</title>
+  <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+  <style>
+    :root {
+      --bg: #fcfcf9;
+      --fg: #1a1a1e;
+      --muted: #6b7280;
+      --accent: #5a6b5d;
+      --accent-soft: #eef1eb;
+      --border: #ecece8;
+      --card-bg: #ffffff;
+      --max-w: 1280px;
+      --radius: 14px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: ui-sans-serif, system-ui, -apple-system, Inter, Segoe UI, Roboto, Helvetica, Arial;
+      -webkit-font-smoothing: antialiased;
+    }
+    .page {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 24px 20px 32px;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .header-left h1 {
+      font-family: "Fraunces", ui-serif, Georgia, serif;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0 0 6px;
+    }
+    .header-left p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .header-left code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      background: var(--accent-soft);
+      padding: 2px 6px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+    .controls {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--fg);
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+    }
+    .btn:hover { background: var(--accent-soft); border-color: var(--accent); }
+    .legend {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin: 12px 0 16px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      border: 1px solid var(--border);
+    }
+    #mynetwork {
+      width: 100%;
+      height: 72vh;
+      min-height: 480px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .footer {
+      margin-top: 16px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+    }
+    .node-tooltip {
+      position: absolute;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      box-shadow: var(--shadow);
+      font-size: 13px;
+      line-height: 1.5;
+      max-width: 320px;
+      display: none;
+      z-index: 10;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="header">
+      <div class="header-left">
+        <h1>Plan DAG</h1>
+        <p>Vault <code>__VAULT__</code> · Repo <code>__REPO__</code> · <span id="stats"></span></p>
+        <p style="margin-top:6px; font-size:12px; color:var(--muted)">Drag to pan · Scroll to zoom · Click node for details · Hierarchical layout</p>
+      </div>
+      <div class="controls">
+        <button class="btn" onclick="network.fit({animation:true})">Fit</button>
+        <button class="btn" onclick="network.moveTo({position:{x:0,y:0}, scale:1, animation:true})">Reset</button>
+        <button class="btn" onclick="togglePhysics()"><span id="physLabel">Physics: on</span></button>
+      </div>
+    </div>
+    <div class="legend">
+      <span><span class="legend-dot" style="background:#22c55e"></span> complete</span>
+      <span><span class="legend-dot" style="background:#eab308"></span> in-progress</span>
+      <span><span class="legend-dot" style="background:#f97316"></span> needs review/input</span>
+      <span><span class="legend-dot" style="background:#a1a1aa"></span> unstarted/archived</span>
+      <span><span class="legend-dot" style="background:#ffffff; border:1px dashed #a1a1aa"></span> parent (feature)</span>
+    </div>
+    <div id="mynetwork"></div>
+    <div class="footer">Generated from vault plans · Pan and zoom are enabled · Layout is hierarchical (UD)</div>
+    <div id="tooltip" class="node-tooltip"></div>
+  </div>
+
+  <script type="text/javascript">
+    const nodesData = __NODES_JSON__;
+    const edgesData = __EDGES_JSON__;
+    const container = document.getElementById('mynetwork');
+    const tooltip = document.getElementById('tooltip');
+
+    // Color by status
+    function colorForStatus(s) {
+      if (s === 'complete') return { background: '#dcfce7', border: '#22c55e' };
+      if (s === 'in-progress') return { background: '#fef9c3', border: '#eab308' };
+      if (s === 'needs-agent-review' || s === 'needs-human-input') return { background: '#ffedd5', border: '#f97316' };
+      if (s === 'archived' || s === 'complete-archived') return { background: '#f4f4f5', border: '#a1a1aa' };
+      return { background: '#ffffff', border: '#d4d4d8' };
+    }
+
+    const nodes = new vis.DataSet(nodesData.map(n => {
+      const c = colorForStatus(n.status);
+      // Truncate label for display but keep full title in tooltip
+      const label = n.label.length > 42 ? n.label.slice(0,42) + '…' : n.label;
+      return {
+        id: n.id,
+        label: label,
+        title: n.title + (n.status ? ' — ' + n.status : ''),
+        shape: n.shape || 'box',
+        color: { background: c.background, border: c.border, highlight: { background: c.background, border: '#000' } },
+        borderWidth: 1.2,
+        borderWidthSelected: 2,
+        font: { size: 12, face: 'Inter, system-ui', color: '#1a1a1e', multi: 'html' },
+        margin: { top: 8, bottom: 8, left: 10, right: 10 },
+        shapeProperties: { borderRadius: 8 },
+        // Keep full title for tooltip
+        _fullTitle: n.title,
+        _status: n.status,
+        _id: n.id
+      };
+    }));
+
+    const edges = new vis.DataSet(edgesData.map((e, i) => ({
+      id: 'e' + i,
+      from: e.from,
+      to: e.to,
+      arrows: { to: { enabled: true, scaleFactor: 0.7 } },
+      color: { color: '#d4d4d8', highlight: '#5a6b5d', hover: '#a1a1aa' },
+      width: 1.2,
+      smooth: { enabled: true, type: 'cubicBezier', roundness: 0.4 },
+      hoverWidth: 1.8
+    })));
+
+    const data = { nodes, edges };
+    const options = {
+      layout: {
+        hierarchical: {
+          enabled: true,
+          direction: 'UD',
+          sortMethod: 'directed',
+          levelSeparation: 90,
+          nodeSpacing: 160,
+          treeSpacing: 160,
+          blockShifting: true,
+          edgeMinimization: true,
+          parentCentralization: true
+        }
+      },
+      interaction: {
+        navigationButtons: true,
+        keyboard: { enabled: true },
+        hover: true,
+        hoverConnectedEdges: true,
+        zoomView: true,
+        dragView: true,
+        dragNodes: true,
+        tooltipDelay: 200
+      },
+      physics: {
+        enabled: false,
+        hierarchicalRepulsion: { nodeDistance: 140 }
+      },
+      nodes: {
+        shadow: { enabled: true, color: 'rgba(0,0,0,0.06)', size: 8, x: 0, y: 4 }
+      }
+    };
+
+    const network = new vis.Network(container, data, options);
+    // Fit after stabilization
+    network.once('stabilizationIterationsDone', () => network.fit({animation:true}));
+    setTimeout(() => network.fit({animation:true}), 600);
+
+    // Stats
+    document.getElementById('stats').textContent = nodes.length + ' nodes · ' + edges.length + ' edges';
+
+    // Tooltip on hover
+    network.on('hoverNode', (p) => {
+      const node = nodes.get(p.node);
+      tooltip.innerHTML = '<b>' + esc(node._fullTitle) + '</b><br/><code>' + esc(node._id) + '</code><br/>' + esc(node._status || '');
+      tooltip.style.display = 'block';
+    });
+    network.on('blurNode', () => tooltip.style.display = 'none');
+    network.on('hoverEdge', () => tooltip.style.display = 'none');
+    container.addEventListener('mousemove', (e) => {
+      tooltip.style.left = (e.pageX + 14) + 'px';
+      tooltip.style.top = (e.pageY + 14) + 'px';
+    });
+    network.on('click', (p) => {
+      if (p.nodes.length === 1) {
+        const n = nodes.get(p.nodes[0]);
+        // Could open plan file or show details; for now just focus
+        network.focus(p.nodes[0], { scale: 1.1, animation: { duration: 300 } });
+      }
+    });
+    function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+    let physicsOn = false;
+    function togglePhysics(){
+      physicsOn = !physicsOn;
+      network.setOptions({ physics: { enabled: physicsOn } });
+      document.getElementById('physLabel').textContent = physicsOn ? 'Physics: on' : 'Physics: off';
+    }
+  </script>
+</body>
+</html>
