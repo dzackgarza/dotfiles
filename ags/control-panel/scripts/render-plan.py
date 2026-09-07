@@ -78,6 +78,30 @@ def main():
         if result.returncode != 0:
             print(f"pandoc failed: {result.stderr}", file=sys.stderr)
             sys.exit(result.returncode)
+        # Post-process to fix raw YAML display: pandoc wraps yaml_raw as <p> inside <pre><code>
+        # Replace with correctly escaped raw YAML
+        if raw_yaml and os.path.exists(out):
+            try:
+                import html
+                import re
+                with open(out, 'r', encoding='utf-8') as f:
+                    html_content = f.read()
+                escaped = html.escape(raw_yaml)
+                # Replace the inner of <pre class="yaml-raw"><code>...</code></pre>
+                # The pandoc output currently has <pre class="yaml-raw"><code><p>...</p></code></pre> or similar
+                pattern = r'<pre class="yaml-raw"><code>.*?</code></pre>'
+                replacement = f'<pre class="yaml-raw"><code>{escaped}</code></pre>'
+                new_html, n = re.subn(pattern, replacement, html_content, flags=re.DOTALL)
+                if n == 0:
+                    # Fallback: try without class
+                    pattern2 = r'<pre><code>.*?</code></pre>'
+                    # Only replace if yaml_raw is inside
+                    pass
+                else:
+                    with open(out, 'w', encoding='utf-8') as f:
+                        f.write(new_html)
+            except Exception as e:
+                print(f"post-process failed: {e}", file=sys.stderr)
         print(f"Rendered {plan_path} -> {out}")
     finally:
         try:
