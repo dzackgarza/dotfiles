@@ -47,7 +47,18 @@
 
 // ── List ──
 .repo-plan-list {
-  // spacing handled by row margins/borders, not gap alone
+  // legacy Box list — now replaced by single Gtk.Grid for uniform columns
+}
+
+.repo-plan-list-grid {
+  // single Grid that holds all rows — columns shared across every entry
+}
+
+.repo-plan-row-bg {
+  background: #{"alpha(@card_bg_color, 0.52)"};
+  border: 1px solid #{"alpha(@theme_fg_color, 0.06)"};
+  border-radius: 10px;
+  // padding is handled by inner Grid cells, not this bg
 }
 
 // ── Row: uniform grid via Gtk.Grid — 8px base, aligned columns ──
