@@ -616,8 +616,19 @@
 
         for (const link of links) {
           let pts = link.points
-          // Fallback if points not provided: use source/target straight
-          if (!pts || pts.length < 2) {
+          // Fallback if points not provided or contain NaN (after rank wrapping)
+          const badPts =
+            !pts ||
+            pts.length < 2 ||
+            pts.some(
+              (p) =>
+                !p ||
+                typeof p.x !== "number" ||
+                typeof p.y !== "number" ||
+                isNaN(p.x) ||
+                isNaN(p.y),
+            )
+          if (badPts) {
             const s = link.source,
               t = link.target
             const sx = s.x,
