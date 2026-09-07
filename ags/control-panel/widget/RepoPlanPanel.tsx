@@ -285,8 +285,8 @@ function RepoPlanRow({
       </box>
       <box
         orientation={Gtk.Orientation.VERTICAL}
-        spacing={4}
-        widthRequest={140}
+        spacing={6}
+        widthRequest={112}
         halign={Gtk.Align.FILL}
         valign={Gtk.Align.CENTER}
       >
