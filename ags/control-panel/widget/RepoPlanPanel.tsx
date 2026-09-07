@@ -10,6 +10,7 @@ export interface RepoPlan {
   plan: string
   progress: number
   activePlan?: string
+  activePlanPath?: string
 }
 
 export const MOCK_REPO_PLANS: RepoPlan[] = [
@@ -99,6 +100,7 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
         const hasLocal = !!checkout
         let percent = 0
         let activePlan: string = "No plan active"
+        let activePlanPath: string = ""
         try {
           const out = await execAsync([
             "python3",
@@ -111,6 +113,7 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
             percent: number
             vault: string
             activePlan: string
+            activePlanPath: string
           }
           if (j.total > 0) {
             percent = j.percent
@@ -118,6 +121,7 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
             percent = 0
           }
           if (j.activePlan) activePlan = j.activePlan
+          if (j.activePlanPath) activePlanPath = j.activePlanPath
         } catch {
           percent = hasLocal ? 78 : 12
         }
@@ -126,6 +130,7 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
           plan: hasLocal ? (checkout as string) : "No local checkout",
           progress: percent,
           activePlan,
+          activePlanPath,
         }
       }),
     )
@@ -138,6 +143,7 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
         const hasLocal = !!checkout
         let percent = 0
         let activePlan: string = "No plan active"
+        let activePlanPath: string = ""
         try {
           const out = await execAsync([
             "python3",
@@ -150,10 +156,12 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
             percent: number
             vault: string
             activePlan: string
+            activePlanPath: string
           }
           if (j.total > 0) percent = j.percent
           else percent = 0
           if (j.activePlan) activePlan = j.activePlan
+          if (j.activePlanPath) activePlanPath = j.activePlanPath
         } catch {
           percent = hasLocal ? r.progress : 12
         }
@@ -162,6 +170,7 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
           plan: hasLocal ? (checkout as string) : "No local checkout",
           progress: percent,
           activePlan,
+          activePlanPath,
         }
       }),
     )
