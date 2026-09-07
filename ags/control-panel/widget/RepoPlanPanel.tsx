@@ -68,11 +68,11 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
       return t >= cutoff
     })
     return recent.map((r) => {
-      const local = map[r.nameWithOwner]
-      const hasLocal = !!local && local !== "None"
+      const checkout = getCheckout(map[r.nameWithOwner])
+      const hasLocal = !!checkout
       return {
         repo: r.nameWithOwner,
-        plan: hasLocal ? (local as string) : "No local checkout",
+        plan: hasLocal ? (checkout as string) : "No local checkout",
         progress: hasLocal ? 78 : 12,
       }
     })
