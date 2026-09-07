@@ -40,7 +40,7 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
       "list",
       "dzackgarza",
       "--limit",
-      "50",
+      "100",
       "--json",
       "nameWithOwner,pushedAt",
     ])
@@ -51,8 +51,14 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
       const tb = b.pushedAt ? new Date(b.pushedAt).getTime() : 0
       return tb - ta
     })
-    const top = arr.slice(0, 15)
-    return top.map((r) => {
+    // Filter to past 14 days only
+    const cutoff = Date.now() - 14 * 24 * 60 * 60 * 1000
+    const recent = arr.filter((r) => {
+      if (!r.pushedAt) return false
+      const t = new Date(r.pushedAt).getTime()
+      return t >= cutoff
+    })
+    return recent.map((r) => {
       const local = map[r.nameWithOwner]
       const hasLocal = !!local && local !== "None"
       return {
