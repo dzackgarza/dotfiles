@@ -98,24 +98,77 @@ function RepoPlanRow({ entry }: { entry: RepoPlan }) {
         halign={Gtk.Align.FILL}
         valign={Gtk.Align.CENTER}
       >
-        <button
-          class="repo-plan-repo-btn"
-          tooltipText={`Open ${repoPath} in kitty`}
-          onClicked={() => {
-            closeControlCenter()
-            void execAsync(["kitty", "-d", repoPath]).catch((e) =>
-              console.error(`kitty -d ${repoPath} failed: ${String(e)}`),
-            )
-          }}
+        <box
+          orientation={Gtk.Orientation.HORIZONTAL}
+          spacing={6}
+          hexpand
+          halign={Gtk.Align.FILL}
+          valign={Gtk.Align.CENTER}
         >
-          <label
-            class="repo-plan-repo"
-            xalign={0}
-            ellipsize={3}
-            maxWidthChars={28}
-            label={entry.repo}
-          />
-        </button>
+          <button
+            class="repo-plan-repo-btn"
+            tooltipText={`Open ${repoPath} in kitty`}
+            hexpand
+            halign={Gtk.Align.FILL}
+            onClicked={() => {
+              closeControlCenter()
+              void execAsync(["kitty", "-d", repoPath]).catch((e) =>
+                console.error(`kitty -d ${repoPath} failed: ${String(e)}`),
+              )
+            }}
+          >
+            <label
+              class="repo-plan-repo"
+              xalign={0}
+              ellipsize={3}
+              maxWidthChars={24}
+              label={entry.repo}
+            />
+          </button>
+          <box
+            orientation={Gtk.Orientation.HORIZONTAL}
+            spacing={2}
+            halign={Gtk.Align.END}
+            valign={Gtk.Align.CENTER}
+          >
+            <button
+              class="repo-launcher-btn"
+              tooltipText={`Open claude in ${repoPath}`}
+              onClicked={() => {
+                closeControlCenter()
+                void execAsync(["kitty", "-d", repoPath, "claude"]).catch((e) =>
+                  console.error(`kitty claude failed: ${String(e)}`),
+                )
+              }}
+            >
+              <image iconName="claude-ai-symbolic" pixelSize={16} />
+            </button>
+            <button
+              class="repo-launcher-btn"
+              tooltipText={`Open chatgpt in ${repoPath}`}
+              onClicked={() => {
+                closeControlCenter()
+                void execAsync(["kitty", "-d", repoPath, "codex"]).catch((e) =>
+                  console.error(`kitty codex failed: ${String(e)}`),
+                )
+              }}
+            >
+              <image iconName="openai-symbolic" pixelSize={16} />
+            </button>
+            <button
+              class="repo-launcher-btn"
+              tooltipText={`Open opencode in ${repoPath}`}
+              onClicked={() => {
+                closeControlCenter()
+                void execAsync(["kitty", "-d", repoPath, "opencode"]).catch(
+                  (e) => console.error(`kitty opencode failed: ${String(e)}`),
+                )
+              }}
+            >
+              <image iconName="opencode-symbolic" pixelSize={16} />
+            </button>
+          </box>
+        </box>
         <label
           class="repo-plan-plan"
           xalign={0}
