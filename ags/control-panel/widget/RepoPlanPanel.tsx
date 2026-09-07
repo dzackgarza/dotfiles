@@ -191,7 +191,7 @@ function RepoPlanRow({
                 )
               }}
             >
-              <image iconName="claude-ai-symbolic" pixelSize={16} />
+              <image iconName="claude-ai-symbolic" pixelSize={14} />
             </button>
             <button
               class="repo-launcher-btn"
@@ -210,7 +210,7 @@ function RepoPlanRow({
                 )
               }}
             >
-              <image iconName="openai-symbolic" pixelSize={16} />
+              <image iconName="openai-symbolic" pixelSize={14} />
             </button>
             <button
               class="repo-launcher-btn"
@@ -222,7 +222,7 @@ function RepoPlanRow({
                 )
               }}
             >
-              <image iconName="opencode-symbolic" pixelSize={16} />
+              <image iconName="opencode-symbolic" pixelSize={14} />
             </button>
           </box>
         </box>
