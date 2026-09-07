@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import json
 import os
 import re
 import subprocess
@@ -46,7 +47,16 @@ def get_progress(repo_short):
             pass
     if not vault_path or not os.path.isdir(vault_path):
         print(
-            '{"total":0,"completed":0,"percent":0,"vault":"No vault initialized","activePlan":"No plan active"}'
+            json.dumps(
+                {
+                    "total": 0,
+                    "completed": 0,
+                    "percent": 0,
+                    "vault": "No vault initialized",
+                    "activePlan": "No plan active",
+                    "activePlanPath": "",
+                }
+            )
         )
         return
     result = subprocess.run(
@@ -78,7 +88,6 @@ def get_progress(repo_short):
                         if m_title
                         else os.path.basename(p)
                     )
-                    # Use mtime for sorting most recent
                     mtime = os.path.getmtime(p)
                     active_candidates.append((mtime, status, title, p))
         except:
@@ -86,23 +95,38 @@ def get_progress(repo_short):
     percent = int(completed * 100 / total) if total > 0 else 0
     vault_name = os.path.basename(vault_path)
     activePlan = "No plan active"
+    activePlanPath = ""
     if active_candidates:
-        # Most recent by mtime
         active_candidates.sort(key=lambda x: x[0], reverse=True)
         activePlan = active_candidates[0][2]
-        # Escape quotes for JSON
-        activePlan = activePlan.replace('"', '\\"')
-    # Escape vault name
-    vault_name_esc = vault_name.replace('"', '\\"')
+        activePlanPath = active_candidates[0][3]
     print(
-        f'{{"total":{total},"completed":{completed},"percent":{percent},"vault":"{vault_name_esc}","activePlan":"{activePlan}"}}'
+        json.dumps(
+            {
+                "total": total,
+                "completed": completed,
+                "percent": percent,
+                "vault": vault_name,
+                "activePlan": activePlan,
+                "activePlanPath": activePlanPath,
+            }
+        )
     )
 
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print(
-            '{"total":0,"completed":0,"percent":0,"vault":"No vault initialized","activePlan":"No plan active"}'
+            json.dumps(
+                {
+                    "total": 0,
+                    "completed": 0,
+                    "percent": 0,
+                    "vault": "No vault initialized",
+                    "activePlan": "No plan active",
+                    "activePlanPath": "",
+                }
+            )
         )
     else:
         get_progress(sys.argv[1])
