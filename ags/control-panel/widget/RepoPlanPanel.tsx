@@ -166,6 +166,7 @@ function RepoPlanRow({
           >
             <Gtk.Overlay class="gh-overlay">
               <button
+                $type="child"
                 class="repo-launcher-btn"
                 tooltipText={`Open https://github.com/${entry.repo}`}
                 onClicked={() => {
@@ -178,10 +179,7 @@ function RepoPlanRow({
                   )
                 }}
               >
-                <image
-                  file="/usr/share/icons/hicolor/scalable/actions/xsi-github-symbolic.svg"
-                  pixelSize={16}
-                />
+                <image iconName="xsi-github-symbolic" pixelSize={16} />
               </button>
               {issueCount ? (
                 <label
