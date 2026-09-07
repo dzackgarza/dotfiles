@@ -216,6 +216,19 @@
   letter-spacing: 0.01em;
 }
 
+.repo-plan-active {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  opacity: 0.52;
+  color: #{"@theme_fg_color"};
+  font-style: italic;
+}
+
+.repo-plan-active-missing {
+  opacity: 0.38;
+}
+
 .gh-plan-icon {
   color: #{"@theme_fg_color"};
   opacity: 0.36;
