@@ -40,7 +40,7 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
       "list",
       "dzackgarza",
       "--limit",
-      "100",
+      "200",
       "--json",
       "nameWithOwner,pushedAt",
     ])
