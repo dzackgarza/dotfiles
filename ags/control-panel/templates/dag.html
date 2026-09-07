@@ -409,9 +409,14 @@
 
         // Sugiyama in d3-dag 1.1 uses nodeSize + gap, not size; we fit later via viewBox/zoom
         try {
-          sug = sug.nodeSize((d) => [d.data ? d.data.width || 140 : 140, d.data ? d.data.height || 36 : 36])
+          sug = sug.nodeSize((d) => [
+            d.data ? d.data.width || 140 : 140,
+            d.data ? d.data.height || 36 : 36,
+          ])
         } catch (e) {
-          try { sug = sug.nodeSize((d) => [d.width || 140, d.height || 36]) } catch(e2){}
+          try {
+            sug = sug.nodeSize((d) => [d.width || 140, d.height || 36])
+          } catch (e2) {}
         }
         try {
           sug = sug.gap([14, 14])
