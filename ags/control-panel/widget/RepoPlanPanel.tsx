@@ -246,22 +246,22 @@ function RepoPlanRow({
           >
             <image iconName="xsi-github-symbolic" pixelSize={10} />
             <label
-              class="repo-plan-plan"
-              xalign={0}
-              ellipsize={3}
-              maxWidthChars={20}
-              label={entry.plan}
-              hexpand
-            />
-            <label
               class="issue-badge"
-              halign={Gtk.Align.END}
+              halign={Gtk.Align.CENTER}
               valign={Gtk.Align.CENTER}
               label={
                 issueCount
                   ? issueCount((n) => (n > 99 ? "99+" : String(n)))
                   : "0"
               }
+            />
+            <label
+              class="repo-plan-plan"
+              xalign={0}
+              ellipsize={3}
+              maxWidthChars={20}
+              label={entry.plan}
+              hexpand
             />
           </box>
         </button>
