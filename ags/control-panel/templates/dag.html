@@ -614,12 +614,21 @@
         document.getElementById("resetBtn").onclick = reset
         document.getElementById("dirBtn").onclick = () => {
           const nd = direction === "TB" ? "LR" : "TB"
-          try { localStorage.setItem("dag-direction", nd) } catch(e) {}
+          try {
+            localStorage.setItem("dag-direction", nd)
+          } catch (e) {}
           location.reload()
         }
         document.getElementById("qualityBtn").onclick = () => {
-          const nq = quality === "medium" ? "fast" : quality === "fast" ? "slow" : "medium"
-          try { localStorage.setItem("dag-quality", nq) } catch(e) {}
+          const nq =
+            quality === "medium"
+              ? "fast"
+              : quality === "fast"
+                ? "slow"
+                : "medium"
+          try {
+            localStorage.setItem("dag-quality", nq)
+          } catch (e) {}
           location.reload()
         }
         document.getElementById("dirBtn").textContent =
