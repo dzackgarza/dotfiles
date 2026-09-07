@@ -185,6 +185,7 @@ function RepoPlanRow({
               </button>
               {issueCount ? (
                 <label
+                  $type="overlay"
                   class="gh-badge"
                   halign={Gtk.Align.END}
                   valign={Gtk.Align.START}
@@ -195,7 +196,7 @@ function RepoPlanRow({
                   canTarget={false}
                 />
               ) : (
-                <box visible={false} />
+                <box $type="overlay" visible={false} />
               )}
             </Gtk.Overlay>
             <button
