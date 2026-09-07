@@ -453,6 +453,10 @@ export function RepoPlanPanel({
 
   // Live fetch: last 15 active repos mapped via static repo-map.json
   const initLive = async () => {
+    try {
+      await execAsync(["bash", "-c", "echo initLive-start-$(date) >> /tmp/live-debug.log"])
+    } catch {}
+    console.log("[RepoPlan] initLive start")
     if (isAccessor || !live) {
       // static mode: use provided items
       const repos = isAccessor
@@ -470,7 +474,10 @@ export function RepoPlanPanel({
       void fetchAll(repos)
       return
     }
-    const live = await fetchLiveRepoPlans()
+    console.log("[RepoPlan] fetchLiveRepoPlans done", live.length)
+    try {
+      await execAsync(["bash", "-c", `echo live-count-${live.length} >> /tmp/live-debug.log`])
+    } catch {}
     setLiveItems(live)
     void fetchAll(live.map((r) => r.repo))
   }
