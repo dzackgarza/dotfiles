@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+import re
 import subprocess
 import sys
 
@@ -7,14 +8,12 @@ vault_base = "/home/dzack/.agent-memory-vault/projects"
 
 
 def get_progress(repo_short):
-    # Try vault ids
     candidates = [
         f"github.com__dzackgarza__{repo_short}",
         f"github.com__dzackgarza__{repo_short.lower()}",
-        repo_short,  # for textext-v2 style
+        repo_short,
         repo_short.lower(),
     ]
-    # Also handle case where repo_short is full nameWithOwner, extract short
     if "/" in repo_short:
         short = repo_short.split("/")[-1]
         candidates.extend(
@@ -31,7 +30,6 @@ def get_progress(repo_short):
         if os.path.isdir(p):
             vault_path = p
             break
-    # Fallback: search for any vault dir ending with __<short> case-insensitive
     if not vault_path:
         try:
             for entry in os.listdir(vault_base):
@@ -47,9 +45,10 @@ def get_progress(repo_short):
         except:
             pass
     if not vault_path or not os.path.isdir(vault_path):
-        print('{"total":0,"completed":0,"percent":0,"vault":"No vault initialized"}')
+        print(
+            '{"total":0,"completed":0,"percent":0,"vault":"No vault initialized","activePlan":"No plan active"}'
+        )
         return
-    # Find PLAN-*.md
     result = subprocess.run(
         ["/usr/bin/find", vault_path, "-name", "PLAN-*.md"],
         capture_output=True,
@@ -58,29 +57,52 @@ def get_progress(repo_short):
     plans = [l.strip() for l in result.stdout.splitlines() if l.strip()]
     total = len(plans)
     completed = 0
+    active_candidates = []
     for p in plans:
         try:
             with open(p) as f:
                 content = f.read()
-                # Look for status: complete (allow quoted or not)
-                if (
-                    "status: complete" in content
-                    or 'status: "complete"' in content
-                    or "status: 'complete'" in content
-                ):
+                m_status = re.search(r"^status:\s*(.+)", content, re.MULTILINE)
+                status = m_status.group(1).strip().strip("\"'") if m_status else ""
+                if status == "complete":
                     completed += 1
+                if status in [
+                    "in-progress",
+                    "needs-agent-review",
+                    "needs-human-input",
+                    "approved-and-unstarted",
+                ]:
+                    m_title = re.search(r"^title:\s*(.+)", content, re.MULTILINE)
+                    title = (
+                        m_title.group(1).strip().strip("\"'")
+                        if m_title
+                        else os.path.basename(p)
+                    )
+                    # Use mtime for sorting most recent
+                    mtime = os.path.getmtime(p)
+                    active_candidates.append((mtime, status, title, p))
         except:
             pass
     percent = int(completed * 100 / total) if total > 0 else 0
-    # vault name is basename
     vault_name = os.path.basename(vault_path)
+    activePlan = "No plan active"
+    if active_candidates:
+        # Most recent by mtime
+        active_candidates.sort(key=lambda x: x[0], reverse=True)
+        activePlan = active_candidates[0][2]
+        # Escape quotes for JSON
+        activePlan = activePlan.replace('"', '\\"')
+    # Escape vault name
+    vault_name_esc = vault_name.replace('"', '\\"')
     print(
-        f'{{"total":{total},"completed":{completed},"percent":{percent},"vault":"{vault_name}"}}'
+        f'{{"total":{total},"completed":{completed},"percent":{percent},"vault":"{vault_name_esc}","activePlan":"{activePlan}"}}'
     )
 
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print('{"total":0,"completed":0,"percent":0,"vault":"No vault initialized"}')
+        print(
+            '{"total":0,"completed":0,"percent":0,"vault":"No vault initialized","activePlan":"No plan active"}'
+        )
     else:
         get_progress(sys.argv[1])
