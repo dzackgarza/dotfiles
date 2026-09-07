@@ -13,11 +13,36 @@ export interface RepoPlan {
 }
 
 export const MOCK_REPO_PLANS: RepoPlan[] = [
-  { repo: "dzackgarza/dotfiles", plan: "control-center-v2", progress: 73, activePlan: "Repo Plans panel polish" },
-  { repo: "dzackgarza/notes", plan: "vault-audit", progress: 41, activePlan: "No plan active" },
-  { repo: "dzackgarza/ai-review-ci", plan: "gate-harness", progress: 92, activePlan: "QC gate hardening" },
-  { repo: "dzackgarza/opencode", plan: "plan-42-refactor", progress: 18, activePlan: "Opencode integration" },
-  { repo: "dzackgarza/repo-plans", plan: "repo-panel-mock", progress: 56, activePlan: "No plan active" },
+  {
+    repo: "dzackgarza/dotfiles",
+    plan: "control-center-v2",
+    progress: 73,
+    activePlan: "Repo Plans panel polish",
+  },
+  {
+    repo: "dzackgarza/notes",
+    plan: "vault-audit",
+    progress: 41,
+    activePlan: "No plan active",
+  },
+  {
+    repo: "dzackgarza/ai-review-ci",
+    plan: "gate-harness",
+    progress: 92,
+    activePlan: "QC gate hardening",
+  },
+  {
+    repo: "dzackgarza/opencode",
+    plan: "plan-42-refactor",
+    progress: 18,
+    activePlan: "Opencode integration",
+  },
+  {
+    repo: "dzackgarza/repo-plans",
+    plan: "repo-panel-mock",
+    progress: 56,
+    activePlan: "No plan active",
+  },
 ]
 
 const REPO_MAP_PATH = `${GLib.get_home_dir()}/dotfiles/ags/control-panel/repo-map.json`
@@ -903,7 +928,8 @@ export function RepoPlanPanel({
                     const activeLabelLive = (
                       <label
                         class={
-                          entry.activePlan && entry.activePlan !== "No plan active"
+                          entry.activePlan &&
+                          entry.activePlan !== "No plan active"
                             ? "repo-plan-active"
                             : "repo-plan-active repo-plan-active-missing"
                         }
