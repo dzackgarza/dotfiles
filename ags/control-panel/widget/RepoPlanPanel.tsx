@@ -187,13 +187,7 @@ function RepoPlanRow({
   const hasLocal = !isMissing
 
   return (
-    <box
-      class="repo-plan-row"
-      orientation={Gtk.Orientation.HORIZONTAL}
-      spacing={10}
-      hexpand
-      halign={Gtk.Align.FILL}
-    >
+    <box class="repo-plan-row" hexpand halign={Gtk.Align.FILL}>
       <button
         class={
           isMissing
@@ -220,182 +214,160 @@ function RepoPlanRow({
           class="repo-plan-icon"
         />
       </button>
-      <box
-        orientation={Gtk.Orientation.VERTICAL}
-        spacing={4}
+      <box class="repo-launchers">
+        <button
+          class="repo-launcher-btn"
+          tooltipText={
+            hasLocal
+              ? `Open claude --dangerously-skip-permissions in ${repoPath}`
+              : "No local checkout — cannot launch"
+          }
+          sensitive={hasLocal}
+          onClicked={() => {
+            if (!hasLocal) return
+            closeControlCenter()
+            void execAsync([
+              "kitty",
+              "-d",
+              repoPath,
+              "claude",
+              "--dangerously-skip-permissions",
+            ]).catch((e) =>
+              console.error(`kitty claude failed: ${String(e)}`),
+            )
+          }}
+        >
+          <image iconName="claude-ai-symbolic" pixelSize={14} />
+        </button>
+        <button
+          class="repo-launcher-btn"
+          tooltipText={
+            hasLocal
+              ? `Open codex --yolo --search in ${repoPath}`
+              : "No local checkout — cannot launch"
+          }
+          sensitive={hasLocal}
+          onClicked={() => {
+            if (!hasLocal) return
+            closeControlCenter()
+            void execAsync([
+              "kitty",
+              "-d",
+              repoPath,
+              "codex",
+              "--yolo",
+              "--search",
+            ]).catch((e) =>
+              console.error(`kitty codex failed: ${String(e)}`),
+            )
+          }}
+        >
+          <image iconName="openai-symbolic" pixelSize={14} />
+        </button>
+        <button
+          class="repo-launcher-btn"
+          tooltipText={
+            hasLocal
+              ? `Open opencode in ${repoPath}`
+              : "No local checkout — cannot launch"
+          }
+          sensitive={hasLocal}
+          onClicked={() => {
+            if (!hasLocal) return
+            closeControlCenter()
+            void execAsync(["kitty", "-d", repoPath, "opencode"]).catch(
+              (e) => console.error(`kitty opencode failed: ${String(e)}`),
+            )
+          }}
+        >
+          <image iconName="opencode-symbolic" pixelSize={14} />
+        </button>
+      </box>
+      <button
+        class="repo-plan-repo-btn"
+        tooltipText={
+          hasLocal
+            ? `Open ${repoPath} in kitty`
+            : `Open ${repoPath} — No local checkout`
+        }
         hexpand
         halign={Gtk.Align.FILL}
-        valign={Gtk.Align.CENTER}
+        sensitive={hasLocal}
+        onClicked={() => {
+          if (!hasLocal) return
+          closeControlCenter()
+          void execAsync(["kitty", "-d", repoPath]).catch((e) =>
+            console.error(`kitty -d ${repoPath} failed: ${String(e)}`),
+          )
+        }}
+      >
+        <label
+          class="repo-plan-repo"
+          xalign={0}
+          ellipsize={3}
+          maxWidthChars={24}
+          label={entry.repo}
+        />
+      </button>
+      <button
+        class="gh-plan-btn"
+        tooltipText={`Open https://github.com/${entry.repo}`}
+        onClicked={() => {
+          closeControlCenter()
+          void execAsync([
+            "xdg-open",
+            `https://github.com/${entry.repo}`,
+          ]).catch((e) => console.error(`xdg-open failed: ${String(e)}`))
+        }}
       >
         <box
           orientation={Gtk.Orientation.HORIZONTAL}
-          spacing={8}
+          spacing={6}
           hexpand
           halign={Gtk.Align.FILL}
           valign={Gtk.Align.CENTER}
         >
-          <box
-            orientation={Gtk.Orientation.HORIZONTAL}
-            spacing={4}
-            halign={Gtk.Align.START}
-            valign={Gtk.Align.CENTER}
-          >
-            <button
-              class="repo-launcher-btn"
-              tooltipText={
-                hasLocal
-                  ? `Open claude --dangerously-skip-permissions in ${repoPath}`
-                  : "No local checkout — cannot launch"
-              }
-              sensitive={hasLocal}
-              onClicked={() => {
-                if (!hasLocal) return
-                closeControlCenter()
-                void execAsync([
-                  "kitty",
-                  "-d",
-                  repoPath,
-                  "claude",
-                  "--dangerously-skip-permissions",
-                ]).catch((e) =>
-                  console.error(`kitty claude failed: ${String(e)}`),
-                )
-              }}
-            >
-              <image iconName="claude-ai-symbolic" pixelSize={14} />
-            </button>
-            <button
-              class="repo-launcher-btn"
-              tooltipText={
-                hasLocal
-                  ? `Open codex --yolo --search in ${repoPath}`
-                  : "No local checkout — cannot launch"
-              }
-              sensitive={hasLocal}
-              onClicked={() => {
-                if (!hasLocal) return
-                closeControlCenter()
-                void execAsync([
-                  "kitty",
-                  "-d",
-                  repoPath,
-                  "codex",
-                  "--yolo",
-                  "--search",
-                ]).catch((e) =>
-                  console.error(`kitty codex failed: ${String(e)}`),
-                )
-              }}
-            >
-              <image iconName="openai-symbolic" pixelSize={14} />
-            </button>
-            <button
-              class="repo-launcher-btn"
-              tooltipText={
-                hasLocal
-                  ? `Open opencode in ${repoPath}`
-                  : "No local checkout — cannot launch"
-              }
-              sensitive={hasLocal}
-              onClicked={() => {
-                if (!hasLocal) return
-                closeControlCenter()
-                void execAsync(["kitty", "-d", repoPath, "opencode"]).catch(
-                  (e) => console.error(`kitty opencode failed: ${String(e)}`),
-                )
-              }}
-            >
-              <image iconName="opencode-symbolic" pixelSize={14} />
-            </button>
-          </box>
-          <button
-            class="repo-plan-repo-btn"
-            tooltipText={
-              hasLocal
-                ? `Open ${repoPath} in kitty`
-                : `Open ${repoPath} — No local checkout`
+          <image
+            iconName="xsi-github-symbolic"
+            pixelSize={12}
+            class="gh-plan-icon"
+          />
+          <label
+            class={
+              issueCount
+                ? issueCount((n) =>
+                    n > 0
+                      ? "issue-badge issue-badge-has-issues"
+                      : "issue-badge",
+                  )
+                : "issue-badge"
             }
-            hexpand
-            halign={Gtk.Align.FILL}
-            sensitive={hasLocal}
-            onClicked={() => {
-              if (!hasLocal) return
-              closeControlCenter()
-              void execAsync(["kitty", "-d", repoPath]).catch((e) =>
-                console.error(`kitty -d ${repoPath} failed: ${String(e)}`),
-              )
-            }}
-          >
-            <label
-              class="repo-plan-repo"
-              xalign={0}
-              ellipsize={3}
-              maxWidthChars={24}
-              label={entry.repo}
-            />
-          </button>
-        </box>
-        <button
-          class="gh-plan-btn"
-          tooltipText={`Open https://github.com/${entry.repo}`}
-          onClicked={() => {
-            closeControlCenter()
-            void execAsync([
-              "xdg-open",
-              `https://github.com/${entry.repo}`,
-            ]).catch((e) => console.error(`xdg-open failed: ${String(e)}`))
-          }}
-        >
-          <box
-            orientation={Gtk.Orientation.HORIZONTAL}
-            spacing={6}
-            hexpand
-            halign={Gtk.Align.FILL}
+            halign={Gtk.Align.CENTER}
             valign={Gtk.Align.CENTER}
-          >
-            <image
-              iconName="xsi-github-symbolic"
-              pixelSize={12}
-              class="gh-plan-icon"
-            />
-            <label
-              class={
-                issueCount
-                  ? issueCount((n) =>
-                      n > 0
-                        ? "issue-badge issue-badge-has-issues"
-                        : "issue-badge",
-                    )
-                  : "issue-badge"
-              }
-              halign={Gtk.Align.CENTER}
-              valign={Gtk.Align.CENTER}
-              label={
-                issueCount
-                  ? issueCount((n) => (n > 99 ? "99+" : String(n)))
-                  : "0"
-              }
-            />
-            <label
-              class={
-                isMissing
-                  ? "repo-plan-plan repo-plan-plan-missing"
-                  : hasLocal && localPath
-                    ? "repo-plan-plan repo-plan-checkout"
-                    : "repo-plan-plan"
-              }
-              xalign={0}
-              ellipsize={3}
-              maxWidthChars={isMissing ? 20 : 28}
-              label={entry.plan}
-              hexpand
-            />
-          </box>
-        </button>
-      </box>
+            label={
+              issueCount
+                ? issueCount((n) => (n > 99 ? "99+" : String(n)))
+                : "0"
+            }
+          />
+          <label
+            class={
+              isMissing
+                ? "repo-plan-plan repo-plan-plan-missing"
+                : hasLocal && localPath
+                  ? "repo-plan-plan repo-plan-checkout"
+                  : "repo-plan-plan"
+            }
+            xalign={0}
+            ellipsize={3}
+            maxWidthChars={isMissing ? 20 : 28}
+            label={entry.plan}
+            hexpand
+          />
+        </box>
+      </button>
       <box
-        orientation={Gtk.Orientation.VERTICAL}
-        spacing={6}
+        class="progress-col"
         widthRequest={hideProgress ? 1 : 112}
         halign={Gtk.Align.FILL}
         valign={Gtk.Align.CENTER}
