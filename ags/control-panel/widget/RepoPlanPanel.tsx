@@ -647,7 +647,7 @@ export function RepoPlanPanel({
                       ? ""
                       : (localPath ?? getRepoPath(entry.repo))
                     const hasLocal = !isMissing
-                    const row = idx * 2
+                    const row = idx * 3
                     const bg = (
                       <box
                         class="repo-plan-row-bg"
@@ -656,7 +656,7 @@ export function RepoPlanPanel({
                         valign={Gtk.Align.FILL}
                       />
                     ) as unknown as Gtk.Widget
-                    self.attach(bg, 0, row, 4, 2)
+                    self.attach(bg, 0, row, 4, 3)
                     const folderBtn = (
                       <button
                         class={
@@ -900,11 +900,26 @@ export function RepoPlanPanel({
                         />
                       </box>
                     ) as unknown as Gtk.Widget
-                    self.attach(folderBtn, 0, row, 1, 2)
+                    const activeLabelLive = (
+                      <label
+                        class={
+                          entry.activePlan && entry.activePlan !== "No plan active"
+                            ? "repo-plan-active"
+                            : "repo-plan-active repo-plan-active-missing"
+                        }
+                        xalign={0}
+                        ellipsize={3}
+                        maxWidthChars={32}
+                        label={entry.activePlan ?? "No plan active"}
+                        hexpand
+                      />
+                    ) as unknown as Gtk.Widget
+                    self.attach(folderBtn, 0, row, 1, 3)
                     self.attach(launchersBox, 1, row, 1, 1)
                     self.attach(repoBtn, 2, row, 1, 1)
                     self.attach(ghBtn, 1, row + 1, 2, 1)
-                    self.attach(progressBox, 3, row, 1, 2)
+                    self.attach(activeLabelLive, 1, row + 2, 2, 1)
+                    self.attach(progressBox, 3, row, 1, 3)
                   })
                 }}
               />
