@@ -524,7 +524,17 @@ export function ControlCenterWindow() {
         keymode={Astal.Keymode.ON_DEMAND}
         exclusivity={Astal.Exclusivity.IGNORE}
       >
-        {panel}
+        <Gtk.ScrolledWindow
+          class="nc-scroller"
+          hscrollbarPolicy={Gtk.PolicyType.NEVER}
+          vscrollbarPolicy={Gtk.PolicyType.AUTOMATIC}
+          hexpand
+          vexpand={false}
+          maxContentHeight={getControlCenterMaxHeight()}
+          propagateNaturalHeight={false}
+        >
+          {panel}
+        </Gtk.ScrolledWindow>
       </window>
     </>
   )
