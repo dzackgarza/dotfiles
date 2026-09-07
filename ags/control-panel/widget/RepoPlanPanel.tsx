@@ -332,8 +332,8 @@ function RepoPlanRow({
         const ghBtn = (
           <button
             class="gh-plan-btn"
-            hexpand
-            halign={Gtk.Align.FILL}
+            halign={Gtk.Align.START}
+            valign={Gtk.Align.CENTER}
             tooltipText={`Open https://github.com/${entry.repo}`}
             onClicked={() => {
               closeControlCenter()
@@ -346,8 +346,7 @@ function RepoPlanRow({
             <box
               orientation={Gtk.Orientation.HORIZONTAL}
               spacing={6}
-              hexpand
-              halign={Gtk.Align.FILL}
+              halign={Gtk.Align.START}
               valign={Gtk.Align.CENTER}
             >
               <image
