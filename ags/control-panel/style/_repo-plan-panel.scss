@@ -229,6 +229,36 @@
   opacity: 0.38;
 }
 
+.repo-plan-active-btn {
+  background: transparent;
+  border: none;
+  padding: 1px 4px;
+  margin: -1px -4px;
+  border-radius: 6px;
+  min-height: 0;
+  box-shadow: none;
+  color: #{"@theme_fg_color"};
+
+  &:hover {
+    background: #{"alpha(@theme_fg_color, 0.05)"};
+  }
+
+  &:hover .repo-plan-active {
+    opacity: 0.85;
+    text-decoration: underline;
+  }
+
+  &:disabled,
+  &.repo-plan-active-btn-missing {
+    opacity: 1;
+  }
+
+  &:disabled .repo-plan-active,
+  &.repo-plan-active-btn-missing .repo-plan-active {
+    text-decoration: none;
+  }
+}
+
 .gh-plan-icon {
   color: #{"@theme_fg_color"};
   opacity: 0.36;
