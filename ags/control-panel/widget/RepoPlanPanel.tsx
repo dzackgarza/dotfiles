@@ -255,14 +255,9 @@ function RepoPlanRow({
                   ? issueCount((n) =>
                       n > 0
                         ? "issue-badge issue-badge-has-issues"
-                        : "issue-badge issue-badge-muted",
+                        : "issue-badge",
                     )
-                  : "issue-badge issue-badge-muted"
-              }
-              visible={
-                issueCount
-                  ? issueCount((n) => n > 0)
-                  : (false as unknown as boolean)
+                  : "issue-badge"
               }
               halign={Gtk.Align.CENTER}
               valign={Gtk.Align.CENTER}
