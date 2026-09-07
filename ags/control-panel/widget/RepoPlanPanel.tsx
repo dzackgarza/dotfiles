@@ -550,12 +550,11 @@ function RepoPlanRow({
               const safeRepo = entry.repo.replaceAll("/", "-")
               const base = planPath.split("/").pop()?.replace(/\.md$/, "") ?? "plan"
               const out = `/tmp/${safeRepo}-${base}.html`
+              const helper = "/home/dzack/dotfiles/ags/control-panel/scripts/render-plan.py"
               const template = "/home/dzack/dotfiles/ags/control-panel/templates/elegant-plan.html"
-              const hasTemplate = GLib.file_test(template, GLib.FileTest.EXISTS)
-              const args = hasTemplate ? ["pandoc", planPath, "-s", "-o", out, `--template=${template}`] : ["pandoc", planPath, "-s", "-o", out]
-              void execAsync(args)
+              void execAsync(["python3", helper, planPath, entry.repo, template, out])
                 .then(() => execAsync(["xdg-open", out]))
-                .catch((e) => console.error(`pandoc render failed for ${planPath}: ${String(e)}`))
+                .catch((e) => console.error(`render-plan failed for ${planPath}: ${String(e)}`))
             }}
           >
             {activeLabelInner}
