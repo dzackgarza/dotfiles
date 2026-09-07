@@ -167,12 +167,7 @@
 }
 
 // ── Subtitle row: GH link + badge + plan ──
-// Spans launchers+repo columns, second grid row
 .gh-plan-btn {
-  grid-column: 2 / span 2;
-  grid-row: 2;
-  align-self: center;
-  justify-self: start;
   background: transparent;
   border: none;
   padding: 2px 4px;
