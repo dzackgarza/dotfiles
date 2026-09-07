@@ -36,6 +36,17 @@
   margin: $spacing-md 0 $spacing-lg 0;
 }
 
+.repo-plan-scroller {
+  min-height: 0;
+  // Height capped via Gtk.ScrolledWindow maxContentHeight (screen-relative, ~45% height).
+  // CSS ensures the scroller does not expand beyond its content and shows overlay scrollbar.
+  border-radius: $radius-lg;
+}
+
+.repo-plan-scroller scrollbar {
+  opacity: 0.6;
+}
+
 .repo-plan-row {
   background: #{"@card_bg_color"};
   border-radius: $radius-lg;
