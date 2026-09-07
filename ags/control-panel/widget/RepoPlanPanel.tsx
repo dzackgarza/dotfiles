@@ -113,7 +113,7 @@ function RepoPlanRow({
     <box
       class="repo-plan-row"
       orientation={Gtk.Orientation.HORIZONTAL}
-      spacing={12}
+      spacing={10}
       hexpand
       halign={Gtk.Align.FILL}
     >
