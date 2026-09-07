@@ -1,5 +1,5 @@
 import type { Accessor } from "ags"
-import { For } from "ags"
+import { createState, For } from "ags"
 import { Astal, Gdk, Gtk } from "ags/gtk4"
 import app from "ags/gtk4/app"
 import { execAsync } from "ags/process"
@@ -22,7 +22,6 @@ export const MOCK_REPO_PLANS: RepoPlan[] = [
 function getRepoPath(repo: string): string {
   const short = repo.split("/").pop() ?? repo
   const home = GLib.get_home_dir()
-  // Direct known mappings
   if (short === "dotfiles") return `${home}/dotfiles`
   if (short === "notes") return `${home}/notes`
   if (short === "ai-review-ci") return `${home}/ai-review-ci`
@@ -38,6 +37,34 @@ function getRepoPath(repo: string): string {
     } catch {}
   }
   return `${home}/${short}`
+}
+
+async function fetchIssueCount(repo: string): Promise<number> {
+  // Try repos open_issues_count first (single call, includes PRs but fast)
+  try {
+    const out = await execAsync([
+      "gh",
+      "api",
+      `repos/${repo}`,
+      "--jq",
+      ".open_issues_count",
+    ])
+    const n = parseInt(out.trim(), 10)
+    if (!Number.isNaN(n)) return n
+  } catch {}
+  // Fallback to search total_count (issues only)
+  try {
+    const out = await execAsync([
+      "gh",
+      "api",
+      `search/issues?q=repo:${repo}+type:issue+state:open`,
+      "--jq",
+      ".total_count",
+    ])
+    const n = parseInt(out.trim(), 10)
+    if (!Number.isNaN(n)) return n
+  } catch {}
+  return 0
 }
 
 function progressClass(pct: number): string {
@@ -71,7 +98,13 @@ function closeControlCenter() {
   void execAsync(["ags", "toggle", "claude-usage"]).catch(() => {})
 }
 
-function RepoPlanRow({ entry }: { entry: RepoPlan }) {
+function RepoPlanRow({
+  entry,
+  issueCount,
+}: {
+  entry: RepoPlan
+  issueCount?: Accessor<number>
+}) {
   const pct = Math.round(Math.min(Math.max(entry.progress, 0), 100))
   const fraction = pct / 100
   const repoPath = getRepoPath(entry.repo)
@@ -131,19 +164,41 @@ function RepoPlanRow({ entry }: { entry: RepoPlan }) {
             halign={Gtk.Align.END}
             valign={Gtk.Align.CENTER}
           >
-            <button
-              class="repo-launcher-btn"
-              tooltipText={`Open https://github.com/${entry.repo}`}
-              onClicked={() => {
-                closeControlCenter()
-                void execAsync([
-                  "xdg-open",
-                  `https://github.com/${entry.repo}`,
-                ]).catch((e) => console.error(`xdg-open failed: ${String(e)}`))
-              }}
+            <Gtk.Overlay
+              class="gh-overlay"
+              halign={Gtk.Align.CENTER}
+              valign={Gtk.Align.CENTER}
             >
-              <image iconName="xsi-github-symbolic" pixelSize={16} />
-            </button>
+              <button
+                class="repo-launcher-btn"
+                tooltipText={`Open https://github.com/${entry.repo}`}
+                onClicked={() => {
+                  closeControlCenter()
+                  void execAsync([
+                    "xdg-open",
+                    `https://github.com/${entry.repo}`,
+                  ]).catch((e) =>
+                    console.error(`xdg-open failed: ${String(e)}`),
+                  )
+                }}
+              >
+                <image iconName="xsi-github-symbolic" pixelSize={16} />
+              </button>
+              {issueCount ? (
+                <label
+                  class="gh-badge"
+                  halign={Gtk.Align.END}
+                  valign={Gtk.Align.START}
+                  label={issueCount((n) =>
+                    n > 0 ? (n > 99 ? "99+" : String(n)) : "",
+                  )}
+                  visible={issueCount((n) => n > 0)}
+                  canTarget={false}
+                />
+              ) : (
+                <box visible={false} />
+              )}
+            </Gtk.Overlay>
             <button
               class="repo-launcher-btn"
               tooltipText={`Open claude --dangerously-skip-permissions in ${repoPath}`}
@@ -251,6 +306,41 @@ export function RepoPlanPanel({
   const staticItems = (items as RepoPlan[] | undefined) ?? MOCK_REPO_PLANS
   const accessorItems = items as Accessor<RepoPlan[]> | undefined
 
+  const [issueCounts, setIssueCounts] = createState<Record<string, number>>({})
+
+  const fetchAll = async (repos: string[]) => {
+    try {
+      const results = await Promise.all(
+        repos.map(async (repo) => {
+          const n = await fetchIssueCount(repo)
+          return [repo, n] as const
+        }),
+      )
+      const next: Record<string, number> = {}
+      for (const [repo, n] of results) next[repo] = n
+      setIssueCounts(next)
+    } catch (e) {
+      console.error(`fetch issue counts failed: ${String(e)}`)
+    }
+  }
+
+  // Initial batch fetch
+  setTimeout(() => {
+    const repos = isAccessor
+      ? (() => {
+          try {
+            const peeked = (
+              accessorItems as unknown as { peek?: () => RepoPlan[] }
+            )?.peek?.()
+            if (peeked && Array.isArray(peeked))
+              return peeked.map((r) => r.repo)
+          } catch {}
+          return staticItems.map((r) => r.repo)
+        })()
+      : staticItems.map((r) => r.repo)
+    void fetchAll(repos)
+  }, 300)
+
   return (
     <box
       class="repo-plan-panel"
@@ -278,10 +368,20 @@ export function RepoPlanPanel({
       <box orientation={Gtk.Orientation.VERTICAL} spacing={8}>
         {isAccessor && accessorItems ? (
           <For each={accessorItems}>
-            {(entry: RepoPlan) => <RepoPlanRow entry={entry} />}
+            {(entry: RepoPlan) => (
+              <RepoPlanRow
+                entry={entry}
+                issueCount={issueCounts((m) => m[entry.repo] ?? 0)}
+              />
+            )}
           </For>
         ) : (
-          staticItems.map((entry) => <RepoPlanRow entry={entry} />)
+          staticItems.map((entry) => (
+            <RepoPlanRow
+              entry={entry}
+              issueCount={issueCounts((m) => m[entry.repo] ?? 0)}
+            />
+          ))
         )}
       </box>
     </box>
