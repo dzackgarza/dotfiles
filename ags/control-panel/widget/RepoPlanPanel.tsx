@@ -85,7 +85,8 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
             vault: string
           }
           if (j.total > 0) {
-            percent = j.percent
+            // User requested not completed / total
+            percent = Math.round(((j.total - j.completed) / j.total) * 100)
           } else {
             percent = 0
           }
