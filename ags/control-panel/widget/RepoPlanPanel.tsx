@@ -486,11 +486,26 @@ function RepoPlanRow({
             />
           </box>
         ) as unknown as Gtk.Widget
-        self.attach(folderBtn, 0, 0, 1, 2)
+        const activeLabel = (
+          <label
+            class={
+              entry.activePlan && entry.activePlan !== "No plan active"
+                ? "repo-plan-active"
+                : "repo-plan-active repo-plan-active-missing"
+            }
+            xalign={0}
+            ellipsize={3}
+            maxWidthChars={32}
+            label={entry.activePlan ?? "No plan active"}
+            hexpand
+          />
+        ) as unknown as Gtk.Widget
+        self.attach(folderBtn, 0, 0, 1, 3)
         self.attach(launchersBox, 1, 0, 1, 1)
         self.attach(repoBtn, 2, 0, 1, 1)
         self.attach(ghBtn, 1, 1, 2, 1)
-        self.attach(progressBox, 3, 0, 1, 2)
+        self.attach(activeLabel, 1, 2, 2, 1)
+        self.attach(progressBox, 3, 0, 1, 3)
       }}
     />
   )
