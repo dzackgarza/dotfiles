@@ -107,9 +107,7 @@ type RepoPlanPanelProps = {
 function getMaxRowsHeight(): number {
   try {
     const display = Gdk.Display.get_default()
-    const monitor = display
-      ?.get_monitors()
-      .get_item(0) as Gdk.Monitor | null
+    const monitor = display?.get_monitors().get_item(0) as Gdk.Monitor | null
     const h = monitor?.get_geometry().height ?? 1080
     // Cap rows area to 45% of screen height, max 480px, min 240px
     const capped = Math.floor(h * 0.45)
