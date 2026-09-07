@@ -265,7 +265,7 @@
         if (sd === "TB" || sd === "LR") direction = sd
         const sq = localStorage.getItem("dag-quality")
         if (sq === "fast" || sq === "medium" || sq === "slow") quality = sq
-      } catch(e) {}
+      } catch (e) {}
 
       function colorForStatus(s) {
         if (s === "complete") return { bg: "#dcfce7", stroke: "#22c55e" }
