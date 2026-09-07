@@ -21,14 +21,22 @@ export const MOCK_REPO_PLANS: RepoPlan[] = [
 
 const REPO_MAP_PATH = `${GLib.get_home_dir()}/dotfiles/ags/control-panel/repo-map.json`
 
-async function loadRepoMap(): Promise<Record<string, string>> {
+type RepoMapEntry = { checkout: string; vault: string } | string
+async function loadRepoMap(): Promise<Record<string, RepoMapEntry>> {
   try {
     const out = await execAsync(["cat", REPO_MAP_PATH])
-    const parsed = JSON.parse(out) as Record<string, string>
+    const parsed = JSON.parse(out) as Record<string, RepoMapEntry>
     return parsed
   } catch {
     return {}
   }
+}
+
+function getCheckout(entry: RepoMapEntry | undefined): string | null {
+  if (!entry) return null
+  if (typeof entry === "string") return entry !== "None" ? entry : null
+  const c = (entry as { checkout: string }).checkout
+  return c && c !== "None" ? c : null
 }
 
 async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
@@ -641,7 +649,9 @@ export function RepoPlanPanel({
                               "claude",
                               "--dangerously-skip-permissions",
                             ]).catch((e) =>
-                              console.error(`kitty claude failed: ${String(e)}`),
+                              console.error(
+                                `kitty claude failed: ${String(e)}`,
+                              ),
                             )
                           }}
                         >
@@ -683,9 +693,12 @@ export function RepoPlanPanel({
                           onClicked={() => {
                             if (!hasLocal) return
                             closeControlCenter()
-                            void execAsync(
-                              ["kitty", "-d", repoPath, "opencode"],
-                            ).catch((e) =>
+                            void execAsync([
+                              "kitty",
+                              "-d",
+                              repoPath,
+                              "opencode",
+                            ]).catch((e) =>
                               console.error(
                                 `kitty opencode failed: ${String(e)}`,
                               ),
@@ -712,7 +725,9 @@ export function RepoPlanPanel({
                           if (!hasLocal) return
                           closeControlCenter()
                           void execAsync(["kitty", "-d", repoPath]).catch((e) =>
-                            console.error(`kitty -d ${repoPath} failed: ${String(e)}`),
+                            console.error(
+                              `kitty -d ${repoPath} failed: ${String(e)}`,
+                            ),
                           )
                         }}
                       >
