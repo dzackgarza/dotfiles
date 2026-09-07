@@ -106,7 +106,7 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
       MOCK_REPO_PLANS.map(async (r) => {
         const checkout = getCheckout(map[r.repo])
         const hasLocal = !!checkout
-        let percent = hasLocal ? r.progress : 12
+        let percent = 0
         try {
           const out = await execAsync([
             "python3",
@@ -117,9 +117,13 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
             total: number
             completed: number
             percent: number
+            vault: string
           }
           if (j.total > 0) percent = j.percent
-        } catch {}
+          else percent = 0
+        } catch {
+          percent = hasLocal ? r.progress : 12
+        }
         return {
           repo: r.repo,
           plan: hasLocal ? (checkout as string) : "No local checkout",
