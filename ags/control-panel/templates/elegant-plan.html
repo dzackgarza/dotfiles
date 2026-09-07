@@ -384,6 +384,83 @@
         flex-wrap: wrap;
         gap: 12px;
       }
+      .yaml-card {
+        margin: 32px 0 40px;
+        background: var(--code-bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+      .yaml-card-header {
+        padding: 14px 20px;
+        border-bottom: 1px solid var(--border);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        background: var(--accent-soft);
+      }
+      .yaml-grid {
+        padding: 16px 20px;
+        display: grid;
+        gap: 14px;
+      }
+      .yaml-row {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        gap: 16px;
+        align-items: start;
+        font-size: 13.5px;
+        line-height: 1.6;
+      }
+      @media (max-width: 640px) {
+        .yaml-row { grid-template-columns: 110px 1fr; }
+      }
+      .yaml-row--stack {
+        grid-template-columns: 1fr;
+      }
+      .yaml-key {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--muted);
+        padding-top: 2px;
+      }
+      .yaml-value {
+        color: var(--fg);
+        word-break: break-word;
+      }
+      .yaml-value code {
+        font-size: 12.5px;
+      }
+      .yaml-list {
+        margin: 6px 0 0;
+        padding-left: 18px;
+      }
+      .yaml-list li {
+        margin: 6px 0;
+        line-height: 1.6;
+      }
+      .yaml-raw {
+        margin: 0;
+        padding: 16px 20px;
+        background: var(--bg);
+        border-top: 1px solid var(--border);
+        font-size: 12.5px;
+        line-height: 1.6;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+      .yaml-raw code {
+        background: transparent;
+        border: none;
+        padding: 0;
+        font-size: inherit;
+      }
       /* Syntax highlighting */
       $if(highlighting-css)$
 $highlighting-css$
@@ -432,6 +509,50 @@ $endif$
           $endif$
         </div>
       </header>
+
+$if(title)$
+      <section class="yaml-card">
+        <div class="yaml-card-header">Plan metadata — full header</div>
+        <div class="yaml-grid">
+$if(id)$
+          <div class="yaml-row"><span class="yaml-key">ID</span><span class="yaml-value"><code>$id$</code></span></div>
+$endif$
+$if(status)$
+          <div class="yaml-row"><span class="yaml-key">Status</span><span class="yaml-value"><span class="plan-status">$status$</span></span></div>
+$endif$
+$if(description)$
+          <div class="yaml-row"><span class="yaml-key">Description</span><span class="yaml-value">$description$</span></div>
+$endif$
+$if(parents)$
+          <div class="yaml-row"><span class="yaml-key">Parents</span><span class="yaml-value">$for(parents)$<code>$parents$</code>$sep$<br/>$endfor$</span></div>
+$endif$
+$if(successCriteria)$
+          <div class="yaml-row yaml-row--stack"><span class="yaml-key">Success criteria</span><ol class="yaml-list">$for(successCriteria)$<li>$successCriteria$</li>$endfor$</ol></div>
+$endif$
+$if(archived)$
+          <div class="yaml-row"><span class="yaml-key">Archived</span><span class="yaml-value"><code>$archived$</code></span></div>
+$endif$
+$if(repo)$
+          <div class="yaml-row"><span class="yaml-key">Repo</span><span class="yaml-value"><code>$repo$</code></span></div>
+$endif$
+$if(vault)$
+          <div class="yaml-row"><span class="yaml-key">Vault</span><span class="yaml-value"><code>$vault$</code></span></div>
+$endif$
+$if(date)$
+          <div class="yaml-row"><span class="yaml-key">Date</span><span class="yaml-value">$date$</span></div>
+$endif$
+$if(tags)$
+          <div class="yaml-row"><span class="yaml-key">Tags</span><span class="yaml-value">$for(tags)$$tags$$sep$, $endfor$</span></div>
+$endif$
+        </div>
+$if(yaml_raw)$
+        <details open>
+          <summary style="padding: 10px 20px; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); cursor: pointer; border-top: 1px solid var(--border);">Raw YAML header</summary>
+          <pre class="yaml-raw"><code>$yaml_raw$</code></pre>
+        </details>
+$endif$
+      </section>
+$endif$
 
       $if(toc)$
       <nav id="TOC" role="doc-toc">
