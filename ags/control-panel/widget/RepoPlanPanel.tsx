@@ -520,7 +520,8 @@ function RepoPlanRow({
             />
           </box>
         ) as unknown as Gtk.Widget
-        const activeLabel = (
+        const hasActivePath = !!entry.activePlanPath && entry.activePlan !== "No plan active"
+        const activeLabelInner = (
           <label
             class={
               entry.activePlan && entry.activePlan !== "No plan active"
@@ -534,11 +535,37 @@ function RepoPlanRow({
             hexpand
           />
         ) as unknown as Gtk.Widget
+        const activeBtn = (
+          <button
+            class={hasActivePath ? "repo-plan-active-btn" : "repo-plan-active-btn repo-plan-active-btn-missing"}
+            hexpand
+            halign={Gtk.Align.FILL}
+            valign={Gtk.Align.CENTER}
+            sensitive={hasActivePath}
+            tooltipText={hasActivePath ? `Render ${entry.activePlanPath} to HTML` : entry.activePlan ?? "No plan active"}
+            onClicked={() => {
+              const planPath = entry.activePlanPath
+              if (!planPath) return
+              closeControlCenter()
+              const safeRepo = entry.repo.replaceAll("/", "-")
+              const base = planPath.split("/").pop()?.replace(/\.md$/, "") ?? "plan"
+              const out = `/tmp/${safeRepo}-${base}.html`
+              const template = "/home/dzack/dotfiles/.pandoc/custom/pandoc_HTML.template"
+              const hasTemplate = GLib.file_test(template, GLib.FileTest.EXISTS)
+              const args = hasTemplate ? ["pandoc", planPath, "-s", "-o", out, `--template=${template}`] : ["pandoc", planPath, "-s", "-o", out]
+              void execAsync(args)
+                .then(() => execAsync(["xdg-open", out]))
+                .catch((e) => console.error(`pandoc render failed for ${planPath}: ${String(e)}`))
+            }}
+          >
+            {activeLabelInner}
+          </button>
+        ) as unknown as Gtk.Widget
         self.attach(folderBtn, 0, 0, 1, 3)
         self.attach(launchersBox, 1, 0, 1, 1)
         self.attach(repoBtn, 2, 0, 1, 1)
         self.attach(ghBtn, 1, 1, 2, 1)
-        self.attach(activeLabel, 1, 2, 2, 1)
+        self.attach(activeBtn, 1, 2, 2, 1)
         self.attach(progressBox, 3, 0, 1, 3)
       }}
     />
