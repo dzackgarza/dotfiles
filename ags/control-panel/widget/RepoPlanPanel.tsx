@@ -530,12 +530,12 @@ export function RepoPlanPanel({
         />
       </box>
       <box class="repo-plan-divider" />
-      <box
-        class="repo-plan-list"
-        orientation={Gtk.Orientation.VERTICAL}
-        spacing={6}
-      >
-        {isAccessor && accessorItems ? (
+      {isAccessor && accessorItems ? (
+        <box
+          class="repo-plan-list"
+          orientation={Gtk.Orientation.VERTICAL}
+          spacing={6}
+        >
           <For each={accessorItems}>
             {(entry: RepoPlan) => (
               <RepoPlanRow
@@ -544,25 +544,304 @@ export function RepoPlanPanel({
               />
             )}
           </For>
-        ) : live ? (
-          <For each={liveItems((v) => v ?? staticItems)}>
-            {(entry: RepoPlan) => (
-              <RepoPlanRow
-                entry={entry}
-                issueCount={issueCounts((m) => m[entry.repo] ?? 0)}
-                hideProgress={false}
+        </box>
+      ) : live ? (
+        <With value={liveItems((v) => v ?? staticItems)}>
+          {(items) => {
+            if (!items || items.length === 0) return <box />
+            return (
+              <Gtk.Grid
+                class="repo-plan-list-grid"
+                columnSpacing={8}
+                rowSpacing={6}
+                columnHomogeneous={false}
+                rowHomogeneous={false}
+                hexpand
+                halign={Gtk.Align.FILL}
+                vexpand={false}
+                $={(self: Gtk.Grid) => {
+                  items.forEach((entry, idx) => {
+                    const pct = Math.round(
+                      Math.min(Math.max(entry.progress, 0), 100),
+                    )
+                    const fraction = pct / 100
+                    const isMissing = entry.plan === "No local checkout"
+                    const localPath = getLocalPathFromPlan(entry.plan)
+                    const repoPath = isMissing
+                      ? ""
+                      : (localPath ?? getRepoPath(entry.repo))
+                    const hasLocal = !isMissing
+                    const row = idx * 2
+                    const bg = (
+                      <box
+                        class="repo-plan-row-bg"
+                        hexpand
+                        halign={Gtk.Align.FILL}
+                        valign={Gtk.Align.FILL}
+                      />
+                    ) as unknown as Gtk.Widget
+                    self.attach(bg, 0, row, 4, 2)
+                    const folderBtn = (
+                      <button
+                        class={
+                          isMissing
+                            ? "repo-folder-btn repo-folder-btn-missing"
+                            : "repo-folder-btn"
+                        }
+                        widthRequest={28}
+                        halign={Gtk.Align.CENTER}
+                        valign={Gtk.Align.CENTER}
+                        tooltipText={
+                          hasLocal
+                            ? `Open ${repoPath} in file manager`
+                            : "No local checkout"
+                        }
+                        sensitive={hasLocal}
+                        onClicked={() => {
+                          if (!hasLocal) return
+                          closeControlCenter()
+                          void execAsync(["xdg-open", repoPath]).catch((e) =>
+                            console.error(
+                              `xdg-open folder failed: ${String(e)}`,
+                            ),
+                          )
+                        }}
+                      >
+                        <image
+                          iconName="xsi-folder-symbolic"
+                          pixelSize={18}
+                          valign={Gtk.Align.CENTER}
+                          halign={Gtk.Align.CENTER}
+                          class="repo-plan-icon"
+                        />
+                      </button>
+                    ) as unknown as Gtk.Widget
+                    const launchersBox = (
+                      <box
+                        class="repo-launchers"
+                        widthRequest={84}
+                        halign={Gtk.Align.START}
+                        valign={Gtk.Align.CENTER}
+                      >
+                        <button
+                          class="repo-launcher-btn"
+                          tooltipText={
+                            hasLocal
+                              ? `Open claude --dangerously-skip-permissions in ${repoPath}`
+                              : "No local checkout — cannot launch"
+                          }
+                          sensitive={hasLocal}
+                          onClicked={() => {
+                            if (!hasLocal) return
+                            closeControlCenter()
+                            void execAsync([
+                              "kitty",
+                              "-d",
+                              repoPath,
+                              "claude",
+                              "--dangerously-skip-permissions",
+                            ]).catch((e) =>
+                              console.error(`kitty claude failed: ${String(e)}`),
+                            )
+                          }}
+                        >
+                          <image iconName="claude-ai-symbolic" pixelSize={14} />
+                        </button>
+                        <button
+                          class="repo-launcher-btn"
+                          tooltipText={
+                            hasLocal
+                              ? `Open codex --yolo --search in ${repoPath}`
+                              : "No local checkout — cannot launch"
+                          }
+                          sensitive={hasLocal}
+                          onClicked={() => {
+                            if (!hasLocal) return
+                            closeControlCenter()
+                            void execAsync([
+                              "kitty",
+                              "-d",
+                              repoPath,
+                              "codex",
+                              "--yolo",
+                              "--search",
+                            ]).catch((e) =>
+                              console.error(`kitty codex failed: ${String(e)}`),
+                            )
+                          }}
+                        >
+                          <image iconName="openai-symbolic" pixelSize={14} />
+                        </button>
+                        <button
+                          class="repo-launcher-btn"
+                          tooltipText={
+                            hasLocal
+                              ? `Open opencode in ${repoPath}`
+                              : "No local checkout — cannot launch"
+                          }
+                          sensitive={hasLocal}
+                          onClicked={() => {
+                            if (!hasLocal) return
+                            closeControlCenter()
+                            void execAsync(
+                              ["kitty", "-d", repoPath, "opencode"],
+                            ).catch((e) =>
+                              console.error(
+                                `kitty opencode failed: ${String(e)}`,
+                              ),
+                            )
+                          }}
+                        >
+                          <image iconName="opencode-symbolic" pixelSize={14} />
+                        </button>
+                      </box>
+                    ) as unknown as Gtk.Widget
+                    const repoBtn = (
+                      <button
+                        class="repo-plan-repo-btn"
+                        hexpand
+                        halign={Gtk.Align.FILL}
+                        valign={Gtk.Align.CENTER}
+                        tooltipText={
+                          hasLocal
+                            ? `Open ${repoPath} in kitty`
+                            : `Open ${repoPath} — No local checkout`
+                        }
+                        sensitive={hasLocal}
+                        onClicked={() => {
+                          if (!hasLocal) return
+                          closeControlCenter()
+                          void execAsync(["kitty", "-d", repoPath]).catch((e) =>
+                            console.error(`kitty -d ${repoPath} failed: ${String(e)}`),
+                          )
+                        }}
+                      >
+                        <label
+                          class="repo-plan-repo"
+                          xalign={0}
+                          ellipsize={3}
+                          maxWidthChars={24}
+                          label={entry.repo}
+                        />
+                      </button>
+                    ) as unknown as Gtk.Widget
+                    const ghBtn = (
+                      <button
+                        class="gh-plan-btn"
+                        hexpand
+                        halign={Gtk.Align.FILL}
+                        valign={Gtk.Align.CENTER}
+                        tooltipText={`Open https://github.com/${entry.repo}`}
+                        onClicked={() => {
+                          closeControlCenter()
+                          void execAsync([
+                            "xdg-open",
+                            `https://github.com/${entry.repo}`,
+                          ]).catch((e) =>
+                            console.error(`xdg-open failed: ${String(e)}`),
+                          )
+                        }}
+                      >
+                        <box
+                          orientation={Gtk.Orientation.HORIZONTAL}
+                          spacing={6}
+                          hexpand
+                          halign={Gtk.Align.FILL}
+                          valign={Gtk.Align.CENTER}
+                        >
+                          <image
+                            iconName="xsi-github-symbolic"
+                            pixelSize={12}
+                            class="gh-plan-icon"
+                          />
+                          <label
+                            class={issueCounts((m) => {
+                              const n = m[entry.repo] ?? 0
+                              return n > 0
+                                ? "issue-badge issue-badge-has-issues"
+                                : "issue-badge"
+                            })}
+                            halign={Gtk.Align.CENTER}
+                            valign={Gtk.Align.CENTER}
+                            label={issueCounts((m) => {
+                              const n = m[entry.repo] ?? 0
+                              return n > 99 ? "99+" : String(n)
+                            })}
+                          />
+                          <label
+                            class={
+                              isMissing
+                                ? "repo-plan-plan repo-plan-plan-missing"
+                                : hasLocal && localPath
+                                  ? "repo-plan-plan repo-plan-checkout"
+                                  : "repo-plan-plan"
+                            }
+                            xalign={0}
+                            ellipsize={3}
+                            maxWidthChars={isMissing ? 20 : 28}
+                            label={entry.plan}
+                            hexpand
+                          />
+                        </box>
+                      </button>
+                    ) as unknown as Gtk.Widget
+                    const progressBox = (
+                      <box
+                        class="progress-col"
+                        widthRequest={112}
+                        halign={Gtk.Align.FILL}
+                        valign={Gtk.Align.CENTER}
+                      >
+                        <box
+                          orientation={Gtk.Orientation.HORIZONTAL}
+                          halign={Gtk.Align.FILL}
+                          hexpand
+                        >
+                          <label
+                            class="repo-plan-progress-label"
+                            xalign={0}
+                            label="progress"
+                            hexpand
+                          />
+                          <label
+                            class="repo-plan-progress-value"
+                            xalign={1}
+                            label={`${pct}%`}
+                          />
+                        </box>
+                        <Gtk.ProgressBar
+                          class={`repo-plan-progress ${progressClass(pct)}`}
+                          fraction={fraction}
+                          hexpand
+                          halign={Gtk.Align.FILL}
+                        />
+                      </box>
+                    ) as unknown as Gtk.Widget
+                    self.attach(folderBtn, 0, row, 1, 2)
+                    self.attach(launchersBox, 1, row, 1, 1)
+                    self.attach(repoBtn, 2, row, 1, 1)
+                    self.attach(ghBtn, 1, row + 1, 2, 1)
+                    self.attach(progressBox, 3, row, 1, 2)
+                  })
+                }}
               />
-            )}
-          </For>
-        ) : (
-          staticItems.map((entry) => (
+            )
+          }}
+        </With>
+      ) : (
+        <box
+          class="repo-plan-list"
+          orientation={Gtk.Orientation.VERTICAL}
+          spacing={6}
+        >
+          {staticItems.map((entry) => (
             <RepoPlanRow
               entry={entry}
               issueCount={issueCounts((m) => m[entry.repo] ?? 0)}
             />
-          ))
-        )}
-      </box>
+          ))}
+        </box>
+      )}
     </box>
   )
 }
