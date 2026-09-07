@@ -570,7 +570,7 @@ function RepoPlanRow({
               closeControlCenter()
               const helper = "/home/dzack/dotfiles/ags/control-panel/scripts/render-dag.py"
               const dagTemplate = "/home/dzack/dotfiles/ags/control-panel/templates/dag.html"
-              void execAsync(["python3", helper, entry.repo, "", dagTemplate])
+              void execAsync(["python3", helper, entry.repo, dagTemplate])
                 .then((out) => {
                   const htmlPath = out.trim().split("\n").pop()?.trim()
                   if (htmlPath) void execAsync(["xdg-open", htmlPath])
@@ -1037,7 +1037,7 @@ export function RepoPlanPanel({
                           closeControlCenter()
                           const helper = "/home/dzack/dotfiles/ags/control-panel/scripts/render-dag.py"
                           const dagTemplate = "/home/dzack/dotfiles/ags/control-panel/templates/dag.html"
-                          void execAsync(["python3", helper, entry.repo, "", dagTemplate])
+                          void execAsync(["python3", helper, entry.repo, dagTemplate])
                             .then((out) => {
                               const htmlPath = out.trim().split("\n").pop()?.trim()
                               if (htmlPath) void execAsync(["xdg-open", htmlPath])
