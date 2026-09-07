@@ -9,6 +9,7 @@ export interface RepoPlan {
   repo: string
   plan: string
   progress: number
+  activePlan?: string
 }
 
 export const MOCK_REPO_PLANS: RepoPlan[] = [
