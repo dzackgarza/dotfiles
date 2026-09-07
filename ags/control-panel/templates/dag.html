@@ -314,9 +314,6 @@
       const wrap = document.getElementById("dag-wrap")
       const g = svg.append("g").attr("id", "viewport")
 
-      let direction = "TB" // or LR
-      let quality = "medium" // fast | medium | slow
-
       // Layout function with Sugiyama
       function buildDag() {
         // Resolve stratify operator: graphStratify vs dagStratify
