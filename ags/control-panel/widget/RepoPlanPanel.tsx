@@ -40,13 +40,19 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
       "list",
       "dzackgarza",
       "--limit",
-      "15",
+      "50",
       "--json",
       "nameWithOwner,pushedAt",
     ])
     const arr = JSON.parse(out) as { nameWithOwner: string; pushedAt: string }[]
-    // gh already sorts by updated; keep order
-    return arr.map((r) => {
+    // Sort by latest pushes (pushedAt descending) — gh list has no --sort flag, so sort here
+    arr.sort((a, b) => {
+      const ta = a.pushedAt ? new Date(a.pushedAt).getTime() : 0
+      const tb = b.pushedAt ? new Date(b.pushedAt).getTime() : 0
+      return tb - ta
+    })
+    const top = arr.slice(0, 15)
+    return top.map((r) => {
       const local = map[r.nameWithOwner]
       const hasLocal = !!local && local !== "None"
       return {
