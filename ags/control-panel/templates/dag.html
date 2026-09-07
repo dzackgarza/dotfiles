@@ -297,7 +297,8 @@
       const parentMap = new Map()
       for (const n of nodesData) parentMap.set(cleanId(n.id), [])
       for (const e of edgesData) {
-        const from = cleanId(e.from), to = cleanId(e.to)
+        const from = cleanId(e.from),
+          to = cleanId(e.to)
         if (!parentMap.has(to)) parentMap.set(to, [])
         parentMap.get(to).push(from)
         if (!parentMap.has(from)) parentMap.set(from, [])
