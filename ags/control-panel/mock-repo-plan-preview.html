@@ -1,41 +1,208 @@
 <!doctype html>
 <html>
-<head>
-<meta charset="utf-8" />
-<title>Repo Plans Mock Preview</title>
-<style>
-  :root { --panel-bg: #1e1e2e; --card-bg: #313244; --fg: #cdd6f4; }
-  body { background: #11111b; color: var(--fg); font-family: system-ui, sans-serif; display: grid; place-items: center; min-height: 100vh; margin: 0; }
-  .repo-plan-panel { background: var(--panel-bg); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 16px; min-width: 460px; box-shadow: 0 12px 32px rgba(0,0,0,0.25); }
-  .repo-plan-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 6px; }
-  .repo-plan-title { font-size: 15px; font-weight: 700; }
-  .repo-plan-count { font-size: 11px; opacity: 0.7; }
-  .repo-plan-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 12px 0 16px; }
-  .rows { display: flex; flex-direction: column; gap: 8px; }
-  .repo-plan-row { background: var(--card-bg); border-radius: 12px; padding: 10px 14px; min-height: 56px; display: flex; gap: 12px; align-items: center; }
-  .repo-plan-icon { width: 20px; height: 20px; opacity: 0.7; display: grid; place-items: center; font-size: 14px; }
-  .repo-main { flex: 1; display: flex; flex-direction: column; gap: 2px; }
-  .repo-plan-repo { font-size: 12px; font-weight: 600; }
-  .repo-plan-plan { font-size: 11px; opacity: 0.7; }
-  .progress-col { width: 140px; display: flex; flex-direction: column; gap: 4px; }
-  .progress-head { display: flex; justify-content: space-between; font-size: 10px; opacity: 0.7; }
-  .progress-value { font-size: 12px; font-weight: 700; opacity: 1; }
-  .bar { height: 6px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; }
-  .fill { height: 100%; border-radius: 999px; }
-  .green { background: rgb(34,197,94); } .yellow { background: rgb(250,204,21); } .red { background: rgb(239,68,68); }
-</style>
-</head>
-<body>
-<div class="repo-plan-panel">
-  <div class="repo-plan-header"><div class="repo-plan-title">Repo Plans</div><div class="repo-plan-count">5 repos</div></div>
-  <div class="repo-plan-divider"></div>
-  <div class="rows">
-    <div class="repo-plan-row"><div class="repo-plan-icon">📁</div><div class="repo-main"><div class="repo-plan-repo">dzackgarza/dotfiles</div><div class="repo-plan-plan">control-center-v2</div></div><div class="progress-col"><div class="progress-head"><span>progress</span><span class="progress-value">73%</span></div><div class="bar"><div class="fill yellow" style="width:73%"></div></div></div></div>
-    <div class="repo-plan-row"><div class="repo-plan-icon">📁</div><div class="repo-main"><div class="repo-plan-repo">dzackgarza/notes</div><div class="repo-plan-plan">vault-audit</div></div><div class="progress-col"><div class="progress-head"><span>progress</span><span class="progress-value">41%</span></div><div class="bar"><div class="fill green" style="width:41%"></div></div></div></div>
-    <div class="repo-plan-row"><div class="repo-plan-icon">📁</div><div class="repo-main"><div class="repo-plan-repo">dzackgarza/ai-review-ci</div><div class="repo-plan-plan">gate-harness</div></div><div class="progress-col"><div class="progress-head"><span>progress</span><span class="progress-value">92%</span></div><div class="bar"><div class="fill red" style="width:92%"></div></div></div></div>
-    <div class="repo-plan-row"><div class="repo-plan-icon">📁</div><div class="repo-main"><div class="repo-plan-repo">dzackgarza/opencode</div><div class="repo-plan-plan">plan-42-refactor</div></div><div class="progress-col"><div class="progress-head"><span>progress</span><span class="progress-value">18%</span></div><div class="bar"><div class="fill green" style="width:18%"></div></div></div></div>
-    <div class="repo-plan-row"><div class="repo-plan-icon">📁</div><div class="repo-main"><div class="repo-plan-repo">dzackgarza/repo-plans</div><div class="repo-plan-plan">repo-panel-mock</div></div><div class="progress-col"><div class="progress-head"><span>progress</span><span class="progress-value">56%</span></div><div class="bar"><div class="fill yellow" style="width:56%"></div></div></div></div>
-  </div>
-</div>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>Repo Plans Mock Preview</title>
+    <style>
+      :root {
+        --panel-bg: #1e1e2e;
+        --card-bg: #313244;
+        --fg: #cdd6f4;
+      }
+      body {
+        background: #11111b;
+        color: var(--fg);
+        font-family: system-ui, sans-serif;
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+        margin: 0;
+      }
+      .repo-plan-panel {
+        background: var(--panel-bg);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 16px;
+        min-width: 460px;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+      }
+      .repo-plan-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 6px;
+      }
+      .repo-plan-title {
+        font-size: 15px;
+        font-weight: 700;
+      }
+      .repo-plan-count {
+        font-size: 11px;
+        opacity: 0.7;
+      }
+      .repo-plan-divider {
+        height: 1px;
+        background: rgba(255, 255, 255, 0.08);
+        margin: 12px 0 16px;
+      }
+      .rows {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .repo-plan-row {
+        background: var(--card-bg);
+        border-radius: 12px;
+        padding: 10px 14px;
+        min-height: 56px;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .repo-plan-icon {
+        width: 20px;
+        height: 20px;
+        opacity: 0.7;
+        display: grid;
+        place-items: center;
+        font-size: 14px;
+      }
+      .repo-main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .repo-plan-repo {
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .repo-plan-plan {
+        font-size: 11px;
+        opacity: 0.7;
+      }
+      .progress-col {
+        width: 140px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .progress-head {
+        display: flex;
+        justify-content: space-between;
+        font-size: 10px;
+        opacity: 0.7;
+      }
+      .progress-value {
+        font-size: 12px;
+        font-weight: 700;
+        opacity: 1;
+      }
+      .bar {
+        height: 6px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 999px;
+        overflow: hidden;
+      }
+      .fill {
+        height: 100%;
+        border-radius: 999px;
+      }
+      .green {
+        background: rgb(34, 197, 94);
+      }
+      .yellow {
+        background: rgb(250, 204, 21);
+      }
+      .red {
+        background: rgb(239, 68, 68);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="repo-plan-panel">
+      <div class="repo-plan-header">
+        <div class="repo-plan-title">Repo Plans</div>
+        <div class="repo-plan-count">5 repos</div>
+      </div>
+      <div class="repo-plan-divider"></div>
+      <div class="rows">
+        <div class="repo-plan-row">
+          <div class="repo-plan-icon">📁</div>
+          <div class="repo-main">
+            <div class="repo-plan-repo">dzackgarza/dotfiles</div>
+            <div class="repo-plan-plan">control-center-v2</div>
+          </div>
+          <div class="progress-col">
+            <div class="progress-head">
+              <span>progress</span><span class="progress-value">73%</span>
+            </div>
+            <div class="bar">
+              <div class="fill yellow" style="width: 73%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="repo-plan-row">
+          <div class="repo-plan-icon">📁</div>
+          <div class="repo-main">
+            <div class="repo-plan-repo">dzackgarza/notes</div>
+            <div class="repo-plan-plan">vault-audit</div>
+          </div>
+          <div class="progress-col">
+            <div class="progress-head">
+              <span>progress</span><span class="progress-value">41%</span>
+            </div>
+            <div class="bar">
+              <div class="fill green" style="width: 41%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="repo-plan-row">
+          <div class="repo-plan-icon">📁</div>
+          <div class="repo-main">
+            <div class="repo-plan-repo">dzackgarza/ai-review-ci</div>
+            <div class="repo-plan-plan">gate-harness</div>
+          </div>
+          <div class="progress-col">
+            <div class="progress-head">
+              <span>progress</span><span class="progress-value">92%</span>
+            </div>
+            <div class="bar">
+              <div class="fill red" style="width: 92%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="repo-plan-row">
+          <div class="repo-plan-icon">📁</div>
+          <div class="repo-main">
+            <div class="repo-plan-repo">dzackgarza/opencode</div>
+            <div class="repo-plan-plan">plan-42-refactor</div>
+          </div>
+          <div class="progress-col">
+            <div class="progress-head">
+              <span>progress</span><span class="progress-value">18%</span>
+            </div>
+            <div class="bar">
+              <div class="fill green" style="width: 18%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="repo-plan-row">
+          <div class="repo-plan-icon">📁</div>
+          <div class="repo-main">
+            <div class="repo-plan-repo">dzackgarza/repo-plans</div>
+            <div class="repo-plan-plan">repo-panel-mock</div>
+          </div>
+          <div class="progress-col">
+            <div class="progress-head">
+              <span>progress</span><span class="progress-value">56%</span>
+            </div>
+            <div class="bar">
+              <div class="fill yellow" style="width: 56%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
