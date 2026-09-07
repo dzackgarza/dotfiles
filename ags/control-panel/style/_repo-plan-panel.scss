@@ -248,6 +248,39 @@
     text-decoration: underline;
   }
 
+  & + .repo-dag-btn {
+    margin-left: 4px;
+  }
+}
+
+.repo-dag-btn {
+  background: transparent;
+  border: 1px solid #{"alpha(@theme_fg_color, 0.08)"};
+  padding: 3px;
+  border-radius: 7px;
+  min-width: 22px;
+  min-height: 22px;
+  color: #{"@theme_fg_color"};
+  opacity: 0.42;
+
+  &:hover {
+    background: #{"alpha(@theme_fg_color, 0.07)"};
+    border-color: #{"alpha(@theme_fg_color, 0.14)"};
+    opacity: 0.92;
+  }
+
+  &:active {
+    background: #{"alpha(@theme_fg_color, 0.10)"};
+  }
+}
+
+.repo-plan-row:hover .repo-dag-btn {
+  opacity: 0.62;
+}
+.repo-plan-row:hover .repo-dag-btn:hover {
+  opacity: 1;
+}
+
   &:disabled,
   &.repo-plan-active-btn-missing {
     opacity: 1;
