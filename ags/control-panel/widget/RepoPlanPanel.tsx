@@ -239,14 +239,31 @@ function RepoPlanRow({
         >
           <box
             orientation={Gtk.Orientation.HORIZONTAL}
-            spacing={4}
+            spacing={6}
             hexpand
             halign={Gtk.Align.FILL}
             valign={Gtk.Align.CENTER}
           >
-            <image iconName="xsi-github-symbolic" pixelSize={10} />
+            <image
+              iconName="xsi-github-symbolic"
+              pixelSize={12}
+              class="gh-plan-icon"
+            />
             <label
-              class="issue-badge"
+              class={
+                issueCount
+                  ? issueCount((n) =>
+                      n > 0
+                        ? "issue-badge issue-badge-has-issues"
+                        : "issue-badge issue-badge-muted",
+                    )
+                  : "issue-badge issue-badge-muted"
+              }
+              visible={
+                issueCount
+                  ? issueCount((n) => n > 0)
+                  : (false as unknown as boolean)
+              }
               halign={Gtk.Align.CENTER}
               valign={Gtk.Align.CENTER}
               label={
