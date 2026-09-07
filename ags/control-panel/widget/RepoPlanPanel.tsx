@@ -133,10 +133,16 @@ function RepoPlanRow({ entry }: { entry: RepoPlan }) {
           >
             <button
               class="repo-launcher-btn"
-              tooltipText={`Open claude in ${repoPath}`}
+              tooltipText={`Open claude --dangerously-skip-permissions in ${repoPath}`}
               onClicked={() => {
                 closeControlCenter()
-                void execAsync(["kitty", "-d", repoPath, "claude"]).catch((e) =>
+                void execAsync([
+                  "kitty",
+                  "-d",
+                  repoPath,
+                  "claude",
+                  "--dangerously-skip-permissions",
+                ]).catch((e) =>
                   console.error(`kitty claude failed: ${String(e)}`),
                 )
               }}
@@ -145,10 +151,17 @@ function RepoPlanRow({ entry }: { entry: RepoPlan }) {
             </button>
             <button
               class="repo-launcher-btn"
-              tooltipText={`Open chatgpt in ${repoPath}`}
+              tooltipText={`Open codex --yolo --search in ${repoPath}`}
               onClicked={() => {
                 closeControlCenter()
-                void execAsync(["kitty", "-d", repoPath, "codex"]).catch((e) =>
+                void execAsync([
+                  "kitty",
+                  "-d",
+                  repoPath,
+                  "codex",
+                  "--yolo",
+                  "--search",
+                ]).catch((e) =>
                   console.error(`kitty codex failed: ${String(e)}`),
                 )
               }}
