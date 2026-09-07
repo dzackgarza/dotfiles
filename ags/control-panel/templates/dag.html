@@ -728,15 +728,26 @@
 
         svg.call(zoom)
 
-        // Initial fit: compute transform to fit viewBox into wrap
+        // Fit: keep 1x for wide graphs and allow horizontal scroll instead of shrinking to tiny.
+        // For narrow graphs, center. For wide (>wrap width), keep scale 1 and center vertically.
         function fit() {
-          const scale = Math.min(
-            wrap.clientWidth / vbW,
-            wrap.clientHeight / vbH,
-            1,
-          )
-          const tx = -vbX * scale + (wrap.clientWidth - vbW * scale) / 2
-          const ty = -vbY * scale + (wrap.clientHeight - vbH * scale) / 2
+          const needScroll = vbW > wrap.clientWidth + 40
+          let scale, tx, ty
+          if (needScroll) {
+            scale = 1
+            tx = -vbX + 20
+            ty = -vbY * scale + (wrap.clientHeight - vbH * scale) / 2
+            // Ensure wrap allows scroll
+            wrap.style.overflowX = "auto"
+            wrap.style.overflowY = "auto"
+            svg.attr("width", vbW + 40).attr("height", vbH + 40)
+          } else {
+            scale = Math.min(wrap.clientWidth / vbW, wrap.clientHeight / vbH, 1)
+            tx = -vbX * scale + (wrap.clientWidth - vbW * scale) / 2
+            ty = -vbY * scale + (wrap.clientHeight - vbH * scale) / 2
+            wrap.style.overflowX = "hidden"
+            svg.attr("width", "100%").attr("height", "100%")
+          }
           const t = d3.zoomIdentity.translate(tx, ty).scale(scale)
           svg.transition().duration(400).call(zoom.transform, t)
         }
