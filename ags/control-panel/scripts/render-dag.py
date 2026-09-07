@@ -134,8 +134,20 @@ def main():
         )
         sys.exit(1)
     repo = sys.argv[1]
-    out = sys.argv[2] if len(sys.argv) > 2 else None
-    template_arg = sys.argv[3] if len(sys.argv) > 3 else None
+    out = None
+    template_arg = None
+    if len(sys.argv) == 3:
+        # repo + template
+        if sys.argv[2].endswith(".html"):
+            template_arg = sys.argv[2]
+        else:
+            out = sys.argv[2]
+    elif len(sys.argv) >= 4:
+        out = sys.argv[2] if len(sys.argv) > 2 else None
+        template_arg = sys.argv[3] if len(sys.argv) > 3 else None
+        # Handle empty out case
+        if out == "":
+            out = None
 
     vault_path = find_vault(repo)
     vault_name = os.path.basename(vault_path) if vault_path else repo.replace("/", "__")
