@@ -190,9 +190,9 @@ async function fetchIssueCount(repo: string): Promise<number> {
 }
 
 function progressClass(pct: number): string {
-  if (pct >= 80) return "repo-plan-progress-red"
+  if (pct >= 80) return "repo-plan-progress-green"
   if (pct >= 50) return "repo-plan-progress-yellow"
-  return "repo-plan-progress-green"
+  return "repo-plan-progress-red"
 }
 
 function closeControlCenter() {
