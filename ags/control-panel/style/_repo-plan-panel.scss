@@ -90,6 +90,14 @@
     background: #{"alpha(@theme_fg_color, 0.06)"};
     opacity: 0.95;
   }
+
+  &:disabled {
+    opacity: 0.18;
+  }
+}
+
+.repo-folder-btn-missing {
+  opacity: 0.22;
 }
 
 // Repo name: primary hierarchy — 13px / 500, slight tracking
