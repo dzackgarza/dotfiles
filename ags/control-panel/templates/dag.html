@@ -487,35 +487,38 @@
             if (!rankMap.has(y)) rankMap.set(y, [])
             rankMap.get(y).push(n)
           }
-          const sortedRanks = Array.from(rankMap.entries()).sort((a,b)=>a[0]-b[0])
+          const sortedRanks = Array.from(rankMap.entries()).sort(
+            (a, b) => a[0] - b[0],
+          )
           let yOffset = 0
           for (const [y, arr] of sortedRanks) {
             if (arr.length <= 6) {
-              if (yOffset!==0) for (const n of arr) n.y += yOffset
+              if (yOffset !== 0) for (const n of arr) n.y += yOffset
               continue
             }
-            arr.sort((a,b)=>a.x-b.x)
+            arr.sort((a, b) => a.x - b.x)
             const perRow = 6
             const rows = Math.ceil(arr.length / perRow)
             const layerGap = 58
-            const maxW = Math.max(...arr.map(n=>n.data.width||140))
+            const maxW = Math.max(...arr.map((n) => n.data.width || 140))
             const colW = maxW + 22
-            const origMinX = Math.min(...arr.map(n=>n.x))
-            const origMaxX = Math.max(...arr.map(n=>n.x))
-            const rankCenter = (origMinX + origMaxX)/2
-            arr.forEach((n,i)=>{
+            const origMinX = Math.min(...arr.map((n) => n.x))
+            const origMaxX = Math.max(...arr.map((n) => n.x))
+            const rankCenter = (origMinX + origMaxX) / 2
+            arr.forEach((n, i) => {
               const col = i % perRow
               const row = Math.floor(i / perRow)
-              const colsThisRow = Math.min(perRow, arr.length - row*perRow)
+              const colsThisRow = Math.min(perRow, arr.length - row * perRow)
               const rowW = colsThisRow * colW
-              const rowOffset = rankCenter - rowW/2
-              n.x = rowOffset + col * colW + (n.data.width||140)/2 + 10
+              const rowOffset = rankCenter - rowW / 2
+              n.x = rowOffset + col * colW + (n.data.width || 140) / 2 + 10
               n.y = y + yOffset + row * layerGap
             })
-            const addedHeight = (rows-1)*layerGap
-            if (addedHeight>0) {
+            const addedHeight = (rows - 1) * layerGap
+            if (addedHeight > 0) {
               yOffset += addedHeight
-              for (const [y2, arr2] of sortedRanks) if (y2 > y) for (const n of arr2) n.y += addedHeight
+              for (const [y2, arr2] of sortedRanks)
+                if (y2 > y) for (const n of arr2) n.y += addedHeight
             }
           }
         }
