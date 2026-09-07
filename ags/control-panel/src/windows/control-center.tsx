@@ -8,6 +8,7 @@ import type {
   UsageCollection,
 } from "../../services/claude-usage-fetcher"
 import { ClaudeUsagePopover } from "../../widget/ClaudeUsagePopover"
+import { RepoPlanPanel } from "../../widget/RepoPlanPanel"
 import { InfoTile } from "../components/InfoTile"
 import { PowerProfileTile } from "../components/PowerProfileTile"
 import { SliderRow } from "../components/SliderRow"
