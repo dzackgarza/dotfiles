@@ -137,6 +137,9 @@
 }
 
 .repo-plan-repo-btn {
+  grid-column: 3;
+  grid-row: 1;
+  align-self: center;
   background: transparent;
   border: none;
   padding: 1px 4px;
