@@ -351,6 +351,7 @@ export function ControlCenterWindow() {
         state={control.brightness}
         onSetValue={control.setBrightness}
       />
+      <RepoPlanPanel />
       <box
         class={control.battery((value) =>
           joinClasses("status-row", value.error && "error"),
