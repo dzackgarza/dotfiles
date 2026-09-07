@@ -2,6 +2,8 @@ import type { Accessor } from "ags"
 import { For } from "ags"
 import { Astal, Gdk, Gtk } from "ags/gtk4"
 import app from "ags/gtk4/app"
+import { execAsync } from "ags/process"
+import GLib from "gi://GLib?version=2.0"
 
 export interface RepoPlan {
   repo: string
@@ -17,6 +19,27 @@ export const MOCK_REPO_PLANS: RepoPlan[] = [
   { repo: "dzackgarza/repo-plans", plan: "repo-panel-mock", progress: 56 },
 ]
 
+function getRepoPath(repo: string): string {
+  const short = repo.split("/").pop() ?? repo
+  const home = GLib.get_home_dir()
+  // Direct known mappings
+  if (short === "dotfiles") return `${home}/dotfiles`
+  if (short === "notes") return `${home}/notes`
+  if (short === "ai-review-ci") return `${home}/ai-review-ci`
+  const candidates = [
+    `${home}/${short}`,
+    `${home}/gitclones/${short}`,
+    `${home}/dotfiles`,
+    home,
+  ]
+  for (const p of candidates) {
+    try {
+      if (GLib.file_test(p, GLib.FileTest.IS_DIR)) return p
+    } catch {}
+  }
+  return `${home}/${short}`
+}
+
 function progressClass(pct: number): string {
   if (pct >= 80) return "repo-plan-progress-red"
   if (pct >= 50) return "repo-plan-progress-yellow"
@@ -26,6 +49,7 @@ function progressClass(pct: number): string {
 function RepoPlanRow({ entry }: { entry: RepoPlan }) {
   const pct = Math.round(Math.min(Math.max(entry.progress, 0), 100))
   const fraction = pct / 100
+  const repoPath = getRepoPath(entry.repo)
 
   return (
     <box
@@ -49,13 +73,23 @@ function RepoPlanRow({ entry }: { entry: RepoPlan }) {
         halign={Gtk.Align.FILL}
         valign={Gtk.Align.CENTER}
       >
-        <label
-          class="repo-plan-repo"
-          xalign={0}
-          ellipsize={3}
-          maxWidthChars={28}
-          label={entry.repo}
-        />
+        <button
+          class="repo-plan-repo-btn"
+          tooltipText={`Open ${repoPath} in kitty`}
+          onClicked={() =>
+            void execAsync(["kitty", "-d", repoPath]).catch((e) =>
+              console.error(`kitty -d ${repoPath} failed: ${String(e)}`),
+            )
+          }
+        >
+          <label
+            class="repo-plan-repo"
+            xalign={0}
+            ellipsize={3}
+            maxWidthChars={28}
+            label={entry.repo}
+          />
+        </button>
         <label
           class="repo-plan-plan"
           xalign={0}
