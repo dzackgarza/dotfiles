@@ -20,66 +20,181 @@
         --radius: 14px;
         --shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06);
       }
-      * { box-sizing: border-box; }
-      html, body {
-        margin: 0; padding: 0; height: 100%;
-        background: var(--bg); color: var(--fg);
-        font-family: ui-sans-serif, system-ui, -apple-system, Inter, Segoe UI, Roboto, Helvetica, Arial;
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background: var(--bg);
+        color: var(--fg);
+        font-family:
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          Inter,
+          Segoe UI,
+          Roboto,
+          Helvetica,
+          Arial;
         -webkit-font-smoothing: antialiased;
       }
-      .page { max-width: var(--max-w); margin: 0 auto; padding: 24px 20px 32px; }
+      .page {
+        max-width: var(--max-w);
+        margin: 0 auto;
+        padding: 24px 20px 32px;
+      }
       .header {
-        display: flex; justify-content: space-between; align-items: flex-start;
-        gap: 16px; margin-bottom: 20px; flex-wrap: wrap;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 16px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
       }
       .header-left h1 {
         font-family: "Fraunces", ui-serif, Georgia, serif;
-        font-size: 28px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 6px;
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin: 0 0 6px;
       }
-      .header-left p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
+      .header-left p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.5;
+      }
       .header-left code {
         font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-        font-size: 12px; background: var(--accent-soft);
-        padding: 2px 6px; border-radius: 6px; border: 1px solid var(--border);
+        font-size: 12px;
+        background: var(--accent-soft);
+        padding: 2px 6px;
+        border-radius: 6px;
+        border: 1px solid var(--border);
       }
-      .controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+      .controls {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
       .btn {
-        appearance: none; border: 1px solid var(--border); background: var(--card-bg);
-        color: var(--fg); padding: 8px 12px; border-radius: 10px;
-        font-size: 13px; font-weight: 500; cursor: pointer; box-shadow: var(--shadow);
+        appearance: none;
+        border: 1px solid var(--border);
+        background: var(--card-bg);
+        color: var(--fg);
+        padding: 8px 12px;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        box-shadow: var(--shadow);
       }
-      .btn:hover { background: var(--accent-soft); border-color: var(--accent); }
-      .btn:disabled { opacity: 0.45; cursor: default; }
+      .btn:hover {
+        background: var(--accent-soft);
+        border-color: var(--accent);
+      }
+      .btn:disabled {
+        opacity: 0.45;
+        cursor: default;
+      }
       .legend {
-        display: flex; gap: 14px; align-items: center; flex-wrap: wrap;
-        margin: 12px 0 16px; font-size: 12px; color: var(--muted);
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin: 12px 0 16px;
+        font-size: 12px;
+        color: var(--muted);
       }
       .legend-dot {
-        width: 10px; height: 10px; border-radius: 50%;
-        display: inline-block; border: 1px solid var(--border);
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        border: 1px solid var(--border);
       }
       #dag-wrap {
-        width: 100%; height: 72vh; min-height: 480px;
-        background: var(--card-bg); border: 1px solid var(--border);
-        border-radius: var(--radius); box-shadow: var(--shadow);
-        overflow: hidden; position: relative;
+        width: 100%;
+        height: 72vh;
+        min-height: 480px;
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        position: relative;
       }
-      #dag-svg { width: 100%; height: 100%; display: block; cursor: grab; }
-      #dag-svg:active { cursor: grabbing; }
-      .footer { margin-top: 16px; font-size: 12px; color: var(--muted); text-align: center; }
+      #dag-svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+        cursor: grab;
+      }
+      #dag-svg:active {
+        cursor: grabbing;
+      }
+      .footer {
+        margin-top: 16px;
+        font-size: 12px;
+        color: var(--muted);
+        text-align: center;
+      }
       .node-tooltip {
-        position: absolute; background: var(--card-bg); border: 1px solid var(--border);
-        border-radius: 10px; padding: 12px 14px; box-shadow: var(--shadow);
-        font-size: 13px; line-height: 1.5; max-width: 340px; display: none; z-index: 10; pointer-events: none;
+        position: absolute;
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 12px 14px;
+        box-shadow: var(--shadow);
+        font-size: 13px;
+        line-height: 1.5;
+        max-width: 340px;
+        display: none;
+        z-index: 10;
+        pointer-events: none;
       }
       /* SVG node styles */
-      .node-rect { stroke-width: 1.2; rx: 8; ry: 8; filter: drop-shadow(0 1px 4px rgba(0,0,0,0.06)); }
-      .node-text { font: 12px Inter, system-ui, sans-serif; fill: #1a1a1e; pointer-events: none; }
-      .node-ellipse { stroke-width: 1.2; stroke-dasharray: 6 4; filter: drop-shadow(0 1px 4px rgba(0,0,0,0.06)); }
-      .edge-path { fill: none; stroke: #d4d4d8; stroke-width: 1.3; }
-      .edge-path:hover { stroke: #a1a1aa; stroke-width: 1.7; }
-      .edge-arrow { fill: #d4d4d8; stroke: none; }
-      .node-g:hover .node-rect, .node-g:hover .node-ellipse { stroke: #1a1a1e !important; stroke-width: 1.9; }
+      .node-rect {
+        stroke-width: 1.2;
+        rx: 8;
+        ry: 8;
+        filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.06));
+      }
+      .node-text {
+        font:
+          12px Inter,
+          system-ui,
+          sans-serif;
+        fill: #1a1a1e;
+        pointer-events: none;
+      }
+      .node-ellipse {
+        stroke-width: 1.2;
+        stroke-dasharray: 6 4;
+        filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.06));
+      }
+      .edge-path {
+        fill: none;
+        stroke: #d4d4d8;
+        stroke-width: 1.3;
+      }
+      .edge-path:hover {
+        stroke: #a1a1aa;
+        stroke-width: 1.7;
+      }
+      .edge-arrow {
+        fill: #d4d4d8;
+        stroke: none;
+      }
+      .node-g:hover .node-rect,
+      .node-g:hover .node-ellipse {
+        stroke: #1a1a1e !important;
+        stroke-width: 1.9;
+      }
     </style>
   </head>
   <body>
@@ -92,7 +207,8 @@
             <span id="stats"></span>
           </p>
           <p style="margin-top: 6px; font-size: 12px; color: var(--muted)">
-            Drag to pan · Scroll to zoom · Hover for details · Sugiyama layered layout (d3-dag)
+            Drag to pan · Scroll to zoom · Hover for details · Sugiyama layered
+            layout (d3-dag)
           </p>
         </div>
         <div class="controls">
@@ -103,18 +219,37 @@
         </div>
       </div>
       <div class="legend">
-        <span><span class="legend-dot" style="background: #22c55e"></span> complete</span>
-        <span><span class="legend-dot" style="background: #eab308"></span> in-progress</span>
-        <span><span class="legend-dot" style="background: #f97316"></span> needs review/input</span>
-        <span><span class="legend-dot" style="background: #a1a1aa"></span> unstarted/archived</span>
-        <span><span class="legend-dot" style="background: #ffffff; border: 1px dashed #a1a1aa"></span> parent (feature)</span>
+        <span
+          ><span class="legend-dot" style="background: #22c55e"></span>
+          complete</span
+        >
+        <span
+          ><span class="legend-dot" style="background: #eab308"></span>
+          in-progress</span
+        >
+        <span
+          ><span class="legend-dot" style="background: #f97316"></span> needs
+          review/input</span
+        >
+        <span
+          ><span class="legend-dot" style="background: #a1a1aa"></span>
+          unstarted/archived</span
+        >
+        <span
+          ><span
+            class="legend-dot"
+            style="background: #ffffff; border: 1px dashed #a1a1aa"
+          ></span>
+          parent (feature)</span
+        >
       </div>
       <div id="dag-wrap">
         <svg id="dag-svg" role="img" aria-label="Plan DAG"></svg>
         <div id="tooltip" class="node-tooltip"></div>
       </div>
       <div class="footer">
-        Generated from vault plans · Sugiyama (layer assignment → crossing minimization → coordinate assignment) · d3-dag
+        Generated from vault plans · Sugiyama (layer assignment → crossing
+        minimization → coordinate assignment) · d3-dag
       </div>
     </div>
 
@@ -126,13 +261,18 @@
       function colorForStatus(s) {
         if (s === "complete") return { bg: "#dcfce7", stroke: "#22c55e" }
         if (s === "in-progress") return { bg: "#fef9c3", stroke: "#eab308" }
-        if (s === "needs-agent-review" || s === "needs-human-input") return { bg: "#ffedd5", stroke: "#f97316" }
-        if (s === "archived" || s === "complete-archived") return { bg: "#f4f4f5", stroke: "#a1a1aa" }
+        if (s === "needs-agent-review" || s === "needs-human-input")
+          return { bg: "#ffedd5", stroke: "#f97316" }
+        if (s === "archived" || s === "complete-archived")
+          return { bg: "#f4f4f5", stroke: "#a1a1aa" }
         if (s === "parent") return { bg: "#ffffff", stroke: "#a1a1aa" }
         return { bg: "#ffffff", stroke: "#d4d4d8" }
       }
       function esc(s) {
-        return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
       }
 
       // Build stratify input: each node needs parentIds
@@ -148,7 +288,7 @@
         const label = (d.label || d.id || "").length
         return Math.max(132, Math.min(240, label * 7 + 28))
       }
-      const stratifyData = nodesData.map(n => ({
+      const stratifyData = nodesData.map((n) => ({
         id: n.id,
         parentIds: parentMap.get(n.id) || [],
         data: n,
@@ -158,7 +298,8 @@
       // Also include any parent-only nodes that were not in nodesData but appeared as source
       // (render-dag.py already creates placeholder nodes for those, so above covers them)
 
-      document.getElementById("stats").textContent = nodesData.length + " nodes · " + edgesData.length + " edges"
+      document.getElementById("stats").textContent =
+        nodesData.length + " nodes · " + edgesData.length + " edges"
 
       const svg = d3.select("#dag-svg")
       const wrap = document.getElementById("dag-wrap")
@@ -171,15 +312,23 @@
       function buildDag() {
         // Resolve stratify operator: graphStratify vs dagStratify
         let stratifyOp
-        if (typeof d3.graphStratify === "function") stratifyOp = d3.graphStratify()
-        else if (typeof d3.dagStratify === "function") stratifyOp = d3.dagStratify()
+        if (typeof d3.graphStratify === "function")
+          stratifyOp = d3.graphStratify()
+        else if (typeof d3.dagStratify === "function")
+          stratifyOp = d3.dagStratify()
         else throw new Error("d3-dag stratify not found")
 
         // Configure id / parentIds accessors
-        try { stratifyOp = stratifyOp.id(d => d.id) } catch(e) {}
-        try { stratifyOp = stratifyOp.parentIds(d => d.parentIds) } catch(e) {
+        try {
+          stratifyOp = stratifyOp.id((d) => d.id)
+        } catch (e) {}
+        try {
+          stratifyOp = stratifyOp.parentIds((d) => d.parentIds)
+        } catch (e) {
           // older API uses parentIds via .parentIds accessor? some versions use .parentIds
-          try { stratifyOp = stratifyOp.parentIds(d => d.parentIds) } catch(e2) {}
+          try {
+            stratifyOp = stratifyOp.parentIds((d) => d.parentIds)
+          } catch (e2) {}
         }
 
         let dag
@@ -190,7 +339,7 @@
           // Fallback: dagConnect with edges
           if (typeof d3.dagConnect === "function") {
             const connect = d3.dagConnect()
-            dag = connect(edgesData.map(e => [e.from, e.to]))
+            dag = connect(edgesData.map((e) => [e.from, e.to]))
           } else {
             throw e
           }
@@ -204,33 +353,53 @@
 
         // Size — use wrap dimensions with padding
         const pad = 40
-        const w = wrap.clientWidth - pad*2
-        const h = wrap.clientHeight - pad*2
+        const w = wrap.clientWidth - pad * 2
+        const h = wrap.clientHeight - pad * 2
 
         // Direction: TB means rankdir TB; LR would swap size
         const size = direction === "TB" ? [w, h] : [h, w]
-        try { sug = sug.size(size) } catch(e) {}
-        try { sug = sug.nodeSize(d => [d.data.width || 140, d.data.height || 36]) } catch(e) {}
-        try { sug = sug.gap([14, 14]) } catch(e) {}
+        try {
+          sug = sug.size(size)
+        } catch (e) {}
+        try {
+          sug = sug.nodeSize((d) => [d.data.width || 140, d.data.height || 36])
+        } catch (e) {}
+        try {
+          sug = sug.gap([14, 14])
+        } catch (e) {}
         // Layering: simplex minimizes total edge length (compact) vs longest-path (minimum layers)
         try {
-          if (typeof d3.layeringSimplex === "function") sug = sug.layering(d3.layeringSimplex())
-          else if (typeof d3.layeringLongestPath === "function" && quality === "fast") sug = sug.layering(d3.layeringLongestPath())
-        } catch(e) {}
+          if (typeof d3.layeringSimplex === "function")
+            sug = sug.layering(d3.layeringSimplex())
+          else if (
+            typeof d3.layeringLongestPath === "function" &&
+            quality === "fast"
+          )
+            sug = sug.layering(d3.layeringLongestPath())
+        } catch (e) {}
         // Decross: two-layer is medium quality, opt is slow optimal, simplex/fast
         try {
-          if (quality === "slow" && typeof d3.decrossOpt === "function") sug = sug.decross(d3.decrossOpt())
-          else if (typeof d3.decrossTwoLayer === "function") sug = sug.decross(d3.decrossTwoLayer())
-          else if (typeof d3.decrossDfs === "function" && quality === "fast") sug = sug.decross(d3.decrossDfs())
-        } catch(e) {}
+          if (quality === "slow" && typeof d3.decrossOpt === "function")
+            sug = sug.decross(d3.decrossOpt())
+          else if (typeof d3.decrossTwoLayer === "function")
+            sug = sug.decross(d3.decrossTwoLayer())
+          else if (typeof d3.decrossDfs === "function" && quality === "fast")
+            sug = sug.decross(d3.decrossDfs())
+        } catch (e) {}
         // Coord: simplex balances bends vs compacts; greedy is faster but looser
         try {
-          if (typeof d3.coordSimplex === "function") sug = sug.coord(d3.coordSimplex())
-          else if (typeof d3.coordGreedy === "function") sug = sug.coord(d3.coordGreedy())
-          else if (typeof d3.coordCenter === "function") sug = sug.coord(d3.coordCenter())
-        } catch(e) {}
+          if (typeof d3.coordSimplex === "function")
+            sug = sug.coord(d3.coordSimplex())
+          else if (typeof d3.coordGreedy === "function")
+            sug = sug.coord(d3.coordGreedy())
+          else if (typeof d3.coordCenter === "function")
+            sug = sug.coord(d3.coordCenter())
+        } catch (e) {}
         // Also set rankdir if supported
-        try { if (direction === "LR" && typeof d3.sugiyama === "function") sug = sug.layering(d3.layeringSimplex()) } catch(e) {}
+        try {
+          if (direction === "LR" && typeof d3.sugiyama === "function")
+            sug = sug.layering(d3.layeringSimplex())
+        } catch (e) {}
 
         sug(dag)
         return dag
@@ -243,8 +412,22 @@
         console.error("d3-dag layout failed", e)
         // Show error in SVG
         const errG = g.append("g").attr("transform", "translate(20,40)")
-        errG.append("text").attr("fill","#b45309").attr("font-size","13px").text("Layout failed: " + e.message)
-        errG.append("text").attr("y",18).attr("fill","#6b7280").attr("font-size","12px").text("Check console for details. Nodes: "+nodesData.length+" Edges: "+edgesData.length)
+        errG
+          .append("text")
+          .attr("fill", "#b45309")
+          .attr("font-size", "13px")
+          .text("Layout failed: " + e.message)
+        errG
+          .append("text")
+          .attr("y", 18)
+          .attr("fill", "#6b7280")
+          .attr("font-size", "12px")
+          .text(
+            "Check console for details. Nodes: " +
+              nodesData.length +
+              " Edges: " +
+              edgesData.length,
+          )
       }
 
       // Render
@@ -253,22 +436,25 @@
         const links = Array.from(dag.links())
 
         // Compute bounds for viewBox
-        let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity
+        let minX = Infinity,
+          maxX = -Infinity,
+          minY = Infinity,
+          maxY = -Infinity
         for (const n of nodes) {
           const nx = n.x ?? n.y ?? 0
           const ny = n.y ?? n.x ?? 0
           const w = n.data.width || 140
           const h = n.data.height || 36
           // d3-dag 1.x nodes have x,y centered at node
-          minX = Math.min(minX, nx - w/2)
-          maxX = Math.max(maxX, nx + w/2)
-          minY = Math.min(minY, ny - h/2)
-          maxY = Math.max(maxY, ny + h/2)
+          minX = Math.min(minX, nx - w / 2)
+          maxX = Math.max(maxX, nx + w / 2)
+          minY = Math.min(minY, ny - h / 2)
+          maxY = Math.max(maxY, ny + h / 2)
         }
         // Handle directional swap: sugiyama LR would have swapped, but we keep TB size
         const pad = 32
-        const vbW = (maxX - minX) + pad*2
-        const vbH = (maxY - minY) + pad*2
+        const vbW = maxX - minX + pad * 2
+        const vbH = maxY - minY + pad * 2
         const vbX = minX - pad
         const vbY = minY - pad
 
@@ -276,91 +462,126 @@
         // if direction LR, rotate points 90 degrees via transform. Simpler: just transform viewport.
 
         // Arrow marker
-        svg.append("defs").append("marker")
-          .attr("id","arrow")
-          .attr("viewBox","0 0 10 10")
-          .attr("refX", 9).attr("refY", 5)
-          .attr("markerWidth", 6).attr("markerHeight", 6)
-          .attr("orient","auto-start-reverse")
-          .append("path").attr("d","M 0 0 L 10 5 L 0 10 z").attr("fill","#d4d4d8")
+        svg
+          .append("defs")
+          .append("marker")
+          .attr("id", "arrow")
+          .attr("viewBox", "0 0 10 10")
+          .attr("refX", 9)
+          .attr("refY", 5)
+          .attr("markerWidth", 6)
+          .attr("markerHeight", 6)
+          .attr("orient", "auto-start-reverse")
+          .append("path")
+          .attr("d", "M 0 0 L 10 5 L 0 10 z")
+          .attr("fill", "#d4d4d8")
 
         // Edge group
-        const edgeG = g.append("g").attr("class","edges")
-        const lineGen = d3.line().x(d=>d.x).y(d=>d.y).curve(d3.curveCatmullRom.alpha(0.7))
+        const edgeG = g.append("g").attr("class", "edges")
+        const lineGen = d3
+          .line()
+          .x((d) => d.x)
+          .y((d) => d.y)
+          .curve(d3.curveCatmullRom.alpha(0.7))
 
         for (const link of links) {
           let pts = link.points
           // Fallback if points not provided: use source/target straight
           if (!pts || pts.length < 2) {
-            const s = link.source, t = link.target
-            const sx = s.x, sy = s.y, tx = t.x, ty = t.y
+            const s = link.source,
+              t = link.target
+            const sx = s.x,
+              sy = s.y,
+              tx = t.x,
+              ty = t.y
             // offset to edge of node rect
-            pts = [{x:sx, y:sy+18}, {x:tx, y:ty-18}]
+            pts = [
+              { x: sx, y: sy + 18 },
+              { x: tx, y: ty - 18 },
+            ]
           }
           // For LR direction, swap x/y
-          if (direction === "LR") pts = pts.map(p => ({x:p.y, y:p.x}))
-          edgeG.append("path")
-            .attr("class","edge-path")
+          if (direction === "LR") pts = pts.map((p) => ({ x: p.y, y: p.x }))
+          edgeG
+            .append("path")
+            .attr("class", "edge-path")
             .attr("d", lineGen(pts))
-            .attr("marker-end","url(#arrow)")
+            .attr("marker-end", "url(#arrow)")
         }
 
         // Node group
-        const nodeG = g.append("g").attr("class","nodes")
+        const nodeG = g.append("g").attr("class", "nodes")
         for (const n of nodes) {
           const d = n.data.data || n.data // stratifyData wrapper
           const orig = d.data || d // original nodesData entry
           const label = orig.label || orig.id || n.id
-          const disp = label.length > 28 ? label.slice(0,28) + "…" : label
+          const disp = label.length > 28 ? label.slice(0, 28) + "…" : label
           const w = n.data.width || 140
           const h = n.data.height || 36
-          let x = n.x, y = n.y
-          if (direction === "LR") { const tmp=x; x=n.y; y=tmp; }
+          let x = n.x,
+            y = n.y
+          if (direction === "LR") {
+            const tmp = x
+            x = n.y
+            y = tmp
+          }
           const c = colorForStatus(orig.status || n.data.status || "")
-          const isEllipse = (orig.shape === "ellipse") || (orig.status === "parent")
-          const ng = nodeG.append("g")
-            .attr("class","node-g")
+          const isEllipse = orig.shape === "ellipse" || orig.status === "parent"
+          const ng = nodeG
+            .append("g")
+            .attr("class", "node-g")
             .attr("transform", `translate(${x},${y})`)
-            .datum({orig, n, x, y, w, h})
+            .datum({ orig, n, x, y, w, h })
 
           if (isEllipse) {
             ng.append("ellipse")
-              .attr("class","node-ellipse")
-              .attr("rx", w/2).attr("ry", h/2)
-              .attr("fill", c.bg).attr("stroke", c.stroke)
+              .attr("class", "node-ellipse")
+              .attr("rx", w / 2)
+              .attr("ry", h / 2)
+              .attr("fill", c.bg)
+              .attr("stroke", c.stroke)
           } else {
             ng.append("rect")
-              .attr("class","node-rect")
-              .attr("x", -w/2).attr("y", -h/2)
-              .attr("width", w).attr("height", h)
-              .attr("fill", c.bg).attr("stroke", c.stroke)
+              .attr("class", "node-rect")
+              .attr("x", -w / 2)
+              .attr("y", -h / 2)
+              .attr("width", w)
+              .attr("height", h)
+              .attr("fill", c.bg)
+              .attr("stroke", c.stroke)
           }
           ng.append("text")
-            .attr("class","node-text")
-            .attr("text-anchor","middle")
-            .attr("dominant-baseline","central")
+            .attr("class", "node-text")
+            .attr("text-anchor", "middle")
+            .attr("dominant-baseline", "central")
             .attr("y", 1)
             .text(disp)
 
           // Tooltip/hover
           ng.on("mouseenter", (ev) => {
-            tooltip.innerHTML = `<b>${esc(orig.title || orig.label || n.id)}</b><br/><code>${esc(n.id)}</code><br/>${esc(orig.status||"")}`
+            tooltip.innerHTML = `<b>${esc(orig.title || orig.label || n.id)}</b><br/><code>${esc(n.id)}</code><br/>${esc(orig.status || "")}`
             tooltip.style.display = "block"
           })
-          .on("mousemove", (ev) => {
-            tooltip.style.left = (ev.pageX + 14) + "px"
-            tooltip.style.top = (ev.pageY + 14) + "px"
-          })
-          .on("mouseleave", () => tooltip.style.display = "none")
-          .on("click", (ev) => {
-            // focus: zoom to node
-            const t = d3.zoomIdentity.translate(wrap.clientWidth/2 - x*1.2, wrap.clientHeight/2 - y*1.2).scale(1.2)
-            svg.transition().duration(400).call(zoom.transform, t)
-          })
+            .on("mousemove", (ev) => {
+              tooltip.style.left = ev.pageX + 14 + "px"
+              tooltip.style.top = ev.pageY + 14 + "px"
+            })
+            .on("mouseleave", () => (tooltip.style.display = "none"))
+            .on("click", (ev) => {
+              // focus: zoom to node
+              const t = d3.zoomIdentity
+                .translate(
+                  wrap.clientWidth / 2 - x * 1.2,
+                  wrap.clientHeight / 2 - y * 1.2,
+                )
+                .scale(1.2)
+              svg.transition().duration(400).call(zoom.transform, t)
+            })
         }
 
         // Zoom behavior
-        const zoom = d3.zoom()
+        const zoom = d3
+          .zoom()
           .scaleExtent([0.12, 4])
           .on("zoom", (ev) => g.attr("transform", ev.transform))
 
@@ -368,9 +589,13 @@
 
         // Initial fit: compute transform to fit viewBox into wrap
         function fit() {
-          const scale = Math.min(wrap.clientWidth / vbW, wrap.clientHeight / vbH, 1)
-          const tx = -vbX * scale + (wrap.clientWidth - vbW*scale)/2
-          const ty = -vbY * scale + (wrap.clientHeight - vbH*scale)/2
+          const scale = Math.min(
+            wrap.clientWidth / vbW,
+            wrap.clientHeight / vbH,
+            1,
+          )
+          const tx = -vbX * scale + (wrap.clientWidth - vbW * scale) / 2
+          const ty = -vbY * scale + (wrap.clientHeight - vbH * scale) / 2
           const t = d3.zoomIdentity.translate(tx, ty).scale(scale)
           svg.transition().duration(400).call(zoom.transform, t)
         }
@@ -383,15 +608,22 @@
         document.getElementById("resetBtn").onclick = reset
         document.getElementById("dirBtn").onclick = () => {
           direction = direction === "TB" ? "LR" : "TB"
-          document.getElementById("dirBtn").textContent = direction === "TB" ? "Direction: ↓ TB" : "Direction: → LR"
+          document.getElementById("dirBtn").textContent =
+            direction === "TB" ? "Direction: ↓ TB" : "Direction: → LR"
           // Re-render by reloading? For simplicity, rebuild DAG and re-render from scratch
           location.reload()
           // Note: LR vs TB would ideally re-layout, but reload toggles flag via localStorage would be needed.
           // For now we keep TB; LR will require re-layout before first render — handled on next load if persisted.
         }
         document.getElementById("qualityBtn").onclick = () => {
-          quality = quality === "medium" ? "fast" : quality === "fast" ? "slow" : "medium"
-          document.getElementById("qualityBtn").textContent = "Quality: " + quality
+          quality =
+            quality === "medium"
+              ? "fast"
+              : quality === "fast"
+                ? "slow"
+                : "medium"
+          document.getElementById("qualityBtn").textContent =
+            "Quality: " + quality
           location.reload()
         }
 
@@ -401,24 +633,35 @@
           const savedQ = localStorage.getItem("dag-quality")
           if (savedDir) direction = savedDir
           if (savedQ) quality = savedQ
-        } catch(e) {}
+        } catch (e) {}
         // Save on change
         const origDirHandler = document.getElementById("dirBtn").onclick
         document.getElementById("dirBtn").onclick = () => {
           direction = direction === "TB" ? "LR" : "TB"
-          try { localStorage.setItem("dag-direction", direction) } catch(e){}
+          try {
+            localStorage.setItem("dag-direction", direction)
+          } catch (e) {}
           location.reload()
         }
         const origQHandler = document.getElementById("qualityBtn").onclick
         document.getElementById("qualityBtn").onclick = () => {
-          quality = quality === "medium" ? "fast" : quality === "fast" ? "slow" : "medium"
-          try { localStorage.setItem("dag-quality", quality) } catch(e){}
+          quality =
+            quality === "medium"
+              ? "fast"
+              : quality === "fast"
+                ? "slow"
+                : "medium"
+          try {
+            localStorage.setItem("dag-quality", quality)
+          } catch (e) {}
           // Need to rebuild layout, not just reload with same build — for now reload
           location.reload()
         }
         // Apply saved labels
-        document.getElementById("dirBtn").textContent = direction === "TB" ? "Direction: ↓ TB" : "Direction: → LR"
-        document.getElementById("qualityBtn").textContent = "Quality: " + quality
+        document.getElementById("dirBtn").textContent =
+          direction === "TB" ? "Direction: ↓ TB" : "Direction: → LR"
+        document.getElementById("qualityBtn").textContent =
+          "Quality: " + quality
 
         // Initial fit after a tick
         setTimeout(fit, 80)
