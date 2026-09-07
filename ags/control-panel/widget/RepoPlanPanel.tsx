@@ -578,7 +578,7 @@ function RepoPlanRow({
                 .catch((e) => console.error(`render-dag failed for ${entry.repo}: ${String(e)}`))
             }}
           >
-            <image iconName="dag-symbolic" pixelSize={12} />
+            <image iconName="view-grid-symbolic" pixelSize={12} />
           </button>
         ) as unknown as Gtk.Widget
         const bottomBox = (
@@ -1045,7 +1045,7 @@ export function RepoPlanPanel({
                             .catch((e) => console.error(`render-dag failed for ${entry.repo}: ${String(e)}`))
                         }}
                       >
-                        <image iconName="dag-symbolic" pixelSize={12} />
+                        <image iconName="view-grid-symbolic" pixelSize={12} />
                       </button>
                     ) as unknown as Gtk.Widget
                     const bottomBoxLive = (
