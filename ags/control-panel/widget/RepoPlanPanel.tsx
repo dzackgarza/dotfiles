@@ -104,19 +104,6 @@ type RepoPlanPanelProps = {
   title?: string
 }
 
-function getMaxRowsHeight(): number {
-  try {
-    const display = Gdk.Display.get_default()
-    const monitor = display?.get_monitors().get_item(0) as Gdk.Monitor | null
-    const h = monitor?.get_geometry().height ?? 1080
-    // Cap rows area to 45% of screen height, max 480px, min 240px
-    const capped = Math.floor(h * 0.45)
-    return Math.max(240, Math.min(480, capped))
-  } catch {
-    return 360
-  }
-}
-
 export function RepoPlanPanel({
   items,
   title = "Repo Plans",
@@ -124,7 +111,6 @@ export function RepoPlanPanel({
   const isAccessor = typeof items === "function"
   const staticItems = (items as RepoPlan[] | undefined) ?? MOCK_REPO_PLANS
   const accessorItems = items as Accessor<RepoPlan[]> | undefined
-  const maxHeight = getMaxRowsHeight()
 
   return (
     <box
@@ -150,25 +136,15 @@ export function RepoPlanPanel({
         />
       </box>
       <box class="repo-plan-divider" />
-      <Gtk.ScrolledWindow
-        class="repo-plan-scroller"
-        hscrollbarPolicy={Gtk.PolicyType.NEVER}
-        vscrollbarPolicy={Gtk.PolicyType.AUTOMATIC}
-        hexpand
-        vexpand={false}
-        maxContentHeight={maxHeight}
-        propagateNaturalHeight={false}
-      >
-        <box orientation={Gtk.Orientation.VERTICAL} spacing={8}>
-          {isAccessor && accessorItems ? (
-            <For each={accessorItems}>
-              {(entry: RepoPlan) => <RepoPlanRow entry={entry} />}
-            </For>
-          ) : (
-            staticItems.map((entry) => <RepoPlanRow entry={entry} />)
-          )}
-        </box>
-      </Gtk.ScrolledWindow>
+      <box orientation={Gtk.Orientation.VERTICAL} spacing={8}>
+        {isAccessor && accessorItems ? (
+          <For each={accessorItems}>
+            {(entry: RepoPlan) => <RepoPlanRow entry={entry} />}
+          </For>
+        ) : (
+          staticItems.map((entry) => <RepoPlanRow entry={entry} />)
+        )}
+      </box>
     </box>
   )
 }
