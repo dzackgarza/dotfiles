@@ -560,11 +560,38 @@ function RepoPlanRow({
             {activeLabelInner}
           </button>
         ) as unknown as Gtk.Widget
+        const dagBtn = (
+          <button
+            class="repo-dag-btn"
+            valign={Gtk.Align.CENTER}
+            halign={Gtk.Align.CENTER}
+            tooltipText={`Open plan DAG for ${entry.repo}`}
+            onClicked={() => {
+              closeControlCenter()
+              const helper = "/home/dzack/dotfiles/ags/control-panel/scripts/render-dag.py"
+              const dagTemplate = "/home/dzack/dotfiles/ags/control-panel/templates/dag.html"
+              void execAsync(["python3", helper, entry.repo, "", dagTemplate])
+                .then((out) => {
+                  const htmlPath = out.trim().split("\n").pop()?.trim()
+                  if (htmlPath) void execAsync(["xdg-open", htmlPath])
+                })
+                .catch((e) => console.error(`render-dag failed for ${entry.repo}: ${String(e)}`))
+            }}
+          >
+            <image iconName="dag-symbolic" pixelSize={12} />
+          </button>
+        ) as unknown as Gtk.Widget
+        const bottomBox = (
+          <box orientation={Gtk.Orientation.HORIZONTAL} spacing={4} hexpand halign={Gtk.Align.FILL} valign={Gtk.Align.CENTER}>
+            {activeBtn}
+            {dagBtn}
+          </box>
+        ) as unknown as Gtk.Widget
         self.attach(folderBtn, 0, 0, 1, 3)
         self.attach(launchersBox, 1, 0, 1, 1)
         self.attach(repoBtn, 2, 0, 1, 1)
         self.attach(ghBtn, 1, 1, 2, 1)
-        self.attach(activeBtn, 1, 2, 2, 1)
+        self.attach(bottomBox, 1, 2, 2, 1)
         self.attach(progressBox, 3, 0, 1, 3)
       }}
     />
@@ -1000,11 +1027,38 @@ export function RepoPlanPanel({
                         {activeLabelLiveInner}
                       </button>
                     ) as unknown as Gtk.Widget
+                    const dagBtnLive = (
+                      <button
+                        class="repo-dag-btn"
+                        valign={Gtk.Align.CENTER}
+                        halign={Gtk.Align.CENTER}
+                        tooltipText={`Open plan DAG for ${entry.repo}`}
+                        onClicked={() => {
+                          closeControlCenter()
+                          const helper = "/home/dzack/dotfiles/ags/control-panel/scripts/render-dag.py"
+                          const dagTemplate = "/home/dzack/dotfiles/ags/control-panel/templates/dag.html"
+                          void execAsync(["python3", helper, entry.repo, "", dagTemplate])
+                            .then((out) => {
+                              const htmlPath = out.trim().split("\n").pop()?.trim()
+                              if (htmlPath) void execAsync(["xdg-open", htmlPath])
+                            })
+                            .catch((e) => console.error(`render-dag failed for ${entry.repo}: ${String(e)}`))
+                        }}
+                      >
+                        <image iconName="dag-symbolic" pixelSize={12} />
+                      </button>
+                    ) as unknown as Gtk.Widget
+                    const bottomBoxLive = (
+                      <box orientation={Gtk.Orientation.HORIZONTAL} spacing={4} hexpand halign={Gtk.Align.FILL} valign={Gtk.Align.CENTER}>
+                        {activeBtnLive}
+                        {dagBtnLive}
+                      </box>
+                    ) as unknown as Gtk.Widget
                     self.attach(folderBtn, 0, row, 1, 3)
                     self.attach(launchersBox, 1, row, 1, 1)
                     self.attach(repoBtn, 2, row, 1, 1)
                     self.attach(ghBtn, 1, row + 1, 2, 1)
-                    self.attach(activeBtnLive, 1, row + 2, 2, 1)
+                    self.attach(bottomBoxLive, 1, row + 2, 2, 1)
                     self.attach(progressBox, 3, row, 1, 3)
                   })
                 }}
