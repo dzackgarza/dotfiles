@@ -63,6 +63,26 @@ def parse_frontmatter(path):
 
             data = yaml.safe_load(yaml_text)
             if isinstance(data, dict):
+                # Clean [[...]] wrappers that yaml leaves intact (e.g. '[[FEATURE-X]]')
+                if "parents" in data and isinstance(data["parents"], list):
+                    cleaned = []
+                    for p in data["parents"]:
+                        if not isinstance(p, str):
+                            cleaned.append(p)
+                            continue
+                        v = p.strip().strip("'\"")
+                        v = v.strip()
+                        if v.startswith("[[") and v.endswith("]]"):
+                            v = v[2:-2]
+                        v = v.strip().strip("'\"").strip()
+                        # also strip any stray brackets
+                        v = v.replace("[[", "").replace("]]", "")
+                        cleaned.append(v)
+                    data["parents"] = cleaned
+                # also clean id/title/status quotes if needed
+                for k in ("id", "title", "status"):
+                    if k in data and isinstance(data[k], str):
+                        data[k] = data[k].strip().strip("'\"")
                 return data
         except:
             pass
