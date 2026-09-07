@@ -112,6 +112,7 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
         const checkout = getCheckout(map[r.repo])
         const hasLocal = !!checkout
         let percent = 0
+        let activePlan: string = "No plan active"
         try {
           const out = await execAsync([
             "python3",
@@ -123,9 +124,11 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
             completed: number
             percent: number
             vault: string
+            activePlan: string
           }
           if (j.total > 0) percent = j.percent
           else percent = 0
+          if (j.activePlan) activePlan = j.activePlan
         } catch {
           percent = hasLocal ? r.progress : 12
         }
@@ -133,6 +136,7 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
           repo: r.repo,
           plan: hasLocal ? (checkout as string) : "No local checkout",
           progress: percent,
+          activePlan,
         }
       }),
     )
