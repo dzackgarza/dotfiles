@@ -164,39 +164,19 @@ function RepoPlanRow({
             halign={Gtk.Align.END}
             valign={Gtk.Align.CENTER}
           >
-            <Gtk.Overlay class="gh-overlay">
-              <button
-                $type="child"
-                class="repo-launcher-btn"
-                tooltipText={`Open https://github.com/${entry.repo}`}
-                onClicked={() => {
-                  closeControlCenter()
-                  void execAsync([
-                    "xdg-open",
-                    `https://github.com/${entry.repo}`,
-                  ]).catch((e) =>
-                    console.error(`xdg-open failed: ${String(e)}`),
-                  )
-                }}
-              >
-                <image iconName="xsi-github-symbolic" pixelSize={16} />
-              </button>
-              {issueCount ? (
-                <label
-                  $type="overlay"
-                  class="gh-badge"
-                  halign={Gtk.Align.END}
-                  valign={Gtk.Align.START}
-                  label={issueCount((n) =>
-                    n > 0 ? (n > 99 ? "99+" : String(n)) : "",
-                  )}
-                  visible={issueCount((n) => n > 0)}
-                  canTarget={false}
-                />
-              ) : (
-                <box $type="overlay" visible={false} />
-              )}
-            </Gtk.Overlay>
+            <button
+              class="repo-launcher-btn"
+              tooltipText={`Open https://github.com/${entry.repo}`}
+              onClicked={() => {
+                closeControlCenter()
+                void execAsync([
+                  "xdg-open",
+                  `https://github.com/${entry.repo}`,
+                ]).catch((e) => console.error(`xdg-open failed: ${String(e)}`))
+              }}
+            >
+              <image iconName="xsi-github-symbolic" pixelSize={16} />
+            </button>
             <button
               class="repo-launcher-btn"
               tooltipText={`Open claude --dangerously-skip-permissions in ${repoPath}`}
