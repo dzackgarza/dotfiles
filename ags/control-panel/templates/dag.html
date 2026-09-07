@@ -613,57 +613,15 @@
         document.getElementById("fitBtn").onclick = fit
         document.getElementById("resetBtn").onclick = reset
         document.getElementById("dirBtn").onclick = () => {
-          direction = direction === "TB" ? "LR" : "TB"
-          document.getElementById("dirBtn").textContent =
-            direction === "TB" ? "Direction: ↓ TB" : "Direction: → LR"
-          // Re-render by reloading? For simplicity, rebuild DAG and re-render from scratch
+          const nd = direction === "TB" ? "LR" : "TB"
+          try { localStorage.setItem("dag-direction", nd) } catch(e) {}
           location.reload()
-          // Note: LR vs TB would ideally re-layout, but reload toggles flag via localStorage would be needed.
-          // For now we keep TB; LR will require re-layout before first render — handled on next load if persisted.
         }
         document.getElementById("qualityBtn").onclick = () => {
-          quality =
-            quality === "medium"
-              ? "fast"
-              : quality === "fast"
-                ? "slow"
-                : "medium"
-          document.getElementById("qualityBtn").textContent =
-            "Quality: " + quality
+          const nq = quality === "medium" ? "fast" : quality === "fast" ? "slow" : "medium"
+          try { localStorage.setItem("dag-quality", nq) } catch(e) {}
           location.reload()
         }
-
-        // Persist direction/quality via query param? Use localStorage
-        try {
-          const savedDir = localStorage.getItem("dag-direction")
-          const savedQ = localStorage.getItem("dag-quality")
-          if (savedDir) direction = savedDir
-          if (savedQ) quality = savedQ
-        } catch (e) {}
-        // Save on change
-        const origDirHandler = document.getElementById("dirBtn").onclick
-        document.getElementById("dirBtn").onclick = () => {
-          direction = direction === "TB" ? "LR" : "TB"
-          try {
-            localStorage.setItem("dag-direction", direction)
-          } catch (e) {}
-          location.reload()
-        }
-        const origQHandler = document.getElementById("qualityBtn").onclick
-        document.getElementById("qualityBtn").onclick = () => {
-          quality =
-            quality === "medium"
-              ? "fast"
-              : quality === "fast"
-                ? "slow"
-                : "medium"
-          try {
-            localStorage.setItem("dag-quality", quality)
-          } catch (e) {}
-          // Need to rebuild layout, not just reload with same build — for now reload
-          location.reload()
-        }
-        // Apply saved labels
         document.getElementById("dirBtn").textContent =
           direction === "TB" ? "Direction: ↓ TB" : "Direction: → LR"
         document.getElementById("qualityBtn").textContent =
