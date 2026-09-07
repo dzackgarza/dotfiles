@@ -175,42 +175,6 @@ function RepoPlanRow({
             halign={Gtk.Align.END}
             valign={Gtk.Align.CENTER}
           >
-            <Gtk.Overlay class="gh-overlay">
-              <button
-                class="repo-launcher-btn"
-                tooltipText={`Open https://github.com/${entry.repo}`}
-                onClicked={() => {
-                  closeControlCenter()
-                  void execAsync([
-                    "xdg-open",
-                    `https://github.com/${entry.repo}`,
-                  ]).catch((e) =>
-                    console.error(`xdg-open failed: ${String(e)}`),
-                  )
-                }}
-              >
-                <image iconName="xsi-github-symbolic" pixelSize={16} />
-              </button>
-              {issueCount ? (
-                <label
-                  $type="overlay"
-                  class="gh-badge"
-                  halign={Gtk.Align.END}
-                  valign={Gtk.Align.START}
-                  label={issueCount((n) => (n > 99 ? "99+" : String(n)))}
-                  canTarget={false}
-                />
-              ) : (
-                <label
-                  $type="overlay"
-                  class="gh-badge"
-                  halign={Gtk.Align.END}
-                  valign={Gtk.Align.START}
-                  label="0"
-                  canTarget={false}
-                />
-              )}
-            </Gtk.Overlay>
             <button
               class="repo-launcher-btn"
               tooltipText={`Open claude --dangerously-skip-permissions in ${repoPath}`}
@@ -262,13 +226,79 @@ function RepoPlanRow({
             </button>
           </box>
         </box>
-        <label
-          class="repo-plan-plan"
-          xalign={0}
-          ellipsize={3}
-          maxWidthChars={28}
-          label={entry.plan}
-        />
+        <box
+          orientation={Gtk.Orientation.HORIZONTAL}
+          spacing={4}
+          hexpand
+          halign={Gtk.Align.FILL}
+          valign={Gtk.Align.CENTER}
+        >
+          <label
+            class="repo-plan-plan"
+            xalign={0}
+            ellipsize={3}
+            maxWidthChars={20}
+            label={entry.plan}
+            hexpand
+          />
+          <Gtk.Overlay
+            class="gh-overlay-small"
+            halign={Gtk.Align.END}
+            valign={Gtk.Align.CENTER}
+          >
+            <button
+              class="repo-launcher-btn-small"
+              tooltipText={`Open https://github.com/${entry.repo}`}
+              onClicked={() => {
+                closeControlCenter()
+                void execAsync([
+                  "xdg-open",
+                  `https://github.com/${entry.repo}`,
+                ]).catch((e) => console.error(`xdg-open failed: ${String(e)}`))
+              }}
+            >
+              <image iconName="xsi-github-symbolic" pixelSize={10} />
+            </button>
+            {issueCount ? (
+              <label
+                $type="overlay"
+                class="gh-badge-small"
+                halign={Gtk.Align.END}
+                valign={Gtk.Align.START}
+                label={issueCount((n) => (n > 99 ? "99+" : String(n)))}
+                canTarget={false}
+              />
+            ) : (
+              <label
+                $type="overlay"
+                class="gh-badge-small"
+                halign={Gtk.Align.END}
+                valign={Gtk.Align.START}
+                label="0"
+                canTarget={false}
+              />
+            )}
+          </Gtk.Overlay>
+          <button
+            class="gh-link-btn"
+            tooltipText={`Open https://github.com/${entry.repo}`}
+            onClicked={() => {
+              closeControlCenter()
+              void execAsync([
+                "xdg-open",
+                `https://github.com/${entry.repo}`,
+              ]).catch((e) => console.error(`xdg-open failed: ${String(e)}`))
+            }}
+          >
+            <label
+              class="gh-link"
+              xalign={0}
+              ellipsize={3}
+              maxWidthChars={16}
+              label={entry.repo}
+            />
+          </button>
+        </box>
       </box>
       <box
         orientation={Gtk.Orientation.VERTICAL}
