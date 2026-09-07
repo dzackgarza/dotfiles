@@ -5,6 +5,7 @@ $bg-color: #{"@theme_bg_color"};
 // Design tokens
 @use "style/_tokens" as *;
 @use "style/_claude-usage-popover" as *;
+@use "style/_repo-plan-panel" as *;
 
 window.Bar {
   background: transparent;
