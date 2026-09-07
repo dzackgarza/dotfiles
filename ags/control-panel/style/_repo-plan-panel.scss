@@ -179,39 +179,36 @@
   opacity: 0.62;
 }
 
-// ── Issue badge: next to GH icon, elegant restraint ──
-// Was saturated rgb(239,68,68) solid pill at 7px — loud, unreadable.
-// Now: subtle outline pill, desaturated, 10px, tabular, only when >0.
-// Uses hairline border + muted bg, not pure red.
+// ── Issue badge: next to GH icon — Raycast/editorial treatment ──
+// Principles: Badges are static indicators, not CTAs. Single neutral
+// state (no rainbow), 6px radius workhorse, 500 weight + positive
+// tracking for dark surfaces, compact padding, whitespace as luxury.
+// Was saturated red pill at 7px/16px — loud, unreadable, hierarchy
+// inversion (badge > plan). Now: airy neutral pill, 9px, tabular.
 .issue-badge {
-  background: #{"alpha(@theme_fg_color, 0.07)"};
-  color: #{"@theme_fg_color"};
-  font-size: 10px;
-  font-weight: 600;
+  background: #{"alpha(@theme_fg_color, 0.065)"};
+  color: #{"alpha(@theme_fg_color, 0.62)"};
+  font-size: 9px;
+  font-weight: 500;
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.02em;
-  border: 1px solid #{"alpha(@theme_fg_color, 0.08)"};
-  border-radius: 999px;
-  padding: 1px 6px;
-  min-height: 16px;
-  min-width: 0;
-  opacity: 0.72;
+  letter-spacing: 0.04em;
+  border: none;
+  border-radius: 6px;
+  padding: 2px 5px;
+  min-height: 0;
+  min-width: 16px;
 }
 
 .issue-badge-has-issues {
-  background: #{"alpha(@error_color, 0.10)"};
-  color: #{"@error_color"};
-  border-color: #{"alpha(@error_color, 0.16)"};
-  opacity: 1;
+  background: #{"alpha(@theme_fg_color, 0.09)"};
+  color: #{"alpha(@theme_fg_color, 0.80)"};
+  border: none;
 }
 
 .issue-badge-muted {
-  // deprecated — zero now shows neutral pill via plain .issue-badge
-  // kept for backwards compat, identical to neutral
-  background: #{"alpha(@theme_fg_color, 0.07)"};
-  color: #{"@theme_fg_color"};
-  border-color: #{"alpha(@theme_fg_color, 0.08)"};
-  opacity: 0.72;
+  // deprecated alias — identical to neutral .issue-badge
+  background: #{"alpha(@theme_fg_color, 0.065)"};
+  color: #{"alpha(@theme_fg_color, 0.62)"};
 }
 
 // Legacy overlay badges — keep but make invisible (no longer used)
