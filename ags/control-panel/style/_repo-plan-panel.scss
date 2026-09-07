@@ -251,6 +251,16 @@
   & + .repo-dag-btn {
     margin-left: 4px;
   }
+
+  &:disabled,
+  &.repo-plan-active-btn-missing {
+    opacity: 1;
+  }
+
+  &:disabled .repo-plan-active,
+  &.repo-plan-active-btn-missing .repo-plan-active {
+    text-decoration: none;
+  }
 }
 
 .repo-dag-btn {
