@@ -315,8 +315,22 @@
         width: n.id === "empty" ? 200 : nodeWidth(n),
         height: 36,
       }))
-      // Also include any parent-only nodes that were not in nodesData but appeared as source
-      // (render-dag.py already creates placeholder nodes for those, so above covers them)
+      // Include any parent-only ids that render-dag.py missed (bracketed parents)
+      {
+        const seen = new Set(stratifyData.map((d) => d.id))
+        for (const [to, froms] of parentMap.entries()) {
+          if (!seen.has(to)) {
+            const fake = { id: to, label: to, title: to, status: "parent", shape: "ellipse" }
+            stratifyData.push({ id: to, parentIds: froms, data: fake, width: nodeWidth(fake), height: 36 })
+            seen.add(to)
+          }
+          for (const f of froms) if (!seen.has(f)) {
+            const fake = { id: f, label: f, title: f, status: "parent", shape: "ellipse" }
+            stratifyData.push({ id: f, parentIds: parentMap.get(f) || [], data: fake, width: nodeWidth(fake), height: 36 })
+            seen.add(f)
+          }
+        }
+      }
 
       document.getElementById("stats").textContent =
         nodesData.length + " nodes · " + edgesData.length + " edges"
