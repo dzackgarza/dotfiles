@@ -226,79 +226,55 @@ function RepoPlanRow({
             </button>
           </box>
         </box>
-        <box
-          orientation={Gtk.Orientation.HORIZONTAL}
-          spacing={4}
-          hexpand
-          halign={Gtk.Align.FILL}
-          valign={Gtk.Align.CENTER}
+        <button
+          class="gh-plan-btn"
+          tooltipText={`Open https://github.com/${entry.repo}`}
+          onClicked={() => {
+            closeControlCenter()
+            void execAsync([
+              "xdg-open",
+              `https://github.com/${entry.repo}`,
+            ]).catch((e) => console.error(`xdg-open failed: ${String(e)}`))
+          }}
         >
-          <label
-            class="repo-plan-plan"
-            xalign={0}
-            ellipsize={3}
-            maxWidthChars={20}
-            label={entry.plan}
+          <box
+            orientation={Gtk.Orientation.HORIZONTAL}
+            spacing={4}
             hexpand
-          />
-          <Gtk.Overlay
-            class="gh-overlay-small"
-            halign={Gtk.Align.END}
+            halign={Gtk.Align.FILL}
             valign={Gtk.Align.CENTER}
           >
-            <button
-              class="repo-launcher-btn-small"
-              tooltipText={`Open https://github.com/${entry.repo}`}
-              onClicked={() => {
-                closeControlCenter()
-                void execAsync([
-                  "xdg-open",
-                  `https://github.com/${entry.repo}`,
-                ]).catch((e) => console.error(`xdg-open failed: ${String(e)}`))
-              }}
-            >
+            <Gtk.Overlay class="gh-overlay-small">
               <image iconName="xsi-github-symbolic" pixelSize={10} />
-            </button>
-            {issueCount ? (
-              <label
-                $type="overlay"
-                class="gh-badge-small"
-                halign={Gtk.Align.END}
-                valign={Gtk.Align.START}
-                label={issueCount((n) => (n > 99 ? "99+" : String(n)))}
-                canTarget={false}
-              />
-            ) : (
-              <label
-                $type="overlay"
-                class="gh-badge-small"
-                halign={Gtk.Align.END}
-                valign={Gtk.Align.START}
-                label="0"
-                canTarget={false}
-              />
-            )}
-          </Gtk.Overlay>
-          <button
-            class="gh-link-btn"
-            tooltipText={`Open https://github.com/${entry.repo}`}
-            onClicked={() => {
-              closeControlCenter()
-              void execAsync([
-                "xdg-open",
-                `https://github.com/${entry.repo}`,
-              ]).catch((e) => console.error(`xdg-open failed: ${String(e)}`))
-            }}
-          >
+              {issueCount ? (
+                <label
+                  $type="overlay"
+                  class="gh-badge-small"
+                  halign={Gtk.Align.END}
+                  valign={Gtk.Align.START}
+                  label={issueCount((n) => (n > 99 ? "99+" : String(n)))}
+                  canTarget={false}
+                />
+              ) : (
+                <label
+                  $type="overlay"
+                  class="gh-badge-small"
+                  halign={Gtk.Align.END}
+                  valign={Gtk.Align.START}
+                  label="0"
+                  canTarget={false}
+                />
+              )}
+            </Gtk.Overlay>
             <label
-              class="gh-link"
+              class="repo-plan-plan"
               xalign={0}
               ellipsize={3}
-              maxWidthChars={16}
-              label={entry.repo}
+              maxWidthChars={28}
+              label={entry.plan}
             />
-          </button>
-        </box>
+          </box>
+        </button>
       </box>
       <box
         orientation={Gtk.Orientation.VERTICAL}
