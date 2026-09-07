@@ -232,9 +232,7 @@ function RepoPlanRow({
               repoPath,
               "claude",
               "--dangerously-skip-permissions",
-            ]).catch((e) =>
-              console.error(`kitty claude failed: ${String(e)}`),
-            )
+            ]).catch((e) => console.error(`kitty claude failed: ${String(e)}`))
           }}
         >
           <image iconName="claude-ai-symbolic" pixelSize={14} />
@@ -257,9 +255,7 @@ function RepoPlanRow({
               "codex",
               "--yolo",
               "--search",
-            ]).catch((e) =>
-              console.error(`kitty codex failed: ${String(e)}`),
-            )
+            ]).catch((e) => console.error(`kitty codex failed: ${String(e)}`))
           }}
         >
           <image iconName="openai-symbolic" pixelSize={14} />
@@ -275,8 +271,8 @@ function RepoPlanRow({
           onClicked={() => {
             if (!hasLocal) return
             closeControlCenter()
-            void execAsync(["kitty", "-d", repoPath, "opencode"]).catch(
-              (e) => console.error(`kitty opencode failed: ${String(e)}`),
+            void execAsync(["kitty", "-d", repoPath, "opencode"]).catch((e) =>
+              console.error(`kitty opencode failed: ${String(e)}`),
             )
           }}
         >
@@ -345,9 +341,7 @@ function RepoPlanRow({
             halign={Gtk.Align.CENTER}
             valign={Gtk.Align.CENTER}
             label={
-              issueCount
-                ? issueCount((n) => (n > 99 ? "99+" : String(n)))
-                : "0"
+              issueCount ? issueCount((n) => (n > 99 ? "99+" : String(n))) : "0"
             }
           />
           <label
