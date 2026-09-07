@@ -531,7 +531,7 @@ export function ControlCenterWindow() {
           hexpand
           vexpand={false}
           maxContentHeight={getControlCenterMaxHeight()}
-          propagateNaturalHeight={false}
+          propagateNaturalHeight={true}
         >
           {panel}
         </Gtk.ScrolledWindow>
