@@ -390,7 +390,11 @@ export function RepoPlanPanel({
         />
       </box>
       <box class="repo-plan-divider" />
-      <box orientation={Gtk.Orientation.VERTICAL} spacing={8}>
+      <box
+        class="repo-plan-list"
+        orientation={Gtk.Orientation.VERTICAL}
+        spacing={6}
+      >
         {isAccessor && accessorItems ? (
           <For each={accessorItems}>
             {(entry: RepoPlan) => (
