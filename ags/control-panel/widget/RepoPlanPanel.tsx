@@ -648,7 +648,7 @@ export function RepoPlanPanel({
         </box>
       ) : live ? (
         <With value={liveItems((v) => v ?? staticItems)}>
-          {(items) => {
+          {(items: RepoPlan[]) => {
             if (!items || items.length === 0) return <box />
             return (
               <Gtk.Grid
