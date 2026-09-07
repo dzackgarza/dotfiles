@@ -407,45 +407,89 @@
           const nCount = stratifyData.length
           const eCount = edgesData.length
           const childrenMap = new Map()
-          for (const [to, froms] of parentMap) for (const f of froms) childrenMap.set(f, (childrenMap.get(f)||0)+1)
-          const maxChildren = Math.max(0, ...Array.from(childrenMap.values()), ...Array.from(parentMap.values()).map(a=>a.length))
+          for (const [to, froms] of parentMap)
+            for (const f of froms)
+              childrenMap.set(f, (childrenMap.get(f) || 0) + 1)
+          const maxChildren = Math.max(
+            0,
+            ...Array.from(childrenMap.values()),
+            ...Array.from(parentMap.values()).map((a) => a.length),
+          )
           const density = eCount / Math.max(1, nCount)
-          const useGrid = (maxChildren > 7) || (nCount > 16 && density < 0.9) || (nCount > 12 && maxChildren > 5)
+          const useGrid =
+            maxChildren > 7 ||
+            (nCount > 16 && density < 0.9) ||
+            (nCount > 12 && maxChildren > 5)
           if (useGrid) {
             const cols = Math.ceil(Math.sqrt(nCount))
-            const gapX = 22, gapY = 22
+            const gapX = 22,
+              gapY = 22
             const order = new Map()
-            let idx=0
-            const indeg = new Map(stratifyData.map(d=>[d.id, d.parentIds.length]))
-            const queue = stratifyData.filter(d=>d.parentIds.length===0).map(d=>d.id)
+            let idx = 0
+            const indeg = new Map(
+              stratifyData.map((d) => [d.id, d.parentIds.length]),
+            )
+            const queue = stratifyData
+              .filter((d) => d.parentIds.length === 0)
+              .map((d) => d.id)
             const seenOrder = new Set()
             while (queue.length) {
               const id = queue.shift()
               if (seenOrder.has(id)) continue
-              seenOrder.add(id); order.set(id, idx++)
-              for (const [to, froms] of parentMap) if (froms.includes(id) && !seenOrder.has(to) && !queue.includes(to)) queue.push(to)
+              seenOrder.add(id)
+              order.set(id, idx++)
+              for (const [to, froms] of parentMap)
+                if (
+                  froms.includes(id) &&
+                  !seenOrder.has(to) &&
+                  !queue.includes(to)
+                )
+                  queue.push(to)
             }
-            for (const d of stratifyData) if (!order.has(d.id)) order.set(d.id, idx++)
-            const sorted = [...stratifyData].sort((a,b)=> order.get(a.id)-order.get(b.id))
+            for (const d of stratifyData)
+              if (!order.has(d.id)) order.set(d.id, idx++)
+            const sorted = [...stratifyData].sort(
+              (a, b) => order.get(a.id) - order.get(b.id),
+            )
             const pos = new Map()
-            sorted.forEach((d,i)=>{
-              const col = i % cols, row = Math.floor(i / cols)
-              const x = col * (d.width + gapX) + d.width/2 + 20
+            sorted.forEach((d, i) => {
+              const col = i % cols,
+                row = Math.floor(i / cols)
+              const x = col * (d.width + gapX) + d.width / 2 + 20
               const y = row * (36 + gapY) + 18 + 20
-              pos.set(d.id, {x,y})
+              pos.set(d.id, { x, y })
             })
-            const gridNodes = sorted.map(d=>{
+            const gridNodes = sorted.map((d) => {
               const p = pos.get(d.id)
               return { data: d, x: p.x, y: p.y }
             })
-            const gridLinks = edgesData.map(e=>{
-              const from = cleanId(e.from), to = cleanId(e.to)
-              const s = pos.get(from), t = pos.get(to)
-              if (!s || !t) return null
-              const pts = [{x:s.x, y:s.y+18}, {x:s.x, y:(s.y+t.y)/2}, {x:t.x, y:(s.y+t.y)/2}, {x:t.x, y:t.y-18}]
-              return { source: {data:{id:from}, x:s.x, y:s.y}, target:{data:{id:to}, x:t.x, y:t.y}, points: pts }
-            }).filter(Boolean)
-            return { nodes: ()=> gridNodes[Symbol.iterator](), links: ()=> gridLinks[Symbol.iterator](), _isGrid:true, _gridNodes:gridNodes, _gridLinks:gridLinks }
+            const gridLinks = edgesData
+              .map((e) => {
+                const from = cleanId(e.from),
+                  to = cleanId(e.to)
+                const s = pos.get(from),
+                  t = pos.get(to)
+                if (!s || !t) return null
+                const pts = [
+                  { x: s.x, y: s.y + 18 },
+                  { x: s.x, y: (s.y + t.y) / 2 },
+                  { x: t.x, y: (s.y + t.y) / 2 },
+                  { x: t.x, y: t.y - 18 },
+                ]
+                return {
+                  source: { data: { id: from }, x: s.x, y: s.y },
+                  target: { data: { id: to }, x: t.x, y: t.y },
+                  points: pts,
+                }
+              })
+              .filter(Boolean)
+            return {
+              nodes: () => gridNodes[Symbol.iterator](),
+              links: () => gridLinks[Symbol.iterator](),
+              _isGrid: true,
+              _gridNodes: gridNodes,
+              _gridLinks: gridLinks,
+            }
           }
         }
 
