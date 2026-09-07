@@ -184,8 +184,8 @@ function RepoPlanRow({
                 <label
                   $type="overlay"
                   class="gh-badge"
-                  halign={Gtk.Align.CENTER}
-                  valign={Gtk.Align.CENTER}
+                  halign={Gtk.Align.END}
+                  valign={Gtk.Align.START}
                   label={issueCount((n) => (n > 99 ? "99+" : String(n)))}
                   canTarget={false}
                 />
@@ -193,8 +193,8 @@ function RepoPlanRow({
                 <label
                   $type="overlay"
                   class="gh-badge"
-                  halign={Gtk.Align.CENTER}
-                  valign={Gtk.Align.CENTER}
+                  halign={Gtk.Align.END}
+                  valign={Gtk.Align.START}
                   label="0"
                   canTarget={false}
                 />
