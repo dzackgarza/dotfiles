@@ -407,19 +407,12 @@
         else if (typeof d3.dagSugiyama === "function") sug = d3.dagSugiyama()
         else throw new Error("sugiyama not found")
 
-        // Size — use wrap dimensions with padding
-        const pad = 40
-        const w = wrap.clientWidth - pad * 2
-        const h = wrap.clientHeight - pad * 2
-
-        // Direction: TB means rankdir TB; LR would swap size
-        const size = direction === "TB" ? [w, h] : [h, w]
+        // Sugiyama in d3-dag 1.1 uses nodeSize + gap, not size; we fit later via viewBox/zoom
         try {
-          sug = sug.size(size)
-        } catch (e) {}
-        try {
-          sug = sug.nodeSize((d) => [d.data.width || 140, d.data.height || 36])
-        } catch (e) {}
+          sug = sug.nodeSize((d) => [d.data ? d.data.width || 140 : 140, d.data ? d.data.height || 36 : 36])
+        } catch (e) {
+          try { sug = sug.nodeSize((d) => [d.width || 140, d.height || 36]) } catch(e2){}
+        }
         try {
           sug = sug.gap([14, 14])
         } catch (e) {}
