@@ -1,155 +1,234 @@
 @use "tokens" as *;
 
+// ── Panel chrome ──
+// Editorial/luxury principle: whitespace is luxury. Panel itself is a
+// quiet section inside .nc-root — no second card, no shadow. Only a
+// hairline divider and generous macro whitespace define it.
 .repo-plan-window-root {
   background: transparent;
   padding: 0;
 }
 
 .repo-plan-panel {
-  background: #{"@window_bg_color"};
-  border: 1px solid #{"alpha(@theme_fg_color, 0.08)"};
-  border-radius: $radius-xl;
-  padding: $spacing-xl;
-  min-width: 420px;
-  box-shadow: 0 12px 32px #{"alpha(@theme_bg_color, 0.25)"};
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  min-width: 0;
+  box-shadow: none;
 }
 
 .repo-plan-header {
-  padding: 0 0 $spacing-sm 0;
+  padding: 2px 2px $spacing-sm 2px;
 }
 
 .repo-plan-title {
-  font-size: $font-md;
-  font-weight: 700;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: #{"@theme_fg_color"};
+  opacity: 0.45;
 }
 
 .repo-plan-count {
-  font-size: $font-xs;
-  opacity: $opacity-secondary;
+  font-size: 11px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.35;
   color: #{"@theme_fg_color"};
 }
 
 .repo-plan-divider {
   min-height: 1px;
-  background: #{"alpha(@theme_fg_color, 0.08)"};
-  margin: $spacing-md 0 $spacing-lg 0;
+  background: #{"alpha(@theme_fg_color, 0.06)"};
+  margin: 0 0 $spacing-lg 0;
 }
 
+// ── List ──
+.repo-plan-list {
+  // spacing handled by row margins/borders, not gap alone
+}
+
+// ── Row: flat list item, not heavy card ──
+// Proximity + repetition: tight internal grouping (repo ↔ plan 3px),
+// generous external breathing (8px between rows via margin, 1px hairline).
+// Alignment: 8px grid (12px horiz, 10px vert).
 .repo-plan-row {
-  background: #{"@card_bg_color"};
-  border-radius: $radius-lg;
-  padding: $spacing-md $spacing-lg;
-  min-height: 56px;
+  background: #{"alpha(@card_bg_color, 0.52)"};
+  border: 1px solid #{"alpha(@theme_fg_color, 0.06)"};
+  border-radius: 10px;
+  padding: 10px 12px;
+  min-height: 0;
 
   &:hover {
-    background: #{"alpha(@card_bg_color, 0.95)"};
+    background: #{"alpha(@card_bg_color, 0.72)"};
+    border-color: #{"alpha(@theme_fg_color, 0.09)"};
+  }
+
+  & + .repo-plan-row {
+    margin-top: 0; // rows spaced by parent spacing
   }
 }
 
 .repo-plan-icon {
   color: #{"@theme_fg_color"};
-  opacity: 0.7;
+  opacity: 0.32;
 }
 
 .repo-folder-btn {
   background: transparent;
   border: none;
   padding: 4px;
-  border-radius: $radius-sm;
+  border-radius: 8px;
   min-width: 28px;
   min-height: 28px;
   color: #{"@theme_fg_color"};
-  opacity: 0.75;
+  opacity: 0.42;
 
   &:hover {
-    background: #{"alpha(@theme_fg_color, 0.08)"};
-    opacity: 1;
+    background: #{"alpha(@theme_fg_color, 0.06)"};
+    opacity: 0.95;
   }
 }
 
+// Repo name: primary hierarchy — 13px / 500, slight tracking
 .repo-plan-repo {
-  font-size: $font-sm;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
   color: #{"@theme_fg_color"};
 }
 
 .repo-plan-repo-btn {
   background: transparent;
   border: none;
-  padding: 0 4px;
-  margin: -2px -4px;
-  border-radius: $radius-sm;
+  padding: 1px 4px;
+  margin: -1px -4px;
+  border-radius: 6px;
   color: #{"@theme_fg_color"};
 
   &:hover {
-    background: #{"alpha(@theme_fg_color, 0.06)"};
+    background: #{"alpha(@theme_fg_color, 0.05)"};
   }
 
   &:hover .repo-plan-repo {
     color: #{"@accent_color"};
-    text-decoration: underline;
   }
 }
 
+// Launchers: secondary affordance — de-emphasized by default,
+// reveal on row hover. Smaller icon, larger hit area, muted.
 .repo-launcher-btn {
   background: transparent;
   border: none;
   padding: 4px;
-  border-radius: $radius-sm;
-  min-width: 24px;
-  min-height: 24px;
+  border-radius: 7px;
+  min-width: 26px;
+  min-height: 26px;
   color: #{"@theme_fg_color"};
-  opacity: 0.75;
+  opacity: 0.38;
 
   &:hover {
-    background: #{"alpha(@theme_fg_color, 0.08)"};
-    opacity: 1;
+    background: #{"alpha(@theme_fg_color, 0.07)"};
+    opacity: 0.95;
   }
 }
 
-.gh-overlay {
-  /* allow badge to overflow button bounds */
+.repo-plan-row:hover .repo-launcher-btn {
+  opacity: 0.55;
+}
+.repo-plan-row:hover .repo-launcher-btn:hover {
+  opacity: 1;
 }
 
-.gh-badge {
+// ── Subtitle row: GH link + badge + plan ──
+// Visual hierarchy: GH icon (12px, 0.38) → badge (pill, 10px)
+// → plan (11px, 0.55). All secondary to repo name.
+.gh-plan-btn {
   background: transparent;
-  color: rgb(239, 68, 68);
-  font-size: 7px;
-  font-weight: 800;
-  min-width: 0;
-  min-height: 0;
   border: none;
+  padding: 2px 4px;
+  margin: -2px -4px;
+  border-radius: 6px;
+  color: #{"@theme_fg_color"};
+
+  &:hover {
+    background: #{"alpha(@theme_fg_color, 0.05)"};
+  }
+
+  &:hover .repo-plan-plan {
+    color: #{"@theme_fg_color"};
+    opacity: 0.85;
+  }
+}
+
+.repo-plan-plan {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.015em;
+  opacity: 0.58;
+  color: #{"@theme_fg_color"};
+}
+
+.gh-plan-icon {
+  color: #{"@theme_fg_color"};
+  opacity: 0.36;
+}
+.gh-plan-btn:hover .gh-plan-icon {
+  opacity: 0.62;
+}
+
+// ── Issue badge: next to GH icon, elegant restraint ──
+// Was saturated rgb(239,68,68) solid pill at 7px — loud, unreadable.
+// Now: subtle outline pill, desaturated, 10px, tabular, only when >0.
+// Uses hairline border + muted bg, not pure red.
+.issue-badge {
+  background: #{"alpha(@theme_fg_color, 0.07)"};
+  color: #{"@theme_fg_color"};
+  font-size: 10px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  border: 1px solid #{"alpha(@theme_fg_color, 0.08)"};
+  border-radius: 999px;
+  padding: 1px 6px;
+  min-height: 16px;
+  min-width: 0;
+  opacity: 0.72;
+}
+
+.issue-badge-has-issues {
+  background: #{"alpha(@error_color, 0.10)"};
+  color: #{"@error_color"};
+  border-color: #{"alpha(@error_color, 0.16)"};
+  opacity: 1;
+}
+
+.issue-badge-muted {
+  // zero issues: hidden via visibility, keeps layout stable but no ink
+  opacity: 0;
+  min-width: 0;
   padding: 0;
-  margin-top: 2px;
-  margin-right: 2px;
+  border: none;
+  background: transparent;
 }
 
+// Legacy overlay badges — keep but make invisible (no longer used)
+.gh-overlay,
 .gh-overlay-small {
+  /* deprecated — badge now inline */
 }
-
+.gh-badge,
 .gh-badge-small {
   background: transparent;
-  color: rgb(239, 68, 68);
-  font-size: 6px;
-  font-weight: 800;
+  color: transparent;
+  font-size: 0;
   min-width: 0;
   min-height: 0;
   border: none;
   padding: 0;
-  margin-top: 1px;
-  margin-right: 1px;
-}
-
-.issue-badge {
-  background: rgb(239, 68, 68);
-  color: white;
-  font-size: 7px;
-  font-weight: 700;
-  border-radius: 6px;
-  padding: 1px 4px;
-  min-width: 16px;
-  min-height: 14px;
+  margin: 0;
 }
 
 .repo-launcher-btn-small {
@@ -188,71 +267,55 @@
   font-weight: 400;
 }
 
-.gh-plan-btn {
-  background: transparent;
-  border: none;
-  padding: 2px 4px;
-  margin: -2px -4px;
-  border-radius: $radius-sm;
-  color: #{"@theme_fg_color"};
-
-  &:hover {
-    background: #{"alpha(@theme_fg_color, 0.06)"};
-  }
-
-  &:hover .repo-plan-plan {
-    color: #{"@accent_color"};
-    text-decoration: underline;
-  }
-}
-
-.repo-plan-plan {
-  font-size: $font-xs;
-  opacity: $opacity-secondary;
-  color: #{"@theme_fg_color"};
-}
-
+// ── Progress: thin, desaturated, quiet ──
+// Was 6px pure rgb — very loud. Now 3px track, muted semantic colors.
 .repo-plan-progress-label {
-  font-size: 10px;
-  opacity: $opacity-secondary;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.32;
   color: #{"@theme_fg_color"};
-  font-weight: 500;
 }
 
 .repo-plan-progress-value {
-  font-size: $font-sm;
-  font-weight: 700;
+  font-size: 11px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
   color: #{"@theme_fg_color"};
+  opacity: 0.86;
 }
 
 .repo-plan-progress {
-  min-height: 6px;
-  border-radius: $radius-sm;
+  min-height: 3px;
+  border-radius: 999px;
 }
 
 .repo-plan-progress trough {
   all: unset;
   background: #{"alpha(@theme_fg_color, 0.08)"};
-  border-radius: $radius-sm;
-  min-height: 6px;
+  border-radius: 999px;
+  min-height: 3px;
 }
 
 .repo-plan-progress progress {
   all: unset;
-  border-radius: $radius-sm;
-  min-height: 6px;
+  border-radius: 999px;
+  min-height: 3px;
 }
 
+// Desaturated editorial palette — lower chroma than pure Tailwind
 .repo-plan-progress-green progress {
-  background: rgb(34, 197, 94);
+  background: rgb(88, 166, 112); // muted sage, not #22c55e
 }
 
 .repo-plan-progress-yellow progress {
-  background: rgb(250, 204, 21);
+  background: rgb(194, 164, 78); // muted wheat, not #facc15
 }
 
 .repo-plan-progress-red progress {
-  background: rgb(239, 68, 68);
+  background: rgb(196, 96, 96); // muted clay, not #ef4444
 }
 
 // Mock window wrapper
