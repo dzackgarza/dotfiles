@@ -18,7 +18,7 @@ def load_module(name: str, relative: str):
     return module
 
 
-def write_plan(root: Path, card_id: str, *, status: str, archived: bool = False, todos: list[dict] | None = None) -> Path:
+def write_plan(root: Path, card_id: str, *, status: str, archived: bool = False, todos: list[dict] | None = None, description: str = '') -> Path:
     path = root / 'plans' / 'features' / 'FEATURE-test' / 'plans' / card_id / f'{card_id}.md'
     path.parent.mkdir(parents=True, exist_ok=True)
     metadata = {
@@ -27,6 +27,8 @@ def write_plan(root: Path, card_id: str, *, status: str, archived: bool = False,
         'status': status,
         'archived': archived,
     }
+    if description:
+        metadata['description'] = description
     if todos is not None:
         metadata['todos'] = todos
     path.write_text('---\n' + yaml.safe_dump(metadata, sort_keys=False) + '---\n# Body\n', encoding='utf-8')
@@ -71,8 +73,8 @@ def test_vault_progress_uses_unarchived_current_plan_todos(tmp_path: Path) -> No
 
 def test_combined_plan_renderer_names_each_source(tmp_path: Path) -> None:
     renderer = load_module('render_plan_test', 'ags/control-panel/scripts/render-plan.py')
-    first = write_plan(tmp_path, 'PLAN-first', status='in-progress')
-    second = write_plan(tmp_path, 'PLAN-second', status='blocked')
+    first = write_plan(tmp_path, 'PLAN-first', status='in-progress', description='Build the first mathematical object.')
+    second = write_plan(tmp_path, 'PLAN-second', status='blocked', description='Connect the second object to its upstream model.')
 
     combined = renderer.combined_markdown([str(first), str(second)])
 
@@ -81,6 +83,8 @@ def test_combined_plan_renderer_names_each_source(tmp_path: Path) -> None:
     assert '## Second' in combined
     assert '**Status:** `in-progress`' in combined
     assert '**Status:** `blocked`' in combined
+    assert '<span class="plan-summary-label">Goal</span>Build the first mathematical object.' in combined
+    assert '<span class="plan-summary-label">Goal</span>Connect the second object to its upstream model.' in combined
     assert str(first) in combined
     assert str(second) in combined
 
@@ -101,5 +105,11 @@ def test_dag_renderer_keeps_canonical_graph_and_interactive_browser_engine() -> 
     assert 'd3.zoom()' in template
     assert 'data-view="dependencies"' in template
     assert 'data-view="containment"' in template
+    assert 'tt-description' in template
+    assert 'p.data.description' in template
+    payload = renderer.node_payload('PLAN-one', {'PLAN-one': {'title': 'One', 'description': 'Mathematical goal', 'status': 'in-progress'}})
+    assert payload['description'] == 'Mathematical goal'
+    plan_template = (DOTFILES / 'ags/control-panel/templates/elegant-plan.html').read_text(encoding='utf-8')
+    assert '<span class="plan-summary-label">Goal</span>$description$' in plan_template
     assert 'https://d3js.org' not in template
     assert 'unpkg.com/d3-dag' not in template
