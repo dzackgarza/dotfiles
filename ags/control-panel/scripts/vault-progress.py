@@ -9,22 +9,8 @@ import yaml
 vault_base = "/home/dzack/.agent-memory-vault/projects"
 
 COMPLETE_STATUSES = {"complete", "done", "decided", "implemented"}
-CURRENT_PLAN_STATUSES = {
-    "in-progress",
-    "needs-agent-review",
-    "needs-human-input",
-    "approved-and-unstarted",
-    "revision-required",
-    "blocked",
-}
-STATUS_ORDER = {
-    "in-progress": 0,
-    "needs-agent-review": 1,
-    "revision-required": 2,
-    "needs-human-input": 3,
-    "blocked": 4,
-    "approved-and-unstarted": 5,
-}
+CURRENT_PLAN_STATUSES = {"in-progress"}
+STATUS_ORDER = {"in-progress": 0}
 
 
 def resolve_vault_path(repo_short: str) -> str | None:
