@@ -1,301 +1,275 @@
 #!/usr/bin/env python3
+"""Render the canonical active agent-memory DAG as self-contained HTML.
+
+The renderer intentionally does not reconstruct graph structure by scanning every plan file:
+`agent-memory plan dag --visibility active` already owns that projection in plan-dag.md.
+It also does not require browser-side graph libraries or network access; Graphviz produces
+SVG at render time so file:// inspection is reliable offline.
+"""
+from __future__ import annotations
+
+import html
 import json
 import os
 import re
 import subprocess
 import sys
+from pathlib import Path
+from typing import Any
 
-vault_base = "/home/dzack/.agent-memory-vault/projects"
+import yaml
+
+VAULT_BASE = Path("/home/dzack/.agent-memory-vault/projects")
+DEFAULT_TEMPLATE = Path("/home/dzack/dotfiles/ags/control-panel/templates/dag.html")
+
+STATUS_STYLE = {
+    "complete": ("#dcfce7", "#22c55e"),
+    "in-progress": ("#fef9c3", "#eab308"),
+    "blocked": ("#fee2e2", "#ef4444"),
+    "needs-agent-review": ("#ffedd5", "#f97316"),
+    "needs-human-input": ("#ffedd5", "#f97316"),
+    "approved-and-unstarted": ("#f4f4f5", "#a1a1aa"),
+    "unstarted": ("#f4f4f5", "#a1a1aa"),
+}
 
 
-def find_vault(repo_short):
+def find_vault(repo_short: str) -> Path | None:
+    short = repo_short.split("/")[-1]
     candidates = [
         f"github.com__dzackgarza__{repo_short}",
         f"github.com__dzackgarza__{repo_short.lower()}",
+        f"github.com__dzackgarza__{short}",
+        f"github.com__dzackgarza__{short.lower()}",
         repo_short,
         repo_short.lower(),
+        short,
+        short.lower(),
     ]
-    if "/" in repo_short:
-        short = repo_short.split("/")[-1]
-        candidates.extend(
-            [
-                f"github.com__dzackgarza__{short}",
-                f"github.com__dzackgarza__{short.lower()}",
-                short,
-                short.lower(),
-            ]
-        )
-    vault_path = None
-    for cand in candidates:
-        p = os.path.join(vault_base, cand)
-        if os.path.isdir(p):
-            vault_path = p
-            break
-    if not vault_path:
-        try:
-            for entry in os.listdir(vault_base):
-                if entry.lower().endswith(f"__{repo_short.split('/')[-1].lower()}"):
-                    if (
-                        "dzackgarza" in entry.lower()
-                        or repo_short.lower() in entry.lower()
-                    ):
-                        maybe = os.path.join(vault_base, entry)
-                        if os.path.isdir(maybe):
-                            vault_path = maybe
-                            break
-        except:
-            pass
-    return vault_path
+    for candidate in candidates:
+        path = VAULT_BASE / candidate
+        if path.is_dir():
+            return path
+    if VAULT_BASE.is_dir():
+        suffix = f"__{short.lower()}"
+        for path in VAULT_BASE.iterdir():
+            if path.is_dir() and path.name.lower().endswith(suffix):
+                return path
+    return None
 
 
-def parse_frontmatter(path):
+def read_frontmatter(path: Path) -> dict[str, Any]:
     try:
-        with open(path, "r", encoding="utf-8") as f:
-            content = f.read()
-        # Extract YAML between first --- and second ---
-        m = re.search(r"^---\s*\n(.*?)\n---\s*\n", content, re.DOTALL | re.MULTILINE)
-        if not m:
-            return {}
-        yaml_text = m.group(1)
-        # Try yaml lib if available
-        try:
-            import yaml
-
-            data = yaml.safe_load(yaml_text)
-            if isinstance(data, dict):
-                # Clean [[...]] wrappers that yaml leaves intact (e.g. '[[FEATURE-X]]')
-                if "parents" in data and isinstance(data["parents"], list):
-                    cleaned = []
-                    for p in data["parents"]:
-                        if not isinstance(p, str):
-                            cleaned.append(p)
-                            continue
-                        v = p.strip().strip("'\"")
-                        v = v.strip()
-                        if v.startswith("[[") and v.endswith("]]"):
-                            v = v[2:-2]
-                        v = v.strip().strip("'\"").strip()
-                        # also strip any stray brackets
-                        v = v.replace("[[", "").replace("]]", "")
-                        cleaned.append(v)
-                    data["parents"] = cleaned
-                # also clean id/title/status quotes if needed
-                for k in ("id", "title", "status"):
-                    if k in data and isinstance(data[k], str):
-                        data[k] = data[k].strip().strip("'\"")
-                return data
-        except:
-            pass
-        # Fallback regex parse for key fields
-        data = {}
-        # id
-        m_id = re.search(r"^id:\s*(.+)$", yaml_text, re.MULTILINE)
-        if m_id:
-            data["id"] = m_id.group(1).strip().strip("'\"")
-        # title
-        m_title = re.search(r"^title:\s*(.+)$", yaml_text, re.MULTILINE)
-        if m_title:
-            # Handle multiline title? Take first line and strip
-            data["title"] = m_title.group(1).strip().strip("'\"")
-            # If title is quoted and multiline, the above may capture only first line; try to handle
-            # For simplicity, if title line ends with no closing quote and next line is indented, join
-            # But for now, just use first line
-        # status
-        m_status = re.search(r"^status:\s*(.+)$", yaml_text, re.MULTILINE)
-        if m_status:
-            data["status"] = m_status.group(1).strip().strip("'\"")
-        # parents - extract list
-        # Look for parents: followed by list items
-        m_parents = re.search(
-            r"^parents:\s*\n((?:\s*-\s*.+\n?)+)", yaml_text, re.MULTILINE
-        )
-        if m_parents:
-            block = m_parents.group(1)
-            parents = []
-            for line in block.splitlines():
-                mm = re.search(r"-\s*(.+)", line)
-                if mm:
-                    val = mm.group(1).strip().strip("'\"")
-                    # Clean [[...]]
-                    val = val.strip()
-                    # Remove surrounding [[ and ]]
-                    if val.startswith("[[") and val.endswith("]]"):
-                        val = val[2:-2]
-                    # Remove any remaining brackets/quotes
-                    val = val.strip("'\"")
-                    parents.append(val)
-            data["parents"] = parents
-        else:
-            # Try inline list: parents: ['...', '...']
-            m_parents_inline = re.search(
-                r"^parents:\s*\[(.+)\]", yaml_text, re.MULTILINE
-            )
-            if m_parents_inline:
-                inner = m_parents_inline.group(1)
-                parts = re.split(r",", inner)
-                parents = [p.strip().strip("'\" ").strip() for p in parts if p.strip()]
-                # Clean [[ ]]
-                cleaned = []
-                for p in parents:
-                    if p.startswith("[[") and p.endswith("]]"):
-                        p = p[2:-2]
-                    cleaned.append(p)
-                data["parents"] = cleaned
-        return data
-    except Exception:
+        text = path.read_text(encoding="utf-8")
+    except OSError:
         return {}
+    if not text.startswith("---"):
+        return {}
+    match = re.match(r"^---\s*\n(.*?)\n---\s*(?:\n|$)", text, re.DOTALL)
+    if match is None:
+        return {}
+    try:
+        payload = yaml.safe_load(match.group(1)) or {}
+    except yaml.YAMLError:
+        return {}
+    return payload if isinstance(payload, dict) else {}
 
 
-def main():
-    if len(sys.argv) < 2:
-        print(
-            f"Usage: {sys.argv[0]} <repoOrVault> [out.html] [template.html]",
-            file=sys.stderr,
-        )
-        sys.exit(1)
-    repo = sys.argv[1]
-    out = None
-    template_arg = None
-    if len(sys.argv) == 3:
-        # repo + template
-        if sys.argv[2].endswith(".html"):
-            template_arg = sys.argv[2]
+def active_card_metadata(vault_path: Path) -> dict[str, dict[str, Any]]:
+    plans_root = vault_path / "plans"
+    records: dict[str, dict[str, Any]] = {}
+    if not plans_root.is_dir():
+        return records
+    for path in plans_root.rglob("*.md"):
+        if path.name in {"plan-dag.md", "plan-dag-archived.md"}:
+            continue
+        meta = read_frontmatter(path)
+        card_id = meta.get("id")
+        if not isinstance(card_id, str) or meta.get("archived") is True:
+            continue
+        records[card_id] = meta
+    return records
+
+
+def mermaid_section(source: str, heading: str) -> str:
+    pattern = rf"^## {re.escape(heading)}\s*$.*?```mermaid\s*\n(.*?)```"
+    match = re.search(pattern, source, re.MULTILINE | re.DOTALL)
+    return match.group(1) if match else ""
+
+
+def parse_mermaid_graph(block: str) -> tuple[list[str], list[tuple[str, str]]]:
+    nodes: list[str] = []
+    seen: set[str] = set()
+    edges: list[tuple[str, str]] = []
+
+    def add_node(node_id: str) -> None:
+        if node_id and node_id not in seen:
+            seen.add(node_id)
+            nodes.append(node_id)
+
+    for raw in block.splitlines():
+        line = raw.strip()
+        if not line or line.startswith("graph ") or line.startswith("%%"):
+            continue
+        edge_match = re.fullmatch(r"([^\s]+)\s*-->\s*([^\s]+)", line)
+        if edge_match:
+            source, target = edge_match.groups()
+            add_node(source)
+            add_node(target)
+            edges.append((source, target))
+            continue
+        # agent-memory emits bare card ids for isolated nodes.
+        if re.fullmatch(r"[^\s]+", line):
+            add_node(line)
+    return nodes, edges
+
+
+def dot_quote(value: str) -> str:
+    return json.dumps(value, ensure_ascii=False)
+
+
+def wrapped_label(value: str, width: int = 30) -> str:
+    words = value.split()
+    lines: list[str] = []
+    current: list[str] = []
+    length = 0
+    for word in words:
+        extra = len(word) + (1 if current else 0)
+        if current and length + extra > width:
+            lines.append(" ".join(current))
+            current = [word]
+            length = len(word)
         else:
-            out = sys.argv[2]
-    elif len(sys.argv) >= 4:
-        out = sys.argv[2] if len(sys.argv) > 2 else None
-        template_arg = sys.argv[3] if len(sys.argv) > 3 else None
-        # Handle empty out case
-        if out == "":
-            out = None
+            current.append(word)
+            length += extra
+    if current:
+        lines.append(" ".join(current))
+    return "\\n".join(lines) if lines else value
 
+
+def graphviz_svg(
+    nodes: list[str],
+    edges: list[tuple[str, str]],
+    metadata: dict[str, dict[str, Any]],
+    *,
+    edge_color: str,
+) -> str:
+    lines = [
+        "digraph G {",
+        '  graph [rankdir=LR, bgcolor="transparent", pad="0.25", nodesep="0.28", ranksep="0.55", splines=ortho];',
+        '  node [fontname="Inter, sans-serif", fontsize=10, margin="0.12,0.08", style="rounded,filled", penwidth=1.2];',
+        f'  edge [color="{edge_color}", penwidth=1.2, arrowsize=0.7];',
+    ]
+    for node_id in nodes:
+        meta = metadata.get(node_id, {})
+        title = str(meta.get("title") or node_id)
+        status = str(meta.get("status") or "unknown")
+        fill, stroke = STATUS_STYLE.get(status, ("#f9fafb", "#9ca3af"))
+        if node_id.startswith("FEATURE-"):
+            shape = "ellipse"
+        elif node_id.startswith("PC-"):
+            shape = "note"
+        else:
+            shape = "box"
+        tooltip = f"{title} [{status}]"
+        lines.append(
+            "  "
+            + dot_quote(node_id)
+            + " ["
+            + ", ".join(
+                [
+                    f"label={dot_quote(wrapped_label(title))}",
+                    f"tooltip={dot_quote(tooltip)}",
+                    f"shape={shape}",
+                    f"fillcolor={dot_quote(fill)}",
+                    f"color={dot_quote(stroke)}",
+                ]
+            )
+            + "];"
+        )
+    for source, target in edges:
+        lines.append(f"  {dot_quote(source)} -> {dot_quote(target)};")
+    lines.append("}")
+    dot_source = "\n".join(lines)
+    result = subprocess.run(
+        ["dot", "-Tsvg"],
+        input=dot_source,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        raise RuntimeError(f"Graphviz failed: {result.stderr.strip()}")
+    svg = re.sub(r"<\?xml.*?\?>\s*", "", result.stdout, flags=re.DOTALL)
+    svg = re.sub(r"<!DOCTYPE.*?>\s*", "", svg, flags=re.DOTALL)
+    svg = svg.replace("<svg ", '<svg class="dag-svg" ', 1)
+    return svg
+
+
+def render(repo: str, out: Path | None, template_arg: Path | None) -> Path:
     vault_path = find_vault(repo)
-    vault_name = os.path.basename(vault_path) if vault_path else repo.replace("/", "__")
-    if not vault_path or not os.path.isdir(vault_path):
-        print(f"Vault not found for {repo}, using empty DAG", file=sys.stderr)
-        vault_path = None
-
-    nodes = []
-    edges = []
-    id_to_title = {}
-    id_to_status = {}
-
-    # Find all PLAN files
-    plan_files = []
-    if vault_path:
-        result = subprocess.run(
-            ["/usr/bin/find", vault_path, "-name", "PLAN-*.md"],
-            capture_output=True,
-            text=True,
-        )
-        plan_files = [l.strip() for l in result.stdout.splitlines() if l.strip()]
-
-    # Parse each plan
-    for pf in plan_files:
-        data = parse_frontmatter(pf)
-        pid = data.get("id") or os.path.basename(pf).replace(".md", "")
-        title = data.get("title") or pid
-        status = data.get("status") or "unknown"
-        parents = data.get("parents") or []
-        if isinstance(parents, str):
-            parents = [parents]
-        id_to_title[pid] = title
-        id_to_status[pid] = status
-        nodes.append(
-            {
-                "id": pid,
-                "label": title,
-                "title": title,
-                "status": status,
-                "shape": "box",
-            }
+    if vault_path is None:
+        raise SystemExit(f"Vault not found for {repo}")
+    dag_path = vault_path / "plans" / "plan-dag.md"
+    if not dag_path.is_file():
+        raise SystemExit(
+            f"Active DAG not found at {dag_path}; regenerate it with agent-memory plan dag --visibility active"
         )
 
-    # Collect all parent ids that are not already nodes, create placeholder nodes
-    parent_ids = set()
-    for pf in plan_files:
-        data = parse_frontmatter(pf)
-        pid = data.get("id") or os.path.basename(pf).replace(".md", "")
-        parents = data.get("parents") or []
-        if isinstance(parents, str):
-            parents = [parents]
-        for par in parents:
-            parent_ids.add(par)
-            # Ensure node exists for parent
-            if par not in id_to_title:
-                # Create placeholder for feature/parent
-                nodes.append(
-                    {
-                        "id": par,
-                        "label": par,
-                        "title": par,
-                        "status": "parent",
-                        "shape": "ellipse",
-                    }
-                )
-                id_to_title[par] = par
+    source = dag_path.read_text(encoding="utf-8")
+    metadata = active_card_metadata(vault_path)
+    dep_nodes, dep_edges = parse_mermaid_graph(mermaid_section(source, "Dependencies"))
+    containment_nodes, containment_edges = parse_mermaid_graph(
+        mermaid_section(source, "Containment")
+    )
+    if not dep_nodes and not containment_nodes:
+        raise SystemExit(f"No graph nodes found in canonical DAG {dag_path}")
 
-    # Build edges
-    for pf in plan_files:
-        data = parse_frontmatter(pf)
-        pid = data.get("id") or os.path.basename(pf).replace(".md", "")
-        parents = data.get("parents") or []
-        if isinstance(parents, str):
-            parents = [parents]
-        for par in parents:
-            edges.append({"from": par, "to": pid})
-
-    # If no nodes, create a single info node
-    if not nodes:
-        nodes.append(
-            {
-                "id": "empty",
-                "label": "No plans in vault",
-                "title": "No plans",
-                "status": "unknown",
-                "shape": "box",
-            }
-        )
-
-    # Load template
-    if template_arg and os.path.exists(template_arg):
-        template_path = template_arg
-    else:
-        # Default template
-        template_path = "/home/dzack/dotfiles/ags/control-panel/templates/dag.html"
-        if not os.path.exists(template_path):
-            # Fallback to elegant? But we need dag
-            print(f"Template not found: {template_path}", file=sys.stderr)
-            sys.exit(1)
-
-    with open(template_path, "r", encoding="utf-8") as f:
-        tmpl = f.read()
-
-    # Replace placeholders
-    # Use json.dumps for nodes/edges
-    nodes_json = json.dumps(nodes, ensure_ascii=False)
-    edges_json = json.dumps(edges, ensure_ascii=False)
-    # Simple replace
-    out_html = (
-        tmpl.replace("__VAULT__", vault_name)
-        .replace("__REPO__", repo)
-        .replace("__NODES_JSON__", nodes_json)
-        .replace("__EDGES_JSON__", edges_json)
+    dep_svg = graphviz_svg(dep_nodes, dep_edges, metadata, edge_color="#94a3b8")
+    containment_svg = graphviz_svg(
+        containment_nodes, containment_edges, metadata, edge_color="#c4b5fd"
     )
 
-    # Determine output path
-    if not out:
-        safe_repo = repo.replace("/", "-")
-        out = f"/tmp/{safe_repo}-dag.html"
-        if vault_name and vault_name != safe_repo:
-            # Use vault name for file
-            safe_vault = vault_name.replace("/", "-")
-            out = f"/tmp/{safe_vault}-dag.html"
+    template_path = template_arg if template_arg and template_arg.is_file() else DEFAULT_TEMPLATE
+    template = template_path.read_text(encoding="utf-8")
+    vault_name = vault_path.name
+    replacements = {
+        "__VAULT__": html.escape(vault_name),
+        "__REPO__": html.escape(repo),
+        "__DEPENDENCIES_SVG__": dep_svg,
+        "__CONTAINMENT_SVG__": containment_svg,
+        "__DEPENDENCY_STATS__": f"{len(dep_nodes)} nodes · {len(dep_edges)} edges",
+        "__CONTAINMENT_STATS__": f"{len(containment_nodes)} nodes · {len(containment_edges)} edges",
+        "__SOURCE_PATH__": html.escape(str(dag_path)),
+    }
+    rendered = template
+    for key, value in replacements.items():
+        rendered = rendered.replace(key, value)
 
-    with open(out, "w", encoding="utf-8") as f:
-        f.write(out_html)
+    if out is None:
+        out = Path("/tmp") / f"{vault_name.replace('/', '-')}-dag.html"
+    out.write_text(rendered, encoding="utf-8")
+    return out
 
-    print(out)
+
+def main() -> None:
+    if len(sys.argv) < 2:
+        raise SystemExit(f"Usage: {sys.argv[0]} <repoOrVault> [out.html] [template.html]")
+    repo = sys.argv[1]
+    out: Path | None = None
+    template: Path | None = None
+    if len(sys.argv) == 3:
+        candidate = Path(sys.argv[2])
+        # Existing AGS caller passes the template as the second argument.
+        if candidate.name == "dag.html" or "template" in candidate.name:
+            template = candidate
+        else:
+            out = candidate
+    elif len(sys.argv) >= 4:
+        if sys.argv[2]:
+            out = Path(sys.argv[2])
+        if sys.argv[3]:
+            template = Path(sys.argv[3])
+    print(render(repo, out, template))
 
 
 if __name__ == "__main__":
