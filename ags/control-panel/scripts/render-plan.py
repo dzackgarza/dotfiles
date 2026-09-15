@@ -48,7 +48,12 @@ def combined_markdown(plan_paths: list[str]) -> str:
         _raw, metadata, body = split_plan(plan_path)
         title = str(metadata.get("title") or Path(plan_path).stem)
         status = str(metadata.get("status") or "")
+        description = str(metadata.get("description") or "").strip()
         chunks.append(f"\n## {title}\n")
+        if description:
+            chunks.append(
+                f'\n<div class="plan-summary"><span class="plan-summary-label">Goal</span>{html.escape(description)}</div>\n'
+            )
         if status:
             chunks.append(f"\n**Status:** `{status}`  \n")
         chunks.append(f"**Source:** `{plan_path}`\n\n")
