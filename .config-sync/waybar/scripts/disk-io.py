@@ -10,9 +10,23 @@ import time
 from pathlib import Path
 
 SAMPLE_SECONDS = 1.0
-EMIT_SECONDS = 2.0
-EMA_HALF_LIFE_SECONDS = 2.0
+NORMAL_EMIT_SECONDS = 4.0
+FAST_EMIT_MIN_GAP_SECONDS = 1.0
 SECTOR_BYTES = 512  # Linux block statistics report sectors in 512-byte units.
+
+# Derivative-adaptive low-pass parameters. The displayed quantity is already the
+# first derivative of cumulative block counters (MiB/s), so adapting to d(rate)/dt
+# makes the filter react to the second derivative of cumulative I/O. Quiet signals
+# stay smooth; sharp changes raise the cutoff and propagate quickly.
+MIN_CUTOFF_HZ = 0.18
+DERIVATIVE_CUTOFF_HZ = 1.0
+RATE_BETA = 0.065
+BUSY_BETA = 0.025
+
+# The bar normally repaints slowly. A large acceleration or utilization-class
+# transition is allowed to interrupt that cadence so bursts appear promptly.
+FAST_RATE_DERIVATIVE_MIB_S2 = 12.0
+FAST_BUSY_DERIVATIVE_PCT_S = 18.0
 
 
 def root_block_device() -> str:
@@ -94,12 +108,36 @@ def severity(busy_percent: float, previous: str) -> str:
     return "idle"
 
 
-def ema(previous: float | None, sample: float, elapsed: float) -> float:
-    """Time-correct exponential smoothing with a short, explicit half-life."""
-    if previous is None:
-        return sample
-    alpha = 1.0 - math.pow(0.5, elapsed / EMA_HALF_LIFE_SECONDS)
-    return previous + alpha * (sample - previous)
+def lowpass_alpha(cutoff_hz: float, elapsed: float) -> float:
+    """Low-pass coefficient for a physical cutoff frequency and sample gap."""
+    tau = 1.0 / (2.0 * math.pi * cutoff_hz)
+    return 1.0 / (1.0 + tau / elapsed)
+
+
+class OneEuro:
+    """Derivative-adaptive low-pass filter with low lag on sharp transitions."""
+
+    def __init__(self, beta: float):
+        self.beta = beta
+        self.value: float | None = None
+        self.raw: float | None = None
+        self.derivative = 0.0
+
+    def update(self, sample: float, elapsed: float) -> tuple[float, float]:
+        if self.value is None or self.raw is None:
+            self.value = sample
+            self.raw = sample
+            return sample, 0.0
+
+        raw_derivative = (sample - self.raw) / elapsed
+        derivative_alpha = lowpass_alpha(DERIVATIVE_CUTOFF_HZ, elapsed)
+        self.derivative += derivative_alpha * (raw_derivative - self.derivative)
+
+        cutoff = MIN_CUTOFF_HZ + self.beta * abs(self.derivative)
+        value_alpha = lowpass_alpha(cutoff, elapsed)
+        self.value += value_alpha * (sample - self.value)
+        self.raw = sample
+        return self.value, self.derivative
 
 
 def payload(
@@ -116,7 +154,7 @@ def payload(
         f"Read:  {detail_rate(read_bps)}  ({read_iops:.0f} IOPS)\n"
         f"Write: {detail_rate(write_bps)}  ({write_iops:.0f} IOPS)\n"
         f"Busy:  {busy_percent:.0f}%\n"
-        f"Smoothing: {EMA_HALF_LIFE_SECONDS:.0f}s EMA half-life\n\n"
+        "Smoothing: derivative-adaptive\n\n"
         "Left click: device stats (iostat)\n"
         "Right click: per-process I/O (pidstat)"
     )
@@ -136,7 +174,14 @@ def main() -> None:
     previous = stats(device)
     previous_time = time.monotonic()
     last_emit = previous_time
-    smoothed: list[float | None] = [None, None, None, None, None]
+
+    # Throughput is filtered in MiB/s so RATE_BETA has stable units. IOPS is
+    # filtered in kIOPS for the same reason.
+    read_rate_filter = OneEuro(RATE_BETA)
+    write_rate_filter = OneEuro(RATE_BETA)
+    read_iops_filter = OneEuro(RATE_BETA)
+    write_iops_filter = OneEuro(RATE_BETA)
+    busy_filter = OneEuro(BUSY_BETA)
     css_class = "idle"
 
     while True:
@@ -148,26 +193,40 @@ def main() -> None:
             previous, previous_time = current, now
             continue
 
-        samples = (
-            max(0, current[1] - previous[1]) * SECTOR_BYTES / elapsed,
-            max(0, current[3] - previous[3]) * SECTOR_BYTES / elapsed,
-            max(0, current[0] - previous[0]) / elapsed,
-            max(0, current[2] - previous[2]) / elapsed,
-            min(100.0, max(0, current[4] - previous[4]) / (elapsed * 10.0)),
-        )
-        for index, sample in enumerate(samples):
-            smoothed[index] = ema(smoothed[index], sample, elapsed)
+        raw_read_bps = max(0, current[1] - previous[1]) * SECTOR_BYTES / elapsed
+        raw_write_bps = max(0, current[3] - previous[3]) * SECTOR_BYTES / elapsed
+        raw_read_iops = max(0, current[0] - previous[0]) / elapsed
+        raw_write_iops = max(0, current[2] - previous[2]) / elapsed
+        raw_busy = min(100.0, max(0, current[4] - previous[4]) / (elapsed * 10.0))
+
+        read_mib_s, read_derivative = read_rate_filter.update(raw_read_bps / 1024**2, elapsed)
+        write_mib_s, write_derivative = write_rate_filter.update(raw_write_bps / 1024**2, elapsed)
+        read_kiops, _ = read_iops_filter.update(raw_read_iops / 1000.0, elapsed)
+        write_kiops, _ = write_iops_filter.update(raw_write_iops / 1000.0, elapsed)
+        busy_percent, busy_derivative = busy_filter.update(raw_busy, elapsed)
 
         previous, previous_time = current, now
-        if now - last_emit < EMIT_SECONDS:
+        next_class = severity(busy_percent, css_class)
+        large_derivative = (
+            abs(read_derivative) >= FAST_RATE_DERIVATIVE_MIB_S2
+            or abs(write_derivative) >= FAST_RATE_DERIVATIVE_MIB_S2
+            or abs(busy_derivative) >= FAST_BUSY_DERIVATIVE_PCT_S
+        )
+        class_changed = next_class != css_class
+        since_emit = now - last_emit
+        fast_emit = (large_derivative or class_changed) and since_emit >= FAST_EMIT_MIN_GAP_SECONDS
+        if not fast_emit and since_emit < NORMAL_EMIT_SECONDS:
             continue
 
-        read_bps, write_bps, read_iops, write_iops, busy_percent = (
-            float(value) for value in smoothed
-        )
-        css_class = severity(busy_percent, css_class)
+        css_class = next_class
         emit(payload(
-            device, read_bps, write_bps, read_iops, write_iops, busy_percent, css_class
+            device,
+            read_mib_s * 1024**2,
+            write_mib_s * 1024**2,
+            read_kiops * 1000.0,
+            write_kiops * 1000.0,
+            busy_percent,
+            css_class,
         ))
         last_emit = now
 
