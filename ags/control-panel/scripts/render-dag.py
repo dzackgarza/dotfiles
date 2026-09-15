@@ -1,18 +1,16 @@
 #!/usr/bin/env python3
-"""Render the canonical active agent-memory DAG as self-contained HTML.
+"""Render the canonical active agent-memory plan graph as an interactive HTML dashboard.
 
-The renderer intentionally does not reconstruct graph structure by scanning every plan file:
-`agent-memory plan dag --visibility active` already owns that projection in plan-dag.md.
-It also does not require browser-side graph libraries or network access; Graphviz produces
-SVG at render time so file:// inspection is reliable offline.
+Graph structure comes from the validated `plans/plan-dag.md` projection.  D3 and d3-dag
+remain browser-side because the dashboard is interactive; their declared local package
+assets are embedded into the generated file so `file://` inspection is deterministic and
+does not depend on CDN availability.
 """
 from __future__ import annotations
 
 import html
 import json
-import os
 import re
-import subprocess
 import sys
 from pathlib import Path
 from typing import Any
@@ -20,17 +18,11 @@ from typing import Any
 import yaml
 
 VAULT_BASE = Path("/home/dzack/.agent-memory-vault/projects")
-DEFAULT_TEMPLATE = Path("/home/dzack/dotfiles/ags/control-panel/templates/dag.html")
-
-STATUS_STYLE = {
-    "complete": ("#dcfce7", "#22c55e"),
-    "in-progress": ("#fef9c3", "#eab308"),
-    "blocked": ("#fee2e2", "#ef4444"),
-    "needs-agent-review": ("#ffedd5", "#f97316"),
-    "needs-human-input": ("#ffedd5", "#f97316"),
-    "approved-and-unstarted": ("#f4f4f5", "#a1a1aa"),
-    "unstarted": ("#f4f4f5", "#a1a1aa"),
-}
+CONTROL_PANEL_ROOT = Path(__file__).resolve().parent.parent
+AGS_ROOT = CONTROL_PANEL_ROOT.parent
+DEFAULT_TEMPLATE = CONTROL_PANEL_ROOT / "templates" / "dag.html"
+D3_JS = AGS_ROOT / "node_modules" / "d3" / "dist" / "d3.min.js"
+D3_DAG_JS = AGS_ROOT / "node_modules" / "d3-dag" / "bundle" / "d3-dag.iife.min.js"
 
 
 def find_vault(repo_short: str) -> Path | None:
@@ -62,8 +54,6 @@ def read_frontmatter(path: Path) -> dict[str, Any]:
         text = path.read_text(encoding="utf-8")
     except OSError:
         return {}
-    if not text.startswith("---"):
-        return {}
     match = re.match(r"^---\s*\n(.*?)\n---\s*(?:\n|$)", text, re.DOTALL)
     if match is None:
         return {}
@@ -72,6 +62,26 @@ def read_frontmatter(path: Path) -> dict[str, Any]:
     except yaml.YAMLError:
         return {}
     return payload if isinstance(payload, dict) else {}
+
+
+def todo_counts(meta: dict[str, Any]) -> tuple[int, int]:
+    todos = meta.get("todos")
+    if not isinstance(todos, list):
+        return 0, 0
+    total = 0
+    completed = 0
+    stack = list(todos)
+    while stack:
+        todo = stack.pop()
+        if not isinstance(todo, dict):
+            continue
+        total += 1
+        if todo.get("status") == "complete":
+            completed += 1
+        children = todo.get("children")
+        if isinstance(children, list):
+            stack.extend(children)
+    return completed, total
 
 
 def active_card_metadata(vault_path: Path) -> dict[str, dict[str, Any]]:
@@ -86,7 +96,13 @@ def active_card_metadata(vault_path: Path) -> dict[str, dict[str, Any]]:
         card_id = meta.get("id")
         if not isinstance(card_id, str) or meta.get("archived") is True:
             continue
-        records[card_id] = meta
+        complete, total = todo_counts(meta)
+        records[card_id] = {
+            **meta,
+            "path": str(path),
+            "todo_completed": complete,
+            "todo_total": total,
+        }
     return records
 
 
@@ -116,93 +132,52 @@ def parse_mermaid_graph(block: str) -> tuple[list[str], list[tuple[str, str]]]:
             add_node(source)
             add_node(target)
             edges.append((source, target))
-            continue
-        # agent-memory emits bare card ids for isolated nodes.
-        if re.fullmatch(r"[^\s]+", line):
+        elif re.fullmatch(r"[^\s]+", line):
             add_node(line)
     return nodes, edges
 
 
-def dot_quote(value: str) -> str:
-    return json.dumps(value, ensure_ascii=False)
+def node_payload(node_id: str, metadata: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    meta = metadata.get(node_id, {})
+    title = str(meta.get("title") or node_id)
+    status = str(meta.get("status") or "unknown")
+    completed = int(meta.get("todo_completed") or 0)
+    total = int(meta.get("todo_total") or 0)
+    if node_id.startswith("FEATURE-"):
+        kind = "feature"
+    elif node_id.startswith("PLAN-"):
+        kind = "plan"
+    elif node_id.startswith("PC-"):
+        kind = "checkpoint"
+    else:
+        kind = "card"
+    return {
+        "id": node_id,
+        "label": title,
+        "title": title,
+        "status": status,
+        "kind": kind,
+        "path": str(meta.get("path") or ""),
+        "todoCompleted": completed,
+        "todoTotal": total,
+    }
 
 
-def wrapped_label(value: str, width: int = 30) -> str:
-    words = value.split()
-    lines: list[str] = []
-    current: list[str] = []
-    length = 0
-    for word in words:
-        extra = len(word) + (1 if current else 0)
-        if current and length + extra > width:
-            lines.append(" ".join(current))
-            current = [word]
-            length = len(word)
-        else:
-            current.append(word)
-            length += extra
-    if current:
-        lines.append(" ".join(current))
-    return "\\n".join(lines) if lines else value
+def graph_payload(
+    nodes: list[str], edges: list[tuple[str, str]], metadata: dict[str, dict[str, Any]]
+) -> dict[str, Any]:
+    return {
+        "nodes": [node_payload(node_id, metadata) for node_id in nodes],
+        "edges": [{"from": source, "to": target} for source, target in edges],
+    }
 
 
-def graphviz_svg(
-    nodes: list[str],
-    edges: list[tuple[str, str]],
-    metadata: dict[str, dict[str, Any]],
-    *,
-    edge_color: str,
-) -> str:
-    lines = [
-        "digraph G {",
-        '  graph [rankdir=LR, bgcolor="transparent", pad="0.25", nodesep="0.28", ranksep="0.55", splines=ortho];',
-        '  node [fontname="Inter, sans-serif", fontsize=10, margin="0.12,0.08", style="rounded,filled", penwidth=1.2];',
-        f'  edge [color="{edge_color}", penwidth=1.2, arrowsize=0.7];',
-    ]
-    for node_id in nodes:
-        meta = metadata.get(node_id, {})
-        title = str(meta.get("title") or node_id)
-        status = str(meta.get("status") or "unknown")
-        fill, stroke = STATUS_STYLE.get(status, ("#f9fafb", "#9ca3af"))
-        if node_id.startswith("FEATURE-"):
-            shape = "ellipse"
-        elif node_id.startswith("PC-"):
-            shape = "note"
-        else:
-            shape = "box"
-        tooltip = f"{title} [{status}]"
-        lines.append(
-            "  "
-            + dot_quote(node_id)
-            + " ["
-            + ", ".join(
-                [
-                    f"label={dot_quote(wrapped_label(title))}",
-                    f"tooltip={dot_quote(tooltip)}",
-                    f"shape={shape}",
-                    f"fillcolor={dot_quote(fill)}",
-                    f"color={dot_quote(stroke)}",
-                ]
-            )
-            + "];"
+def read_browser_asset(path: Path, label: str) -> str:
+    if not path.is_file():
+        raise SystemExit(
+            f"Missing local {label} asset at {path}. Run the AGS dependency install before rendering the DAG."
         )
-    for source, target in edges:
-        lines.append(f"  {dot_quote(source)} -> {dot_quote(target)};")
-    lines.append("}")
-    dot_source = "\n".join(lines)
-    result = subprocess.run(
-        ["dot", "-Tsvg"],
-        input=dot_source,
-        text=True,
-        capture_output=True,
-        check=False,
-    )
-    if result.returncode != 0:
-        raise RuntimeError(f"Graphviz failed: {result.stderr.strip()}")
-    svg = re.sub(r"<\?xml.*?\?>\s*", "", result.stdout, flags=re.DOTALL)
-    svg = re.sub(r"<!DOCTYPE.*?>\s*", "", svg, flags=re.DOTALL)
-    svg = svg.replace("<svg ", '<svg class="dag-svg" ', 1)
-    return svg
+    return path.read_text(encoding="utf-8")
 
 
 def render(repo: str, out: Path | None, template_arg: Path | None) -> Path:
@@ -224,29 +199,26 @@ def render(repo: str, out: Path | None, template_arg: Path | None) -> Path:
     if not dep_nodes and not containment_nodes:
         raise SystemExit(f"No graph nodes found in canonical DAG {dag_path}")
 
-    dep_svg = graphviz_svg(dep_nodes, dep_edges, metadata, edge_color="#94a3b8")
-    containment_svg = graphviz_svg(
-        containment_nodes, containment_edges, metadata, edge_color="#c4b5fd"
-    )
-
+    graphs = {
+        "dependencies": graph_payload(dep_nodes, dep_edges, metadata),
+        "containment": graph_payload(containment_nodes, containment_edges, metadata),
+    }
     template_path = template_arg if template_arg and template_arg.is_file() else DEFAULT_TEMPLATE
     template = template_path.read_text(encoding="utf-8")
-    vault_name = vault_path.name
     replacements = {
-        "__VAULT__": html.escape(vault_name),
+        "__VAULT__": html.escape(vault_path.name),
         "__REPO__": html.escape(repo),
-        "__DEPENDENCIES_SVG__": dep_svg,
-        "__CONTAINMENT_SVG__": containment_svg,
-        "__DEPENDENCY_STATS__": f"{len(dep_nodes)} nodes · {len(dep_edges)} edges",
-        "__CONTAINMENT_STATS__": f"{len(containment_nodes)} nodes · {len(containment_edges)} edges",
         "__SOURCE_PATH__": html.escape(str(dag_path)),
+        "__GRAPHS_JSON__": json.dumps(graphs, ensure_ascii=False).replace("</", "<\\/"),
+        "__D3_JS__": read_browser_asset(D3_JS, "D3"),
+        "__D3_DAG_JS__": read_browser_asset(D3_DAG_JS, "d3-dag"),
     }
     rendered = template
     for key, value in replacements.items():
         rendered = rendered.replace(key, value)
 
     if out is None:
-        out = Path("/tmp") / f"{vault_name.replace('/', '-')}-dag.html"
+        out = Path("/tmp") / f"{vault_path.name.replace('/', '-')}-dag.html"
     out.write_text(rendered, encoding="utf-8")
     return out
 
@@ -259,7 +231,6 @@ def main() -> None:
     template: Path | None = None
     if len(sys.argv) == 3:
         candidate = Path(sys.argv[2])
-        # Existing AGS caller passes the template as the second argument.
         if candidate.name == "dag.html" or "template" in candidate.name:
             template = candidate
         else:
