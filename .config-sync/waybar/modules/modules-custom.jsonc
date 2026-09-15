@@ -173,6 +173,14 @@
         "format": "{}"
     },
 
+    "custom/disk-io": {
+        "exec": "~/.config/waybar/scripts/disk-io.py",
+        "return-type": "json",
+        "tooltip": true,
+        "on-click": "kitty --title disk-io -e sh -lc 'iostat -dx 1'",
+        "on-click-right": "kitty --title disk-io-processes -e sh -lc 'pidstat -d 1'"
+    },
+
     "custom/kbd-backlight": {
         "exec": "~/.config/waybar/scripts/kbd-backlight.sh",
         "on-click": "~/.config/waybar/scripts/kbd-backlight.sh --toggle",

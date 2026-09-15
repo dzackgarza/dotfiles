@@ -29,6 +29,7 @@
 	    "cpu",        
         "memory",
         "disk",
+        "custom/disk-io",
         "battery", 
         "custom/lid-toggle",
         "custom/kbd-backlight",

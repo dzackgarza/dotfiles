@@ -386,6 +386,7 @@ tooltip label {
 #cpu,
 #memory,
 #disk,
+#custom-disk-io,
 #battery,
 #custom-lid-toggle,
 #custom-kbd-backlight,
@@ -414,6 +415,29 @@ tooltip label {
 #memory,
 #disk {
   color: #9db8c1;
+}
+
+#custom-disk-io {
+  min-width: 112px;
+  color: #9db8c1;
+  font-variant-numeric: tabular-nums;
+}
+
+#custom-disk-io.idle {
+  color: #5a6669;
+}
+
+#custom-disk-io.active {
+  color: #9db8c1;
+}
+
+#custom-disk-io.warning {
+  color: #ffb454;
+}
+
+#custom-disk-io.critical {
+  color: #f07178;
+  font-weight: 700;
 }
 
 #battery,
