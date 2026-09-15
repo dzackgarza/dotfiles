@@ -424,8 +424,6 @@ tooltip label {
   padding-left: 4px;
   padding-right: 4px;
   font-size: 12px;
-  font-variant-numeric: tabular-nums;
-  transition: color 180ms linear;
 }
 
 #custom-disk-io.load-0 { color: #5a6669; }
