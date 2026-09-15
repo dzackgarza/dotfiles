@@ -47,13 +47,9 @@ def stats(device: str) -> tuple[int, int, int, int, int]:
 
 
 def rate_text(bytes_per_second: float) -> str:
-    value = max(0.0, bytes_per_second)
-    units = ((1024**3, "G"), (1024**2, "M"), (1024, "K"))
-    for scale, suffix in units:
-        if value >= scale:
-            scaled = value / scale
-            return f"{scaled:.0f}{suffix}" if scaled >= 100 else f"{scaled:.1f}{suffix}"
-    return f"{value:.0f}B"
+    """Compact bar text: whole MiB/s; precision stays in the tooltip."""
+    mib_per_second = max(0.0, bytes_per_second) / 1024**2
+    return f"{round(mib_per_second):.0f}M"
 
 
 def detail_rate(bytes_per_second: float) -> str:
