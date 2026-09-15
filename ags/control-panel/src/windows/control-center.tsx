@@ -8,7 +8,10 @@ import type {
   UsageCollection,
 } from "../../services/claude-usage-fetcher"
 import { ClaudeUsagePopover } from "../../widget/ClaudeUsagePopover"
-import { RepoPlanPanel } from "../../widget/RepoPlanPanel"
+import {
+  RepoPlanPanel,
+  setRepoPlanKeepControlCenterOpen,
+} from "../../widget/RepoPlanPanel"
 import { InfoTile } from "../components/InfoTile"
 import { PowerProfileTile } from "../components/PowerProfileTile"
 import { SliderRow } from "../components/SliderRow"
@@ -229,6 +232,17 @@ export function ControlCenterWindow() {
   const control = getControlCenterService()
   const [claudeUsagePopoverVisible, setClaudeUsagePopoverVisible] =
     createState(false)
+  const [keepControlCenterOpen, setKeepControlCenterOpenState] = createState(false)
+  let controlCenterWindow: Gtk.Window | null = null
+  let controlCenterCatcher: Astal.Window | null = null
+
+  const setKeepControlCenterOpen = (value: boolean) => {
+    setKeepControlCenterOpenState(value)
+    setRepoPlanKeepControlCenterOpen(value)
+    if (controlCenterCatcher) {
+      controlCenterCatcher.visible = Boolean(controlCenterWindow?.visible) && !value
+    }
+  }
 
   // Initialize all state synchronously before building UI
   logger.info`Initializing service [SERVICE]`
@@ -364,7 +378,10 @@ export function ControlCenterWindow() {
         state={control.brightness}
         onSetValue={control.setBrightness}
       />
-      <RepoPlanPanel />
+      <RepoPlanPanel
+        keepOpen={keepControlCenterOpen}
+        onKeepOpenChange={setKeepControlCenterOpen}
+      />
       <box
         class={control.battery((value) =>
           joinClasses("status-row", value.error && "error"),
@@ -455,6 +472,7 @@ export function ControlCenterWindow() {
         application={app}
         visible={false}
         $={(self: Gtk.Window) => {
+          controlCenterWindow = self
           const bindEscapeToggle = (widget: Gtk.Widget) => {
             const key = Gtk.EventControllerKey.new()
             key.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
@@ -486,7 +504,7 @@ export function ControlCenterWindow() {
           click.set_button(0)
           click.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
           click.connect("pressed", () => {
-            if (self.visible) self.visible = false
+            if (self.visible && !keepControlCenterOpen.peek()) self.visible = false
           })
           backdrop.add_controller(click)
 
@@ -500,6 +518,7 @@ export function ControlCenterWindow() {
             exclusivity: Astal.Exclusivity.IGNORE,
             child: backdrop,
           })
+          controlCenterCatcher = catcher
 
           bindEscapeToggle(catcher)
           catcher.add_css_class("NotificationCenter")
@@ -513,9 +532,13 @@ export function ControlCenterWindow() {
               control.refreshUpdates()
               control.refreshUsage()
             }
-            catcher.visible = self.visible
+            catcher.visible = self.visible && !keepControlCenterOpen.peek()
           })
-          self.connect("destroy", () => catcher.destroy())
+          self.connect("destroy", () => {
+            if (controlCenterCatcher === catcher) controlCenterCatcher = null
+            if (controlCenterWindow === self) controlCenterWindow = null
+            catcher.destroy()
+          })
         }}
         anchor={TOP | RIGHT}
         marginTop={20}

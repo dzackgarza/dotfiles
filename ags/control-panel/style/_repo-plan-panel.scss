@@ -39,6 +39,28 @@
   color: #{"@theme_fg_color"};
 }
 
+.repo-plan-pin {
+  min-height: 0;
+  padding: 2px 7px;
+  border-radius: 7px;
+  background: transparent;
+  border: 1px solid #{"alpha(@theme_fg_color, 0.08)"};
+  color: #{"@theme_fg_color"};
+  opacity: 0.55;
+  font-size: 10px;
+
+  &:hover {
+    opacity: 0.8;
+    background: #{"alpha(@theme_fg_color, 0.04)"};
+  }
+}
+
+.repo-plan-pin-active {
+  opacity: 0.95;
+  background: #{"alpha(@accent_bg_color, 0.16)"};
+  border-color: #{"alpha(@accent_bg_color, 0.42)"};
+}
+
 .repo-plan-divider {
   min-height: 1px;
   background: #{"alpha(@theme_fg_color, 0.06)"};
