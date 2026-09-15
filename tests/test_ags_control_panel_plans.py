@@ -113,3 +113,42 @@ def test_dag_renderer_keeps_canonical_graph_and_interactive_browser_engine() -> 
     assert '<span class="plan-summary-label">Goal</span>$description$' in plan_template
     assert 'https://d3js.org' not in template
     assert 'unpkg.com/d3-dag' not in template
+
+
+def test_pending_work_dag_uses_todo_needs_and_goals(tmp_path: Path) -> None:
+    renderer = load_module('render_dag_pending_test', 'ags/control-panel/scripts/render-dag.py')
+    (tmp_path / 'TODO.md').write_text(
+        '- [ ] **`root-work`**. **Needs:** none.\n'
+        '  **Goal:** Build the root mathematical object.\n'
+        '- [ ] **`dependent-work`**. **Needs:** `root-work`.\n'
+        '  **Goal:** Use the root object in the dependent construction.\n'
+        '- [x] **`finished-work`**. **Needs:** none.\n',
+        encoding='utf-8',
+    )
+    graph = renderer.pending_todo_graph(tmp_path)
+    assert [node['id'] for node in graph['nodes']] == ['root-work', 'dependent-work']
+    assert graph['edges'] == [{'from': 'root-work', 'to': 'dependent-work'}]
+    by_id = {node['id']: node for node in graph['nodes']}
+    assert by_id['root-work']['description'] == 'Build the root mathematical object.'
+    assert by_id['root-work']['status'] == 'ready'
+    assert by_id['dependent-work']['status'] == 'waiting'
+
+
+def test_plan_renderer_summarizes_pending_execution_work(tmp_path: Path) -> None:
+    renderer = load_module('render_plan_pending_test', 'ags/control-panel/scripts/render-plan.py')
+    (tmp_path / 'TODO.md').write_text(
+        '- [ ] **`root-work`**. **Needs:** none.\n'
+        '  **Goal:** Build the root mathematical object.\n'
+        '- [ ] **`dependent-work`**. **Needs:** `root-work`.\n'
+        '  **Goal:** Build the dependent object.\n',
+        encoding='utf-8',
+    )
+    records = renderer.pending_work_records(tmp_path)
+    assert [record['state'] for record in records] == ['ready', 'waiting']
+    # Formatting itself is exercised independently of repo-map lookup.
+    assert records[0]['goal'] == 'Build the root mathematical object.'
+
+    template = (DOTFILES / 'ags/control-panel/templates/dag.html').read_text(encoding='utf-8')
+    assert 'data-view="pending"' in template
+    assert 'Selected work' in template
+    assert 'plan-dag-view-v2' in template
