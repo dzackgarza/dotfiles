@@ -6,95 +6,218 @@
     <title>Plan DAG — __VAULT__</title>
     <style>
       :root {
-        --bg: #fcfcf9;
-        --fg: #1a1a1e;
-        --muted: #6b7280;
-        --accent: #5a6b5d;
-        --accent-soft: #eef1eb;
-        --border: #e5e7eb;
-        --card-bg: #fff;
-        --radius: 14px;
+        --bg: #fcfcf9; --fg: #1a1a1e; --muted: #6b7280; --accent: #5a6b5d;
+        --accent-soft: #eef1eb; --border: #e5e7eb; --card-bg: #fff; --radius: 14px;
         --shadow: 0 1px 3px rgba(0,0,0,.04), 0 8px 24px rgba(0,0,0,.06);
       }
       * { box-sizing: border-box; }
-      body {
-        margin: 0;
-        background: var(--bg);
-        color: var(--fg);
-        font-family: ui-sans-serif, system-ui, -apple-system, Inter, Segoe UI, sans-serif;
-      }
-      .page { max-width: 1500px; margin: 0 auto; padding: 24px 20px 40px; }
-      .header { display:flex; justify-content:space-between; gap:16px; align-items:flex-start; flex-wrap:wrap; }
-      h1 { margin:0 0 6px; font:700 30px ui-serif, Georgia, serif; letter-spacing:-.02em; }
-      .sub { margin:0; color:var(--muted); font-size:13px; line-height:1.55; }
+      html, body { margin:0; min-height:100%; background:var(--bg); color:var(--fg); font-family:ui-sans-serif,system-ui,-apple-system,Inter,Segoe UI,sans-serif; }
+      .page { max-width:1600px; margin:0 auto; padding:20px 20px 30px; }
+      .header { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; }
+      h1 { margin:0 0 5px; font:700 30px ui-serif,Georgia,serif; letter-spacing:-.02em; }
+      .sub { margin:0; color:var(--muted); font-size:12px; line-height:1.55; }
       code { background:var(--accent-soft); border:1px solid var(--border); border-radius:6px; padding:2px 6px; }
-      .tabs { display:flex; gap:8px; margin:18px 0 12px; }
-      button {
-        border:1px solid var(--border); background:var(--card-bg); color:var(--fg);
-        border-radius:10px; padding:8px 12px; cursor:pointer; box-shadow:var(--shadow);
+      .controls, .views, .legend { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+      .controls { justify-content:flex-end; }
+      .views { margin:15px 0 10px; }
+      button, select, input {
+        border:1px solid var(--border); background:var(--card-bg); color:var(--fg); border-radius:9px;
+        padding:7px 10px; font:500 12px ui-sans-serif,system-ui,sans-serif; box-shadow:var(--shadow);
       }
-      button.active { background:var(--accent-soft); border-color:var(--accent); }
-      .legend { display:flex; gap:14px; flex-wrap:wrap; color:var(--muted); font-size:12px; margin-bottom:12px; }
-      .dot { width:10px; height:10px; border-radius:50%; display:inline-block; margin-right:4px; vertical-align:-1px; }
-      .panel { display:none; }
-      .panel.active { display:block; }
-      .panel-head { display:flex; justify-content:space-between; gap:12px; align-items:baseline; margin:10px 2px 8px; }
-      .panel-head h2 { margin:0; font-size:16px; }
-      .stats { color:var(--muted); font-size:12px; }
-      .dag-canvas {
-        background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius);
-        box-shadow:var(--shadow); overflow:auto; min-height:360px; padding:18px;
-      }
-      .dag-svg { display:block; width:100%; min-width:820px; height:auto; }
-      .dag-svg text { font-family:Inter, ui-sans-serif, system-ui, sans-serif !important; }
-      .footer { margin-top:14px; color:var(--muted); font-size:11px; text-align:center; }
-      @media (max-width: 850px) { .dag-svg { min-width:1100px; } }
+      button { cursor:pointer; }
+      button:hover, button.active { background:var(--accent-soft); border-color:var(--accent); }
+      .legend { color:var(--muted); font-size:11px; margin-bottom:10px; gap:14px; }
+      .dot { display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:4px; vertical-align:-1px; }
+      #dag-wrap { position:relative; width:100%; height:76vh; min-height:560px; overflow:hidden; background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
+      #dag-svg { width:100%; height:100%; display:block; cursor:grab; }
+      #dag-svg:active { cursor:grabbing; }
+      .node-rect, .node-ellipse, .node-note { stroke-width:1.35; filter:drop-shadow(0 1px 3px rgba(0,0,0,.06)); }
+      .node-g { cursor:pointer; }
+      .node-g:hover .node-rect, .node-g:hover .node-ellipse, .node-g:hover .node-note { stroke:#111827 !important; stroke-width:2; }
+      .node-title { fill:#111827; font:600 11px ui-sans-serif,system-ui,sans-serif; pointer-events:none; }
+      .node-meta { fill:#6b7280; font:10px ui-monospace,SFMono-Regular,Menlo,monospace; pointer-events:none; }
+      .edge-path { fill:none; stroke-width:1.35; opacity:.78; }
+      .node-tooltip { position:fixed; display:none; z-index:20; max-width:420px; padding:11px 13px; background:#fff; border:1px solid var(--border); border-radius:10px; box-shadow:var(--shadow); font-size:12px; line-height:1.5; pointer-events:none; }
+      .node-tooltip .tt-title { font-weight:700; margin-bottom:4px; }
+      .node-tooltip .tt-id { color:var(--muted); font-family:ui-monospace,SFMono-Regular,Menlo,monospace; overflow-wrap:anywhere; }
+      .error { position:absolute; inset:20px; color:#b91c1c; white-space:pre-wrap; font-family:ui-monospace,monospace; }
+      .footer { margin-top:10px; color:var(--muted); font-size:11px; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+      #search { width:220px; }
+      @media (max-width:800px) { #dag-wrap { min-height:460px; height:72vh; } .controls { justify-content:flex-start; } }
     </style>
+    <script>__D3_JS__</script>
+    <script>__D3_DAG_JS__</script>
   </head>
   <body>
-    <main class="page">
-      <header class="header">
+    <div class="page">
+      <div class="header">
         <div>
           <h1>Plan DAG</h1>
           <p class="sub">Vault <code>__VAULT__</code> · Repo <code>__REPO__</code></p>
-          <p class="sub">Canonical active projection: <code>__SOURCE_PATH__</code></p>
+          <p class="sub">Canonical source <code>__SOURCE_PATH__</code></p>
         </div>
-      </header>
-      <div class="tabs">
-        <button id="dep-tab" class="active" type="button">Dependencies</button>
-        <button id="containment-tab" type="button">Containment</button>
+        <div class="controls">
+          <input id="search" type="search" placeholder="Find node…" />
+          <button id="fitBtn">Fit</button>
+          <button id="resetBtn">Reset</button>
+          <button id="dirBtn">Direction: ↓ TB</button>
+          <button id="qualityBtn">Quality: medium</button>
+        </div>
+      </div>
+      <div class="views">
+        <button data-view="dependencies" class="view-btn active">Dependencies</button>
+        <button data-view="containment" class="view-btn">Containment</button>
+        <span id="stats" class="sub"></span>
       </div>
       <div class="legend">
         <span><span class="dot" style="background:#22c55e"></span>complete</span>
         <span><span class="dot" style="background:#eab308"></span>in progress</span>
         <span><span class="dot" style="background:#ef4444"></span>blocked</span>
         <span><span class="dot" style="background:#f97316"></span>needs review/input</span>
-        <span><span class="dot" style="background:#a1a1aa"></span>unstarted</span>
+        <span><span class="dot" style="background:#a1a1aa"></span>unstarted/other</span>
       </div>
-      <section id="dependencies" class="panel active">
-        <div class="panel-head"><h2>Dependencies</h2><span class="stats">__DEPENDENCY_STATS__</span></div>
-        <div class="dag-canvas">__DEPENDENCIES_SVG__</div>
-      </section>
-      <section id="containment" class="panel">
-        <div class="panel-head"><h2>Containment</h2><span class="stats">__CONTAINMENT_STATS__</span></div>
-        <div class="dag-canvas">__CONTAINMENT_SVG__</div>
-      </section>
-      <div class="footer">Self-contained Graphviz SVG · no browser network dependency</div>
-    </main>
+      <div id="dag-wrap">
+        <svg id="dag-svg" role="img" aria-label="Plan DAG"></svg>
+        <div id="tooltip" class="node-tooltip"></div>
+      </div>
+      <div class="footer">
+        <span>Drag to pan · scroll to zoom · click a node to focus · hover for status/progress</span>
+        <span>Interactive Sugiyama layout via locally embedded D3 + d3-dag</span>
+      </div>
+    </div>
     <script>
-      const depTab = document.getElementById('dep-tab')
-      const containmentTab = document.getElementById('containment-tab')
-      const dependencies = document.getElementById('dependencies')
-      const containment = document.getElementById('containment')
-      function show(which) {
-        const dep = which === 'dependencies'
-        depTab.classList.toggle('active', dep)
-        containmentTab.classList.toggle('active', !dep)
-        dependencies.classList.toggle('active', dep)
-        containment.classList.toggle('active', !dep)
+      const graphs = __GRAPHS_JSON__;
+      const wrap = document.getElementById("dag-wrap");
+      const svg = d3.select("#dag-svg");
+      const tooltip = document.getElementById("tooltip");
+      const stats = document.getElementById("stats");
+      const search = document.getElementById("search");
+      let view = localStorage.getItem("plan-dag-view") || "dependencies";
+      let direction = localStorage.getItem("plan-dag-direction") || "TB";
+      let quality = localStorage.getItem("plan-dag-quality") || "medium";
+      if (!(view in graphs)) view = "dependencies";
+      if (!['TB','LR'].includes(direction)) direction = 'TB';
+      if (!['fast','medium','slow'].includes(quality)) quality = 'medium';
+      let zoom = null, viewport = null, positioned = new Map(), bounds = null;
+
+      function colors(status) {
+        if (status === 'complete') return ['#dcfce7','#22c55e'];
+        if (status === 'in-progress') return ['#fef9c3','#eab308'];
+        if (status === 'blocked') return ['#fee2e2','#ef4444'];
+        if (status === 'needs-agent-review' || status === 'needs-human-input') return ['#ffedd5','#f97316'];
+        return ['#f4f4f5','#a1a1aa'];
       }
-      depTab.addEventListener('click', () => show('dependencies'))
-      containmentTab.addEventListener('click', () => show('containment'))
+      function edgeColor() { return view === 'dependencies' ? '#64748b' : '#8b5cf6'; }
+      function esc(s) { return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+      function nodeWidth(n) { return Math.max(170, Math.min(310, 68 + (n.title || n.id).length * 5.6)); }
+      function nodeHeight(n) { return n.todoTotal ? 54 : 44; }
+      function trim(s, n=38) { s=String(s); return s.length > n ? s.slice(0,n-1)+'…' : s; }
+
+      function makeLayout(graph) {
+        const parents = new Map(graph.nodes.map(n => [n.id, []]));
+        for (const e of graph.edges) {
+          if (!parents.has(e.to)) parents.set(e.to, []);
+          parents.get(e.to).push(e.from);
+          if (!parents.has(e.from)) parents.set(e.from, []);
+        }
+        const input = graph.nodes.map(n => ({...n, parentIds: parents.get(n.id) || [], width: nodeWidth(n), height: nodeHeight(n)}));
+        const stratify = d3.graphStratify().id(d => d.id).parentIds(d => d.parentIds);
+        const dag = stratify(input);
+        let layout = d3.sugiyama();
+        if (direction === 'TB') layout = layout.nodeSize(n => [n.data.width, n.data.height]).gap([26, 64]);
+        else layout = layout.nodeSize(n => [n.data.height, n.data.width]).gap([34, 72]);
+        try {
+          if (quality === 'fast' && typeof d3.layeringLongestPath === 'function') layout = layout.layering(d3.layeringLongestPath());
+          else if (typeof d3.layeringSimplex === 'function') layout = layout.layering(d3.layeringSimplex());
+        } catch (_) {}
+        try {
+          if (quality === 'slow' && typeof d3.decrossOpt === 'function') layout = layout.decross(d3.decrossOpt());
+          else if (typeof d3.decrossTwoLayer === 'function') layout = layout.decross(d3.decrossTwoLayer());
+        } catch (_) {}
+        try {
+          if (quality !== 'fast' && typeof d3.coordSimplex === 'function') layout = layout.coord(d3.coordSimplex());
+          else if (typeof d3.coordGreedy === 'function') layout = layout.coord(d3.coordGreedy());
+        } catch (_) {}
+        layout(dag);
+        return dag;
+      }
+
+      function orient(x,y) { return direction === 'TB' ? [x,y] : [y,x]; }
+      function render() {
+        const graph = graphs[view];
+        stats.textContent = `${graph.nodes.length} nodes · ${graph.edges.length} edges`;
+        document.querySelectorAll('.view-btn').forEach(b => b.classList.toggle('active', b.dataset.view === view));
+        document.getElementById('dirBtn').textContent = direction === 'TB' ? 'Direction: ↓ TB' : 'Direction: → LR';
+        document.getElementById('qualityBtn').textContent = `Quality: ${quality}`;
+        svg.selectAll('*').remove(); positioned = new Map(); bounds = null;
+        let dag;
+        try { dag = makeLayout(graph); }
+        catch (e) {
+          console.error('d3-dag layout failed', e);
+          wrap.querySelector('.error')?.remove();
+          const err = document.createElement('div'); err.className='error'; err.textContent=`Layout failed: ${e.message}`; wrap.appendChild(err); return;
+        }
+        wrap.querySelector('.error')?.remove();
+        viewport = svg.append('g').attr('id','viewport');
+        const defs = svg.append('defs');
+        defs.append('marker').attr('id','arrow').attr('viewBox','0 0 10 10').attr('refX',9).attr('refY',5).attr('markerWidth',6).attr('markerHeight',6).attr('orient','auto-start-reverse').append('path').attr('d','M 0 0 L 10 5 L 0 10 z').attr('fill',edgeColor());
+        const nodes = [...dag.nodes()];
+        for (const n of nodes) {
+          const [x,y] = orient(n.x,n.y); const d=n.data; positioned.set(d.id,{x,y,w:d.width,h:d.height,data:d});
+        }
+        const line = d3.line().x(p=>p[0]).y(p=>p[1]).curve(d3.curveMonotoneY);
+        const edgeG = viewport.append('g').attr('class','edges');
+        for (const link of dag.links()) {
+          let pts = (link.points || []).map(p => orient(p[0],p[1]));
+          if (direction === 'LR') pts = (link.points || []).map(p => [p[1],p[0]]);
+          edgeG.append('path').attr('class','edge-path').attr('stroke',edgeColor()).attr('d', line(pts)).attr('marker-end','url(#arrow)');
+        }
+        const nodeG = viewport.append('g').attr('class','nodes');
+        for (const n of nodes) {
+          const d=n.data, p=positioned.get(d.id), [fill,stroke]=colors(d.status);
+          const g=nodeG.append('g').attr('class','node-g').attr('data-node-id',d.id).attr('transform',`translate(${p.x},${p.y})`);
+          if (d.kind === 'feature') g.append('ellipse').attr('class','node-ellipse').attr('rx',d.width/2).attr('ry',d.height/2).attr('fill',fill).attr('stroke',stroke);
+          else if (d.kind === 'checkpoint') g.append('path').attr('class','node-note').attr('d',`M${-d.width/2},${-d.height/2} H${d.width/2-12} L${d.width/2},${-d.height/2+12} V${d.height/2} H${-d.width/2} Z`).attr('fill',fill).attr('stroke',stroke);
+          else g.append('rect').attr('class','node-rect').attr('x',-d.width/2).attr('y',-d.height/2).attr('width',d.width).attr('height',d.height).attr('rx',8).attr('fill',fill).attr('stroke',stroke);
+          g.append('text').attr('class','node-title').attr('text-anchor','middle').attr('y',d.todoTotal ? -4 : 3).text(trim(d.title));
+          const meta = d.todoTotal ? `${d.status} · ${d.todoCompleted}/${d.todoTotal}` : d.status;
+          if (meta) g.append('text').attr('class','node-meta').attr('text-anchor','middle').attr('y',14).text(meta);
+          g.on('mouseenter',(ev)=>{tooltip.innerHTML=`<div class="tt-title">${esc(d.title)}</div><div>${esc(d.status)}${d.todoTotal ? ` · ${d.todoCompleted}/${d.todoTotal} milestones (${Math.round(100*d.todoCompleted/d.todoTotal)}%)` : ''}</div><div class="tt-id">${esc(d.id)}</div>${d.path ? `<div class="tt-id">${esc(d.path)}</div>`:''}`; tooltip.style.display='block';})
+           .on('mousemove',(ev)=>{tooltip.style.left=(ev.clientX+14)+'px'; tooltip.style.top=(ev.clientY+14)+'px';})
+           .on('mouseleave',()=>{tooltip.style.display='none';})
+           .on('click',()=>focusNode(d.id));
+        }
+        const xs=[...positioned.values()].flatMap(p=>[p.x-p.w/2,p.x+p.w/2]);
+        const ys=[...positioned.values()].flatMap(p=>[p.y-p.h/2,p.y+p.h/2]);
+        bounds={minX:Math.min(...xs),maxX:Math.max(...xs),minY:Math.min(...ys),maxY:Math.max(...ys)};
+        zoom=d3.zoom().scaleExtent([0.08,6]).on('zoom',ev=>viewport.attr('transform',ev.transform));
+        svg.call(zoom); setTimeout(fit,0); applySearch();
+      }
+      function fit() {
+        if (!bounds || !zoom) return;
+        const pad=40, w=bounds.maxX-bounds.minX+2*pad, h=bounds.maxY-bounds.minY+2*pad;
+        const scale=Math.min((wrap.clientWidth-10)/w,(wrap.clientHeight-10)/h,1.25);
+        const cx=(bounds.minX+bounds.maxX)/2, cy=(bounds.minY+bounds.maxY)/2;
+        const t=d3.zoomIdentity.translate(wrap.clientWidth/2,wrap.clientHeight/2).scale(scale).translate(-cx,-cy);
+        svg.transition().duration(300).call(zoom.transform,t);
+      }
+      function reset() { if (zoom) svg.transition().duration(250).call(zoom.transform,d3.zoomIdentity); }
+      function focusNode(id) {
+        const p=positioned.get(id); if (!p || !zoom) return;
+        const t=d3.zoomIdentity.translate(wrap.clientWidth/2,wrap.clientHeight/2).scale(1.25).translate(-p.x,-p.y);
+        svg.transition().duration(280).call(zoom.transform,t);
+      }
+      function applySearch() {
+        const q=search.value.trim().toLowerCase();
+        svg.selectAll('.node-g').style('opacity',function(){ if(!q) return 1; const id=this.getAttribute('data-node-id'); const p=positioned.get(id); return p && (`${p.data.id} ${p.data.title} ${p.data.status}`.toLowerCase().includes(q)) ? 1 : .13; });
+      }
+      document.querySelectorAll('.view-btn').forEach(btn=>btn.onclick=()=>{view=btn.dataset.view;localStorage.setItem('plan-dag-view',view);render();});
+      document.getElementById('fitBtn').onclick=fit;
+      document.getElementById('resetBtn').onclick=reset;
+      document.getElementById('dirBtn').onclick=()=>{direction=direction==='TB'?'LR':'TB';localStorage.setItem('plan-dag-direction',direction);render();};
+      document.getElementById('qualityBtn').onclick=()=>{quality=quality==='medium'?'slow':quality==='slow'?'fast':'medium';localStorage.setItem('plan-dag-quality',quality);render();};
+      search.oninput=applySearch;
+      render();
     </script>
   </body>
 </html>
