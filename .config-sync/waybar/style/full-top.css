@@ -420,7 +420,6 @@ tooltip label {
 #custom-disk-io {
   min-width: 112px;
   color: #9db8c1;
-  font-variant-numeric: tabular-nums;
 }
 
 #custom-disk-io.idle {
