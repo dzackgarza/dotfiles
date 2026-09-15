@@ -139,6 +139,25 @@
         margin: 0 0 20px 0;
         font-weight: 400;
       }
+      .plan-summary {
+        margin: 14px 0 20px;
+        padding: 14px 16px;
+        border-left: 3px solid var(--accent);
+        background: var(--accent-soft);
+        border-radius: 0 10px 10px 0;
+        color: var(--fg);
+        font-size: 15px;
+        line-height: 1.6;
+      }
+      .plan-summary-label {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--accent);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
       .plan-meta {
         display: flex;
         flex-wrap: wrap;
@@ -489,6 +508,8 @@ $endif$
         </div>
         $if(title)$
         <h1 class="plan-title">$title$</h1>
+        $endif$ $if(description)$
+        <div class="plan-summary"><span class="plan-summary-label">Goal</span>$description$</div>
         $endif$ $if(subtitle)$
         <p class="plan-subtitle">$subtitle$</p>
         $endif$ $if(abstract)$
