@@ -71,9 +71,10 @@
         </div>
       </div>
       <div class="views">
-        <button data-view="pending" class="view-btn active">Pending work</button>
-        <button data-view="dependencies" class="view-btn">Roadmap dependencies</button>
-        <button data-view="containment" class="view-btn">Roadmap containment</button>
+        <button data-view="sequence" class="view-btn active">Roadmap sequence</button>
+        <button data-view="dependencies" class="view-btn">Logical dependencies</button>
+        <button data-view="containment" class="view-btn">Containment</button>
+        <button data-view="pending" class="view-btn">Implementation DAG</button>
         <span id="stats" class="sub"></span>
       </div>
       <div class="legend">
@@ -91,7 +92,7 @@
       <section id="nodeDetails" class="detail-panel">
         <div class="detail-kicker">Selected work</div>
         <div id="detailTitle" class="detail-title">Select a node</div>
-        <p id="detailDescription" class="detail-description">The pending-work view is the repository's actual open execution DAG; roadmap views remain available above.</p>
+        <p id="detailDescription" class="detail-description">The roadmap sequence is the one-plan-at-a-time working order. Logical dependencies are shown separately and only mean genuine prerequisites.</p>
         <div id="detailMeta" class="detail-meta"></div>
       </section>
       <div class="footer">
@@ -110,10 +111,10 @@
       const detailTitle = document.getElementById("detailTitle");
       const detailDescription = document.getElementById("detailDescription");
       const detailMeta = document.getElementById("detailMeta");
-      let view = localStorage.getItem("plan-dag-view-v2") || "pending";
+      let view = localStorage.getItem("plan-dag-view-v3") || "sequence";
       let direction = localStorage.getItem("plan-dag-direction") || "TB";
       let quality = localStorage.getItem("plan-dag-quality") || "medium";
-      if (!(view in graphs)) view = "pending";
+      if (!(view in graphs)) view = "sequence";
       if (!['TB','LR'].includes(direction)) direction = 'TB';
       if (!['fast','medium','slow'].includes(quality)) quality = 'medium';
       let zoom = null, viewport = null, positioned = new Map(), bounds = null;
@@ -244,7 +245,7 @@
         const q=search.value.trim().toLowerCase();
         svg.selectAll('.node-g').style('opacity',function(){ if(!q) return 1; const id=this.getAttribute('data-node-id'); const p=positioned.get(id); return p && (`${p.data.id} ${p.data.title} ${p.data.description || ''} ${p.data.status}`.toLowerCase().includes(q)) ? 1 : .13; });
       }
-      document.querySelectorAll('.view-btn').forEach(btn=>btn.onclick=()=>{view=btn.dataset.view;localStorage.setItem('plan-dag-view-v2',view);render();});
+      document.querySelectorAll('.view-btn').forEach(btn=>btn.onclick=()=>{view=btn.dataset.view;localStorage.setItem('plan-dag-view-v3',view);render();});
       document.getElementById('fitBtn').onclick=fit;
       document.getElementById('resetBtn').onclick=reset;
       document.getElementById('dirBtn').onclick=()=>{direction=direction==='TB'?'LR':'TB';localStorage.setItem('plan-dag-direction',direction);render();};
