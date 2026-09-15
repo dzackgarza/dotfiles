@@ -38,6 +38,8 @@
       .node-meta { fill:#6b7280; font:10px ui-monospace,SFMono-Regular,Menlo,monospace; pointer-events:none; }
       .edge-path { fill:none; stroke-width:1.35; opacity:.78; }
       .node-tooltip { position:fixed; display:none; z-index:20; max-width:420px; padding:11px 13px; background:#fff; border:1px solid var(--border); border-radius:10px; box-shadow:var(--shadow); font-size:12px; line-height:1.5; pointer-events:none; }
+      .node-tooltip.pinned { pointer-events:auto; user-select:text; cursor:text; }
+      .node-tooltip-close { float:right; margin:-4px -6px 4px 8px; border:0; box-shadow:none; background:transparent; padding:2px 5px; font-size:14px; line-height:1; }
       .node-tooltip .tt-title { font-weight:700; margin-bottom:4px; }
       .node-tooltip .tt-description { margin:6px 0 7px; color:var(--fg); line-height:1.55; }
       .node-tooltip .tt-id { color:var(--muted); font-family:ui-monospace,SFMono-Regular,Menlo,monospace; overflow-wrap:anywhere; }
@@ -96,7 +98,7 @@
         <div id="detailMeta" class="detail-meta"></div>
       </section>
       <div class="footer">
-        <span>Drag to pan · scroll to zoom · click a node to focus · hover for status/progress</span>
+        <span>Drag to pan · scroll to zoom · hover for preview · click a node to pin selectable details</span>
         <span>Interactive Sugiyama layout via locally embedded D3 + d3-dag</span>
       </div>
     </div>
@@ -118,6 +120,7 @@
       if (!['TB','LR'].includes(direction)) direction = 'TB';
       if (!['fast','medium','slow'].includes(quality)) quality = 'medium';
       let zoom = null, viewport = null, positioned = new Map(), bounds = null;
+      let tooltipPinned = false;
 
       function colors(status) {
         if (status === 'ready') return ['#dbeafe','#2563eb'];
@@ -134,6 +137,24 @@
       function nodeWidth(n) { return Math.max(170, Math.min(310, 68 + (n.title || n.id).length * 5.6)); }
       function nodeHeight(n) { return n.todoTotal ? 54 : 44; }
       function trim(s, n=38) { s=String(s); return s.length > n ? s.slice(0,n-1)+'…' : s; }
+      function tooltipHtml(d, pinned=false) {
+        const needs=Array.isArray(d.needs)&&d.needs.length?`<div class="tt-id">needs: ${esc(d.needs.join(', '))}</div>`:'';
+        const close=pinned?'<button class="node-tooltip-close" id="tooltipClose" aria-label="Close pinned details">×</button>':'';
+        return `${close}<div class="tt-title">${esc(d.title)}</div>${d.description ? `<div class="tt-description">${esc(d.description)}</div>` : ''}<div>${esc(d.status)}${d.todoTotal ? ` · ${d.todoCompleted}/${d.todoTotal} milestones (${Math.round(100*d.todoCompleted/d.todoTotal)}%)` : ''}</div>${needs}<div class="tt-id">${esc(d.id)}</div>${d.path ? `<div class="tt-id">${esc(d.path)}</div>`:''}`;
+      }
+      function showTooltip(d, ev, pinned=false) {
+        tooltipPinned = pinned;
+        tooltip.classList.toggle('pinned', pinned);
+        tooltip.innerHTML = tooltipHtml(d, pinned);
+        tooltip.style.left=(ev.clientX+14)+'px';
+        tooltip.style.top=(ev.clientY+14)+'px';
+        tooltip.style.display='block';
+        if (pinned) {
+          document.getElementById('tooltipClose')?.addEventListener('click', () => {
+            tooltipPinned=false; tooltip.classList.remove('pinned'); tooltip.style.display='none';
+          });
+        }
+      }
 
       function makeLayout(graph) {
         const parents = new Map(graph.nodes.map(n => [n.id, []]));
@@ -205,10 +226,10 @@
           g.append('text').attr('class','node-title').attr('text-anchor','middle').attr('y',d.todoTotal ? -4 : 3).text(trim(d.title));
           const meta = d.todoTotal ? `${d.status} · ${d.todoCompleted}/${d.todoTotal}` : d.status;
           if (meta) g.append('text').attr('class','node-meta').attr('text-anchor','middle').attr('y',14).text(meta);
-          g.on('mouseenter',(ev)=>{const needs=Array.isArray(d.needs)&&d.needs.length?`<div class="tt-id">needs: ${esc(d.needs.join(', '))}</div>`:''; tooltip.innerHTML=`<div class="tt-title">${esc(d.title)}</div>${d.description ? `<div class="tt-description">${esc(d.description)}</div>` : ''}<div>${esc(d.status)}${d.todoTotal ? ` · ${d.todoCompleted}/${d.todoTotal} milestones (${Math.round(100*d.todoCompleted/d.todoTotal)}%)` : ''}</div>${needs}<div class="tt-id">${esc(d.id)}</div>${d.path ? `<div class="tt-id">${esc(d.path)}</div>`:''}`; tooltip.style.display='block';})
-           .on('mousemove',(ev)=>{tooltip.style.left=(ev.clientX+14)+'px'; tooltip.style.top=(ev.clientY+14)+'px';})
-           .on('mouseleave',()=>{tooltip.style.display='none';})
-           .on('click',()=>{selectNode(d); focusNode(d.id);});
+          g.on('mouseenter',(ev)=>{if (!tooltipPinned) showTooltip(d,ev,false);})
+           .on('mousemove',(ev)=>{if (!tooltipPinned) {tooltip.style.left=(ev.clientX+14)+'px'; tooltip.style.top=(ev.clientY+14)+'px';}})
+           .on('mouseleave',()=>{if (!tooltipPinned) tooltip.style.display='none';})
+           .on('click',(ev)=>{showTooltip(d,ev,true); selectNode(d); focusNode(d.id);});
         }
         const xs=[...positioned.values()].flatMap(p=>[p.x-p.w/2,p.x+p.w/2]);
         const ys=[...positioned.values()].flatMap(p=>[p.y-p.h/2,p.y+p.h/2]);
@@ -245,7 +266,7 @@
         const q=search.value.trim().toLowerCase();
         svg.selectAll('.node-g').style('opacity',function(){ if(!q) return 1; const id=this.getAttribute('data-node-id'); const p=positioned.get(id); return p && (`${p.data.id} ${p.data.title} ${p.data.description || ''} ${p.data.status}`.toLowerCase().includes(q)) ? 1 : .13; });
       }
-      document.querySelectorAll('.view-btn').forEach(btn=>btn.onclick=()=>{view=btn.dataset.view;localStorage.setItem('plan-dag-view-v3',view);render();});
+      document.querySelectorAll('.view-btn').forEach(btn=>btn.onclick=()=>{tooltipPinned=false;tooltip.classList.remove('pinned');tooltip.style.display='none';view=btn.dataset.view;localStorage.setItem('plan-dag-view-v3',view);render();});
       document.getElementById('fitBtn').onclick=fit;
       document.getElementById('resetBtn').onclick=reset;
       document.getElementById('dirBtn').onclick=()=>{direction=direction==='TB'?'LR':'TB';localStorage.setItem('plan-dag-direction',direction);render();};
