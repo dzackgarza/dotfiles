@@ -5,12 +5,22 @@ import app from "ags/gtk4/app"
 import { execAsync } from "ags/process"
 import GLib from "gi://GLib?version=2.0"
 
+export interface ActiveRepoPlan {
+  title: string
+  path: string
+  status: string
+  total: number
+  completed: number
+  percent: number
+}
+
 export interface RepoPlan {
   repo: string
   plan: string
   progress: number
   activePlan?: string
   activePlanPath?: string
+  activePlans?: ActiveRepoPlan[]
 }
 
 export const MOCK_REPO_PLANS: RepoPlan[] = [
@@ -101,6 +111,7 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
         let percent = 0
         let activePlan: string = "No plan active"
         let activePlanPath: string = ""
+        let activePlans: ActiveRepoPlan[] = []
         try {
           const out = await execAsync([
             "python3",
@@ -114,6 +125,7 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
             vault: string
             activePlan: string
             activePlanPath: string
+            activePlans?: ActiveRepoPlan[]
           }
           if (j.total > 0) {
             percent = j.percent
@@ -122,6 +134,7 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
           }
           if (j.activePlan) activePlan = j.activePlan
           if (j.activePlanPath) activePlanPath = j.activePlanPath
+          if (Array.isArray(j.activePlans)) activePlans = j.activePlans
         } catch {
           percent = hasLocal ? 78 : 12
         }
@@ -131,6 +144,7 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
           progress: percent,
           activePlan,
           activePlanPath,
+          activePlans,
         }
       }),
     )
@@ -144,6 +158,7 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
         let percent = 0
         let activePlan: string = "No plan active"
         let activePlanPath: string = ""
+        let activePlans: ActiveRepoPlan[] = []
         try {
           const out = await execAsync([
             "python3",
@@ -157,11 +172,13 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
             vault: string
             activePlan: string
             activePlanPath: string
+            activePlans?: ActiveRepoPlan[]
           }
           if (j.total > 0) percent = j.percent
           else percent = 0
           if (j.activePlan) activePlan = j.activePlan
           if (j.activePlanPath) activePlanPath = j.activePlanPath
+          if (Array.isArray(j.activePlans)) activePlans = j.activePlans
         } catch {
           percent = hasLocal ? r.progress : 12
         }
@@ -171,6 +188,7 @@ async function fetchLiveRepoPlans(): Promise<RepoPlan[]> {
           progress: percent,
           activePlan,
           activePlanPath,
+          activePlans,
         }
       }),
     )
@@ -520,7 +538,9 @@ function RepoPlanRow({
             />
           </box>
         ) as unknown as Gtk.Widget
-        const hasActivePath = !!entry.activePlanPath && entry.activePlan !== "No plan active"
+        const activePlanPaths = entry.activePlans?.map((plan) => plan.path).filter(Boolean)
+          ?? (entry.activePlanPath ? [entry.activePlanPath] : [])
+        const hasActivePath = activePlanPaths.length > 0 && entry.activePlan !== "No plan active"
         const activeLabelInner = (
           <label
             class={
@@ -542,19 +562,29 @@ function RepoPlanRow({
             halign={Gtk.Align.FILL}
             valign={Gtk.Align.CENTER}
             sensitive={hasActivePath}
-            tooltipText={hasActivePath ? `Render ${entry.activePlanPath} to HTML` : entry.activePlan ?? "No plan active"}
+            tooltipText={
+              hasActivePath
+                ? activePlanPaths.length > 1
+                  ? `Render ${activePlanPaths.length} current plans to HTML`
+                  : `Render ${activePlanPaths[0]} to HTML`
+                : entry.activePlan ?? "No plan active"
+            }
             onClicked={() => {
-              const planPath = entry.activePlanPath
-              if (!planPath) return
+              if (activePlanPaths.length === 0) return
               closeControlCenter()
               const safeRepo = entry.repo.replaceAll("/", "-")
-              const base = planPath.split("/").pop()?.replace(/\.md$/, "") ?? "plan"
+              const base = activePlanPaths.length > 1
+                ? "current-plans"
+                : (activePlanPaths[0].split("/").pop()?.replace(/\.md$/, "") ?? "plan")
               const out = `/tmp/${safeRepo}-${base}.html`
               const helper = "/home/dzack/dotfiles/ags/control-panel/scripts/render-plan.py"
               const template = "/home/dzack/dotfiles/ags/control-panel/templates/elegant-plan.html"
-              void execAsync(["python3", helper, planPath, entry.repo, template, out])
+              const args = activePlanPaths.length > 1
+                ? ["python3", helper, "--plans-json", JSON.stringify(activePlanPaths), entry.repo, template, out]
+                : ["python3", helper, activePlanPaths[0], entry.repo, template, out]
+              void execAsync(args)
                 .then(() => execAsync(["xdg-open", out]))
-                .catch((e) => console.error(`render-plan failed for ${planPath}: ${String(e)}`))
+                .catch((e) => console.error(`render-plan failed for ${activePlanPaths.join(", ")}: ${String(e)}`))
             }}
           >
             {activeLabelInner}
@@ -987,7 +1017,9 @@ export function RepoPlanPanel({
                         />
                       </box>
                     ) as unknown as Gtk.Widget
-                    const hasActivePathLive = !!entry.activePlanPath && entry.activePlan !== "No plan active"
+                    const activePlanPathsLive = entry.activePlans?.map((plan) => plan.path).filter(Boolean)
+                      ?? (entry.activePlanPath ? [entry.activePlanPath] : [])
+                    const hasActivePathLive = activePlanPathsLive.length > 0 && entry.activePlan !== "No plan active"
                     const activeLabelLiveInner = (
                       <label
                         class={
@@ -1009,19 +1041,29 @@ export function RepoPlanPanel({
                         halign={Gtk.Align.FILL}
                         valign={Gtk.Align.CENTER}
                         sensitive={hasActivePathLive}
-                        tooltipText={hasActivePathLive ? `Render ${entry.activePlanPath} to HTML` : (entry.activePlan ?? "No plan active")}
+                        tooltipText={
+                          hasActivePathLive
+                            ? activePlanPathsLive.length > 1
+                              ? `Render ${activePlanPathsLive.length} current plans to HTML`
+                              : `Render ${activePlanPathsLive[0]} to HTML`
+                            : (entry.activePlan ?? "No plan active")
+                        }
                         onClicked={() => {
-                          const planPath = entry.activePlanPath
-                          if (!planPath) return
+                          if (activePlanPathsLive.length === 0) return
                           closeControlCenter()
                           const safeRepo = entry.repo.replaceAll("/", "-")
-                          const base = planPath.split("/").pop()?.replace(/\.md$/, "") ?? "plan"
+                          const base = activePlanPathsLive.length > 1
+                            ? "current-plans"
+                            : (activePlanPathsLive[0].split("/").pop()?.replace(/\.md$/, "") ?? "plan")
                           const out = `/tmp/${safeRepo}-${base}.html`
                           const helper = "/home/dzack/dotfiles/ags/control-panel/scripts/render-plan.py"
                           const template = "/home/dzack/dotfiles/ags/control-panel/templates/elegant-plan.html"
-                          void execAsync(["python3", helper, planPath, entry.repo, template, out])
+                          const args = activePlanPathsLive.length > 1
+                            ? ["python3", helper, "--plans-json", JSON.stringify(activePlanPathsLive), entry.repo, template, out]
+                            : ["python3", helper, activePlanPathsLive[0], entry.repo, template, out]
+                          void execAsync(args)
                             .then(() => execAsync(["xdg-open", out]))
-                            .catch((e) => console.error(`render-plan failed for ${planPath}: ${String(e)}`))
+                            .catch((e) => console.error(`render-plan failed for ${activePlanPathsLive.join(", ")}: ${String(e)}`))
                         }}
                       >
                         {activeLabelLiveInner}
