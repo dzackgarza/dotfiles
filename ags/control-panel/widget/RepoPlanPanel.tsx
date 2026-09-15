@@ -254,7 +254,14 @@ function progressClass(pct: number): string {
   return "repo-plan-progress-red"
 }
 
+let keepControlCenterOpen = false
+
+export function setRepoPlanKeepControlCenterOpen(value: boolean) {
+  keepControlCenterOpen = value
+}
+
 function closeControlCenter() {
+  if (keepControlCenterOpen) return
   try {
     const w = (
       app as unknown as { get_window?: (n: string) => Gtk.Window | null }
@@ -632,12 +639,16 @@ type RepoPlanPanelProps = {
   items?: RepoPlan[] | Accessor<RepoPlan[]>
   title?: string
   live?: boolean
+  keepOpen?: Accessor<boolean>
+  onKeepOpenChange?: (value: boolean) => void
 }
 
 export function RepoPlanPanel({
   items,
   title = "Repo Plans",
   live = true,
+  keepOpen,
+  onKeepOpenChange,
 }: RepoPlanPanelProps) {
   const isAccessor = typeof items === "function"
   const staticItems = (items as RepoPlan[] | undefined) ?? MOCK_REPO_PLANS
@@ -721,6 +732,17 @@ export function RepoPlanPanel({
                 )
           }
         />
+        {keepOpen && onKeepOpenChange && (
+          <button
+            class={keepOpen((value) =>
+              value ? "repo-plan-pin repo-plan-pin-active" : "repo-plan-pin",
+            )}
+            tooltipText="Keep this popup open while interacting with other windows"
+            onClicked={() => onKeepOpenChange(!keepOpen.peek())}
+          >
+            <label label={keepOpen((value) => (value ? "Pinned" : "Keep open"))} />
+          </button>
+        )}
       </box>
       <box class="repo-plan-divider" />
       {isAccessor && accessorItems ? (
