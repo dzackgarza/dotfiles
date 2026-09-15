@@ -281,18 +281,20 @@ def render(repo: str, out: Path | None, template_arg: Path | None) -> Path:
 
     source = dag_path.read_text(encoding="utf-8")
     metadata = active_card_metadata(vault_path)
+    sequence_nodes, sequence_edges = parse_mermaid_graph(mermaid_section(source, "Sequence"))
     dep_nodes, dep_edges = parse_mermaid_graph(mermaid_section(source, "Dependencies"))
     containment_nodes, containment_edges = parse_mermaid_graph(
         mermaid_section(source, "Containment")
     )
-    if not dep_nodes and not containment_nodes:
+    if not sequence_nodes and not dep_nodes and not containment_nodes:
         raise SystemExit(f"No graph nodes found in canonical DAG {dag_path}")
 
     checkout = find_checkout(repo)
     graphs = {
-        "pending": pending_todo_graph(checkout),
+        "sequence": {**graph_payload(sequence_nodes, sequence_edges, metadata), "source": str(dag_path)},
         "dependencies": {**graph_payload(dep_nodes, dep_edges, metadata), "source": str(dag_path)},
         "containment": {**graph_payload(containment_nodes, containment_edges, metadata), "source": str(dag_path)},
+        "pending": pending_todo_graph(checkout),
     }
     template_path = template_arg if template_arg and template_arg.is_file() else DEFAULT_TEMPLATE
     template = template_path.read_text(encoding="utf-8")

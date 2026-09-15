@@ -91,11 +91,13 @@ def test_combined_plan_renderer_names_each_source(tmp_path: Path) -> None:
 
 def test_dag_renderer_keeps_canonical_graph_and_interactive_browser_engine() -> None:
     renderer = load_module('render_dag_test', 'ags/control-panel/scripts/render-dag.py')
-    dag_source = '''## Dependencies\n\n```mermaid\ngraph LR\n  FEATURE-one\n  PLAN-one\n  FEATURE-one --> PLAN-one\n```\n\n## Containment\n\n```mermaid\ngraph LR\n  FEATURE-one\n  PLAN-one\n  FEATURE-one --> PLAN-one\n```\n'''
+    dag_source = '''## Sequence\n\n```mermaid\ngraph LR\n  FEATURE-one\n  PLAN-one\n  PLAN-two\n  PLAN-one --> PLAN-two\n```\n\n## Dependencies\n\n```mermaid\ngraph LR\n  FEATURE-one\n  PLAN-one\n  PLAN-two\n  PLAN-one --> PLAN-two\n```\n\n## Containment\n\n```mermaid\ngraph LR\n  FEATURE-one\n  PLAN-one\n  FEATURE-one --> PLAN-one\n```\n'''
+    sequence = renderer.parse_mermaid_graph(renderer.mermaid_section(dag_source, 'Sequence'))
     deps = renderer.parse_mermaid_graph(renderer.mermaid_section(dag_source, 'Dependencies'))
     containment = renderer.parse_mermaid_graph(renderer.mermaid_section(dag_source, 'Containment'))
-    assert deps == (['FEATURE-one', 'PLAN-one'], [('FEATURE-one', 'PLAN-one')])
-    assert containment == deps
+    assert sequence == (['FEATURE-one', 'PLAN-one', 'PLAN-two'], [('PLAN-one', 'PLAN-two')])
+    assert deps == sequence
+    assert containment == (['FEATURE-one', 'PLAN-one'], [('FEATURE-one', 'PLAN-one')])
 
     template = (DOTFILES / 'ags/control-panel/templates/dag.html').read_text(encoding='utf-8')
     assert '__D3_JS__' in template
@@ -103,8 +105,11 @@ def test_dag_renderer_keeps_canonical_graph_and_interactive_browser_engine() -> 
     assert '__GRAPHS_JSON__' in template
     assert 'graphStratify' in template
     assert 'd3.zoom()' in template
+    assert 'data-view="sequence"' in template
     assert 'data-view="dependencies"' in template
     assert 'data-view="containment"' in template
+    assert 'data-view="pending"' in template
+    assert 'plan-dag-view-v3' in template
     assert 'tt-description' in template
     assert 'p.data.description' in template
     payload = renderer.node_payload('PLAN-one', {'PLAN-one': {'title': 'One', 'description': 'Mathematical goal', 'status': 'in-progress'}})
@@ -151,4 +156,4 @@ def test_plan_renderer_summarizes_pending_execution_work(tmp_path: Path) -> None
     template = (DOTFILES / 'ags/control-panel/templates/dag.html').read_text(encoding='utf-8')
     assert 'data-view="pending"' in template
     assert 'Selected work' in template
-    assert 'plan-dag-view-v2' in template
+    assert 'plan-dag-view-v3' in template
