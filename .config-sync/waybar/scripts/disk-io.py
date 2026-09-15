@@ -12,7 +12,7 @@ from pathlib import Path
 
 SAMPLE_SECONDS = 1.0
 WINDOW_SECONDS = 30.0
-EMIT_SECONDS = 5.0
+EMIT_SECONDS = 10.0
 SECTOR_BYTES = 512  # Linux block statistics report sectors in 512-byte units.
 
 
@@ -133,7 +133,7 @@ def main() -> None:
     device = root_block_device()
     now = time.monotonic()
     history: deque[tuple[float, tuple[int, int, int, int, int]]] = deque([(now, stats(device))])
-    last_emit = now - EMIT_SECONDS
+    last_emit = now
     css_class = "idle"
 
     while True:
@@ -152,7 +152,7 @@ def main() -> None:
 
         oldest_time, oldest = history[0]
         elapsed = now - oldest_time
-        if elapsed <= 0:
+        if elapsed < EMIT_SECONDS:
             continue
 
         read_iops = max(0, current[0] - oldest[0]) / elapsed
@@ -171,6 +171,8 @@ def main() -> None:
 if __name__ == "__main__":
     try:
         main()
+    except BrokenPipeError:
+        pass
     except Exception as exc:
         emit({"text": "↑? ↓?", "tooltip": str(exc), "class": "critical"})
         raise
