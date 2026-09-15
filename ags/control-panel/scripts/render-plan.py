@@ -42,8 +42,86 @@ def derive_vault(plan_path: str) -> str:
     return ""
 
 
-def combined_markdown(plan_paths: list[str]) -> str:
+
+
+def find_checkout(repo: str) -> Path | None:
+    repo_map = Path(__file__).resolve().parent.parent / "repo-map.json"
+    try:
+        payload = json.loads(repo_map.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        payload = {}
+    entry = payload.get(repo) if isinstance(payload, dict) else None
+    checkout = entry.get("checkout") if isinstance(entry, dict) else entry
+    if isinstance(checkout, str) and checkout and checkout != "None":
+        path = Path(checkout)
+        if path.is_dir():
+            return path
+    return None
+
+
+def humanize_work_id(node_id: str) -> str:
+    special = {"api": "API", "sage": "Sage", "cas": "CAS", "gap": "GAP", "qc": "QC", "hom": "Hom"}
+    return " ".join(special.get(word.lower(), word.capitalize()) for word in node_id.replace("-", " ").split())
+
+
+def pending_work_records(checkout: Path | None) -> list[dict]:
+    if checkout is None:
+        return []
+    todo = checkout / "TODO.md"
+    if not todo.is_file():
+        return []
+    lines = todo.read_text(encoding="utf-8").splitlines()
+    header = re.compile(r"^- \[([ x])\] \*\*`([^`]+)`\*\*\. \*\*Needs:\*\* (.*)$")
+    records = []
+    for index, line in enumerate(lines):
+        match = header.match(line)
+        if match is None or match.group(1) != " ":
+            continue
+        node_id = match.group(2)
+        rest = match.group(3)
+        needs_clause = rest.split(".", 1)[0]
+        needs = [] if needs_clause.strip() == "none" else re.findall(r"`([^`]+)`", needs_clause)
+        goal = ""
+        cursor = index + 1
+        while cursor < len(lines) and header.match(lines[cursor]) is None:
+            goal_match = re.match(r"^\s+\*\*Goal:\*\*\s*(.+)$", lines[cursor])
+            if goal_match:
+                goal = goal_match.group(1).strip()
+                break
+            if lines[cursor].startswith("## "):
+                break
+            cursor += 1
+        records.append({"id": node_id, "title": humanize_work_id(node_id), "goal": goal, "needs": needs, "optional": node_id.startswith("optional-")})
+    open_ids = {record["id"] for record in records}
+    for record in records:
+        record["unmet"] = [need for need in record["needs"] if need in open_ids]
+        record["state"] = "optional" if record["optional"] else ("waiting" if record["unmet"] else "ready")
+    return records
+
+
+def pending_work_markdown(repo: str) -> str:
+    records = pending_work_records(find_checkout(repo))
+    if not records:
+        return ""
+    groups = [("Ready now", "ready"), ("Waiting on pending prerequisites", "waiting"), ("Optional after required work", "optional")]
+    chunks = ["## Pending execution work\n", "These are the repository's actual open dependency-DAG nodes, summarized at the mathematical/architectural goal level.\n"]
+    for heading, state in groups:
+        subset = [record for record in records if record["state"] == state]
+        if not subset:
+            continue
+        chunks.append(f"### {heading}\n")
+        for record in subset:
+            needs = ", ".join(f"`{need}`" for need in record["needs"]) or "none"
+            goal = record["goal"] or "No concise goal recorded."
+            chunks.append(f"- **{record['title']}** (`{record['id']}`) — {goal}  \n  **Needs:** {needs}\n")
+    return "\n".join(chunks) + "\n"
+
+def combined_markdown(plan_paths: list[str], repo: str = "") -> str:
     chunks = ["# Current plans\n"]
+    if repo:
+        pending = pending_work_markdown(repo)
+        if pending:
+            chunks.append("\n" + pending)
     for plan_path in plan_paths:
         _raw, metadata, body = split_plan(plan_path)
         title = str(metadata.get("title") or Path(plan_path).stem)
@@ -113,11 +191,18 @@ def main() -> None:
     input_path = plan_paths[0]
     combined_path = ""
     if len(plan_paths) == 1:
-        raw_yaml, _metadata, _body = split_plan(plan_paths[0])
+        raw_yaml, _metadata, body = split_plan(plan_paths[0])
+        pending = pending_work_markdown(repo)
+        if pending:
+            fd, combined_path = tempfile.mkstemp(suffix=".md", prefix="plan-with-pending-")
+            with os.fdopen(fd, "w", encoding="utf-8") as combined:
+                combined.write("---\n" + raw_yaml + "\n---\n")
+                combined.write(pending + "\n" + body.lstrip())
+            input_path = combined_path
     else:
         fd, combined_path = tempfile.mkstemp(suffix=".md", prefix="current-plans-")
         with os.fdopen(fd, "w", encoding="utf-8") as combined:
-            combined.write(combined_markdown(plan_paths))
+            combined.write(combined_markdown(plan_paths, repo))
         input_path = combined_path
 
     meta_fd, meta_path = tempfile.mkstemp(suffix=".yaml", prefix="plan-meta-")
