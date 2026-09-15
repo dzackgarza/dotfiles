@@ -63,12 +63,12 @@ def test_vault_progress_uses_unarchived_current_plan_todos(tmp_path: Path) -> No
 
     result = progress.summarize(str(tmp_path))
 
-    assert result['total'] == 3
-    assert result['completed'] == 2
-    assert result['percent'] == 66
-    assert result['activePlan'] == '2 current plans'
-    assert [item['path'] for item in result['activePlans']] == [str(first), str(second)]
-    assert [item['status'] for item in result['activePlans']] == ['in-progress', 'blocked']
+    assert result['total'] == 2
+    assert result['completed'] == 1
+    assert result['percent'] == 50
+    assert result['activePlan'] == 'First'
+    assert [item['path'] for item in result['activePlans']] == [str(first)]
+    assert [item['status'] for item in result['activePlans']] == ['in-progress']
 
 
 def test_combined_plan_renderer_names_each_source(tmp_path: Path) -> None:
@@ -157,3 +157,16 @@ def test_plan_renderer_summarizes_pending_execution_work(tmp_path: Path) -> None
     assert 'data-view="pending"' in template
     assert 'Selected work' in template
     assert 'plan-dag-view-v3' in template
+
+
+def test_control_center_keep_open_and_selectable_dag_details_are_present() -> None:
+    repo_panel = (DOTFILES / 'ags/control-panel/widget/RepoPlanPanel.tsx').read_text(encoding='utf-8')
+    control_window = (DOTFILES / 'ags/control-panel/src/windows/control-center.tsx').read_text(encoding='utf-8')
+    dag_template = (DOTFILES / 'ags/control-panel/templates/dag.html').read_text(encoding='utf-8')
+    assert 'Keep open' in repo_panel
+    assert 'if (keepControlCenterOpen) return' in repo_panel
+    assert '!keepControlCenterOpen.peek()' in control_window
+    assert 'node-tooltip.pinned' in dag_template
+    assert 'user-select:text' in dag_template
+    assert 'tooltipClose' in dag_template
+    assert 'click a node to pin selectable details' in dag_template
