@@ -133,7 +133,7 @@ def payload(
         "Right click: per-process I/O (pidstat)"
     )
     return {
-        "text": f"↑{rate_text(read_bps)} ↓{rate_text(write_bps)}",
+        "text": f"↑{rate_text(read_bps)}↓{rate_text(write_bps)}",
         "tooltip": tooltip,
         "class": css_class,
     }
