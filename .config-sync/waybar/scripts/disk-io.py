@@ -60,9 +60,9 @@ def stats(device: str) -> tuple[int, int, int, int, int]:
 
 
 def rate_text(bytes_per_second: float) -> str:
-    """Compact bar text: whole MiB/s; precision stays in the tooltip."""
+    """Compact bar text: whole MiB/s with the unit implied by the meter."""
     mib_per_second = max(0.0, bytes_per_second) / 1024**2
-    return f"{round(mib_per_second):.0f}M"
+    return f"{round(mib_per_second):.0f}"
 
 
 def detail_rate(bytes_per_second: float) -> str:
@@ -76,36 +76,10 @@ def detail_rate(bytes_per_second: float) -> str:
     return f"{value:.0f} B/s"
 
 
-def severity(busy_percent: float, previous: str) -> str:
-    """Severity with hysteresis so colour does not flap near thresholds."""
-    if previous == "critical":
-        if busy_percent >= 72:
-            return "critical"
-    elif previous == "warning":
-        if busy_percent >= 88:
-            return "critical"
-        if busy_percent >= 48:
-            return "warning"
-    elif previous == "active":
-        if busy_percent >= 88:
-            return "critical"
-        if busy_percent >= 62:
-            return "warning"
-        if busy_percent >= 7:
-            return "active"
-    else:
-        if busy_percent >= 88:
-            return "critical"
-        if busy_percent >= 62:
-            return "warning"
-        if busy_percent >= 12:
-            return "active"
-
-    if busy_percent >= 62:
-        return "warning"
-    if busy_percent >= 12:
-        return "active"
-    return "idle"
+def utilization_class(busy_percent: float) -> str:
+    """Eight visual load bands spanning idle through saturated."""
+    bucket = min(7, max(0, int(busy_percent / 12.5)))
+    return f"load-{bucket}"
 
 
 def lowpass_alpha(cutoff_hz: float, elapsed: float) -> float:
@@ -182,7 +156,7 @@ def main() -> None:
     read_iops_filter = OneEuro(RATE_BETA)
     write_iops_filter = OneEuro(RATE_BETA)
     busy_filter = OneEuro(BUSY_BETA)
-    css_class = "idle"
+    css_class = "load-0"
 
     while True:
         time.sleep(SAMPLE_SECONDS)
@@ -206,7 +180,7 @@ def main() -> None:
         busy_percent, busy_derivative = busy_filter.update(raw_busy, elapsed)
 
         previous, previous_time = current, now
-        next_class = severity(busy_percent, css_class)
+        next_class = utilization_class(busy_percent)
         large_derivative = (
             abs(read_derivative) >= FAST_RATE_DERIVATIVE_MIB_S2
             or abs(write_derivative) >= FAST_RATE_DERIVATIVE_MIB_S2

@@ -418,24 +418,25 @@ tooltip label {
 }
 
 #custom-disk-io {
-  min-width: 102px;
-  color: #9db8c1;
+  min-width: 58px;
+  margin-left: 1px;
+  margin-right: 1px;
+  padding-left: 4px;
+  padding-right: 4px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  transition: color 180ms linear;
 }
 
-#custom-disk-io.idle {
-  color: #5a6669;
-}
-
-#custom-disk-io.active {
-  color: #9db8c1;
-}
-
-#custom-disk-io.warning {
-  color: #ffb454;
-}
-
-#custom-disk-io.critical {
-  color: #f07178;
+#custom-disk-io.load-0 { color: #5a6669; }
+#custom-disk-io.load-1 { color: #73daca; }
+#custom-disk-io.load-2 { color: #aad94c; }
+#custom-disk-io.load-3 { color: #c2d94c; }
+#custom-disk-io.load-4 { color: #ffd173; }
+#custom-disk-io.load-5 { color: #ffb454; }
+#custom-disk-io.load-6 { color: #f28779; }
+#custom-disk-io.load-7 {
+  color: #e92d4d;
   font-weight: 700;
 }
 
