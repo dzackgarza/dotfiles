@@ -83,3 +83,23 @@ def test_combined_plan_renderer_names_each_source(tmp_path: Path) -> None:
     assert '**Status:** `blocked`' in combined
     assert str(first) in combined
     assert str(second) in combined
+
+
+def test_dag_renderer_keeps_canonical_graph_and_interactive_browser_engine() -> None:
+    renderer = load_module('render_dag_test', 'ags/control-panel/scripts/render-dag.py')
+    dag_source = '''## Dependencies\n\n```mermaid\ngraph LR\n  FEATURE-one\n  PLAN-one\n  FEATURE-one --> PLAN-one\n```\n\n## Containment\n\n```mermaid\ngraph LR\n  FEATURE-one\n  PLAN-one\n  FEATURE-one --> PLAN-one\n```\n'''
+    deps = renderer.parse_mermaid_graph(renderer.mermaid_section(dag_source, 'Dependencies'))
+    containment = renderer.parse_mermaid_graph(renderer.mermaid_section(dag_source, 'Containment'))
+    assert deps == (['FEATURE-one', 'PLAN-one'], [('FEATURE-one', 'PLAN-one')])
+    assert containment == deps
+
+    template = (DOTFILES / 'ags/control-panel/templates/dag.html').read_text(encoding='utf-8')
+    assert '__D3_JS__' in template
+    assert '__D3_DAG_JS__' in template
+    assert '__GRAPHS_JSON__' in template
+    assert 'graphStratify' in template
+    assert 'd3.zoom()' in template
+    assert 'data-view="dependencies"' in template
+    assert 'data-view="containment"' in template
+    assert 'https://d3js.org' not in template
+    assert 'unpkg.com/d3-dag' not in template
