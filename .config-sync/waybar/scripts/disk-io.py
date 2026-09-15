@@ -9,7 +9,7 @@ import subprocess
 import time
 from pathlib import Path
 
-POLL_SECONDS = 1.0
+POLL_SECONDS = 4.0
 SECTOR_BYTES = 512  # Linux block statistics report sectors in 512-byte units.
 
 
@@ -91,7 +91,7 @@ def payload(
         "Right click: per-process I/O (pidstat)"
     )
     return {
-        "text": f"R{rate_text(read_bps)} W{rate_text(write_bps)}",
+        "text": f"↑{rate_text(read_bps)} ↓{rate_text(write_bps)}",
         "tooltip": tooltip,
         "class": severity(busy_percent),
     }
@@ -129,5 +129,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as exc:
-        emit({"text": "R? W?", "tooltip": str(exc), "class": "critical"})
+        emit({"text": "↑? ↓?", "tooltip": str(exc), "class": "critical"})
         raise
