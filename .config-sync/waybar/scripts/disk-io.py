@@ -4,15 +4,14 @@
 from __future__ import annotations
 
 import json
-import os
+import math
 import subprocess
 import time
-from collections import deque
 from pathlib import Path
 
 SAMPLE_SECONDS = 1.0
-WINDOW_SECONDS = 30.0
-EMIT_SECONDS = 10.0
+EMIT_SECONDS = 2.0
+EMA_HALF_LIFE_SECONDS = 2.0
 SECTOR_BYTES = 512  # Linux block statistics report sectors in 512-byte units.
 
 
@@ -95,6 +94,14 @@ def severity(busy_percent: float, previous: str) -> str:
     return "idle"
 
 
+def ema(previous: float | None, sample: float, elapsed: float) -> float:
+    """Time-correct exponential smoothing with a short, explicit half-life."""
+    if previous is None:
+        return sample
+    alpha = 1.0 - math.pow(0.5, elapsed / EMA_HALF_LIFE_SECONDS)
+    return previous + alpha * (sample - previous)
+
+
 def payload(
     device: str,
     read_bps: float,
@@ -102,7 +109,6 @@ def payload(
     read_iops: float,
     write_iops: float,
     busy_percent: float,
-    window_seconds: float,
     css_class: str,
 ) -> dict[str, str]:
     tooltip = (
@@ -110,7 +116,7 @@ def payload(
         f"Read:  {detail_rate(read_bps)}  ({read_iops:.0f} IOPS)\n"
         f"Write: {detail_rate(write_bps)}  ({write_iops:.0f} IOPS)\n"
         f"Busy:  {busy_percent:.0f}%\n"
-        f"Window: {window_seconds:.0f}s rolling average\n\n"
+        f"Smoothing: {EMA_HALF_LIFE_SECONDS:.0f}s EMA half-life\n\n"
         "Left click: device stats (iostat)\n"
         "Right click: per-process I/O (pidstat)"
     )
@@ -127,39 +133,41 @@ def emit(data: dict[str, str]) -> None:
 
 def main() -> None:
     device = root_block_device()
-    now = time.monotonic()
-    history: deque[tuple[float, tuple[int, int, int, int, int]]] = deque([(now, stats(device))])
-    last_emit = now
+    previous = stats(device)
+    previous_time = time.monotonic()
+    last_emit = previous_time
+    smoothed: list[float | None] = [None, None, None, None, None]
     css_class = "idle"
 
     while True:
         time.sleep(SAMPLE_SECONDS)
         now = time.monotonic()
         current = stats(device)
-        history.append((now, current))
+        elapsed = now - previous_time
+        if elapsed <= 0:
+            previous, previous_time = current, now
+            continue
 
-        # Keep one sample just older than the target horizon when possible.
-        cutoff = now - WINDOW_SECONDS
-        while len(history) > 2 and history[1][0] <= cutoff:
-            history.popleft()
+        samples = (
+            max(0, current[1] - previous[1]) * SECTOR_BYTES / elapsed,
+            max(0, current[3] - previous[3]) * SECTOR_BYTES / elapsed,
+            max(0, current[0] - previous[0]) / elapsed,
+            max(0, current[2] - previous[2]) / elapsed,
+            min(100.0, max(0, current[4] - previous[4]) / (elapsed * 10.0)),
+        )
+        for index, sample in enumerate(samples):
+            smoothed[index] = ema(smoothed[index], sample, elapsed)
 
+        previous, previous_time = current, now
         if now - last_emit < EMIT_SECONDS:
             continue
 
-        oldest_time, oldest = history[0]
-        elapsed = now - oldest_time
-        if elapsed < EMIT_SECONDS:
-            continue
-
-        read_iops = max(0, current[0] - oldest[0]) / elapsed
-        read_bps = max(0, current[1] - oldest[1]) * SECTOR_BYTES / elapsed
-        write_iops = max(0, current[2] - oldest[2]) / elapsed
-        write_bps = max(0, current[3] - oldest[3]) * SECTOR_BYTES / elapsed
-        busy_percent = min(100.0, max(0, current[4] - oldest[4]) / (elapsed * 10.0))
+        read_bps, write_bps, read_iops, write_iops, busy_percent = (
+            float(value) for value in smoothed
+        )
         css_class = severity(busy_percent, css_class)
-
         emit(payload(
-            device, read_bps, write_bps, read_iops, write_iops, busy_percent, elapsed, css_class
+            device, read_bps, write_bps, read_iops, write_iops, busy_percent, css_class
         ))
         last_emit = now
 
