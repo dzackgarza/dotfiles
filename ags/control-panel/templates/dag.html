@@ -41,6 +41,11 @@
       .node-tooltip .tt-title { font-weight:700; margin-bottom:4px; }
       .node-tooltip .tt-description { margin:6px 0 7px; color:var(--fg); line-height:1.55; }
       .node-tooltip .tt-id { color:var(--muted); font-family:ui-monospace,SFMono-Regular,Menlo,monospace; overflow-wrap:anywhere; }
+      .detail-panel { margin-top:12px; padding:15px 17px; background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
+      .detail-kicker { color:var(--muted); font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+      .detail-title { margin:4px 0 6px; font:650 18px ui-serif,Georgia,serif; }
+      .detail-description { margin:0; max-width:1100px; color:var(--fg); font-size:13px; line-height:1.6; }
+      .detail-meta { margin-top:8px; color:var(--muted); font:11px ui-monospace,SFMono-Regular,Menlo,monospace; overflow-wrap:anywhere; }
       .error { position:absolute; inset:20px; color:#b91c1c; white-space:pre-wrap; font-family:ui-monospace,monospace; }
       .footer { margin-top:10px; color:var(--muted); font-size:11px; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; }
       #search { width:220px; }
@@ -55,7 +60,7 @@
         <div>
           <h1>Plan DAG</h1>
           <p class="sub">Vault <code>__VAULT__</code> · Repo <code>__REPO__</code></p>
-          <p class="sub">Canonical source <code>__SOURCE_PATH__</code></p>
+          <p class="sub">Source <code id="sourcePath">__SOURCE_PATH__</code></p>
         </div>
         <div class="controls">
           <input id="search" type="search" placeholder="Find node…" />
@@ -66,21 +71,29 @@
         </div>
       </div>
       <div class="views">
-        <button data-view="dependencies" class="view-btn active">Dependencies</button>
-        <button data-view="containment" class="view-btn">Containment</button>
+        <button data-view="pending" class="view-btn active">Pending work</button>
+        <button data-view="dependencies" class="view-btn">Roadmap dependencies</button>
+        <button data-view="containment" class="view-btn">Roadmap containment</button>
         <span id="stats" class="sub"></span>
       </div>
       <div class="legend">
-        <span><span class="dot" style="background:#22c55e"></span>complete</span>
-        <span><span class="dot" style="background:#eab308"></span>in progress</span>
-        <span><span class="dot" style="background:#ef4444"></span>blocked</span>
-        <span><span class="dot" style="background:#f97316"></span>needs review/input</span>
-        <span><span class="dot" style="background:#a1a1aa"></span>unstarted/other</span>
+        <span><span class="dot" style="background:#2563eb"></span>ready pending work</span>
+        <span><span class="dot" style="background:#9333ea"></span>waiting on pending prerequisite</span>
+        <span><span class="dot" style="background:#a1a1aa"></span>optional</span>
+        <span><span class="dot" style="background:#22c55e"></span>complete roadmap card</span>
+        <span><span class="dot" style="background:#eab308"></span>in progress roadmap card</span>
+        <span><span class="dot" style="background:#ef4444"></span>blocked roadmap card</span>
       </div>
       <div id="dag-wrap">
         <svg id="dag-svg" role="img" aria-label="Plan DAG"></svg>
         <div id="tooltip" class="node-tooltip"></div>
       </div>
+      <section id="nodeDetails" class="detail-panel">
+        <div class="detail-kicker">Selected work</div>
+        <div id="detailTitle" class="detail-title">Select a node</div>
+        <p id="detailDescription" class="detail-description">The pending-work view is the repository's actual open execution DAG; roadmap views remain available above.</p>
+        <div id="detailMeta" class="detail-meta"></div>
+      </section>
       <div class="footer">
         <span>Drag to pan · scroll to zoom · click a node to focus · hover for status/progress</span>
         <span>Interactive Sugiyama layout via locally embedded D3 + d3-dag</span>
@@ -93,22 +106,29 @@
       const tooltip = document.getElementById("tooltip");
       const stats = document.getElementById("stats");
       const search = document.getElementById("search");
-      let view = localStorage.getItem("plan-dag-view") || "dependencies";
+      const sourcePath = document.getElementById("sourcePath");
+      const detailTitle = document.getElementById("detailTitle");
+      const detailDescription = document.getElementById("detailDescription");
+      const detailMeta = document.getElementById("detailMeta");
+      let view = localStorage.getItem("plan-dag-view-v2") || "pending";
       let direction = localStorage.getItem("plan-dag-direction") || "TB";
       let quality = localStorage.getItem("plan-dag-quality") || "medium";
-      if (!(view in graphs)) view = "dependencies";
+      if (!(view in graphs)) view = "pending";
       if (!['TB','LR'].includes(direction)) direction = 'TB';
       if (!['fast','medium','slow'].includes(quality)) quality = 'medium';
       let zoom = null, viewport = null, positioned = new Map(), bounds = null;
 
       function colors(status) {
+        if (status === 'ready') return ['#dbeafe','#2563eb'];
+        if (status === 'waiting') return ['#f3e8ff','#9333ea'];
+        if (status === 'optional') return ['#f4f4f5','#a1a1aa'];
         if (status === 'complete') return ['#dcfce7','#22c55e'];
         if (status === 'in-progress') return ['#fef9c3','#eab308'];
         if (status === 'blocked') return ['#fee2e2','#ef4444'];
         if (status === 'needs-agent-review' || status === 'needs-human-input') return ['#ffedd5','#f97316'];
         return ['#f4f4f5','#a1a1aa'];
       }
-      function edgeColor() { return view === 'dependencies' ? '#64748b' : '#8b5cf6'; }
+      function edgeColor() { return view === 'containment' ? '#8b5cf6' : '#64748b'; }
       function esc(s) { return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
       function nodeWidth(n) { return Math.max(170, Math.min(310, 68 + (n.title || n.id).length * 5.6)); }
       function nodeHeight(n) { return n.todoTotal ? 54 : 44; }
@@ -147,6 +167,7 @@
       function render() {
         const graph = graphs[view];
         stats.textContent = `${graph.nodes.length} nodes · ${graph.edges.length} edges`;
+        sourcePath.textContent = graph.source || '__SOURCE_PATH__';
         document.querySelectorAll('.view-btn').forEach(b => b.classList.toggle('active', b.dataset.view === view));
         document.getElementById('dirBtn').textContent = direction === 'TB' ? 'Direction: ↓ TB' : 'Direction: → LR';
         document.getElementById('qualityBtn').textContent = `Quality: ${quality}`;
@@ -183,16 +204,18 @@
           g.append('text').attr('class','node-title').attr('text-anchor','middle').attr('y',d.todoTotal ? -4 : 3).text(trim(d.title));
           const meta = d.todoTotal ? `${d.status} · ${d.todoCompleted}/${d.todoTotal}` : d.status;
           if (meta) g.append('text').attr('class','node-meta').attr('text-anchor','middle').attr('y',14).text(meta);
-          g.on('mouseenter',(ev)=>{tooltip.innerHTML=`<div class="tt-title">${esc(d.title)}</div>${d.description ? `<div class="tt-description">${esc(d.description)}</div>` : ''}<div>${esc(d.status)}${d.todoTotal ? ` · ${d.todoCompleted}/${d.todoTotal} milestones (${Math.round(100*d.todoCompleted/d.todoTotal)}%)` : ''}</div><div class="tt-id">${esc(d.id)}</div>${d.path ? `<div class="tt-id">${esc(d.path)}</div>`:''}`; tooltip.style.display='block';})
+          g.on('mouseenter',(ev)=>{const needs=Array.isArray(d.needs)&&d.needs.length?`<div class="tt-id">needs: ${esc(d.needs.join(', '))}</div>`:''; tooltip.innerHTML=`<div class="tt-title">${esc(d.title)}</div>${d.description ? `<div class="tt-description">${esc(d.description)}</div>` : ''}<div>${esc(d.status)}${d.todoTotal ? ` · ${d.todoCompleted}/${d.todoTotal} milestones (${Math.round(100*d.todoCompleted/d.todoTotal)}%)` : ''}</div>${needs}<div class="tt-id">${esc(d.id)}</div>${d.path ? `<div class="tt-id">${esc(d.path)}</div>`:''}`; tooltip.style.display='block';})
            .on('mousemove',(ev)=>{tooltip.style.left=(ev.clientX+14)+'px'; tooltip.style.top=(ev.clientY+14)+'px';})
            .on('mouseleave',()=>{tooltip.style.display='none';})
-           .on('click',()=>focusNode(d.id));
+           .on('click',()=>{selectNode(d); focusNode(d.id);});
         }
         const xs=[...positioned.values()].flatMap(p=>[p.x-p.w/2,p.x+p.w/2]);
         const ys=[...positioned.values()].flatMap(p=>[p.y-p.h/2,p.y+p.h/2]);
         bounds={minX:Math.min(...xs),maxX:Math.max(...xs),minY:Math.min(...ys),maxY:Math.max(...ys)};
         zoom=d3.zoom().scaleExtent([0.08,6]).on('zoom',ev=>viewport.attr('transform',ev.transform));
         svg.call(zoom); setTimeout(fit,0); applySearch();
+        const preferred = graph.nodes.find(n => n.status === 'ready') || graph.nodes[0];
+        selectNode(preferred);
       }
       function fit() {
         if (!bounds || !zoom) return;
@@ -203,6 +226,15 @@
         svg.transition().duration(300).call(zoom.transform,t);
       }
       function reset() { if (zoom) svg.transition().duration(250).call(zoom.transform,d3.zoomIdentity); }
+      function selectNode(data) {
+        if (!data) return;
+        detailTitle.textContent = data.title || data.id;
+        detailDescription.textContent = data.description || 'No concise goal has been recorded for this node.';
+        const needs = Array.isArray(data.needs) && data.needs.length ? ` · needs ${data.needs.join(', ')}` : '';
+        const progress = data.todoTotal ? ` · ${data.todoCompleted}/${data.todoTotal} milestones` : '';
+        detailMeta.textContent = `${data.id} · ${data.status}${progress}${needs}${data.path ? ` · ${data.path}` : ''}`;
+      }
+
       function focusNode(id) {
         const p=positioned.get(id); if (!p || !zoom) return;
         const t=d3.zoomIdentity.translate(wrap.clientWidth/2,wrap.clientHeight/2).scale(1.25).translate(-p.x,-p.y);
@@ -212,7 +244,7 @@
         const q=search.value.trim().toLowerCase();
         svg.selectAll('.node-g').style('opacity',function(){ if(!q) return 1; const id=this.getAttribute('data-node-id'); const p=positioned.get(id); return p && (`${p.data.id} ${p.data.title} ${p.data.description || ''} ${p.data.status}`.toLowerCase().includes(q)) ? 1 : .13; });
       }
-      document.querySelectorAll('.view-btn').forEach(btn=>btn.onclick=()=>{view=btn.dataset.view;localStorage.setItem('plan-dag-view',view);render();});
+      document.querySelectorAll('.view-btn').forEach(btn=>btn.onclick=()=>{view=btn.dataset.view;localStorage.setItem('plan-dag-view-v2',view);render();});
       document.getElementById('fitBtn').onclick=fit;
       document.getElementById('resetBtn').onclick=reset;
       document.getElementById('dirBtn').onclick=()=>{direction=direction==='TB'?'LR':'TB';localStorage.setItem('plan-dag-direction',direction);render();};

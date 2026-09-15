@@ -49,6 +49,93 @@ def find_vault(repo_short: str) -> Path | None:
     return None
 
 
+
+
+def find_checkout(repo: str) -> Path | None:
+    """Resolve the local checkout used by the control-panel repo map."""
+    repo_map = CONTROL_PANEL_ROOT / "repo-map.json"
+    try:
+        payload = json.loads(repo_map.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        payload = {}
+    entry = payload.get(repo) if isinstance(payload, dict) else None
+    checkout = entry.get("checkout") if isinstance(entry, dict) else entry
+    if isinstance(checkout, str) and checkout and checkout != "None":
+        path = Path(checkout)
+        if path.is_dir():
+            return path
+    short = repo.split("/")[-1]
+    for candidate in (Path.home() / short, Path.home() / "gitclones" / short):
+        if candidate.is_dir():
+            return candidate
+    return None
+
+
+def humanize_work_id(node_id: str) -> str:
+    words = node_id.replace("-", " ").split()
+    special = {
+        "api": "API", "sage": "Sage", "cas": "CAS", "gap": "GAP",
+        "qc": "QC", "todo": "TODO", "hom": "Hom",
+    }
+    return " ".join(special.get(word.lower(), word.capitalize()) for word in words)
+
+
+def pending_todo_graph(checkout: Path | None) -> dict[str, Any]:
+    """Parse the repository-defined open execution DAG from TODO.md.
+
+    TODO owns arbitrary Needs edges, so this view preserves the actual work DAG instead
+    of forcing the plan-card schema's ordered-sibling chain onto independent workstreams.
+    """
+    if checkout is None:
+        return {"nodes": [], "edges": [], "source": ""}
+    todo_path = checkout / "TODO.md"
+    if not todo_path.is_file():
+        return {"nodes": [], "edges": [], "source": ""}
+    lines = todo_path.read_text(encoding="utf-8").splitlines()
+    header = re.compile(r"^- \[([ x])\] \*\*`([^`]+)`\*\*\. \*\*Needs:\*\* (.*)$")
+    parsed: dict[str, dict[str, Any]] = {}
+    for index, line in enumerate(lines):
+        match = header.match(line)
+        if match is None or match.group(1) != " ":
+            continue
+        node_id = match.group(2)
+        rest = match.group(3)
+        needs_clause = rest.split(".", 1)[0]
+        needs = [] if needs_clause.strip() == "none" else re.findall(r"`([^`]+)`", needs_clause)
+        goal = ""
+        cursor = index + 1
+        while cursor < len(lines) and header.match(lines[cursor]) is None:
+            goal_match = re.match(r"^\s+\*\*Goal:\*\*\s*(.+)$", lines[cursor])
+            if goal_match:
+                goal = goal_match.group(1).strip()
+                break
+            if lines[cursor].startswith("## "):
+                break
+            cursor += 1
+        parsed[node_id] = {
+            "id": node_id,
+            "title": humanize_work_id(node_id),
+            "description": goal,
+            "needs": needs,
+            "kind": "work",
+            "path": str(todo_path),
+            "optional": node_id.startswith("optional-"),
+        }
+    open_ids = set(parsed)
+    nodes = []
+    edges = []
+    for node_id, node in parsed.items():
+        unmet = [need for need in node["needs"] if need in open_ids]
+        status = "optional" if node["optional"] else ("waiting" if unmet else "ready")
+        nodes.append({
+            **node,
+            "status": status,
+            "todoCompleted": 0,
+            "todoTotal": 0,
+        })
+        edges.extend({"from": need, "to": node_id} for need in unmet)
+    return {"nodes": nodes, "edges": edges, "source": str(todo_path)}
+
 def read_frontmatter(path: Path) -> dict[str, Any]:
     try:
         text = path.read_text(encoding="utf-8")
@@ -201,9 +288,11 @@ def render(repo: str, out: Path | None, template_arg: Path | None) -> Path:
     if not dep_nodes and not containment_nodes:
         raise SystemExit(f"No graph nodes found in canonical DAG {dag_path}")
 
+    checkout = find_checkout(repo)
     graphs = {
-        "dependencies": graph_payload(dep_nodes, dep_edges, metadata),
-        "containment": graph_payload(containment_nodes, containment_edges, metadata),
+        "pending": pending_todo_graph(checkout),
+        "dependencies": {**graph_payload(dep_nodes, dep_edges, metadata), "source": str(dag_path)},
+        "containment": {**graph_payload(containment_nodes, containment_edges, metadata), "source": str(dag_path)},
     }
     template_path = template_arg if template_arg and template_arg.is_file() else DEFAULT_TEMPLATE
     template = template_path.read_text(encoding="utf-8")
