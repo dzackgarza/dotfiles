@@ -39,6 +39,7 @@
       .edge-path { fill:none; stroke-width:1.35; opacity:.78; }
       .node-tooltip { position:fixed; display:none; z-index:20; max-width:420px; padding:11px 13px; background:#fff; border:1px solid var(--border); border-radius:10px; box-shadow:var(--shadow); font-size:12px; line-height:1.5; pointer-events:none; }
       .node-tooltip .tt-title { font-weight:700; margin-bottom:4px; }
+      .node-tooltip .tt-description { margin:6px 0 7px; color:var(--fg); line-height:1.55; }
       .node-tooltip .tt-id { color:var(--muted); font-family:ui-monospace,SFMono-Regular,Menlo,monospace; overflow-wrap:anywhere; }
       .error { position:absolute; inset:20px; color:#b91c1c; white-space:pre-wrap; font-family:ui-monospace,monospace; }
       .footer { margin-top:10px; color:var(--muted); font-size:11px; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; }
@@ -182,7 +183,7 @@
           g.append('text').attr('class','node-title').attr('text-anchor','middle').attr('y',d.todoTotal ? -4 : 3).text(trim(d.title));
           const meta = d.todoTotal ? `${d.status} · ${d.todoCompleted}/${d.todoTotal}` : d.status;
           if (meta) g.append('text').attr('class','node-meta').attr('text-anchor','middle').attr('y',14).text(meta);
-          g.on('mouseenter',(ev)=>{tooltip.innerHTML=`<div class="tt-title">${esc(d.title)}</div><div>${esc(d.status)}${d.todoTotal ? ` · ${d.todoCompleted}/${d.todoTotal} milestones (${Math.round(100*d.todoCompleted/d.todoTotal)}%)` : ''}</div><div class="tt-id">${esc(d.id)}</div>${d.path ? `<div class="tt-id">${esc(d.path)}</div>`:''}`; tooltip.style.display='block';})
+          g.on('mouseenter',(ev)=>{tooltip.innerHTML=`<div class="tt-title">${esc(d.title)}</div>${d.description ? `<div class="tt-description">${esc(d.description)}</div>` : ''}<div>${esc(d.status)}${d.todoTotal ? ` · ${d.todoCompleted}/${d.todoTotal} milestones (${Math.round(100*d.todoCompleted/d.todoTotal)}%)` : ''}</div><div class="tt-id">${esc(d.id)}</div>${d.path ? `<div class="tt-id">${esc(d.path)}</div>`:''}`; tooltip.style.display='block';})
            .on('mousemove',(ev)=>{tooltip.style.left=(ev.clientX+14)+'px'; tooltip.style.top=(ev.clientY+14)+'px';})
            .on('mouseleave',()=>{tooltip.style.display='none';})
            .on('click',()=>focusNode(d.id));
@@ -209,7 +210,7 @@
       }
       function applySearch() {
         const q=search.value.trim().toLowerCase();
-        svg.selectAll('.node-g').style('opacity',function(){ if(!q) return 1; const id=this.getAttribute('data-node-id'); const p=positioned.get(id); return p && (`${p.data.id} ${p.data.title} ${p.data.status}`.toLowerCase().includes(q)) ? 1 : .13; });
+        svg.selectAll('.node-g').style('opacity',function(){ if(!q) return 1; const id=this.getAttribute('data-node-id'); const p=positioned.get(id); return p && (`${p.data.id} ${p.data.title} ${p.data.description || ''} ${p.data.status}`.toLowerCase().includes(q)) ? 1 : .13; });
       }
       document.querySelectorAll('.view-btn').forEach(btn=>btn.onclick=()=>{view=btn.dataset.view;localStorage.setItem('plan-dag-view',view);render();});
       document.getElementById('fitBtn').onclick=fit;

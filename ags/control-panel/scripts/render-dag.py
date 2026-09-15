@@ -141,6 +141,7 @@ def node_payload(node_id: str, metadata: dict[str, dict[str, Any]]) -> dict[str,
     meta = metadata.get(node_id, {})
     title = str(meta.get("title") or node_id)
     status = str(meta.get("status") or "unknown")
+    description = str(meta.get("description") or "").strip()
     completed = int(meta.get("todo_completed") or 0)
     total = int(meta.get("todo_total") or 0)
     if node_id.startswith("FEATURE-"):
@@ -155,6 +156,7 @@ def node_payload(node_id: str, metadata: dict[str, dict[str, Any]]) -> dict[str,
         "id": node_id,
         "label": title,
         "title": title,
+        "description": description,
         "status": status,
         "kind": kind,
         "path": str(meta.get("path") or ""),
