@@ -1,0 +1,22 @@
+
+# Kiro CLI pre block. Keep at the top of this file.
+[[ -f "${HOME}/.local/share/kiro-cli/shell/zprofile.pre.zsh" ]] && builtin source "${HOME}/.local/share/kiro-cli/shell/zprofile.pre.zsh"
+
+# Load path variables before Hyprland starts so all GUI children inherit them
+. "$HOME/.pathrc"
+
+# Select the NVM default before Hyprland/GUI children inherit this environment.
+. "$HOME/dotfiles/zsh/nvm-env.zsh"
+
+if [[ -z "$WAYLAND_DISPLAY" && "${XDG_VTNR:-}" == "1" ]] && command -v Hyprland >/dev/null; then
+    exec start-hyprland
+fi
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/dzack/.local/bin:$PATH"
+
+
+
+# Kiro CLI post block. Keep at the bottom of this file.
+[[ -f "${HOME}/.local/share/kiro-cli/shell/zprofile.post.zsh" ]] && builtin source "${HOME}/.local/share/kiro-cli/shell/zprofile.post.zsh"
