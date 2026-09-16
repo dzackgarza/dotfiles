@@ -81,12 +81,23 @@ def rate_band(mib_per_second: float) -> int:
     return sum(1 for edge in BAND_EDGES_MIB_S if mib_per_second >= edge)
 
 
+def rate_digits(mib_per_second: float) -> str:
+    """Exactly two cells wide, so the module never changes width.
+
+    Below 100 MiB/s the value is whole MiB/s. Above it, the unit switches to
+    GiB/s and the suffix carries the magnitude; 9G is the top of the scale,
+    well past what the device can sustain.
+    """
+    if mib_per_second < 99.5:
+        return f"{round(mib_per_second):.0f}".rjust(2, FIGURE_SPACE)
+    return f"{min(9, round(mib_per_second / 1024)):.0f}G"
+
+
 def rate_field(arrow: str, bytes_per_second: float) -> str:
-    """One direction as coloured Pango markup: arrow plus whole MiB/s."""
+    """One direction as coloured Pango markup: arrow plus throughput."""
     mib_per_second = max(0.0, bytes_per_second) / 1024**2
-    digits = f"{round(mib_per_second):.0f}".rjust(2, FIGURE_SPACE)
     colour = BAND_COLOURS[rate_band(mib_per_second)]
-    return f'<span foreground="{colour}">{arrow}{digits}</span>'
+    return f'<span foreground="{colour}">{arrow}{rate_digits(mib_per_second)}</span>'
 
 
 def detail_rate(bytes_per_second: float) -> str:
