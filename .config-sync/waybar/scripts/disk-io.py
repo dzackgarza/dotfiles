@@ -23,10 +23,27 @@ DERIVATIVE_CUTOFF_HZ = 1.0
 RATE_BETA = 0.065
 BUSY_BETA = 0.025
 
-# The bar normally repaints slowly. A large acceleration or utilization-class
+# The bar normally repaints slowly. A large acceleration or throughput-band
 # transition is allowed to interrupt that cadence so bursts appear promptly.
 FAST_RATE_DERIVATIVE_MIB_S2 = 12.0
 FAST_BUSY_DERIVATIVE_PCT_S = 18.0
+
+# Read and write each carry their own colour, so one direction saturating stays
+# visible while the other is idle. Bands are geometric in MiB/s because disk
+# throughput spans several orders of magnitude.
+BAND_EDGES_MIB_S = (0.5, 2.0, 8.0, 32.0, 96.0, 256.0, 600.0)
+BAND_COLOURS = (
+    "#5a6669",  # idle
+    "#73daca",
+    "#aad94c",
+    "#c2d94c",
+    "#ffd173",
+    "#ffb454",
+    "#f28779",
+    "#e92d4d",  # saturated
+)
+SEPARATOR_COLOUR = "#3f484b"
+FIGURE_SPACE = "\u2007"  # digit-width space: keeps the two fields aligned.
 
 
 def root_block_device() -> str:
@@ -59,10 +76,17 @@ def stats(device: str) -> tuple[int, int, int, int, int]:
     )
 
 
-def rate_text(bytes_per_second: float) -> str:
-    """Compact bar text: whole MiB/s with the unit implied by the meter."""
+def rate_band(mib_per_second: float) -> int:
+    """Index into BAND_COLOURS for one direction's throughput."""
+    return sum(1 for edge in BAND_EDGES_MIB_S if mib_per_second >= edge)
+
+
+def rate_field(arrow: str, bytes_per_second: float) -> str:
+    """One direction as coloured Pango markup: arrow plus whole MiB/s."""
     mib_per_second = max(0.0, bytes_per_second) / 1024**2
-    return f"{round(mib_per_second):.0f}"
+    digits = f"{round(mib_per_second):.0f}".rjust(4, FIGURE_SPACE)
+    colour = BAND_COLOURS[rate_band(mib_per_second)]
+    return f'<span foreground="{colour}">{arrow}{digits}</span>'
 
 
 def detail_rate(bytes_per_second: float) -> str:
@@ -74,12 +98,6 @@ def detail_rate(bytes_per_second: float) -> str:
     if value >= 1024:
         return f"{value / 1024:.1f} KiB/s"
     return f"{value:.0f} B/s"
-
-
-def utilization_class(busy_percent: float) -> str:
-    """Eight visual load bands spanning idle through saturated."""
-    bucket = min(7, max(0, int(busy_percent / 12.5)))
-    return f"load-{bucket}"
 
 
 def lowpass_alpha(cutoff_hz: float, elapsed: float) -> float:
@@ -121,7 +139,6 @@ def payload(
     read_iops: float,
     write_iops: float,
     busy_percent: float,
-    css_class: str,
 ) -> dict[str, str]:
     tooltip = (
         f"Disk I/O — {device}\n"
@@ -132,10 +149,10 @@ def payload(
         "Left click: device stats (iostat)\n"
         "Right click: per-process I/O (pidstat)"
     )
+    separator = f'<span foreground="{SEPARATOR_COLOUR}">  \u2502  </span>'
     return {
-        "text": f"↑{rate_text(read_bps)}↓{rate_text(write_bps)}",
+        "text": rate_field("↑", read_bps) + separator + rate_field("↓", write_bps),
         "tooltip": tooltip,
-        "class": css_class,
     }
 
 
@@ -156,7 +173,7 @@ def main() -> None:
     read_iops_filter = OneEuro(RATE_BETA)
     write_iops_filter = OneEuro(RATE_BETA)
     busy_filter = OneEuro(BUSY_BETA)
-    css_class = "load-0"
+    bands = (0, 0)
 
     while True:
         time.sleep(SAMPLE_SECONDS)
@@ -180,19 +197,19 @@ def main() -> None:
         busy_percent, busy_derivative = busy_filter.update(raw_busy, elapsed)
 
         previous, previous_time = current, now
-        next_class = utilization_class(busy_percent)
+        next_bands = (rate_band(read_mib_s), rate_band(write_mib_s))
         large_derivative = (
             abs(read_derivative) >= FAST_RATE_DERIVATIVE_MIB_S2
             or abs(write_derivative) >= FAST_RATE_DERIVATIVE_MIB_S2
             or abs(busy_derivative) >= FAST_BUSY_DERIVATIVE_PCT_S
         )
-        class_changed = next_class != css_class
+        band_changed = next_bands != bands
         since_emit = now - last_emit
-        fast_emit = (large_derivative or class_changed) and since_emit >= FAST_EMIT_MIN_GAP_SECONDS
+        fast_emit = (large_derivative or band_changed) and since_emit >= FAST_EMIT_MIN_GAP_SECONDS
         if not fast_emit and since_emit < NORMAL_EMIT_SECONDS:
             continue
 
-        css_class = next_class
+        bands = next_bands
         emit(payload(
             device,
             read_mib_s * 1024**2,
@@ -200,7 +217,6 @@ def main() -> None:
             read_kiops * 1000.0,
             write_kiops * 1000.0,
             busy_percent,
-            css_class,
         ))
         last_emit = now
 
@@ -211,5 +227,5 @@ if __name__ == "__main__":
     except BrokenPipeError:
         pass
     except Exception as exc:
-        emit({"text": "↑? ↓?", "tooltip": str(exc), "class": "critical"})
+        emit({"text": "↑? │ ↓?", "tooltip": str(exc), "class": "critical"})
         raise
