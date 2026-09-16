@@ -86,12 +86,12 @@ def rate_digits(mib_per_second: float) -> str:
 
     Whole MiB/s covers the device's ordinary range; a measured single-threaded
     O_DIRECT read reaches 394 MiB/s, and this PCIe 4.0 drive goes several times
-    higher under a deep queue. Past 999 MiB/s the unit switches to GiB/s with
-    one decimal, which the same three cells hold up to 9.9G.
+    higher under a deep queue. Past 999 MiB/s the unit switches to whole GiB/s,
+    which the same three cells hold to the top of the drive's rated speed.
     """
     if mib_per_second < 999.5:
         return f"{round(mib_per_second):.0f}".rjust(3, FIGURE_SPACE)
-    return f"{min(9.9, mib_per_second / 1024):.1f}G"[-3:]
+    return f"{min(9, round(mib_per_second / 1024)):.0f}G".rjust(3, FIGURE_SPACE)
 
 
 def rate_field(arrow: str, bytes_per_second: float) -> str:
