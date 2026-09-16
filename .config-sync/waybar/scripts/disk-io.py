@@ -82,18 +82,16 @@ def rate_band(mib_per_second: float) -> int:
 
 
 def rate_digits(mib_per_second: float) -> str:
-    """Exactly two cells wide, so the module never changes width.
+    """Exactly three cells wide, so the module never changes width.
 
-    Below 100 MiB/s the value is whole MiB/s. Above it the display saturates at
-    99 until the rate rounds to a whole GiB/s, after which the suffix carries
-    the magnitude up to 9G. The colour band resolves what the two cells cannot.
+    Whole MiB/s covers the device's ordinary range; a measured single-threaded
+    O_DIRECT read reaches 394 MiB/s, and this PCIe 4.0 drive goes several times
+    higher under a deep queue. Past 999 MiB/s the unit switches to GiB/s with
+    one decimal, which the same three cells hold up to 9.9G.
     """
-    if mib_per_second < 99.5:
-        return f"{round(mib_per_second):.0f}".rjust(2, FIGURE_SPACE)
-    gib_per_second = round(mib_per_second / 1024)
-    if gib_per_second < 1:
-        return "99"
-    return f"{min(9, gib_per_second):.0f}G"
+    if mib_per_second < 999.5:
+        return f"{round(mib_per_second):.0f}".rjust(3, FIGURE_SPACE)
+    return f"{min(9.9, mib_per_second / 1024):.1f}G"[-3:]
 
 
 def rate_field(arrow: str, bytes_per_second: float) -> str:

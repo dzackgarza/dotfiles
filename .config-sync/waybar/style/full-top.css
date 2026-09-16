@@ -419,7 +419,7 @@ tooltip label {
 
 /* Read and write are coloured per direction by the script's Pango markup. */
 #custom-disk-io {
-  min-width: 52px;
+  min-width: 64px;
   margin-left: 1px;
   margin-right: 1px;
   padding-left: 4px;
