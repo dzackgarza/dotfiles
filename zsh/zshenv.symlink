@@ -1,6 +1,12 @@
 
 . "$HOME/.cargo/env"
-# NVM lazy loaded in functions.zsh
+
+# NVM default selected by ~/.zprofile; cheap inheritance for every zsh.
+export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+if [[ -x "$NVM_DIR/current/bin/node" ]]; then
+    export PATH="$NVM_DIR/current/bin:$PATH"
+fi
+
 
 # Direnv
 eval "$(direnv hook zsh)"

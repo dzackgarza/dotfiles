@@ -273,7 +273,6 @@ export XDG_PICTURES_DIR=~/Screenshots/
 #export GP_DATA_DIR=~/.local/share/pari
 export GP_DATA_DIR=/usr/share/pari 
 # source /home/dzack/gitclones/sage/.venv/bin/activate
-source /usr/share/nvm/init-nvm.sh
 
 
 . "$HOME/.atuin/bin/env"
@@ -284,8 +283,8 @@ export SAGE_ROOT=~/gitclones/sage
 export SAGE_LOCAL="$SAGE_ROOT/local"
 alias sage='uv --project /home/dzack/gitclones/sage run sage'
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# NVM default; shared with login shells/GUI environment.
+. "$HOME/dotfiles/zsh/nvm-env.zsh"
 
 # opencode
 export PATH=/home/dzack/.opencode/bin:$PATH
