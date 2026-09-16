@@ -84,13 +84,16 @@ def rate_band(mib_per_second: float) -> int:
 def rate_digits(mib_per_second: float) -> str:
     """Exactly two cells wide, so the module never changes width.
 
-    Below 100 MiB/s the value is whole MiB/s. Above it, the unit switches to
-    GiB/s and the suffix carries the magnitude; 9G is the top of the scale,
-    well past what the device can sustain.
+    Below 100 MiB/s the value is whole MiB/s. Above it the display saturates at
+    99 until the rate rounds to a whole GiB/s, after which the suffix carries
+    the magnitude up to 9G. The colour band resolves what the two cells cannot.
     """
     if mib_per_second < 99.5:
         return f"{round(mib_per_second):.0f}".rjust(2, FIGURE_SPACE)
-    return f"{min(9, round(mib_per_second / 1024)):.0f}G"
+    gib_per_second = round(mib_per_second / 1024)
+    if gib_per_second < 1:
+        return "99"
+    return f"{min(9, gib_per_second):.0f}G"
 
 
 def rate_field(arrow: str, bytes_per_second: float) -> str:
