@@ -417,23 +417,18 @@ tooltip label {
   color: #9db8c1;
 }
 
+/* Read and write are coloured per direction by the script's Pango markup. */
 #custom-disk-io {
-  min-width: 46px;
+  min-width: 104px;
   margin-left: 1px;
   margin-right: 1px;
-  padding-left: 4px;
-  padding-right: 4px;
+  padding-left: 8px;
+  padding-right: 8px;
+  font-family: monospace;
   font-size: 12px;
 }
 
-#custom-disk-io.load-0 { color: #5a6669; }
-#custom-disk-io.load-1 { color: #73daca; }
-#custom-disk-io.load-2 { color: #aad94c; }
-#custom-disk-io.load-3 { color: #c2d94c; }
-#custom-disk-io.load-4 { color: #ffd173; }
-#custom-disk-io.load-5 { color: #ffb454; }
-#custom-disk-io.load-6 { color: #f28779; }
-#custom-disk-io.load-7 {
+#custom-disk-io.critical {
   color: #e92d4d;
   font-weight: 700;
 }
