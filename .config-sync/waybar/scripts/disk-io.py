@@ -84,7 +84,7 @@ def rate_band(mib_per_second: float) -> int:
 def rate_field(arrow: str, bytes_per_second: float) -> str:
     """One direction as coloured Pango markup: arrow plus whole MiB/s."""
     mib_per_second = max(0.0, bytes_per_second) / 1024**2
-    digits = f"{round(mib_per_second):.0f}".rjust(4, FIGURE_SPACE)
+    digits = f"{round(mib_per_second):.0f}".rjust(2, FIGURE_SPACE)
     colour = BAND_COLOURS[rate_band(mib_per_second)]
     return f'<span foreground="{colour}">{arrow}{digits}</span>'
 
@@ -149,7 +149,7 @@ def payload(
         "Left click: device stats (iostat)\n"
         "Right click: per-process I/O (pidstat)"
     )
-    separator = f'<span foreground="{SEPARATOR_COLOUR}">  \u2502  </span>'
+    separator = f'<span foreground="{SEPARATOR_COLOUR}">\u2502</span>'
     return {
         "text": rate_field("↑", read_bps) + separator + rate_field("↓", write_bps),
         "tooltip": tooltip,
