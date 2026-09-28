@@ -188,7 +188,7 @@ where the triples $(r, a, \delta)_n$ are the triples shown by \cite{Nik80} to cl
 Concretely,
 
 - $r \da \rank_\ZZ(L)$ is the rank,
-- $a$ is the *length* of $L$, which can be expressed as $\dim_{\FF_2}(L\dual/L)$,
+- $a$ is the *length* of $L$, which can be expressed as $\dim_{\FF_2}(\dualof{L}/L)$,
 - $\delta\in \ts{0, 1}$ is the *coparity*, and
 - the subscript $n$ is used to track the rank of a maximal positive-definite sublattice, which can be used to recover the signature as $(n, r-n)$.
 \footnote{The lattice $T_{\En} \da \lkt^{I_{\En}=1 }$ is sometimes referred to as $E_{10}(2)$ in the literature, where $E_{10} \da U \oplus E_8$ is the *Enriques lattice*.}
