@@ -67,6 +67,16 @@ scratch_typst_concealer/
 **/*zsh_history*
 history-backups/
 
+# Private keys, credentials, and app logs or prefs that store API keys
+*.key
+*.pem
+**/org.sparkleshare.SparkleShare/
+**/kdeconnect/
+**/praw.ini
+**/0ad/
+**/Typora/
+**/remmina/
+
 # Misc
 .DS_Store
 .env
