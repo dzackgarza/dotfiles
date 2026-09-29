@@ -63,6 +63,10 @@ scratch_typst_concealer/
 .config-sync/ranger/plugins/ranger-fzf/
 .config-sync/hypr/hyprsplit/
 
+# Shell history (holds pasted credentials)
+**/*zsh_history*
+history-backups/
+
 # Misc
 .DS_Store
 .env
