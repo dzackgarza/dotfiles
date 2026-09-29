@@ -2,7 +2,7 @@
 
 Config sources: GNU Stow packages in `dotfiles/stow/<app>/.config/<app>/`, symlinked to
 `~/.config/<app>/` by `stow -d ~/dotfiles/stow -t ~ <app>` (all: `cd ~/dotfiles/stow && stow -t ~ */`).
-Other sources: `dotfiles/bin/`, and legacy X11 configs in `dotfiles/.config-sync/`.
+Other sources: `dotfiles/bin/`.
 
 ## Window Manager
 
@@ -25,9 +25,7 @@ Other sources: `dotfiles/bin/`, and legacy X11 configs in `dotfiles/.config-sync
 ## Widgets / Popups
 
 - **AGS (Astal GTK Shell)** — Widget system.
-  Two AGS programs reside on this system:
-  - **System Config**: Located at `~/.config/ags/`. Entry: `app.tsx`. Powers Waybar widgets, the Claude/Codex usage popover (`services/claude-usage-fetcher.ts`, `get_codex_usage.sh`), and a custom control center dashboard (`src/windows/control-center.tsx`).
-  - **Reminder Scheduler**: Located at `~/gitclones/reminder-scheduler/ags/`. Entry: `app.tsx`. Provides a GTK user interface to create, edit, and manage reminders.
+  Located at `~/.config/ags/`. Entry: `app.tsx`. Powers Waybar widgets, the Claude/Codex usage popover (`services/claude-usage-fetcher.ts`, `get_codex_usage.sh`), and a custom control center dashboard (`src/windows/control-center.tsx`).
 
 ## Launchers
 
@@ -117,7 +115,6 @@ Other sources: `dotfiles/bin/`, and legacy X11 configs in `dotfiles/.config-sync
 ## Media
 
 - **mpv** — Media player.
-  Config: `dotfiles/.config-sync/mpv/`.
 
 ## Screenshots
 
@@ -268,16 +265,3 @@ Other sources: `dotfiles/bin/`, and legacy X11 configs in `dotfiles/.config-sync
 - `xpand-paper` — Expand/compile a paper from Markdown sources.
 - `xpandlatex` / `xpandlatex-new` — Expand LaTeX macros/includes into single file.
 
-## Historical Configs
-
-Configs still in the repo from before the switch to Wayland:
-
-- **i3** — X11 window manager.
-  Config: `dotfiles/.config-sync/i3/config`.
-- **polybar** — X11 status bar.
-  Config: `dotfiles/.config-sync/polybar/config`.
-- **picom** — X11 compositor.
-  Config: `dotfiles/.config-sync/picom.conf`.
-- **eww** — Widget system (previously used, superseded by AGS).
-- **termite** — Terminal emulator.
-- **twmn** — Notification system (previously used, superseded by dunst).

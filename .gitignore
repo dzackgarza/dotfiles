@@ -55,7 +55,6 @@ cursor_extensions/
 xmonad
 
 # Unregistered nested repos (gitlinks removed from index)
-stow/ags/.config/ags/reminder-scheduler/
 new-website/
 scratch_math_conceal/
 scratch_typst_concealer/
