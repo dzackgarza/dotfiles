@@ -2,7 +2,10 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "lib": ["ES2023", "DOM"],
+    "lib": [
+      "ES2023",
+      "DOM"
+    ],
     "noImplicitAny": true,
     "strictNullChecks": true
   },
@@ -16,5 +19,8 @@
     "widget/**/*.tsx",
     "vitest.config.ts"
   ],
-  "exclude": ["@girs", "node_modules", "reminders"]
+  "exclude": [
+    "@girs",
+    "node_modules"
+  ]
 }

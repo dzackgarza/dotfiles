@@ -20,16 +20,6 @@
         "vitest": "^2.0.0",
       },
     },
-    "reminder-scheduler/ags": {
-      "name": "rem-ags",
-      "dependencies": {
-        "@ags/shared": "workspace:*",
-      },
-      "devDependencies": {
-        "typescript": "^5.0.0",
-        "vitest": "^2.0.0",
-      },
-    },
     "shared": {
       "name": "@ags/shared",
       "version": "0.0.1",
@@ -282,8 +272,6 @@
     "postcss": ["postcss@8.5.15", "", { "dependencies": { "nanoid": "^3.3.12", "picocolors": "^1.1.1", "source-map-js": "^1.2.1" } }, "sha512-FfR8sjd4em2T6fb3I2MwAJU7HWVMr9zba+enmQeeWFfCbm+UOC/0X4DS8XtpUTMwWMGbjKYP7xjfNekzyGmB3A=="],
 
     "quadprog": ["quadprog@1.6.1", "", {}, "sha512-fN5Jkcjlln/b3pJkseDKREf89JkKIyu6cKIVXisgL6ocKPQ0yTp9n6NZUAq3otEPPw78WZMG9K0o9WsfKyMWJw=="],
-
-    "rem-ags": ["rem-ags@workspace:reminder-scheduler/ags"],
 
     "robust-predicates": ["robust-predicates@3.0.3", "", {}, "sha512-NS3levdsRIUOmiJ8FZWCP7LG3QpJyrs/TE0Zpf1yvZu8cAJJ6QMW92H1c7kWpdIHo8RvmLxN/o2JXTKHp74lUA=="],
 
