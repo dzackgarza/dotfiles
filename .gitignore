@@ -76,6 +76,16 @@ history-backups/
 **/0ad/
 **/Typora/
 **/remmina/
+**/claude_session_key.txt
+**/filezilla/
+**/Cookies
+**/Cookies-journal
+**/cookies
+**/Local Storage/
+**/IndexedDB/
+**/Login Data*
+**/Web Data*
+/.config/
 
 # Misc
 .DS_Store
