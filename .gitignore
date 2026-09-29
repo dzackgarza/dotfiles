@@ -64,20 +64,20 @@ scratch_typst_concealer/
 .config-sync/hypr/hyprsplit/
 
 # Shell history (holds pasted credentials)
-**/*zsh_history*
+**/.zsh_history*
+**/zsh_history_testcopy*
 history-backups/
 
-# Private keys, credentials, and app logs or prefs that store API keys
+# Files that hold keys, passwords, tokens, or cookies
 *.key
-*.pem
-**/org.sparkleshare.SparkleShare/
-**/kdeconnect/
+**/privateKey.pem
 **/praw.ini
-**/0ad/
-**/Typora/
-**/remmina/
 **/claude_session_key.txt
-**/filezilla/
+**/remmina/remmina.pref
+**/filezilla/sitemanager.xml
+**/filezilla/recentservers.xml
+**/filezilla/queue.sqlite3
+**/pulse/cookie
 **/Cookies
 **/Cookies-journal
 **/cookies
@@ -85,7 +85,9 @@ history-backups/
 **/IndexedDB/
 **/Login Data*
 **/Web Data*
-/.config/
+**/midori/history.db*
+**/Typora/draftsRecover/
+**/0ad/logs/
 
 # Misc
 .DS_Store
@@ -93,8 +95,7 @@ history-backups/
 envkeys
 **/envkeys
 
-# Hyprland: session key, runtime state, wallpaper images
-.config-sync/hypr/claude_session_key.txt
+# Hyprland: runtime state, wallpaper images
 .config-sync/hypr/claude_usage_data.json
 .config-sync/hypr/.cache/
 .config-sync/hypr/Wallpapers/
