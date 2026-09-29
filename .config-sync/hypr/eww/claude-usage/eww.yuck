@@ -1,0 +1,63 @@
+(defvar usage_5h_percent 42)
+(defvar usage_5h_percent_label "42%")
+(defvar usage_5h_label "2.1h of 5.0h")
+(defvar usage_5h_reset "Reset: 2026-02-03 21:00")
+
+(defvar usage_7d_percent 64)
+(defvar usage_7d_percent_label "64%")
+(defvar usage_7d_label "22.4h of 35.0h")
+(defvar usage_7d_reset "Reset: 2026-02-05 09:00")
+
+(defvar stat_sessions "124")
+(defvar stat_messages "802")
+(defvar stat_tokens "412k")
+(defvar stat_latency "1.6s")
+
+(defvar last_updated "Last updated: 2026-02-03 19:42")
+
+(defwidget stat_card [?label ?value]
+  (box :class "stat-card" :orientation "vertical" :spacing 4
+    (label :class "stat-label" :text label)
+    (label :class "stat-value" :text value)))
+
+(defwidget usage_bar [?title ?percent_value ?percent_label ?summary ?reset]
+  (box :class "usage-block" :orientation "vertical" :spacing 6
+    (box :class "usage-header" :orientation "horizontal" :spacing 10
+      (label :class "usage-title" :text title)
+      (label :class "usage-percent" :text percent_label))
+    (progress :class "usage-progress" :value percent_value)
+    (box :class "usage-meta" :orientation "horizontal" :spacing 10
+      (label :class "usage-label" :text summary)
+      (label :class "usage-reset" :text reset))))
+
+(defwidget usage_panel []
+  (box :class "usage-root" :orientation "vertical" :spacing 16
+    (box :class "title-row" :orientation "horizontal" :spacing 10
+      (label :class "title" :text "Claude Code Usage")
+      (label :class "subtitle" :text "mockup"))
+    (usage_bar
+      :title "5h window"
+      :percent_value usage_5h_percent
+      :percent_label usage_5h_percent_label
+      :summary usage_5h_label
+      :reset usage_5h_reset)
+    (usage_bar
+      :title "7d window"
+      :percent_value usage_7d_percent
+      :percent_label usage_7d_percent_label
+      :summary usage_7d_label
+      :reset usage_7d_reset)
+    (box :class "stats-row" :orientation "horizontal" :spacing 12 :space-evenly true
+      (stat_card :label "Sessions" :value stat_sessions)
+      (stat_card :label "Messages" :value stat_messages)
+      (stat_card :label "Tokens" :value stat_tokens)
+      (stat_card :label "Avg latency" :value stat_latency))
+    (label :class "last-updated" :text last_updated)))
+
+(defwindow claude_usage
+  :monitor 0
+  :geometry (geometry :x "20px" :y "20px" :width "380px" :height "320px" :anchor "top right")
+  :stacking "fg"
+  :windowtype "dock"
+  :focusable false
+  (usage_panel))

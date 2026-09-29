@@ -1,0 +1,20 @@
+# This config file is the one that @wez uses on a PixelBook Go
+
+device_name = "Logitech USB Receiver"
+
+
+[[remap]]
+input = ["KEY_RIGHTALT"]
+output = ["KEY_DELETE"]
+
+[[remap]]
+input = ["KEY_KPASTERISK"]
+output = ["KEY_PAGEDOWN"]
+
+[[remap]]
+input = ["KEY_END"]
+output = ["KEY_HOME"]
+
+[[remap]]
+input = ["KEY_KPSLASH"]
+output = ["KEY_END"]

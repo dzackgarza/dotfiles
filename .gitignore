@@ -61,9 +61,16 @@ scratch_math_conceal/
 scratch_typst_concealer/
 .config-sync/ranger/colorschemes/
 .config-sync/ranger/plugins/ranger-fzf/
+.config-sync/hypr/hyprsplit/
 
 # Misc
 .DS_Store
 .env
 envkeys
 **/envkeys
+
+# Hyprland: session key, runtime state, wallpaper images
+.config-sync/hypr/claude_session_key.txt
+.config-sync/hypr/claude_usage_data.json
+.config-sync/hypr/.cache/
+.config-sync/hypr/Wallpapers/

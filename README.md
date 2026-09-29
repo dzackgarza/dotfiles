@@ -1,6 +1,6 @@
 # Component Catalog
 
-Config sources: `~/.config/hypr/`, `~/.config/waybar/`, `dotfiles/ags/` (symlinked to `~/.config/ags/`),
+Config sources: `dotfiles/.config-sync/hypr/` (symlinked to `~/.config/hypr/`), `~/.config/waybar/`, `dotfiles/ags/` (symlinked to `~/.config/ags/`),
 `~/.config/rofi/`, `dotfiles/.config-sync/`, `dotfiles/bin/`.
 
 ## Window Manager
@@ -137,10 +137,12 @@ Config sources: `~/.config/hypr/`, `~/.config/waybar/`, `dotfiles/ags/` (symlink
 
 - evremap.service, gitwatch@.service, jupyter-sagemath.service, network-monitor.service
 
-## Startup (from `~/.config/hypr/confs/startup.conf`)
+## Startup (from `dotfiles/.config-sync/hypr/confs/startup.lua`)
 
 - waybar, hypridle, hyprsunset, nm-applet, copyq, dropbox, bitwarden-desktop, polkit
-  agent, AGS (`ags run ~/.config/ags`), zotero (workspace 10), hyprscratch.
+  agent, AGS `control-panel`, then AGS `window-ram` after the `control-panel` instance
+  registers (`ags run` writes every app to the same `$XDG_RUNTIME_DIR/ags.js`),
+  zotero (workspace 10), hyprscratch.
 
 ## Scripts (dotfiles/bin/)
 
