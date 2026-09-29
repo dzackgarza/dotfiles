@@ -1,0 +1,6 @@
+require("shell-ninja.core")
+require("shell-ninja.lazy")
+require("shell-ninja.core.autocmds")
+vim.cmd("set undodir=~/.vim/undodir")
+vim.cmd("set undofile")
+vim.cmd("set swapfile")

@@ -1,0 +1,16 @@
+[Unit]
+Description=One-shot model-assisted Workstreams dashboard refresh
+After=default.target network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/dzack/gitclones/project-management
+ExecStart=/usr/bin/python3 /home/dzack/gitclones/project-management/scripts/refresh_workstreams_dashboard.py
+TimeoutStartSec=15min
+Environment=HOME=/home/dzack
+Environment=PATH=/home/dzack/.local/bin:/home/dzack/.nvm/versions/node/v25.8.2/bin:/usr/local/bin:/usr/bin:/bin
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=default.target

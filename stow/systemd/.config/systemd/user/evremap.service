@@ -1,0 +1,12 @@
+[Unit]
+Description=Key Remapping Service using evremap
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/bin/evremap remap --config /home/dzack/.config/hypr/evremap.toml --device 'AT Translated Set 2 keyboard'
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=graphical-session.target

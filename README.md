@@ -1,7 +1,8 @@
 # Component Catalog
 
-Config sources: `dotfiles/.config-sync/hypr/` (symlinked to `~/.config/hypr/`), `~/.config/waybar/`, `dotfiles/ags/` (symlinked to `~/.config/ags/`),
-`~/.config/rofi/`, `dotfiles/.config-sync/`, `dotfiles/bin/`.
+Config sources: GNU Stow packages in `dotfiles/stow/<app>/.config/<app>/`, symlinked to
+`~/.config/<app>/` by `stow -d ~/dotfiles/stow -t ~ <app>` (all: `cd ~/dotfiles/stow && stow -t ~ */`).
+Other sources: `dotfiles/bin/`, and legacy X11 configs in `dotfiles/.config-sync/`.
 
 ## Window Manager
 
@@ -10,7 +11,7 @@ Config sources: `dotfiles/.config-sync/hypr/` (symlinked to `~/.config/hypr/`), 
   hyprfocus, dynamic-cursors.
   Utilities: hyprctl, hyprpm, hypridle, hyprlock, hyprsunset, hyprscratch.
 - **SwayFX 0.5.3** — Fallback Wayland compositor.
-  Config: `dotfiles/.config-sync/sway/config`.
+  Config: `~/.config/sway/config`.
 
 ## Bar
 
@@ -25,7 +26,7 @@ Config sources: `dotfiles/.config-sync/hypr/` (symlinked to `~/.config/hypr/`), 
 
 - **AGS (Astal GTK Shell)** — Widget system.
   Two AGS programs reside on this system:
-  - **System Config**: Located at `dotfiles/ags/` (symlinked to `~/.config/ags/`). Entry: `app.tsx`. Powers Waybar widgets, the Claude/Codex usage popover (`services/claude-usage-fetcher.ts`, `get_codex_usage.sh`), and a custom control center dashboard (`src/windows/control-center.tsx`).
+  - **System Config**: Located at `~/.config/ags/`. Entry: `app.tsx`. Powers Waybar widgets, the Claude/Codex usage popover (`services/claude-usage-fetcher.ts`, `get_codex_usage.sh`), and a custom control center dashboard (`src/windows/control-center.tsx`).
   - **Reminder Scheduler**: Located at `~/gitclones/reminder-scheduler/ags/`. Entry: `app.tsx`. Provides a GTK user interface to create, edit, and manage reminders.
 
 ## Launchers
@@ -43,7 +44,7 @@ Config sources: `dotfiles/.config-sync/hypr/` (symlinked to `~/.config/hypr/`), 
 ## Notifications
 
 - **dunst** — Notification daemon.
-  Config: `dotfiles/.config-sync/dunst/dunstrc`.
+  Config: `~/.config/dunst/dunstrc`.
 
 ## Terminals
 
@@ -73,7 +74,7 @@ Config sources: `dotfiles/.config-sync/hypr/` (symlinked to `~/.config/hypr/`), 
 - **ripgrep** / **ag** — Code search tools used in shell and Neovim.
 ## Editor
 
-- **Neovim** — Config: `dotfiles/.config-sync/nvim/init.vim`. Plugin manager: vim-plug.
+- **Neovim** — Config: `~/.config/nvim/init.lua`. Plugin manager: vim-plug.
   Plugins:
   - vim-pandoc-syntax — Highlights Pandoc-specific Markdown (embedded LaTeX, citations,
     table alignment, fenced code annotations) that standard Markdown syntax misses.
@@ -106,7 +107,7 @@ Config sources: `dotfiles/.config-sync/hypr/` (symlinked to `~/.config/hypr/`), 
 - **dolphin** — GUI (KDE).
 - **yazi** — Terminal (via kitty).
 - **ranger** — Terminal.
-  Config: `dotfiles/.config-sync/ranger/`.
+  Config: `~/.config/ranger/`.
 
 ## Documents / PDFs
 
@@ -137,7 +138,7 @@ Config sources: `dotfiles/.config-sync/hypr/` (symlinked to `~/.config/hypr/`), 
 
 - evremap.service, gitwatch@.service, jupyter-sagemath.service, network-monitor.service
 
-## Startup (from `dotfiles/.config-sync/hypr/confs/startup.lua`)
+## Startup (from `~/.config/hypr/confs/startup.lua`)
 
 - waybar, hypridle, hyprsunset, nm-applet, copyq, dropbox, bitwarden-desktop, polkit
   agent, AGS `control-panel`, then AGS `window-ram` after the `control-panel` instance

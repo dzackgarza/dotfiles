@@ -1,0 +1,11 @@
+[Unit]
+Description=Run agent-memory vault synchronization every 300 seconds
+
+[Timer]
+OnBootSec=300s
+OnUnitActiveSec=300s
+Persistent=true
+Unit=agent-memory-sync.service
+
+[Install]
+WantedBy=timers.target

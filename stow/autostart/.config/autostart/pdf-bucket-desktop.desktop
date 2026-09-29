@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=PDF Bucket
+GenericName=PDF Library
+Comment=Read, file and extract captured PDFs
+Exec=/home/dzack/.local/bin/pdf-bucket-desktop
+Icon=pdf-bucket-desktop
+Terminal=false
+Categories=Office;Viewer;
+Keywords=PDF;library;reader;capture;
+StartupNotify=true
+StartupWMClass=pdf-bucket-desktop

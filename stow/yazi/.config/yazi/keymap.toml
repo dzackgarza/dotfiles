@@ -1,0 +1,136 @@
+# Mimics keybindings from ~/.config/ranger/rc.conf
+# Ranger bindings win over yazi defaults on every conflict.
+# Docs: https://yazi-rs.github.io/docs/configuration/keymap
+
+[mgr]
+
+prepend_keymap = [
+	# --- Shell / console (ranger: s S ! @ # cd) ---
+	{ on = "s", run = "shell --interactive",    desc = "Shell command (ranger: s)" },
+	{ on = "S", run = 'shell "$SHELL" --block', desc = "Drop to $SHELL (ranger: S)" },
+	{ on = "!", run = "shell --interactive",    desc = "Shell command (ranger: !)" },
+	{ on = "@", run = "shell --interactive",    desc = "Shell command (ranger: @)" },
+	{ on = "#", run = "shell --interactive",    desc = "Shell command (ranger: #)" },
+	{ on = [ "c", "d" ], run = "cd --interactive", desc = "cd prompt (ranger: cd)" },
+
+	# --- Find / filter (ranger: f = find prompt, zf/zz = filter prompt) ---
+	{ on = "f",          run = "find --smart",   desc = "Find file (ranger: f)" },
+	{ on = [ "z", "f" ], run = "filter --smart", desc = "Filter files (ranger: zf)" },
+	{ on = [ "z", "z" ], run = "filter --smart", desc = "Filter files (ranger: zz)" },
+
+	# --- Open-with / rename (ranger: r = open_with, cw = rename) ---
+	{ on = "r",          run = "open --interactive", desc = "Open with (ranger: r)" },
+	{ on = [ "c", "w" ], run = "rename",             desc = "Rename (ranger: cw)" },
+	{ on = "a", run = "rename --cursor=end",   desc = "Rename, append (ranger: a)" },
+	{ on = "A", run = "rename --cursor=end",   desc = "Rename, append (ranger: A)" },
+	{ on = "I", run = "rename --cursor=start", desc = "Rename, cursor at start (ranger: I)" },
+	{ on = "<Insert>", run = "create", desc = "Create file (ranger: INSERT)" },
+
+	# --- Quit (ranger: ZZ ZQ) ---
+	{ on = [ "Z", "Z" ], run = "quit", desc = "Quit (ranger: ZZ)" },
+	{ on = [ "Z", "Q" ], run = "quit", desc = "Quit (ranger: ZQ)" },
+
+	# --- Tabs (ranger: TAB S-TAB A-Left A-Right gt gT gn gc C-n C-w A-r A-l) ---
+	{ on = "<Tab>",     run = "tab_switch 1 --relative",  desc = "Next tab (ranger: TAB)" },
+	{ on = "<BackTab>", run = "tab_switch -1 --relative", desc = "Previous tab (ranger: S-TAB)" },
+	{ on = "<A-Right>", run = "tab_switch 1 --relative",  desc = "Next tab (ranger: A-Right)" },
+	{ on = "<A-Left>",  run = "tab_switch -1 --relative", desc = "Previous tab (ranger: A-Left)" },
+	{ on = [ "g", "t" ], run = "tab_switch 1 --relative",  desc = "Next tab (ranger: gt)" },
+	{ on = [ "g", "T" ], run = "tab_switch -1 --relative", desc = "Previous tab (ranger: gT)" },
+	{ on = [ "g", "n" ], run = "tab_create --current",     desc = "New tab (ranger: gn)" },
+	{ on = [ "g", "c" ], run = "close",                    desc = "Close tab (ranger: gc)" },
+	{ on = "<C-n>", run = "tab_create --current", desc = "New tab (ranger: C-n)" },
+	{ on = "<C-w>", run = "close",                desc = "Close tab (ranger: C-w)" },
+	{ on = "<A-r>", run = "tab_swap 1",  desc = "Shift tab right (ranger: A-r)" },
+	{ on = "<A-l>", run = "tab_swap -1", desc = "Shift tab left (ranger: A-l)" },
+
+	# --- Movement / preview ---
+	{ on = "<Home>", run = "arrow top", desc = "Go to top (ranger: HOME)" },
+	{ on = "<End>",  run = "arrow bot", desc = "Go to bottom (ranger: END)" },
+	{ on = "i", run = "spot", desc = "Show file info (ranger: i)" },
+	{ on = "<A-j>", run = "seek 1",  desc = "Scroll preview down (ranger: A-j)" },
+	{ on = "<A-k>", run = "seek -1", desc = "Scroll preview up (ranger: A-k)" },
+	{ on = "J", run = "arrow 50%",  desc = "Half page down (ranger: J)" },
+	{ on = "K", run = "arrow -50%", desc = "Half page up (ranger: K)" },
+
+	# --- Help (ranger: ?) ---
+	{ on = "?", run = "help", desc = "Help (ranger: ?)" },
+
+	# --- Yank/paste operations ---
+	{ on = [ "y", "p" ], run = "copy path",             desc = "Copy file path (ranger: yp)" },
+	{ on = [ "y", "d" ], run = "copy dirname",          desc = "Copy directory path (ranger: yd)" },
+	{ on = [ "y", "n" ], run = "copy filename",         desc = "Copy filename (ranger: yn)" },
+	{ on = [ "y", "." ], run = "copy name_without_ext", desc = "Copy name without extension (ranger: y.)" },
+	{ on = [ "d", "d" ], run = "yank --cut", desc = "Cut (ranger: dd)" },
+	{ on = [ "u", "d" ], run = "unyank",     desc = "Uncut (ranger: ud)" },
+	{ on = [ "u", "v" ], run = "toggle_all --state=off", desc = "Deselect all (ranger: uv)" },
+	{ on = [ "u", "V" ], run = "visual_mode --unset",    desc = "Visual unset mode (ranger: uV)" },
+	{ on = [ "p", "o" ], run = "paste --force",    desc = "Paste overwrite (ranger: po)" },
+	{ on = [ "p", "O" ], run = "paste --force",    desc = "Paste overwrite+append (ranger: pO)" },
+	{ on = [ "p", "l" ], run = "link",             desc = "Symlink absolute (ranger: pl)" },
+	{ on = [ "p", "L" ], run = "link --relative",  desc = "Symlink relative (ranger: pL)" },
+	{ on = [ "p", "h", "l" ], run = "hardlink",    desc = "Hardlink (ranger: phl)" },
+	{ on = "E", run = "open", desc = "Edit/open (ranger: E)" },
+
+	# --- Disk usage (ranger: du dU) ---
+	{ on = [ "d", "u" ], run = 'shell "du --max-depth=1 -h --apparent-size" --block',            desc = "Disk usage of CWD (ranger: du)" },
+	{ on = [ "d", "U" ], run = 'shell "du --max-depth=1 -h --apparent-size | sort -rh" --block', desc = "Disk usage of CWD, sorted (ranger: dU)" },
+
+	# --- chmod (ranger: =) ---
+	{ on = "=", run = 'shell "chmod  %s" --interactive --cursor=7', desc = "Change permissions (ranger: =)" },
+
+	# --- Hidden files (ranger: zh C-h) ---
+	{ on = [ "z", "h" ], run = "hidden toggle", desc = "Toggle hidden files (ranger: zh)" },
+	{ on = "<C-h>",     run = "hidden toggle", desc = "Toggle hidden files (ranger: C-h)" },
+
+	# --- Linemodes (ranger: Mf Mp Mm Mh Ms MH) ---
+	{ on = "<A-f>", run = "linemode none",        desc = "Linemode: filename (ranger: Mf)" },
+	{ on = "<A-p>", run = "linemode permissions", desc = "Linemode: permissions (ranger: Mp)" },
+	{ on = "<A-m>", run = "linemode mtime",       desc = "Linemode: mtime (ranger: Mm/Mh)" },
+	{ on = "<A-h>", run = "linemode mtime",       desc = "Linemode: mtime (ranger: Mh)" },
+	{ on = "<A-s>", run = "linemode size",        desc = "Linemode: size (ranger: Ms/MH)" },
+	{ on = "<A-H>", run = "linemode size",        desc = "Linemode: size (ranger: MH)" },
+
+	# --- Goto (ranger: gd go gi gL) ---
+	{ on = [ "g", "d" ], run = "cd /dev",  desc = "Go /dev (ranger: gd)" },
+	{ on = [ "g", "o" ], run = "cd /opt",  desc = "Go /opt (ranger: go)" },
+	{ on = [ "g", "i" ], run = "cd /run/media/dzack", desc = "Go removable media (ranger: gi)" },
+	{ on = [ "g", "L" ], run = "follow",   desc = "Follow symlink (ranger: gL)" },
+
+	# --- Sort (ranger: oz os ob on om oc oe, uppercase = reverse) ---
+	{ on = [ "o", "z" ], run = "sort random --reverse=no",                     desc = "Sort: random (ranger: oz)" },
+	{ on = [ "o", "s" ], run = [ "sort size --reverse=no", "linemode size" ],  desc = "Sort: size (ranger: os)" },
+	{ on = [ "o", "b" ], run = "sort alphabetical --reverse=no",               desc = "Sort: name (ranger: ob)" },
+	{ on = [ "o", "n" ], run = "sort natural --reverse=no",                    desc = "Sort: natural (ranger: on)" },
+	{ on = [ "o", "m" ], run = [ "sort mtime --reverse=no", "linemode mtime" ], desc = "Sort: mtime (ranger: om)" },
+	{ on = [ "o", "c" ], run = [ "sort btime --reverse=no", "linemode btime" ], desc = "Sort: ctime (ranger: oc)" },
+	{ on = [ "o", "e" ], run = "sort extension --reverse=no",                  desc = "Sort: extension (ranger: oe)" },
+	{ on = [ "o", "S" ], run = [ "sort size --reverse=yes", "linemode size" ],  desc = "Sort: size, reverse (ranger: oS)" },
+	{ on = [ "o", "B" ], run = "sort alphabetical --reverse=yes",               desc = "Sort: name, reverse (ranger: oB)" },
+	{ on = [ "o", "N" ], run = "sort natural --reverse=yes",                    desc = "Sort: natural, reverse (ranger: oN)" },
+	{ on = [ "o", "M" ], run = [ "sort mtime --reverse=yes", "linemode mtime" ], desc = "Sort: mtime, reverse (ranger: oM)" },
+	{ on = [ "o", "C" ], run = [ "sort btime --reverse=yes", "linemode btime" ], desc = "Sort: ctime, reverse (ranger: oC)" },
+	{ on = [ "o", "E" ], run = "sort extension --reverse=yes",                  desc = "Sort: extension, reverse (ranger: oE)" },
+
+	# --- F-keys (ranger: F2-F8, F10) ---
+	{ on = "<F2>",  run = "rename --cursor=end", desc = "Rename, append (ranger: F2)" },
+	{ on = "<F3>",  run = "spot",                desc = "Show file info (ranger: F3)" },
+	{ on = "<F4>",  run = "open",                desc = "Open (ranger: F4)" },
+	{ on = "<F5>",  run = "yank",                desc = "Copy (ranger: F5)" },
+	{ on = "<F6>",  run = "yank --cut",          desc = "Cut (ranger: F6)" },
+	{ on = "<F7>",  run = "create",              desc = "Create file/dir (ranger: F7)" },
+	{ on = "<F8>",  run = "remove",              desc = "Trash (ranger: F8)" },
+	{ on = "<F10>", run = "quit",                desc = "Quit (ranger: F10)" },
+
+	# --- Goto (ranger: ge gu gv gm gM gs gp gr gR g/) ---
+	{ on = [ "g", "e" ], run = "cd /etc",   desc = "Go /etc (ranger: ge)" },
+	{ on = [ "g", "u" ], run = "cd /usr",   desc = "Go /usr (ranger: gu)" },
+	{ on = [ "g", "v" ], run = "cd /var",   desc = "Go /var (ranger: gv)" },
+	{ on = [ "g", "m" ], run = "cd /media", desc = "Go /media (ranger: gm)" },
+	{ on = [ "g", "M" ], run = "cd /mnt",   desc = "Go /mnt (ranger: gM)" },
+	{ on = [ "g", "s" ], run = "cd /srv",   desc = "Go /srv (ranger: gs)" },
+	{ on = [ "g", "p" ], run = "cd /tmp",   desc = "Go /tmp (ranger: gp)" },
+	{ on = [ "g", "r" ], run = "cd /",      desc = "Go root (ranger: gr)" },
+	{ on = [ "g", "/" ], run = "cd /",      desc = "Go root (ranger: g/)" },
+	{ on = [ "g", "R" ], run = "cd ~/.config/yazi", desc = "Go yazi config (ranger: gR)" },
+]

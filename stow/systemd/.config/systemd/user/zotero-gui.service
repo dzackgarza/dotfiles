@@ -1,0 +1,15 @@
+[Unit]
+Description=Zotero GUI dynamic dashboard
+After=default.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/dzack/gitclones/zotero-gui
+ExecStart=/bin/direnv exec /home/dzack/gitclones/zotero-gui /home/dzack/gitclones/zotero-gui/node_modules/.bin/concurrently --names api,vite --prefix-colors cyan,yellow "bun run api" "bunx vite --port=3018 --host=0.0.0.0 --force"
+Restart=on-failure
+RestartSec=5
+Environment=HOME=/home/dzack
+Environment=PATH=/home/dzack/.nvm/versions/node/v25.8.2/bin:/usr/local/bin:/usr/bin:/bin
+
+[Install]
+WantedBy=default.target

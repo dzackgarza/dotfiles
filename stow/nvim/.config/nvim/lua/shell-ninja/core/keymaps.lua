@@ -1,0 +1,75 @@
+vim.g.mapleader = ","
+
+local keymap = vim.keymap -- for conciseness
+
+keymap.set({ "i" }, "jf", "<ESC>:w<CR>", { desc = "Exit insert mode and save file with jf" })
+-- keymap.set("n", "cc", ":nohl<CR>", { desc = "Clear search highlights" })
+keymap.set({ "i", "n" }, "<C-x>", "<ESC>:wq<CR>", { desc = "save and exit" })
+
+keymap.set("n", "[d", function()
+  vim.diagnostic.goto_prev({ float = true })
+end, { desc = "Prev diagnostic (float)" })
+
+keymap.set("n", "]d", function()
+  vim.diagnostic.goto_next({ float = true })
+end, { desc = "Next diagnostic (float)" })
+
+-- keymaps similar to vs code
+keymap.set({ "i", "n" }, "<C-s>", "<ESC>:w<CR>", { desc = "save with Ctrl + s" }) -- save with ctrl + s
+keymap.set({ "i", "n" }, "<C-z>", "<ESC>u", { desc = "undo" })                    -- undo with ctrl + z
+keymap.set({ "i", "n" }, "<C-y>", "<C-r>", { desc = "redo" })                     -- redo with ctrl + y
+-- keymap.set({ "n" }, "qq", ":wq<CR>", { desc = "save and exit" })
+
+-- Delete a word backwards
+-- keymap.set("n", "dw", 'vb"_di')
+-- keymap.set("n", "<C-d>", 'vb"_d')
+
+-- Delect in line
+-- keymap.set("n", "df", 'd$')  -- deletes after the cursor
+-- keymap.set("n", "db", 'v0d') -- deletes before the cursor
+
+-- Select all
+keymap.set("n", "<C-a>", "gg<S-v>G") -- Select all
+
+-- window management
+keymap.set("n", "<leader>v", "<C-w>v", { desc = "Split window vertically" })                    -- split window vertically
+keymap.set("n", "<leader>h", "<C-w>s", { desc = "Split window horizontally" })                  -- split window horizontally
+keymap.set("n", "<leader>ee", "<C-w>=", { desc = "Make splits equal size" })                    -- make split windows equal width & height
+keymap.set("n", "<leader>ex", "<cmd>close<CR>", { desc = "Close current split" })               -- close current split window
+
+keymap.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" })                     -- open new tab
+keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" })              -- close current tab
+keymap.set("n", "<C-n>", "<cmd>tabn<CR>", { desc = "Go to next tab" })                          --  go to next tab
+keymap.set("n", "<C-p>", "<cmd>tabp<CR>", { desc = "Go to previous tab" })                      --  go to previous tab
+keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab
+
+-- Toggle focus between source and Aerial outline
+keymap.set("n", "<Tab>", function()
+  local ok, aerial = pcall(require, "aerial")
+  if not ok then
+    return
+  end
+  if vim.bo.filetype == "aerial" then
+    vim.cmd("wincmd p")
+  elseif aerial.is_open() then
+    aerial.focus()
+  else
+    aerial.toggle({ focus = true })
+  end
+end, { desc = "Toggle focus between outline and source" })
+
+-- In Aerial, <CR> jumps to symbol and closes the outline
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "aerial",
+  callback = function(args)
+    local buf = args.buf
+    local ok_aerial, aerial = pcall(require, "aerial")
+    if not ok_aerial then
+      return
+    end
+    keymap.set("n", "<CR>", function()
+      aerial.select()
+      aerial.close()
+    end, { buffer = buf, silent = true, desc = "Jump to symbol and close Aerial" })
+  end,
+})

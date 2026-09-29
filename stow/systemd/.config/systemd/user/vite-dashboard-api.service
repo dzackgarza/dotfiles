@@ -1,0 +1,15 @@
+[Unit]
+Description=FastAPI local management dashboard API
+After=default.target
+
+[Service]
+Type=simple
+WorkingDirectory=/var/www
+ExecStart=/bin/direnv exec /home/dzack /home/dzack/.local/bin/uv run --with fastapi --with uvicorn --with playwright --with pyyaml --with sqlmodel --with pyguitarpro python3 api.py
+Restart=on-failure
+RestartSec=5
+Environment=HOME=/home/dzack
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=default.target

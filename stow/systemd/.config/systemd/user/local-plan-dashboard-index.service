@@ -1,0 +1,10 @@
+[Unit]
+Description=Refresh Local Plan Dashboard plan index
+After=default.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/dzack/gitclones/local-apps/Local Plan Dashboard
+ExecStart=/bin/direnv exec /home/dzack/gitclones/local-apps /home/dzack/.local/bin/uv run index-plans.py
+Environment=HOME=/home/dzack
+Environment=AGENT_MEMORY_VAULT=/home/dzack/.agent-memory-vault

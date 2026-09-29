@@ -1,0 +1,18 @@
+modmap:
+  - name: "Logitech USB Receiver remappings"
+    device:
+      only: "Logitech USB Receiver"  # This matches the name we found earlier
+    remap:
+      # Example: Remap Caps Lock to Escape only on this USB keyboard
+      CapsLock: Esc
+
+keymap:
+  - name: "Application-specific shortcuts for Logitech keyboard"
+    device:
+      only: "Logitech USB Receiver"
+    remap:
+      # Example: Emacs-style navigation only when using the USB keyboard
+      C-b: left
+      C-f: right
+      C-p: up
+      C-n: down

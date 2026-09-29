@@ -1,0 +1,13 @@
+[Unit]
+Description=Refresh the package update snapshot daily
+
+[Timer]
+OnCalendar=*-*-* 04:00:00
+Persistent=true
+RandomizedDelaySec=30min
+FixedRandomDelay=true
+AccuracySec=30min
+Unit=package-update-check.service
+
+[Install]
+WantedBy=timers.target

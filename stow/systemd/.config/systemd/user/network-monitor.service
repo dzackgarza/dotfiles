@@ -1,0 +1,14 @@
+[Unit]
+Description=Network Speed Test Monitor
+After=suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target
+
+[Service]
+Type=oneshot
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/dzack/.Xauthority
+ExecStart=/home/dzack/gitclones/pdfsearch2/agents/sway_stuff/network_event_handler.sh resume
+User=dzack
+Group=dzack
+
+[Install]
+WantedBy=suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target

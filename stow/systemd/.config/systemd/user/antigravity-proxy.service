@@ -1,0 +1,19 @@
+[Unit]
+Description=Antigravity Proxy (OpenAI-compatible gateway to the antigravity Gemini secret pool)
+Documentation=https://github.com/frieser/antigravity-proxy
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/dzack/gitclones/antigravity-proxy
+Environment=PORT=3000
+ExecStart=/bin/bun run src/server.ts
+Restart=always
+RestartSec=3
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=antigravity-proxy
+
+[Install]
+WantedBy=default.target

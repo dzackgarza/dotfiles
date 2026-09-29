@@ -1,0 +1,16 @@
+*.so
+*.pyd
+*.pyx
+*.pdx
+*.pxd
+
+**/.claude/settings.local.json
+# Qoder local files (private, not committed)
+AGENTS.local.md
+*.local.md
+
+.serena/
+
+# Local agent/runtime files
+.hermes
+.agents

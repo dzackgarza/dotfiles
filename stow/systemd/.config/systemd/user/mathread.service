@@ -1,0 +1,10 @@
+[Unit]
+Description=MathRead local PDF capture service
+
+[Service]
+ExecStart=%h/.local/bin/uv run --project %h/gitclones/mathread mathread serve --host 127.0.0.1 --port 8765
+Restart=on-failure
+Environment=MATHREAD_ROOT=%h/math-reading
+
+[Install]
+WantedBy=default.target

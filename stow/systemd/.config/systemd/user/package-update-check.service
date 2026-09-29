@@ -1,0 +1,17 @@
+[Unit]
+Description=Refresh the package update snapshot
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /home/dzack/.config/hypr/scripts/systemupdate.py --refresh
+CPUQuota=20%
+MemoryHigh=512M
+MemoryMax=1G
+MemorySwapMax=0
+TasksMax=32
+IOWeight=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
+Nice=19
+NoNewPrivileges=yes
+TimeoutStartSec=10min

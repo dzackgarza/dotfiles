@@ -1,0 +1,26 @@
+[Unit]
+Description=Self-hosted Hypothesis (h) annotation backend
+Documentation=https://github.com/hypothesis/h
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Match the working direnv-backed user services (jupyter-sagemath, github-dashboard, ...):
+# set HOME/XDG explicitly so direnv resolves its allow record and loads ~/.envrc
+# (which carries MATHPIX_API_KEY) -- without these the service's direnv treats the
+# .envrc as blocked and loads nothing.
+Environment=HOME=/home/dzack
+Environment=XDG_DATA_HOME=/home/dzack/.local/share
+Environment=XDG_CONFIG_HOME=/home/dzack/.config
+ExecStart=%h/.local/bin/hypothesis-h
+Restart=on-failure
+RestartSec=10
+# docker pulls/waits + app startup can be slow on a cold start
+TimeoutStartSec=600
+# supervisord shuts its children down gracefully within ~60s (tox terminate_timeout)
+TimeoutStopSec=90
+KillMode=mixed
+
+[Install]
+WantedBy=default.target

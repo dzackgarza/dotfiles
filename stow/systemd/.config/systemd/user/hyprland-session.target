@@ -1,0 +1,13 @@
+# The Hyprland session as a systemd target: started from ~/.config/hypr/confs/startup.lua once
+# the compositor's environment is in the user manager, it pulls in graphical-session.target and
+# with it every user unit WantedBy that target.
+# Pattern: systemd.special(7) (graphical-session.target is bound to by a session-specific
+# target), as home-manager's Hyprland module writes it
+# (nix-community/home-manager modules/services/window-managers/hyprland), the same shape as
+# the Sway wiki's sway-session.target.
+[Unit]
+Description=Hyprland compositor session
+Documentation=man:systemd.special(7)
+BindsTo=graphical-session.target
+Wants=graphical-session-pre.target
+After=graphical-session-pre.target

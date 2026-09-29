@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = REPO_ROOT / ".config-sync" / "waybar" / "scripts" / "lid-toggle.py"
+SCRIPT = REPO_ROOT / "stow" / "waybar" / ".config" / "waybar" / "scripts" / "lid-toggle.py"
 
 
 class WaybarLidToggleTest(unittest.TestCase):

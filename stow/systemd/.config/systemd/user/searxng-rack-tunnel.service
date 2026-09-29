@@ -1,0 +1,12 @@
+[Unit]
+Description=Private SearXNG SSH tunnel to rack
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart=/usr/bin/ssh -NT dzack@rack -L 127.0.0.1:18081:127.0.0.1:80 -o ExitOnForwardFailure=yes -o ServerAliveInterval=30 -o ServerAliveCountMax=3
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target

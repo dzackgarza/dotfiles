@@ -1,0 +1,11 @@
+[Unit]
+Description=Refresh Local Plan Dashboard plan index hourly
+
+[Timer]
+OnBootSec=5m
+OnUnitActiveSec=1h
+Persistent=true
+Unit=local-plan-dashboard-index.service
+
+[Install]
+WantedBy=timers.target

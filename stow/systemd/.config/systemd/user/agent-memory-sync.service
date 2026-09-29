@@ -1,0 +1,8 @@
+[Unit]
+Description=Synchronize the agent-memory vault
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/dzack/.agent-memory-vault
+Environment=AGENT_MEMORY_VAULT=/home/dzack/.agent-memory-vault
+ExecStart=/home/dzack/.local/share/uv/tools/agent-memory/bin/python -m agent_memory sync run

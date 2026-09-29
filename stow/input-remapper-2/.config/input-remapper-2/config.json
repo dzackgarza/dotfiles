@@ -1,0 +1,6 @@
+{
+    "version": "2.1.1",
+    "autoload": {
+        "Logitech USB Receiver": "remapped-keyboard"
+    }
+}

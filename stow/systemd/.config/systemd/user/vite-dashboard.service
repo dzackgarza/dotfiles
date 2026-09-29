@@ -1,0 +1,14 @@
+[Unit]
+Description=Local management dashboard frontend build watcher
+After=default.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/dzack/gitclones/project-management/portal
+ExecStart=/home/dzack/.nvm/versions/node/v25.8.2/bin/npm run build:watch
+Restart=on-failure
+RestartSec=5
+Environment=PATH=/home/dzack/.nvm/versions/node/v25.8.2/bin:/usr/local/bin:/usr/bin:/bin
+
+[Install]
+WantedBy=default.target

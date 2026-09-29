@@ -1,0 +1,5 @@
+chromium {
+    class = "chromium"
+    command = "chromium"
+    rules = "size 85% 85%"
+}

@@ -1,0 +1,11 @@
+[Unit]
+Description=Watch file or directory and git commit all changes. run with: systemctl --user --now enable gitwatch@$(systemd-escape -- "/path/to/folder").service
+
+[Service]
+Environment="SCRIPT_ARGS=%I"
+ExecStart=/usr/bin/bash -c "/usr/bin/gitwatch watch -m 'Automatic save.' --remote=origin ${SCRIPT_ARGS}"
+#ExecStart=/usr/bin/gitwatch watch -m "Automatic save" --remote=origin /home/dzack/.config 
+ExecStop=/bin/true
+
+[Install]
+WantedBy=default.target

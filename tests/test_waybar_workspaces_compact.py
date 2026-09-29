@@ -6,7 +6,7 @@ from pathlib import Path
 
 SCRIPT_PATH = (
     Path(__file__).resolve().parents[1]
-    / ".config-sync"
+    / "stow" / "waybar" / ".config"
     / "waybar"
     / "scripts"
     / "workspaces-compact.py"

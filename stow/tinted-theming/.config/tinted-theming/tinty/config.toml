@@ -1,0 +1,56 @@
+# Global settings
+shell = "zsh -c '{}'"
+default-scheme = "base16-mocha"
+preferred-schemes = ["base16-gruvbox-dark", "base16-gruvbox-light", "base16-github-dark"]
+
+# Item configurations
+[[items]]
+name = "tinted-shell"
+path = "https://github.com/tinted-theming/tinted-shell"
+themes-dir = "scripts"
+hook = "source \"$TINTY_THEME_FILE_PATH\""
+supported-systems = ["base16", "base24"]
+
+# Kitty terminal
+[[items]]
+path = "https://github.com/tinted-theming/tinted-terminal"
+name = "tinted-terminal"
+themes-dir = "themes/kitty"
+hook = "kitten @ load-config"
+supported-systems = ["base16", "base24"]
+
+[[items]]
+name = "base16-vim"
+path = "https://github.com/tinted-theming/base16-vim"
+themes-dir = "colors"
+supported-systems = ["base16"]
+# Look at USAGE.md for more information on sourcing the generated file in vim
+
+[[items]]
+name = "tmux"
+path = "https://github.com/tinted-theming/base16-tmux"
+themes-dir = "colors"
+hook = "cp -f \"$TINTY_THEME_FILE_PATH\" ~/.config/tmux/tmux-base16.conf && tmux run 2> /dev/null && tmux source-file ~/.config/tmux/tmux-base16.conf"
+supported-systems = ["base16", "base24"]
+
+[[items]]
+path = "https://github.com/tinted-theming/tinted-alacritty"
+name = "tinted-alacritty"
+themes-dir = "colors"
+hook = "cp -f \"$TINTY_THEME_FILE_PATH\" ~/.config/alacritty/colors.toml"
+supported-systems = ["base16", "base24"]
+
+[[items]]
+path = "https://github.com/tinted-theming/base16-waybar"
+name = "base16-waybar"
+themes-dir = "colors"
+hook = "cp -f \"$TINTY_THEME_FILE_PATH\" ~/.config/waybar/colors.css"
+supported-systems = ["base16"]
+
+[[items]]
+path = "https://github.com/rkubosz/base16-sway"
+name = "base16-sway"
+themes-dir = "themes"
+revision = "master"
+hook = "cp -f \"$TINTY_THEME_FILE_PATH\" ~/.config/sway/config.d/theme && swaymsg reload"
+supported-systems = ["base16"]

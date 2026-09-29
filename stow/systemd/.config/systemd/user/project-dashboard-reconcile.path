@@ -1,0 +1,18 @@
+[Unit]
+Description=Watch dashboard runtime manifest
+
+[Path]
+PathChanged=/home/dzack/gitclones/project-management/dashboards.toml
+PathChanged=/home/dzack/gitclones/project-management/scripts/reconcile_dashboards.py
+PathChanged=/home/dzack/gitclones/project-management/justfile
+PathChanged=/home/dzack/gitclones/github-dashboard/.envrc
+PathChanged=/home/dzack/gitclones/github-dashboard/package.json
+PathChanged=/home/dzack/gitclones/github-dashboard/bun.lock
+PathChanged=/home/dzack/gitclones/github-dashboard/vite.config.ts
+PathChanged=/home/dzack/gitclones/zotero-gui/.envrc
+PathChanged=/home/dzack/gitclones/zotero-gui/package.json
+PathChanged=/home/dzack/gitclones/zotero-gui/bun.lock
+PathChanged=/home/dzack/gitclones/zotero-gui/vite.config.ts
+
+[Install]
+WantedBy=default.target

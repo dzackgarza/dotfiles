@@ -1,0 +1,59 @@
+[[items]]
+path = "https://github.com/tinted-theming/schemes"
+name = "tinted-theming-schemes"
+
+[[items]]
+path = "https://github.com/tinted-theming/tinted-terminal"
+name = "tinted-terminal"
+themes-dir = "themes/kitty"
+hook = "kitten @ load-config"
+supported-systems = ["base16", "base24"]
+
+# ZSH theme colors and FZF integration
+[[items]]
+path = "~/.config/zsh/base16-theme.zsh"
+name = "shell"
+themes_dir = "shell"
+
+# Neovim colorscheme
+[[items]]
+path = "~/.config/nvim/colors/base16.vim"
+name = "vim"
+themes_dir = "vim"
+
+# Ranger file manager colorscheme
+[[items]]
+path = "~/.config/ranger/colorschemes/base16.py"
+name = "ranger"
+themes_dir = "ranger"
+
+# Tmux terminal multiplexer
+[[items]]
+path = "~/.config/tmux/tmux-base16.conf"
+name = "tmux"
+themes_dir = "tmux"
+hook = "tmux run 2> /dev/null && tmux source-file ~/.config/tmux/tmux-base16.conf"
+
+# Rofi application launcher
+[[items]]
+path = "~/.config/rofi/themes/base16-colors.rasi"
+name = "rofi"
+themes_dir = "rofi"
+
+# Alacritty terminal
+[[items]]
+path = "~/.config/alacritty/base16-theme.toml"
+name = "alacritty"
+themes_dir = "alacritty"
+
+# Qutebrowser
+[[items]]
+path = "~/.config/qutebrowser/base16-theme.py"
+name = "qutebrowser"
+themes_dir = "qutebrowser"
+
+# Waybar
+[[items]]
+path = "https://github.com/mnussbaum/base16-waybar"
+name = "base16-waybar"
+supported-systems = ["base16"]

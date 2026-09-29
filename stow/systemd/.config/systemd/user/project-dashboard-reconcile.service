@@ -1,0 +1,7 @@
+[Unit]
+Description=Reconcile project-management dashboard runtime surfaces
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/dzack/gitclones/project-management
+ExecStart=/bin/just --justfile /home/dzack/gitclones/project-management/justfile reconcile-dashboards

@@ -36,7 +36,7 @@ def write_plan(root: Path, card_id: str, *, status: str, archived: bool = False,
 
 
 def test_vault_progress_uses_unarchived_current_plan_todos(tmp_path: Path) -> None:
-    progress = load_module('vault_progress_test', 'ags/control-panel/scripts/vault-progress.py')
+    progress = load_module('vault_progress_test', 'stow/ags/.config/ags/control-panel/scripts/vault-progress.py')
     first = write_plan(
         tmp_path,
         'PLAN-first',
@@ -72,7 +72,7 @@ def test_vault_progress_uses_unarchived_current_plan_todos(tmp_path: Path) -> No
 
 
 def test_combined_plan_renderer_names_each_source(tmp_path: Path) -> None:
-    renderer = load_module('render_plan_test', 'ags/control-panel/scripts/render-plan.py')
+    renderer = load_module('render_plan_test', 'stow/ags/.config/ags/control-panel/scripts/render-plan.py')
     first = write_plan(tmp_path, 'PLAN-first', status='in-progress', description='Build the first mathematical object.')
     second = write_plan(tmp_path, 'PLAN-second', status='blocked', description='Connect the second object to its upstream model.')
 
@@ -90,7 +90,7 @@ def test_combined_plan_renderer_names_each_source(tmp_path: Path) -> None:
 
 
 def test_dag_renderer_keeps_canonical_graph_and_interactive_browser_engine() -> None:
-    renderer = load_module('render_dag_test', 'ags/control-panel/scripts/render-dag.py')
+    renderer = load_module('render_dag_test', 'stow/ags/.config/ags/control-panel/scripts/render-dag.py')
     dag_source = '''## Sequence\n\n```mermaid\ngraph LR\n  FEATURE-one\n  PLAN-one\n  PLAN-two\n  PLAN-one --> PLAN-two\n```\n\n## Dependencies\n\n```mermaid\ngraph LR\n  FEATURE-one\n  PLAN-one\n  PLAN-two\n  PLAN-one --> PLAN-two\n```\n\n## Containment\n\n```mermaid\ngraph LR\n  FEATURE-one\n  PLAN-one\n  FEATURE-one --> PLAN-one\n```\n'''
     sequence = renderer.parse_mermaid_graph(renderer.mermaid_section(dag_source, 'Sequence'))
     deps = renderer.parse_mermaid_graph(renderer.mermaid_section(dag_source, 'Dependencies'))
@@ -99,7 +99,7 @@ def test_dag_renderer_keeps_canonical_graph_and_interactive_browser_engine() -> 
     assert deps == sequence
     assert containment == (['FEATURE-one', 'PLAN-one'], [('FEATURE-one', 'PLAN-one')])
 
-    template = (DOTFILES / 'ags/control-panel/templates/dag.html').read_text(encoding='utf-8')
+    template = (DOTFILES / 'stow/ags/.config/ags/control-panel/templates/dag.html').read_text(encoding='utf-8')
     assert '__D3_JS__' in template
     assert '__D3_DAG_JS__' in template
     assert '__GRAPHS_JSON__' in template
@@ -114,14 +114,14 @@ def test_dag_renderer_keeps_canonical_graph_and_interactive_browser_engine() -> 
     assert 'p.data.description' in template
     payload = renderer.node_payload('PLAN-one', {'PLAN-one': {'title': 'One', 'description': 'Mathematical goal', 'status': 'in-progress'}})
     assert payload['description'] == 'Mathematical goal'
-    plan_template = (DOTFILES / 'ags/control-panel/templates/elegant-plan.html').read_text(encoding='utf-8')
+    plan_template = (DOTFILES / 'stow/ags/.config/ags/control-panel/templates/elegant-plan.html').read_text(encoding='utf-8')
     assert '<span class="plan-summary-label">Goal</span>$description$' in plan_template
     assert 'https://d3js.org' not in template
     assert 'unpkg.com/d3-dag' not in template
 
 
 def test_pending_work_dag_uses_todo_needs_and_goals(tmp_path: Path) -> None:
-    renderer = load_module('render_dag_pending_test', 'ags/control-panel/scripts/render-dag.py')
+    renderer = load_module('render_dag_pending_test', 'stow/ags/.config/ags/control-panel/scripts/render-dag.py')
     (tmp_path / 'TODO.md').write_text(
         '- [ ] **`root-work`**. **Needs:** none.\n'
         '  **Goal:** Build the root mathematical object.\n'
@@ -140,7 +140,7 @@ def test_pending_work_dag_uses_todo_needs_and_goals(tmp_path: Path) -> None:
 
 
 def test_plan_renderer_summarizes_pending_execution_work(tmp_path: Path) -> None:
-    renderer = load_module('render_plan_pending_test', 'ags/control-panel/scripts/render-plan.py')
+    renderer = load_module('render_plan_pending_test', 'stow/ags/.config/ags/control-panel/scripts/render-plan.py')
     (tmp_path / 'TODO.md').write_text(
         '- [ ] **`root-work`**. **Needs:** none.\n'
         '  **Goal:** Build the root mathematical object.\n'
@@ -153,16 +153,16 @@ def test_plan_renderer_summarizes_pending_execution_work(tmp_path: Path) -> None
     # Formatting itself is exercised independently of repo-map lookup.
     assert records[0]['goal'] == 'Build the root mathematical object.'
 
-    template = (DOTFILES / 'ags/control-panel/templates/dag.html').read_text(encoding='utf-8')
+    template = (DOTFILES / 'stow/ags/.config/ags/control-panel/templates/dag.html').read_text(encoding='utf-8')
     assert 'data-view="pending"' in template
     assert 'Selected work' in template
     assert 'plan-dag-view-v3' in template
 
 
 def test_control_center_keep_open_and_selectable_dag_details_are_present() -> None:
-    repo_panel = (DOTFILES / 'ags/control-panel/widget/RepoPlanPanel.tsx').read_text(encoding='utf-8')
-    control_window = (DOTFILES / 'ags/control-panel/src/windows/control-center.tsx').read_text(encoding='utf-8')
-    dag_template = (DOTFILES / 'ags/control-panel/templates/dag.html').read_text(encoding='utf-8')
+    repo_panel = (DOTFILES / 'stow/ags/.config/ags/control-panel/widget/RepoPlanPanel.tsx').read_text(encoding='utf-8')
+    control_window = (DOTFILES / 'stow/ags/.config/ags/control-panel/src/windows/control-center.tsx').read_text(encoding='utf-8')
+    dag_template = (DOTFILES / 'stow/ags/.config/ags/control-panel/templates/dag.html').read_text(encoding='utf-8')
     assert 'Keep open' in repo_panel
     assert 'if (keepControlCenterOpen) return' in repo_panel
     assert '!keepControlCenterOpen.peek()' in control_window

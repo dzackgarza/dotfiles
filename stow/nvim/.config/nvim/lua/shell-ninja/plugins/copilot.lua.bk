@@ -1,0 +1,41 @@
+--return {
+--{
+--"zbirenbaum/copilot.lua",
+--cmd = "Copilot",
+--event = "InsertEnter",
+--opts = {
+--copilot_node_command = (function()
+--local function glob_latest()
+--local nvm_dir = os.getenv("NVM_DIR") or (os.getenv("HOME") .. "/.nvm")
+--local nodes = vim.fn.globpath(nvm_dir .. "/versions/node", "v*/bin/node", 0, 1)
+--table.sort(nodes)
+--return nodes[#nodes]
+--end
+--local nvm_bin = os.getenv("NVM_BIN")
+--if nvm_bin and nvm_bin ~= "" and vim.fn.executable(nvm_bin .. "/node") == 1 then
+--return nvm_bin .. "/node"
+--end
+--return glob_latest()
+--end)(),
+--suggestion = { enabled = false },
+--panel = { enabled = false },
+--filetypes = {
+--markdown = true,
+--},
+--},
+--config = function(_, opts)
+--if opts.copilot_node_command then
+--vim.g.copilot_node_command = opts.copilot_node_command
+--end
+--require("copilot").setup(opts)
+--end,
+--},
+--{
+--"zbirenbaum/copilot-cmp",
+--dependencies = { "zbirenbaum/copilot.lua" },
+--event = { "InsertEnter", "LspAttach" },
+--config = function()
+--require("copilot_cmp").setup()
+--end,
+--},
+--}
