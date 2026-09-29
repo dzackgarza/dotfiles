@@ -14,8 +14,8 @@ from PIL import Image
 
 
 # MathPix API credentials
-APP_ID = 'dzackgarza_gmail_com_6431f8_2115fb'
-APP_KEY = '***REMOVED***'
+APP_ID = os.environ['MATHPIX_APP_ID']
+APP_KEY = os.environ['MATHPIX_APP_KEY']
 
 # MathPix API endpoint
 ENDPOINT = 'https://api.mathpix.com/v3/text'
