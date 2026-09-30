@@ -141,7 +141,7 @@ hl.window_rule({ match = { class = "^(com.chatonsteroids.app)$" }, workspace = "
 hl.window_rule({ match = { class = "^([Zz]ettlr(-[Pp]andoc)?)$" }, workspace = "8 silent" })
 
 -- prevent new windows from stealing focus
-hl.window_rule({ match = { class = ".*" }, no_initial_focus = true })
+hl.window_rule({ match = { class = ".*", initial_title = "negative:^(main)$" }, no_initial_focus = true })
 
 hl.workspace_rule({
     workspace = "special:exposed",
