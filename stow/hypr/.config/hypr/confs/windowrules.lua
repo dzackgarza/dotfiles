@@ -142,7 +142,7 @@ hl.window_rule({ match = { class = "^([Zz]ettlr(-[Pp]andoc)?)$" }, workspace = "
 
 -- prevent new windows from stealing focus
 hl.window_rule({ match = { class = ".*" }, no_initial_focus = true })
-hl.window_rule({ match = { class = "^(kitty)$" }, no_initial_focus = false })
+hl.window_rule({ match = { title = "^(main)$" }, no_initial_focus = false })
 
 hl.workspace_rule({
     workspace = "special:exposed",
