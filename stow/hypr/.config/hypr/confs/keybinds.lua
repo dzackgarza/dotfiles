@@ -122,7 +122,7 @@ register_bind(mainMod .. " + SHIFT + right", hl.dsp.window.move({ direction = "r
 register_bind(mainMod .. " + SHIFT + l", hl.dsp.window.move({ direction = "right" }), { description = "Move window right" })
 register_bind(mainMod .. " + SHIFT + up", hl.dsp.window.move({ direction = "up" }), { description = "Move window up" })
 register_bind(mainMod .. " + SHIFT + k", hl.dsp.window.move({ direction = "up" }), { description = "Move window up" })
-register_bind(mainMod .. " + SHIFT + down", hl.dsp.window.move({ direction = "down" }), { description = "Move window down" })
+register_bind(mainMod .. " + SHIFT + down", hl.dsp.layout("togglesplit"), { description = "Toggle layout split direction" })
 register_bind(mainMod .. " + SHIFT + j", hl.dsp.window.move({ direction = "down" }), { description = "Move window down" })
 
 -- Switch to / move a window to the Nth workspace OF THE CURRENT MONITOR
