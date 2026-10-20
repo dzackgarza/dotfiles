@@ -17,6 +17,7 @@ local rofi_emoji = scriptsDir .. "/rofi-emoji.sh"
 local rofi_websites = home .. "/.config/hypr/confs/rofi-websites.sh"
 local help = scriptsDir .. "/show-keybindings.sh"
 local rofi_pdfs = home .. "/dotfiles/bin/dmenu/dmenuAllPDFs.sh"
+local libgen_to_zotero = home .. "/dotfiles/bin/dmenu/libgen-to-zotero.py"
 
 local bind_actions = {}
 
@@ -88,6 +89,7 @@ register_bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd(terminal .. " --title "
 register_bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }), { description = "Toggle floating layout" })
 register_bind(mainMod .. " + Space", hl.dsp.window.fullscreen(), { description = "Toggle fullscreen layout" })
 register_bind(mainMod .. " + A", hl.dsp.exec_cmd(rofi_pdfs), { description = "Search PDFs" })
+register_bind(mainMod .. " + F", hl.dsp.exec_cmd(libgen_to_zotero), { description = "Find a LibGen PDF and add it to Zotero" })
 register_bind(mainMod .. " + D", hl.dsp.exec_cmd(scriptsDir .. "/menu.sh || pkill rofi"), { description = "Open application menu" })
 register_bind(mainMod .. " + SHIFT + D", hl.dsp.exec_cmd(rofi_emoji), { description = "Open emoji picker" })
 register_bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd(rofi_websites), { description = "Open website launcher" })
