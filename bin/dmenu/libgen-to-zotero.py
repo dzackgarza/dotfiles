@@ -51,8 +51,17 @@ class Progress:
     def __enter__(self) -> Self:
         self.process = subprocess.Popen(
             [
-                "zenity", "--progress", "--pulsate", "--no-cancel", "--auto-close",
-                "--title", self.title, "--text", self.stage, "--width", "440",
+                "zenity",
+                "--progress",
+                "--pulsate",
+                "--no-cancel",
+                "--auto-close",
+                "--title",
+                self.title,
+                "--text",
+                self.stage,
+                "--width",
+                "440",
             ],
             stdin=subprocess.PIPE,
             text=True,
@@ -62,12 +71,23 @@ class Progress:
 
     def update(self, stage: str) -> None:
         LOG.info(stage)
-        if self.process is None or self.process.stdin is None or self.process.poll() is not None:
-            raise RuntimeError("The progress window closed before the operation finished")
+        if (
+            self.process is None
+            or self.process.stdin is None
+            or self.process.poll() is not None
+        ):
+            raise RuntimeError(
+                "The progress window closed before the operation finished"
+            )
         self.process.stdin.write(f"# {stage}\n")
         self.process.stdin.flush()
 
-    def __exit__(self, exc_type: type[BaseException] | None, exc: BaseException | None, traceback: TracebackType | None) -> None:
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc: BaseException | None,
+        traceback: TracebackType | None,
+    ) -> None:
         if self.process is None or self.process.stdin is None:
             return
         if self.process.poll() is None:
@@ -80,11 +100,23 @@ class Progress:
 
 def message(kind: str, title: str, body: str) -> None:
     notification = subprocess.run(
-        ["notify-send", "-a", "LibGen to Zotero", "-u", "critical" if kind == "error" else "normal", title, body],
+        [
+            "notify-send",
+            "-a",
+            "LibGen to Zotero",
+            "-u",
+            "critical" if kind == "error" else "normal",
+            title,
+            body,
+        ],
         check=False,
     )
     if notification.returncode != 0:
-        LOG.error("Could not show %s notification: exit status %s", kind, notification.returncode)
+        LOG.error(
+            "Could not show %s notification: exit status %s",
+            kind,
+            notification.returncode,
+        )
     result = subprocess.run(
         ["zenity", f"--{kind}", "--title", title, "--text", body, "--width", "440"],
         check=False,
@@ -104,7 +136,9 @@ def menu(prompt: str, choices: list[str] | None = None) -> str | None:
     if result.returncode == 1 and not result.stderr.strip():
         return None
     if result.returncode != 0:
-        raise RuntimeError(f"The search menu failed: {result.stderr.strip() or result.returncode}")
+        raise RuntimeError(
+            f"The search menu failed: {result.stderr.strip() or result.returncode}"
+        )
     return result.stdout.strip() or None
 
 
@@ -129,7 +163,10 @@ def search(query: str) -> list[Book]:
         page = BeautifulSoup(response.text, "html.parser")
         error_banner = page.select_one(".alert-danger")
         if error_banner is not None:
-            LOG.warning("Search mirror reported an error: %s", error_banner.get_text(" ", strip=True))
+            LOG.warning(
+                "Search mirror reported an error: %s",
+                error_banner.get_text(" ", strip=True),
+            )
             continue
         table = page.select_one("#tablelibgen")
         if table is not None:
@@ -172,7 +209,9 @@ def resolve(md5: str) -> str:
         timeout=120,
     )
     if result.returncode != 0:
-        raise RuntimeError(f"LibGen could not resolve {md5}: {(result.stderr or result.stdout).strip()[-500:]}")
+        raise RuntimeError(
+            f"LibGen could not resolve {md5}: {(result.stderr or result.stdout).strip()[-500:]}"
+        )
     match = URL_PATTERN.search(result.stdout)
     if match is None:
         raise RuntimeError(f"LibGen did not resolve {md5}: {result.stdout.strip()}")
@@ -183,8 +222,12 @@ def check_zotero() -> None:
     response = requests.get(f"{ZOTERO_URL}/version", timeout=10)
     response.raise_for_status()
     status = response.json()
-    if not status.get("healthy") or "attach_standalone" not in status.get("capabilities", []):
-        raise RuntimeError("The live Zotero add-on does not support standalone attachments")
+    if not status.get("healthy") or "attach_standalone" not in status.get(
+        "capabilities", []
+    ):
+        raise RuntimeError(
+            "The live Zotero add-on does not support standalone attachments"
+        )
 
 
 def download(url: str, md5: str, path: Path, progress: Progress) -> None:
@@ -199,13 +242,17 @@ def download(url: str, md5: str, path: Path, progress: Progress) -> None:
                 if not chunk:
                     continue
                 if first and not chunk.startswith(b"%PDF-"):
-                    raise RuntimeError("The download URL returned a file that is not a PDF")
+                    raise RuntimeError(
+                        "The download URL returned a file that is not a PDF"
+                    )
                 first = False
                 output.write(chunk)
                 digest.update(chunk)
                 downloaded += len(chunk)
                 if downloaded - reported >= 1048576:
-                    progress.update(f"Downloading PDF: {downloaded / 1048576:.1f} MB received")
+                    progress.update(
+                        f"Downloading PDF: {downloaded / 1048576:.1f} MB received"
+                    )
                     reported = downloaded
     if digest.hexdigest() != md5:
         raise RuntimeError(f"Downloaded PDF does not match catalog MD5 {md5}")
@@ -219,7 +266,9 @@ def attach(book: Book, path: Path) -> str:
         timeout=120,
     )
     if not response.ok:
-        raise RuntimeError(f"Zotero rejected the PDF (HTTP {response.status_code}): {response.text[:500]}")
+        raise RuntimeError(
+            f"Zotero rejected the PDF (HTTP {response.status_code}): {response.text[:500]}"
+        )
     result = response.json()
     if result.get("success") is not True or not result.get("attachment_key"):
         raise RuntimeError(f"Zotero did not confirm the attachment: {result}")
@@ -252,7 +301,9 @@ def main() -> None:
         progress.update("Finding a working PDF link")
         url = resolve(book.md5)
         progress.update("Downloading PDF")
-        with tempfile.NamedTemporaryFile(prefix="libgen-", suffix=".pdf", dir="/tmp", delete=False) as staged:
+        with tempfile.NamedTemporaryFile(
+            prefix="libgen-", suffix=".pdf", dir="/tmp", delete=False
+        ) as staged:
             path = Path(staged.name)
         try:
             download(url, book.md5, path, progress)
@@ -275,7 +326,14 @@ if __name__ == "__main__":
     )
     try:
         main()
-    except (OSError, requests.RequestException, subprocess.SubprocessError, RuntimeError, KeyError, ValueError) as error:
+    except (
+        OSError,
+        requests.RequestException,
+        subprocess.SubprocessError,
+        RuntimeError,
+        KeyError,
+        ValueError,
+    ) as error:
         LOG.exception("Workflow failed")
         print(f"LibGen to Zotero failed: {error}. Log: {LOG_PATH}", file=sys.stderr)
         message("error", "LibGen to Zotero failed", f"{error}\n\nLog: {LOG_PATH}")
