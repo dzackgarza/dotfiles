@@ -13,8 +13,8 @@ import subprocess
 import sys
 import tempfile
 from dataclasses import dataclass
-from datetime import datetime
 from pathlib import Path
+from types import TracebackType
 
 import requests
 from bs4 import BeautifulSoup
@@ -66,7 +66,7 @@ class Progress:
         self.process.stdin.write(f"# {stage}\n")
         self.process.stdin.flush()
 
-    def __exit__(self, exc_type: type[BaseException] | None, exc: BaseException | None, traceback: object) -> None:
+    def __exit__(self, exc_type: type[BaseException] | None, exc: BaseException | None, traceback: TracebackType | None) -> None:
         if self.process is None or self.process.stdin is None:
             return
         if self.process.poll() is None:
@@ -78,6 +78,12 @@ class Progress:
 
 
 def message(kind: str, title: str, body: str) -> None:
+    notification = subprocess.run(
+        ["notify-send", "-a", "LibGen to Zotero", "-u", "critical" if kind == "error" else "normal", title, body],
+        check=False,
+    )
+    if notification.returncode != 0:
+        LOG.error("Could not show %s notification: exit status %s", kind, notification.returncode)
     result = subprocess.run(
         ["zenity", f"--{kind}", "--title", title, "--text", body, "--width", "440"],
         check=False,
@@ -107,6 +113,7 @@ def search(query: str) -> list[Book]:
     mirrors = config_response.json()["mirrors"]
     table = None
     for mirror in mirrors:
+        LOG.info("Searching mirror: %s", mirror["src"])
         try:
             response = requests.get(
                 f"{mirror['src'].rstrip('/')}/index.php",
@@ -115,11 +122,13 @@ def search(query: str) -> list[Book]:
                 timeout=15,
             )
             response.raise_for_status()
-        except requests.RequestException:
+        except requests.RequestException as error:
+            LOG.warning("Search mirror failed: %s", error)
             continue
         table = BeautifulSoup(response.text, "html.parser").select_one("#tablelibgen")
         if table is not None:
             break
+        LOG.warning("Search mirror returned no results table: %s", mirror["src"])
     if table is None:
         raise RuntimeError("No LibGen search mirror returned a results table")
     books: list[Book] = []
@@ -240,6 +249,7 @@ def main() -> None:
             download(url, book.md5, path, progress)
             progress.update("Adding PDF as a standalone Zotero item")
             key = attach(book, path)
+            LOG.info("Zotero stored item: %s [%s]", key, book.md5)
         finally:
             subprocess.run(["trash", str(path)], check=True)
         progress.update(f"Zotero item added: {key}")
