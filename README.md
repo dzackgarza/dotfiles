@@ -34,6 +34,9 @@ Other sources: `dotfiles/bin/`.
   - `Mod+D` -> rofi drun (GUI apps) via `~/.config/hypr/scripts/menu.sh`
   - `Mod+A` -> rofi PDF browser from Dropbox/Library via
     `dotfiles/bin/dmenu/dmenuAllPDFs.sh`
+  - `Mod+F` -> search LibGen PDFs in rofi, then add the selected PDF as a
+    standalone attachment in the live Zotero library via
+    `dotfiles/bin/dmenu/libgen-to-zotero.py`. Zotero must be open.
   - `Mod+Shift+D` -> emoji picker
   - `Mod+Shift+B` -> website launcher
 - **Rofi/dmenu scripts** in `dotfiles/bin/dmenu/` — dmenuAllPDFs, dmenuAnnotatedPDFs,
