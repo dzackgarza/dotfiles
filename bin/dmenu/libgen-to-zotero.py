@@ -15,6 +15,7 @@ import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 from types import TracebackType
+from typing import Self
 
 import requests
 from bs4 import BeautifulSoup
@@ -47,7 +48,7 @@ class Progress:
         self.stage = stage
         self.process: subprocess.Popen[str] | None = None
 
-    def __enter__(self) -> Progress:
+    def __enter__(self) -> Self:
         self.process = subprocess.Popen(
             [
                 "zenity", "--progress", "--pulsate", "--no-cancel", "--auto-close",
