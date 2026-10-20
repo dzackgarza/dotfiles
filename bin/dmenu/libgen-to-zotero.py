@@ -126,9 +126,17 @@ def search(query: str) -> list[Book]:
         except requests.RequestException as error:
             LOG.warning("Search mirror failed: %s", error)
             continue
-        table = BeautifulSoup(response.text, "html.parser").select_one("#tablelibgen")
+        page = BeautifulSoup(response.text, "html.parser")
+        error_banner = page.select_one(".alert-danger")
+        if error_banner is not None:
+            LOG.warning("Search mirror reported an error: %s", error_banner.get_text(" ", strip=True))
+            continue
+        table = page.select_one("#tablelibgen")
         if table is not None:
             break
+        submitted_query = page.select_one('form[action="index.php"] input[name="req"]')
+        if submitted_query is not None and submitted_query.get("value") == query:
+            return []
         LOG.warning("Search mirror returned no results table: %s", mirror["src"])
     if table is None:
         raise RuntimeError("No LibGen search mirror returned a results table")
