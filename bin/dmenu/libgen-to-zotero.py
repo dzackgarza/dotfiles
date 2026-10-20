@@ -17,7 +17,7 @@ from pathlib import Path
 import requests
 from bs4 import BeautifulSoup
 
-SEARCH_URL = "https://libgen.com.de/search.php"
+SEARCH_URL = "https://libgen.li/index.php"
 ZOTERO_URL = "http://127.0.0.1:23119"
 MD5_PATTERN = re.compile(r"md5=([0-9a-f]{32})")
 URL_PATTERN = re.compile(r"Here is the direct download link:\s*(https?://\S+)")
@@ -49,27 +49,34 @@ def menu(prompt: str, choices: list[str] | None = None) -> str | None:
 
 
 def search(query: str) -> list[Book]:
-    response = requests.get(SEARCH_URL, params={"q": query}, timeout=20)
+    response = requests.get(
+        SEARCH_URL,
+        params={"req": query, "page": 1, "res": 100},
+        headers={"User-Agent": "Mozilla/5.0"},
+        timeout=20,
+    )
     response.raise_for_status()
     page = BeautifulSoup(response.text, "html.parser")
     books: list[Book] = []
-    for item in page.select(".book-item"):
-        title = item.select_one(".book-title a")
-        author = item.select_one(".book-author")
-        if title is None or author is None:
+    table = page.select_one("#tablelibgen")
+    if table is None:
+        raise RuntimeError("LibGen returned no results table")
+    for row in table.select("tr"):
+        cells = row.find_all("td", recursive=False)
+        if len(cells) < 9 or cells[7].get_text(" ", strip=True).lower() != "pdf":
             continue
-        details = item.select_one(".book-details")
-        if details is None or not re.search(r"File:\s*PDF\b", details.get_text(" ", strip=True), re.I):
+        title = cells[0].select_one('a[href^="edition.php"]')
+        mirror = cells[8].select_one('a[href*="md5="]')
+        if title is None or mirror is None:
             continue
-        match = MD5_PATTERN.search(title.get("href", ""))
+        match = MD5_PATTERN.search(mirror.get("href", ""))
         if match is None:
             continue
-        size_match = re.search(r"\b\d+(?:\.\d+)?\s*[KMG]B\b", details.get_text(" ", strip=True), re.I)
         books.append(
             Book(
                 title=title.get_text(" ", strip=True),
-                author=author.get_text(" ", strip=True),
-                size=size_match.group() if size_match else "",
+                author=cells[1].get_text(" ", strip=True),
+                size=cells[6].get_text(" ", strip=True),
                 md5=match.group(1),
             )
         )
