@@ -17,7 +17,7 @@ from pathlib import Path
 import requests
 from bs4 import BeautifulSoup
 
-SEARCH_URL = "https://libgen.li/index.php"
+MIRRORS_CONFIG_URL = "https://raw.githubusercontent.com/obsfx/libgen-downloader/configuration/config.v3.json"
 ZOTERO_URL = "http://127.0.0.1:23119"
 MD5_PATTERN = re.compile(r"md5=([0-9a-f]{32})")
 URL_PATTERN = re.compile(r"Here is the direct download link:\s*(https?://\S+)")
@@ -49,18 +49,27 @@ def menu(prompt: str, choices: list[str] | None = None) -> str | None:
 
 
 def search(query: str) -> list[Book]:
-    response = requests.get(
-        SEARCH_URL,
-        params={"req": query, "page": 1, "res": 100},
-        headers={"User-Agent": "Mozilla/5.0"},
-        timeout=20,
-    )
-    response.raise_for_status()
-    page = BeautifulSoup(response.text, "html.parser")
-    books: list[Book] = []
-    table = page.select_one("#tablelibgen")
+    config_response = requests.get(MIRRORS_CONFIG_URL, timeout=15)
+    config_response.raise_for_status()
+    mirrors = config_response.json()["mirrors"]
+    table = None
+    for mirror in mirrors:
+        try:
+            response = requests.get(
+                f"{mirror['src'].rstrip('/')}/index.php",
+                params={"req": query, "page": 1, "res": 100},
+                headers={"User-Agent": "Mozilla/5.0"},
+                timeout=15,
+            )
+            response.raise_for_status()
+        except requests.RequestException:
+            continue
+        table = BeautifulSoup(response.text, "html.parser").select_one("#tablelibgen")
+        if table is not None:
+            break
     if table is None:
-        raise RuntimeError("LibGen returned no results table")
+        raise RuntimeError("No LibGen search mirror returned a results table")
+    books: list[Book] = []
     for row in table.select("tr"):
         cells = row.find_all("td", recursive=False)
         if len(cells) < 9 or cells[7].get_text(" ", strip=True).lower() != "pdf":
