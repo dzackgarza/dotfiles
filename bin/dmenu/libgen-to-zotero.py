@@ -7,11 +7,13 @@
 from __future__ import annotations
 
 import hashlib
+import logging
 import re
 import subprocess
 import sys
 import tempfile
 from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
 
 import requests
@@ -21,6 +23,8 @@ MIRRORS_CONFIG_URL = "https://raw.githubusercontent.com/obsfx/libgen-downloader/
 ZOTERO_URL = "http://127.0.0.1:23119"
 MD5_PATTERN = re.compile(r"md5=([0-9a-f]{32})")
 URL_PATTERN = re.compile(r"Here is the direct download link:\s*(https?://\S+)")
+LOG_PATH = Path.home() / ".local/state/libgen-to-zotero.log"
+LOG = logging.getLogger("libgen-to-zotero")
 
 
 @dataclass(frozen=True)
@@ -35,6 +39,53 @@ class Book:
         return f"{self.title} | {self.author} | PDF {self.size} | {self.md5[:8]}"
 
 
+class Progress:
+    """Keep a visible stage indicator open during network and Zotero work."""
+
+    def __init__(self, title: str, stage: str) -> None:
+        self.title = title
+        self.stage = stage
+        self.process: subprocess.Popen[str] | None = None
+
+    def __enter__(self) -> Progress:
+        self.process = subprocess.Popen(
+            [
+                "zenity", "--progress", "--pulsate", "--no-cancel", "--auto-close",
+                "--title", self.title, "--text", self.stage, "--width", "440",
+            ],
+            stdin=subprocess.PIPE,
+            text=True,
+        )
+        self.update(self.stage)
+        return self
+
+    def update(self, stage: str) -> None:
+        LOG.info(stage)
+        if self.process is None or self.process.stdin is None or self.process.poll() is not None:
+            raise RuntimeError("The progress window closed before the operation finished")
+        self.process.stdin.write(f"# {stage}\n")
+        self.process.stdin.flush()
+
+    def __exit__(self, exc_type: type[BaseException] | None, exc: BaseException | None, traceback: object) -> None:
+        if self.process is None or self.process.stdin is None:
+            return
+        if self.process.poll() is None:
+            self.process.stdin.write("100\n")
+            self.process.stdin.close()
+        status = self.process.wait(timeout=5)
+        if status != 0 and exc is None:
+            raise RuntimeError(f"The progress window exited with status {status}")
+
+
+def message(kind: str, title: str, body: str) -> None:
+    result = subprocess.run(
+        ["zenity", f"--{kind}", "--title", title, "--text", body, "--width", "440"],
+        check=False,
+    )
+    if result.returncode != 0:
+        LOG.error("Could not show %s dialog: exit status %s", kind, result.returncode)
+
+
 def menu(prompt: str, choices: list[str] | None = None) -> str | None:
     result = subprocess.run(
         ["rofi", "-dmenu", "-i", "-p", prompt, "-l", "15"],
@@ -43,8 +94,10 @@ def menu(prompt: str, choices: list[str] | None = None) -> str | None:
         capture_output=True,
         check=False,
     )
-    if result.returncode != 0:
+    if result.returncode == 1 and not result.stderr.strip():
         return None
+    if result.returncode != 0:
+        raise RuntimeError(f"The search menu failed: {result.stderr.strip() or result.returncode}")
     return result.stdout.strip() or None
 
 
@@ -97,9 +150,11 @@ def resolve(md5: str) -> str:
         ["bunx", "--yes", "libgen-downloader@3.4.0", "-u", md5],
         text=True,
         capture_output=True,
-        check=True,
+        check=False,
         timeout=120,
     )
+    if result.returncode != 0:
+        raise RuntimeError(f"LibGen could not resolve {md5}: {(result.stderr or result.stdout).strip()[-500:]}")
     match = URL_PATTERN.search(result.stdout)
     if match is None:
         raise RuntimeError(f"LibGen did not resolve {md5}: {result.stdout.strip()}")
@@ -114,8 +169,10 @@ def check_zotero() -> None:
         raise RuntimeError("The live Zotero add-on does not support standalone attachments")
 
 
-def download(url: str, md5: str, path: Path) -> None:
+def download(url: str, md5: str, path: Path, progress: Progress) -> None:
     digest = hashlib.md5()
+    downloaded = 0
+    reported = 0
     with requests.get(url, stream=True, timeout=(15, 60)) as response:
         response.raise_for_status()
         with path.open("wb") as output:
@@ -128,8 +185,13 @@ def download(url: str, md5: str, path: Path) -> None:
                 first = False
                 output.write(chunk)
                 digest.update(chunk)
+                downloaded += len(chunk)
+                if downloaded - reported >= 1048576:
+                    progress.update(f"Downloading PDF: {downloaded / 1048576:.1f} MB received")
+                    reported = downloaded
     if digest.hexdigest() != md5:
         raise RuntimeError(f"Downloaded PDF does not match catalog MD5 {md5}")
+    progress.update(f"PDF verified: {downloaded / 1048576:.1f} MB, MD5 matches")
 
 
 def attach(book: Book, path: Path) -> str:
@@ -138,47 +200,64 @@ def attach(book: Book, path: Path) -> str:
         json={"title": book.title, "file_path": str(path)},
         timeout=120,
     )
-    response.raise_for_status()
+    if not response.ok:
+        raise RuntimeError(f"Zotero rejected the PDF (HTTP {response.status_code}): {response.text[:500]}")
     result = response.json()
     if result.get("success") is not True or not result.get("attachment_key"):
         raise RuntimeError(f"Zotero did not confirm the attachment: {result}")
     return result["attachment_key"]
 
 
-def notify(title: str, message: str) -> None:
-    subprocess.run(["notify-send", title, message], check=False)
-
-
 def main() -> None:
     query = menu("LibGen search")
     if query is None:
+        LOG.info("Search canceled")
         return
-    books = search(query)
+    LOG.info("Search requested: %s", query)
+    with Progress("LibGen search", "Searching LibGen mirrors"):
+        books = search(query)
     if not books:
-        notify("LibGen", "No PDF results")
+        LOG.info("No PDF results for %s", query)
+        message("info", "LibGen search", f"No PDF results for: {query}")
         return
+    LOG.info("PDF results: %d", len(books))
     chosen = menu("Send PDF to Zotero", [book.label for book in books])
     if chosen is None:
+        LOG.info("Result selection canceled")
         return
     book = next((book for book in books if book.label == chosen), None)
     if book is None:
         raise RuntimeError("Choose a listed PDF")
-    check_zotero()
-    url = resolve(book.md5)
-    with tempfile.NamedTemporaryFile(prefix="libgen-", suffix=".pdf", dir="/tmp", delete=False) as staged:
-        path = Path(staged.name)
-    try:
-        download(url, book.md5, path)
-        key = attach(book, path)
-    finally:
-        subprocess.run(["trash", str(path)], check=True)
-    notify("Zotero PDF added", f"{book.title}\n{key}")
+    LOG.info("Selected PDF: %s [%s]", book.title, book.md5)
+    with Progress("LibGen to Zotero", "Checking live Zotero") as progress:
+        check_zotero()
+        progress.update("Finding a working PDF link")
+        url = resolve(book.md5)
+        progress.update("Downloading PDF")
+        with tempfile.NamedTemporaryFile(prefix="libgen-", suffix=".pdf", dir="/tmp", delete=False) as staged:
+            path = Path(staged.name)
+        try:
+            download(url, book.md5, path, progress)
+            progress.update("Adding PDF as a standalone Zotero item")
+            key = attach(book, path)
+        finally:
+            subprocess.run(["trash", str(path)], check=True)
+        progress.update(f"Zotero item added: {key}")
+    LOG.info("Completed Zotero item: %s [%s]", key, book.md5)
+    message("info", "PDF added to Zotero", f"{book.title}\nZotero item: {key}")
 
 
 if __name__ == "__main__":
+    LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+    logging.basicConfig(
+        filename=LOG_PATH,
+        level=logging.INFO,
+        format="%(asctime)s %(levelname)s %(message)s",
+    )
     try:
         main()
-    except (OSError, requests.RequestException, subprocess.SubprocessError, RuntimeError) as error:
-        print(error, file=sys.stderr)
-        notify("LibGen to Zotero failed", str(error)[:300])
+    except (OSError, requests.RequestException, subprocess.SubprocessError, RuntimeError, KeyError, ValueError) as error:
+        LOG.exception("Workflow failed")
+        print(f"LibGen to Zotero failed: {error}. Log: {LOG_PATH}", file=sys.stderr)
+        message("error", "LibGen to Zotero failed", f"{error}\n\nLog: {LOG_PATH}")
         sys.exit(1)
