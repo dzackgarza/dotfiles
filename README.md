@@ -52,6 +52,21 @@ Other sources: `dotfiles/bin/`.
 - **Rofi/dmenu scripts** in `dotfiles/bin/dmenu/` — dmenuAllPDFs, dmenuAnnotatedPDFs,
   dmenuRecentPDFs, dmenu_locate, dmenu_Oldest_Notes, faves_term, faves_wm.
 
+## Kindle
+
+- **`bin/kindle-send`** — Sends files to the Kindle over Amazon's Send to Kindle
+  service (the `stkclient` package). `kindle-send login` runs a one-time Amazon
+  sign-in; `kindle-send send FILE.pdf` delivers to every device named "Kindle"
+  on the account, `--device NAME` picks another. Credentials:
+  `~/.config/kindle-send/client.json`. Each send is logged to
+  `~/.local/state/kindle-send/sends.log`.
+- **Zotero → Kindle** — `Ctrl+Shift+K` on selected Zotero items, or "Send to
+  Kindle" in the item context menu, sends each item's PDF with the item's title
+  and first author. This is an [Actions & Tags](https://github.com/windingwind/zotero-actions-tags)
+  script action whose source is `zotero/actions/send-to-kindle.js`. Install or
+  update it in the running Zotero with
+  `bin/zotero-action-install --name "Send to Kindle" --shortcut accel,shift,k zotero/actions/send-to-kindle.js`.
+
 ## Notifications
 
 - **dunst** — Notification daemon.
