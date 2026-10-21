@@ -379,16 +379,16 @@ def attach(book: Book, path: Path) -> str:
 
 
 def main() -> None:
-    query = menu("LibGen search")
+    query = menu("LibGen + Anna's search")
     if query is None:
         LOG.info("Search canceled")
         return
     LOG.info("Search requested: %s", query)
-    with Progress("LibGen search", "Searching LibGen mirrors"):
+    with Progress("PDF search", "Searching LibGen mirrors and Anna's Archive"):
         books = search(query)
     if not books:
         LOG.info("No PDF results for %s", query)
-        message("info", "LibGen search", f"No PDF results for: {query}")
+        message("info", "PDF search", f"No PDF results for: {query}")
         return
     LOG.info("PDF results: %d", len(books))
     chosen = menu("Send PDF to Zotero", [book.label for book in books])
