@@ -21,6 +21,7 @@ import argparse
 import json
 import os
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 import stkclient
@@ -28,6 +29,7 @@ import stkclient
 CONFIG_DIR = Path(os.environ.get("XDG_CONFIG_HOME", Path.home() / ".config")) / "kindle-send"
 CLIENT_FILE = CONFIG_DIR / "client.json"
 PENDING_FILE = CONFIG_DIR / "pending-login.json"
+LOG_FILE = Path(os.environ.get("XDG_STATE_HOME", Path.home() / ".local/state")) / "kindle-send" / "sends.log"
 
 
 def write_private(path: Path, text: str) -> None:
