@@ -9,7 +9,7 @@ Usage:
   kindle-send login <redirect-url>  Finish the login with the URL Amazon redirected to.
   kindle-send devices               List Kindle devices on the account.
   kindle-send send [--device NAME]... [--author A] [--title T] FILE...
-                                    Send files. Default: every device.
+                                    Send files. Default: devices named "Kindle".
 
 Credentials live in ~/.config/kindle-send/client.json.
 """
@@ -104,7 +104,7 @@ def main() -> None:
 
     send = sub.add_parser("send", help="send files to Kindle devices")
     send.add_argument("files", nargs="+", metavar="FILE")
-    send.add_argument("--device", action="append", help="device name; repeatable; default all")
+    send.add_argument("--device", action="append", help="device name; repeatable; default: devices named Kindle")
     send.add_argument("--author", default="", help="author metadata")
     send.add_argument("--title", help="title metadata; default file stem (one file only)")
     send.set_defaults(func=cmd_send)
