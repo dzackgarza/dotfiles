@@ -69,14 +69,16 @@ def cmd_devices(args: argparse.Namespace) -> None:
 def cmd_send(args: argparse.Namespace) -> None:
     client = load_client()
     devices = client.get_owned_devices()
+    by_name = {d.device_name: d for d in devices}
     if args.device:
-        by_name = {d.device_name: d for d in devices}
         missing = [name for name in args.device if name not in by_name]
         if missing:
             sys.exit(f"unknown device(s) {missing}; known: {sorted(by_name)}")
         devices = [by_name[name] for name in args.device]
+    else:
+        devices = [d for d in devices if "kindle" in d.device_name.lower()]
     if not devices:
-        sys.exit("no devices on this account")
+        sys.exit(f"no target device; pick one with --device from: {sorted(by_name)}")
     serials = [d.device_serial_number for d in devices]
     names = ", ".join(d.device_name for d in devices)
     for file in args.files:
