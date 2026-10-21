@@ -1,0 +1,117 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# dependencies = ["stkclient>=0.3,<1"]
+# ///
+"""Send documents to Kindle devices through Amazon's Send to Kindle service.
+
+Usage:
+  kindle-send login                 Print the Amazon sign-in URL and save the login state.
+  kindle-send login <redirect-url>  Finish the login with the URL Amazon redirected to.
+  kindle-send devices               List Kindle devices on the account.
+  kindle-send send [--device NAME]... [--author A] [--title T] FILE...
+                                    Send files. Default: every device.
+
+Credentials live in ~/.config/kindle-send/client.json.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import sys
+from pathlib import Path
+
+import stkclient
+
+CONFIG_DIR = Path(os.environ.get("XDG_CONFIG_HOME", Path.home() / ".config")) / "kindle-send"
+CLIENT_FILE = CONFIG_DIR / "client.json"
+PENDING_FILE = CONFIG_DIR / "pending-login.json"
+
+
+def write_private(path: Path, text: str) -> None:
+    CONFIG_DIR.mkdir(parents=True, exist_ok=True)
+    path.write_text(text)
+    path.chmod(0o600)
+
+
+def load_client() -> stkclient.Client:
+    if not CLIENT_FILE.exists():
+        sys.exit(f"not logged in: run `kindle-send login` first ({CLIENT_FILE} missing)")
+    with CLIENT_FILE.open() as fp:
+        return stkclient.Client.load(fp)
+
+
+def cmd_login(args: argparse.Namespace) -> None:
+    if args.redirect_url is None:
+        auth = stkclient.OAuth2()
+        write_private(PENDING_FILE, json.dumps({"verifier": auth._verifier}))
+        print(auth.get_signin_url())
+        print("\nSign in, then rerun: kindle-send login '<URL the browser landed on>'", file=sys.stderr)
+        return
+    if not PENDING_FILE.exists():
+        sys.exit("no pending login: run `kindle-send login` without arguments first")
+    auth = stkclient.OAuth2()
+    auth._verifier = json.loads(PENDING_FILE.read_text())["verifier"]
+    client = auth.create_client(args.redirect_url)
+    write_private(CLIENT_FILE, client.dumps())
+    PENDING_FILE.unlink()
+    print(f"logged in; credentials saved to {CLIENT_FILE}")
+    for device in client.get_owned_devices():
+        print(f"  {device.device_name}  ({device.device_serial_number})")
+
+
+def cmd_devices(args: argparse.Namespace) -> None:
+    for device in load_client().get_owned_devices():
+        print(f"{device.device_name}\t{device.device_serial_number}")
+
+
+def cmd_send(args: argparse.Namespace) -> None:
+    client = load_client()
+    devices = client.get_owned_devices()
+    if args.device:
+        by_name = {d.device_name: d for d in devices}
+        missing = [name for name in args.device if name not in by_name]
+        if missing:
+            sys.exit(f"unknown device(s) {missing}; known: {sorted(by_name)}")
+        devices = [by_name[name] for name in args.device]
+    if not devices:
+        sys.exit("no devices on this account")
+    serials = [d.device_serial_number for d in devices]
+    names = ", ".join(d.device_name for d in devices)
+    for file in args.files:
+        path = Path(file)
+        if not path.is_file():
+            sys.exit(f"not a file: {path}")
+        title = args.title or path.stem
+        fmt = path.suffix.lstrip(".").lower()
+        sku = client.send_file(path, serials, author=args.author, title=title, format=fmt)
+        print(f"sent {path.name} -> {names} (sku {sku})")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    sub = parser.add_subparsers(dest="command", required=True)
+
+    login = sub.add_parser("login", help="start or finish the Amazon login")
+    login.add_argument("redirect_url", nargs="?", help="URL the browser landed on after signing in")
+    login.set_defaults(func=cmd_login)
+
+    devices = sub.add_parser("devices", help="list Kindle devices")
+    devices.set_defaults(func=cmd_devices)
+
+    send = sub.add_parser("send", help="send files to Kindle devices")
+    send.add_argument("files", nargs="+", metavar="FILE")
+    send.add_argument("--device", action="append", help="device name; repeatable; default all")
+    send.add_argument("--author", default="", help="author metadata")
+    send.add_argument("--title", help="title metadata; default file stem (one file only)")
+    send.set_defaults(func=cmd_send)
+
+    args = parser.parse_args()
+    if args.command == "send" and args.title and len(args.files) > 1:
+        parser.error("--title applies to a single file")
+    args.func(args)
+
+
+if __name__ == "__main__":
+    main()
