@@ -11,8 +11,8 @@ Usage:
   kindle-send send [--device NAME]... [--author A] [--title T] FILE...
                                     Send files. Default: devices named "Kindle".
 
-Credentials live in ~/.config/kindle-send/client.json. Every send appends one line to
-~/.local/state/kindle-send/sends.log.
+Credentials live in ~/.config/kindle-send/client.json. Every send, and every send that
+Amazon rejects, appends one line to ~/.local/state/kindle-send/sends.log.
 """
 
 from __future__ import annotations
@@ -122,7 +122,7 @@ def main() -> None:
     send = sub.add_parser("send", help="send files to Kindle devices")
     send.add_argument("files", nargs="+", metavar="FILE")
     send.add_argument("--device", action="append", help="device name; repeatable; default: devices named Kindle")
-    send.add_argument("--author", default="", help="author metadata")
+    send.add_argument("--author", default="", help='author metadata; default "Unknown"')
     send.add_argument("--title", help="title metadata; default file stem (one file only)")
     send.set_defaults(func=cmd_send)
 
