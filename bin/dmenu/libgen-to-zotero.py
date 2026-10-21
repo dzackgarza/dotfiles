@@ -440,6 +440,6 @@ if __name__ == "__main__":
         ValueError,
     ) as error:
         LOG.exception("Workflow failed")
-        print(f"LibGen to Zotero failed: {error}. Log: {LOG_PATH}", file=sys.stderr)
-        message("error", "LibGen to Zotero failed", f"{error}\n\nLog: {LOG_PATH}")
+        print(f"PDF to Zotero failed: {error}. Log: {LOG_PATH}", file=sys.stderr)
+        message("error", "PDF to Zotero failed", f"{error}\n\nLog: {LOG_PATH}")
         sys.exit(1)
