@@ -91,6 +91,10 @@ def cmd_send(args: argparse.Namespace) -> None:
         title = args.title or path.stem
         fmt = path.suffix.lstrip(".").lower()
         sku = client.send_file(path, serials, author=args.author, title=title, format=fmt)
+        stamp = datetime.now(timezone.utc).isoformat(timespec="seconds")
+        LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
+        with LOG_FILE.open("a") as log:
+            log.write(f"{stamp}\t{sku}\t{names}\t{title}\t{path}\n")
         print(f"sent {path.name} -> {names} (sku {sku})")
 
 
