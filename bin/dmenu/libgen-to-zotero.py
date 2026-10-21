@@ -327,6 +327,41 @@ def download_libgen(url: str, md5: str, path: Path, progress: Progress) -> None:
     progress.update(f"PDF verified: {downloaded / 1048576:.1f} MB, MD5 matches")
 
 
+def download_annas(md5: str, path: Path, progress: Progress) -> None:
+    """Fetch through the free Anna's Archive partner servers; the CLI verifies the MD5."""
+    with subprocess.Popen(
+        [
+            *ANNAS_CLI,
+            "download",
+            md5,
+            "-o",
+            str(path),
+            "--max-wait",
+            str(ANNAS_MAX_WAIT_SECONDS),
+            "--json",
+        ],
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    ) as process:
+        assert process.stderr is not None
+        for line in process.stderr:
+            if line.strip():
+                progress.update(f"Anna's Archive: {line.strip()}")
+        stdout, _ = process.communicate(timeout=ANNAS_MAX_WAIT_SECONDS + 600)
+    report = json.loads(stdout)
+    if process.returncode != 0 or "error" in report:
+        raise RuntimeError(
+            f"Anna's Archive could not download {md5}: {report.get('error', report)}"
+        )
+    if report["md5"] != md5:
+        raise RuntimeError(f"Downloaded PDF does not match catalog MD5 {md5}")
+    with path.open("rb") as output:
+        if output.read(5) != b"%PDF-":
+            raise RuntimeError("Anna's Archive returned a file that is not a PDF")
+    progress.update(f"PDF verified: {report['bytes'] / 1048576:.1f} MB, MD5 matches")
+
+
 def attach(book: Book, path: Path) -> str:
     response = requests.post(
         f"{ZOTERO_URL}/attach",
