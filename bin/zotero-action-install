@@ -1,0 +1,75 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# dependencies = []
+# ///
+"""Install or update an Actions & Tags script action in the running Zotero.
+
+Usage:
+  zotero-action-install --name NAME [--shortcut accel,shift,k] [--menu LABEL] FILE.js
+
+The file body becomes the action script. An existing action with the same name is
+replaced in place. Talks to the local write API addon at http://127.0.0.1:23119/write
+(operation run_javascript) and the Actions & Tags plugin API
+(Zotero.ActionsTags.api.actionManager).
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+import urllib.request
+from pathlib import Path
+
+WRITE_URL = "http://127.0.0.1:23119/write"
+EVENT_NONE = 0
+OPERATION_SCRIPT = 4
+
+UPSERT_JS = """
+const api = Zotero.ActionsTags && Zotero.ActionsTags.api;
+if (!api) throw new Error("Actions & Tags plugin is not loaded");
+const mgr = api.actionManager;
+const wanted = ACTION;
+const existingKey = Object.entries(mgr.getActions())
+  .filter(([, a]) => a.name === wanted.name)
+  .map(([key]) => key)[0];
+const key = mgr.updateAction(wanted, existingKey);
+return { key, replaced: Boolean(existingKey) };
+"""
+
+
+def run_javascript(code: str) -> dict:
+    body = json.dumps({"operation": "run_javascript", "code": code}).encode()
+    request = urllib.request.Request(WRITE_URL, data=body, headers={"Content-Type": "application/json"})
+    with urllib.request.urlopen(request) as response:
+        payload = json.load(response)
+    if not payload.get("success"):
+        sys.exit(f"Zotero write API failed: {json.dumps(payload)}")
+    return payload["details"]["result"]
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("file", type=Path, help="JavaScript file holding the action body")
+    parser.add_argument("--name", required=True, help="action name; also the upsert key")
+    parser.add_argument("--shortcut", default="", help='KeyModifier string, e.g. "accel,shift,k"')
+    parser.add_argument("--menu", help="item context-menu label; default: the name")
+    args = parser.parse_args()
+
+    action = {
+        "name": args.name,
+        "event": EVENT_NONE,
+        "operation": OPERATION_SCRIPT,
+        "data": args.file.read_text(),
+        "shortcut": args.shortcut,
+        "menu": args.menu or args.name,
+        "enabled": True,
+        "showInMenu": {"item": True, "collection": False, "tools": False, "reader": False, "readerAnnotation": False},
+    }
+    result = run_javascript(UPSERT_JS.replace("ACTION", json.dumps(action)))
+    verb = "updated" if result["replaced"] else "installed"
+    print(f"{verb} action {args.name!r} (key {result['key']})")
+
+
+if __name__ == "__main__":
+    main()
