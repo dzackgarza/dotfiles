@@ -2,16 +2,18 @@
 # /// script
 # dependencies = ["beautifulsoup4>=4.12,<5", "requests>=2.32,<3"]
 # ///
-"""Search LibGen in rofi and store a selected PDF in live Zotero."""
+"""Search LibGen and Anna's Archive in rofi and store a selected PDF in live Zotero."""
 
 from __future__ import annotations
 
 import hashlib
+import json
 import logging
 import re
 import subprocess
 import sys
 import tempfile
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
 from types import TracebackType
