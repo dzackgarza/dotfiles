@@ -41,10 +41,12 @@ class Book:
     author: str
     size: str
     md5: str
+    sources: frozenset[str]
 
     @property
     def label(self) -> str:
-        return f"{self.title} | {self.author} | PDF {self.size} | {self.md5[:8]}"
+        sources = "+".join(sorted(self.sources))
+        return f"[{sources}] {self.title} | {self.author} | PDF {self.size} | {self.md5[:8]}"
 
 
 class Progress:
@@ -110,7 +112,7 @@ def message(kind: str, title: str, body: str) -> None:
         [
             "notify-send",
             "-a",
-            "LibGen to Zotero",
+            "PDF to Zotero",
             "-u",
             "critical" if kind == "error" else "normal",
             title,
