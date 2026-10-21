@@ -204,9 +204,68 @@ def search_libgen(query: str) -> list[Book]:
                 author=cells[1].get_text(" ", strip=True),
                 size=cells[6].get_text(" ", strip=True),
                 md5=match.group(1),
+                sources=frozenset({LIBGEN}),
             )
         )
     return books
+
+
+def search_annas(query: str) -> list[Book]:
+    LOG.info("Searching Anna's Archive")
+    result = subprocess.run(
+        [
+            *ANNAS_CLI,
+            "search",
+            query,
+            "--ext",
+            "pdf",
+            "--limit",
+            str(ANNAS_RESULT_LIMIT),
+            "--json",
+        ],
+        text=True,
+        capture_output=True,
+        check=False,
+        timeout=180,
+    )
+    if result.returncode != 0:
+        raise RuntimeError(
+            f"Anna's Archive search failed: {(result.stderr or result.stdout).strip()[-500:]}"
+        )
+    records = json.loads(result.stdout)
+    return [
+        Book(
+            title=record["title"],
+            author=record["author"],
+            size=record["size"],
+            md5=record["md5"],
+            sources=frozenset({ANNAS}),
+        )
+        for record in records
+        if record["format"] == "pdf"
+    ]
+
+
+def search(query: str) -> list[Book]:
+    """LibGen results first, then Anna's; one entry per MD5 naming every source."""
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        libgen = pool.submit(search_libgen, query)
+        annas = pool.submit(search_annas, query)
+        books = [*libgen.result(), *annas.result()]
+    merged: dict[str, Book] = {}
+    for book in books:
+        seen = merged.get(book.md5)
+        if seen is None:
+            merged[book.md5] = book
+            continue
+        merged[book.md5] = Book(
+            title=seen.title,
+            author=seen.author,
+            size=seen.size,
+            md5=seen.md5,
+            sources=seen.sources | book.sources,
+        )
+    return list(merged.values())
 
 
 def resolve(md5: str) -> str:
