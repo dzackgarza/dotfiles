@@ -28,6 +28,8 @@ ANNAS_RESULT_LIMIT = 50
 ANNAS_MAX_WAIT_SECONDS = 300
 LIBGEN = "LibGen"
 ANNAS = "Anna's"
+ANNAS_RECORD_URL = "https://annas-archive.gl/md5/{md5}"
+LIBGEN_RECORD_URL = "https://libgen.li/ads.php?md5={md5}"
 ZOTERO_URL = "http://127.0.0.1:23119"
 MD5_PATTERN = re.compile(r"md5=([0-9a-f]{32})")
 URL_PATTERN = re.compile(r"Here is the direct download link:\s*(https?://\S+)")
