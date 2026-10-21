@@ -365,8 +365,10 @@ def download_annas(md5: str, path: Path, progress: Progress) -> None:
         stdout, _ = process.communicate(timeout=ANNAS_MAX_WAIT_SECONDS + 600)
     report = json.loads(stdout)
     if process.returncode != 0 or "error" in report:
-        raise RuntimeError(
-            f"Anna's Archive could not download {md5}: {report.get('error', report)}"
+        error = report.get("error", report)
+        raise ManualDownload(
+            f"Anna's Archive could not download {md5}: {error.get('message', error)}",
+            ANNAS_RECORD_URL.format(md5=md5),
         )
     if report["md5"] != md5:
         raise RuntimeError(f"Downloaded PDF does not match catalog MD5 {md5}")
@@ -445,6 +447,15 @@ if __name__ == "__main__":
     )
     try:
         main()
+    except ManualDownload as error:
+        LOG.exception("Automated download stopped; opening %s", error.url)
+        message(
+            "warning",
+            "Continue the download in your browser",
+            f"{error}\n\nOpening the record page so you can finish by hand:\n{error.url}",
+        )
+        subprocess.run(["xdg-open", error.url], check=True)
+        sys.exit(1)
     except (
         OSError,
         requests.RequestException,
