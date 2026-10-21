@@ -11,7 +11,8 @@ Usage:
   kindle-send send [--device NAME]... [--author A] [--title T] FILE...
                                     Send files. Default: devices named "Kindle".
 
-Credentials live in ~/.config/kindle-send/client.json.
+Credentials live in ~/.config/kindle-send/client.json. Every send appends one line to
+~/.local/state/kindle-send/sends.log.
 """
 
 from __future__ import annotations
