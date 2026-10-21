@@ -41,6 +41,9 @@ Other sources: `dotfiles/bin/`.
     entries download through a LibGen mirror; Anna's-only entries download
     through the free Anna's Archive partner servers via the pinned
     `annas-archive-cli` (`uvx`), which may wait up to 300 s on the countdown.
+    When a download cannot be completed automatically (for example Anna's
+    Archive demands browser verification, or no LibGen mirror resolves), the
+    record page for that file opens in the browser so you can finish by hand.
     Zotero must be open. A progress dialog shows each stage. Success and failure
     appear in a dialog and a notification; details are logged in
     `~/.local/state/libgen-to-zotero.log`.
