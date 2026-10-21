@@ -287,12 +287,16 @@ def resolve(md5: str) -> str:
         timeout=120,
     )
     if result.returncode != 0:
-        raise RuntimeError(
-            f"LibGen could not resolve {md5}: {(result.stderr or result.stdout).strip()[-500:]}"
+        raise ManualDownload(
+            f"LibGen could not resolve {md5}: {(result.stderr or result.stdout).strip()[-500:]}",
+            LIBGEN_RECORD_URL.format(md5=md5),
         )
     match = URL_PATTERN.search(result.stdout)
     if match is None:
-        raise RuntimeError(f"LibGen did not resolve {md5}: {result.stdout.strip()}")
+        raise ManualDownload(
+            f"LibGen did not resolve {md5}: {result.stdout.strip()}",
+            LIBGEN_RECORD_URL.format(md5=md5),
+        )
     return match.group(1)
 
 
