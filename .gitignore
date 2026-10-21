@@ -19,6 +19,8 @@ node_modules/
 *.js
 *.js.map
 out/
+# Hand-written Zotero Actions & Tags scripts are source, not build output
+!zotero/actions/*.js
 
 # VSCode/Editor settings
 .vscode/
