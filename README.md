@@ -34,11 +34,16 @@ Other sources: `dotfiles/bin/`.
   - `Mod+D` -> rofi drun (GUI apps) via `~/.config/hypr/scripts/menu.sh`
   - `Mod+A` -> rofi PDF browser from Dropbox/Library via
     `dotfiles/bin/dmenu/dmenuAllPDFs.sh`
-  - `Mod+F` -> search LibGen PDFs in rofi, then add the selected PDF as a
-    standalone attachment in the live Zotero library via
-    `dotfiles/bin/dmenu/libgen-to-zotero.py`. Zotero must be open. A progress
-    dialog shows each stage. Success and failure appear in a dialog and a
-    notification; details are logged in `~/.local/state/libgen-to-zotero.log`.
+  - `Mod+F` -> search LibGen and Anna's Archive for PDFs in one rofi list, then
+    add the selected PDF as a standalone attachment in the live Zotero library
+    via `dotfiles/bin/dmenu/libgen-to-zotero.py`. Each entry is prefixed with
+    its source (`[LibGen]`, `[Anna's]`, or both when the MD5 matches). LibGen
+    entries download through a LibGen mirror; Anna's-only entries download
+    through the free Anna's Archive partner servers via the pinned
+    `annas-archive-cli` (`uvx`), which may wait up to 300 s on the countdown.
+    Zotero must be open. A progress dialog shows each stage. Success and failure
+    appear in a dialog and a notification; details are logged in
+    `~/.local/state/libgen-to-zotero.log`.
   - `Mod+Shift+D` -> emoji picker
   - `Mod+Shift+B` -> website launcher
 - **Rofi/dmenu scripts** in `dotfiles/bin/dmenu/` — dmenuAllPDFs, dmenuAnnotatedPDFs,
