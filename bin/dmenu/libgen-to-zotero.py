@@ -23,6 +23,11 @@ import requests
 from bs4 import BeautifulSoup
 
 MIRRORS_CONFIG_URL = "https://raw.githubusercontent.com/obsfx/libgen-downloader/configuration/config.v3.json"
+ANNAS_CLI = ["uvx", "--from", "annas-archive-cli==0.2.0rc4", "anna"]
+ANNAS_RESULT_LIMIT = 50
+ANNAS_MAX_WAIT_SECONDS = 300
+LIBGEN = "LibGen"
+ANNAS = "Anna's"
 ZOTERO_URL = "http://127.0.0.1:23119"
 MD5_PATTERN = re.compile(r"md5=([0-9a-f]{32})")
 URL_PATTERN = re.compile(r"Here is the direct download link:\s*(https?://\S+)")
