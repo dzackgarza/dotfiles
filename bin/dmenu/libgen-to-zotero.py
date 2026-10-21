@@ -298,7 +298,7 @@ def check_zotero() -> None:
         )
 
 
-def download(url: str, md5: str, path: Path, progress: Progress) -> None:
+def download_libgen(url: str, md5: str, path: Path, progress: Progress) -> None:
     digest = hashlib.md5()
     downloaded = 0
     reported = 0
