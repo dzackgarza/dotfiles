@@ -90,12 +90,22 @@ def cmd_send(args: argparse.Namespace) -> None:
             sys.exit(f"not a file: {path}")
         title = args.title or path.stem
         fmt = path.suffix.lstrip(".").lower()
-        sku = client.send_file(path, serials, author=args.author, title=title, format=fmt)
-        stamp = datetime.now(timezone.utc).isoformat(timespec="seconds")
-        LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
-        with LOG_FILE.open("a") as log:
-            log.write(f"{stamp}\t{sku}\t{names}\t{title}\t{path}\n")
+        # Amazon rejects documentMetadata.author shorter than one character.
+        author = args.author.strip() or "Unknown"
+        try:
+            sku = client.send_file(path, serials, author=author, title=title, format=fmt)
+        except stkclient.api.APIError as error:
+            log_send(f"FAILED\t{names}\t{title}\t{path}\t{error}")
+            sys.exit(f"send failed for {path}: {error}")
+        log_send(f"{sku}\t{names}\t{title}\t{path}")
         print(f"sent {path.name} -> {names} (sku {sku})")
+
+
+def log_send(line: str) -> None:
+    stamp = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with LOG_FILE.open("a") as log:
+        log.write(f"{stamp}\t{line}\n")
 
 
 def main() -> None:
