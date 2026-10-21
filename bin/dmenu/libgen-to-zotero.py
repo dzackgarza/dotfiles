@@ -51,6 +51,14 @@ class Book:
         return f"[{sources}] {self.title} | {self.author} | PDF {self.size} | {self.md5[:8]}"
 
 
+class ManualDownload(RuntimeError):
+    """The automated download stopped; the record page is where a person continues."""
+
+    def __init__(self, reason: str, url: str) -> None:
+        super().__init__(reason)
+        self.url = url
+
+
 class Progress:
     """Keep a visible stage indicator open during network and Zotero work."""
 
