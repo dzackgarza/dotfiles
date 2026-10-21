@@ -151,7 +151,7 @@ def menu(prompt: str, choices: list[str] | None = None) -> str | None:
     return result.stdout.strip() or None
 
 
-def search(query: str) -> list[Book]:
+def search_libgen(query: str) -> list[Book]:
     config_response = requests.get(MIRRORS_CONFIG_URL, timeout=15)
     config_response.raise_for_status()
     mirrors = config_response.json()["mirrors"]
