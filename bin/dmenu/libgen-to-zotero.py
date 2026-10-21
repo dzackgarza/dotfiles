@@ -399,22 +399,24 @@ def main() -> None:
     if book is None:
         raise RuntimeError("Choose a listed PDF")
     LOG.info("Selected PDF: %s [%s]", book.title, book.md5)
-    with Progress("LibGen to Zotero", "Checking live Zotero") as progress:
+    with Progress("PDF to Zotero", "Checking live Zotero") as progress:
         check_zotero()
-        progress.update("Finding a working PDF link")
-        url = resolve(book.md5)
-        progress.update("Downloading PDF")
-        with tempfile.NamedTemporaryFile(
-            prefix="libgen-", suffix=".pdf", dir="/tmp", delete=False
-        ) as staged:
-            path = Path(staged.name)
+        staging = Path(tempfile.mkdtemp(prefix="pdf-to-zotero-", dir="/tmp"))
+        path = staging / f"{book.md5}.pdf"
         try:
-            download(url, book.md5, path, progress)
+            if LIBGEN in book.sources:
+                progress.update("Finding a working LibGen link")
+                url = resolve(book.md5)
+                progress.update("Downloading PDF from LibGen")
+                download_libgen(url, book.md5, path, progress)
+            else:
+                progress.update("Downloading PDF from Anna's Archive")
+                download_annas(book.md5, path, progress)
             progress.update("Adding PDF as a standalone Zotero item")
             key = attach(book, path)
             LOG.info("Zotero stored item: %s [%s]", key, book.md5)
         finally:
-            subprocess.run(["trash", str(path)], check=True)
+            subprocess.run(["trash", str(staging)], check=True)
         progress.update(f"Zotero item added: {key}")
     LOG.info("Completed Zotero item: %s [%s]", key, book.md5)
     message("info", "PDF added to Zotero", f"{book.title}\nZotero item: {key}")
