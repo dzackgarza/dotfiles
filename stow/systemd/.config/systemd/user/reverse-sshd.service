@@ -1,0 +1,10 @@
+[Unit]
+Description=Loopback SSH server for the rack reverse tunnel
+
+[Service]
+ExecStart=/usr/bin/sshd -D -e -f /home/dzack/.config/reverse-sshd/sshd_config
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
