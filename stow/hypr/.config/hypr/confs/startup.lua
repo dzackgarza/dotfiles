@@ -15,7 +15,7 @@ hl.on("hyprland.start", function()
     -- Start window-ram only after control-panel's instance ("ags") is registered,
     -- which happens after its gjs has loaded that file.
     hl.exec_cmd(
-        "waybar & hyprsunset & nm-applet & copyq & dropbox & bitwarden-desktop & "
+        "waybar & hyprsunset & nm-applet & copyq & bitwarden-desktop & "
             .. "ags run /home/dzack/.config/ags/control-panel & "
             .. "{ timeout 30 sh -c 'until ags list | grep -qx ags; do sleep 0.2; done' "
             .. "&& ags run /home/dzack/.config/ags/window-ram/app.tsx "
