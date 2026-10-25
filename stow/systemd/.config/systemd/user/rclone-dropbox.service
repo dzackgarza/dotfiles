@@ -1,0 +1,16 @@
+[Unit]
+Description=Dropbox filesystem
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=notify
+Environment=PATH=/home/dzack/.local/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/usr/bin/env rclone mount dropbox: %h/mnt/dropbox --vfs-cache-mode full --vfs-links --file-perms 0755 --dir-cache-time 5s --poll-interval 15s --vfs-write-back 0s --vfs-cache-max-size 1G --vfs-cache-max-age 1h
+ExecStop=/usr/bin/fusermount3 -u %h/mnt/dropbox
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=300
+
+[Install]
+WantedBy=default.target
