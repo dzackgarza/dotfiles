@@ -13,6 +13,7 @@ PathChanged=/home/dzack/gitclones/zotero-gui/.envrc
 PathChanged=/home/dzack/gitclones/zotero-gui/package.json
 PathChanged=/home/dzack/gitclones/zotero-gui/bun.lock
 PathChanged=/home/dzack/gitclones/zotero-gui/vite.config.ts
+PathChanged=/home/dzack/gitclones/project-management/workstreams-dashboard
 
 [Install]
 WantedBy=default.target
