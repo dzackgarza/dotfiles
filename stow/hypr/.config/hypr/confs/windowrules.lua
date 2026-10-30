@@ -145,6 +145,10 @@ hl.window_rule({ match = { class = ".*" }, no_initial_focus = true })
 -- terminals are opened on request, so they take focus
 hl.window_rule({ match = { class = "^(kitty)$" }, no_initial_focus = false })
 
+-- Flameshot capture overlays follow the upstream Hyprland configuration.
+hl.window_rule({ match = { class = "^(flameshot)$" }, float = true, pin = true, no_anim = true, decorate = false, no_blur = true, no_shadow = true, no_initial_focus = false })
+hl.window_rule({ match = { class = "^(flameshot)$", title = "^(flameshot)$" }, move = { 0, 0 } })
+
 hl.workspace_rule({
     workspace = "special:exposed",
     gaps_out = 60,
