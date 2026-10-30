@@ -76,7 +76,7 @@ register_bind("F11", hl.dsp.workspace.toggle_special("chromium"), { description 
 register_bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(wallpaperSelect .. " thm1"), { description = "Select wallpaper" })
 
 -- Screenshot
-register_bind("print", hl.dsp.exec_cmd(scriptsDir .. "/screenshot.sh"), { description = "Take screenshot" })
+register_bind("print", hl.dsp.exec_cmd("flameshot gui"), { description = "Take screenshot" })
 
 -- Key Binds Help
 register_bind(mainMod .. " + SHIFT + h", hl.dsp.exec_cmd(help), { description = "Show keybinds" })

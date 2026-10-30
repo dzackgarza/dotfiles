@@ -146,8 +146,8 @@ Other sources: `dotfiles/bin/`.
 
 ## Screenshots
 
-- **grimblast + satty** — Print key workflow: select area via rofi, annotate, save.
-  Script: `~/.config/hypr/scripts/screenshot.sh`.
+- **Flameshot** — Print opens the capture interface to select, annotate, copy, or save.
+  Binding: `~/.config/hypr/confs/keybinds.lua` (`flameshot gui`).
 - Waybar "Screen Clip" button uses `grim -g "$(slurp)" - | wl-copy` (clipboard only).
 
 ## Display
