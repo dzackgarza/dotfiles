@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
-# Prune package-manager download caches. Every target here is a cache that the
-# owning tool refills on demand; nothing installed or built is touched.
+# Weekly disk cleanup: package-manager caches, Rust build caches, and the trash.
 # Runs each step even if an earlier one fails, then exits 1 if any failed.
 set -uo pipefail
 
 nvm_bin=$(ls -d /home/dzack/.nvm/versions/node/*/bin | sort -V | tail -1)
-export PATH="/home/dzack/.local/bin:/home/dzack/.local/share/pnpm:$nvm_bin:/usr/bin"
+export PATH="/home/dzack/.local/bin:/home/dzack/.local/share/pnpm:/home/dzack/.cargo/bin:$nvm_bin:/usr/bin"
 
 failed=()
 run() {
@@ -16,6 +15,17 @@ run() {
 run npm cache clean --force
 run pnpm store prune
 run yay -Sc --aur --noconfirm
+run uv cache prune
+for m in \
+	/home/dzack/gitclones/math-flashcards/desktop/src-tauri/Cargo.toml \
+	/home/dzack/gitclones/math-pdf-reader/Cargo.toml \
+	/home/dzack/gitclones/math-pdf-reader/desktop/src-tauri/Cargo.toml \
+	/home/dzack/gitclones/visual-tikz-editor/src-tauri/Cargo.toml \
+	/home/dzack/gitclones/agent-memory/Cargo.toml \
+	/home/dzack/gitclones/paru/src/paru-2.1.0/Cargo.toml; do
+	run cargo clean --manifest-path "$m"
+done
+run trash-empty -f
 
 if ((${#failed[@]})); then
 	printf 'failed: %s\n' "${failed[@]}" >&2

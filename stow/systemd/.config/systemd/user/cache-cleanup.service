@@ -1,5 +1,5 @@
 [Unit]
-Description=Prune npm, pnpm, and yay download caches
+Description=Weekly disk cleanup: package caches, Rust build caches, trash
 
 [Service]
 Type=oneshot
