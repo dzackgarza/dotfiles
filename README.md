@@ -162,6 +162,8 @@ Other sources: `dotfiles/bin/`.
 ## Systemd User Services
 
 - evremap.service, gitwatch@.service, jupyter-sagemath.service, network-monitor.service
+- cache-cleanup.timer — weekly `bin/cache-cleanup`: prunes npm, pnpm, and yay AUR download caches.
+- uv-cache-prune.service — `uv cache prune` at login, before MCP servers hold the uv cache lock.
 
 ## Startup (from `~/.config/hypr/confs/startup.lua`)
 
