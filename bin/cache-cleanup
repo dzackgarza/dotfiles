@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Prune package-manager download caches. Every target here is a cache that the
+# owning tool refills on demand; nothing installed or built is touched.
+# Runs each step even if an earlier one fails, then exits 1 if any failed.
+set -uo pipefail
+
+nvm_bin=$(ls -d /home/dzack/.nvm/versions/node/*/bin | sort -V | tail -1)
+export PATH="/home/dzack/.local/bin:/home/dzack/.local/share/pnpm:$nvm_bin:/usr/bin"
+
+failed=()
+run() {
+	echo "==> $*"
+	"$@" || failed+=("$*")
+}
+
+run npm cache clean --force
+run pnpm store prune
+run uv cache prune
+run yay -Sc --aur --noconfirm
+
+if ((${#failed[@]})); then
+	printf 'failed: %s\n' "${failed[@]}" >&2
+	exit 1
+fi
