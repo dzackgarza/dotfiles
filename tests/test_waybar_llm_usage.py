@@ -101,6 +101,40 @@ CODEX_TWO_ACCOUNT_RESPONSE = {
 
 
 class WaybarLlmUsageTest(unittest.TestCase):
+    def test_claude_bar_uses_subscription_limits_when_api_spend_is_exhausted(self):
+        module = load_module()
+        data = {
+            "providers": [{
+                "provider": "claude",
+                "display_name": "Claude Code",
+                "status": "ok",
+                "account": "default",
+                "rows": [
+                    {"identifier": "Claude (weekly)", "pct_used": 0,
+                     "reset_at": "2026-11-11T05:00:00Z", "is_exhausted": False,
+                     "time_until_reset": "in 6d 18h"},
+                    {"identifier": "Claude (Fable)", "pct_used": 0,
+                     "reset_at": "2026-11-11T05:00:00Z", "is_exhausted": False,
+                     "time_until_reset": "in 6d 18h"},
+                    {"identifier": "Claude (API Spend $250)", "pct_used": 100,
+                     "reset_at": "2026-11-05T07:59:00Z", "is_exhausted": True,
+                     "time_until_reset": "in 21h 12m"},
+                ],
+            }],
+        }
+
+        payload = module.render_waybar_payload("claude", data)
+
+        self.assertEqual(
+            payload["text"],
+            "<span color='#aad94c'>0</span>"
+            "<span color='#3e4b59'>/</span>"
+            "<span color='#aad94c' size='smaller'>0</span>",
+        )
+        self.assertEqual(payload["class"], "")
+        self.assertNotIn("API Spend", payload["tooltip"])
+        self.assertIn("Claude (weekly)", payload["tooltip"])
+
     def test_countdown_formats_reset_as_decimal_hours(self):
         module = load_module()
 
