@@ -66,6 +66,13 @@ def _active_snapshots(slug: str, providers: list[dict]) -> list[dict]:
     return sorted(snapshots, key=lambda snapshot: snapshot.get("account") or snapshot["display_name"])
 
 
+def _relevant_rows(slug: str, snap: dict) -> list[dict]:
+    rows = snap["rows"]
+    if slug == "claude":
+        return [r for r in rows if not r["identifier"].startswith("Claude (API Spend")]
+    return rows
+
+
 def _compact_item(icon: str, icon_color: str, rows: list[dict]) -> tuple[str, int]:
     prefix = f"<span color='{icon_color}'>{icon}</span>" if icon else ""
     if not rows:
@@ -93,8 +100,9 @@ def _compact_item(icon: str, icon_color: str, rows: list[dict]) -> tuple[str, in
 
 
 def _snapshot_payload(slug: str, snap: dict) -> tuple[str, str, int]:
-    main_rows = [r for r in snap["rows"] if not _is_spark(r)]
-    spark_rows = [r for r in snap["rows"] if _is_spark(r)]
+    rows = _relevant_rows(slug, snap)
+    main_rows = [r for r in rows if not _is_spark(r)]
+    spark_rows = [r for r in rows if _is_spark(r)]
 
     rendered_items = [_compact_item(REGULAR_ICON, DIM, main_rows)]
     if spark_rows:
@@ -104,7 +112,7 @@ def _snapshot_payload(slug: str, snap: dict) -> tuple[str, str, int]:
     worst = max(item[1] for item in rendered_items)
 
     lines = [f"{snap['display_name']} - {snap.get('account') or '?'}"]
-    for r in snap["rows"]:
+    for r in rows:
         lines.append(f"  {r['identifier']:>15}: {r['pct_used']:>3}%  resets {r['time_until_reset'] or 'n/a'}")
     tip = "\n".join(lines)
     return text, tip, worst
@@ -128,7 +136,7 @@ def render_waybar_payload(slug: str, data: dict) -> dict:
 def _fresh_window_ready(slug: str, data: dict) -> bool:
     """A main window is open, not exhausted, and at 0% -- i.e. just reset/untouched."""
     for snap in _active_snapshots(slug, data["providers"]):
-        for r in snap["rows"]:
+        for r in _relevant_rows(slug, snap):
             if not _is_spark(r) and not r["is_exhausted"] and r["pct_used"] == 0:
                 return True
     return False
