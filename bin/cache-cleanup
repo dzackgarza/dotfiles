@@ -15,7 +15,6 @@ run() {
 
 run npm cache clean --force
 run pnpm store prune
-run uv cache prune
 run yay -Sc --aur --noconfirm
 
 if ((${#failed[@]})); then

@@ -1,5 +1,5 @@
 [Unit]
-Description=Prune npm, pnpm, uv, and yay download caches
+Description=Prune npm, pnpm, and yay download caches
 
 [Service]
 Type=oneshot

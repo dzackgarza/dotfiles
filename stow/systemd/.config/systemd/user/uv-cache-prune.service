@@ -1,0 +1,11 @@
+[Unit]
+Description=Prune the uv cache at login, before MCP servers hold its lock
+
+[Service]
+Type=oneshot
+Nice=19
+IOSchedulingClass=idle
+ExecStart=/home/dzack/.local/bin/uv cache prune
+
+[Install]
+WantedBy=default.target
