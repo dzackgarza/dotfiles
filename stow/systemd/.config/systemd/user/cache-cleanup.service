@@ -1,0 +1,8 @@
+[Unit]
+Description=Prune npm, pnpm, uv, and yay download caches
+
+[Service]
+Type=oneshot
+Nice=19
+IOSchedulingClass=idle
+ExecStart=/home/dzack/dotfiles/bin/cache-cleanup
