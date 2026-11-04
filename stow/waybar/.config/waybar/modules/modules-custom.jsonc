@@ -187,5 +187,12 @@
         "return-type": "json",
         "interval": 5,
         "tooltip": true
+    },
+    "custom/llm-openmath": {
+        "exec": "~/.config/waybar/scripts/llm-usage.py openmath",
+        "return-type": "json",
+        "interval": 60,
+        "tooltip": true,
+        "format": "OM {}"
     }
 }

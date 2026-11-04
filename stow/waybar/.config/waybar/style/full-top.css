@@ -393,6 +393,7 @@ tooltip label {
 #custom-notify,
 #custom-llm-claude,
 #custom-llm-codex,
+#custom-llm-openmath,
 #custom-claude-usage,
 #tray {
   background-color: @background;
