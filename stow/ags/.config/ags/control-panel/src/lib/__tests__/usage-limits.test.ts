@@ -131,10 +131,11 @@ describe("usage-limits --json", () => {
     expect(snapshots.length).toBeGreaterThan(0)
     for (const p of snapshots) {
       expect(p.saved_resets).not.toBeNull()
-      expect(Number.isInteger(p.saved_resets.available_count)).toBe(true)
-      expect(p.saved_resets.applicable_now_count).toBeGreaterThanOrEqual(0)
-      expect(p.saved_resets.applicable_now_count).toBeLessThanOrEqual(
-        p.saved_resets.available_count,
+      const resets = p.saved_resets!
+      expect(Number.isInteger(resets.available_count)).toBe(true)
+      expect(resets.applicable_now_count).toBeGreaterThanOrEqual(0)
+      expect(resets.applicable_now_count).toBeLessThanOrEqual(
+        resets.available_count,
       )
     }
   })
