@@ -19,6 +19,7 @@ export interface ModelAvailability {
 export interface SavedResets {
   available_count: number
   applicable_now_count: number
+  usage_url: string
 }
 
 export interface ProviderSnapshot {
