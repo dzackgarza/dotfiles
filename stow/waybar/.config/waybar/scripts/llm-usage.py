@@ -108,12 +108,22 @@ def _snapshot_payload(slug: str, snap: dict) -> tuple[str, str, int]:
     if spark_rows:
         rendered_items.append(_compact_item(SPARK_ICON, YELLOW, spark_rows))
 
-    text = f"<span color='{DIM}'> </span>".join(item[0] for item in rendered_items)
+    text_items = [item[0] for item in rendered_items]
     worst = max(item[1] for item in rendered_items)
+
+    resets = snap.get("saved_resets")
+    if resets is not None and resets["available_count"] > 0:
+        color = GREEN if resets["applicable_now_count"] > 0 else DIM
+        text_items.append(f"<span color='{color}'>{RESET_ICON}{resets['available_count']}</span>")
+    text = f"<span color='{DIM}'> </span>".join(text_items)
 
     lines = [f"{snap['display_name']} - {snap.get('account') or '?'}"]
     for r in rows:
         lines.append(f"  {r['identifier']:>15}: {r['pct_used']:>3}%  resets {r['time_until_reset'] or 'n/a'}")
+    if resets is not None:
+        lines.append(
+            f"  Saved resets: {resets['available_count']} (usable now: {resets['applicable_now_count']})"
+        )
     tip = "\n".join(lines)
     return text, tip, worst
 
