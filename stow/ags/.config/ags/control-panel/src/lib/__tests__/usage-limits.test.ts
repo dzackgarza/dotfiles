@@ -137,6 +137,7 @@ describe("usage-limits --json", () => {
       expect(p.saved_resets).not.toBeNull()
       const resets = p.saved_resets!
       expect(Number.isInteger(resets.available_count)).toBe(true)
+      expect(resets.usage_url).toMatch(/^https:\/\//)
       expect(resets.applicable_now_count).toBeGreaterThanOrEqual(0)
       expect(resets.applicable_now_count).toBeLessThanOrEqual(
         resets.available_count,
