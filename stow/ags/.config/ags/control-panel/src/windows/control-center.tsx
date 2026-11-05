@@ -3,9 +3,10 @@ import { createState, For } from "ags"
 import { Astal, Gdk, Gtk } from "ags/gtk4"
 import app from "ags/gtk4/app"
 import { formatRelative } from "../../lib/utils"
-import type {
-  ProviderSnapshot,
-  UsageCollection,
+import {
+  type ProviderSnapshot,
+  savedResetsText,
+  type UsageCollection,
 } from "../../services/claude-usage-fetcher"
 import { ClaudeUsagePopover } from "../../widget/ClaudeUsagePopover"
 import {
