@@ -15,7 +15,8 @@ from pathlib import Path
 USAGE_LIMITS = "/home/dzack/gitclones/usage-limits/.venv/bin/usage-limits"
 
 GREEN, YELLOW, RED, DIM = "#aad94c", "#ffb454", "#f07178", "#3e4b59"
-REGULAR_ICON, SPARK_ICON = "", "⚡"
+# RESET_ICON marks saved one-time resets: green when one can restore a window now.
+REGULAR_ICON, SPARK_ICON, RESET_ICON = "", "⚡", "↺"
 
 # Fresh-window "touch": call the model with a trivial prompt so the rolling 5h
 # window starts ticking the moment it opens. ponytail: 4.5h cooldown assumes 5h
