@@ -1,9 +1,10 @@
 import type { Accessor } from "ags"
 import { For } from "ags"
 import { Astal, Gdk, Gtk } from "ags/gtk4"
-import type {
-  ProviderSnapshot,
-  UsageCollection,
+import {
+  type ProviderSnapshot,
+  savedResetsText,
+  type UsageCollection,
 } from "../services/claude-usage-fetcher"
 
 const ICON_SIZE = 16
@@ -179,6 +180,13 @@ export function ClaudeUsagePopover({
                           />
                         )
                       })}
+                      {provider.saved_resets && (
+                        <label
+                          class="popover-resets-text"
+                          xalign={0}
+                          label={savedResetsText(provider.saved_resets)}
+                        />
+                      )}
                     </box>
                   )}
                   <box class="popover-divider" />

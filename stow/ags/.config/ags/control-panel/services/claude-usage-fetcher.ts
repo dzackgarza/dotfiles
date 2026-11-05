@@ -30,6 +30,11 @@ export interface ProviderSnapshot {
   metadata: Record<string, unknown>
   errors: Array<{ type: string; message: string }>
   account: string | null
+  saved_resets: SavedResets | null
+}
+
+export function savedResetsText(resets: SavedResets): string {
+  return `Saved resets: ${resets.available_count} (usable now: ${resets.applicable_now_count})`
 }
 
 export interface UsageCollection {
