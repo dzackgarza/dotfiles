@@ -97,6 +97,9 @@ function getProviderTooltipText(provider: ProviderSnapshot): string {
   } else {
     parts.push("Usage available")
   }
+  if (provider.saved_resets) {
+    parts.push(savedResetsText(provider.saved_resets))
+  }
 
   return parts.join("\n")
 }
