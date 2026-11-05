@@ -26,6 +26,7 @@ interface ProviderSnapshot {
   errors: { type: string; message: string }[]
   metadata: Record<string, unknown>
   account: string | null
+  saved_resets: { available_count: number; applicable_now_count: number } | null
 }
 
 interface UsageCollection {
