@@ -222,10 +222,10 @@ class WaybarLlmUsageTest(unittest.TestCase):
         self.assertTrue(first.endswith("<span color='#3e4b59'> </span><span color='#aad94c'>↺2</span>"))
         self.assertTrue(second.endswith("<span color='#3e4b59'> </span><span color='#3e4b59'>↺1</span>"))
         self.assertIn(
-            "  Codex Spark (7d):   0%  resets in 6d 23h\n  Saved resets: 2 (usable now: 1)\n\nCodex - zack",
+            "  Codex Spark (7d):   0%  resets in 6d 23h\n  Saved resets: 2 (worth using now: 1)\n\nCodex - zack",
             payload["tooltip"],
         )
-        self.assertTrue(payload["tooltip"].endswith("  Saved resets: 1 (usable now: 0)"))
+        self.assertTrue(payload["tooltip"].endswith("  Saved resets: 1 (worth using now: 0)"))
 
     def test_claude_payload_lists_empty_saved_reset_inventory_only_in_tooltip(self):
         module = load_module()
@@ -247,7 +247,7 @@ class WaybarLlmUsageTest(unittest.TestCase):
         payload = module.render_waybar_payload("claude", data)
 
         self.assertEqual(payload["text"], "<span color='#aad94c'>8</span>")
-        self.assertTrue(payload["tooltip"].endswith("  Saved resets: 0 (usable now: 0)"))
+        self.assertTrue(payload["tooltip"].endswith("  Saved resets: 0 (worth using now: 0)"))
 
 
 if __name__ == "__main__":

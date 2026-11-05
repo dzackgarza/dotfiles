@@ -34,7 +34,7 @@ export interface ProviderSnapshot {
 }
 
 export function savedResetsText(resets: SavedResets): string {
-  return `Saved resets: ${resets.available_count} (usable now: ${resets.applicable_now_count})`
+  return `Saved resets: ${resets.available_count} (worth using now: ${resets.applicable_now_count})`
 }
 
 export interface UsageCollection {

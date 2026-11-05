@@ -123,7 +123,7 @@ def _snapshot_payload(slug: str, snap: dict) -> tuple[str, str, int]:
         lines.append(f"  {r['identifier']:>15}: {r['pct_used']:>3}%  resets {r['time_until_reset'] or 'n/a'}")
     if resets is not None:
         lines.append(
-            f"  Saved resets: {resets['available_count']} (usable now: {resets['applicable_now_count']})"
+            f"  Saved resets: {resets['available_count']} (worth using now: {resets['applicable_now_count']})"
         )
     tip = "\n".join(lines)
     return text, tip, worst
