@@ -181,11 +181,22 @@ export function ClaudeUsagePopover({
                         )
                       })}
                       {provider.saved_resets && (
-                        <label
-                          class="popover-resets-text"
-                          xalign={0}
-                          label={savedResetsText(provider.saved_resets)}
-                        />
+                        <box
+                          orientation={Gtk.Orientation.HORIZONTAL}
+                          spacing={8}
+                        >
+                          <label
+                            class="popover-resets-text"
+                            xalign={0}
+                            label={savedResetsText(provider.saved_resets)}
+                          />
+                          {provider.saved_resets.applicable_now_count > 0 && (
+                            <Gtk.LinkButton
+                              label="Usage page"
+                              uri={provider.saved_resets.usage_url}
+                            />
+                          )}
+                        </box>
                       )}
                     </box>
                   )}
