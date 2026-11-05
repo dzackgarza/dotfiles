@@ -251,6 +251,18 @@ class WaybarLlmUsageTest(unittest.TestCase):
         self.assertEqual(payload["text"], "<span color='#aad94c'>8</span>")
         self.assertTrue(payload["tooltip"].endswith("  Saved resets: 0"))
 
+    def test_click_opens_usage_page_only_for_accounts_whose_reset_applies(self):
+        module = load_module()
+        data = copy.deepcopy(CODEX_TWO_ACCOUNT_RESPONSE)
+        data["providers"][0]["saved_resets"] = {"available_count": 1, "applicable_now_count": 0, "usage_url": CODEX_USAGE_URL}
+        data["providers"][1]["saved_resets"] = {"available_count": 0, "applicable_now_count": 0, "usage_url": CODEX_USAGE_URL}
+
+        self.assertEqual(module.applicable_usage_urls("codex", data), [])
+
+        data["providers"][1]["saved_resets"] = {"available_count": 1, "applicable_now_count": 1, "usage_url": CODEX_USAGE_URL}
+
+        self.assertEqual(module.applicable_usage_urls("codex", data), [CODEX_USAGE_URL])
+
 
 if __name__ == "__main__":
     unittest.main()
