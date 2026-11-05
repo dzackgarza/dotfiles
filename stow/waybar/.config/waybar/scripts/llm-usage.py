@@ -177,7 +177,29 @@ def maybe_touch_fresh_window(slug: str, data: dict, now=None) -> None:
     )
 
 
+def applicable_usage_urls(slug: str, data: dict) -> list[str]:
+    """Usage pages of accounts holding a saved reset that would restore a window now."""
+    urls = []
+    for snap in _active_snapshots(slug, data["providers"]):
+        resets = snap.get("saved_resets")
+        if resets is not None and resets["applicable_now_count"] > 0 and resets["usage_url"] not in urls:
+            urls.append(resets["usage_url"])
+    return urls
+
+
+def open_applicable_usage_pages(slug: str) -> None:
+    out = subprocess.run(
+        [USAGE_LIMITS, "--json", "-p", slug],
+        capture_output=True, text=True, timeout=90, check=True,
+    )
+    for url in applicable_usage_urls(slug, json.loads(out.stdout)):
+        subprocess.Popen(["xdg-open", url], start_new_session=True)
+
+
 def main():
+    if sys.argv[1] == "--open":
+        open_applicable_usage_pages(sys.argv[2])
+        return
     slug = sys.argv[1]
     out = subprocess.run(
         [USAGE_LIMITS, "--json", "-p", slug],
