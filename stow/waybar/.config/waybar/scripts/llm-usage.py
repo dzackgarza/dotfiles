@@ -2,7 +2,9 @@
 """Waybar custom module: provider active 5h/7d usage windows.
 
 Usage: llm-usage.py <provider-slug>
+       llm-usage.py --open <provider-slug>
 Consumes the usage-limits `--json` contract and emits one waybar JSON line.
+`--open` opens the usage page of each account whose saved reset applies now.
 """
 import json
 import os
