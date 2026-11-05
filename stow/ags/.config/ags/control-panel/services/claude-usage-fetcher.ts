@@ -15,6 +15,12 @@ export interface ModelAvailability {
   available_when: string | null
 }
 
+// Saved one-time resets; null means the provider reports no reset inventory.
+export interface SavedResets {
+  available_count: number
+  applicable_now_count: number
+}
+
 export interface ProviderSnapshot {
   provider: string
   display_name: string
