@@ -124,6 +124,21 @@ describe("usage-limits --json", () => {
     }
   })
 
+  it("reports a saved reset inventory for every ok Claude and Codex snapshot", () => {
+    const snapshots = data.providers.filter(
+      (p) => ["claude", "codex"].includes(p.provider) && p.status === "ok",
+    )
+    expect(snapshots.length).toBeGreaterThan(0)
+    for (const p of snapshots) {
+      expect(p.saved_resets).not.toBeNull()
+      expect(Number.isInteger(p.saved_resets.available_count)).toBe(true)
+      expect(p.saved_resets.applicable_now_count).toBeGreaterThanOrEqual(0)
+      expect(p.saved_resets.applicable_now_count).toBeLessThanOrEqual(
+        p.saved_resets.available_count,
+      )
+    }
+  })
+
   it("every provider has pct_used values that produce valid Gtk fractions", () => {
     for (const provider of data.providers) {
       for (const row of provider.rows) {
