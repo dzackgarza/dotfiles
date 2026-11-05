@@ -28,6 +28,8 @@ def load_module():
     return module
 
 
+CODEX_USAGE_URL = "https://chatgpt.com/settings/usage"
+
 CODEX_TWO_ACCOUNT_RESPONSE = {
     "version": "1",
     "captured_at": "2026-06-29T06:39:43.911385Z",
@@ -210,11 +212,11 @@ class WaybarLlmUsageTest(unittest.TestCase):
         self.assertIn("Codex Spark (5h):   0%  resets in 4h 59m", payload["tooltip"])
         self.assertEqual(payload["class"], "critical")
 
-    def test_codex_payload_shows_saved_resets_held_and_usable_now(self):
+    def test_codex_payload_shows_banked_reset_count_marked_green_when_one_applies(self):
         module = load_module()
         data = copy.deepcopy(CODEX_TWO_ACCOUNT_RESPONSE)
-        data["providers"][0]["saved_resets"] = {"available_count": 2, "applicable_now_count": 1}
-        data["providers"][1]["saved_resets"] = {"available_count": 1, "applicable_now_count": 0}
+        data["providers"][0]["saved_resets"] = {"available_count": 2, "applicable_now_count": 1, "usage_url": CODEX_USAGE_URL}
+        data["providers"][1]["saved_resets"] = {"available_count": 1, "applicable_now_count": 0, "usage_url": CODEX_USAGE_URL}
 
         payload = module.render_waybar_payload("codex", data)
 
@@ -222,10 +224,10 @@ class WaybarLlmUsageTest(unittest.TestCase):
         self.assertTrue(first.endswith("<span color='#3e4b59'> </span><span color='#aad94c'>↺2</span>"))
         self.assertTrue(second.endswith("<span color='#3e4b59'> </span><span color='#3e4b59'>↺1</span>"))
         self.assertIn(
-            "  Codex Spark (7d):   0%  resets in 6d 23h\n  Saved resets: 2 (worth using now: 1)\n\nCodex - zack",
+            "  Codex Spark (7d):   0%  resets in 6d 23h\n  Saved resets: 2\n\nCodex - zack",
             payload["tooltip"],
         )
-        self.assertTrue(payload["tooltip"].endswith("  Saved resets: 1 (worth using now: 0)"))
+        self.assertTrue(payload["tooltip"].endswith("  Saved resets: 1"))
 
     def test_claude_payload_lists_empty_saved_reset_inventory_only_in_tooltip(self):
         module = load_module()
@@ -240,14 +242,14 @@ class WaybarLlmUsageTest(unittest.TestCase):
                      "reset_at": "2026-11-11T05:00:00Z", "is_exhausted": False,
                      "time_until_reset": "in 5d 14h"},
                 ],
-                "saved_resets": {"available_count": 0, "applicable_now_count": 0},
+                "saved_resets": {"available_count": 0, "applicable_now_count": 0, "usage_url": "https://claude.ai/settings/usage"},
             }],
         }
 
         payload = module.render_waybar_payload("claude", data)
 
         self.assertEqual(payload["text"], "<span color='#aad94c'>8</span>")
-        self.assertTrue(payload["tooltip"].endswith("  Saved resets: 0 (worth using now: 0)"))
+        self.assertTrue(payload["tooltip"].endswith("  Saved resets: 0"))
 
 
 if __name__ == "__main__":
