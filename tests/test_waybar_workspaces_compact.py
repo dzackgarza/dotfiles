@@ -27,6 +27,21 @@ def load_module():
 
 
 class WaybarWorkspacesCompactTest(unittest.TestCase):
+    def test_render_payload_accepts_special_workspace_without_id(self):
+        module = load_module()
+
+        payload = module.render_payload(
+            [
+                {"id": 1, "windows": 2, "monitor": "eDP-1"},
+                {"name": "special:kitty-scratch", "type": "special", "windows": 1},
+            ],
+            {"id": 1},
+        )
+
+        self.assertEqual(payload["class"], "compact-workspaces")
+        self.assertIn("1: 2 windows", payload["tooltip"])
+        self.assertNotIn("special:kitty-scratch", payload["tooltip"])
+
     def test_render_payload_uses_numeric_ids_and_window_counts(self):
         module = load_module()
 
