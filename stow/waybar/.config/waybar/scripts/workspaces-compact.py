@@ -19,7 +19,7 @@ SEPARATOR = "│"
 
 def _workspace_ids(workspaces: list[dict]) -> list[int]:
     ids = set(PERSISTENT_WORKSPACE_IDS)
-    ids.update(workspace["id"] for workspace in workspaces if workspace["id"] > 0)
+    ids.update(workspace["id"] for workspace in workspaces if workspace.get("id", 0) > 0)
     return sorted(ids)
 
 
@@ -38,7 +38,7 @@ def _workspace_item(workspace_id: int, windows: int, active_id: int) -> str:
 
 
 def render_payload(workspaces: list[dict], active_workspace: dict) -> dict:
-    by_id = {workspace["id"]: workspace for workspace in workspaces if workspace["id"] > 0}
+    by_id = {workspace["id"]: workspace for workspace in workspaces if workspace.get("id", 0) > 0}
     active_id = active_workspace["id"]
     items = []
     tooltip_lines = []
