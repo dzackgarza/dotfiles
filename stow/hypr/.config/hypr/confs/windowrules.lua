@@ -158,18 +158,18 @@ hl.workspace_rule({
     no_shadow = true,
 })
 
-hl.workspace_rule({
-    workspace = "special:kitty-scratch",
-    on_created_empty = "kitty --class scratch-term -e tmux new-session -A -s scratch",
-})
-hl.workspace_rule({
-    workspace = "special:btop",
-    on_created_empty = "alacritty --title btop -e btop",
-})
-hl.workspace_rule({
-    workspace = "special:chromium",
-    on_created_empty = "chromium",
-})
+local scratchpad_commands = {
+    ["special:kitty-scratch"] = "kitty --class scratch-term -e tmux new-session -A -s scratch",
+    ["special:btop"] = "alacritty --title btop -e btop",
+    ["special:chromium"] = "chromium",
+}
+
+hl.on("workspace.created", function(workspace)
+    if not workspace.is_empty then return end
+    local command = scratchpad_commands[workspace.name]
+    if command == nil then return end
+    hl.exec_cmd(command, { workspace = workspace.name .. " silent" })
+end)
 
 -----------------
 -- LAYER RULES --
