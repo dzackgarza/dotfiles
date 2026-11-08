@@ -104,12 +104,17 @@ def _compact_item(icon: str, icon_color: str, rows: list[dict]) -> tuple[str, in
 
 def _snapshot_payload(slug: str, snap: dict) -> tuple[str, str, int]:
     rows = _relevant_rows(slug, snap)
-    main_rows = [r for r in rows if not _is_spark(r)]
+    # A model-scoped pool blocks only its model, so it renders as its own item.
+    main_rows = [r for r in rows if not _is_spark(r) and r["model"] is None]
     spark_rows = [r for r in rows if _is_spark(r)]
+    models = sorted({r["model"] for r in rows if r["model"] is not None})
 
     rendered_items = [_compact_item(REGULAR_ICON, DIM, main_rows)]
     if spark_rows:
         rendered_items.append(_compact_item(SPARK_ICON, YELLOW, spark_rows))
+    for model in models:
+        model_rows = [r for r in rows if r["model"] == model]
+        rendered_items.append(_compact_item(model[0], DIM, model_rows))
 
     text_items = [item[0] for item in rendered_items]
     worst = max(item[1] for item in rendered_items)
