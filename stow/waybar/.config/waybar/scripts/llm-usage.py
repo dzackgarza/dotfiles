@@ -112,12 +112,11 @@ def _snapshot_payload(slug: str, snap: dict) -> tuple[str, str, int]:
     rendered_items = [_compact_item(REGULAR_ICON, DIM, main_rows)]
     if spark_rows:
         rendered_items.append(_compact_item(SPARK_ICON, YELLOW, spark_rows))
+    worst = max(item[1] for item in rendered_items)
     for model in models:
         model_rows = [r for r in rows if r["model"] == model]
         rendered_items.append(_compact_item(model[0], DIM, model_rows))
-
     text_items = [item[0] for item in rendered_items]
-    worst = max(item[1] for item in rendered_items)
 
     resets = snap.get("saved_resets")
     if resets is not None and resets["available_count"] > 0:
