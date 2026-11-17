@@ -78,6 +78,11 @@ class HistoryWindow(Gtk.Window):
         self.set_border_width(12)
         self.set_decorated(False)
         self.set_resizable(False)
+        self.set_can_focus(True)
+        self.add_events(Gdk.EventMask.KEY_PRESS_MASK | Gdk.EventMask.BUTTON_PRESS_MASK)
+        self.connect("key-press-event", self.on_key_press)
+        self.connect("button-press-event", self.on_button_press)
+        self.connect("focus-out-event", self.on_focus_out)
 
         GtkLayerShell.init_for_window(self)
         GtkLayerShell.set_namespace(self, "waybar-battery-history")
@@ -109,6 +114,36 @@ class HistoryWindow(Gtk.Window):
         self.add(layout)
 
         self.refresh()
+
+    def on_key_press(self, _window: Gtk.Window, event: Gdk.EventKey) -> bool:
+        if event.keyval == Gdk.KEY_Escape:
+            self.close()
+            return True
+        return False
+
+    def on_button_press(self, _window: Gtk.Window, event: Gdk.EventButton) -> bool:
+        if event.button != 1:
+            return False
+        allocation = self.get_allocation()
+        if not (0 <= event.x <= allocation.width and 0 <= event.y <= allocation.height):
+            self.close()
+            return True
+        return False
+
+    def on_focus_out(self, _window: Gtk.Window, _event: Gdk.EventFocus) -> bool:
+        self.close()
+        return False
+
+    def show(self) -> None:
+        super().show()
+        self.present()
+        self.grab_focus()
+        Gtk.grab_add(self)
+
+    def close(self) -> None:
+        if Gtk.grab_get_current() is self:
+            Gtk.grab_remove(self)
+        self.destroy()
 
     def position_below_pointer(self) -> None:
         display = Gdk.Display.get_default()
