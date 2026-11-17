@@ -12,6 +12,7 @@ export function toggleBatteryHistory() {
 }
 
 export function BatteryHistoryWindow() {
+  console.log("battery-history window constructed")
   const { TOP, RIGHT, LEFT, BOTTOM } = Astal.WindowAnchor
   const service = createBatteryHistoryService()
   const [visible, setVisible] = createState(false)
