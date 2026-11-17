@@ -66,7 +66,7 @@ forecast_data <- tibble(
 plot <- ggplot(history, aes(timestamp, percentage)) +
   geom_ribbon(
     data = forecast_data,
-    aes(ymin = lower, ymax = upper),
+    aes(timestamp, ymin = lower, ymax = upper),
     inherit.aes = FALSE,
     fill = "#81a1c1",
     alpha = 0.2
