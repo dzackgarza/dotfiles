@@ -50,9 +50,10 @@ regular$percentage <- approx(
   rule = 2
 )$y
 
+forecast_horizon_limit <- max(30, ceiling(range_seconds / 60))
 forecast_fit <- forecast(
   auto.arima(ts(regular$percentage, frequency = 1)),
-  h = 30 * 24 * 60
+  h = forecast_horizon_limit
 )
 forecast_values <- as.numeric(forecast_fit$mean)
 zero_crossing <- which(forecast_values <= 0)[1]
