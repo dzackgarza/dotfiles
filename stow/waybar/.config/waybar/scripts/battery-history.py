@@ -220,7 +220,7 @@ class HistoryWindow(Gtk.Window):
                 len(samples),
                 range_seconds,
             )
-            input_path = Path(self.tempdir.name) / "history.csv"
+            input_path = Path(self.tempdir.name) / f"history-{generation}.csv"
             output_path = Path(self.tempdir.name) / f"history-{generation}.png"
             with input_path.open("w", newline="") as stream:
                 writer = csv.writer(stream)
