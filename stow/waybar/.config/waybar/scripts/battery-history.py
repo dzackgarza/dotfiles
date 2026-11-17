@@ -130,7 +130,7 @@ class HistoryWindow(Gtk.Window):
         self.spinner.set_margin_bottom(4)
         spinner_style = Gtk.CssProvider()
         spinner_style.load_from_data(
-            b"spinner.large-battery-spinner { -gtk-icon-size: 32px; }"
+            b"spinner.large-battery-spinner { min-width: 32px; min-height: 32px; }"
         )
         self.spinner.get_style_context().add_provider(
             spinner_style,
