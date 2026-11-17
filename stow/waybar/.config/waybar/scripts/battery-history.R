@@ -63,6 +63,13 @@ forecast_data <- tibble(
   upper = pmin(100, pmax(0, as.numeric(forecast_fit$upper[, 2])))
 )
 
+break_interval <- case_when(
+  range_seconds <= 3600 ~ "15 min",
+  range_seconds <= 10800 ~ "30 min",
+  range_seconds <= 28800 ~ "1 hour",
+  TRUE ~ "3 hours"
+)
+
 plot <- ggplot(history, aes(timestamp, percentage)) +
   geom_ribbon(
     data = forecast_data,
@@ -86,7 +93,11 @@ plot <- ggplot(history, aes(timestamp, percentage)) +
     linetype = "dashed",
     inherit.aes = FALSE
   ) +
-  scale_x_datetime(date_labels = "%H:%M", date_breaks = "1 hour") +
+  scale_x_datetime(
+    date_labels = "%H:%M",
+    date_breaks = break_interval,
+    expand = c(0.01, 0)
+  ) +
   scale_y_continuous(limits = c(0, 100), breaks = seq(0, 100, 25)) +
   scale_color_manual(
     values = c(Observed = "#a3be8c", LOESS = "#88c0d0", Forecast = "#81a1c1")
