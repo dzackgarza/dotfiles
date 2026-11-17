@@ -17,6 +17,7 @@ export function BatteryHistoryWindow() {
   const [visible, setVisible] = createState(false)
   const [range, setRange] = createState(3600)
   setBatteryHistoryVisible = setVisible
+  void service.refresh(range.peek())
 
   const monitor = Gdk.Display.get_default()
     ?.get_monitors()
