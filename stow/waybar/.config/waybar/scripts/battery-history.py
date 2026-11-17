@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import csv
 import logging
+import math
 import os
 import signal
 import subprocess
@@ -34,6 +35,110 @@ window: "HistoryWindow | None" = None
 class Sample:
     timestamp: float
     percentage: float
+
+
+class LoadingCanvas(Gtk.DrawingArea):
+    def __init__(self) -> None:
+        super().__init__()
+        self.phase = 0.0
+        self.active = False
+        self.set_size_request(640, 320)
+        self.connect("draw", self.draw_scene)
+
+    def set_active(self, active: bool) -> None:
+        self.active = active
+        if active:
+            self.show()
+            GLib.timeout_add(33, self.animate)
+        else:
+            self.hide()
+        self.queue_draw()
+
+    def animate(self) -> bool:
+        if not self.active:
+            return False
+        self.phase = (self.phase + 0.045) % (2 * math.pi)
+        self.queue_draw()
+        return True
+
+    def draw_scene(self, _area: Gtk.DrawingArea, context) -> bool:
+        allocation = self.get_allocation()
+        width, height = allocation.width, allocation.height
+        center_x, center_y = width / 2, height / 2
+        context.set_source_rgb(0.035, 0.04, 0.055)
+        context.paint()
+
+        # Perspective floor gives the scene a quiet sense of depth.
+        context.set_line_width(1)
+        context.set_source_rgba(0.35, 0.48, 0.62, 0.16)
+        horizon = center_y + 38
+        for offset in range(-8, 9):
+            context.move_to(center_x + offset * 42, horizon)
+            context.line_to(center_x + offset * 105, height)
+            context.stroke()
+        for row in range(1, 7):
+            y = horizon + row * row * 7
+            context.move_to(0, y)
+            context.line_to(width, y)
+            context.stroke()
+
+        # Orbiting charge rings.
+        context.save()
+        context.translate(center_x, center_y - 20)
+        context.rotate(self.phase * 0.35)
+        for index, (rx, ry, alpha) in enumerate(((150, 48, 0.55), (125, 38, 0.35), (185, 62, 0.22))):
+            context.save()
+            context.rotate(index * 0.9)
+            context.set_source_rgba(0.35, 0.78, 0.85, alpha)
+            context.set_line_width(2 if index == 0 else 1)
+            context.scale(1, ry / rx)
+            context.arc(0, 0, rx, 0, 2 * math.pi)
+            context.stroke()
+            context.restore()
+        context.restore()
+
+        # A rotating highlight gives the central battery a dimensional surface.
+        battery_width, battery_height = 142, 178
+        left = center_x - battery_width / 2
+        top = center_y - battery_height / 2 - 20
+        context.save()
+        context.set_source_rgba(0.01, 0.02, 0.03, 0.7)
+        context.rectangle(left + 12, top + 16, battery_width, battery_height)
+        context.fill()
+
+        context.set_source_rgb(0.09, 0.14, 0.18)
+        context.rounded_rectangle(left, top, battery_width, battery_height, 18)
+        context.fill()
+        context.set_source_rgb(0.42, 0.78, 0.82)
+        context.set_line_width(2)
+        context.rounded_rectangle(left, top, battery_width, battery_height, 18)
+        context.stroke()
+
+        level = 0.52 + 0.18 * math.sin(self.phase)
+        fill_height = (battery_height - 24) * level
+        context.set_source_rgba(0.38, 0.82, 0.72, 0.8)
+        context.rounded_rectangle(
+            left + 12,
+            top + battery_height - 12 - fill_height,
+            battery_width - 24,
+            fill_height,
+            10,
+        )
+        context.fill()
+
+        context.set_source_rgb(0.42, 0.78, 0.82)
+        context.rounded_rectangle(center_x - 25, top - 12, 50, 14, 6)
+        context.fill()
+        context.restore()
+
+        # Moving marker indicates that the analysis is progressing.
+        marker_angle = self.phase * 1.8
+        marker_x = center_x + math.cos(marker_angle) * 185
+        marker_y = center_y - 20 + math.sin(marker_angle) * 62
+        context.set_source_rgb(0.95, 0.72, 0.38)
+        context.arc(marker_x, marker_y, 4, 0, 2 * math.pi)
+        context.fill()
+        return False
 
 
 def battery_path() -> str:
@@ -124,19 +229,7 @@ class HistoryWindow(Gtk.Window):
         self.error = Gtk.Label()
         self.error.set_line_wrap(True)
         self.error.set_xalign(0)
-        self.spinner = Gtk.Spinner()
-        self.spinner.set_size_request(32, 32)
-        self.spinner.set_margin_top(4)
-        self.spinner.set_margin_bottom(4)
-        spinner_style = Gtk.CssProvider()
-        spinner_style.load_from_data(
-            b"spinner.large-battery-spinner { min-width: 32px; min-height: 32px; }"
-        )
-        self.spinner.get_style_context().add_provider(
-            spinner_style,
-            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
-        )
-        self.spinner.get_style_context().add_class("large-battery-spinner")
+        self.loading = LoadingCanvas()
 
         controls = Gtk.Box(spacing=6)
         for label, seconds in (("1h", 3600), ("3h", 10800), ("8h", 28800), ("1d", 86400)):
@@ -144,13 +237,10 @@ class HistoryWindow(Gtk.Window):
             button.connect("clicked", self.set_range, seconds)
             controls.pack_start(button, False, False, 0)
 
-        progress = Gtk.Box(spacing=6)
-        progress.pack_start(self.spinner, False, False, 0)
-
         layout = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
         layout.pack_start(controls, False, False, 0)
+        layout.pack_start(self.loading, True, True, 0)
         layout.pack_start(self.image, True, True, 0)
-        layout.pack_start(progress, False, False, 0)
         layout.pack_start(self.error, False, False, 0)
         self.add(layout)
 
@@ -211,8 +301,8 @@ class HistoryWindow(Gtk.Window):
     def start_refresh(self) -> None:
         self.render_generation += 1
         generation = self.render_generation
-        self.spinner.start()
-        self.spinner.show()
+        self.image.hide()
+        self.loading.set_active(True)
         self.error.set_text("")
 
         threading.Thread(
@@ -270,12 +360,12 @@ class HistoryWindow(Gtk.Window):
     ) -> bool:
         if generation != self.render_generation:
             return False
-        self.spinner.stop()
-        self.spinner.hide()
+        self.loading.set_active(False)
         if error is not None:
             self.image.clear()
             self.error.set_text(error)
         else:
+            self.image.show()
             self.image.set_from_file(str(output_path))
             self.error.set_text("")
         return False
