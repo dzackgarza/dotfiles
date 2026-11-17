@@ -182,9 +182,19 @@ class HistoryWindow(Gtk.Window):
         display = Gdk.Display.get_default()
         if display is None:
             raise RuntimeError("No GDK display available")
-        _screen, pointer_x, pointer_y = (
-            display.get_default_seat().get_pointer().get_position()
-        )
+        try:
+            cursor = subprocess.run(
+                ["hyprctl", "cursorpos"],
+                check=True,
+                capture_output=True,
+                text=True,
+            ).stdout.strip()
+            pointer_x, pointer_y = (int(value) for value in cursor.split(",", 1))
+        except (OSError, ValueError, subprocess.CalledProcessError) as exc:
+            LOGGER.warning("Could not read Hyprland cursor position: %s", exc)
+            _screen, pointer_x, pointer_y = (
+                display.get_default_seat().get_pointer().get_position()
+            )
         monitor = display.get_monitor_at_point(pointer_x, pointer_y)
         if monitor is None:
             raise RuntimeError("No monitor found under pointer")
