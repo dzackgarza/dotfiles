@@ -28,6 +28,15 @@ export function BatteryHistoryWindow() {
   const geometry = monitor?.get_geometry()
   const width = Math.min(900, Math.max(680, Math.floor((geometry?.width ?? 1920) * 0.42)))
   const height = Math.min(650, Math.max(440, Math.floor((geometry?.height ?? 1200) * 0.5)))
+  const graph = new Gtk.Picture()
+  graph.set_content_fit(Gtk.ContentFit.CONTAIN)
+  graph.set_hexpand(true)
+  graph.set_vexpand(true)
+  graph.set_size_request(width - 40, height - 90)
+  service.state((state) => {
+    graph.visible = !state.loading && !state.error
+    if (state.imagePath) graph.set_filename(state.imagePath)
+  })
 
   const buttons = ([
     ["1h", 3600],
@@ -74,17 +83,7 @@ export function BatteryHistoryWindow() {
         hexpand
         vexpand
       />
-      <image
-        file={service.state((state) => state.imagePath)}
-        visible={service.state((state) => !state.loading && !state.error)}
-        class="battery-graph"
-        hexpand
-        vexpand
-        halign={Gtk.Align.FILL}
-        valign={Gtk.Align.FILL}
-        widthRequest={width - 40}
-        heightRequest={height - 90}
-      />
+      {graph}
     </box>
   )
 
