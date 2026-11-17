@@ -223,13 +223,20 @@ class HistoryWindow(Gtk.Window):
         geometry = monitor.get_geometry() if monitor is not None else Gdk.Rectangle(0, 0, 1920, 1200)
         self.popup_width = min(900, max(680, int(geometry.width * 0.42)))
         self.popup_height = min(650, max(440, int(geometry.height * 0.5)))
-        self.set_default_size(self.popup_width, self.popup_height)
-        self.set_size_request(self.popup_width, self.popup_height)
         self.set_decorated(False)
         self.set_resizable(False)
-        self.set_position(Gtk.WindowPosition.CENTER)
-        self.set_keep_above(True)
-        self.set_skip_taskbar_hint(True)
+        self.set_can_focus(True)
+        GtkLayerShell.init_for_window(self)
+        GtkLayerShell.set_layer(self, GtkLayerShell.Layer.OVERLAY)
+        GtkLayerShell.set_anchor(self, GtkLayerShell.Edge.TOP, True)
+        GtkLayerShell.set_anchor(self, GtkLayerShell.Edge.RIGHT, True)
+        GtkLayerShell.set_anchor(self, GtkLayerShell.Edge.BOTTOM, True)
+        GtkLayerShell.set_anchor(self, GtkLayerShell.Edge.LEFT, True)
+        GtkLayerShell.set_exclusive_zone(self, -1)
+        GtkLayerShell.set_keyboard_interactivity(self, True)
+        self.connect("draw", self.on_draw)
+        self.add_events(Gdk.EventMask.KEY_PRESS_MASK)
+        self.connect("key-press-event", self.on_key_press)
 
         self.range_seconds = 3600
         self.samples: list[Sample] = []
@@ -241,16 +248,6 @@ class HistoryWindow(Gtk.Window):
         self.error.set_line_wrap(True)
         self.error.set_xalign(0)
         self.loading = LoadingCanvas()
-
-        anchor = Gtk.Button()
-        anchor.set_size_request(1, 1)
-        fixed = Gtk.Fixed()
-        fixed.put(anchor, self.popup_width // 2, self.popup_height)
-        self.add(fixed)
-        self.popover = Gtk.Popover.new(anchor)
-        self.popover.set_modal(True)
-        self.popover.set_position(Gtk.PositionType.TOP)
-        self.popover.connect("closed", self.on_popover_closed)
 
         controls = Gtk.Box(spacing=4)
         controls.set_halign(Gtk.Align.CENTER)
@@ -274,8 +271,16 @@ class HistoryWindow(Gtk.Window):
         panel.pack_start(self.image, True, True, 0)
         panel.pack_start(self.error, False, False, 6)
 
-        self.popover.add(panel)
-        self.popover.set_size_request(self.popup_width, self.popup_height)
+        self.panel = panel
+        background = Gtk.EventBox()
+        background.add_events(Gdk.EventMask.BUTTON_PRESS_MASK)
+        background.connect("button-press-event", self.on_background_press)
+        overlay = Gtk.Overlay()
+        overlay.add(background)
+        overlay.add_overlay(panel)
+        panel.set_halign(Gtk.Align.CENTER)
+        panel.set_valign(Gtk.Align.CENTER)
+        self.add(overlay)
 
         css = Gtk.CssProvider()
         css.load_from_data(
@@ -307,23 +312,35 @@ class HistoryWindow(Gtk.Window):
 
         self.start_refresh()
 
-    def show(self) -> None:
-        super().show()
-        self.resize(self.popup_width, self.popup_height)
-        self.present()
-        self.popover.popup()
-        self.popover.show_all()
-        self.popover.get_child().show_all()
+    def on_draw(self, _window: Gtk.Window, context) -> bool:
+        context.set_operator(0)
+        context.set_source_rgba(0, 0, 0, 0)
+        context.paint()
+        return False
 
-    def on_popover_closed(self, _popover: Gtk.Popover) -> None:
-        if not self.closing:
+    def on_key_press(self, _window: Gtk.Window, event: Gdk.EventKey) -> bool:
+        if event.keyval == Gdk.KEY_Escape:
             self.close()
+            return True
+        return False
+
+    def on_background_press(self, _background: Gtk.EventBox, event: Gdk.EventButton) -> bool:
+        if event.button == 1:
+            self.close()
+            return True
+        return False
+
+    def show(self) -> None:
+        super().show_all()
+        self.present()
+        self.grab_focus()
 
     def close(self) -> None:
         if self.closing:
             return
         self.closing = True
-        self.popover.popdown()
+        if Gtk.grab_get_current() is self:
+            Gtk.grab_remove(self)
         self.destroy()
 
     def start_refresh(self) -> None:
@@ -404,7 +421,6 @@ class HistoryWindow(Gtk.Window):
             )
             self.image.set_from_pixbuf(pixbuf)
             self.error.set_text("")
-        self.resize(self.popup_width, self.popup_height)
         return False
 
     def set_range(self, _button: Gtk.Button, seconds: int) -> None:
