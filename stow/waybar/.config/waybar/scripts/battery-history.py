@@ -2,10 +2,12 @@
 import csv
 import logging
 import os
+import signal
 import subprocess
 import tempfile
 from dataclasses import dataclass
 from pathlib import Path
+from fcntl import LOCK_EX, LOCK_NB, flock
 
 import gi
 
@@ -16,6 +18,7 @@ from gi.repository import Gdk, Gio, GLib, Gtk, GtkLayerShell
 
 
 LOG_PATH = Path(os.path.expanduser("~/.local/state/waybar/battery-history.log"))
+LOCK_PATH = Path(os.path.expanduser("~/.local/state/waybar/battery-history.lock"))
 LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
 logging.basicConfig(
     filename=LOG_PATH,
@@ -23,6 +26,7 @@ logging.basicConfig(
     format="%(asctime)s %(levelname)s %(message)s",
 )
 LOGGER = logging.getLogger(__name__)
+window: "HistoryWindow | None" = None
 
 
 @dataclass(frozen=True)
@@ -69,6 +73,26 @@ def charge_history(timespan: int) -> list[Sample]:
         Sample(float(timestamp), float(percentage))
         for timestamp, percentage, _state in result.unpack()[0]
     ]
+
+
+def acquire_singleton() -> object | None:
+    lock_file = LOCK_PATH.open("a+")
+    try:
+        flock(lock_file.fileno(), LOCK_EX | LOCK_NB)
+    except BlockingIOError:
+        lock_file.seek(0)
+        try:
+            owner_pid = int(lock_file.read().strip())
+            os.kill(owner_pid, signal.SIGUSR1)
+        except (ValueError, ProcessLookupError):
+            LOGGER.warning("Could not signal existing battery popup")
+        lock_file.close()
+        return None
+    lock_file.seek(0)
+    lock_file.truncate()
+    lock_file.write(str(os.getpid()))
+    lock_file.flush()
+    return lock_file
 
 
 class HistoryWindow(Gtk.Window):
@@ -214,10 +238,20 @@ class HistoryWindow(Gtk.Window):
 
 
 def main() -> None:
+    global window
+    lock_file = acquire_singleton()
+    if lock_file is None:
+        return
+
+    def close_from_signal(_signum: int, _frame: object) -> None:
+        GLib.idle_add(window.close)
+
+    signal.signal(signal.SIGUSR1, close_from_signal)
     window = HistoryWindow()
     window.connect("destroy", Gtk.main_quit)
     window.show_all()
     Gtk.main()
+    lock_file.close()
 
 
 if __name__ == "__main__":
