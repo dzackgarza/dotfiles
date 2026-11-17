@@ -75,10 +75,16 @@ export function BatteryHistoryWindow() {
         vexpand
       />
       <image
-        file={service.state((state) => state.imagePath)}
-        visible={service.state((state) => !state.loading && !state.error)}
+        $={(self: Gtk.Image) => {
+          service.state((state) => {
+            self.visible = !state.loading && !state.error
+            if (state.imagePath) self.set_from_file(state.imagePath)
+          })
+        }}
         hexpand
         vexpand
+        halign={Gtk.Align.FILL}
+        valign={Gtk.Align.FILL}
       />
     </box>
   )
