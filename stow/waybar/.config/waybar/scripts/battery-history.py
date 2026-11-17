@@ -137,6 +137,20 @@ class HistoryWindow(Gtk.Window):
             else:
                 context.line_to(x, y)
         context.stroke()
+
+        if len(samples) == 1:
+            sample = samples[0]
+            x = left + ((sample.timestamp - start) / (end - start)) * (right - left)
+            y = bottom - (sample.percentage / 100) * (bottom - top)
+            context.move_to(x, y)
+            context.line_to(right, y)
+            context.stroke()
+            context.arc(x, y, 4, 0, 2 * 3.141592653589793)
+            context.fill()
+
+        context.set_source_rgb(0.75, 0.75, 0.8)
+        context.move_to(left, height - 12)
+        context.show_text(f"Latest: {samples[-1].percentage:.0f}%")
         return False
 
 
