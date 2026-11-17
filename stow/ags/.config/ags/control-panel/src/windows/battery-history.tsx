@@ -74,13 +74,21 @@ export function BatteryHistoryWindow() {
         hexpand
         vexpand
       />
-      <image
-        $={(self: Gtk.Image) => {
+      <box
+        $={(self: Gtk.Box) => {
+          const picture = new Gtk.Picture()
+          picture.set_content_fit(Gtk.ContentFit.CONTAIN)
+          picture.set_hexpand(true)
+          picture.set_vexpand(true)
+          self.append(picture)
           service.state((state) => {
-            self.visible = !state.loading && !state.error
-            if (state.imagePath) self.set_from_file(state.imagePath)
+            picture.visible = !state.loading && !state.error
+            if (state.imagePath) {
+              picture.set_paintable(Gdk.Texture.new_from_filename(state.imagePath))
+            }
           })
         }}
+        class="battery-graph"
         hexpand
         vexpand
         halign={Gtk.Align.FILL}
