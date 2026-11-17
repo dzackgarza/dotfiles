@@ -9,8 +9,10 @@ from pathlib import Path
 
 import gi
 
+gi.require_version("Gdk", "3.0")
+gi.require_version("GtkLayerShell", "0.1")
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gio, GLib, Gtk
+from gi.repository import Gdk, Gio, GLib, Gtk, GtkLayerShell
 
 
 LOG_PATH = Path(os.path.expanduser("~/.local/state/waybar/battery-history.log"))
@@ -74,7 +76,17 @@ class HistoryWindow(Gtk.Window):
         super().__init__(title="Battery history")
         self.set_default_size(680, 400)
         self.set_border_width(12)
-        self.set_position(Gtk.WindowPosition.CENTER)
+        self.set_decorated(False)
+        self.set_resizable(False)
+
+        GtkLayerShell.init_for_window(self)
+        GtkLayerShell.set_namespace(self, "waybar-battery-history")
+        GtkLayerShell.set_layer(self, GtkLayerShell.Layer.TOP)
+        GtkLayerShell.set_anchor(self, GtkLayerShell.Edge.TOP, True)
+        GtkLayerShell.set_anchor(self, GtkLayerShell.Edge.LEFT, True)
+        GtkLayerShell.set_exclusive_zone(self, -1)
+        GtkLayerShell.set_keyboard_mode(self, GtkLayerShell.KeyboardMode.ON_DEMAND)
+        self.position_below_pointer()
 
         self.range_seconds = 3600
         self.samples: list[Sample] = []
@@ -97,6 +109,26 @@ class HistoryWindow(Gtk.Window):
         self.add(layout)
 
         self.refresh()
+
+    def position_below_pointer(self) -> None:
+        display = Gdk.Display.get_default()
+        if display is None:
+            raise RuntimeError("No GDK display available")
+        _screen, pointer_x, pointer_y = (
+            display.get_default_seat().get_pointer().get_position()
+        )
+        monitor = display.get_monitor_at_point(pointer_x, pointer_y)
+        if monitor is None:
+            raise RuntimeError("No monitor found under pointer")
+        geometry = monitor.get_geometry()
+        popup_width = 680
+        left = max(
+            geometry.x + 8,
+            min(pointer_x - popup_width // 2, geometry.x + geometry.width - popup_width - 8),
+        )
+        GtkLayerShell.set_monitor(self, monitor)
+        GtkLayerShell.set_margin(self, GtkLayerShell.Edge.TOP, pointer_y - geometry.y + 8)
+        GtkLayerShell.set_margin(self, GtkLayerShell.Edge.LEFT, left - geometry.x)
 
     def refresh(self) -> None:
         try:
