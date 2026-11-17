@@ -21,6 +21,7 @@ export function BatteryHistoryWindow() {
     setVisible(nextVisible)
     if (nextVisible) void service.refresh(range.peek())
   }
+  console.log("battery-history starting render")
   void service.refresh(3600)
 
   const monitor = Gdk.Display.get_default()
