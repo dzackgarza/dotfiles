@@ -214,32 +214,20 @@ def acquire_singleton() -> object | None:
 
 class HistoryWindow(Gtk.Window):
     def __init__(self) -> None:
-        super().__init__(title="Battery history")
-        self.set_default_size(680, 400)
+        super().__init__(type=Gtk.WindowType.POPUP)
+        self.set_default_size(760, 500)
         self.set_border_width(12)
         self.set_decorated(False)
         self.set_resizable(False)
-        self.set_app_paintable(True)
-        self.get_style_context().add_class("battery-overlay")
         self.set_can_focus(True)
+        self.set_position(Gtk.WindowPosition.CENTER)
+        self.set_keep_above(True)
+        self.set_skip_taskbar_hint(True)
+        self.set_type_hint(Gdk.WindowTypeHint.POPUP_MENU)
         self.add_events(Gdk.EventMask.KEY_PRESS_MASK | Gdk.EventMask.BUTTON_PRESS_MASK)
         self.connect("key-press-event", self.on_key_press)
         self.connect("button-press-event", self.on_button_press)
         self.connect("focus-out-event", self.on_focus_out)
-
-        GtkLayerShell.init_for_window(self)
-        GtkLayerShell.set_namespace(self, "waybar-battery-history")
-        GtkLayerShell.set_layer(self, GtkLayerShell.Layer.TOP)
-        for edge in (
-            GtkLayerShell.Edge.TOP,
-            GtkLayerShell.Edge.BOTTOM,
-            GtkLayerShell.Edge.LEFT,
-            GtkLayerShell.Edge.RIGHT,
-        ):
-            GtkLayerShell.set_anchor(self, edge, True)
-        GtkLayerShell.set_exclusive_zone(self, -1)
-        GtkLayerShell.set_keyboard_mode(self, GtkLayerShell.KeyboardMode.EXCLUSIVE)
-        self.center_on_active_monitor()
 
         self.range_seconds = 3600
         self.samples: list[Sample] = []
@@ -273,22 +261,11 @@ class HistoryWindow(Gtk.Window):
         panel.pack_start(self.image, True, True, 0)
         panel.pack_start(self.error, False, False, 12)
 
-        outside = Gtk.EventBox()
-        outside.set_visible_window(False)
-        outside.add_events(Gdk.EventMask.BUTTON_PRESS_MASK)
-        outside.connect("button-press-event", lambda *_args: self.close() or True)
-
-        overlay = Gtk.Overlay()
-        overlay.add(outside)
-        overlay.add_overlay(panel)
-        self.add(overlay)
+        self.add(panel)
 
         css = Gtk.CssProvider()
         css.load_from_data(
             b"""
-            .battery-overlay {
-                background-color: rgba(0, 0, 0, 0);
-            }
             .battery-panel {
                 background-color: #1f1f26;
                 border-radius: 18px;
@@ -308,11 +285,8 @@ class HistoryWindow(Gtk.Window):
             }
             """
         )
-        display = Gdk.Display.get_default()
-        if display is None:
-            raise RuntimeError("No GDK display available")
         Gtk.StyleContext.add_provider_for_screen(
-            display.get_default_screen(),
+            self.get_screen(),
             css,
             Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
         )
@@ -348,28 +322,6 @@ class HistoryWindow(Gtk.Window):
         if Gtk.grab_get_current() is self:
             Gtk.grab_remove(self)
         self.destroy()
-
-    def center_on_active_monitor(self) -> None:
-        display = Gdk.Display.get_default()
-        if display is None:
-            raise RuntimeError("No GDK display available")
-        try:
-            cursor = subprocess.run(
-                ["hyprctl", "cursorpos"],
-                check=True,
-                capture_output=True,
-                text=True,
-            ).stdout.strip()
-            pointer_x, pointer_y = (int(value) for value in cursor.split(",", 1))
-        except (OSError, ValueError, subprocess.CalledProcessError) as exc:
-            LOGGER.warning("Could not read Hyprland cursor position: %s", exc)
-            _screen, pointer_x, pointer_y = (
-                display.get_default_seat().get_pointer().get_position()
-            )
-        monitor = display.get_monitor_at_point(pointer_x, pointer_y)
-        if monitor is None:
-            raise RuntimeError("No monitor found under pointer")
-        GtkLayerShell.set_monitor(self, monitor)
 
     def start_refresh(self) -> None:
         self.render_generation += 1
