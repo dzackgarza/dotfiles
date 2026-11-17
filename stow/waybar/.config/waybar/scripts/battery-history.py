@@ -14,9 +14,10 @@ from fcntl import LOCK_EX, LOCK_NB, flock
 import gi
 
 gi.require_version("Gdk", "3.0")
+gi.require_version("GdkPixbuf", "2.0")
 gi.require_version("GtkLayerShell", "0.1")
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gdk, Gio, GLib, Gtk, GtkLayerShell
+from gi.repository import Gdk, GdkPixbuf, Gio, GLib, Gtk, GtkLayerShell
 
 
 LOG_PATH = Path(os.path.expanduser("~/.local/state/waybar/battery-history.log"))
@@ -401,7 +402,13 @@ class HistoryWindow(Gtk.Window):
             self.error.set_text(error)
         else:
             self.image.show()
-            self.image.set_from_file(str(output_path))
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+                str(output_path),
+                self.popup_width - 60,
+                self.popup_height - 100,
+                True,
+            )
+            self.image.set_from_pixbuf(pixbuf)
             self.error.set_text("")
         return False
 
