@@ -227,7 +227,6 @@ class HistoryWindow(Gtk.Window):
         self.set_size_request(self.popup_width, self.popup_height)
         self.set_decorated(False)
         self.set_resizable(False)
-        self.set_opacity(0.0)
         self.set_position(Gtk.WindowPosition.CENTER)
         self.set_keep_above(True)
         self.set_skip_taskbar_hint(True)
@@ -314,6 +313,7 @@ class HistoryWindow(Gtk.Window):
         self.present()
         self.popover.popup()
         self.popover.show_all()
+        self.popover.get_child().show_all()
 
     def on_popover_closed(self, _popover: Gtk.Popover) -> None:
         if not self.closing:
