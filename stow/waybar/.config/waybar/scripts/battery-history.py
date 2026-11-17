@@ -323,6 +323,7 @@ class HistoryWindow(Gtk.Window):
 
     def show(self) -> None:
         super().show()
+        self.resize(self.popup_width, self.popup_height)
         self.present()
         self.grab_focus()
         Gtk.grab_add(self)
@@ -410,6 +411,7 @@ class HistoryWindow(Gtk.Window):
             )
             self.image.set_from_pixbuf(pixbuf)
             self.error.set_text("")
+        self.resize(self.popup_width, self.popup_height)
         return False
 
     def set_range(self, _button: Gtk.Button, seconds: int) -> None:
