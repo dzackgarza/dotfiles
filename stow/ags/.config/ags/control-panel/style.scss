@@ -48,6 +48,11 @@ window.NotificationCenter {
       min-height: 400px;
     }
 
+    window.BatteryHistoryCatcher {
+      background: transparent;
+      box-shadow: none;
+    }
+
     .battery-controls {
       margin: $spacing-md 0 $spacing-sm;
     }

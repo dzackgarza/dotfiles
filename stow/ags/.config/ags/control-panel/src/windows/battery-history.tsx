@@ -92,6 +92,7 @@ export function BatteryHistoryWindow() {
   const catcher = (
     <window
       name="battery-history-catcher"
+      class="BatteryHistoryCatcher"
       application={app}
       visible={visible}
       anchor={TOP | RIGHT | LEFT | BOTTOM}
