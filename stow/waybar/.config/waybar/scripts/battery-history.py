@@ -31,6 +31,16 @@ LOGGER = logging.getLogger(__name__)
 window: "HistoryWindow | None" = None
 
 
+def rounded_rectangle(context, x: float, y: float, width: float, height: float, radius: float) -> None:
+    radius = min(radius, width / 2, height / 2)
+    context.new_sub_path()
+    context.arc(x + width - radius, y + radius, radius, -math.pi / 2, 0)
+    context.arc(x + width - radius, y + height - radius, radius, 0, math.pi / 2)
+    context.arc(x + radius, y + height - radius, radius, math.pi / 2, math.pi)
+    context.arc(x + radius, y + radius, radius, math.pi, 3 * math.pi / 2)
+    context.close_path()
+
+
 @dataclass(frozen=True)
 class Sample:
     timestamp: float
@@ -103,21 +113,22 @@ class LoadingCanvas(Gtk.DrawingArea):
         top = center_y - battery_height / 2 - 20
         context.save()
         context.set_source_rgba(0.01, 0.02, 0.03, 0.7)
-        context.rectangle(left + 12, top + 16, battery_width, battery_height)
+        rounded_rectangle(context, left + 12, top + 16, battery_width, battery_height, 18)
         context.fill()
 
         context.set_source_rgb(0.09, 0.14, 0.18)
-        context.rounded_rectangle(left, top, battery_width, battery_height, 18)
+        rounded_rectangle(context, left, top, battery_width, battery_height, 18)
         context.fill()
         context.set_source_rgb(0.42, 0.78, 0.82)
         context.set_line_width(2)
-        context.rounded_rectangle(left, top, battery_width, battery_height, 18)
+        rounded_rectangle(context, left, top, battery_width, battery_height, 18)
         context.stroke()
 
         level = 0.52 + 0.18 * math.sin(self.phase)
         fill_height = (battery_height - 24) * level
         context.set_source_rgba(0.38, 0.82, 0.72, 0.8)
-        context.rounded_rectangle(
+        rounded_rectangle(
+            context,
             left + 12,
             top + battery_height - 12 - fill_height,
             battery_width - 24,
