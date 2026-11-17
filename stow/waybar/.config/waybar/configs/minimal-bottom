@@ -31,7 +31,7 @@
         "custom/notify",
         "group/network",
         "pulseaudio", 
-        "battery", 
+        "custom/upower-battery", 
         "backlight",  
         "clock",
         "group/power-profiles-daemon",

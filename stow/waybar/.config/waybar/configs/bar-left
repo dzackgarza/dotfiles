@@ -35,7 +35,7 @@
         "network", 
         "idle_inhibitor", 
         "custom/nightlight",
-        "battery", 
+        "custom/upower-battery", 
         "backlight",  
         "pulseaudio/slider",
         "pulseaudio#audio", 

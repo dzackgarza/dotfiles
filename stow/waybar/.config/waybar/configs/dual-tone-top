@@ -40,7 +40,7 @@
         "pulseaudio#microphone",
         "custom/updater_icon", 
         "custom/updater", 
-        "battery", 
+        "custom/upower-battery", 
         "backlight",  
         "group/network", 
         "custom/notify_icon",

@@ -30,7 +30,7 @@
         "memory",
         "disk",
         "custom/disk-io",
-        "battery", 
+        "custom/upower-battery", 
         "custom/lid-toggle",
         "custom/kbd-backlight",
         // "custom/upower-battery",
