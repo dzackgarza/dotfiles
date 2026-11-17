@@ -151,7 +151,7 @@ plot <- ggplot(history, aes(timestamp, percentage)) +
   scale_color_manual(
     values = c(Observed = "#a3be8c", LOESS = "#88c0d0", Forecast = "#81a1c1")
   ) +
-  labs(x = NULL, y = "Battery (%)", title = "Battery history") +
+  labs(x = NULL, y = NULL, title = NULL) +
   theme_minimal(base_size = 11) +
   theme(
     plot.background = element_rect(fill = "#1f1f26", color = NA),

@@ -75,7 +75,7 @@ class LoadingCanvas(Gtk.DrawingArea):
         allocation = self.get_allocation()
         width, height = allocation.width, allocation.height
         center_x, center_y = width / 2, height / 2
-        context.set_source_rgb(0.035, 0.04, 0.055)
+        context.set_source_rgb(0.12, 0.12, 0.15)
         context.paint()
 
         # Perspective floor gives the scene a quiet sense of depth.
@@ -228,6 +228,13 @@ class HistoryWindow(Gtk.Window):
         GtkLayerShell.init_for_window(self)
         GtkLayerShell.set_namespace(self, "waybar-battery-history")
         GtkLayerShell.set_layer(self, GtkLayerShell.Layer.TOP)
+        for edge in (
+            GtkLayerShell.Edge.TOP,
+            GtkLayerShell.Edge.BOTTOM,
+            GtkLayerShell.Edge.LEFT,
+            GtkLayerShell.Edge.RIGHT,
+        ):
+            GtkLayerShell.set_anchor(self, edge, True)
         GtkLayerShell.set_exclusive_zone(self, -1)
         GtkLayerShell.set_keyboard_mode(self, GtkLayerShell.KeyboardMode.EXCLUSIVE)
         self.center_on_active_monitor()
@@ -242,18 +249,65 @@ class HistoryWindow(Gtk.Window):
         self.error.set_xalign(0)
         self.loading = LoadingCanvas()
 
-        controls = Gtk.Box(spacing=6)
+        controls = Gtk.Box(spacing=4)
+        controls.set_halign(Gtk.Align.CENTER)
+        controls.set_margin_top(16)
+        controls.set_margin_bottom(8)
+        self.range_buttons: dict[int, Gtk.Button] = {}
         for label, seconds in (("1h", 3600), ("3h", 10800), ("8h", 28800), ("1d", 86400)):
             button = Gtk.Button(label=label)
             button.connect("clicked", self.set_range, seconds)
+            button.get_style_context().add_class("battery-range")
+            self.range_buttons[seconds] = button
             controls.pack_start(button, False, False, 0)
 
-        layout = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
-        layout.pack_start(controls, False, False, 0)
-        layout.pack_start(self.loading, True, True, 0)
-        layout.pack_start(self.image, True, True, 0)
-        layout.pack_start(self.error, False, False, 0)
-        self.add(layout)
+        panel = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
+        panel.set_size_request(760, 500)
+        panel.set_halign(Gtk.Align.CENTER)
+        panel.set_valign(Gtk.Align.CENTER)
+        panel.get_style_context().add_class("battery-panel")
+        panel.pack_start(controls, False, False, 0)
+        panel.pack_start(self.loading, True, True, 0)
+        panel.pack_start(self.image, True, True, 0)
+        panel.pack_start(self.error, False, False, 12)
+
+        outside = Gtk.EventBox()
+        outside.set_visible_window(False)
+        outside.add_events(Gdk.EventMask.BUTTON_PRESS_MASK)
+        outside.connect("button-press-event", lambda *_args: self.close() or True)
+
+        overlay = Gtk.Overlay()
+        overlay.add(outside)
+        overlay.add_overlay(panel)
+        self.add(overlay)
+
+        css = Gtk.CssProvider()
+        css.load_from_data(
+            b"""
+            .battery-panel {
+                background-color: #1f1f26;
+                border-radius: 18px;
+                padding: 0 18px 18px 18px;
+            }
+            .battery-range {
+                background-color: #2a2d37;
+                color: #d8dee9;
+                border: 0;
+                border-radius: 9px;
+                box-shadow: none;
+                padding: 8px 18px;
+            }
+            .battery-range:hover,
+            .battery-range:focus {
+                background-color: #3b4252;
+            }
+            """
+        )
+        Gtk.StyleContext.add_provider_for_screen(
+            display.get_default_screen(),
+            css,
+            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
+        )
 
         self.start_refresh()
 
@@ -314,6 +368,8 @@ class HistoryWindow(Gtk.Window):
         generation = self.render_generation
         self.image.hide()
         self.loading.set_active(True)
+        for seconds, button in self.range_buttons.items():
+            button.set_sensitive(seconds != self.range_seconds)
         self.error.set_text("")
 
         threading.Thread(
