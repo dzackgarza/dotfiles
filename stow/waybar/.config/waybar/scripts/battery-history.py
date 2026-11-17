@@ -2,6 +2,7 @@
 import subprocess
 import time
 from dataclasses import dataclass
+from datetime import datetime
 
 import gi
 import matplotlib
@@ -117,7 +118,7 @@ class HistoryWindow(Gtk.Window):
             spine.set_color("#4c566a")
         self.axes.grid(True, color="#4c566a", alpha=0.35)
         self.axes.set_ylim(0, 100)
-        self.axes.set_xlim(cutoff, now)
+        self.axes.set_xlim(datetime.fromtimestamp(cutoff), datetime.fromtimestamp(now))
         self.axes.set_ylabel("Battery", color="#d8dee9")
         self.axes.yaxis.set_major_formatter(lambda value, _position: f"{value:.0f}%")
         self.axes.xaxis_date()
@@ -125,7 +126,7 @@ class HistoryWindow(Gtk.Window):
         self.axes.xaxis.set_major_formatter(mdates.ConciseDateFormatter(self.axes.xaxis.get_major_locator()))
 
         if samples:
-            timestamps = [sample.timestamp for sample in samples]
+            timestamps = [datetime.fromtimestamp(sample.timestamp) for sample in samples]
             percentages = [sample.percentage for sample in samples]
             self.axes.plot(
                 timestamps,
