@@ -219,6 +219,8 @@ class HistoryWindow(Gtk.Window):
         self.set_border_width(12)
         self.set_decorated(False)
         self.set_resizable(False)
+        self.set_app_paintable(True)
+        self.get_style_context().add_class("battery-overlay")
         self.set_can_focus(True)
         self.add_events(Gdk.EventMask.KEY_PRESS_MASK | Gdk.EventMask.BUTTON_PRESS_MASK)
         self.connect("key-press-event", self.on_key_press)
@@ -284,6 +286,9 @@ class HistoryWindow(Gtk.Window):
         css = Gtk.CssProvider()
         css.load_from_data(
             b"""
+            .battery-overlay {
+                background-color: rgba(0, 0, 0, 0);
+            }
             .battery-panel {
                 background-color: #1f1f26;
                 border-radius: 18px;
