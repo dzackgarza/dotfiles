@@ -43,6 +43,12 @@ window.NotificationCenter {
     box-shadow: none;
   }
 
+  .nc-scroller {
+    min-height: 0;
+    background: transparent;
+    border-radius: $radius-xl;
+  }
+
   window.BatteryHistory {
     background: transparent;
     color: $fg-color;
@@ -86,12 +92,6 @@ window.NotificationCenter {
   window.BatteryHistoryCatcher {
     background: transparent;
     box-shadow: none;
-  }
-
-  .nc-scroller {
-    min-height: 0;
-    background: transparent;
-    border-radius: $radius-xl;
   }
 
   .nc-scroller scrollbar {
