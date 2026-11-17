@@ -303,6 +303,9 @@ class HistoryWindow(Gtk.Window):
             }
             """
         )
+        display = Gdk.Display.get_default()
+        if display is None:
+            raise RuntimeError("No GDK display available")
         Gtk.StyleContext.add_provider_for_screen(
             display.get_default_screen(),
             css,
