@@ -5,6 +5,7 @@ import math
 import os
 import signal
 import subprocess
+import sys
 import tempfile
 import threading
 from dataclasses import dataclass
@@ -211,6 +212,32 @@ def acquire_singleton() -> object | None:
     lock_file.write(str(os.getpid()))
     lock_file.flush()
     return lock_file
+
+
+def render_history(range_seconds: int, output_path: Path) -> None:
+    samples = charge_history(range_seconds)
+    with tempfile.TemporaryDirectory(prefix="waybar-battery-render-") as directory:
+        input_path = Path(directory) / "history.csv"
+        with input_path.open("w", newline="") as stream:
+            writer = csv.writer(stream)
+            writer.writerow(("timestamp", "percentage"))
+            writer.writerows((sample.timestamp, sample.percentage) for sample in samples)
+        subprocess.run(
+            [
+                "Rscript",
+                str(Path(__file__).with_name("battery-history.R")),
+                str(input_path),
+                str(output_path),
+                str(range_seconds),
+            ],
+            check=True,
+            capture_output=True,
+            text=True,
+            env={**os.environ, "R_LIBS_USER": os.path.expanduser("~/R/x86_64-pc-linux-gnu-library/4.6")},
+            timeout=30,
+        )
+    if not output_path.is_file() or output_path.stat().st_size == 0:
+        raise RuntimeError("R completed without producing a graph image")
 
 
 class HistoryWindow(Gtk.Window):
@@ -425,6 +452,12 @@ class HistoryWindow(Gtk.Window):
 
 
 def main() -> None:
+    if len(sys.argv) >= 2 and sys.argv[1] == "--render":
+        if len(sys.argv) != 4:
+            raise RuntimeError("Usage: battery-history.py --render RANGE_SECONDS OUTPUT_PATH")
+        render_history(int(sys.argv[2]), Path(sys.argv[3]))
+        return
+
     global window
     lock_file = acquire_singleton()
     if lock_file is None:

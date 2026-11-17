@@ -173,7 +173,7 @@
         "return-type": "json",
         "interval": 5,
         "format": "{}",
-        "on-click": "~/.config/waybar/scripts/battery-history.py"
+        "on-click": "ags request battery-history"
     },
 
     "custom/disk-io": {
