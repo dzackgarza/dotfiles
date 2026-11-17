@@ -125,7 +125,6 @@ class HistoryWindow(Gtk.Window):
         self.error.set_line_wrap(True)
         self.error.set_xalign(0)
         self.spinner = Gtk.Spinner()
-        self.status = Gtk.Label(label="Analyzing battery history…")
 
         controls = Gtk.Box(spacing=6)
         for label, seconds in (("1h", 3600), ("3h", 10800), ("8h", 28800), ("1d", 86400)):
@@ -135,7 +134,6 @@ class HistoryWindow(Gtk.Window):
 
         progress = Gtk.Box(spacing=6)
         progress.pack_start(self.spinner, False, False, 0)
-        progress.pack_start(self.status, False, False, 0)
 
         layout = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
         layout.pack_start(controls, False, False, 0)
@@ -203,7 +201,6 @@ class HistoryWindow(Gtk.Window):
         generation = self.render_generation
         self.spinner.start()
         self.spinner.show()
-        self.status.set_text("Analyzing battery history…")
         self.error.set_text("")
 
         threading.Thread(
@@ -265,11 +262,9 @@ class HistoryWindow(Gtk.Window):
         self.spinner.hide()
         if error is not None:
             self.image.clear()
-            self.status.set_text("Analysis failed")
             self.error.set_text(error)
         else:
             self.image.set_from_file(str(output_path))
-            self.status.set_text("Analysis complete")
             self.error.set_text("")
         return False
 
