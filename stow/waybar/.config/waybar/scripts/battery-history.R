@@ -107,28 +107,6 @@ plot <- ggplot(history, aes(timestamp, percentage)) +
     linetype = "dashed",
     inherit.aes = FALSE
   ) +
-  if (!is.null(zero_time)) {
-    list(
-      geom_vline(
-        xintercept = as.numeric(zero_time),
-        color = "#bf616a",
-        linewidth = 0.8,
-        linetype = "dotted"
-      ),
-      annotate(
-        "text",
-        x = zero_time,
-        y = 95,
-        label = paste0("t_f = ", format(zero_time, "%H:%M")),
-        color = "#bf616a",
-        angle = 90,
-        vjust = -0.4,
-        hjust = 1
-      )
-    )
-  } else {
-    NULL
-  } +
   scale_x_datetime(
     date_labels = "%H:%M",
     date_breaks = break_interval,
@@ -151,5 +129,25 @@ plot <- ggplot(history, aes(timestamp, percentage)) +
     legend.text = element_text(color = "#d8dee9"),
     legend.title = element_blank()
   )
+
+if (!is.null(zero_time)) {
+  plot <- plot +
+    geom_vline(
+      xintercept = zero_time,
+      color = "#bf616a",
+      linewidth = 0.8,
+      linetype = "dotted"
+    ) +
+    annotate(
+      "text",
+      x = zero_time,
+      y = 95,
+      label = paste0("t_f = ", format(zero_time, "%H:%M")),
+      color = "#bf616a",
+      angle = 90,
+      vjust = -0.4,
+      hjust = 1
+    )
+}
 
 ggsave(output_path, plot, width = 8, height = 4.5, dpi = 120, bg = "#1f1f26")
