@@ -119,6 +119,8 @@ export function BatteryHistoryWindow() {
         class="BatteryHistory"
         application={app}
         visible={visible}
+        widthRequest={width}
+        heightRequest={height}
         anchor={TOP | LEFT}
         marginTop={Math.max(0, Math.floor(((geometry?.height ?? 1200) - height) / 2))}
         marginLeft={Math.max(0, Math.floor(((geometry?.width ?? 1920) - width) / 2))}
