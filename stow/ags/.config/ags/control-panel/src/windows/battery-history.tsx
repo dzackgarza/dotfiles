@@ -16,7 +16,10 @@ export function BatteryHistoryWindow() {
   const service = createBatteryHistoryService()
   const [visible, setVisible] = createState(false)
   const [range, setRange] = createState(3600)
-  setBatteryHistoryVisible = setVisible
+  setBatteryHistoryVisible = (nextVisible) => {
+    setVisible(nextVisible)
+    if (nextVisible) void service.refresh(range.peek())
+  }
 
   const monitor = Gdk.Display.get_default()
     ?.get_monitors()
@@ -150,9 +153,6 @@ export function BatteryHistoryWindow() {
 
         self.connect("notify::visible", () => {
           catcher.visible = self.visible
-          if (self.visible && !service.state.peek().imagePath) {
-            void service.refresh(range.peek())
-          }
         })
         self.connect("destroy", () => catcher.destroy())
       }}
