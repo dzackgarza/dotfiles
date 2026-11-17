@@ -71,6 +71,11 @@ forecast_data <- tibble(
   lower = pmin(100, pmax(0, as.numeric(forecast_fit$lower[seq_len(forecast_horizon), 2]))),
   upper = pmin(100, pmax(0, as.numeric(forecast_fit$upper[seq_len(forecast_horizon), 2])))
 )
+zero_time <- if (is.na(zero_crossing)) {
+  NULL
+} else {
+  forecast_data$timestamp[forecast_horizon]
+}
 
 break_interval <- case_when(
   range_seconds <= 3600 ~ "15 min",
@@ -102,6 +107,28 @@ plot <- ggplot(history, aes(timestamp, percentage)) +
     linetype = "dashed",
     inherit.aes = FALSE
   ) +
+  if (!is.null(zero_time)) {
+    list(
+      geom_vline(
+        xintercept = as.numeric(zero_time),
+        color = "#bf616a",
+        linewidth = 0.8,
+        linetype = "dotted"
+      ),
+      annotate(
+        "text",
+        x = zero_time,
+        y = 95,
+        label = paste0("t_f = ", format(zero_time, "%H:%M")),
+        color = "#bf616a",
+        angle = 90,
+        vjust = -0.4,
+        hjust = 1
+      )
+    )
+  } else {
+    NULL
+  } +
   scale_x_datetime(
     date_labels = "%H:%M",
     date_breaks = break_interval,
