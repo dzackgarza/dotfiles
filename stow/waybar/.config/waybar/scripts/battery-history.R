@@ -71,25 +71,26 @@ plot <- ggplot(history, aes(timestamp, percentage)) +
     fill = "#81a1c1",
     alpha = 0.2
   ) +
-  geom_line(linewidth = 0.8, color = "#a3be8c") +
-  geom_point(size = 1.5, color = "#a3be8c") +
+  geom_line(aes(color = "Observed"), linewidth = 0.8) +
+  geom_point(aes(color = "Observed"), size = 1.5) +
   geom_line(
     data = smooth_grid,
-    aes(timestamp, percentage),
-    color = "#88c0d0",
+    aes(timestamp, percentage, color = "LOESS"),
     linewidth = 1.1,
     inherit.aes = FALSE
   ) +
   geom_line(
     data = forecast_data,
-    aes(timestamp, percentage),
-    color = "#81a1c1",
+    aes(timestamp, percentage, color = "Forecast"),
     linewidth = 1,
     linetype = "dashed",
     inherit.aes = FALSE
   ) +
   scale_x_datetime(date_labels = "%H:%M", date_breaks = "1 hour") +
   scale_y_continuous(limits = c(0, 100), breaks = seq(0, 100, 25)) +
+  scale_color_manual(
+    values = c(Observed = "#a3be8c", LOESS = "#88c0d0", Forecast = "#81a1c1")
+  ) +
   labs(x = NULL, y = "Battery (%)", title = "Battery history") +
   theme_minimal(base_size = 11) +
   theme(
@@ -99,7 +100,9 @@ plot <- ggplot(history, aes(timestamp, percentage)) +
     axis.text = element_text(color = "#d8dee9"),
     axis.title = element_text(color = "#d8dee9"),
     plot.title = element_text(color = "#d8dee9"),
-    legend.position = "none"
+    legend.position = "bottom",
+    legend.text = element_text(color = "#d8dee9"),
+    legend.title = element_blank()
   )
 
 ggsave(output_path, plot, width = 8, height = 4.5, dpi = 120, bg = "#1f1f26")
