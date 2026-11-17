@@ -20,7 +20,6 @@ export function BatteryHistoryWindow() {
     setVisible(nextVisible)
     if (nextVisible) void service.refresh(range.peek())
   }
-  void service.refresh(3600)
 
   const monitor = Gdk.Display.get_default()
     ?.get_monitors()
@@ -37,6 +36,11 @@ export function BatteryHistoryWindow() {
     graph.visible = !state.loading && !state.error
     if (state.imagePath) graph.set_filename(state.imagePath)
   })
+  service.setOnRendered((path) => {
+    graph.set_filename(path)
+    graph.visible = true
+  })
+  void service.refresh(3600)
 
   const buttons = ([
     ["1h", 3600],

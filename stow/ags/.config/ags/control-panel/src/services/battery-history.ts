@@ -16,6 +16,7 @@ export function createBatteryHistoryService() {
     error: "",
   })
   let generation = 0
+  let onRendered: ((path: string) => void) | null = null
 
   const refresh = async (rangeSeconds: number) => {
     const currentGeneration = ++generation
@@ -30,6 +31,7 @@ export function createBatteryHistoryService() {
         outputPath,
       ])
       if (currentGeneration === generation) {
+        onRendered?.(outputPath)
         setState({ loading: false, imagePath: outputPath, error: "" })
       }
     } catch (error) {
@@ -43,5 +45,11 @@ export function createBatteryHistoryService() {
     }
   }
 
-  return { state, refresh }
+  return {
+    state,
+    refresh,
+    setOnRendered(callback: (path: string) => void) {
+      onRendered = callback
+    },
+  }
 }
