@@ -83,6 +83,17 @@ break_interval <- case_when(
   range_seconds <= 28800 ~ "1 hour",
   TRUE ~ "3 hours"
 )
+break_seconds <- case_when(
+  range_seconds <= 3600 ~ 15 * 60,
+  range_seconds <= 10800 ~ 30 * 60,
+  range_seconds <= 28800 ~ 60 * 60,
+  TRUE ~ 3 * 60 * 60
+)
+axis_end <- if (is.null(zero_time)) {
+  max(forecast_data$timestamp)
+} else {
+  ceiling_date(zero_time, unit = break_interval) + seconds(2 * break_seconds)
+}
 
 plot <- ggplot(history, aes(timestamp, percentage)) +
   geom_ribbon(
@@ -110,6 +121,7 @@ plot <- ggplot(history, aes(timestamp, percentage)) +
   scale_x_datetime(
     date_labels = "%H:%M",
     date_breaks = break_interval,
+    limits = c(min(history$timestamp), axis_end),
     expand = c(0.01, 0)
   ) +
   scale_y_continuous(limits = c(0, 100), breaks = seq(0, 100, 25)) +
