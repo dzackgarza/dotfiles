@@ -17,7 +17,6 @@ export function BatteryHistoryWindow() {
   const [visible, setVisible] = createState(false)
   const [range, setRange] = createState(3600)
   setBatteryHistoryVisible = setVisible
-  void service.refresh(range.peek())
 
   const monitor = Gdk.Display.get_default()
     ?.get_monitors()
@@ -25,23 +24,6 @@ export function BatteryHistoryWindow() {
   const geometry = monitor?.get_geometry()
   const width = Math.min(900, Math.max(680, Math.floor((geometry?.width ?? 1920) * 0.42)))
   const height = Math.min(650, Math.max(440, Math.floor((geometry?.height ?? 1200) * 0.5)))
-
-  const backdrop = (
-    <box
-      hexpand
-      vexpand
-      canTarget
-      halign={Gtk.Align.FILL}
-      valign={Gtk.Align.FILL}
-    />
-  ) as Gtk.Box
-  const click = Gtk.GestureClick.new()
-  click.set_button(0)
-  click.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
-  click.connect("pressed", () => {
-    if (visible.peek()) setVisible(false)
-  })
-  backdrop.add_controller(click)
 
   const buttons = ([
     ["1h", 3600],
@@ -97,59 +79,84 @@ export function BatteryHistoryWindow() {
     </box>
   )
 
-  const catcher = (
+  return (
     <window
-      name="battery-history-catcher"
-      class="BatteryHistoryCatcher"
+      name="battery-history"
+      title="Battery history"
+      class="BatteryHistory"
       application={app}
       visible={visible}
-      anchor={TOP | RIGHT | LEFT | BOTTOM}
-      layer={Astal.Layer.TOP}
+      widthRequest={width}
+      heightRequest={height}
+      anchor={TOP | LEFT}
+      marginTop={Math.max(0, Math.floor(((geometry?.height ?? 1200) - height) / 2))}
+      marginLeft={Math.max(0, Math.floor(((geometry?.width ?? 1920) - width) / 2))}
+      layer={Astal.Layer.OVERLAY}
       keymode={Astal.Keymode.ON_DEMAND}
       exclusivity={Astal.Exclusivity.IGNORE}
-    >
-      {backdrop}
-    </window>
-  )
+      $={(self: Gtk.Window) => {
+        self.set_default_size(width, height)
 
-  return (
-    <>
-      {catcher}
-      <window
-        name="battery-history"
-        title="Battery history"
-        class="BatteryHistory"
-        application={app}
-        visible={visible}
-        widthRequest={width}
-        heightRequest={height}
-        anchor={TOP | LEFT}
-        marginTop={Math.max(0, Math.floor(((geometry?.height ?? 1200) - height) / 2))}
-        marginLeft={Math.max(0, Math.floor(((geometry?.width ?? 1920) - width) / 2))}
-        layer={Astal.Layer.OVERLAY}
-        keymode={Astal.Keymode.ON_DEMAND}
-        exclusivity={Astal.Exclusivity.IGNORE}
-        $={(self: Gtk.Window) => {
-          self.set_default_size(width, height)
-          const key = Gtk.EventControllerKey.new()
-          key.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
-          key.connect("key-pressed", (_controller, keyval) => {
-            if (keyval === Gdk.KEY_Escape) {
-              setVisible(false)
+        const key = Gtk.EventControllerKey.new()
+        key.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
+        key.connect("key-pressed", (_controller, keyval) => {
+          if (keyval !== Gdk.KEY_Escape) return false
+          self.visible = false
+          return true
+        })
+        self.add_controller(key)
+
+        const backdrop = (
+          <box
+            class="BatteryHistoryCatcher"
+            hexpand
+            vexpand
+            canTarget
+            halign={Gtk.Align.FILL}
+            valign={Gtk.Align.FILL}
+          />
+        ) as Gtk.Box
+        const click = Gtk.GestureClick.new()
+        click.set_button(0)
+        click.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
+        click.connect("pressed", () => {
+          if (self.visible) self.visible = false
+        })
+        backdrop.add_controller(click)
+
+        const catcher = new Astal.Window({
+          name: "battery-history-catcher",
+          application: app,
+          visible: false,
+          anchor: TOP | RIGHT | LEFT | BOTTOM,
+          layer: Astal.Layer.TOP,
+          keymode: Astal.Keymode.ON_DEMAND,
+          exclusivity: Astal.Exclusivity.IGNORE,
+          child: backdrop,
+        })
+        catcher.add_controller(
+          (() => {
+            const controller = Gtk.EventControllerKey.new()
+            controller.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
+            controller.connect("key-pressed", (_c, keyval) => {
+              if (keyval !== Gdk.KEY_Escape) return false
+              self.visible = false
               return true
-            }
-            return false
-          })
-          self.add_controller(key)
-          self.connect("notify::visible", () => {
-            if (self.visible && !service.state.peek().imagePath) {
-              void service.refresh(range.peek())
-            }
-          })
-        }}
-      >
-        {content}
-      </window>
-    </>
+            })
+            return controller
+          })(),
+        )
+
+        self.connect("notify::visible", () => {
+          catcher.visible = self.visible
+          if (self.visible && !service.state.peek().imagePath) {
+            void service.refresh(range.peek())
+          }
+        })
+        self.connect("destroy", () => catcher.destroy())
+      }}
+    >
+      {content}
+    </window>
   )
 }
