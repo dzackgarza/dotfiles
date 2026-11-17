@@ -201,7 +201,7 @@ tooltip label {
   padding-left: 15px;
 }
 
-#battery {,
+#battery,
 #custom-upower-battery {
   color: #a6e3a1;
   background-color: @mantle;
@@ -217,7 +217,7 @@ tooltip label {
   }
 }
 
-#battery.critical:not(.charging) {,
+#battery.critical:not(.charging),
 #custom-upower-battery.critical:not(.charging) {
   color: #f53c3c;
   animation-name: blink;
