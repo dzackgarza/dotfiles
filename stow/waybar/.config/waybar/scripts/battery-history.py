@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import csv
+import logging
 import os
 import subprocess
 import tempfile
@@ -10,6 +11,16 @@ import gi
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gio, GLib, Gtk
+
+
+LOG_PATH = Path(os.path.expanduser("~/.local/state/waybar/battery-history.log"))
+LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+logging.basicConfig(
+    filename=LOG_PATH,
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(message)s",
+)
+LOGGER = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True)
@@ -90,13 +101,18 @@ class HistoryWindow(Gtk.Window):
     def refresh(self) -> None:
         try:
             self.samples = charge_history(self.range_seconds)
+            LOGGER.info(
+                "Rendering %s samples for %ss range",
+                len(self.samples),
+                self.range_seconds,
+            )
             input_path = Path(self.tempdir.name) / "history.csv"
             output_path = Path(self.tempdir.name) / "history.png"
             with input_path.open("w", newline="") as stream:
                 writer = csv.writer(stream)
                 writer.writerow(("timestamp", "percentage"))
                 writer.writerows((sample.timestamp, sample.percentage) for sample in self.samples)
-            subprocess.run(
+            result = subprocess.run(
                 [
                     "Rscript",
                     str(Path(__file__).with_name("battery-history.R")),
@@ -110,9 +126,17 @@ class HistoryWindow(Gtk.Window):
                 env={**os.environ, "R_LIBS_USER": os.path.expanduser("~/R/x86_64-pc-linux-gnu-library/4.6")},
                 timeout=30,
             )
+            if result.stdout:
+                LOGGER.info("R output: %s", result.stdout.strip())
+            if result.stderr:
+                LOGGER.warning("R warnings: %s", result.stderr.strip())
+            if not output_path.is_file() or output_path.stat().st_size == 0:
+                raise RuntimeError("R completed without producing a graph image")
             self.image.set_from_file(str(output_path))
             self.error.set_text("")
+            LOGGER.info("Rendered graph image: %s bytes", output_path.stat().st_size)
         except (OSError, RuntimeError, GLib.Error, subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
+            LOGGER.exception("Battery history render failed")
             self.image.clear()
             message = getattr(exc, "stderr", None) or str(exc)
             self.error.set_text(message.strip())
