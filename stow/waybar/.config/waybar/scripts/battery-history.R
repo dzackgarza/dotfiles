@@ -50,17 +50,26 @@ regular$percentage <- approx(
   rule = 2
 )$y
 
-forecast_horizon <- max(5, min(60, ceiling(range_seconds / 60 * 0.25)))
-forecast_fit <- forecast(auto.arima(ts(regular$percentage, frequency = 1)), h = forecast_horizon)
+forecast_fit <- forecast(
+  auto.arima(ts(regular$percentage, frequency = 1)),
+  h = 30 * 24 * 60
+)
+forecast_values <- as.numeric(forecast_fit$mean)
+zero_crossing <- which(forecast_values <= 0)[1]
+forecast_horizon <- if (is.na(zero_crossing)) length(forecast_values) else zero_crossing
+forecast_values <- forecast_values[seq_len(forecast_horizon)]
+if (!is.na(zero_crossing)) {
+  forecast_values[forecast_horizon] <- 0
+}
 forecast_data <- tibble(
   timestamp = seq(
     max(regular$timestamp) + minutes(1),
     by = "1 min",
     length.out = forecast_horizon
   ),
-  percentage = pmin(100, pmax(0, as.numeric(forecast_fit$mean))),
-  lower = pmin(100, pmax(0, as.numeric(forecast_fit$lower[, 2]))),
-  upper = pmin(100, pmax(0, as.numeric(forecast_fit$upper[, 2])))
+  percentage = pmin(100, pmax(0, forecast_values)),
+  lower = pmin(100, pmax(0, as.numeric(forecast_fit$lower[seq_len(forecast_horizon), 2]))),
+  upper = pmin(100, pmax(0, as.numeric(forecast_fit$upper[seq_len(forecast_horizon), 2])))
 )
 
 break_interval <- case_when(
