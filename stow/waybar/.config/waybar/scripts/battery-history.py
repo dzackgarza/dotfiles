@@ -231,7 +231,7 @@ class HistoryWindow(Gtk.Window):
         self.set_position(Gtk.WindowPosition.CENTER)
         self.set_keep_above(True)
         self.set_skip_taskbar_hint(True)
-        self.set_type_hint(Gdk.WindowTypeHint.POPUP_MENU)
+        self.set_type_hint(Gdk.WindowTypeHint.DIALOG)
         self.add_events(Gdk.EventMask.KEY_PRESS_MASK | Gdk.EventMask.BUTTON_PRESS_MASK)
         self.connect("key-press-event", self.on_key_press)
         self.connect("button-press-event", self.on_button_press)
