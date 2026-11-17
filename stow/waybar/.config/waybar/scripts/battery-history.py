@@ -125,6 +125,18 @@ class HistoryWindow(Gtk.Window):
         self.error.set_line_wrap(True)
         self.error.set_xalign(0)
         self.spinner = Gtk.Spinner()
+        self.spinner.set_size_request(32, 32)
+        self.spinner.set_margin_top(4)
+        self.spinner.set_margin_bottom(4)
+        spinner_style = Gtk.CssProvider()
+        spinner_style.load_from_data(
+            b"spinner.large-battery-spinner { -gtk-icon-size: 32px; }"
+        )
+        self.spinner.get_style_context().add_provider(
+            spinner_style,
+            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
+        )
+        self.spinner.get_style_context().add_class("large-battery-spinner")
 
         controls = Gtk.Box(spacing=6)
         for label, seconds in (("1h", 3600), ("3h", 10800), ("8h", 28800), ("1d", 86400)):
