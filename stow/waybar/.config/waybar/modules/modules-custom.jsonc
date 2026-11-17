@@ -172,7 +172,8 @@
         "exec": "~/.config/waybar/scripts/upower-battery.py",
         "return-type": "json",
         "interval": 5,
-        "format": "{}"
+        "format": "{}",
+        "on-click": "~/.config/waybar/scripts/battery-history.py"
     },
 
     "custom/disk-io": {
