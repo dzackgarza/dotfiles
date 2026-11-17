@@ -67,6 +67,8 @@ export function BatteryHistoryWindow() {
       spacing={0}
       widthRequest={width}
       heightRequest={height}
+      halign={Gtk.Align.CENTER}
+      valign={Gtk.Align.CENTER}
     >
       <box class="battery-controls" spacing={4} halign={Gtk.Align.CENTER}>
         {buttons}
