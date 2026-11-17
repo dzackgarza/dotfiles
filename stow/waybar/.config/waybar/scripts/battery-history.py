@@ -214,7 +214,7 @@ def acquire_singleton() -> object | None:
 
 class HistoryWindow(Gtk.Window):
     def __init__(self) -> None:
-        super().__init__(type=Gtk.WindowType.POPUP)
+        super().__init__()
         display = Gdk.Display.get_default()
         if display is None:
             raise RuntimeError("No GDK display available")
