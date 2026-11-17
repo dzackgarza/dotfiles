@@ -160,9 +160,7 @@ plot <- ggplot(history, aes(timestamp, percentage)) +
     axis.text = element_text(color = "#d8dee9"),
     axis.title = element_text(color = "#d8dee9"),
     plot.title = element_text(color = "#d8dee9"),
-    legend.position = "bottom",
-    legend.text = element_text(color = "#d8dee9"),
-    legend.title = element_blank()
+    legend.position = "none"
   )
 
 if (!is.null(zero_time)) {
