@@ -20,6 +20,7 @@ export function createBatteryHistoryService() {
   const refresh = async (rangeSeconds: number) => {
     const currentGeneration = ++generation
     const outputPath = `/tmp/ags-battery-history-${process.pid}-${currentGeneration}.png`
+    console.log(`battery-history render start: ${outputPath}`)
     setState({ loading: true, imagePath: "", error: "" })
     try {
       await execAsync([
@@ -30,10 +31,12 @@ export function createBatteryHistoryService() {
         outputPath,
       ])
       if (currentGeneration === generation) {
+        console.log(`battery-history render complete: ${outputPath}`)
         setState({ loading: false, imagePath: outputPath, error: "" })
       }
     } catch (error) {
       if (currentGeneration === generation) {
+        console.error(`battery-history render failed: ${String(error)}`)
         setState({
           loading: false,
           imagePath: "",
