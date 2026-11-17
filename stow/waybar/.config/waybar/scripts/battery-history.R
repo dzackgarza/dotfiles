@@ -61,7 +61,7 @@ forecast_values <- forecast_values[seq_len(forecast_horizon)]
 if (!is.na(zero_crossing)) {
   forecast_values[forecast_horizon] <- 0
 }
-forecast_data <- tibble(
+forecast_points <- tibble(
   timestamp = seq(
     max(regular$timestamp) + minutes(1),
     by = "1 min",
@@ -74,7 +74,31 @@ forecast_data <- tibble(
 zero_time <- if (is.na(zero_crossing)) {
   NULL
 } else {
-  forecast_data$timestamp[forecast_horizon]
+  forecast_points$timestamp[forecast_horizon]
+}
+
+forecast_data <- if (nrow(forecast_points) >= 3) {
+  dense_timestamps <- seq(
+    min(forecast_points$timestamp),
+    max(forecast_points$timestamp),
+    length.out = max(200, nrow(forecast_points) * 4)
+  )
+  forecast_numeric_time <- as.numeric(forecast_points$timestamp)
+  dense_numeric_time <- as.numeric(dense_timestamps)
+  smooth_series <- function(values) {
+    pmin(
+      100,
+      pmax(0, spline(forecast_numeric_time, values, xout = dense_numeric_time, method = "natural")$y)
+    )
+  }
+  tibble(
+    timestamp = dense_timestamps,
+    percentage = smooth_series(forecast_points$percentage),
+    lower = smooth_series(forecast_points$lower),
+    upper = smooth_series(forecast_points$upper)
+  )
+} else {
+  forecast_points
 }
 
 break_interval <- case_when(
@@ -103,7 +127,6 @@ plot <- ggplot(history, aes(timestamp, percentage)) +
     fill = "#81a1c1",
     alpha = 0.2
   ) +
-  geom_line(aes(color = "Observed"), linewidth = 0.8) +
   geom_point(aes(color = "Observed"), size = 1.5) +
   geom_line(
     data = smooth_grid,
