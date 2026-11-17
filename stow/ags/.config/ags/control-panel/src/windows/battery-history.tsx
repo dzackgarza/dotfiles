@@ -134,6 +134,7 @@ export function BatteryHistoryWindow() {
           exclusivity: Astal.Exclusivity.IGNORE,
           child: backdrop,
         })
+        catcher.add_css_class("BatteryHistoryCatcher")
         catcher.add_controller(
           (() => {
             const controller = Gtk.EventControllerKey.new()
