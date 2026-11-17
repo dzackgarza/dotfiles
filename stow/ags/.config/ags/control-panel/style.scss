@@ -36,6 +36,13 @@ window.NotificationCenter {
     border-radius: 0;
   }
 
+  .nc-backdrop:hover,
+  .nc-backdrop:active,
+  .nc-backdrop:focus {
+    background: $backdrop-bg;
+    box-shadow: none;
+  }
+
   window.BatteryHistory {
     background: transparent;
     color: $fg-color;
@@ -46,11 +53,6 @@ window.NotificationCenter {
       padding: $spacing-sm $spacing-lg $spacing-sm;
       min-width: 640px;
       min-height: 400px;
-    }
-
-    window.BatteryHistoryCatcher {
-      background: transparent;
-      box-shadow: none;
     }
 
     .battery-controls {
@@ -81,10 +83,8 @@ window.NotificationCenter {
     }
   }
 
-  .nc-backdrop:hover,
-  .nc-backdrop:active,
-  .nc-backdrop:focus {
-    background: $backdrop-bg;
+  window.BatteryHistoryCatcher {
+    background: transparent;
     box-shadow: none;
   }
 
