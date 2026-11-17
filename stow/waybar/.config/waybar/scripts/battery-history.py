@@ -6,7 +6,7 @@ from dataclasses import dataclass
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from gi.repository import Gio, GLib, Gtk
 
 
 @dataclass(frozen=True)
@@ -32,35 +32,27 @@ def battery_path() -> str:
         raise RuntimeError("No battery device found") from exc
 
 
-def charge_history() -> list[Sample]:
-    output = subprocess.run(
-        ["upower", "-i", battery_path()],
-        check=True,
-        capture_output=True,
-        text=True,
-    ).stdout
-    lines = output.splitlines()
-    try:
-        start = next(
-            index + 1
-            for index, line in enumerate(lines)
-            if line.strip() == "History (charge):"
-        )
-    except StopIteration as exc:
-        raise RuntimeError("UPower did not provide charge history") from exc
-
-    samples = []
-    for line in lines[start:]:
-        if line.strip().startswith("History ("):
-            break
-        fields = line.split()
-        if len(fields) < 2:
-            continue
-        try:
-            samples.append(Sample(float(fields[0]), float(fields[1])))
-        except ValueError:
-            continue
-    return sorted(samples, key=lambda sample: sample.timestamp)
+def charge_history(timespan: int) -> list[Sample]:
+    proxy = Gio.DBusProxy.new_sync(
+        Gio.bus_get_sync(Gio.BusType.SYSTEM, None),
+        Gio.DBusProxyFlags.NONE,
+        None,
+        "org.freedesktop.UPower",
+        battery_path(),
+        "org.freedesktop.UPower.Device",
+        None,
+    )
+    result = proxy.call_sync(
+        "GetHistory",
+        GLib.Variant("(suu)", ("charge", timespan, max(1, timespan // 300))),
+        Gio.DBusCallFlags.NONE,
+        -1,
+        None,
+    )
+    return [
+        Sample(float(timestamp), float(percentage))
+        for timestamp, percentage, _state in result.unpack()[0]
+    ]
 
 
 class HistoryWindow(Gtk.Window):
@@ -90,8 +82,8 @@ class HistoryWindow(Gtk.Window):
 
     def refresh(self) -> None:
         try:
-            self.samples = charge_history()
-        except (OSError, RuntimeError, subprocess.CalledProcessError) as exc:
+            self.samples = charge_history(self.range_seconds)
+        except (OSError, RuntimeError, GLib.Error, subprocess.CalledProcessError) as exc:
             self.samples = []
             self.graph.set_tooltip_text(str(exc))
         self.graph.queue_draw()
