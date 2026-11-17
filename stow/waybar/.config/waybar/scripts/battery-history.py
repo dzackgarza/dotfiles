@@ -225,28 +225,35 @@ class HistoryWindow(Gtk.Window):
         self.popup_height = min(650, max(440, int(geometry.height * 0.5)))
         self.set_default_size(self.popup_width, self.popup_height)
         self.set_size_request(self.popup_width, self.popup_height)
-        self.set_border_width(12)
         self.set_decorated(False)
         self.set_resizable(False)
-        self.set_can_focus(True)
+        self.set_opacity(0.0)
         self.set_position(Gtk.WindowPosition.CENTER)
         self.set_keep_above(True)
         self.set_skip_taskbar_hint(True)
-        self.set_type_hint(Gdk.WindowTypeHint.DIALOG)
-        self.add_events(Gdk.EventMask.KEY_PRESS_MASK | Gdk.EventMask.BUTTON_PRESS_MASK)
-        self.connect("key-press-event", self.on_key_press)
-        self.connect("button-press-event", self.on_button_press)
-        self.connect("focus-out-event", self.on_focus_out)
 
         self.range_seconds = 3600
         self.samples: list[Sample] = []
         self.render_generation = 0
+        self.closing = False
         self.tempdir = tempfile.TemporaryDirectory(prefix="waybar-battery-")
         self.image = Gtk.Image()
         self.error = Gtk.Label()
         self.error.set_line_wrap(True)
         self.error.set_xalign(0)
         self.loading = LoadingCanvas()
+
+        anchor = Gtk.Button()
+        anchor.set_size_request(1, 1)
+        fixed = Gtk.Fixed()
+        fixed.put(anchor, self.popup_width // 2, self.popup_height)
+        self.add(fixed)
+        self.popover = Gtk.Popover.new(anchor)
+        self.popover.set_modal(True)
+        self.popover.set_has_arrow(False)
+        self.popover.set_position(Gtk.PositionType.TOP)
+        self.popover.set_size_request(self.popup_width, self.popup_height)
+        self.popover.connect("closed", self.on_popover_closed)
 
         controls = Gtk.Box(spacing=4)
         controls.set_halign(Gtk.Align.CENTER)
@@ -270,7 +277,7 @@ class HistoryWindow(Gtk.Window):
         panel.pack_start(self.image, True, True, 0)
         panel.pack_start(self.error, False, False, 6)
 
-        self.add(panel)
+        self.popover.add(panel)
 
         css = Gtk.CssProvider()
         css.load_from_data(
@@ -302,35 +309,22 @@ class HistoryWindow(Gtk.Window):
 
         self.start_refresh()
 
-    def on_key_press(self, _window: Gtk.Window, event: Gdk.EventKey) -> bool:
-        if event.keyval == Gdk.KEY_Escape:
-            self.close()
-            return True
-        return False
-
-    def on_button_press(self, _window: Gtk.Window, event: Gdk.EventButton) -> bool:
-        if event.button != 1:
-            return False
-        allocation = self.get_allocation()
-        if not (0 <= event.x <= allocation.width and 0 <= event.y <= allocation.height):
-            self.close()
-            return True
-        return False
-
-    def on_focus_out(self, _window: Gtk.Window, _event: Gdk.EventFocus) -> bool:
-        self.close()
-        return False
-
     def show(self) -> None:
         super().show()
         self.resize(self.popup_width, self.popup_height)
         self.present()
-        self.grab_focus()
-        Gtk.grab_add(self)
+        self.popover.show_all()
+        self.popover.popup()
+
+    def on_popover_closed(self, _popover: Gtk.Popover) -> None:
+        if not self.closing:
+            self.close()
 
     def close(self) -> None:
-        if Gtk.grab_get_current() is self:
-            Gtk.grab_remove(self)
+        if self.closing:
+            return
+        self.closing = True
+        self.popover.popdown()
         self.destroy()
 
     def start_refresh(self) -> None:
