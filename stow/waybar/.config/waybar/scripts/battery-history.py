@@ -138,7 +138,7 @@ class LoadingCanvas(Gtk.DrawingArea):
         context.fill()
 
         context.set_source_rgb(0.42, 0.78, 0.82)
-        context.rounded_rectangle(center_x - 25, top - 12, 50, 14, 6)
+        rounded_rectangle(context, center_x - 25, top - 12, 50, 14, 6)
         context.fill()
         context.restore()
 
