@@ -220,10 +220,10 @@ class HistoryWindow(Gtk.Window):
             raise RuntimeError("No GDK display available")
         monitor = display.get_primary_monitor()
         geometry = monitor.get_geometry() if monitor is not None else Gdk.Rectangle(0, 0, 1920, 1200)
-        self.set_default_size(
-            min(900, max(680, int(geometry.width * 0.42))),
-            min(650, max(440, int(geometry.height * 0.5))),
-        )
+        self.popup_width = min(900, max(680, int(geometry.width * 0.42)))
+        self.popup_height = min(650, max(440, int(geometry.height * 0.5)))
+        self.set_default_size(self.popup_width, self.popup_height)
+        self.set_size_request(self.popup_width, self.popup_height)
         self.set_border_width(12)
         self.set_decorated(False)
         self.set_resizable(False)
@@ -260,14 +260,14 @@ class HistoryWindow(Gtk.Window):
             controls.pack_start(button, False, False, 0)
 
         panel = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
-        panel.set_size_request(760, 500)
+        panel.set_size_request(self.popup_width - 24, self.popup_height - 24)
         panel.set_halign(Gtk.Align.CENTER)
         panel.set_valign(Gtk.Align.CENTER)
         panel.get_style_context().add_class("battery-panel")
         panel.pack_start(controls, False, False, 0)
         panel.pack_start(self.loading, True, True, 0)
         panel.pack_start(self.image, True, True, 0)
-        panel.pack_start(self.error, False, False, 12)
+        panel.pack_start(self.error, False, False, 6)
 
         self.add(panel)
 
@@ -277,7 +277,7 @@ class HistoryWindow(Gtk.Window):
             .battery-panel {
                 background-color: #1f1f26;
                 border-radius: 18px;
-                padding: 0 18px 18px 18px;
+                padding: 0 18px 8px 18px;
             }
             .battery-range {
                 background-color: #2a2d37;
