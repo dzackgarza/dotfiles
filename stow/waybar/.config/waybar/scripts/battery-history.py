@@ -5,6 +5,7 @@ import os
 import signal
 import subprocess
 import tempfile
+import threading
 from dataclasses import dataclass
 from pathlib import Path
 from fcntl import LOCK_EX, LOCK_NB, flock
@@ -119,11 +120,14 @@ class HistoryWindow(Gtk.Window):
 
         self.range_seconds = 3600
         self.samples: list[Sample] = []
+        self.render_generation = 0
         self.tempdir = tempfile.TemporaryDirectory(prefix="waybar-battery-")
         self.image = Gtk.Image()
         self.error = Gtk.Label()
         self.error.set_line_wrap(True)
         self.error.set_xalign(0)
+        self.spinner = Gtk.Spinner()
+        self.status = Gtk.Label(label="Analyzing battery history…")
 
         controls = Gtk.Box(spacing=6)
         for label, seconds in (("1h", 3600), ("3h", 10800), ("8h", 28800), ("1d", 86400)):
@@ -131,13 +135,18 @@ class HistoryWindow(Gtk.Window):
             button.connect("clicked", self.set_range, seconds)
             controls.pack_start(button, False, False, 0)
 
+        progress = Gtk.Box(spacing=6)
+        progress.pack_start(self.spinner, False, False, 0)
+        progress.pack_start(self.status, False, False, 0)
+
         layout = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
         layout.pack_start(controls, False, False, 0)
         layout.pack_start(self.image, True, True, 0)
+        layout.pack_start(progress, False, False, 0)
         layout.pack_start(self.error, False, False, 0)
         self.add(layout)
 
-        self.refresh()
+        self.start_refresh()
 
     def on_key_press(self, _window: Gtk.Window, event: Gdk.EventKey) -> bool:
         if event.keyval == Gdk.KEY_Escape:
@@ -189,27 +198,41 @@ class HistoryWindow(Gtk.Window):
         GtkLayerShell.set_margin(self, GtkLayerShell.Edge.TOP, pointer_y - geometry.y + 8)
         GtkLayerShell.set_margin(self, GtkLayerShell.Edge.LEFT, left - geometry.x)
 
-    def refresh(self) -> None:
+    def start_refresh(self) -> None:
+        self.render_generation += 1
+        generation = self.render_generation
+        self.spinner.start()
+        self.spinner.show()
+        self.status.set_text("Analyzing battery history…")
+        self.error.set_text("")
+
+        threading.Thread(
+            target=self.render_in_background,
+            args=(generation, self.range_seconds),
+            daemon=True,
+        ).start()
+
+    def render_in_background(self, generation: int, range_seconds: int) -> None:
         try:
-            self.samples = charge_history(self.range_seconds)
+            samples = charge_history(range_seconds)
             LOGGER.info(
                 "Rendering %s samples for %ss range",
-                len(self.samples),
-                self.range_seconds,
+                len(samples),
+                range_seconds,
             )
             input_path = Path(self.tempdir.name) / "history.csv"
-            output_path = Path(self.tempdir.name) / "history.png"
+            output_path = Path(self.tempdir.name) / f"history-{generation}.png"
             with input_path.open("w", newline="") as stream:
                 writer = csv.writer(stream)
                 writer.writerow(("timestamp", "percentage"))
-                writer.writerows((sample.timestamp, sample.percentage) for sample in self.samples)
+                writer.writerows((sample.timestamp, sample.percentage) for sample in samples)
             result = subprocess.run(
                 [
                     "Rscript",
                     str(Path(__file__).with_name("battery-history.R")),
                     str(input_path),
                     str(output_path),
-                    str(self.range_seconds),
+                    str(range_seconds),
                 ],
                 check=True,
                 capture_output=True,
@@ -223,18 +246,36 @@ class HistoryWindow(Gtk.Window):
                 LOGGER.warning("R warnings: %s", result.stderr.strip())
             if not output_path.is_file() or output_path.stat().st_size == 0:
                 raise RuntimeError("R completed without producing a graph image")
-            self.image.set_from_file(str(output_path))
-            self.error.set_text("")
             LOGGER.info("Rendered graph image: %s bytes", output_path.stat().st_size)
+            GLib.idle_add(self.finish_refresh, generation, output_path, None)
         except (OSError, RuntimeError, GLib.Error, subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
             LOGGER.exception("Battery history render failed")
-            self.image.clear()
             message = getattr(exc, "stderr", None) or str(exc)
-            self.error.set_text(message.strip())
+            GLib.idle_add(self.finish_refresh, generation, None, message.strip())
+
+    def finish_refresh(
+        self,
+        generation: int,
+        output_path: Path | None,
+        error: str | None,
+    ) -> bool:
+        if generation != self.render_generation:
+            return False
+        self.spinner.stop()
+        self.spinner.hide()
+        if error is not None:
+            self.image.clear()
+            self.status.set_text("Analysis failed")
+            self.error.set_text(error)
+        else:
+            self.image.set_from_file(str(output_path))
+            self.status.set_text("Analysis complete")
+            self.error.set_text("")
+        return False
 
     def set_range(self, _button: Gtk.Button, seconds: int) -> None:
         self.range_seconds = seconds
-        self.refresh()
+        self.start_refresh()
 
 
 def main() -> None:
