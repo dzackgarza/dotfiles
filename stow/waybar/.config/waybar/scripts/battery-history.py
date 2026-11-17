@@ -1,16 +1,12 @@
 #!/usr/bin/env python3
+import csv
+import os
 import subprocess
-import time
+import tempfile
 from dataclasses import dataclass
-from datetime import datetime
+from pathlib import Path
 
 import gi
-import matplotlib
-
-matplotlib.use("GTK3Agg")
-from matplotlib import dates as mdates
-from matplotlib.figure import Figure
-from matplotlib.backends.backend_gtk3agg import FigureCanvasGTK3Agg
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gio, GLib, Gtk
@@ -71,10 +67,11 @@ class HistoryWindow(Gtk.Window):
 
         self.range_seconds = 3600
         self.samples: list[Sample] = []
-        self.figure = Figure(figsize=(7, 4), dpi=100)
-        self.figure.patch.set_facecolor("#1f1f26")
-        self.axes = self.figure.add_subplot(111)
-        self.canvas = FigureCanvasGTK3Agg(self.figure)
+        self.tempdir = tempfile.TemporaryDirectory(prefix="waybar-battery-")
+        self.image = Gtk.Image()
+        self.error = Gtk.Label()
+        self.error.set_line_wrap(True)
+        self.error.set_xalign(0)
 
         controls = Gtk.Box(spacing=6)
         for label, seconds in (("1h", 3600), ("3h", 10800), ("8h", 28800), ("1d", 86400)):
@@ -84,7 +81,8 @@ class HistoryWindow(Gtk.Window):
 
         layout = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
         layout.pack_start(controls, False, False, 0)
-        layout.pack_start(self.canvas, True, True, 0)
+        layout.pack_start(self.image, True, True, 0)
+        layout.pack_start(self.error, False, False, 0)
         self.add(layout)
 
         self.refresh()
@@ -92,62 +90,32 @@ class HistoryWindow(Gtk.Window):
     def refresh(self) -> None:
         try:
             self.samples = charge_history(self.range_seconds)
-        except (OSError, RuntimeError, GLib.Error, subprocess.CalledProcessError) as exc:
-            self.samples = []
-            self.axes.clear()
-            self.axes.text(
-                0.5,
-                0.5,
-                str(exc),
-                ha="center",
-                va="center",
-                transform=self.axes.transAxes,
-                color="#d8dee9",
+            input_path = Path(self.tempdir.name) / "history.csv"
+            output_path = Path(self.tempdir.name) / "history.png"
+            with input_path.open("w", newline="") as stream:
+                writer = csv.writer(stream)
+                writer.writerow(("timestamp", "percentage"))
+                writer.writerows((sample.timestamp, sample.percentage) for sample in self.samples)
+            subprocess.run(
+                [
+                    "Rscript",
+                    str(Path(__file__).with_name("battery-history.R")),
+                    str(input_path),
+                    str(output_path),
+                    str(self.range_seconds),
+                ],
+                check=True,
+                capture_output=True,
+                text=True,
+                env={**os.environ, "R_LIBS_USER": os.path.expanduser("~/R/x86_64-pc-linux-gnu-library/4.6")},
+                timeout=30,
             )
-            self.canvas.draw_idle()
-            return
-
-        now = time.time()
-        cutoff = now - self.range_seconds
-        samples = [sample for sample in self.samples if sample.timestamp >= cutoff]
-
-        self.axes.clear()
-        self.axes.set_facecolor("#1f1f26")
-        self.axes.tick_params(colors="#d8dee9", which="both")
-        for spine in self.axes.spines.values():
-            spine.set_color("#4c566a")
-        self.axes.grid(True, color="#4c566a", alpha=0.35)
-        self.axes.set_ylim(0, 100)
-        self.axes.set_xlim(datetime.fromtimestamp(cutoff), datetime.fromtimestamp(now))
-        self.axes.set_ylabel("Battery", color="#d8dee9")
-        self.axes.yaxis.set_major_formatter(lambda value, _position: f"{value:.0f}%")
-        self.axes.xaxis_date()
-        self.axes.xaxis.set_major_locator(mdates.AutoDateLocator())
-        self.axes.xaxis.set_major_formatter(mdates.ConciseDateFormatter(self.axes.xaxis.get_major_locator()))
-
-        if samples:
-            timestamps = [datetime.fromtimestamp(sample.timestamp) for sample in samples]
-            percentages = [sample.percentage for sample in samples]
-            self.axes.plot(
-                timestamps,
-                percentages,
-                color="#a3be8c",
-                linewidth=2,
-                marker="o",
-                markersize=3,
-            )
-        else:
-            self.axes.text(
-                0.5,
-                0.5,
-                "No UPower history for this range",
-                ha="center",
-                va="center",
-                transform=self.axes.transAxes,
-                color="#d8dee9",
-            )
-        self.figure.tight_layout()
-        self.canvas.draw_idle()
+            self.image.set_from_file(str(output_path))
+            self.error.set_text("")
+        except (OSError, RuntimeError, GLib.Error, subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
+            self.image.clear()
+            message = getattr(exc, "stderr", None) or str(exc)
+            self.error.set_text(message.strip())
 
     def set_range(self, _button: Gtk.Button, seconds: int) -> None:
         self.range_seconds = seconds
