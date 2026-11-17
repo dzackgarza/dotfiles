@@ -62,16 +62,16 @@ window.NotificationCenter {
     .battery-range.active,
     .battery-range:hover,
     .battery-range:focus {
-      background: $accent-bg;
+      background: $tile-active;
     }
 
     .battery-loading {
-      color: $muted-fg;
+      color: $fg-color;
       font-size: $font-lg;
     }
 
     .battery-error {
-      color: $error-fg;
+      color: $error-text;
       padding: $spacing-lg;
     }
   }
