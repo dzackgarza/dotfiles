@@ -250,7 +250,6 @@ class HistoryWindow(Gtk.Window):
         self.add(fixed)
         self.popover = Gtk.Popover.new(anchor)
         self.popover.set_modal(True)
-        self.popover.set_has_arrow(False)
         self.popover.set_position(Gtk.PositionType.TOP)
         self.popover.set_size_request(self.popup_width, self.popup_height)
         self.popover.connect("closed", self.on_popover_closed)
