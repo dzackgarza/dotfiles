@@ -223,20 +223,20 @@ class HistoryWindow(Gtk.Window):
         geometry = monitor.get_geometry() if monitor is not None else Gdk.Rectangle(0, 0, 1920, 1200)
         self.popup_width = min(900, max(680, int(geometry.width * 0.42)))
         self.popup_height = min(650, max(440, int(geometry.height * 0.5)))
+        self.set_default_size(self.popup_width, self.popup_height)
+        self.set_size_request(self.popup_width, self.popup_height)
+        self.set_border_width(12)
         self.set_decorated(False)
         self.set_resizable(False)
         self.set_can_focus(True)
-        GtkLayerShell.init_for_window(self)
-        GtkLayerShell.set_layer(self, GtkLayerShell.Layer.OVERLAY)
-        GtkLayerShell.set_anchor(self, GtkLayerShell.Edge.TOP, True)
-        GtkLayerShell.set_anchor(self, GtkLayerShell.Edge.RIGHT, True)
-        GtkLayerShell.set_anchor(self, GtkLayerShell.Edge.BOTTOM, True)
-        GtkLayerShell.set_anchor(self, GtkLayerShell.Edge.LEFT, True)
-        GtkLayerShell.set_exclusive_zone(self, -1)
-        GtkLayerShell.set_keyboard_interactivity(self, True)
-        self.connect("draw", self.on_draw)
-        self.add_events(Gdk.EventMask.KEY_PRESS_MASK)
+        self.set_position(Gtk.WindowPosition.CENTER)
+        self.set_keep_above(True)
+        self.set_skip_taskbar_hint(True)
+        self.set_type_hint(Gdk.WindowTypeHint.DIALOG)
+        self.add_events(Gdk.EventMask.KEY_PRESS_MASK | Gdk.EventMask.BUTTON_PRESS_MASK)
         self.connect("key-press-event", self.on_key_press)
+        self.connect("button-press-event", self.on_button_press)
+        self.connect("focus-out-event", self.on_focus_out)
 
         self.range_seconds = 3600
         self.samples: list[Sample] = []
@@ -271,16 +271,7 @@ class HistoryWindow(Gtk.Window):
         panel.pack_start(self.image, True, True, 0)
         panel.pack_start(self.error, False, False, 6)
 
-        self.panel = panel
-        background = Gtk.EventBox()
-        background.add_events(Gdk.EventMask.BUTTON_PRESS_MASK)
-        background.connect("button-press-event", self.on_background_press)
-        overlay = Gtk.Overlay()
-        overlay.add(background)
-        overlay.add_overlay(panel)
-        panel.set_halign(Gtk.Align.CENTER)
-        panel.set_valign(Gtk.Align.CENTER)
-        self.add(overlay)
+        self.add(panel)
 
         css = Gtk.CssProvider()
         css.load_from_data(
@@ -312,33 +303,37 @@ class HistoryWindow(Gtk.Window):
 
         self.start_refresh()
 
-    def on_draw(self, _window: Gtk.Window, context) -> bool:
-        context.set_operator(0)
-        context.set_source_rgba(0, 0, 0, 0)
-        context.paint()
-        return False
-
     def on_key_press(self, _window: Gtk.Window, event: Gdk.EventKey) -> bool:
         if event.keyval == Gdk.KEY_Escape:
             self.close()
             return True
         return False
 
-    def on_background_press(self, _background: Gtk.EventBox, event: Gdk.EventButton) -> bool:
+    def on_button_press(self, _window: Gtk.Window, event: Gdk.EventButton) -> bool:
         if event.button == 1:
-            self.close()
-            return True
+            allocation = self.get_allocation()
+            if not (0 <= event.x <= allocation.width and 0 <= event.y <= allocation.height):
+                self.close()
+                return True
+        return False
+
+    def on_focus_out(self, _window: Gtk.Window, _event: Gdk.EventFocus) -> bool:
+        self.close()
         return False
 
     def show(self) -> None:
         super().show_all()
+        self.resize(self.popup_width, self.popup_height)
         self.present()
         self.grab_focus()
+        Gtk.grab_add(self)
 
     def close(self) -> None:
         if self.closing:
             return
         self.closing = True
+        if Gtk.grab_get_current() is self:
+            Gtk.grab_remove(self)
         if Gtk.grab_get_current() is self:
             Gtk.grab_remove(self)
         self.destroy()
@@ -406,6 +401,7 @@ class HistoryWindow(Gtk.Window):
         error: str | None,
     ) -> bool:
         if generation != self.render_generation:
+            self.resize(self.popup_width, self.popup_height)
             return False
         self.loading.set_active(False)
         if error is not None:
