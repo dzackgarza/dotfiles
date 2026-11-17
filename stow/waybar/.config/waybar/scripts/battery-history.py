@@ -112,11 +112,9 @@ class HistoryWindow(Gtk.Window):
         GtkLayerShell.init_for_window(self)
         GtkLayerShell.set_namespace(self, "waybar-battery-history")
         GtkLayerShell.set_layer(self, GtkLayerShell.Layer.TOP)
-        GtkLayerShell.set_anchor(self, GtkLayerShell.Edge.TOP, True)
-        GtkLayerShell.set_anchor(self, GtkLayerShell.Edge.LEFT, True)
         GtkLayerShell.set_exclusive_zone(self, -1)
         GtkLayerShell.set_keyboard_mode(self, GtkLayerShell.KeyboardMode.EXCLUSIVE)
-        self.position_below_pointer()
+        self.center_on_active_monitor()
 
         self.range_seconds = 3600
         self.samples: list[Sample] = []
@@ -178,7 +176,7 @@ class HistoryWindow(Gtk.Window):
             Gtk.grab_remove(self)
         self.destroy()
 
-    def position_below_pointer(self) -> None:
+    def center_on_active_monitor(self) -> None:
         display = Gdk.Display.get_default()
         if display is None:
             raise RuntimeError("No GDK display available")
@@ -198,15 +196,7 @@ class HistoryWindow(Gtk.Window):
         monitor = display.get_monitor_at_point(pointer_x, pointer_y)
         if monitor is None:
             raise RuntimeError("No monitor found under pointer")
-        geometry = monitor.get_geometry()
-        popup_width = 680
-        left = max(
-            geometry.x + 8,
-            min(pointer_x - popup_width // 2, geometry.x + geometry.width - popup_width - 8),
-        )
         GtkLayerShell.set_monitor(self, monitor)
-        GtkLayerShell.set_margin(self, GtkLayerShell.Edge.TOP, pointer_y - geometry.y + 8)
-        GtkLayerShell.set_margin(self, GtkLayerShell.Edge.LEFT, left - geometry.x)
 
     def start_refresh(self) -> None:
         self.render_generation += 1
