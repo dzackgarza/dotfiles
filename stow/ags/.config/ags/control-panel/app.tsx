@@ -28,11 +28,7 @@ app.start({
   },
   main() {
     logger.info`main() entry point [STARTUP]`;
-    return (
-      <>
-        <ControlCenterWindow />
-        <BatteryHistoryWindow />
-      </>
-    );
+    BatteryHistoryWindow();
+    return <ControlCenterWindow />;
   },
 });
