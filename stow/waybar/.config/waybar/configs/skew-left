@@ -38,7 +38,7 @@
         "custom/dot",
         "custom/nightlight",
         "custom/dot",
-        "battery", 
+        "custom/upower-battery", 
         "backlight",  
         "clock",
         "custom/power_btn"

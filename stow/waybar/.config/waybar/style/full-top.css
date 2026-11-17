@@ -388,6 +388,7 @@ tooltip label {
 #disk,
 #custom-disk-io,
 #battery,
+#custom-upower-battery,
 #custom-lid-toggle,
 #custom-kbd-backlight,
 #custom-notify,
@@ -435,6 +436,7 @@ tooltip label {
 }
 
 #battery,
+#custom-upower-battery,
 #custom-lid-toggle.hibernate,
 #custom-kbd-backlight.on {
   color: #aad94c;

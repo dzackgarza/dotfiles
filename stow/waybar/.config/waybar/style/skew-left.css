@@ -69,6 +69,7 @@ tooltip label {
 #tray,
 #workspaces,
 #battery,
+#custom-upower-battery,
 #backlight {
   background: @background;
   opacity: 1;
@@ -96,7 +97,8 @@ tooltip label {
   margin-right: 20px;
 }
 
-#battery {
+#battery {,
+#custom-upower-battery {
   color: #a6e3a1;
   background-color: @background;
   margin-right: 0;
@@ -112,7 +114,8 @@ tooltip label {
   }
 }
 
-#battery.critical:not(.charging) {
+#battery.critical:not(.charging) {,
+#custom-upower-battery.critical:not(.charging) {
   color: #f53c3c;
   animation-name: blink;
   animation-duration: 0.5s;
