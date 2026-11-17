@@ -61,7 +61,13 @@ export function BatteryHistoryWindow() {
   ))
 
   const content = (
-    <box class="battery-panel" orientation={Gtk.Orientation.VERTICAL} spacing={0}>
+    <box
+      class="battery-panel"
+      orientation={Gtk.Orientation.VERTICAL}
+      spacing={0}
+      widthRequest={width}
+      heightRequest={height}
+    >
       <box class="battery-controls" spacing={4} halign={Gtk.Align.CENTER}>
         {buttons}
       </box>
