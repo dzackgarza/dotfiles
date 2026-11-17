@@ -82,6 +82,7 @@ export function BatteryHistoryWindow() {
           picture.set_vexpand(true)
           self.append(picture)
           service.state((state) => {
+            console.log(`battery-history state: ${state.loading} ${state.imagePath}`)
             picture.visible = !state.loading && !state.error
             if (state.imagePath) {
               picture.set_paintable(Gdk.Texture.new_from_filename(state.imagePath))
