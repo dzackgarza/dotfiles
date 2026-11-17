@@ -36,6 +36,46 @@ window.NotificationCenter {
     border-radius: 0;
   }
 
+  window.BatteryHistory {
+    background: transparent;
+    color: $fg-color;
+
+    .battery-panel {
+      background: $panel-bg;
+      border-radius: $radius-xl;
+      padding: $spacing-sm $spacing-lg $spacing-sm;
+      min-width: 640px;
+      min-height: 400px;
+    }
+
+    .battery-controls {
+      margin: $spacing-md 0 $spacing-sm;
+    }
+
+    .battery-range {
+      background: $tile-bg;
+      border: none;
+      border-radius: $radius-md;
+      padding: $spacing-sm $spacing-lg;
+    }
+
+    .battery-range.active,
+    .battery-range:hover,
+    .battery-range:focus {
+      background: $accent-bg;
+    }
+
+    .battery-loading {
+      color: $muted-fg;
+      font-size: $font-lg;
+    }
+
+    .battery-error {
+      color: $error-fg;
+      padding: $spacing-lg;
+    }
+  }
+
   .nc-backdrop:hover,
   .nc-backdrop:active,
   .nc-backdrop:focus {
