@@ -312,8 +312,8 @@ class HistoryWindow(Gtk.Window):
         super().show()
         self.resize(self.popup_width, self.popup_height)
         self.present()
-        self.popover.show_all()
         self.popover.popup()
+        self.popover.show_all()
 
     def on_popover_closed(self, _popover: Gtk.Popover) -> None:
         if not self.closing:
