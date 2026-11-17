@@ -64,15 +64,27 @@ export function BatteryHistoryWindow() {
       <box class="battery-controls" spacing={4} halign={Gtk.Align.CENTER}>
         {buttons}
       </box>
-      {service.state((state) =>
-        state.loading ? (
-          <label class="battery-loading" label="Rendering battery history…" hexpand vexpand />
-        ) : state.error ? (
-          <label class="battery-error" label={state.error} wrap hexpand vexpand />
-        ) : (
-          <image file={state.imagePath} hexpand vexpand />
-        ),
-      )}
+      <label
+        class="battery-loading"
+        label="Rendering battery history…"
+        visible={service.state((state) => state.loading)}
+        hexpand
+        vexpand
+      />
+      <label
+        class="battery-error"
+        label={service.state((state) => state.error)}
+        visible={service.state((state) => !state.loading && Boolean(state.error))}
+        wrap
+        hexpand
+        vexpand
+      />
+      <image
+        file={service.state((state) => state.imagePath)}
+        visible={service.state((state) => !state.loading && !state.error)}
+        hexpand
+        vexpand
+      />
     </box>
   )
 
