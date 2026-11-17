@@ -19,7 +19,7 @@ export function createBatteryHistoryService() {
 
   const refresh = async (rangeSeconds: number) => {
     const currentGeneration = ++generation
-    const outputPath = `/tmp/ags-battery-history-${process.pid}-${currentGeneration}.png`
+    const outputPath = `/tmp/ags-battery-history-${Date.now()}-${currentGeneration}.png`
     console.log(`battery-history render start: ${outputPath}`)
     setState({ loading: true, imagePath: "", error: "" })
     try {
