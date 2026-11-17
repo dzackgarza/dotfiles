@@ -215,7 +215,15 @@ def acquire_singleton() -> object | None:
 class HistoryWindow(Gtk.Window):
     def __init__(self) -> None:
         super().__init__(type=Gtk.WindowType.POPUP)
-        self.set_default_size(760, 500)
+        display = Gdk.Display.get_default()
+        if display is None:
+            raise RuntimeError("No GDK display available")
+        monitor = display.get_primary_monitor()
+        geometry = monitor.get_geometry() if monitor is not None else Gdk.Rectangle(0, 0, 1920, 1200)
+        self.set_default_size(
+            min(900, max(680, int(geometry.width * 0.42))),
+            min(650, max(440, int(geometry.height * 0.5))),
+        )
         self.set_border_width(12)
         self.set_decorated(False)
         self.set_resizable(False)
