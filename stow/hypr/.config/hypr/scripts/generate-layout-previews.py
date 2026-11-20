@@ -1,4 +1,8 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.12"
+# dependencies = ["cyclopts>=3", "pydantic>=2"]
+# ///
 """Generate TikZ previews for the Hyprland layout picker.
 
 Each preview is a standalone TikZ picture of rounded rectangles, compiled to
@@ -7,16 +11,17 @@ SVG and rasterised to PNG for rofi. No raster image library is involved.
 
 from __future__ import annotations
 
-import argparse
 import math
 import os
 import subprocess
 import sys
 import tempfile
-from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
-from typing import NamedTuple
+from typing import Callable
+
+from cyclopts import App
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 W_CM = 8.0
 H_CM = 4.5
@@ -31,8 +36,10 @@ MONOCLE_MARGIN = 0.02
 MONOCLE_SHADES = (0.19, 0.37, 0.55)
 
 
-class Card(NamedTuple):
+class Card(BaseModel):
     """One window in a preview, in a 0..1 box, top-left origin."""
+
+    model_config = ConfigDict(frozen=True, strict=True)
 
     x: float
     y: float
@@ -41,7 +48,7 @@ class Card(NamedTuple):
     color: str = "win"
 
 
-class Layout(NamedTuple):
+class Layout(BaseModel):
     """One picker entry and the Hyprland layout it applies.
 
     `hypr` is the layout name passed to the workspace rule; `orientation` is
@@ -49,12 +56,37 @@ class Layout(NamedTuple):
     `minimum` is the smallest window count at which the layout differs.
     """
 
+    model_config = ConfigDict(frozen=True)
+
     key: str
     label: str
     geometry: Callable[[int], list[Card]]
     hypr: str
     orientation: str = ""
     minimum: int = 1
+
+
+class PreviewOptions(BaseModel):
+    """Command line contract."""
+
+    model_config = ConfigDict(frozen=True, strict=True)
+
+    count: int | None = Field(default=None, description="window count to build for")
+    all: bool = Field(default=False, description="build every count from 1 to 10")
+    list: bool = Field(default=False, description="print the picker entries")
+    force: bool = Field(default=False, description="rebuild up-to-date previews")
+    out: Path = Field(
+        default=Path.home() / ".cache/hypr/layout-previews",
+        description="preview cache directory",
+    )
+
+    @model_validator(mode="after")
+    def _consistent(self) -> PreviewOptions:
+        if self.list and self.count is None:
+            raise ValueError("--list requires --count")
+        if not self.list and self.count is None and not self.all:
+            raise ValueError("pass --count N or --all")
+        return self
 
 
 def blend(color: str, toward: str, t: float) -> str:
@@ -67,17 +99,17 @@ def blend(color: str, toward: str, t: float) -> str:
 def split(card: Card, side: str, ratio: float = 0.5) -> tuple[Card, Card]:
     if side == "v":
         return (
-            Card(card.x, card.y, card.w * ratio, card.h),
-            Card(card.x + card.w * ratio, card.y, card.w * (1 - ratio), card.h),
+            Card(x=card.x, y=card.y, w=card.w * ratio, h=card.h),
+            Card(x=card.x + card.w * ratio, y=card.y, w=card.w * (1 - ratio), h=card.h),
         )
     return (
-        Card(card.x, card.y, card.w, card.h * ratio),
-        Card(card.x, card.y + card.h * ratio, card.w, card.h * (1 - ratio)),
+        Card(x=card.x, y=card.y, w=card.w, h=card.h * ratio),
+        Card(x=card.x, y=card.y + card.h * ratio, w=card.w, h=card.h * (1 - ratio)),
     )
 
 
 def dwindle(n: int) -> list[Card]:
-    cards = [Card(0.0, 0.0, 1.0, 1.0)]
+    cards = [Card(x=0.0, y=0.0, w=1.0, h=1.0)]
     for i in range(1, n):
         side = "v" if (i - 1) % 2 == 0 else "h"
         first, second = split(cards[-1], side)
@@ -96,16 +128,16 @@ def grid(n: int) -> list[Card]:
         in_row = min(cols, n - row * cols)
         w = 1.0 / in_row
         h = 1.0 / rows
-        cards.append(Card(col * w, row * h, w, h))
+        cards.append(Card(x=col * w, y=row * h, w=w, h=h))
     return cards
 
 
 def columns(n: int) -> list[Card]:
-    return [Card(i / n, 0.0, 1.0 / n, 1.0) for i in range(n)]
+    return [Card(x=i / n, y=0.0, w=1.0 / n, h=1.0) for i in range(n)]
 
 
 def rows(n: int) -> list[Card]:
-    return [Card(0.0, i / n, 1.0, 1.0 / n) for i in range(n)]
+    return [Card(x=0.0, y=i / n, w=1.0, h=1.0 / n) for i in range(n)]
 
 
 def two_sided(n: int, master_w: float) -> list[Card]:
@@ -113,42 +145,61 @@ def two_sided(n: int, master_w: float) -> list[Card]:
     side_w = (1.0 - master_w) / 2
     left_n = (n - 1) // 2
     right_n = n - 1 - left_n
-    cards = [Card(side_w, 0.0, master_w, 1.0)]
+    cards = [Card(x=side_w, y=0.0, w=master_w, h=1.0)]
     for i in range(left_n):
-        cards.append(Card(0.0, i / left_n, side_w, 1.0 / left_n))
+        cards.append(Card(x=0.0, y=i / left_n, w=side_w, h=1.0 / left_n))
     for i in range(right_n):
-        cards.append(Card(side_w + master_w, i / right_n, side_w, 1.0 / right_n))
+        cards.append(
+            Card(x=side_w + master_w, y=i / right_n, w=side_w, h=1.0 / right_n)
+        )
     return cards
 
 
 def center(n: int) -> list[Card]:
     if n == 1:
-        return [Card(0.0, 0.0, 1.0, 1.0)]
+        return [Card(x=0.0, y=0.0, w=1.0, h=1.0)]
     if n == 2:
-        return [Card(0.0, 0.0, 0.5, 1.0), Card(0.5, 0.0, 0.5, 1.0)]
+        return [
+            Card(x=0.0, y=0.0, w=0.5, h=1.0),
+            Card(x=0.5, y=0.0, w=0.5, h=1.0),
+        ]
     return two_sided(n, CENTER_RATIO)
 
 
 def master_left(n: int) -> list[Card]:
-    cards = [Card(0.0, 0.0, MASTER_RATIO, 1.0)]
+    cards = [Card(x=0.0, y=0.0, w=MASTER_RATIO, h=1.0)]
     for i in range(n - 1):
-        cards.append(Card(MASTER_RATIO, i / (n - 1), 1.0 - MASTER_RATIO, 1.0 / (n - 1)))
+        cards.append(
+            Card(
+                x=MASTER_RATIO,
+                y=i / (n - 1),
+                w=1.0 - MASTER_RATIO,
+                h=1.0 / (n - 1),
+            )
+        )
     return cards
 
 
 def master_right(n: int) -> list[Card]:
-    return [Card(1.0 - c.x - c.w, c.y, c.w, c.h) for c in master_left(n)]
+    return [Card(x=1.0 - c.x - c.w, y=c.y, w=c.w, h=c.h) for c in master_left(n)]
 
 
 def master_top(n: int) -> list[Card]:
-    cards = [Card(0.0, 0.0, 1.0, MASTER_RATIO)]
+    cards = [Card(x=0.0, y=0.0, w=1.0, h=MASTER_RATIO)]
     for i in range(n - 1):
-        cards.append(Card(i / (n - 1), MASTER_RATIO, 1.0 / (n - 1), 1.0 - MASTER_RATIO))
+        cards.append(
+            Card(
+                x=i / (n - 1),
+                y=MASTER_RATIO,
+                w=1.0 / (n - 1),
+                h=1.0 - MASTER_RATIO,
+            )
+        )
     return cards
 
 
 def master_bottom(n: int) -> list[Card]:
-    return [Card(c.x, 1.0 - c.y - c.h, c.w, c.h) for c in master_top(n)]
+    return [Card(x=c.x, y=1.0 - c.y - c.h, w=c.w, h=c.h) for c in master_top(n)]
 
 
 def master_center(n: int) -> list[Card]:
@@ -162,7 +213,13 @@ def monocle(_n: int) -> list[Card]:
     w = 1.0 - 2 * MONOCLE_MARGIN - 3 * dx
     h = 1.0 - 2 * MONOCLE_MARGIN - 3 * dy
     return [
-        Card(MONOCLE_MARGIN + i * dx, MONOCLE_MARGIN + i * dy, w, h, color)
+        Card(
+            x=MONOCLE_MARGIN + i * dx,
+            y=MONOCLE_MARGIN + i * dy,
+            w=w,
+            h=h,
+            color=color,
+        )
         for i, color in ((3, "win3"), (2, "win2"), (1, "win1"), (0, "win"))
     ]
 
@@ -170,17 +227,56 @@ def monocle(_n: int) -> list[Card]:
 # Popup order is by prevalence, most common first: `grid` is the everyday
 # layout, and the master orientations are the least used.
 LAYOUTS = (
-    Layout("grid", "Grid", grid, "lua:grid", minimum=3),
-    Layout("dwindle", "Dwindle · tree", dwindle, "dwindle"),
-    Layout("monocle", "Monocle · stack", monocle, "monocle"),
-    Layout("columns", "Columns", columns, "lua:columns", minimum=2),
-    Layout("rows", "Rows", rows, "lua:rows", minimum=2),
-    Layout("center", "Center focus", center, "lua:center", minimum=3),
-    Layout("master-left", "Master · left", master_left, "master", "left", 2),
-    Layout("master-right", "Master · right", master_right, "master", "right", 2),
-    Layout("master-top", "Master · top", master_top, "master", "top", 2),
-    Layout("master-bottom", "Master · bottom", master_bottom, "master", "bottom", 2),
-    Layout("master-center", "Master · center", master_center, "master", "center", 3),
+    Layout(key="grid", label="Grid", geometry=grid, hypr="lua:grid", minimum=3),
+    Layout(key="dwindle", label="Dwindle · tree", geometry=dwindle, hypr="dwindle"),
+    Layout(key="monocle", label="Monocle · stack", geometry=monocle, hypr="monocle"),
+    Layout(
+        key="columns", label="Columns", geometry=columns, hypr="lua:columns", minimum=2
+    ),
+    Layout(key="rows", label="Rows", geometry=rows, hypr="lua:rows", minimum=2),
+    Layout(
+        key="center", label="Center focus", geometry=center, hypr="lua:center", minimum=3
+    ),
+    Layout(
+        key="master-left",
+        label="Master · left",
+        geometry=master_left,
+        hypr="master",
+        orientation="left",
+        minimum=2,
+    ),
+    Layout(
+        key="master-right",
+        label="Master · right",
+        geometry=master_right,
+        hypr="master",
+        orientation="right",
+        minimum=2,
+    ),
+    Layout(
+        key="master-top",
+        label="Master · top",
+        geometry=master_top,
+        hypr="master",
+        orientation="top",
+        minimum=2,
+    ),
+    Layout(
+        key="master-bottom",
+        label="Master · bottom",
+        geometry=master_bottom,
+        hypr="master",
+        orientation="bottom",
+        minimum=2,
+    ),
+    Layout(
+        key="master-center",
+        label="Master · center",
+        geometry=master_center,
+        hypr="master",
+        orientation="center",
+        minimum=3,
+    ),
 )
 
 
@@ -268,48 +364,31 @@ def build(layout: Layout, n: int, out_dir: Path, force: bool = False) -> Path:
     return png
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Build and list Hyprland layout previews.",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-    )
-    parser.add_argument("--count", type=int, help="window count to build for")
-    parser.add_argument(
-        "--all", action="store_true", help="build every count from 1 to 10"
-    )
-    parser.add_argument(
-        "--list",
-        action="store_true",
-        help="print the picker entries instead of building",
-    )
-    parser.add_argument(
-        "--force", action="store_true", help="rebuild previews that are up to date"
-    )
-    parser.add_argument(
-        "--out",
-        type=Path,
-        default=Path.home() / ".cache/hypr/layout-previews",
-        help="preview cache directory",
-    )
-    args = parser.parse_args()
+app = App(name="generate-layout-previews")
 
-    if args.list:
-        if not args.count:
-            parser.error("--list requires --count")
-        for layout, label in options(args.count):
+
+@app.default
+def main(options: PreviewOptions) -> int:
+    """Build and list Hyprland layout previews.
+
+    Args:
+        options: Window count, output directory, and build mode.
+    """
+    if options.list:
+        assert options.count is not None
+        for layout, label in options_for(options.count):
             print(f"{layout.key}|{label}|{layout.hypr}|{layout.orientation}")
         return 0
 
-    counts = [args.count] if args.count else list(range(1, 11)) if args.all else []
-    if not counts:
-        parser.error("pass --count N or --all")
+    counts = list(range(1, 11)) if options.all else [options.count]
+    assert all(count is not None for count in counts)
 
-    args.out.mkdir(parents=True, exist_ok=True)
-    jobs = [(layout, n) for n in counts for layout, _ in options(n)]
+    options.out.mkdir(parents=True, exist_ok=True)
+    jobs = [(layout, n) for n in counts for layout, _ in options_for(n)]
 
     with ThreadPoolExecutor(max_workers=min(8, os.cpu_count() or 1)) as pool:
         futures = {
-            pool.submit(build, layout, n, args.out, args.force): (layout, n)
+            pool.submit(build, layout, n, options.out, options.force): (layout, n)
             for layout, n in jobs
         }
         for future in as_completed(futures):
@@ -324,4 +403,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    app()
