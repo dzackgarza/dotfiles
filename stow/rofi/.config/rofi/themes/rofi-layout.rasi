@@ -97,6 +97,7 @@ listview {
     spacing:               6px;
     dynamic:               true;
     cycle:                 true;
+    flow:                  horizontal;
     scrollbar:             false;
     layout:                vertical;
     reverse:               false;
