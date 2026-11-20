@@ -113,6 +113,19 @@ def master_bottom(n):
     return [(x, 1.0 - y - h, w, h) for x, y, w, h in master_top(n)]
 
 
+def master_center(n):
+    master_w = 0.55
+    side_w = (1.0 - master_w) / 2
+    left_n = (n - 1) // 2
+    right_n = n - 1 - left_n
+    out = [(side_w, 0.0, master_w, 1.0)]
+    for i in range(left_n):
+        out.append((0.0, i / left_n, side_w, 1.0 / left_n))
+    for i in range(right_n):
+        out.append((side_w + master_w, i / right_n, side_w, 1.0 / right_n))
+    return out
+
+
 def monocle(_n):
     """A deck of windows: the front card full size, the others peeking out."""
     dx = MONOCLE_STEP_CM / W_CM
