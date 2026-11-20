@@ -21,6 +21,14 @@ W_CM = 8.0
 H_CM = 4.5
 GAP_CM = 0.08
 FILL = "89B4FA"
+MONOCLE_STEP_CM = 0.22
+
+
+def blend(color, toward, t):
+    """Mix `color` toward `toward` by `t`."""
+    a = [int(color[i : i + 2], 16) for i in (0, 2, 4)]
+    b = [int(toward[i : i + 2], 16) for i in (0, 2, 4)]
+    return "".join(f"{round(x + (y - x) * t):02X}" for x, y in zip(a, b))
 
 
 def split(rect, side, ratio=0.5):
