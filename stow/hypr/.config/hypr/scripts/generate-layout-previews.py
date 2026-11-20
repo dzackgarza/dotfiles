@@ -19,6 +19,7 @@ import tempfile
 from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
+from typing import Annotated
 
 from cyclopts import App, Parameter
 from pydantic import BaseModel, ConfigDict, Field, model_validator
