@@ -109,3 +109,11 @@ if ! hyprctl eval "hl.workspace_rule({ workspace = $ws_lua, layout = \"$layout\"
     notify-send "Layout" "Could not apply $key"
     exit 1
 fi
+
+mkdir -p "$order_dir"
+tmp="$order_file.tmp"
+printf '%s\n' "$key" >"$tmp"
+if [[ -f "$order_file" ]]; then
+    grep -vxF -- "$key" "$order_file" >>"$tmp" || true
+fi
+mv "$tmp" "$order_file"
