@@ -110,12 +110,37 @@ app.start({
     const focused = (): WindowState | null => {
       try {
         const state = JSON.parse(hypr.message("j/activewindow")) as WindowState;
-        return typeof state.address === "string" && Array.isArray(state.at)
+        return typeof state.address === "string" &&
+          Array.isArray(state.at) &&
+          Array.isArray(state.size) &&
+          typeof state.monitor === "number" &&
+          typeof state.pid === "number" &&
+          typeof state.fullscreen === "number"
           ? state
           : null;
       } catch {
         return null;
       }
+    };
+
+    // The connector name changes only when the window moves to another
+    // monitor, so scan Gdk once per name instead of on every tick.
+    let gdkMonitor: Gdk.Monitor | null = null;
+    let gdkMonitorName: string | null = null;
+    const monitorFor = (name: string): Gdk.Monitor | null => {
+      if (name === gdkMonitorName) return gdkMonitor;
+      gdkMonitorName = name;
+      gdkMonitor = null;
+      const monitors = Gdk.Display.get_default()?.get_monitors();
+      if (!monitors) return null;
+      for (let i = 0; i < monitors.get_n_items(); i++) {
+        const candidate = monitors.get_item(i) as Gdk.Monitor;
+        if (candidate.get_connector() === name) {
+          gdkMonitor = candidate;
+          break;
+        }
+      }
+      return gdkMonitor;
     };
 
     const place = () => {
