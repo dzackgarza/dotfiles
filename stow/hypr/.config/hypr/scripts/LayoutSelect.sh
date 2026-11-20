@@ -55,7 +55,7 @@ choice="$(
         IFS='|' read -r key label _ _ <<<"$line"
         printf '%s\x00icon\x1f%s\n' "$label" "$cache_dir/$key-$n.png"
     done | rofi -dmenu -i -no-custom -config "$theme" -p "Layout · $n windows"
-)"
+)" || exit 0
 
 [[ -z "$choice" ]] && exit 0
 
