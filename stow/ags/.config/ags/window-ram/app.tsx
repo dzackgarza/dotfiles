@@ -7,6 +7,7 @@ import { execAsync } from "ags/process"
 import { interval } from "ags/time"
 import AstalHyprland from "gi://AstalHyprland"
 import GLib from "gi://GLib"
+import Gdk from "gi://Gdk"
 import Cairo from "cairo"
 
 const POLL_MS = 1000
