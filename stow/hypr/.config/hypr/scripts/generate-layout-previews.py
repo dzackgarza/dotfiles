@@ -124,23 +124,29 @@ LAYOUTS = {
 }
 
 
-def options(n):
-    keys = ["dwindle"]
-    if n >= 2:
-        keys += [
-            "master-left",
-            "master-right",
-            "master-top",
-            "master-bottom",
-            "columns",
-            "rows",
-        ]
-    if n >= 3:
-        keys += ["master-center", "grid", "center"]
-    keys.append("monocle")
+# Popup order and the smallest window count at which each layout applies.
+# Tree layout first, master family ordered by master position, split family,
+# grid family, stacked layout last.
+ORDER = (
+    ("dwindle", 1),
+    ("master-left", 2),
+    ("master-right", 2),
+    ("master-top", 2),
+    ("master-bottom", 2),
+    ("master-center", 3),
+    ("columns", 2),
+    ("rows", 2),
+    ("grid", 3),
+    ("center", 3),
+    ("monocle", 1),
+)
 
+
+def options(n):
     out = []
-    for key in keys:
+    for key, minimum in ORDER:
+        if n < minimum:
+            continue
         label = LAYOUTS[key][0]
         if key == "grid":
             cols = math.ceil(math.sqrt(n))
