@@ -398,8 +398,11 @@ def main(
             print(f"{layout.key}|{label}|{layout.hypr}|{layout.orientation}")
         return 0
 
-    counts = range(1, 11) if opts.all else [opts.count]
-    assert all(count is not None for count in counts)
+    if opts.all:
+        counts = range(1, 11)
+    else:
+        assert opts.count is not None
+        counts = [opts.count]
 
     opts.out.mkdir(parents=True, exist_ok=True)
     jobs = [(layout, n) for n in counts for layout, _ in options(n)]
