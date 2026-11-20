@@ -54,13 +54,15 @@ function processTicks(pid: number): number {
   return Number(fields[11]) + Number(fields[12]);
 }
 
-// Sum of all columns of the aggregate "cpu" line of proc_stat(5), in clock ticks.
+// Sum of the first eight columns of the aggregate "cpu" line of
+// proc_stat(5), in clock ticks. guest and guest_nice are already counted in
+// user and nice.
 function totalTicks(): number {
   const line = readText("/proc/stat")!.split("\n")[0];
   return line
     .trim()
     .split(/\s+/)
-    .slice(1)
+    .slice(1, 9)
     .map(Number)
     .reduce((a, b) => a + b, 0);
 }
