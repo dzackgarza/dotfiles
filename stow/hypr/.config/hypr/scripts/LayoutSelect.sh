@@ -23,15 +23,7 @@ fi
 
 mapfile -t options < <(python3 "$scripts_dir/generate-layout-previews.py" --list --count "$n")
 
-missing=0
-for line in "${options[@]}"; do
-    key="${line%%|*}"
-    [[ -f "$cache_dir/$key-$n.png" ]] || missing=1
-done
-
-if (( missing )); then
-    python3 "$scripts_dir/generate-layout-previews.py" --count "$n" --out "$cache_dir"
-fi
+python3 "$scripts_dir/generate-layout-previews.py" --count "$n" --out "$cache_dir"
 
 declare -A key_by_label=()
 for line in "${options[@]}"; do
