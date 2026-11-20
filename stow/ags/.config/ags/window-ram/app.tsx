@@ -93,23 +93,45 @@ app.start({
       win.get_surface()?.set_input_region(new Cairo.Region()),
     );
 
-    // Position follows Hyprland events at once; usage refreshes on a timer.
+    // Hyprland moves windows on a layout change without emitting an event,
+    // and AstalHyprland keeps the stale geometry it cached on focus change.
+    // Read the focused window from the compositor on every tick instead.
+    type WindowState = {
+      address: string;
+      at: [number, number];
+      size: [number, number];
+      monitor: number;
+      fullscreen: number;
+      pid: number;
+    };
+
+    const focused = (): WindowState | null => {
+      try {
+        const state = JSON.parse(hypr.message("j/activewindow")) as WindowState;
+        return typeof state.address === "string" && Array.isArray(state.at)
+          ? state
+          : null;
+      } catch {
+        return null;
+      }
+    };
+
     const place = () => {
-      const client = hypr.get_focused_client();
-      if (
-        client === null ||
-        client.get_fullscreen() !== AstalHyprland.Fullscreen.NONE
-      ) {
+      const state = focused();
+      if (state === null || state.fullscreen !== AstalHyprland.Fullscreen.NONE) {
         win.visible = false;
         return;
       }
-      const monitor = client.get_monitor();
+      const monitor =
+        state.monitor >= 0
+          ? hypr.get_monitor(state.monitor)
+          : hypr.get_focused_monitor();
       const gdkMonitors = Gdk.Display.get_default()?.get_monitors();
       if (gdkMonitors) {
         for (let i = 0; i < gdkMonitors.get_n_items(); i++) {
           const candidate = gdkMonitors.get_item(i) as Gdk.Monitor;
           if (candidate.get_connector() === monitor.get_name()) {
-            win.gdkmonitor = candidate;
+            if (win.gdkmonitor !== candidate) win.gdkmonitor = candidate;
             break;
           }
         }
@@ -118,9 +140,9 @@ app.start({
       const monitorX = geometry?.x ?? monitor.get_x();
       const monitorY = geometry?.y ?? monitor.get_y();
       const monitorWidth = geometry?.width ?? monitor.get_width();
-      win.marginTop = client.get_y() - monitorY + INSET;
+      win.marginTop = state.at[1] - monitorY + INSET;
       win.marginRight =
-        monitorX + monitorWidth - (client.get_x() + client.get_width()) + INSET;
+        monitorX + monitorWidth - (state.at[0] + state.size[0]) + INSET;
       win.visible = true;
     };
 
