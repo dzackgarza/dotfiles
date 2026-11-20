@@ -138,7 +138,20 @@ def options(n):
     if n >= 3:
         keys += ["master-center", "grid", "center"]
     keys.append("monocle")
-    return [(key, LAYOUTS[key][0]) for key in keys]
+
+    out = []
+    for key in keys:
+        label = LAYOUTS[key][0]
+        if key == "grid":
+            cols = math.ceil(math.sqrt(n))
+            rows = math.ceil(n / cols)
+            label = f"Grid · {cols}×{rows}"
+        elif key == "columns":
+            label = f"Columns · {n}"
+        elif key == "rows":
+            label = f"Rows · {n}"
+        out.append((key, label))
+    return out
 
 
 def tex_for(rects):
