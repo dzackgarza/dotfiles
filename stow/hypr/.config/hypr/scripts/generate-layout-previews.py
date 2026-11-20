@@ -124,21 +124,21 @@ LAYOUTS = {
 }
 
 
-# Popup order and the smallest window count at which each layout applies.
-# Tree layout first, master family ordered by master position, split family,
-# grid family, stacked layout last.
+# Popup order is by prevalence, most common first: `grid` is the everyday
+# layout, and the master orientations are the least used. The second value is
+# the smallest window count at which the layout applies.
 ORDER = (
+    ("grid", 3),
     ("dwindle", 1),
+    ("monocle", 1),
+    ("columns", 2),
+    ("rows", 2),
+    ("center", 3),
     ("master-left", 2),
     ("master-right", 2),
     ("master-top", 2),
     ("master-bottom", 2),
     ("master-center", 3),
-    ("columns", 2),
-    ("rows", 2),
-    ("grid", 3),
-    ("center", 3),
-    ("monocle", 1),
 )
 
 
