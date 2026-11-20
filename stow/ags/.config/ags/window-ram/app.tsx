@@ -9,6 +9,7 @@ import AstalHyprland from "gi://AstalHyprland";
 import GLib from "gi://GLib";
 import Gdk from "gi://Gdk";
 import Cairo from "cairo";
+import { z } from "zod";
 
 const POLL_MS = 1000;
 const LABEL_WIDTH = 120;
