@@ -372,27 +372,27 @@ app = App(name="generate-layout-previews")
 
 
 @app.default
-def main(options: PreviewOptions) -> int:
+def main(opts: PreviewOptions) -> int:
     """Build and list Hyprland layout previews.
 
     Args:
-        options: Window count, output directory, and build mode.
+        opts: Window count, output directory, and build mode.
     """
-    if options.list:
-        assert options.count is not None
-        for layout, label in options_for(options.count):
+    if opts.list:
+        assert opts.count is not None
+        for layout, label in options(opts.count):
             print(f"{layout.key}|{label}|{layout.hypr}|{layout.orientation}")
         return 0
 
-    counts = list(range(1, 11)) if options.all else [options.count]
+    counts = list(range(1, 11)) if opts.all else [opts.count]
     assert all(count is not None for count in counts)
 
-    options.out.mkdir(parents=True, exist_ok=True)
-    jobs = [(layout, n) for n in counts for layout, _ in options_for(n)]
+    opts.out.mkdir(parents=True, exist_ok=True)
+    jobs = [(layout, n) for n in counts for layout, _ in options(n)]
 
     with ThreadPoolExecutor(max_workers=min(8, os.cpu_count() or 1)) as pool:
         futures = {
-            pool.submit(build, layout, n, options.out, options.force): (layout, n)
+            pool.submit(build, layout, n, opts.out, opts.force): (layout, n)
             for layout, n in jobs
         }
         for future in as_completed(futures):
