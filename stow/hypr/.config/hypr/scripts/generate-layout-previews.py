@@ -117,8 +117,8 @@ def monocle(_n):
     """A deck of windows: the front card full size, the others peeking out."""
     dx = MONOCLE_STEP_CM / W_CM
     dy = MONOCLE_STEP_CM / H_CM
-    w = 1.0 - 3 * dx - 0.02
-    h = 1.0 - 3 * dy - 0.02
+    w = 0.96 - 3 * dx
+    h = 0.96 - 3 * dy
     return [
         (0.02 + 3 * dx, 0.02 + 3 * dy, w, h, "win3"),
         (0.02 + 2 * dx, 0.02 + 2 * dy, w, h, "win2"),
