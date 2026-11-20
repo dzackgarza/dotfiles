@@ -114,7 +114,17 @@ def master_bottom(n):
 
 
 def monocle(_n):
-    return [(0.0, 0.0, 1.0, 1.0)]
+    """A deck of windows: the front card full size, the others peeking out."""
+    dx = MONOCLE_STEP_CM / W_CM
+    dy = MONOCLE_STEP_CM / H_CM
+    w = 1.0 - 3 * dx - 0.02
+    h = 1.0 - 3 * dy - 0.02
+    return [
+        (0.02 + 3 * dx, 0.02 + 3 * dy, w, h, "win3"),
+        (0.02 + 2 * dx, 0.02 + 2 * dy, w, h, "win2"),
+        (0.02 + dx, 0.02 + dy, w, h, "win1"),
+        (0.02, 0.02, w, h, "win"),
+    ]
 
 
 LAYOUTS = {
