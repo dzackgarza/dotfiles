@@ -10,7 +10,7 @@ ws_json="$(hyprctl -j activeworkspace)"
 ws_name="$(jq -r '.name' <<<"$ws_json")"
 
 n="$(hyprctl -j clients | jq --arg ws "$ws_name" '
-    [.[] | select(.workspace.name == $ws and (.floating | not) and (.mapped // true))] | length
+    [.[] | select(.workspace.name == $ws and (.floating | not) and (.mapped != false))] | length
 ')"
 
 if (( n == 0 )); then
