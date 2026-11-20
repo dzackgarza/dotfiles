@@ -10,6 +10,7 @@ local home = os.getenv("HOME")
 -- Custom Variables
 local scriptsDir = home .. "/.config/hypr/scripts"
 local wallpaperSelect = scriptsDir .. "/WallpaperSelect.sh"
+local layoutSelect = scriptsDir .. "/LayoutSelect.sh"
 local terminal = "kitty"
 local file_man = "dolphin"
 local terminal_file_man = "yazi"
@@ -74,6 +75,9 @@ register_bind("F11", hl.dsp.workspace.toggle_special("chromium"), { description 
 
 -- Change Wallpaper
 register_bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(wallpaperSelect .. " thm1"), { description = "Select wallpaper" })
+
+-- Select a tiling layout for the focused workspace
+register_bind(mainMod .. " + ALT + L", hl.dsp.exec_cmd(layoutSelect), { description = "Select window layout" })
 
 -- Screenshot
 register_bind("print", hl.dsp.exec_cmd("flameshot gui"), { description = "Take screenshot" })
