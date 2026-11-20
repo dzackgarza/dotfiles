@@ -152,9 +152,9 @@ app.start({
     // CPU share needs two samples of the same process tree.
     let previous: { root: number; tree: number; total: number } | null = null;
     const measure = async () => {
-      const client = hypr.get_focused_client();
-      if (client === null) return;
-      const root = client.get_pid();
+      const state = focused();
+      if (state === null) return;
+      const root = state.pid;
       const ps = await execAsync(["ps", "-eo", "pid=,ppid=,rss="]);
       const { pids, rssKb } = processTree(ps, root);
       const sample = {
