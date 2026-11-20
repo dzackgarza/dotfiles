@@ -1,5 +1,6 @@
 /* ---- Configuration ---- */
 configuration {
+    font:                  "Fira Code SemiBold 12";
     show-icons:            true;
     hover-select:          true;
     me-select-entry:       "MouseSecondary";
