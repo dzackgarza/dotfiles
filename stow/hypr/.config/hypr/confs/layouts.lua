@@ -5,14 +5,10 @@
 -- `lua:<name>`, so a workspace rule can select one directly.
 --
 -- `ctx.area` is the monitor work area after gaps_out. `target:place` sets the
--- logical box and does not add gaps, so each cell is inset by half of gaps_in.
-
--- Hyprland's directional focus treats layout boxes as adjacent only when their
--- edges touch (within 2 px). Do not inset the boxes for gaps: a gap makes the
--- boxes non-adjacent and breaks `focus({ direction = ... })`.
-local function place(target, box)
-    target:place(box)
-end
+-- logical box; Hyprland applies gaps_in when it draws the window, so adjacent
+-- cells must share edges. Do not inset the boxes: a gap makes them
+-- non-adjacent for `focus({ direction = ... })`, which only links boxes whose
+-- edges touch within 2 px.
 
 hl.layout.register("grid", {
     recalculate = function(ctx)
@@ -31,7 +27,7 @@ hl.layout.register("grid", {
             local w = ctx.area.w / in_row
             local h = ctx.area.h / rows
 
-            place(target, {
+            target:place({
                 x = ctx.area.x + col * w,
                 y = ctx.area.y + row * h,
                 w = w,
@@ -50,7 +46,7 @@ hl.layout.register("columns", {
 
         local w = ctx.area.w / n
         for i, target in ipairs(ctx.targets) do
-            place(target, {
+            target:place({
                 x = ctx.area.x + (i - 1) * w,
                 y = ctx.area.y,
                 w = w,
@@ -69,7 +65,7 @@ hl.layout.register("rows", {
 
         local h = ctx.area.h / n
         for i, target in ipairs(ctx.targets) do
-            place(target, {
+            target:place({
                 x = ctx.area.x,
                 y = ctx.area.y + (i - 1) * h,
                 w = ctx.area.w,
@@ -87,14 +83,14 @@ hl.layout.register("center", {
         end
 
         if n == 1 then
-            place(ctx.targets[1], ctx.area)
+            ctx.targets[1]:place(ctx.area)
             return
         end
 
         if n == 2 then
             local w = ctx.area.w / 2
-            place(ctx.targets[1], { x = ctx.area.x, y = ctx.area.y, w = w, h = ctx.area.h })
-            place(ctx.targets[2], { x = ctx.area.x + w, y = ctx.area.y, w = w, h = ctx.area.h })
+            ctx.targets[1]:place({ x = ctx.area.x, y = ctx.area.y, w = w, h = ctx.area.h })
+            ctx.targets[2]:place({ x = ctx.area.x + w, y = ctx.area.y, w = w, h = ctx.area.h })
             return
         end
 
@@ -103,7 +99,7 @@ hl.layout.register("center", {
         local center_w = ctx.area.w * 0.5
         local side_w = (ctx.area.w - center_w) / 2
 
-        place(ctx.targets[1], {
+        ctx.targets[1]:place({
             x = ctx.area.x + side_w,
             y = ctx.area.y,
             w = center_w,
@@ -112,7 +108,7 @@ hl.layout.register("center", {
 
         for i = 1, left_n do
             local h = ctx.area.h / left_n
-            place(ctx.targets[1 + i], {
+            ctx.targets[1 + i]:place({
                 x = ctx.area.x,
                 y = ctx.area.y + (i - 1) * h,
                 w = side_w,
@@ -122,7 +118,7 @@ hl.layout.register("center", {
 
         for i = 1, right_n do
             local h = ctx.area.h / right_n
-            place(ctx.targets[1 + left_n + i], {
+            ctx.targets[1 + left_n + i]:place({
                 x = ctx.area.x + side_w + center_w,
                 y = ctx.area.y + (i - 1) * h,
                 w = side_w,
