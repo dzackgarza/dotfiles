@@ -20,7 +20,7 @@ from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
-from cyclopts import App
+from cyclopts import App, Parameter
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 W_CM = 8.0
@@ -372,7 +372,7 @@ app = App(name="generate-layout-previews")
 
 
 @app.default
-def main(opts: PreviewOptions) -> int:
+def main(opts: Annotated[PreviewOptions, Parameter(name="*")]) -> int:
     """Build and list Hyprland layout previews.
 
     Args:
