@@ -34,17 +34,48 @@ if (( missing )); then
 fi
 
 declare -A key_by_label=()
+declare -A label_by_key=()
+declare -A known=()
 for line in "${options[@]}"; do
     key="${line%%|*}"
     label="${line#*|}"
     key_by_label["$label"]="$key"
+    label_by_key["$key"]="$label"
+    known["$key"]=1
+done
+
+# Order by relevance, not by layout family: the layout the workspace is on,
+# then the layouts selected here before, most recent first.
+order_dir="${cache_dir%/*}/layout-order"
+order_file="$order_dir/${ws_name//[^[:alnum:]_-]/_}"
+ordered=()
+declare -A seen=()
+
+current="$(hyprctl -j workspaces | jq -r --arg ws "$ws_name" 'first(.[] | select(.name == $ws)) | .tiledLayout // ""')"
+current="${current#lua:}"
+if [[ -n "${known[$current]:-}" ]]; then
+    seen["$current"]=1
+    ordered+=("$current")
+fi
+
+if [[ -f "$order_file" ]]; then
+    while IFS= read -r key; do
+        [[ -n "${known[$key]:-}" && -z "${seen[$key]:-}" ]] || continue
+        seen["$key"]=1
+        ordered+=("$key")
+    done <"$order_file"
+fi
+
+for line in "${options[@]}"; do
+    key="${line%%|*}"
+    [[ -z "${seen[$key]:-}" ]] || continue
+    seen["$key"]=1
+    ordered+=("$key")
 done
 
 choice="$(
-    for line in "${options[@]}"; do
-        key="${line%%|*}"
-        label="${line#*|}"
-        printf '%s\x00icon\x1f%s\n' "$label" "$cache_dir/$key-$n.png"
+    for key in "${ordered[@]}"; do
+        printf '%s\x00icon\x1f%s\n' "${label_by_key[$key]}" "$cache_dir/$key-$n.png"
     done | rofi -dmenu -i -no-custom -config "$theme" -p "Layout · $n windows"
 )"
 
