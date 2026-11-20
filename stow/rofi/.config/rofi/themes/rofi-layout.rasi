@@ -40,7 +40,7 @@ mainbox {
 
 /* ---- Listbox ---- */
 listbox {
-    spacing:               10px;
+    spacing:               8px;
     background-color:      transparent;
     orientation:           horizontal;
     children:              [ "listview" ];
@@ -51,7 +51,7 @@ inputbar {
     enabled:               true;
     text-color:            @foreground;
     spacing:               10px;
-    padding:               15px;
+    padding:               10px;
     border-radius:         0px;
     border-color:          @foreground;
     background-color:      @background;
@@ -93,7 +93,7 @@ listview {
     enabled:               true;
     columns:               4;
     lines:                 3;
-    spacing:               8px;
+    spacing:               6px;
     dynamic:               true;
     cycle:                 true;
     scrollbar:             false;
@@ -108,7 +108,7 @@ listview {
 /* ---- Element ---- */
 element {
     enabled:               true;
-    padding:               8px;
+    padding:               4px;
     cursor:                pointer;
     orientation:           vertical;
     background-color:      transparent;
@@ -129,7 +129,7 @@ element selected.normal {
 element-icon {
     background-color:      transparent;
     text-color:            inherit;
-    size:                  200px;
+    size:                  180px;
     cursor:                inherit;
 }
 
@@ -137,7 +137,7 @@ element-text {
     background-color:      transparent;
     text-color:            inherit;
     cursor:                inherit;
-    padding:               8px 10px;
+    padding:               4px 8px;
     border-radius:         @radius;
     vertical-align:        0.5;
     horizontal-align:      0.5;
