@@ -146,7 +146,7 @@ LAYOUTS = {
     "master-right": ("Master · right", master_right),
     "master-top": ("Master · top", master_top),
     "master-bottom": ("Master · bottom", master_bottom),
-    "master-center": ("Master · center", center),
+    "master-center": ("Master · center", master_center),
     "columns": ("Columns", columns),
     "rows": ("Rows", rows),
     "grid": ("Grid", grid),
