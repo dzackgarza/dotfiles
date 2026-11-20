@@ -167,9 +167,10 @@ def tex_for(rects):
 
 
 def build(key, n, out_dir, force=False):
-    out = out_dir / f"{key}-{n}.svg"
-    if out.exists() and not force:
-        return out
+    svg = out_dir / f"{key}-{n}.svg"
+    png = out_dir / f"{key}-{n}.png"
+    if png.exists() and not force:
+        return png
 
     with tempfile.TemporaryDirectory(prefix="layout-preview-") as tmp:
         tmp_path = Path(tmp)
@@ -182,12 +183,18 @@ def build(key, n, out_dir, force=False):
             stderr=subprocess.DEVNULL,
         )
         subprocess.run(
-            ["pdf2svg", str(tmp_path / "preview.pdf"), str(out)],
+            ["pdf2svg", str(tmp_path / "preview.pdf"), str(svg)],
             check=True,
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
         )
-    return out
+        subprocess.run(
+            ["rsvg-convert", "-w", "400", "-o", str(png), str(svg)],
+            check=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+    return png
 
 
 def main():
@@ -208,8 +215,8 @@ def main():
             print(f"{key}|{label}")
         return 0
 
-    if not shutil.which("pdflatex") or not shutil.which("pdf2svg"):
-        print("pdflatex and pdf2svg are required", file=sys.stderr)
+    if not shutil.which("pdflatex") or not shutil.which("pdf2svg") or not shutil.which("rsvg-convert"):
+        print("pdflatex, pdf2svg, and rsvg-convert are required", file=sys.stderr)
         return 1
 
     counts = [args.count] if args.count else list(range(1, 11)) if args.all else []
