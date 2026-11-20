@@ -4,6 +4,7 @@
 require("confs/env")
 require("confs/monitor")
 require("confs/settings")
+require("confs/layouts")
 require("confs/decoration")
 require("confs/animations")
 require("confs/windowrules")
