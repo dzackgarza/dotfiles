@@ -398,7 +398,7 @@ def main(
             print(f"{layout.key}|{label}|{layout.hypr}|{layout.orientation}")
         return 0
 
-    counts = list(range(1, 11)) if opts.all else [opts.count]
+    counts = range(1, 11) if opts.all else [opts.count]
     assert all(count is not None for count in counts)
 
     opts.out.mkdir(parents=True, exist_ok=True)
