@@ -118,7 +118,10 @@ app.start({
 
     const place = () => {
       const state = focused();
-      if (state === null || state.fullscreen !== AstalHyprland.Fullscreen.NONE) {
+      if (
+        state === null ||
+        state.fullscreen !== AstalHyprland.Fullscreen.NONE
+      ) {
         win.visible = false;
         return;
       }
