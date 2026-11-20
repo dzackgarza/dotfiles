@@ -179,15 +179,26 @@ def options(n):
 
 
 def tex_for(rects):
+    shades = {
+        "win": FILL,
+        "win1": blend(FILL, "000000", 0.19),
+        "win2": blend(FILL, "000000", 0.37),
+        "win3": blend(FILL, "000000", 0.55),
+    }
     lines = [
         r"\documentclass[tikz,border=0pt]{standalone}",
         r"\usepackage{tikz}",
-        rf"\definecolor{{win}}{{HTML}}{{{FILL}}}",
+        *(
+            rf"\definecolor{{{name}}}{{HTML}}{{{value}}}"
+            for name, value in shades.items()
+        ),
         r"\begin{document}",
         r"\begin{tikzpicture}[x=1cm,y=1cm]",
     ]
 
-    for x, y, w, h in rects:
+    for rect in rects:
+        x, y, w, h = rect[:4]
+        color = rect[4] if len(rect) > 4 else "win"
         x0 = x * W_CM + GAP_CM
         y0 = (1.0 - y - h) * H_CM + GAP_CM
         x1 = (x + w) * W_CM - GAP_CM
@@ -195,7 +206,7 @@ def tex_for(rects):
         if x1 <= x0 or y1 <= y0:
             continue
         lines.append(
-            rf"\fill[win, rounded corners=1.5pt] "
+            rf"\fill[{color}, rounded corners=1.5pt] "
             rf"({x0:.3f},{y0:.3f}) rectangle ({x1:.3f},{y1:.3f});"
         )
 
