@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-for cmd in hyprctl jq python3 rofi; do
+for cmd in hyprctl jq rofi uv; do
     if ! command -v "$cmd" >/dev/null; then
         printf 'Layout: missing %s\n' "$cmd" >&2
         exit 1
@@ -28,13 +28,13 @@ if (( n == 0 )); then
     exit 0
 fi
 
-if ! layout_list="$(python3 "$scripts_dir/generate-layout-previews.py" --list --count "$n")"; then
+if ! layout_list="$("$scripts_dir/generate-layout-previews.py" --list --count "$n")"; then
     notify-send "Layout" "Could not list layouts"
     exit 1
 fi
 mapfile -t options <<<"$layout_list"
 
-if ! python3 "$scripts_dir/generate-layout-previews.py" --count "$n" --out "$cache_dir"; then
+if ! "$scripts_dir/generate-layout-previews.py" --count "$n" --out "$cache_dir"; then
     notify-send "Layout" "Could not build layout previews"
     exit 1
 fi
