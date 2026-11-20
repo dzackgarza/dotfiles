@@ -156,17 +156,9 @@ app.start({
         state.monitor >= 0
           ? hypr.get_monitor(state.monitor)
           : hypr.get_focused_monitor();
-      const gdkMonitors = Gdk.Display.get_default()?.get_monitors();
-      if (gdkMonitors) {
-        for (let i = 0; i < gdkMonitors.get_n_items(); i++) {
-          const candidate = gdkMonitors.get_item(i) as Gdk.Monitor;
-          if (candidate.get_connector() === monitor.get_name()) {
-            if (win.gdkmonitor !== candidate) win.gdkmonitor = candidate;
-            break;
-          }
-        }
-      }
-      const geometry = win.gdkmonitor?.get_geometry();
+      const gdk = monitorFor(monitor.get_name());
+      if (gdk !== null && win.gdkmonitor !== gdk) win.gdkmonitor = gdk;
+      const geometry = gdk?.get_geometry();
       const monitorX = geometry?.x ?? monitor.get_x();
       const monitorY = geometry?.y ?? monitor.get_y();
       const monitorWidth = geometry?.width ?? monitor.get_width();
