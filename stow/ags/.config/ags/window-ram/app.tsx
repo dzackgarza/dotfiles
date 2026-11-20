@@ -118,7 +118,8 @@ app.start({
           typeof state.fullscreen === "number"
           ? state
           : null;
-      } catch {
+      } catch (error) {
+        console.error("window-ram: unreadable activewindow reply", error);
         return null;
       }
     };
