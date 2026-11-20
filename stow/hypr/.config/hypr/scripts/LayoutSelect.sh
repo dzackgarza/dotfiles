@@ -21,9 +21,16 @@ if (( n == 0 )); then
     exit 0
 fi
 
-mapfile -t options < <(python3 "$scripts_dir/generate-layout-previews.py" --list --count "$n")
+if ! layout_list="$(python3 "$scripts_dir/generate-layout-previews.py" --list --count "$n")"; then
+    notify-send "Layout" "Could not list layouts"
+    exit 1
+fi
+mapfile -t options <<<"$layout_list"
 
-python3 "$scripts_dir/generate-layout-previews.py" --count "$n" --out "$cache_dir"
+if ! python3 "$scripts_dir/generate-layout-previews.py" --count "$n" --out "$cache_dir"; then
+    notify-send "Layout" "Could not build layout previews"
+    exit 1
+fi
 
 declare -A key_by_label=()
 for line in "${options[@]}"; do
