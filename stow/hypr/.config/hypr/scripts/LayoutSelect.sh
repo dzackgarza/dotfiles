@@ -2,6 +2,13 @@
 
 set -euo pipefail
 
+for cmd in hyprctl jq python3 rofi; do
+    if ! command -v "$cmd" >/dev/null; then
+        printf 'Layout: missing %s\n' "$cmd" >&2
+        exit 1
+    fi
+done
+
 scripts_dir="$HOME/.config/hypr/scripts"
 theme="$HOME/.config/rofi/themes/rofi-layout.rasi"
 cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/hypr/layout-previews"
