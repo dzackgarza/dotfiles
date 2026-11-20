@@ -16,9 +16,9 @@ import os
 import subprocess
 import sys
 import tempfile
+from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
-from typing import Callable
 
 from cyclopts import App
 from pydantic import BaseModel, ConfigDict, Field, model_validator
@@ -235,7 +235,11 @@ LAYOUTS = (
     ),
     Layout(key="rows", label="Rows", geometry=rows, hypr="lua:rows", minimum=2),
     Layout(
-        key="center", label="Center focus", geometry=center, hypr="lua:center", minimum=3
+        key="center",
+        label="Center focus",
+        geometry=center,
+        hypr="lua:center",
+        minimum=3,
     ),
     Layout(
         key="master-left",
