@@ -19,9 +19,8 @@ import tempfile
 from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
-from typing import Annotated
 
-from cyclopts import App, Parameter
+from cyclopts import App
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 W_CM = 8.0
@@ -373,12 +372,26 @@ app = App(name="generate-layout-previews")
 
 
 @app.default
-def main(opts: Annotated[PreviewOptions, Parameter(name="*")]) -> int:
+def main(
+    count: int | None = None,
+    all: bool = False,
+    list: bool = False,
+    force: bool = False,
+    out: Path = Path.home() / ".cache/hypr/layout-previews",
+) -> int:
     """Build and list Hyprland layout previews.
 
     Args:
-        opts: Window count, output directory, and build mode.
+        count: Window count to build for.
+        all: Build every count from 1 to 10.
+        list: Print the picker entries instead of building.
+        force: Rebuild previews that are up to date.
+        out: Preview cache directory.
     """
+    opts = PreviewOptions(
+        count=count, all=all, list=list, force=force, out=out
+    )
+
     if opts.list:
         assert opts.count is not None
         for layout, label in options(opts.count):
