@@ -23,7 +23,7 @@ mapfile -t options < <(python3 "$scripts_dir/generate-layout-previews.py" --list
 missing=0
 for line in "${options[@]}"; do
     key="${line%%|*}"
-    [[ -f "$cache_dir/$key-$n.svg" ]] || missing=1
+    [[ -f "$cache_dir/$key-$n.png" ]] || missing=1
 done
 
 if (( missing )); then
@@ -41,7 +41,7 @@ choice="$(
     for line in "${options[@]}"; do
         key="${line%%|*}"
         label="${line#*|}"
-        printf '%s\x00icon\x1f%s\n' "$label" "$cache_dir/$key-$n.svg"
+        printf '%s\x00icon\x1f%s\n' "$label" "$cache_dir/$key-$n.png"
     done | rofi -dmenu -i -no-custom -config "$theme" -p "Layout · $n windows"
 )"
 

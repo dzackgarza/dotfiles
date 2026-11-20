@@ -215,7 +215,11 @@ def main():
             print(f"{key}|{label}")
         return 0
 
-    if not shutil.which("pdflatex") or not shutil.which("pdf2svg") or not shutil.which("rsvg-convert"):
+    if (
+        not shutil.which("pdflatex")
+        or not shutil.which("pdf2svg")
+        or not shutil.which("rsvg-convert")
+    ):
         print("pdflatex, pdf2svg, and rsvg-convert are required", file=sys.stderr)
         return 1
 
