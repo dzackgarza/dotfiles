@@ -98,26 +98,20 @@ app.start({
     // Hyprland moves windows on a layout change without emitting an event,
     // and AstalHyprland keeps the stale geometry it cached on focus change.
     // Read the focused window from the compositor on every tick instead.
-    type WindowState = {
-      address: string;
-      at: [number, number];
-      size: [number, number];
-      monitor: number;
-      fullscreen: number;
-      pid: number;
-    };
+    const windowState = z.object({
+      address: z.string(),
+      at: z.tuple([z.number(), z.number()]),
+      size: z.tuple([z.number(), z.number()]),
+      monitor: z.number().int(),
+      fullscreen: z.number().int(),
+      pid: z.number().int(),
+    });
+
+    type WindowState = z.infer<typeof windowState>;
 
     const focused = (): WindowState | null => {
       try {
-        const state = JSON.parse(hypr.message("j/activewindow")) as WindowState;
-        return typeof state.address === "string" &&
-          Array.isArray(state.at) &&
-          Array.isArray(state.size) &&
-          typeof state.monitor === "number" &&
-          typeof state.pid === "number" &&
-          typeof state.fullscreen === "number"
-          ? state
-          : null;
+        return windowState.parse(JSON.parse(hypr.message("j/activewindow")));
       } catch (error) {
         console.error("window-ram: unreadable activewindow reply", error);
         return null;
