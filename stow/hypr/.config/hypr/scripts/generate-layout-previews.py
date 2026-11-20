@@ -10,7 +10,6 @@ from __future__ import annotations
 import argparse
 import math
 import os
-import shutil
 import subprocess
 import sys
 import tempfile
@@ -270,13 +269,27 @@ def build(layout: Layout, n: int, out_dir: Path, force: bool = False) -> Path:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--count", type=int)
-    parser.add_argument("--all", action="store_true")
-    parser.add_argument("--list", action="store_true")
-    parser.add_argument("--force", action="store_true")
+    parser = argparse.ArgumentParser(
+        description="Build and list Hyprland layout previews.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument("--count", type=int, help="window count to build for")
     parser.add_argument(
-        "--out", type=Path, default=Path.home() / ".cache/hypr/layout-previews"
+        "--all", action="store_true", help="build every count from 1 to 10"
+    )
+    parser.add_argument(
+        "--list",
+        action="store_true",
+        help="print the picker entries instead of building",
+    )
+    parser.add_argument(
+        "--force", action="store_true", help="rebuild previews that are up to date"
+    )
+    parser.add_argument(
+        "--out",
+        type=Path,
+        default=Path.home() / ".cache/hypr/layout-previews",
+        help="preview cache directory",
     )
     args = parser.parse_args()
 
@@ -286,14 +299,6 @@ def main() -> int:
         for layout, label in options(args.count):
             print(f"{layout.key}|{label}|{layout.hypr}|{layout.orientation}")
         return 0
-
-    if (
-        not shutil.which("pdflatex")
-        or not shutil.which("pdf2svg")
-        or not shutil.which("rsvg-convert")
-    ):
-        print("pdflatex, pdf2svg, and rsvg-convert are required", file=sys.stderr)
-        return 1
 
     counts = [args.count] if args.count else list(range(1, 11)) if args.all else []
     if not counts:
@@ -311,7 +316,7 @@ def main() -> int:
             layout, n = futures[future]
             try:
                 future.result()
-            except Exception as exc:
+            except (subprocess.CalledProcessError, OSError) as exc:
                 print(f"failed {layout.key}-{n}: {exc}", file=sys.stderr)
                 return 1
 
