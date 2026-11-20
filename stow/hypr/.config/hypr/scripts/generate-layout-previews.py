@@ -127,7 +127,14 @@ LAYOUTS = {
 def options(n):
     keys = ["dwindle"]
     if n >= 2:
-        keys += ["master-left", "master-right", "master-top", "master-bottom", "columns", "rows"]
+        keys += [
+            "master-left",
+            "master-right",
+            "master-top",
+            "master-bottom",
+            "columns",
+            "rows",
+        ]
     if n >= 3:
         keys += ["master-center", "grid", "center"]
     keys.append("monocle")
@@ -189,7 +196,9 @@ def main():
     parser.add_argument("--all", action="store_true")
     parser.add_argument("--list", action="store_true")
     parser.add_argument("--force", action="store_true")
-    parser.add_argument("--out", type=Path, default=Path.home() / ".cache/hypr/layout-previews")
+    parser.add_argument(
+        "--out", type=Path, default=Path.home() / ".cache/hypr/layout-previews"
+    )
     args = parser.parse_args()
 
     if args.list:
@@ -211,7 +220,10 @@ def main():
     jobs = [(key, n) for n in counts for key, _ in options(n)]
 
     with ThreadPoolExecutor(max_workers=min(8, os.cpu_count() or 1)) as pool:
-        futures = {pool.submit(build, key, n, args.out, args.force): (key, n) for key, n in jobs}
+        futures = {
+            pool.submit(build, key, n, args.out, args.force): (key, n)
+            for key, n in jobs
+        }
         for future in as_completed(futures):
             key, n = futures[future]
             try:
