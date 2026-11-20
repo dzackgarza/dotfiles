@@ -217,7 +217,11 @@ def tex_for(rects):
 def build(key, n, out_dir, force=False):
     svg = out_dir / f"{key}-{n}.svg"
     png = out_dir / f"{key}-{n}.png"
-    if png.exists() and not force:
+    if (
+        png.exists()
+        and not force
+        and png.stat().st_mtime >= Path(__file__).resolve().stat().st_mtime
+    ):
         return png
 
     with tempfile.TemporaryDirectory(prefix="layout-preview-") as tmp:
