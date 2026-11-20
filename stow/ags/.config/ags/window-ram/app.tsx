@@ -171,11 +171,11 @@ app.start({
       previous = sample;
       text!.label = `${(rssKb / 1024 / 1024).toFixed(1)}GB ${cpu}`;
     };
-    hypr.connect("event", place);
     hypr.connect("notify::focused-client", () => {
       place();
       void measure();
     });
+    interval(100, place);
     interval(POLL_MS, () => void measure());
     place();
   },
