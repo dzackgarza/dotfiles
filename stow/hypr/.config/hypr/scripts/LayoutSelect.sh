@@ -7,7 +7,10 @@ theme="$HOME/.config/rofi/themes/rofi-layout.rasi"
 cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/hypr/layout-previews"
 
 ws_json="$(hyprctl -j activeworkspace)"
-ws_name="$(jq -r '.name' <<<"$ws_json")"
+ws_name="$(hyprctl -j monitors | jq -r 'first(.[] | select(.focused == true)) // {} | .specialWorkspace.name // ""')"
+if [[ -z "$ws_name" ]]; then
+    ws_name="$(jq -r '.name' <<<"$ws_json")"
+fi
 
 n="$(hyprctl -j clients | jq --arg ws "$ws_name" '
     [.[] | select(.workspace.name == $ws and (.floating | not) and (.mapped != false))] | length
