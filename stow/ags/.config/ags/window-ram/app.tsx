@@ -104,13 +104,23 @@ app.start({
         return;
       }
       const monitor = client.get_monitor();
-      win.marginTop = client.get_y() - monitor.get_y() + INSET;
-      win.marginLeft =
-        client.get_x() -
-        monitor.get_x() +
-        client.get_width() -
-        LABEL_WIDTH -
-        INSET;
+      const gdkMonitors = Gdk.Display.get_default()?.get_monitors();
+      if (gdkMonitors) {
+        for (let i = 0; i < gdkMonitors.get_n_items(); i++) {
+          const candidate = gdkMonitors.get_item(i) as Gdk.Monitor;
+          if (candidate.get_connector() === monitor.get_name()) {
+            win.gdkmonitor = candidate;
+            break;
+          }
+        }
+      }
+      const geometry = win.gdkmonitor?.get_geometry();
+      const monitorX = geometry?.x ?? monitor.get_x();
+      const monitorY = geometry?.y ?? monitor.get_y();
+      const monitorWidth = geometry?.width ?? monitor.get_width();
+      win.marginTop = client.get_y() - monitorY + INSET;
+      win.marginRight =
+        monitorX + monitorWidth - (client.get_x() + client.get_width()) + INSET;
       win.visible = true;
     };
 
