@@ -7,23 +7,11 @@
 -- `ctx.area` is the monitor work area after gaps_out. `target:place` sets the
 -- logical box and does not add gaps, so each cell is inset by half of gaps_in.
 
-local function gap_half()
-    local gaps = hl.get_config("general:gaps_in")
-    if type(gaps) == "table" then
-        local g = tonumber(gaps.left) or tonumber(gaps.top) or 0
-        return math.max(0, math.floor(g / 2))
-    end
-    return 5
-end
-
+-- Hyprland's directional focus treats layout boxes as adjacent only when their
+-- edges touch (within 2 px). Do not inset the boxes for gaps: a gap makes the
+-- boxes non-adjacent and breaks `focus({ direction = ... })`.
 local function place(target, box)
-    local g = gap_half()
-    target:place({
-        x = box.x + g,
-        y = box.y + g,
-        w = math.max(1, box.w - 2 * g),
-        h = math.max(1, box.h - 2 * g),
-    })
+    target:place(box)
 end
 
 hl.layout.register("grid", {
