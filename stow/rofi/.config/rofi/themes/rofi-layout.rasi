@@ -122,6 +122,11 @@ element normal.normal {
     text-color:            @foreground;
 }
 
+element alternate.normal {
+    background-color:      transparent;
+    text-color:            @foreground;
+}
+
 element selected.normal {
     background-color:      transparent;
     text-color:            @background;
