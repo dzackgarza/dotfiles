@@ -3,6 +3,7 @@
 --------------
 
 local hs = require("hyprsplit")
+local focus_workspace = require("workspace_focus")
 
 local mainMod = "SUPER"
 local home = os.getenv("HOME")
