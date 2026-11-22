@@ -135,7 +135,7 @@ register_bind(mainMod .. " + SHIFT + j", hl.dsp.window.move({ direction = "down"
 -- Switch to / move a window to the Nth workspace OF THE CURRENT MONITOR
 for i = 1, 10 do
     local key = i % 10 -- 10 maps to key 0
-    register_bind(mainMod .. " + " .. key, hs.dsp.focus({ workspace = i }), { description = "Focus workspace " .. i })
+    register_bind(mainMod .. " + " .. key, focus_workspace(i), { description = "Focus workspace " .. i })
     register_bind(mainMod .. " + SHIFT + " .. key, hs.dsp.window.move({ workspace = i, follow = true }), { description = "Move window to workspace " .. i })
 end
 
