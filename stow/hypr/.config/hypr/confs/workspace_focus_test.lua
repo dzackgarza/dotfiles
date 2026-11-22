@@ -1,5 +1,5 @@
 -- Regression: pressing Super+N twice must stay on workspace N (binds.workspace_back_and_forth = 0).
--- Run inside the live compositor: hyprctl repl "$(cat confs/workspace_focus_test.lua)"
+-- Run inside the live compositor: hyprctl repl -- "$(cat confs/workspace_focus_test.lua)"
 local focus = dofile(os.getenv("HOME") .. "/.config/hypr/confs/workspace_focus.lua")
 local function active() return hl.get_active_monitor().active_workspace.id end
 local start = active()
