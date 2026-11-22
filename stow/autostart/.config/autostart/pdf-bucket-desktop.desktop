@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Name=PDF Bucket
+Name=Math PDF Reader
 GenericName=PDF Library
 Comment=Read, file and extract captured PDFs
 Exec=/home/dzack/.local/bin/pdf-bucket
