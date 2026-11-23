@@ -1142,11 +1142,7 @@ function setupAuxPolls(
     onError: (error) => {
       const message = error instanceof Error ? error.message : String(error)
       logger.error`Failed to fetch Claude usage: ${message}`
-      return {
-        version: "1",
-        captured_at: "",
-        providers: [],
-      }
+      return usageFetchFailure(error, new Date())
     },
     onSuccess: () => {
       markUpdated()
