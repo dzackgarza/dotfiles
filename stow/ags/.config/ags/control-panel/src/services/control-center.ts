@@ -39,6 +39,7 @@ import {
   type UsageCollection,
 } from "../../services/claude-usage-fetcher"
 import { createLogger } from "../index"
+import { usageFetchFailure } from "../lib/usage-status"
 
 const logger = createLogger(["ags", "control-center"])
 
@@ -142,11 +143,17 @@ function createPolledState<T>(options: PollOptions<T>): PolledStateWithInit<T> {
   const [loading, setLoading] = createState(false)
   const [suppressUpdates, setSuppressUpdates] = createState(false)
   let running = false
+  let rerunRequested = false
   let firstComplete = false
   let pollingStarted = false
 
-  const refresh = async () => {
-    if (running || suppressUpdates.peek()) return false
+  const refresh = async (): Promise<boolean> => {
+    if (suppressUpdates.peek()) return false
+    if (running) {
+      // A request that arrives mid-fetch needs data newer than the fetch in flight.
+      rerunRequested = true
+      return false
+    }
 
     running = true
     setLoading(true)
@@ -169,6 +176,10 @@ function createPolledState<T>(options: PollOptions<T>): PolledStateWithInit<T> {
         logger.debug`${pollName} first poll complete`
         options.onFirstComplete?.()
       }
+    }
+    if (rerunRequested) {
+      rerunRequested = false
+      void refresh()
     }
     return true
   }

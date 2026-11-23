@@ -13,6 +13,7 @@ interface ClaudeUsagePopoverProps {
   visible: Accessor<boolean>
   onVisibleChange: (visible: boolean) => void
   claudeUsageData?: Accessor<UsageCollection>
+  onRefresh: () => void
 }
 
 function QuotaSection({
