@@ -6,6 +6,7 @@ import {
   savedResetsText,
   type UsageCollection,
 } from "../services/claude-usage-fetcher"
+import { formatUpdatedAgo } from "../src/lib/usage-status"
 
 const ICON_SIZE = 16
 
@@ -75,6 +76,7 @@ export function ClaudeUsagePopover({
   visible,
   onVisibleChange,
   claudeUsageData,
+  onRefresh,
 }: ClaudeUsagePopoverProps) {
   const { TOP, RIGHT, LEFT, BOTTOM } = Astal.WindowAnchor
 
@@ -221,13 +223,16 @@ export function ClaudeUsagePopover({
         <label
           class="popover-updated-text"
           xalign={0}
-          label="Updated 0 sec ago"
+          label={
+            claudeUsageData
+              ? claudeUsageData((data) =>
+                  formatUpdatedAgo(data.captured_at, new Date()),
+                )
+              : "Not yet updated"
+          }
           hexpand
         />
-        <button
-          class="popover-refresh-btn"
-          onClicked={() => console.log("Refresh clicked")}
-        >
+        <button class="popover-refresh-btn" onClicked={onRefresh}>
           <image iconName="view-refresh-symbolic" pixelSize={14} />
         </button>
       </box>

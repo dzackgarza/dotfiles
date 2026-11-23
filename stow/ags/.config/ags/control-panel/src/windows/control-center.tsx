@@ -468,6 +468,7 @@ export function ControlCenterWindow() {
         visible={claudeUsagePopoverVisible}
         onVisibleChange={setClaudeUsagePopoverVisible}
         claudeUsageData={control.claudeUsageData}
+        onRefresh={control.refreshUsage}
       />
       <window
         name="claude-usage"
