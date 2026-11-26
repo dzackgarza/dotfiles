@@ -77,8 +77,8 @@ class PreviewOptions(BaseModel):
     list: bool = Field(default=False, description="print the picker entries")
     force: bool = Field(default=False, description="rebuild up-to-date previews")
     out: Path = Field(
-        default=Path.home() / ".cache/hypr/layout-previews",
-        description="preview cache directory",
+        default=ASSETS_DIR,
+        description="preview directory",
     )
 
     @model_validator(mode="after")
@@ -335,17 +335,13 @@ def tex_for(cards: list[Card]) -> str:
 
 
 def build(layout: Layout, n: int, out_dir: Path, force: bool = False) -> Path:
-    svg = out_dir / f"{layout.key}-{n}.svg"
     png = out_dir / f"{layout.key}-{n}.png"
-    if (
-        png.exists()
-        and not force
-        and png.stat().st_mtime >= Path(__file__).resolve().stat().st_mtime
-    ):
+    if png.exists() and not force:
         return png
 
     with tempfile.TemporaryDirectory(prefix="layout-preview-") as tmp:
         tmp_path = Path(tmp)
+        svg = tmp_path / "preview.svg"
         (tmp_path / "preview.tex").write_text(tex_for(layout.geometry(n)))
         subprocess.run(
             ["pdflatex", "-interaction=batchmode", "-halt-on-error", "preview.tex"],
