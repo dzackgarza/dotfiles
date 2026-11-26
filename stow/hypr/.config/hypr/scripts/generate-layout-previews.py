@@ -374,7 +374,7 @@ def main(
     all: bool = False,
     list: bool = False,
     force: bool = False,
-    out: Path = Path.home() / ".cache/hypr/layout-previews",
+    out: Path = ASSETS_DIR,
 ) -> int:
     """Build and list Hyprland layout previews.
 
@@ -383,7 +383,7 @@ def main(
         all: Build every count from 1 to 10.
         list: Print the picker entries instead of building.
         force: Rebuild previews that are up to date.
-        out: Preview cache directory.
+        out: Preview directory.
     """
     opts = PreviewOptions(
         count=count, all=all, list=list, force=force, out=out
