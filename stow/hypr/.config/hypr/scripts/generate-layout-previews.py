@@ -34,6 +34,7 @@ CENTER_RATIO = 0.5
 MONOCLE_STEP_CM = 0.22
 MONOCLE_MARGIN = 0.02
 MONOCLE_SHADES = (0.19, 0.37, 0.55)
+ASSETS_DIR = Path(__file__).resolve().parent.parent / "assets/layout-previews"
 
 
 class Card(BaseModel):

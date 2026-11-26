@@ -11,7 +11,7 @@ done
 
 scripts_dir="$HOME/.config/hypr/scripts"
 theme="$HOME/.config/rofi/themes/rofi-layout.rasi"
-cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/hypr/layout-previews"
+preview_dir="$HOME/.config/hypr/assets/layout-previews"
 
 ws_json="$(hyprctl -j activeworkspace)"
 ws_name="$(hyprctl -j monitors | jq -r 'first(.[] | select(.focused == true)) // {} | .specialWorkspace.name // ""')"
@@ -34,12 +34,6 @@ if ! layout_list="$("$scripts_dir/generate-layout-previews.py" --list --count "$
 fi
 mapfile -t options <<<"$layout_list"
 
-if ! "$scripts_dir/generate-layout-previews.py" --count "$n" --out "$cache_dir"; then
-    notify-send "Layout" "Could not build layout previews"
-    exit 1
-fi
-
-# Each line is `key|label|hypr-layout|orientation`.
 declare -A key_by_label=()
 declare -A hypr_by_key=()
 declare -A orientation_by_key=()
@@ -53,7 +47,7 @@ done
 choice="$(
     for line in "${options[@]}"; do
         IFS='|' read -r key label _ _ <<<"$line"
-        printf '%s\x00icon\x1f%s\n' "$label" "$cache_dir/$key-$n.png"
+        printf '%s\x00icon\x1f%s\n' "$label" "$preview_dir/$key-$n.png"
     done | rofi -dmenu -i -no-custom -config "$theme" -p "Layout · $n windows"
 )" || exit 0
 
