@@ -1,0 +1,12 @@
+[Unit]
+Description=Forward rack loopback port 22223 to the laptop SSH server
+Wants=reverse-sshd.service
+After=reverse-sshd.service
+
+[Service]
+ExecStart=/usr/bin/ssh -NT -o HostName=rack -o BatchMode=yes -o ExitOnForwardFailure=yes -o ServerAliveInterval=15 -o ServerAliveCountMax=3 -o ConnectTimeout=15 -R 127.0.0.1:22223:127.0.0.1:22222 dzack@rack-bahamut-forward
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target
