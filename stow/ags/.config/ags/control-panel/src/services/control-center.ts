@@ -672,48 +672,7 @@ async function fetchClaudeUsageData(): Promise<ClaudeUsageData> {
       }
     }
   }
-  return splitAntigravityProviders(data)
-}
-
-/** Collapse each antigravity account's individual model bins into 2 aggregated rows: Gemini and Anthropic. */
-function splitAntigravityProviders(c: UsageCollection): UsageCollection {
-  return {
-    ...c,
-    providers: c.providers.map((p) => {
-      if (p.provider !== "antigravity") return p
-
-      const geminiRows = p.rows.filter((r) =>
-        r.identifier.toLowerCase().includes("gemini"),
-      )
-      const anthropicRows = p.rows.filter((r) => {
-        const id = r.identifier.toLowerCase()
-        return id.includes("claude") || id.includes("gpt-oss")
-      })
-
-      const aggRow = (
-        bin: string,
-        rows: typeof p.rows,
-      ): (typeof p.rows)[0] | null => {
-        if (!rows.length) return null
-        const ref = rows[0]
-        return {
-          identifier: bin,
-          pct_used: Math.max(...rows.map((r) => r.pct_used)),
-          reset_at: ref.reset_at,
-          is_exhausted: rows.some((r) => r.is_exhausted),
-          time_until_reset: ref.time_until_reset,
-        }
-      }
-
-      const newRows: typeof p.rows = []
-      const gemini = aggRow("Gemini", geminiRows)
-      if (gemini) newRows.push(gemini)
-      const anthropic = aggRow("Anthropic", anthropicRows)
-      if (anthropic) newRows.push(anthropic)
-
-      return { ...p, rows: newRows }
-    }),
-  }
+  return data
 }
 
 async function readUpdatesState(): Promise<InfoTileState> {
