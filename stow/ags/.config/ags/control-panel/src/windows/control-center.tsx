@@ -226,6 +226,8 @@ function AiProviderIcons({
         spinning={loading}
         visible={loading}
         valign={Gtk.Align.CENTER}
+        widthRequest={16}
+        heightRequest={16}
       />
     </box>
   )
