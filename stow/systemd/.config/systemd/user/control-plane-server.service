@@ -1,0 +1,15 @@
+[Unit]
+Description=Control Plane shared application service
+After=network.target
+
+[Service]
+Type=simple
+Environment=CONTROL_PLANE_PORT=17865
+EnvironmentFile=-%h/.config/control-plane/server.env
+ExecStart=%h/.local/bin/control-plane-server --port ${CONTROL_PLANE_PORT}
+KillMode=process
+Restart=on-failure
+RestartSec=2s
+
+[Install]
+WantedBy=default.target
