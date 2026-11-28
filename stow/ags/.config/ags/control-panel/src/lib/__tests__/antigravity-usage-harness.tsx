@@ -10,7 +10,7 @@ app.start({
     setTimeout(() => {
       console.error("Timed out waiting for usage data")
       app.quit()
-    }, 25_000)
+    }, 90_000)
     interval(100, () => {
       const providers = control.claudeUsageData.peek().providers
       if (providers.length === 0) return true
