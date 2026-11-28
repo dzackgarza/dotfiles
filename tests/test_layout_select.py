@@ -92,7 +92,7 @@ class LayoutSelectTest(unittest.TestCase):
         )
 
         self.assertEqual(process.returncode, 0, evidence)
-        self.assertLess(elapsed, 1.0, evidence)
+        self.assertLess(elapsed, 0.75, evidence)
 
 
 if __name__ == "__main__":
