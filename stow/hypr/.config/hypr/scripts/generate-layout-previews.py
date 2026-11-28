@@ -83,9 +83,7 @@ class PreviewOptions(BaseModel):
 
     @model_validator(mode="after")
     def _consistent(self) -> PreviewOptions:
-        if self.list and self.count is None:
-            raise ValueError("--list requires --count")
-        if not self.list and self.count is None and not self.all:
+        if self.count is None and not self.all:
             raise ValueError("pass --count N or --all")
         return self
 
