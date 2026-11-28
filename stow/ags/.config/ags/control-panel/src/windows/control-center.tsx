@@ -22,7 +22,7 @@ import { UsageTile } from "../components/UsageTile"
 import { createLogger } from "../lib/logger"
 import { getControlCenterService } from "../services/control-center"
 
-// Icon size constants (matches _tokens.scss)
+
 const ICON_SIZE = {
   status: 12,
   tile: 22,
@@ -147,7 +147,7 @@ function ProviderIcon({
   const avail = getProviderAvail(provider)
   const eta = providerEta(provider)
 
-  // Determine dot class and sub-label based on provider status
+  
   let dotClass = "provider-dot-unknown"
   let subLabel: string | null = null
   let subLabelClass = "provider-reset-time"
@@ -252,7 +252,7 @@ export function ControlCenterWindow() {
     }
   }
 
-  // Initialize all state synchronously before building UI
+  
   logger.info`Initializing service [SERVICE]`
   void control
     .initializeService()
@@ -266,7 +266,7 @@ export function ControlCenterWindow() {
       return true
     })
 
-  // Start polling loops after window is created
+  
   setTimeout(() => {
     logger.info`Starting polling service [POLLING]`
     control.startPollingService()
