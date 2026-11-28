@@ -75,7 +75,6 @@ class PreviewOptions(BaseModel):
 
     count: int | None = Field(default=None, description="window count to build for")
     all: bool = Field(default=False, description="build every count from 1 to 10")
-    list: bool = Field(default=False, description="print the picker entries")
     force: bool = Field(default=False, description="rebuild up-to-date previews")
     out: Path = Field(
         default=ASSETS_DIR,
