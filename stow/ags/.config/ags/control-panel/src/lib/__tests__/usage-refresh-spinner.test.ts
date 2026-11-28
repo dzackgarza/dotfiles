@@ -7,10 +7,14 @@ const LOG = "/tmp/opencode/ags-refresh-spinner-regression.log"
 
 beforeAll(() => {
   const output = openSync(LOG, "w")
-  spawn("ags", ["run", `${import.meta.dirname}/usage-refresh-spinner-harness.tsx`], {
-    stdio: ["ignore", output, output],
-    detached: true,
-  }).unref()
+  spawn(
+    "ags",
+    ["run", `${import.meta.dirname}/usage-refresh-spinner-harness.tsx`],
+    {
+      stdio: ["ignore", output, output],
+      detached: true,
+    },
+  ).unref()
   closeSync(output)
   execFileSync(
     "timeout",
