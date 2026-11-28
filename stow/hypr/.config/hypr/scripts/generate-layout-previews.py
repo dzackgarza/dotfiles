@@ -338,7 +338,7 @@ def main(
         counts = [opts.count]
 
     opts.out.mkdir(parents=True, exist_ok=True)
-    jobs = [(layout, n) for n in counts for layout, _ in options(n)]
+    jobs = [(layout, n) for n in counts for layout in eligible(n)]
 
     with ThreadPoolExecutor(max_workers=min(8, os.cpu_count() or 1)) as pool:
         futures = {
