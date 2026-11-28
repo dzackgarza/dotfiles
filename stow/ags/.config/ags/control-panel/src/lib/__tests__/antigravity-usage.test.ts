@@ -33,10 +33,7 @@ describe("Antigravity usage windows", () => {
 
     const harness = execFileSync(
       "ags",
-      [
-        "run",
-        `${import.meta.dirname}/antigravity-usage-harness.tsx`,
-      ],
+      ["run", `${import.meta.dirname}/antigravity-usage-harness.tsx`],
       { encoding: "utf-8", timeout: 30_000 },
     )
     const match = /^USAGE_ROWS=(.*)$/m.exec(harness)
