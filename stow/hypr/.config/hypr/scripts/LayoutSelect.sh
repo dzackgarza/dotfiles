@@ -9,15 +9,17 @@ for cmd in hyprctl jq rofi; do
     fi
 done
 
-scripts_dir="$HOME/.config/hypr/scripts"
+definitions="$HOME/.config/hypr/confs/layout-picker.json"
 theme="$HOME/.config/rofi/themes/rofi-layout.rasi"
 preview_dir="$HOME/.config/hypr/assets/layout-previews"
 
-ws_json="$(hyprctl -j activeworkspace)"
-ws_name="$(hyprctl -j monitors | jq -r 'first(.[] | select(.focused == true)) // {} | .specialWorkspace.name // ""')"
-if [[ -z "$ws_name" ]]; then
-    ws_name="$(jq -r '.name' <<<"$ws_json")"
-fi
+ws_name="$(hyprctl -j monitors | jq -r '
+    first(.[] | select(.focused == true))
+    | if (.specialWorkspace.name // "") != ""
+      then .specialWorkspace.name
+      else .activeWorkspace.name
+      end
+')"
 
 n="$(hyprctl -j clients | jq --arg ws "$ws_name" '
     [.[] | select(.workspace.name == $ws and (.floating | not) and (.mapped != false))] | length
