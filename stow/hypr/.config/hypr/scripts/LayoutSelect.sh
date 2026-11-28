@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-for cmd in hyprctl jq rofi uv; do
+for cmd in hyprctl jq rofi; do
     if ! command -v "$cmd" >/dev/null; then
         printf 'Layout: missing %s\n' "$cmd" >&2
         exit 1
