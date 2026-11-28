@@ -45,7 +45,7 @@ class LayoutSelectTest(unittest.TestCase):
         (ARTIFACT_DIR / "cancel-stdout.log").write_text(stdout)
         (ARTIFACT_DIR / "cancel-stderr.log").write_text(stderr)
 
-    def test_real_picker_appears_within_one_second(self):
+    def test_real_picker_appears_without_launcher_startup_delay(self):
         start = time.perf_counter()
         process = subprocess.Popen(
             [SCRIPT],
