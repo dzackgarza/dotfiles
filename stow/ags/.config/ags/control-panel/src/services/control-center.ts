@@ -1,20 +1,4 @@
-/**
- * Control Center Service
- *
- * Architecture:
- * - Polls system state independently for each tile at appropriate intervals
- * - Each tile has a reader function that throws on errors (fail fast)
- * - Errors are caught by createPolledState and converted to error states
- * - UI (app.tsx) subscribes to state via Accessor functions
- * - Actions (toggle, set) refresh their specific tile after completion
- *
- * To add a new tile:
- * 1. Add state type (e.g., ToggleTileState, UsageTileState, InfoTileState)
- * 2. Add reader function (e.g., readBluetoothState()) that throws on errors
- * 3. Add poll setup in createControlCenterService() using createPolledState
- * 4. Add action function if needed (e.g., toggleBluetooth())
- * 5. Wire up in app.tsx UI components
- */
+
 
 import GLib from "gi://GLib?version=2.0"
 import { type Accessor, createState } from "ags"
