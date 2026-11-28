@@ -238,7 +238,8 @@ export function ControlCenterWindow() {
   const control = getControlCenterService()
   const [claudeUsagePopoverVisible, setClaudeUsagePopoverVisible] =
     createState(false)
-  const [keepControlCenterOpen, setKeepControlCenterOpenState] = createState(false)
+  const [keepControlCenterOpen, setKeepControlCenterOpenState] =
+    createState(false)
   let controlCenterWindow: Gtk.Window | null = null
   let controlCenterCatcher: Astal.Window | null = null
 
@@ -246,7 +247,8 @@ export function ControlCenterWindow() {
     setKeepControlCenterOpenState(value)
     setRepoPlanKeepControlCenterOpen(value)
     if (controlCenterCatcher) {
-      controlCenterCatcher.visible = Boolean(controlCenterWindow?.visible) && !value
+      controlCenterCatcher.visible =
+        Boolean(controlCenterWindow?.visible) && !value
     }
   }
 
@@ -511,7 +513,8 @@ export function ControlCenterWindow() {
           click.set_button(0)
           click.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
           click.connect("pressed", () => {
-            if (self.visible && !keepControlCenterOpen.peek()) self.visible = false
+            if (self.visible && !keepControlCenterOpen.peek())
+              self.visible = false
           })
           backdrop.add_controller(click)
 
