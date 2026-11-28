@@ -223,63 +223,25 @@ def monocle(_n: int) -> list[Card]:
     ]
 
 
-# Popup order is by prevalence, most common first: `grid` is the everyday
-# layout, and the master orientations are the least used.
-LAYOUTS = (
-    Layout(key="grid", label="Grid", geometry=grid, hypr="lua:grid", minimum=3),
-    Layout(key="dwindle", label="Dwindle · tree", geometry=dwindle, hypr="dwindle"),
-    Layout(key="monocle", label="Monocle · stack", geometry=monocle, hypr="monocle"),
-    Layout(
-        key="columns", label="Columns", geometry=columns, hypr="lua:columns", minimum=2
-    ),
-    Layout(key="rows", label="Rows", geometry=rows, hypr="lua:rows", minimum=2),
-    Layout(
-        key="center",
-        label="Center focus",
-        geometry=center,
-        hypr="lua:center",
-        minimum=3,
-    ),
-    Layout(
-        key="master-left",
-        label="Master · left",
-        geometry=master_left,
-        hypr="master",
-        orientation="left",
-        minimum=2,
-    ),
-    Layout(
-        key="master-right",
-        label="Master · right",
-        geometry=master_right,
-        hypr="master",
-        orientation="right",
-        minimum=2,
-    ),
-    Layout(
-        key="master-top",
-        label="Master · top",
-        geometry=master_top,
-        hypr="master",
-        orientation="top",
-        minimum=2,
-    ),
-    Layout(
-        key="master-bottom",
-        label="Master · bottom",
-        geometry=master_bottom,
-        hypr="master",
-        orientation="bottom",
-        minimum=2,
-    ),
-    Layout(
-        key="master-center",
-        label="Master · center",
-        geometry=master_center,
-        hypr="master",
-        orientation="center",
-        minimum=3,
-    ),
+GEOMETRY = {
+    "grid": grid,
+    "dwindle": dwindle,
+    "monocle": monocle,
+    "columns": columns,
+    "rows": rows,
+    "center": center,
+    "master-left": master_left,
+    "master-right": master_right,
+    "master-top": master_top,
+    "master-bottom": master_bottom,
+    "master-center": master_center,
+}
+DEFINITIONS = TypeAdapter(list[LayoutDefinition]).validate_json(
+    DEFINITIONS_PATH.read_bytes()
+)
+LAYOUTS = tuple(
+    Layout(**definition.model_dump(), geometry=GEOMETRY[definition.key])
+    for definition in DEFINITIONS
 )
 
 
