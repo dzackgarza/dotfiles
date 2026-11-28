@@ -18,7 +18,7 @@ describe("Antigravity usage windows", () => {
   it("preserves the upstream 5-hour and weekly rows in the panel service", () => {
     const [command, ...args] = USAGE_LIMITS_JSON_COMMAND
     const upstream = JSON.parse(
-      execFileSync(command, args, {
+      execFileSync(command, [...args, "--provider", "antigravity"], {
         encoding: "utf-8",
         timeout: 30_000,
       }),
