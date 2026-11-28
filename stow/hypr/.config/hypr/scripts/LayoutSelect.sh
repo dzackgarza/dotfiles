@@ -30,7 +30,21 @@ if (( n == 0 )); then
     exit 0
 fi
 
-if ! layout_list="$("$scripts_dir/generate-layout-previews.py" --list --count "$n")"; then
+if ! layout_list="$(jq -r --argjson n "$n" '
+    .[]
+    | select($n >= .minimum)
+    | . as $layout
+    | (if $layout.key == "grid"
+       then ($n | sqrt | ceil) as $cols
+            | ($n / $cols | ceil) as $rows
+            | "Grid · \($cols)×\($rows)"
+       elif $layout.key == "columns" then "Columns · \($n)"
+       elif $layout.key == "rows" then "Rows · \($n)"
+       else $layout.label
+       end) as $label
+    | [$layout.key, $label, $layout.hypr, ($layout.orientation // "")]
+    | join("|")
+' "$definitions")"; then
     notify-send "Layout" "Could not list layouts"
     exit 1
 fi
