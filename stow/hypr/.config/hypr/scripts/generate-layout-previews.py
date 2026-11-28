@@ -245,22 +245,8 @@ LAYOUTS = tuple(
 )
 
 
-def options(n: int) -> list[tuple[Layout, str]]:
-    out = []
-    for layout in LAYOUTS:
-        if n < layout.minimum:
-            continue
-        label = layout.label
-        if layout.key == "grid":
-            cols = math.ceil(math.sqrt(n))
-            rows = math.ceil(n / cols)
-            label = f"Grid · {cols}×{rows}"
-        elif layout.key == "columns":
-            label = f"Columns · {n}"
-        elif layout.key == "rows":
-            label = f"Rows · {n}"
-        out.append((layout, label))
-    return out
+def eligible(n: int) -> list[Layout]:
+    return [layout for layout in LAYOUTS if n >= layout.minimum]
 
 
 def tex_for(cards: list[Card]) -> str:
