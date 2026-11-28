@@ -1,0 +1,73 @@
+[
+  {
+    "key": "grid",
+    "label": "Grid",
+    "hypr": "lua:grid",
+    "minimum": 3
+  },
+  {
+    "key": "dwindle",
+    "label": "Dwindle · tree",
+    "hypr": "dwindle",
+    "minimum": 1
+  },
+  {
+    "key": "monocle",
+    "label": "Monocle · stack",
+    "hypr": "monocle",
+    "minimum": 1
+  },
+  {
+    "key": "columns",
+    "label": "Columns",
+    "hypr": "lua:columns",
+    "minimum": 2
+  },
+  {
+    "key": "rows",
+    "label": "Rows",
+    "hypr": "lua:rows",
+    "minimum": 2
+  },
+  {
+    "key": "center",
+    "label": "Center focus",
+    "hypr": "lua:center",
+    "minimum": 3
+  },
+  {
+    "key": "master-left",
+    "label": "Master · left",
+    "hypr": "master",
+    "orientation": "left",
+    "minimum": 2
+  },
+  {
+    "key": "master-right",
+    "label": "Master · right",
+    "hypr": "master",
+    "orientation": "right",
+    "minimum": 2
+  },
+  {
+    "key": "master-top",
+    "label": "Master · top",
+    "hypr": "master",
+    "orientation": "top",
+    "minimum": 2
+  },
+  {
+    "key": "master-bottom",
+    "label": "Master · bottom",
+    "hypr": "master",
+    "orientation": "bottom",
+    "minimum": 2
+  },
+  {
+    "key": "master-center",
+    "label": "Master · center",
+    "hypr": "master",
+    "orientation": "center",
+    "minimum": 3
+  }
+]
