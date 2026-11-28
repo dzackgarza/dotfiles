@@ -11,7 +11,6 @@ SVG and rasterised to PNG for rofi. No raster image library is involved.
 
 from __future__ import annotations
 
-import json
 import math
 import os
 import subprocess
