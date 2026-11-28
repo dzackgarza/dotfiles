@@ -11,6 +11,7 @@ SVG and rasterised to PNG for rofi. No raster image library is involved.
 
 from __future__ import annotations
 
+import json
 import math
 import os
 import subprocess
@@ -385,9 +386,7 @@ def main(
         force: Rebuild previews that are up to date.
         out: Preview directory.
     """
-    opts = PreviewOptions(
-        count=count, all=all, list=list, force=force, out=out
-    )
+    opts = PreviewOptions(count=count, all=all, list=list, force=force, out=out)
 
     if opts.list:
         assert opts.count is not None
