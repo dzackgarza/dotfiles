@@ -35,10 +35,10 @@ const POWER_SCRIPT = `${HYPR_SCRIPTS}/power.sh`
 
 export type PowerProfile = "power-saver" | "balanced" | "performance"
 
-// Re-export from fetcher to avoid duplication
+
 export type ClaudeUsageData = Awaited<ReturnType<typeof fetchClaudeUsage>>
 
-// Base tile state with common fields
+
 type BaseTileState = {
   detail: string
   error: string | null
@@ -134,7 +134,7 @@ function createPolledState<T>(options: PollOptions<T>): PolledStateWithInit<T> {
   const refresh = async (): Promise<boolean> => {
     if (suppressUpdates.peek()) return false
     if (running) {
-      // A request that arrives mid-fetch needs data newer than the fetch in flight.
+      
       rerunRequested = true
       return false
     }
@@ -149,7 +149,7 @@ function createPolledState<T>(options: PollOptions<T>): PolledStateWithInit<T> {
       setState(next)
       options.onSuccess?.()
     } catch (error) {
-      // Error already logged by onError handler; add context
+      
       logger.debug`${pollName} refresh FAILED`
       setState(options.onError(error))
     } finally {
@@ -200,7 +200,7 @@ function createPolledState<T>(options: PollOptions<T>): PolledStateWithInit<T> {
   }
 }
 
-// Truncate long error strings for display so they don't blow up tile width
+
 const MAX_ERROR_LENGTH = 30
 
 export function truncateError(message: string): string {
@@ -208,7 +208,7 @@ export function truncateError(message: string): string {
   return message.slice(0, MAX_ERROR_LENGTH) + "…"
 }
 
-// Generic error state creator - replaces 6 nearly-identical functions
+
 function createErrorState<T>(baseState: T, error: unknown): T & BaseTileState {
   const message = error instanceof Error ? error.message : String(error)
   logger.error`${message}`
@@ -219,7 +219,7 @@ function createErrorState<T>(baseState: T, error: unknown): T & BaseTileState {
   } satisfies T & BaseTileState
 }
 
-// Specific error handlers using the generic creator
+
 export function toggleError(name: string, error: unknown): ToggleTileState {
   const errorMsg = error instanceof Error ? error.message : String(error)
   return createErrorState(
@@ -491,7 +491,7 @@ async function readMicState(): Promise<ToggleTileState> {
 
 const cpuSample: { current?: { total: number; idle: number } } = {}
 
-// Explicit return types for type safety - TypeScript will catch breaking changes at all call sites
+
 function readCpuState(): UsageTileState {
   const statLine = firstLine(readFile("/proc/stat")).trim()
   const fields = splitWords(statLine)
@@ -664,7 +664,7 @@ async function readUpdatesState(): Promise<InfoTileState> {
   try {
     parsed = JSON.parse(readFile(UPDATE_STATE_PATH))
   } catch (error) {
-    // The timer owns package-manager work; AGS only reads its last snapshot.
+    
     const msg = error instanceof Error ? error.message : String(error)
     logger.warn`Update snapshot unavailable: ${msg}`
     return {
@@ -722,7 +722,7 @@ async function readUpdatesState(): Promise<InfoTileState> {
   }
 
   throw new Error(`Unexpected update response: ${text}`)
-  // Unreachable but satisfies fp/no-nil function-end-return rule
+  
   return {} as InfoTileState
 }
 
@@ -785,8 +785,8 @@ async function readVolumeState(): Promise<SliderState> {
 async function readBrightnessState(): Promise<SliderState> {
   await requireCommand("brightnessctl")
   const output = (await execAsync(["brightnessctl", "-m"])).trim()
-  // Format: device,class,current,percent,max
-  // Example: intel_backlight,backlight,48000,50%,96000
+  
+  
   const percentStr = output.split(",")[3] ?? "0%"
   const percent = clamp(parsePercentText(percentStr), 0, 100)
 
@@ -887,7 +887,7 @@ export type ControlCenterService = {
   poweroff: () => Promise<boolean>
 }
 
-// Helper to create a standard poll with common onSuccess/onFirstComplete callbacks
+
 function createStandardPoll<T>(
   options: PollOptions<T>,
   onSuccess: () => boolean,
@@ -900,7 +900,7 @@ function createStandardPoll<T>(
   })
 }
 
-// Create the 10 standard polls (bluetooth through disk) that share the same callback pattern
+
 function setupStandardPolls(
   markUpdated: () => boolean,
   markFirstPollComplete: () => boolean,
@@ -1073,7 +1073,7 @@ function setupStandardPolls(
   }
 }
 
-// Create the auxiliary polls: claude usage data, volume, brightness, battery
+
 function setupAuxPolls(
   markUpdated: () => boolean,
   markFirstPollComplete: () => boolean,
@@ -1105,8 +1105,8 @@ function setupAuxPolls(
     onFirstComplete: markFirstPollComplete,
   })
 
-  // Fetch fresh on every panel open — opening the panel is itself the request for
-  // up-to-date info, and usage-limits handles its own caching CLI-side.
+  
+  
   const refreshUsage = () => {
     void claudeUsageDataPoll.refresh()
     return true
@@ -1261,9 +1261,9 @@ function createControlCenterService(): ControlCenterService {
     return true
   }
 
-  // Initialize all state
+  
   const initializeService = async () => {
-    // Await all initializations before resolving
+    
     const logger = createLogger(["ags", "control-center"])
     logger.info`Initializing 14 system polls [SERVICE] (initializeService)`
     try {
@@ -1292,7 +1292,7 @@ function createControlCenterService(): ControlCenterService {
     return true
   }
 
-  // Start polling for all state
+  
   const startPollingService = () => {
     const logger = createLogger(["ags", "control-center"])
     logger.info`Starting continuous polling of 13 live system states [SERVICE] (startPollingService)`
@@ -1306,7 +1306,7 @@ function createControlCenterService(): ControlCenterService {
     cpuPoll.startPolling()
     memoryPoll.startPolling()
     diskPoll.startPolling()
-    // claudeUsageData: no background polling — refreshed on window open via refreshUsage()
+    
     volumePoll.startPolling()
     brightnessPoll.startPolling()
     batteryPoll.startPolling()
@@ -1318,7 +1318,7 @@ function createControlCenterService(): ControlCenterService {
     if (suppress) {
       volumePoll.setSuppressUpdates(true)
     } else {
-      // Don't re-enable polling if action is still in flight
+      
       if (!actionInFlight) {
         volumePoll.setSuppressUpdates(false)
         return true
@@ -1332,7 +1332,7 @@ function createControlCenterService(): ControlCenterService {
     if (suppress) {
       brightnessPoll.setSuppressUpdates(true)
     } else {
-      // Don't re-enable polling if action is still in flight
+      
       if (!actionInFlight) {
         brightnessPoll.setSuppressUpdates(false)
         return true
