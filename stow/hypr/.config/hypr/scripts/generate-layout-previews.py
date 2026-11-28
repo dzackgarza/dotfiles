@@ -50,22 +50,22 @@ class Card(BaseModel):
     color: str = "win"
 
 
-class Layout(BaseModel):
-    """One picker entry and the Hyprland layout it applies.
-
-    `hypr` is the layout name passed to the workspace rule; `orientation` is
-    the `layout_opts.orientation` value, empty when the layout takes none.
-    `minimum` is the smallest window count at which the layout differs.
-    """
+class LayoutDefinition(BaseModel):
+    """One picker entry and the Hyprland layout it applies."""
 
     model_config = ConfigDict(frozen=True)
 
     key: str
     label: str
-    geometry: Callable[[int], list[Card]]
     hypr: str
     orientation: str = ""
     minimum: int = 1
+
+
+class Layout(LayoutDefinition):
+    """A picker entry paired with its preview geometry."""
+
+    geometry: Callable[[int], list[Card]]
 
 
 class PreviewOptions(BaseModel):
