@@ -318,7 +318,6 @@ app = App(name="generate-layout-previews")
 def main(
     count: int | None = None,
     all: bool = False,
-    list: bool = False,
     force: bool = False,
     out: Path = ASSETS_DIR,
 ) -> int:
