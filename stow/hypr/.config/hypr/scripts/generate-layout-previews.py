@@ -321,22 +321,15 @@ def main(
     force: bool = False,
     out: Path = ASSETS_DIR,
 ) -> int:
-    """Build and list Hyprland layout previews.
+    """Build Hyprland layout previews.
 
     Args:
         count: Window count to build for.
         all: Build every count from 1 to 10.
-        list: Print the picker entries instead of building.
         force: Rebuild previews that are up to date.
         out: Preview directory.
     """
-    opts = PreviewOptions(count=count, all=all, list=list, force=force, out=out)
-
-    if opts.list:
-        assert opts.count is not None
-        for layout, label in options(opts.count):
-            print(f"{layout.key}|{label}|{layout.hypr}|{layout.orientation}")
-        return 0
+    opts = PreviewOptions(count=count, all=all, force=force, out=out)
 
     if opts.all:
         counts = range(1, 11)
